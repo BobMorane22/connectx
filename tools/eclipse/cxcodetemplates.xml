@@ -70,13 +70,11 @@ ${declarations}
      Author: ${user}
 
 </template><template autoinsert="false" context="org.eclipse.cdt.core.cxxSource.contenttype_context" deleted="false" description="" enabled="true" name="Connect X source file">${filecomment}
-
 /**********************************************************************************************//**
  * @file ${file_base}.cpp
  * @date ${year}
  *
  *************************************************************************************************/</template><template autoinsert="false" context="org.eclipse.cdt.core.cxxHeader.contenttype_context" deleted="false" description="" enabled="true" name="Connect X header file">${filecomment}
-
 /**********************************************************************************************//**
  * @file ${file_base}.h
  * @date ${year}
