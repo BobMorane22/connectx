@@ -107,3 +107,6 @@ local.properties
 
 # End of https://www.gitignore.io/api/c++,eclipse
 
+### Connect X ###
+cxmain/connectx
+cxmodel/test/cxmodeltests
