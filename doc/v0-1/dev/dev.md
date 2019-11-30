@@ -1,4 +1,4 @@
-# Release 1 (December 1st, 2019)
+# Connect X v0.1 (December 1st, 2019)
 
 ## Sprint objectives
 
