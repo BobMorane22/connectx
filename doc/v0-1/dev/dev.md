@@ -46,8 +46,18 @@ These templates are kept in two files and can be imported in any Eclipse CDT set
 
 ## Create library for `cxmodel`
 
-Soon...
+The static library `cxmodel` has been created. It can be built in two ways
+
+1. __By building the whole project__: call `make` from the top level project directory.
+2. __By building only the library__: call `make cxmodel/libcxmodel.a` from the top level project directory.
+
+Libraries, object files and executable are created in the source directories. You can clean using `make clean` from the top level project directory. `make clean cxmodel/libcxmodel.a` will clean the library only. Note that a unit test executable is also available. To build it, you can build the whole project (see above) or call `make cxmodel/test/cxmodeltests`.
 
 ## Next sprint
 
-Soon...
+In the next iteration:
+
+1. The standard command line arguments `--version` and `--help` will be added to the executable.
+2. An analysis of the `cxmodel` library will be done to maximize the chances of building a nice architecture for the project.
+
+
