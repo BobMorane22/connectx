@@ -79,26 +79,25 @@ ${declarations}
  * @file ${file_base}.h
  * @date ${year}
  *
- *************************************************************************************************/</template><template autoinsert="false" context="org.eclipse.core.runtime.text.contenttype_context" deleted="false" description="Use this for any non C++ source file" enabled="true" name="Connect X generic file">/**************************************************************************************************
- *  This file is part of Connect X.
- *
- *  Connect X is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  Connect X is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with Connect X. If not, see &lt;https://www.gnu.org/licenses/&gt;.
- *
- *************************************************************************************************/
+ *************************************************************************************************/</template><template autoinsert="false" context="org.eclipse.core.runtime.text.contenttype_context" deleted="false" description="Use this for any non C++ source file" enabled="true" name="Connect X generic file">#*************************************************************************************************
+#  This file is part of Connect X.
+#  Connect X is free software: you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation, either version 3 of the License, or
+#  (at your option) any later version.
+#
+#  Connect X is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with Connect X. If not, see &lt;https://www.gnu.org/licenses/&gt;.
+#
+#*************************************************************************************************/
 
-/**************************************************************************************************
- * @file ${file_name}
- * @date ${year}
- *
- *************************************************************************************************/</template></templates>
+#*************************************************************************************************
+# @file ${file_name}
+# @date ${year}
+#
+#************************************************************************************************/</template></templates>
