@@ -43,7 +43,7 @@ SHELL = /bin/sh
 #  LF_ALL : Global linker flags
 #  LL_ALL : Global link libraries
 #
-CF_ALL          = -std=c++14
+CF_ALL          = -std=c++17 -g -o0 -Wall -Wextra -Wshadow -Wpedantic -pedantic-errors -Werror
 LF_ALL          = 
 LL_ALL          = 
 
