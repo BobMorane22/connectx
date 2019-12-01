@@ -16,18 +16,35 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file main.cpp
+ * @file CmdArgVersionStrategy.cpp
  * @date 2019
  *
  *************************************************************************************************/
 
-#include <memory>
+#include <cstdlib>
+#include <iostream>
 
-#include <Application.h>
+#include <CmdArgVersionStrategy.h>
 
-int main(int argc, char const *argv[])
+namespace
 {
-    std::unique_ptr<cx::IApplication> app = std::make_unique<cx::Application>(argc, argv);
 
-    return 0;
+const std::string VERSION = "v0.2";
+const std::string COPYRIGHT_OWNER = "Eric Poirier";
+const std::string COPYRIGHT_YEAR = "2019";
+
+} // namespace
+
+int cx::CmdArgVersionStrategy::Handle()
+{
+    std::cout << "Connect X " << VERSION << std::endl
+    << std::endl
+    << "Copyright (C) " << COPYRIGHT_YEAR << " " <<  COPYRIGHT_OWNER << "." << std::endl
+    << "License GPLv3+: GNU GPL version 3 or later <gnu.org/licenses/gpl.html>." << std::endl
+    << "This is free software: you are free to change and redistribute it." << std::endl
+    << "There is NO WARRANTY, to the extent permitted by law." << std::endl
+    << std::endl
+    << "Written by " << COPYRIGHT_OWNER << "." << std::endl;
+
+    return EXIT_SUCCESS;
 }

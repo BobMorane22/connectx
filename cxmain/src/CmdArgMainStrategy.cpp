@@ -16,18 +16,24 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file main.cpp
+ * @file CmdArgMainStrategy.cpp
  * @date 2019
  *
  *************************************************************************************************/
 
-#include <memory>
+#include <cstdlib>
+#include <iostream>
 
-#include <Application.h>
+#include <cxmodel/include/HelloWorld.h>
 
-int main(int argc, char const *argv[])
+#include <CmdArgMainStrategy.h>
+
+int cx::CmdArgMainStrategy::Handle()
 {
-    std::unique_ptr<cx::IApplication> app = std::make_unique<cx::Application>(argc, argv);
+    const HelloWorld hw;
+    const std::string HELLO_WORLD = hw.Make();
 
-    return 0;
+    std::cout << HELLO_WORLD << std::endl;
+
+    return EXIT_SUCCESS;
 }

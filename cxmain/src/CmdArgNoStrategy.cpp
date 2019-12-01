@@ -16,18 +16,16 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file main.cpp
+ * @file CmdArgNoStrategy.h
  * @date 2019
  *
  *************************************************************************************************/
 
-#include <memory>
+#include <cstdlib>
 
-#include <Application.h>
+#include "CmdArgNoStrategy.h"
 
-int main(int argc, char const *argv[])
+int cx::CmdArgNoStrategy::Handle()
 {
-    std::unique_ptr<cx::IApplication> app = std::make_unique<cx::Application>(argc, argv);
-
-    return 0;
+    return EXIT_FAILURE;
 }

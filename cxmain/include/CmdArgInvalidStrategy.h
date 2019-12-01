@@ -16,18 +16,46 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file main.cpp
+ * @file CmdArgInvalidStrategy.h
  * @date 2019
  *
  *************************************************************************************************/
 
-#include <memory>
+#ifndef CMDARGINVALIDSTRATEGY_H_9C44DA78_9CAA_4521_AB76_6944321EEFE5
+#define CMDARGINVALIDSTRATEGY_H_9C44DA78_9CAA_4521_AB76_6944321EEFE5
 
-#include <Application.h>
+#include <string>
 
-int main(int argc, char const *argv[])
+#include <ICmdArgWorkflowStrategy.h>
+
+namespace cx
 {
-    std::unique_ptr<cx::IApplication> app = std::make_unique<cx::Application>(argc, argv);
 
-    return 0;
-}
+/*********************************************************************************************//**
+ * @brief DESCRIPTION
+ *
+ * @invariant
+ * @invariant
+ *
+ * DESCRIPTION
+ *
+ ************************************************************************************************/
+class CmdArgInvalidStrategy : public ICmdArgWorkflowStrategy
+{
+
+public:
+
+    CmdArgInvalidStrategy(const std::string& p_invalidArg);
+
+    int Handle() override;
+
+
+private:
+
+    const std::string m_invalidArg;
+
+};
+
+} // namespace cx
+
+#endif // CMDARGINVALIDSTRATEGY_H_9C44DA78_9CAA_4521_AB76_6944321EEFE5

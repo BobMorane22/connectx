@@ -16,18 +16,22 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file main.cpp
+ * @file Application.cpp
  * @date 2019
  *
  *************************************************************************************************/
 
-#include <memory>
-
 #include <Application.h>
+#include <CmdArgWorkflowFactory.h>
 
-int main(int argc, char const *argv[])
+cx::Application::Application(int argc, char const *argv[])
 {
-    std::unique_ptr<cx::IApplication> app = std::make_unique<cx::Application>(argc, argv);
+    CmdArgWorkflowFactory factory;
 
-    return 0;
+    m_workflow = factory.Create(argc, argv);
+}
+
+int cx::Application::Run()
+{
+    return m_workflow->Handle();
 }

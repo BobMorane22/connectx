@@ -16,18 +16,24 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file main.cpp
+ * @file CmdArgInvalidStrategy.cpp
  * @date 2019
  *
  *************************************************************************************************/
 
-#include <memory>
+#include <cstdlib>
+#include <iostream>
 
-#include <Application.h>
+#include <CmdArgInvalidStrategy.h>
 
-int main(int argc, char const *argv[])
+cx::CmdArgInvalidStrategy::CmdArgInvalidStrategy(const std::string& p_invalidArg) : m_invalidArg{p_invalidArg}
 {
-    std::unique_ptr<cx::IApplication> app = std::make_unique<cx::Application>(argc, argv);
+    // Nothing to do...
+}
 
-    return 0;
+int cx::CmdArgInvalidStrategy::Handle()
+{
+    std::cout << "Connect X: invalid option '" + m_invalidArg + "'" << std::endl;
+
+    return EXIT_FAILURE;
 }

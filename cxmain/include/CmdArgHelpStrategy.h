@@ -16,18 +16,37 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file main.cpp
+ * @file CmdArgHelpStrategy.h
  * @date 2019
  *
  *************************************************************************************************/
 
-#include <memory>
+#ifndef CMDARGHELPSTRATEGY_H_3362D6BD_3ADC_4D59_9E62_1B7E12B40C48
+#define CMDARGHELPSTRATEGY_H_3362D6BD_3ADC_4D59_9E62_1B7E12B40C48
 
-#include <Application.h>
+#include <ICmdArgWorkflowStrategy.h>
 
-int main(int argc, char const *argv[])
+namespace cx
 {
-    std::unique_ptr<cx::IApplication> app = std::make_unique<cx::Application>(argc, argv);
 
-    return 0;
-}
+/*********************************************************************************************//**
+ * @brief DESCRIPTION
+ *
+ * @invariant
+ * @invariant
+ *
+ * DESCRIPTION
+ *
+ ************************************************************************************************/
+class CmdArgHelpStrategy : public ICmdArgWorkflowStrategy
+{
+
+public:
+
+    int Handle() override;
+
+};
+
+} // namespace cx
+
+#endif // CMDARGHELPSTRATEGY_H_3362D6BD_3ADC_4D59_9E62_1B7E12B40C48

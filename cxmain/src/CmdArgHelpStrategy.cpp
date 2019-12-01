@@ -16,18 +16,29 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file main.cpp
+ * @file CmdArgHelpStrategy.cpp
  * @date 2019
  *
  *************************************************************************************************/
 
-#include <memory>
+#include <cstdlib>
+#include <iostream>
 
-#include <Application.h>
+#include <CmdArgHelpStrategy.h>
 
-int main(int argc, char const *argv[])
+int cx::CmdArgHelpStrategy::Handle()
 {
-    std::unique_ptr<cx::IApplication> app = std::make_unique<cx::Application>(argc, argv);
+    std::cout << "Usage: connectx [OPTION]..." << std::endl
+    << std::endl
+    << "Possible arguments:" << std::endl
+    << "--help        display this help and exit" << std::endl
+    << "--version     output version information and exit" << std::endl
+    << std::endl
+    << "Exit status:" << std::endl
+    << " 0 if OK," << std::endl
+    << " 1 if problems." << std::endl
+    << std::endl
+    << "Connect X available at: <https://github.com/BobMorane22/connectx/>" << std::endl;
 
-    return 0;
+    return EXIT_SUCCESS;
 }

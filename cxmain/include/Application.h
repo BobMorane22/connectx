@@ -16,18 +16,47 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file main.cpp
+ * @file Application.h
  * @date 2019
  *
  *************************************************************************************************/
 
+#ifndef APPLICATION_H_3ED6B0E2_2A03_4F6C_AB0C_632A2F6E855D
+#define APPLICATION_H_3ED6B0E2_2A03_4F6C_AB0C_632A2F6E855D
+
 #include <memory>
 
-#include <Application.h>
+#include <IApplication.h>
+#include <ICmdArgWorkflowStrategy.h>
 
-int main(int argc, char const *argv[])
+namespace cx
 {
-    std::unique_ptr<cx::IApplication> app = std::make_unique<cx::Application>(argc, argv);
 
-    return 0;
-}
+/*********************************************************************************************//**
+ * @brief DESCRIPTION
+ *
+ * @invariant
+ * @invariant
+ *
+ * DESCRIPTION
+ *
+ ************************************************************************************************/
+class Application : public IApplication
+{
+
+public:
+
+    Application(int argc, char const *argv[]);
+
+    int Run() override;
+
+
+private:
+
+    std::unique_ptr<ICmdArgWorkflowStrategy> m_workflow;
+
+};
+
+} // namespace cx
+
+#endif // APPLICATION_H_3ED6B0E2_2A03_4F6C_AB0C_632A2F6E855D

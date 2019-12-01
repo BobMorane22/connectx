@@ -16,18 +16,39 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file main.cpp
+ * @file CmdArgWorkflowFactory.h
  * @date 2019
  *
  *************************************************************************************************/
 
+#ifndef CMDARGWORKFLOWFACTORY_H_FEECC848_F293_48E7_91FD_E2BF6BA98EC7
+#define CMDARGWORKFLOWFACTORY_H_FEECC848_F293_48E7_91FD_E2BF6BA98EC7
+
 #include <memory>
 
-#include <Application.h>
+#include <ICmdArgWorkflowStrategy.h>
 
-int main(int argc, char const *argv[])
+namespace cx
 {
-    std::unique_ptr<cx::IApplication> app = std::make_unique<cx::Application>(argc, argv);
 
-    return 0;
-}
+/*********************************************************************************************//**
+ * @brief DESCRIPTION
+ *
+ * @invariant
+ * @invariant
+ *
+ * DESCRIPTION
+ *
+ ************************************************************************************************/
+class CmdArgWorkflowFactory
+{
+
+public:
+
+    std::unique_ptr<ICmdArgWorkflowStrategy> Create(int argc, char const *argv[]);
+
+};
+
+} // namespace cx
+
+#endif // CMDARGWORKFLOWFACTORY_H_FEECC848_F293_48E7_91FD_E2BF6BA98EC7

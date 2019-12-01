@@ -16,18 +16,39 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file main.cpp
+ * @file ICmdArgWorkflowStrategy.h
  * @date 2019
  *
  *************************************************************************************************/
 
-#include <memory>
+#ifndef ICMDARGWORKFLOWSTRATEGY_H_22B11697_3758_4728_939D_3709D3F9C64E
+#define ICMDARGWORKFLOWSTRATEGY_H_22B11697_3758_4728_939D_3709D3F9C64E
 
-#include <Application.h>
-
-int main(int argc, char const *argv[])
+namespace cx
 {
-    std::unique_ptr<cx::IApplication> app = std::make_unique<cx::Application>(argc, argv);
 
-    return 0;
-}
+/*********************************************************************************************//**
+ * @brief DESCRIPTION
+ *
+ * @invariant
+ * @invariant
+ *
+ * DESCRIPTION
+ *
+ ************************************************************************************************/
+class ICmdArgWorkflowStrategy
+{
+
+public:
+
+    virtual ~ICmdArgWorkflowStrategy() = default;
+
+    virtual int Handle() = 0;
+
+private:
+
+};
+
+} // namespace cx
+
+#endif // ICMDARGWORKFLOWSTRATEGY_H_22B11697_3758_4728_939D_3709D3F9C64E

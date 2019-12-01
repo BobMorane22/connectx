@@ -16,18 +16,37 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file main.cpp
+ * @file CmdArgVersionStrategy.h
  * @date 2019
  *
  *************************************************************************************************/
 
-#include <memory>
+#ifndef CMDARGVERSIONSTRATEGY_H_5A1B3137_4CCC_43BC_B86B_5CFD2649C858
+#define CMDARGVERSIONSTRATEGY_H_5A1B3137_4CCC_43BC_B86B_5CFD2649C858
 
-#include <Application.h>
+#include <ICmdArgWorkflowStrategy.h>
 
-int main(int argc, char const *argv[])
+namespace cx
 {
-    std::unique_ptr<cx::IApplication> app = std::make_unique<cx::Application>(argc, argv);
 
-    return 0;
-}
+/*********************************************************************************************//**
+ * @brief DESCRIPTION
+ *
+ * @invariant
+ * @invariant
+ *
+ * DESCRIPTION
+ *
+ ************************************************************************************************/
+class CmdArgVersionStrategy : public ICmdArgWorkflowStrategy
+{
+
+public:
+
+    int Handle() override;
+
+};
+
+} // namespace cx
+
+#endif // CMDARGVERSIONSTRATEGY_H_5A1B3137_4CCC_43BC_B86B_5CFD2649C858

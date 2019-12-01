@@ -16,18 +16,37 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file main.cpp
+ * @file CmdArgNoStrategy.h
  * @date 2019
  *
  *************************************************************************************************/
 
-#include <memory>
+#ifndef CMDARGNOSTRATEGY_H_25881F6A_566B_4C12_A32C_70E60C30D4E5
+#define CMDARGNOSTRATEGY_H_25881F6A_566B_4C12_A32C_70E60C30D4E5
 
-#include <Application.h>
+#include <ICmdArgWorkflowStrategy.h>
 
-int main(int argc, char const *argv[])
+namespace cx
 {
-    std::unique_ptr<cx::IApplication> app = std::make_unique<cx::Application>(argc, argv);
 
-    return 0;
-}
+/*********************************************************************************************//**
+ * @brief DESCRIPTION
+ *
+ * @invariant
+ * @invariant
+ *
+ * DESCRIPTION
+ *
+ ************************************************************************************************/
+class CmdArgNoStrategy : public ICmdArgWorkflowStrategy
+{
+
+public:
+
+    int Handle() override;
+
+};
+
+} // namespace cx
+
+#endif // CMDARGNOSTRATEGY_H_25881F6A_566B_4C12_A32C_70E60C30D4E5
