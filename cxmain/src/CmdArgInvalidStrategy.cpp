@@ -33,7 +33,7 @@ cx::CmdArgInvalidStrategy::CmdArgInvalidStrategy(const std::string& p_invalidArg
 
 int cx::CmdArgInvalidStrategy::Handle()
 {
-    std::cout << "Connect X: invalid option '" + m_invalidArg + "'" << std::endl;
+    std::cerr << "Connect X: invalid option '" + m_invalidArg + "'" << std::endl;
 
     return EXIT_FAILURE;
 }
