@@ -36,7 +36,7 @@ sp := $(sp).x
 dirstack_$(sp) := $(d)
 d := $(dir)
 
-### Subdirectories, in alphabetical order
+### Subdirectories, in build order.
 #
 dir := $(d)/test
 include $(dir)/Rules.mk
@@ -49,7 +49,7 @@ include $(dir)/Rules.mk
 # To the global variable "CLEAN", we add the files that the rules present here may create,
 # i.e. the ones we want deleted by a "make clean" command.
 #
-OBJS_$(d) := $(d)/HelloWorld.o
+OBJS_$(d) := $(d)/src/HelloWorld.o
 
 DEPS_$(d) := $(OBJS_$(d):%=%.d)
 
@@ -68,8 +68,7 @@ CLEAN := $(CLEAN) $(OBJS_$(d)) $(DEPS_$(d)) \
 $(OBJS_$(d)): CF_TGT := -I$(d)/include
 
 $(d)/lib$(d).a: $(OBJS_$(d))
-	@echo
-	@echo Generating the lib$(d).a static library...
+	@echo ~~~ Generating the lib$(d).a static library ~~~
 	$(ARCHIVE)
 
 

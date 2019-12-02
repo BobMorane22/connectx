@@ -82,8 +82,7 @@ $(TGTS_$(d)): CF_TGT := -I$(d)/../include -I$(d)
 $(TGTS_$(d)): LL_TGT := cxmodel/libcxmodel.a -lgtest -lgtest_main -lpthread
 
 $(TGTS_$(d)): $(d)/HelloWorldTests.cpp cxmodel/libcxmodel.a
-	@echo
-	@echo Generating the cxmodel unit tests executable...
+	@echo ~~~ Generating the cxmodel unit tests executable ~~~
 	$(COMPLINK)
 
 

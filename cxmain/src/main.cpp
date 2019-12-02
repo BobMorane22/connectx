@@ -29,5 +29,5 @@ int main(int argc, char const *argv[])
 {
     std::unique_ptr<cx::IApplication> app = std::make_unique<cx::Application>(argc, argv);
 
-    return 0;
+    return app->Run();
 }

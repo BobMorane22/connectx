@@ -32,7 +32,7 @@
 all: targets
 
 
-### Subdirectories, in alphabetical order
+### Subdirectories, in build order.
 #
 # These are the lower level directories in which some "Rules.mk" file exist and must
 # be handled here to ensure correct build of the target. Note that if these directories
@@ -40,17 +40,16 @@ all: targets
 # low level sub-directories must NOT be handled here. They must be handled in their parent
 # directory's "Rules.mk" file for the recursive inclusion process to work as expected.
 #
-
-dir := cxmain
+dir := cxmodel
 include $(dir)/Rules.mk
 
-dir := cxmodel
+dir := cxmain
 include $(dir)/Rules.mk
 
 
 ### General directory independent rules
 #
-%.o: src/%.cpp
+%.o: %.cpp
 	@echo Compiling $<...
 	$(COMP)
 
@@ -58,7 +57,7 @@ include $(dir)/Rules.mk
 	@echo Linking $<...
 	$(LINK)
 
-%: src/%.cpp
+%: %.cpp
 	@echo Compiling and linking $<...
 	$(COMPLINK)
 

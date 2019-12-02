@@ -45,9 +45,18 @@ d := $(dir)
 # i.e. the ones we want deleted by a "make clean" command.
 #
 TGTS_$(d) := $(d)/connectx
-DEPS_$(d) := $(TGTS_$(d):%=%.d)
+OBJS_$(d) := $(d)/src/main.o \
+             $(d)/src/Application.o \
+             $(d)/src/CmdArgHelpStrategy.o \
+             $(d)/src/CmdArgInvalidStrategy.o \
+             $(d)/src/CmdArgMainStrategy.o \
+             $(d)/src/CmdArgNoStrategy.o \
+             $(d)/src/CmdArgVersionStrategy.o \
+             $(d)/src/CmdArgWorkflowFactory.o
+DEPS_$(d) := $(TGTS_$(d):%=%.d) $(OBJS_$(d):%=%.d)
+
 TGT_BIN := $(TGT_BIN) $(TGTS_$(d))
-CLEAN := $(CLEAN) $(TGTS_$(d)) $(DEPS_$(d))
+CLEAN := $(CLEAN) $(OBJS_$(d)) $(TGTS_$(d)) $(DEPS_$(d))
 
 
 ### Local rules
@@ -57,13 +66,12 @@ CLEAN := $(CLEAN) $(TGTS_$(d)) $(DEPS_$(d))
 # Since the executable needs to access all libraries, we make sure its include directory
 # is the project root. That way, all include files can be found.
 #
-$(TGTS_$(d)): CF_TGT := -I. -I$(d)/include
+$(OBJS_$(d)): CF_TGT := -I. -I$(d)/include
 $(TGTS_$(d)): LL_TGT := cxmodel/libcxmodel.a
 
-$(TGTS_$(d)): $(d)/src/main.cpp cxmodel/libcxmodel.a
-	@echo
-	@echo Generating the executable...
-	$(COMPLINK)
+$(TGTS_$(d)): $(OBJS_$(d)) $(LL_TGT)
+	@echo ~~~ Generating the executable ~~~
+	$(LINK)
 
 
 ### Restoring stack
