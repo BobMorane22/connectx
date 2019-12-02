@@ -17,8 +17,6 @@
 #************************************************************************************************/
 
 #*************************************************************************************************
-# Makefile to build the 'Connect X' executable.
-#
 # @file Rules.mk
 # @date 2019
 #
@@ -37,28 +35,24 @@ dirstack_$(sp) := $(d)
 d := $(dir)
 
 
-### Subdirectories, in build order.
-#
-dir := $(d)/test
-include $(dir)/Rules.mk
-
-
 ### Local variables
 #
-# To the global variable "TGT_BIN", we add the Connect X executable.
+# To the global variable "TGT_BIN", we add the "cxmodel" unit test executable.
 #
 # To the global variable "CLEAN", we add the files that the rules present here may create,
 # i.e. the ones we want deleted by a "make clean" command.
 #
-TGTS_$(d) := $(d)/connectx
-OBJS_$(d) := $(d)/src/main.o \
-             $(d)/src/Application.o \
-             $(d)/src/CmdArgHelpStrategy.o \
-             $(d)/src/CmdArgInvalidStrategy.o \
-             $(d)/src/CmdArgMainStrategy.o \
-             $(d)/src/CmdArgNoStrategy.o \
-             $(d)/src/CmdArgVersionStrategy.o \
-             $(d)/src/CmdArgWorkflowFactory.o
+TGTS_$(d) := $(d)/cxmaintests
+OBJS_$(d) := $(d)/../src/Application.o \
+             $(d)/../src/CmdArgHelpStrategy.o \
+             $(d)/../src/CmdArgInvalidStrategy.o \
+             $(d)/../src/CmdArgMainStrategy.o \
+             $(d)/../src/CmdArgNoStrategy.o \
+             $(d)/../src/CmdArgVersionStrategy.o \
+             $(d)/../src/CmdArgWorkflowFactory.o \
+             $(d)/ApplicationTests.o \
+             $(d)/ApplicationTestFixture.o \
+             $(d)/CmdArgStrategyFactoryTests.o
 DEPS_$(d) := $(TGTS_$(d):%=%.d) $(OBJS_$(d):%=%.d)
 
 TGT_BIN := $(TGT_BIN) $(TGTS_$(d))
@@ -72,11 +66,11 @@ CLEAN := $(CLEAN) $(OBJS_$(d)) $(TGTS_$(d)) $(DEPS_$(d))
 # Since the executable needs to access all libraries, we make sure its include directory
 # is the project root. That way, all include files can be found.
 #
-$(OBJS_$(d)): CF_TGT := -I. -I$(d)/include
-$(TGTS_$(d)): LL_TGT := cxmodel/libcxmodel.a
+$(OBJS_$(d)): CF_TGT := -I. -I$(d)/../include -I$(d)
+$(TGTS_$(d)): LL_TGT := cxmodel/libcxmodel.a -lgtest -lgtest_main -lpthread
 
 $(TGTS_$(d)): $(OBJS_$(d)) $(LL_TGT)
-	@echo ~~~ Generating the executable ~~~
+	@echo ~~~ Generating the cxmain unit tests executable ~~~
 	$(LINK)
 
 
