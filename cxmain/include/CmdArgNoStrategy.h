@@ -30,12 +30,7 @@ namespace cx
 {
 
 /*********************************************************************************************//**
- * @brief DESCRIPTION
- *
- * @invariant
- * @invariant
- *
- * DESCRIPTION
+ * @brief The absence of a workflow.
  *
  ************************************************************************************************/
 class CmdArgNoStrategy : public ICmdArgWorkflowStrategy

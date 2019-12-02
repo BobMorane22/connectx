@@ -30,12 +30,7 @@ namespace cx
 {
 
 /*********************************************************************************************//**
- * @brief DESCRIPTION
- *
- * @invariant
- * @invariant
- *
- * DESCRIPTION
+ * @brief Main application workflow. This represents when the standard application logic is ran.
  *
  ************************************************************************************************/
 class CmdArgMainStrategy : public ICmdArgWorkflowStrategy

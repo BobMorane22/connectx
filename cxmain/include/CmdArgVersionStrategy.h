@@ -30,12 +30,7 @@ namespace cx
 {
 
 /*********************************************************************************************//**
- * @brief DESCRIPTION
- *
- * @invariant
- * @invariant
- *
- * DESCRIPTION
+ * @brief Workflow for when the @c --version command line argument is passed.
  *
  ************************************************************************************************/
 class CmdArgVersionStrategy : public ICmdArgWorkflowStrategy

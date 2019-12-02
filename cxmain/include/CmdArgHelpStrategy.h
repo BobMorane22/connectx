@@ -30,12 +30,7 @@ namespace cx
 {
 
 /*********************************************************************************************//**
- * @brief DESCRIPTION
- *
- * @invariant
- * @invariant
- *
- * DESCRIPTION
+ * @brief Workflow for the @c --help command line argument.
  *
  ************************************************************************************************/
 class CmdArgHelpStrategy : public ICmdArgWorkflowStrategy

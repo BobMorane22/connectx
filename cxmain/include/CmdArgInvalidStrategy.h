@@ -32,12 +32,7 @@ namespace cx
 {
 
 /*********************************************************************************************//**
- * @brief DESCRIPTION
- *
- * @invariant
- * @invariant
- *
- * DESCRIPTION
+ * @brief Workflow for when an invalid argument is given to the command line.
  *
  ************************************************************************************************/
 class CmdArgInvalidStrategy : public ICmdArgWorkflowStrategy

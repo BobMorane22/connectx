@@ -33,12 +33,7 @@ namespace cx
 {
 
 /*********************************************************************************************//**
- * @brief DESCRIPTION
- *
- * @invariant
- * @invariant
- *
- * DESCRIPTION
+ * @brief Connect X application.
  *
  ************************************************************************************************/
 class Application : public IApplication

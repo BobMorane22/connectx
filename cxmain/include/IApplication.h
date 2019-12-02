@@ -28,12 +28,10 @@ namespace cx
 {
 
 /*********************************************************************************************//**
- * @brief DESCRIPTION
+ * @brief Interface for building an application.
  *
- * @invariant
- * @invariant
- *
- * DESCRIPTION
+ * Use this interface to hide the complexity of an application setup process (such as command
+ * line parsing).
  *
  ************************************************************************************************/
 class IApplication
@@ -42,17 +40,7 @@ class IApplication
 public:
 
     /******************************************************************************************//**
-     * @brief DESCRIPTION
-     *
-     * @pre
-     * @post
-     *
-     * @param
-     * @param
-     *
-     * @return
-     *
-     * DESCRIPTION
+     * @brief Default destructor.
      *
      ********************************************************************************************/
     virtual ~IApplication() = default;
@@ -61,15 +49,25 @@ public:
     /******************************************************************************************//**
      * @brief DESCRIPTION
      *
-     * @pre
-     * @post
+     * @return A return code indicating if the application ran successfully (0) or not (1).
      *
-     * @param
-     * @param
+     * Runs the application. The content of this method should be equivalent of what would go in
+     * the @c function.
      *
-     * @return
+     * Example usage:
      *
-     * DESCRIPTION
+     * @code
+     *
+     * int main(int argc, char const *argv[])
+     * {
+     *     std::unique_ptr<cx::IApplication> app = std::make_unique<cx::MyApplication>(argc, argv);
+     *
+     *     return app->Run();
+     * }
+     *
+     * @endcode
+     *
+     * where @c cx::MyApplication is a user defined type inheriting from this interface.
      *
      ********************************************************************************************/
     virtual int Run() = 0;

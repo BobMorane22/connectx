@@ -28,12 +28,7 @@ namespace cx
 {
 
 /*********************************************************************************************//**
- * @brief DESCRIPTION
- *
- * @invariant
- * @invariant
- *
- * DESCRIPTION
+ * @brief Strategy to handle command line arguments dependent workflows.
  *
  ************************************************************************************************/
 class ICmdArgWorkflowStrategy
@@ -41,8 +36,18 @@ class ICmdArgWorkflowStrategy
 
 public:
 
+    /******************************************************************************************//**
+     * @brief Default destructor.
+     *
+     ********************************************************************************************/
     virtual ~ICmdArgWorkflowStrategy() = default;
 
+    /******************************************************************************************//**
+     * @brief Handles a workflow.
+     *
+     * @return A return code indicating if the workflow ran successfully (0) or not (1).
+     *
+     ********************************************************************************************/
     virtual int Handle() = 0;
 
 private:

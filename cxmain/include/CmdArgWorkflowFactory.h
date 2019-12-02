@@ -32,12 +32,7 @@ namespace cx
 {
 
 /*********************************************************************************************//**
- * @brief DESCRIPTION
- *
- * @invariant
- * @invariant
- *
- * DESCRIPTION
+ * @brief Factory for creating command line arguments dependent workflows.
  *
  ************************************************************************************************/
 class CmdArgWorkflowFactory
@@ -45,6 +40,20 @@ class CmdArgWorkflowFactory
 
 public:
 
+    /******************************************************************************************//**
+     * @brief Create a command line dependent workflow.
+     *
+     * @param argc The number of command line arguments (including the executable).
+     * @param argv A C-style array containing the command line argument strings (including the
+     *             executable).
+     *
+     * @return The command line dependent workflow.
+     *
+     * If no workflow has been found for the given command line arguments, an instance of
+     * @c cx::CmdArgNoStragegy will be returned, meaning that this method never returns
+     * @c nullptr.
+     *
+     ********************************************************************************************/
     std::unique_ptr<ICmdArgWorkflowStrategy> Create(int argc, char const *argv[]);
 
 };
