@@ -51,8 +51,8 @@ OBJS_$(d) := $(d)/../src/Application.o \
              $(d)/../src/CmdArgVersionStrategy.o \
              $(d)/../src/CmdArgWorkflowFactory.o \
              $(d)/ApplicationTests.o \
-             $(d)/ApplicationTestFixture.o \
-             $(d)/CmdArgStrategyFactoryTests.o
+             $(d)/CmdArgStrategyFactoryTests.o \
+             $(d)/DisableStdStreamsRAII.o
 DEPS_$(d) := $(TGTS_$(d):%=%.d) $(OBJS_$(d):%=%.d)
 
 TGT_BIN := $(TGT_BIN) $(TGTS_$(d))

@@ -16,16 +16,17 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file ApplicationTestFixture.cpp
+ * @file DisableStdStreamsRAII.cpp
  * @date 2019
  *
  *************************************************************************************************/
 
+#include "DisableStdStreamsRAII.h"
+
 #include <iostream>
 
-#include <ApplicationTestFixture.h>
 
-ApplicationTestFixture::ApplicationTestFixture()
+DisableStdStreamsRAII::DisableStdStreamsRAII()
  : m_stdOutBufferContents{std::cout.rdbuf()}
  , m_stdErrBufferContents{std::cerr.rdbuf()}
 {
@@ -33,28 +34,38 @@ ApplicationTestFixture::ApplicationTestFixture()
     DisableStdErr();
 }
 
-ApplicationTestFixture::~ApplicationTestFixture()
+DisableStdStreamsRAII::~DisableStdStreamsRAII()
 {
     EnableStdOut();
     EnableStdErr();
 }
 
-void ApplicationTestFixture::DisableStdOut()
+void DisableStdStreamsRAII::DisableStdOut()
 {
     std::cout.rdbuf(m_stdOutBuffer.rdbuf());
 }
 
-void ApplicationTestFixture::EnableStdOut()
+void DisableStdStreamsRAII::EnableStdOut()
 {
     std::cout.rdbuf(m_stdOutBufferContents);
 }
 
-void ApplicationTestFixture::DisableStdErr()
+void DisableStdStreamsRAII::DisableStdErr()
 {
     std::cerr.rdbuf(m_stdErrBuffer.rdbuf());
 }
 
-void ApplicationTestFixture::EnableStdErr()
+void DisableStdStreamsRAII::EnableStdErr()
 {
     std::cerr.rdbuf(m_stdErrBufferContents);
+}
+
+std::string DisableStdStreamsRAII::GetStdOutContents() const
+{
+    return m_stdOutBuffer.str();
+}
+
+std::string DisableStdStreamsRAII::GetStdErrContents() const
+{
+    return m_stdErrBuffer.str();
 }

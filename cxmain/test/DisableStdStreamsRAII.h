@@ -16,33 +16,50 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file ApplicationTestFixture.h
+ * @file DisableStdStreamsRAII.h
  * @date 2019
  *
  *************************************************************************************************/
 
-#ifndef APPLICATIONTESTFIXTURE_H_91B6841E_7598_474B_BE68_991DB1816418
-#define APPLICATIONTESTFIXTURE_H_91B6841E_7598_474B_BE68_991DB1816418
+#ifndef DISABLESTDSTREAMSRAII_H_5F0DC0F2_264C_4133_A688_5B8D6B26DAAC
+#define DISABLESTDSTREAMSRAII_H_5F0DC0F2_264C_4133_A688_5B8D6B26DAAC
 
-#include <gtest/gtest.h>
-
-#include <DisableStdStreamsRAII.h>
+#include <sstream>
 
 /*********************************************************************************************//**
- * @brief Test fixture for the class @c cx::Application
+ * @brief Disable/enable @c stdout and @c stderr.
  *
- * This fixture guarantees correct disabling/enabling of the standard streams through RAII.
+ * At construction, both streams are redirected to an @c std::stringstream (e.g. nothing gets
+ * printed to the console). At destruction, both streams are redirected back to their original
+ * targets. Use this class as a data member to either disable streaming to the console, or
+ * to access the streaming data in a @c std::string (e.g. for testing).
  *
  ************************************************************************************************/
-class ApplicationTestFixture : public ::testing::Test
+class DisableStdStreamsRAII final
 {
+
+public:
+
+    DisableStdStreamsRAII();
+    ~DisableStdStreamsRAII();
+
+    void DisableStdOut();
+    void EnableStdOut();
+    void DisableStdErr();
+    void EnableStdErr();
+
     std::string GetStdOutContents() const;
     std::string GetStdErrContents() const;
 
 
 private:
 
-    DisableStdStreamsRAII m_disableStreamsRAII;
+    std::stringstream m_stdOutBuffer;
+    std::streambuf *m_stdOutBufferContents;
+
+    std::stringstream m_stdErrBuffer;
+    std::streambuf *m_stdErrBufferContents;
+
 };
 
-#endif // APPLICATIONTESTFIXTURE_H_91B6841E_7598_474B_BE68_991DB1816418
+#endif // DISABLESTDSTREAMSRAII_H_5F0DC0F2_264C_4133_A688_5B8D6B26DAAC
