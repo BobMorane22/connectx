@@ -16,35 +16,19 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file ApplicationTestFixture.h
+ * @file ApplicationTestFixture.cpp
  * @date 2019
  *
  *************************************************************************************************/
 
-#ifndef APPLICATIONTESTFIXTURE_H_91B6841E_7598_474B_BE68_991DB1816418
-#define APPLICATIONTESTFIXTURE_H_91B6841E_7598_474B_BE68_991DB1816418
+#include <ApplicationTestFixture.h>
 
-#include <gtest/gtest.h>
-
-#include <DisableStdStreamsRAII.h>
-
-/*********************************************************************************************//**
- * @brief Test fixture for the class @c cx::Application
- *
- * This fixture guarantees correct disabling/enabling of the standard streams through RAII.
- *
- ************************************************************************************************/
-class ApplicationTestFixture : public ::testing::Test
+std::string ApplicationTestFixture::GetStdOutContents() const
 {
-public:
+    return m_disableStreamsRAII.GetStdOutContents();
+}
 
-    std::string GetStdOutContents() const;
-    std::string GetStdErrContents() const;
-
-
-private:
-
-    DisableStdStreamsRAII m_disableStreamsRAII;
-};
-
-#endif // APPLICATIONTESTFIXTURE_H_91B6841E_7598_474B_BE68_991DB1816418
+std::string ApplicationTestFixture::GetStdErrContents() const
+{
+    return m_disableStreamsRAII.GetStdErrContents();
+}
