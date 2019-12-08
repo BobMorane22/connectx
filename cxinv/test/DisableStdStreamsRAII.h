@@ -16,54 +16,50 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file Application.h
+ * @file DisableStdStreamsRAII.h
  * @date 2019
  *
  *************************************************************************************************/
 
-#ifndef APPLICATION_H_3ED6B0E2_2A03_4F6C_AB0C_632A2F6E855D
-#define APPLICATION_H_3ED6B0E2_2A03_4F6C_AB0C_632A2F6E855D
+#ifndef DISABLESTDSTREAMSRAII_H_FCB7CC7C_606B_4076_BEA5_A68168F20EF8
+#define DISABLESTDSTREAMSRAII_H_FCB7CC7C_606B_4076_BEA5_A68168F20EF8
 
-#include <memory>
-
-#include <IApplication.h>
-#include <ICmdArgWorkflowStrategy.h>
-
-namespace cx
-{
+#include <sstream>
 
 /*********************************************************************************************//**
- * @brief Connect X application.
+ * @brief Disable/enable @c stdout and @c stderr.
  *
- * @invariant The command line argument workflow is not @c nullptr.
+ * At construction, both streams are redirected to an @c std::stringstream (e.g. nothing gets
+ * printed to the console). At destruction, both streams are redirected back to their original
+ * targets. Use this class as a data member to either disable streaming to the console, or
+ * to access the streaming data in a @c std::string (e.g. for testing).
  *
  ************************************************************************************************/
-class Application : public IApplication
+class DisableStdStreamsRAII final
 {
 
 public:
 
-    /******************************************************************************************//**
-     * @brief Constructor.
-     *
-     * @pre The argument count is at least 1.
-     * @pre The argument list is not @c nullptr.
-     *
-     * @param argc Command line argument count.
-     * @param argc A C-style array of arguments.
-     *
-     ********************************************************************************************/
-    Application(int argc, char const *argv[]);
+    DisableStdStreamsRAII();
+    ~DisableStdStreamsRAII();
 
-    int Run() override;
+    void DisableStdOut();
+    void EnableStdOut();
+    void DisableStdErr();
+    void EnableStdErr();
+
+    std::string GetStdOutContents() const;
+    std::string GetStdErrContents() const;
 
 
 private:
 
-    std::unique_ptr<ICmdArgWorkflowStrategy> m_workflow;
+    std::stringstream m_stdOutBuffer;
+    std::streambuf *m_stdOutBufferContents;
+
+    std::stringstream m_stdErrBuffer;
+    std::streambuf *m_stdErrBufferContents;
 
 };
 
-} // namespace cx
-
-#endif // APPLICATION_H_3ED6B0E2_2A03_4F6C_AB0C_632A2F6E855D
+#endif // DISABLESTDSTREAMSRAII_H_FCB7CC7C_606B_4076_BEA5_A68168F20EF8

@@ -16,54 +16,50 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file Application.h
+ * @file HandleAssertTestFixture.h
  * @date 2019
  *
  *************************************************************************************************/
 
-#ifndef APPLICATION_H_3ED6B0E2_2A03_4F6C_AB0C_632A2F6E855D
-#define APPLICATION_H_3ED6B0E2_2A03_4F6C_AB0C_632A2F6E855D
+#ifndef HANDLEASSERTTESTFIXTURE_H_86DDB7C1_6022_4421_8477_EBDA35EC90EC
+#define HANDLEASSERTTESTFIXTURE_H_86DDB7C1_6022_4421_8477_EBDA35EC90EC
 
-#include <memory>
+#include <gtest/gtest.h>
 
-#include <IApplication.h>
-#include <ICmdArgWorkflowStrategy.h>
+#include <assertion.h>
 
-namespace cx
-{
+#include <DisableStdStreamsRAII.h>
 
 /*********************************************************************************************//**
- * @brief Connect X application.
+ * @brief Test fixture for the class @c cxinv::HandleAssert function.
  *
- * @invariant The command line argument workflow is not @c nullptr.
+ * This fixture guarantees correct disabling/enabling of the standard streams through RAII.
  *
  ************************************************************************************************/
-class Application : public IApplication
+class HandleAssertTestFixture : public ::testing::Test
 {
 
 public:
 
-    /******************************************************************************************//**
-     * @brief Constructor.
-     *
-     * @pre The argument count is at least 1.
-     * @pre The argument list is not @c nullptr.
-     *
-     * @param argc Command line argument count.
-     * @param argc A C-style array of arguments.
-     *
-     ********************************************************************************************/
-    Application(int argc, char const *argv[]);
+    std::string GetStdOutContents() const;
+    std::string GetStdErrContents() const;
 
-    int Run() override;
+    std::string MakeExpectedMessage(cxinv::AssertLabel p_label, const char* p_message = nullptr) const;
+
+
+protected:
+
+    const char* m__FILE_{"File.cpp"};
+    const char* m__FUNCTION_{"Function()"};
+    const long  m__LINE_{10};
+    const char* m_CONDITION_EXPRESSION{"(3 > 5)"};
+    const char* m_VALID_MESSAGE{"A valid message"};
 
 
 private:
 
-    std::unique_ptr<ICmdArgWorkflowStrategy> m_workflow;
+    DisableStdStreamsRAII m_disableStreamsRAII;
 
 };
 
-} // namespace cx
-
-#endif // APPLICATION_H_3ED6B0E2_2A03_4F6C_AB0C_632A2F6E855D
+#endif // HANDLEASSERTTESTFIXTURE_H_86DDB7C1_6022_4421_8477_EBDA35EC90EC

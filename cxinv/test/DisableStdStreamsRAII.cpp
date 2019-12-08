@@ -16,39 +16,56 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file Application.cpp
+ * @file DisableStdStreamsRAII.cpp
  * @date 2019
  *
  *************************************************************************************************/
 
-#include <memory>
+#include "DisableStdStreamsRAII.h"
 
-#include <cxinv/include/assertion.h>
+#include <iostream>
 
-#include <Application.h>
-#include <CmdArgWorkflowFactory.h>
-#include <CmdArgNoStrategy.h>
 
-cx::Application::Application(int argc, char const *argv[])
+DisableStdStreamsRAII::DisableStdStreamsRAII()
+ : m_stdOutBufferContents{std::cout.rdbuf()}
+ , m_stdErrBufferContents{std::cerr.rdbuf()}
 {
-    PRECONDITION(argc >= 1);
-    PRECONDITION(argv != nullptr);
-
-    CmdArgWorkflowFactory factory;
-
-    m_workflow = factory.Create(argc, argv);
+    DisableStdOut();
+    DisableStdErr();
 }
 
-int cx::Application::Run()
+DisableStdStreamsRAII::~DisableStdStreamsRAII()
 {
-    INVARIANT(m_workflow != nullptr);
+    EnableStdOut();
+    EnableStdErr();
+}
 
-    if(m_workflow)
-    {
-        return m_workflow->Handle();
-    }
+void DisableStdStreamsRAII::DisableStdOut()
+{
+    std::cout.rdbuf(m_stdOutBuffer.rdbuf());
+}
 
-    const auto workflow = std::make_unique<cx::CmdArgNoStrategy>();
+void DisableStdStreamsRAII::EnableStdOut()
+{
+    std::cout.rdbuf(m_stdOutBufferContents);
+}
 
-    return workflow->Handle();
+void DisableStdStreamsRAII::DisableStdErr()
+{
+    std::cerr.rdbuf(m_stdErrBuffer.rdbuf());
+}
+
+void DisableStdStreamsRAII::EnableStdErr()
+{
+    std::cerr.rdbuf(m_stdErrBufferContents);
+}
+
+std::string DisableStdStreamsRAII::GetStdOutContents() const
+{
+    return m_stdOutBuffer.str();
+}
+
+std::string DisableStdStreamsRAII::GetStdErrContents() const
+{
+    return m_stdErrBuffer.str();
 }
