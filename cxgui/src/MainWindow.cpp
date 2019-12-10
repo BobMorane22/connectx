@@ -16,40 +16,22 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file CmdArgMainStrategy.h
+ * @file MainWindow.cpp
  * @date 2019
  *
  *************************************************************************************************/
 
-#ifndef CMDARGMAINSTRATEGY_H_687BF302_DBF1_4EB7_B096_8DD7B233614A
-#define CMDARGMAINSTRATEGY_H_687BF302_DBF1_4EB7_B096_8DD7B233614A
+#include <MainWindow.h>
 
-#include <GtkmmUIManager.h>
-#include <ICmdArgWorkflowStrategy.h>
-
-namespace cx
+cxgui::MainWindow::MainWindow(int argc, char *argv[])
 {
+    m_app = Gtk::Application::create(argc, argv, "org.gtkmm.examples.base");
 
-/*********************************************************************************************//**
- * @brief Main application workflow. This represents when the standard application logic is ran.
- *
- ************************************************************************************************/
-class CmdArgMainStrategy : public ICmdArgWorkflowStrategy
+    m_mainWindow = std::make_unique<Gtk::ApplicationWindow>();
+    m_mainWindow->set_default_size(200, 200);
+}
+
+int cxgui::MainWindow::Show()
 {
-
-public:
-
-    CmdArgMainStrategy(int argc, char *argv[]);
-
-    int Handle() override;
-
-
-private:
-
-    std::unique_ptr<cx::IUIManager> m_uiMgr;
-
-};
-
-} // namespace cx
-
-#endif // CMDARGMAINSTRATEGY_H_687BF302_DBF1_4EB7_B096_8DD7B233614A
+    return m_app->run(*m_mainWindow);
+}

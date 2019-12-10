@@ -16,40 +16,37 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file CmdArgMainStrategy.h
+ * @file IMainWindow.h
  * @date 2019
  *
  *************************************************************************************************/
 
-#ifndef CMDARGMAINSTRATEGY_H_687BF302_DBF1_4EB7_B096_8DD7B233614A
-#define CMDARGMAINSTRATEGY_H_687BF302_DBF1_4EB7_B096_8DD7B233614A
+#ifndef IMAINWINDOW_H_87FB17B9_ABA6_42D6_8B00_1B898BCD3C94
+#define IMAINWINDOW_H_87FB17B9_ABA6_42D6_8B00_1B898BCD3C94
 
-#include <GtkmmUIManager.h>
-#include <ICmdArgWorkflowStrategy.h>
-
-namespace cx
+namespace cxgui
 {
 
 /*********************************************************************************************//**
- * @brief Main application workflow. This represents when the standard application logic is ran.
+ * @brief DESCRIPTION
+ *
+ * @invariant
+ * @invariant
+ *
+ * DESCRIPTION
  *
  ************************************************************************************************/
-class CmdArgMainStrategy : public ICmdArgWorkflowStrategy
+class IMainWindow
 {
 
 public:
 
-    CmdArgMainStrategy(int argc, char *argv[]);
+    virtual ~IMainWindow() = default;
 
-    int Handle() override;
-
-
-private:
-
-    std::unique_ptr<cx::IUIManager> m_uiMgr;
+    virtual int Show() = 0;
 
 };
 
-} // namespace cx
+} // namespace cxgui
 
-#endif // CMDARGMAINSTRATEGY_H_687BF302_DBF1_4EB7_B096_8DD7B233614A
+#endif // IMAINWINDOW_H_87FB17B9_ABA6_42D6_8B00_1B898BCD3C94

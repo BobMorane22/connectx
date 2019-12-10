@@ -53,7 +53,7 @@ public:
      * @param argc A C-style array of arguments.
      *
      ********************************************************************************************/
-    Application(int argc, char const *argv[]);
+    Application(int argc, char *argv[]);
 
     int Run() override;
 

@@ -69,7 +69,7 @@ CLEAN := $(CLEAN) $(OBJS_$(d)) $(DEPS_$(d)) \
 $(OBJS_$(d)): CF_TGT := -I$(d)/include
 
 $(d)/lib$(d).a: $(OBJS_$(d))
-	@echo ~~~ Generating the lib$(d).a static library ~~~
+	@echo ~~~ Generating the libcxinv.a static library ~~~
 	$(ARCHIVE)
 
 

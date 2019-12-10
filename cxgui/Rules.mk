@@ -17,7 +17,7 @@
 #************************************************************************************************/
 
 #*************************************************************************************************
-# Makefile to build the 'Connect X' executable.
+# Makefile to build the 'cxgui' library.
 #
 # @file Rules.mk
 # @date 2019
@@ -37,49 +37,34 @@ dirstack_$(sp) := $(d)
 d := $(dir)
 
 
-### Subdirectories, in build order.
-#
-#dir := $(d)/test
-#include $(dir)/Rules.mk
-
-
 ### Local variables
 #
-# To the global variable "TGT_BIN", we add the Connect X executable.
+# Object files and dependencies are defined here.
 #
 # To the global variable "CLEAN", we add the files that the rules present here may create,
 # i.e. the ones we want deleted by a "make clean" command.
 #
-TGTS_$(d) := $(d)/connectx
-OBJS_$(d) := $(d)/src/main.o \
-             $(d)/src/Application.o \
-             $(d)/src/CmdArgHelpStrategy.o \
-             $(d)/src/CmdArgInvalidStrategy.o \
-             $(d)/src/CmdArgMainStrategy.o \
-             $(d)/src/CmdArgNoStrategy.o \
-             $(d)/src/CmdArgVersionStrategy.o \
-             $(d)/src/CmdArgWorkflowFactory.o \
-             $(d)/src/GtkmmUIManager.o \
-             cxgui/libcxgui.a
-DEPS_$(d) := $(TGTS_$(d):%=%.d) $(OBJS_$(d):%=%.d)
+OBJS_$(d) := $(d)/src/MainWindow.o
 
-TGT_BIN := $(TGT_BIN) $(TGTS_$(d))
-CLEAN := $(CLEAN) $(OBJS_$(d)) $(TGTS_$(d)) $(DEPS_$(d))
+DEPS_$(d) := $(OBJS_$(d):%=%.d)
+
+CLEAN := $(CLEAN) $(OBJS_$(d)) $(DEPS_$(d)) \
+         $(d)/lib$(d).a
 
 
 ### Local rules
 #
-# Executable is compiled and linked.
+# Objects are compiled and archived (static library).
 #
-# Since the executable needs to access all libraries, we make sure its include directory
-# is the project root. That way, all include files can be found.
+# The local include path is added to the local target compiler flags variable "CF_TGT" so that
+# includes seem natural within the library. For example, #include <localfile.h> can be used
+# instead of having to include the path.
 #
-$(OBJS_$(d)): CF_TGT := -I. -I$(d)/include `pkg-config gtkmm-3.0 --cflags --libs`
-$(TGTS_$(d)): LL_TGT := cxinv/libcxinv.a cxmodel/libcxmodel.a cxgui/libcxgui.a `pkg-config gtkmm-3.0 --cflags --libs`
+$(OBJS_$(d)): CF_TGT := -I$(d)/include `pkg-config gtkmm-3.0 --cflags --libs`
 
-$(TGTS_$(d)): $(OBJS_$(d)) $(LL_TGT)
-	@echo ~~~ Generating the executable ~~~
-	$(LINK)
+$(d)/lib$(d).a: $(OBJS_$(d))
+	@echo ~~~ Generating the libcxgui.a static library ~~~
+	$(ARCHIVE)
 
 
 ### Restoring stack
@@ -87,6 +72,5 @@ $(TGTS_$(d)): $(OBJS_$(d)) $(LL_TGT)
 # The stack pointer is "decremented" and the last current directory is restored.
 #
 -include $(DEPS_$(d))
-
 d := $(dirstack_$(sp))
 sp := $(basename $(sp))

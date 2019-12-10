@@ -41,7 +41,7 @@ const std::string VERSION_ARG = "--version";
 } // namespace cx
 
 
-std::unique_ptr<cx::ICmdArgWorkflowStrategy> cx::CmdArgWorkflowFactory::Create(int argc, char const *argv[])
+std::unique_ptr<cx::ICmdArgWorkflowStrategy> cx::CmdArgWorkflowFactory::Create(int argc, char *argv[])
 {
     if(argc < 1)
     {
@@ -49,7 +49,7 @@ std::unique_ptr<cx::ICmdArgWorkflowStrategy> cx::CmdArgWorkflowFactory::Create(i
     }
     else if(argc == 1)
     {
-        return std::make_unique<CmdArgMainStrategy>();
+        return std::make_unique<CmdArgMainStrategy>(argc, argv);
     }
 
     else

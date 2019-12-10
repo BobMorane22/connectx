@@ -25,7 +25,7 @@
 
 #include <Application.h>
 
-int main(int argc, char const *argv[])
+int main(int argc, char *argv[])
 {
     std::unique_ptr<cx::IApplication> app = std::make_unique<cx::Application>(argc, argv);
 

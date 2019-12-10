@@ -54,7 +54,7 @@ public:
      * @c nullptr.
      *
      ********************************************************************************************/
-    std::unique_ptr<ICmdArgWorkflowStrategy> Create(int argc, char const *argv[]);
+    std::unique_ptr<ICmdArgWorkflowStrategy> Create(int argc, char *argv[]);
 
 };
 

@@ -28,12 +28,17 @@
 
 #include <CmdArgMainStrategy.h>
 
+cx::CmdArgMainStrategy::CmdArgMainStrategy(int argc, char *argv[])
+{
+    m_uiMgr = std::make_unique<cx::GtkmmUIManager>(argc, argv);
+}
+
 int cx::CmdArgMainStrategy::Handle()
 {
-    const HelloWorld hw;
-    const std::string HELLO_WORLD = hw.Make();
+    if(m_uiMgr)
+    {
+        return m_uiMgr->Manage();
+    }
 
-    std::cout << HELLO_WORLD << std::endl;
-
-    return EXIT_SUCCESS;
+    return EXIT_FAILURE;
 }

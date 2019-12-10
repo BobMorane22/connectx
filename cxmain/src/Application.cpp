@@ -29,7 +29,7 @@
 #include <CmdArgWorkflowFactory.h>
 #include <CmdArgNoStrategy.h>
 
-cx::Application::Application(int argc, char const *argv[])
+cx::Application::Application(int argc, char *argv[])
 {
     PRECONDITION(argc >= 1);
     PRECONDITION(argv != nullptr);

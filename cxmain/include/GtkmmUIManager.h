@@ -16,64 +16,58 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file IApplication.h
+ * @file GtkmmUIManager.h
  * @date 2019
  *
  *************************************************************************************************/
 
-#ifndef IAPPLICATION_H_323C05EC_2EC7_4CB7_B3E0_D9F1A57E4B7B
-#define IAPPLICATION_H_323C05EC_2EC7_4CB7_B3E0_D9F1A57E4B7B
+#ifndef GTKMMUIMANAGER_H_E1DB88FF_B8D0_4340_B32B_E1970564E266
+#define GTKMMUIMANAGER_H_E1DB88FF_B8D0_4340_B32B_E1970564E266
+
+#include <memory>
+
+#include <cxgui/include/MainWindow.h>
+
+#include <IUIManager.h>
 
 namespace cx
 {
 
 /*********************************************************************************************//**
- * @brief Interface for building an application.
+ * @brief A Gtkmm UI manager.
  *
- * Use this interface to hide the complexity of an application setup process (such as command
- * line parsing).
+ * @invariant @c m_mainWindow is not @c nullptr.
+ *
+ * Manages a Gtkmm implemented UI. For more information, see:
+ *
+ *                                 https://www.gtkmm.org/en/
  *
  ************************************************************************************************/
-class IApplication
+class GtkmmUIManager : public cx::IUIManager
 {
 
 public:
 
     /******************************************************************************************//**
-     * @brief Default destructor.
+     * @brief Constructor.
+     *
+     * @pre The argument count is at least 1.
+     * @pre The argument list is not @c nullptr.
+     *
+     * @param argc Command line argument count.
+     * @param argc A C-style array of arguments.
      *
      ********************************************************************************************/
-    virtual ~IApplication() = default;
+    GtkmmUIManager(int argc, char *argv[]);
+
+    int Manage() override;
 
 
-    /******************************************************************************************//**
-     * @brief DESCRIPTION
-     *
-     * @return A return code indicating if the application ran successfully (0) or not (1).
-     *
-     * Runs the application. The content of this method should be equivalent of what would go in
-     * the @c function.
-     *
-     * Example usage:
-     *
-     * @code
-     *
-     * int main(int argc, char *argv[])
-     * {
-     *     std::unique_ptr<cx::IApplication> app = std::make_unique<cx::MyApplication>(argc, argv);
-     *
-     *     return app->Run();
-     * }
-     *
-     * @endcode
-     *
-     * where @c cx::MyApplication is a user defined type inheriting from this interface.
-     *
-     ********************************************************************************************/
-    virtual int Run() = 0;
+private:
 
+    std::unique_ptr<cxgui::IMainWindow> m_mainWindow;
 };
 
 } // namespace cx
 
-#endif // IAPPLICATION_H_323C05EC_2EC7_4CB7_B3E0_D9F1A57E4B7B
+#endif // GTKMMUIMANAGER_H_E1DB88FF_B8D0_4340_B32B_E1970564E266

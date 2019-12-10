@@ -16,40 +16,49 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file CmdArgMainStrategy.h
+ * @file MainWindow.h
  * @date 2019
  *
  *************************************************************************************************/
 
-#ifndef CMDARGMAINSTRATEGY_H_687BF302_DBF1_4EB7_B096_8DD7B233614A
-#define CMDARGMAINSTRATEGY_H_687BF302_DBF1_4EB7_B096_8DD7B233614A
+#include <memory>
 
-#include <GtkmmUIManager.h>
-#include <ICmdArgWorkflowStrategy.h>
+#include <gtkmm/application.h>
+#include <gtkmm/applicationwindow.h>
 
-namespace cx
+#include "IMainWindow.h"
+
+#ifndef MAINWINDOW_H_F0ED11E8_831A_4C6A_8A9B_8C329506BD72
+#define MAINWINDOW_H_F0ED11E8_831A_4C6A_8A9B_8C329506BD72
+
+namespace cxgui
 {
 
 /*********************************************************************************************//**
- * @brief Main application workflow. This represents when the standard application logic is ran.
+ * @brief DESCRIPTION
+ *
+ * @invariant
+ * @invariant
+ *
+ * DESCRIPTION
  *
  ************************************************************************************************/
-class CmdArgMainStrategy : public ICmdArgWorkflowStrategy
+class MainWindow : public cxgui::IMainWindow
 {
 
 public:
 
-    CmdArgMainStrategy(int argc, char *argv[]);
+    MainWindow(int argc, char *argv[]);
 
-    int Handle() override;
-
+    int Show() override;
 
 private:
 
-    std::unique_ptr<cx::IUIManager> m_uiMgr;
+    Glib::RefPtr<Gtk::Application> m_app;
+    std::unique_ptr<Gtk::ApplicationWindow> m_mainWindow;
 
 };
 
-} // namespace cx
+} // namespace cxgui
 
-#endif // CMDARGMAINSTRATEGY_H_687BF302_DBF1_4EB7_B096_8DD7B233614A
+#endif // MAINWINDOW_H_F0ED11E8_831A_4C6A_8A9B_8C329506BD72

@@ -46,6 +46,9 @@ include $(dir)/Rules.mk
 dir := cxmodel
 include $(dir)/Rules.mk
 
+dir := cxgui
+include $(dir)/Rules.mk
+
 dir := cxmain
 include $(dir)/Rules.mk
 

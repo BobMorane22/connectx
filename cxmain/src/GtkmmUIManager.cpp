@@ -16,40 +16,28 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file CmdArgMainStrategy.h
+ * @file GtkmmUIManager.cpp
  * @date 2019
  *
  *************************************************************************************************/
 
-#ifndef CMDARGMAINSTRATEGY_H_687BF302_DBF1_4EB7_B096_8DD7B233614A
-#define CMDARGMAINSTRATEGY_H_687BF302_DBF1_4EB7_B096_8DD7B233614A
+#include <cxinv/include/assertion.h>
 
 #include <GtkmmUIManager.h>
-#include <ICmdArgWorkflowStrategy.h>
 
-namespace cx
+cx::GtkmmUIManager::GtkmmUIManager(int argc, char *argv[])
 {
+    m_mainWindow = std::make_unique<cxgui::MainWindow>(argc, argv);
+}
 
-/*********************************************************************************************//**
- * @brief Main application workflow. This represents when the standard application logic is ran.
- *
- ************************************************************************************************/
-class CmdArgMainStrategy : public ICmdArgWorkflowStrategy
+int cx::GtkmmUIManager::Manage()
 {
+    INVARIANT(m_mainWindow != nullptr);
 
-public:
+    if(m_mainWindow)
+    {
+        return m_mainWindow->Show();
+    }
 
-    CmdArgMainStrategy(int argc, char *argv[]);
-
-    int Handle() override;
-
-
-private:
-
-    std::unique_ptr<cx::IUIManager> m_uiMgr;
-
-};
-
-} // namespace cx
-
-#endif // CMDARGMAINSTRATEGY_H_687BF302_DBF1_4EB7_B096_8DD7B233614A
+    return EXIT_FAILURE;
+}

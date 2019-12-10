@@ -16,25 +16,25 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file IApplication.h
+ * @file IUIManager.h
  * @date 2019
  *
  *************************************************************************************************/
 
-#ifndef IAPPLICATION_H_323C05EC_2EC7_4CB7_B3E0_D9F1A57E4B7B
-#define IAPPLICATION_H_323C05EC_2EC7_4CB7_B3E0_D9F1A57E4B7B
+#ifndef IUIMANAGER_H_C426182A_242D_4305_A936_DCF78C10A9F8
+#define IUIMANAGER_H_C426182A_242D_4305_A936_DCF78C10A9F8
 
 namespace cx
 {
 
 /*********************************************************************************************//**
- * @brief Interface for building an application.
+ * @brief Interface for creating UI managers.
  *
- * Use this interface to hide the complexity of an application setup process (such as command
- * line parsing).
+ * Inherit from this to implement a dependent specific UI. The main should be blind to the UI
+ * implementation.
  *
  ************************************************************************************************/
-class IApplication
+class IUIManager
 {
 
 public:
@@ -43,37 +43,18 @@ public:
      * @brief Default destructor.
      *
      ********************************************************************************************/
-    virtual ~IApplication() = default;
-
+    virtual ~IUIManager() = default;
 
     /******************************************************************************************//**
-     * @brief DESCRIPTION
+     * @brief Manages the execution of the user interface.
      *
-     * @return A return code indicating if the application ran successfully (0) or not (1).
-     *
-     * Runs the application. The content of this method should be equivalent of what would go in
-     * the @c function.
-     *
-     * Example usage:
-     *
-     * @code
-     *
-     * int main(int argc, char *argv[])
-     * {
-     *     std::unique_ptr<cx::IApplication> app = std::make_unique<cx::MyApplication>(argc, argv);
-     *
-     *     return app->Run();
-     * }
-     *
-     * @endcode
-     *
-     * where @c cx::MyApplication is a user defined type inheriting from this interface.
+     * Manages the execution of the user interface in an implementation independent fashion.
      *
      ********************************************************************************************/
-    virtual int Run() = 0;
+    virtual int Manage() = 0;
 
 };
 
 } // namespace cx
 
-#endif // IAPPLICATION_H_323C05EC_2EC7_4CB7_B3E0_D9F1A57E4B7B
+#endif // IUIMANAGER_H_C426182A_242D_4305_A936_DCF78C10A9F8
