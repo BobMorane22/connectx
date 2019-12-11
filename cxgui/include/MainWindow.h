@@ -25,6 +25,7 @@
 
 #include <gtkmm/application.h>
 #include <gtkmm/applicationwindow.h>
+#include <gtkmm/label.h>
 
 #include "IMainWindow.h"
 
@@ -56,7 +57,7 @@ private:
 
     Glib::RefPtr<Gtk::Application> m_app;
     std::unique_ptr<Gtk::ApplicationWindow> m_mainWindow;
-
+    std::unique_ptr<Gtk::Label> m_helloWorld;
 };
 
 } // namespace cxgui

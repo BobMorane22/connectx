@@ -21,17 +21,33 @@
  *
  *************************************************************************************************/
 
+#include <cxmodel/include/HelloWorld.h>
+#include <cxinv/include/assertion.h>
+
 #include <MainWindow.h>
 
 cxgui::MainWindow::MainWindow(int argc, char *argv[])
 {
     m_app = Gtk::Application::create(argc, argv, "org.gtkmm.examples.base");
 
+    const HelloWorld hw;
+    m_helloWorld = std::make_unique<Gtk::Label>(hw.Make());
+
     m_mainWindow = std::make_unique<Gtk::ApplicationWindow>();
     m_mainWindow->set_default_size(200, 200);
+    m_mainWindow->add(*m_helloWorld);
+
+    POSTCONDITION(bool(m_app));
+    POSTCONDITION(m_helloWorld != nullptr);
+    POSTCONDITION(m_mainWindow != nullptr);
 }
 
 int cxgui::MainWindow::Show()
 {
+    m_mainWindow->show_all();
     return m_app->run(*m_mainWindow);
+
+    INVARIANT(bool(m_app));
+    INVARIANT(m_helloWorld != nullptr);
+    INVARIANT(m_mainWindow != nullptr);
 }

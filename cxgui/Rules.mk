@@ -60,7 +60,8 @@ CLEAN := $(CLEAN) $(OBJS_$(d)) $(DEPS_$(d)) \
 # includes seem natural within the library. For example, #include <localfile.h> can be used
 # instead of having to include the path.
 #
-$(OBJS_$(d)): CF_TGT := -I$(d)/include `pkg-config gtkmm-3.0 --cflags --libs`
+$(OBJS_$(d)): CF_TGT := -I. -I$(d)/include `pkg-config gtkmm-3.0 --cflags --libs`
+$(OBJS_$(d)): LL_TGT := cxinv/libcxinv.a cxmodel/libcxmodel.a
 
 $(d)/lib$(d).a: $(OBJS_$(d))
 	@echo ~~~ Generating the libcxgui.a static library ~~~
