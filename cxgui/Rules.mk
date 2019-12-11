@@ -37,6 +37,12 @@ dirstack_$(sp) := $(d)
 d := $(dir)
 
 
+### Subdirectories, in build order.
+#
+dir := $(d)/test
+include $(dir)/Rules.mk
+
+
 ### Local variables
 #
 # Object files and dependencies are defined here.

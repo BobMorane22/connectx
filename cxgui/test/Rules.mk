@@ -15,10 +15,8 @@
 #  along with Connect X. If not, see <https://www.gnu.org/licenses/>.
 #
 #************************************************************************************************/
-
-#*************************************************************************************************
-# Makefile to build the 'Connect X' executable.
 #
+#*************************************************************************************************
 # @file Rules.mk
 # @date 2019
 #
@@ -37,48 +35,29 @@ dirstack_$(sp) := $(d)
 d := $(dir)
 
 
-### Subdirectories, in build order.
-#
-#dir := $(d)/test
-#include $(dir)/Rules.mk
-
-
 ### Local variables
 #
-# To the global variable "TGT_BIN", we add the Connect X executable.
+# To the global variable "TGT_BIN", we add the "cxmodel" unit test executable.
 #
 # To the global variable "CLEAN", we add the files that the rules present here may create,
 # i.e. the ones we want deleted by a "make clean" command.
 #
-TGTS_$(d) := $(d)/connectx
-OBJS_$(d) := $(d)/src/main.o \
-             $(d)/src/Application.o \
-             $(d)/src/CmdArgHelpStrategy.o \
-             $(d)/src/CmdArgInvalidStrategy.o \
-             $(d)/src/CmdArgMainStrategy.o \
-             $(d)/src/CmdArgNoStrategy.o \
-             $(d)/src/CmdArgVersionStrategy.o \
-             $(d)/src/CmdArgWorkflowFactory.o \
-             $(d)/src/GtkmmUIManager.o
-DEPS_$(d) := $(TGTS_$(d):%=%.d) $(OBJS_$(d):%=%.d)
-
+TGTS_$(d) := $(d)/cxguitests
+DEPS_$(d) := $(TGTS_$(d):%=%.d)
 TGT_BIN := $(TGT_BIN) $(TGTS_$(d))
-CLEAN := $(CLEAN) $(OBJS_$(d)) $(TGTS_$(d)) $(DEPS_$(d))
+CLEAN := $(CLEAN) $(TGTS_$(d)) $(DEPS_$(d))
 
 
 ### Local rules
 #
 # Executable is compiled and linked.
 #
-# Since the executable needs to access all libraries, we make sure its include directory
-# is the project root. That way, all include files can be found.
-#
-$(OBJS_$(d)): CF_TGT := -I. -I$(d)/include `pkg-config gtkmm-3.0 --cflags --libs`
-$(TGTS_$(d)): LL_TGT := cxinv/libcxinv.a cxmodel/libcxmodel.a cxgui/libcxgui.a `pkg-config gtkmm-3.0 --cflags --libs`
+$(TGTS_$(d)): CF_TGT := -I$(d)/../include -I$(d) `pkg-config gtkmm-3.0 --cflags --libs`
+$(TGTS_$(d)): LL_TGT := cxgui/libcxgui.a -lgtest -lgtest_main -lpthread
 
-$(TGTS_$(d)): $(OBJS_$(d)) $(LL_TGT)
-	@echo ~~~ Generating the executable ~~~
-	$(LINK)
+$(TGTS_$(d)): $(d)/MainWindowTests.cpp cxgui/libcxgui.a
+	@echo ~~~ Generating the cxgui unit tests executable ~~~
+	$(COMPLINK)
 
 
 ### Restoring stack
