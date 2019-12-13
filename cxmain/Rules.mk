@@ -39,8 +39,8 @@ d := $(dir)
 
 ### Subdirectories, in build order.
 #
-#dir := $(d)/test
-#include $(dir)/Rules.mk
+dir := $(d)/test
+include $(dir)/Rules.mk
 
 
 ### Local variables

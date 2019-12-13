@@ -50,6 +50,7 @@ OBJS_$(d) := $(d)/../src/Application.o \
              $(d)/../src/CmdArgNoStrategy.o \
              $(d)/../src/CmdArgVersionStrategy.o \
              $(d)/../src/CmdArgWorkflowFactory.o \
+             $(d)/../src/GtkmmUIManager.o \
              $(d)/ApplicationTests.o \
              $(d)/ApplicationTestFixture.o \
              $(d)/CmdArgStrategyFactoryTests.o \
@@ -69,7 +70,7 @@ CLEAN := $(CLEAN) $(OBJS_$(d)) $(TGTS_$(d)) $(DEPS_$(d))
 # is the project root. That way, all include files can be found.
 #
 $(OBJS_$(d)): CF_TGT := -I. -I$(d)/../include -I$(d)
-$(TGTS_$(d)): LL_TGT := cxinv/libcxinv.a cxmodel/libcxmodel.a cxgui/libcxgui.a -lgtest -lgtest_main -lpthread
+$(TGTS_$(d)): LL_TGT := cxgui/libcxgui.a cxmodel/libcxmodel.a cxinv/libcxinv.a -lgtest -lgtest_main -lpthread `pkg-config gtkmm-3.0 --cflags --libs`
 
 $(TGTS_$(d)): $(OBJS_$(d)) $(LL_TGT)
 	@echo ~~~ Generating the cxmain unit tests executable ~~~

@@ -29,23 +29,12 @@
 #include <Application.h>
 #include <ApplicationTestFixture.h>
 
-
-TEST_F(ApplicationTestFixture, Run_StandardCase_ExitSuccess)
-{
-    const int argc = 1;
-    char const *argv[] = {"connectx"};
-
-    std::unique_ptr<cx::IApplication> app = std::make_unique<cx::Application>(argc, argv);
-
-    EXPECT_EQ(app->Run(), EXIT_SUCCESS);
-}
-
 TEST_F(ApplicationTestFixture, Run_BadArgumentCount_ExitFailure)
 {
     const int argc = 0;
-    char const *argv[] = {"connectx"};
+    const char *argv[] = {"connectx"};
 
-    std::unique_ptr<cx::IApplication> app = std::make_unique<cx::Application>(argc, argv);
+    std::unique_ptr<cx::IApplication> app = std::make_unique<cx::Application>(argc, (char**)argv);
 
     EXPECT_EQ(app->Run(), EXIT_FAILURE);
 }
@@ -53,9 +42,9 @@ TEST_F(ApplicationTestFixture, Run_BadArgumentCount_ExitFailure)
 TEST_F(ApplicationTestFixture, Run_BadArgument_ExitFailure)
 {
     const int argc = 2;
-    char const *argv[] = {"connectx", "--bad"};
+    const char *argv[] = {"connectx", "--bad"};
 
-    std::unique_ptr<cx::IApplication> app = std::make_unique<cx::Application>(argc, argv);
+    std::unique_ptr<cx::IApplication> app = std::make_unique<cx::Application>(argc, (char**)argv);
 
     EXPECT_EQ(app->Run(), EXIT_FAILURE);
 }
@@ -63,9 +52,9 @@ TEST_F(ApplicationTestFixture, Run_BadArgument_ExitFailure)
 TEST_F(ApplicationTestFixture, Run_Help_ExitSuccess)
 {
     const int argc = 2;
-    char const *argv[] = {"connectx", "--help"};
+    const char *argv[] = {"connectx", "--help"};
 
-    std::unique_ptr<cx::IApplication> app = std::make_unique<cx::Application>(argc, argv);
+    std::unique_ptr<cx::IApplication> app = std::make_unique<cx::Application>(argc, (char**)argv);
 
     EXPECT_EQ(app->Run(), EXIT_SUCCESS);
 }
@@ -73,9 +62,9 @@ TEST_F(ApplicationTestFixture, Run_Help_ExitSuccess)
 TEST_F(ApplicationTestFixture, Run_Version_ExitSuccess)
 {
     const int argc = 2;
-    char const *argv[] = {"connectx", "--version"};
+    const char *argv[] = {"connectx", "--version"};
 
-    std::unique_ptr<cx::IApplication> app = std::make_unique<cx::Application>(argc, argv);
+    std::unique_ptr<cx::IApplication> app = std::make_unique<cx::Application>(argc, (char**)argv);
 
     EXPECT_EQ(app->Run(), EXIT_SUCCESS);
 }
@@ -83,9 +72,9 @@ TEST_F(ApplicationTestFixture, Run_Version_ExitSuccess)
 TEST_F(ApplicationTestFixture, Run_HelpAndVersion_ExitSuccess)
 {
     const int argc = 3;
-    char const *argv[] = {"connectx", "--help", "--version"};
+    const char *argv[] = {"connectx", "--help", "--version"};
 
-    std::unique_ptr<cx::IApplication> app = std::make_unique<cx::Application>(argc, argv);
+    std::unique_ptr<cx::IApplication> app = std::make_unique<cx::Application>(argc, (char**)argv);
 
     EXPECT_EQ(app->Run(), EXIT_SUCCESS);
 }
@@ -93,9 +82,9 @@ TEST_F(ApplicationTestFixture, Run_HelpAndVersion_ExitSuccess)
 TEST_F(ApplicationTestFixture, Run_VersionAndHelp_ExitSuccess)
 {
     const int argc = 3;
-    char const *argv[] = {"connectx", "--version", "--help"};
+    const char *argv[] = {"connectx", "--version", "--help"};
 
-    std::unique_ptr<cx::IApplication> app = std::make_unique<cx::Application>(argc, argv);
+    std::unique_ptr<cx::IApplication> app = std::make_unique<cx::Application>(argc, (char**)argv);
 
     EXPECT_EQ(app->Run(), EXIT_SUCCESS);
 }
@@ -103,9 +92,9 @@ TEST_F(ApplicationTestFixture, Run_VersionAndHelp_ExitSuccess)
 TEST_F(ApplicationTestFixture, Run_TwoManyValidArguments_ExitSuccess)
 {
     const int argc = 4;
-    char const *argv[] = {"connectx", "--help", "--version", "--help"};
+    const char *argv[] = {"connectx", "--help", "--version", "--help"};
 
-    std::unique_ptr<cx::IApplication> app = std::make_unique<cx::Application>(argc, argv);
+    std::unique_ptr<cx::IApplication> app = std::make_unique<cx::Application>(argc, (char**)argv);
 
     EXPECT_EQ(app->Run(), EXIT_SUCCESS);
 }
@@ -113,9 +102,9 @@ TEST_F(ApplicationTestFixture, Run_TwoManyValidArguments_ExitSuccess)
 TEST_F(ApplicationTestFixture, Run_MixedArguments_ExitFailure)
 {
     const int argc = 4;
-    char const *argv[] = {"connectx", "--version", "--bad", "--help"};
+    const char *argv[] = {"connectx", "--version", "--bad", "--help"};
 
-    std::unique_ptr<cx::IApplication> app = std::make_unique<cx::Application>(argc, argv);
+    std::unique_ptr<cx::IApplication> app = std::make_unique<cx::Application>(argc, (char**)argv);
 
     EXPECT_EQ(app->Run(), EXIT_FAILURE);
 }
