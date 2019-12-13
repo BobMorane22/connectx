@@ -21,6 +21,9 @@
  *
  *************************************************************************************************/
 
+#ifndef MAINWINDOW_H_F0ED11E8_831A_4C6A_8A9B_8C329506BD72
+#define MAINWINDOW_H_F0ED11E8_831A_4C6A_8A9B_8C329506BD72
+
 #include <memory>
 
 #include <gtkmm/application.h>
@@ -28,9 +31,6 @@
 #include <gtkmm/label.h>
 
 #include "IMainWindow.h"
-
-#ifndef MAINWINDOW_H_F0ED11E8_831A_4C6A_8A9B_8C329506BD72
-#define MAINWINDOW_H_F0ED11E8_831A_4C6A_8A9B_8C329506BD72
 
 namespace cxgui
 {

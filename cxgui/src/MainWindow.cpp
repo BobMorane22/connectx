@@ -29,6 +29,7 @@
 cxgui::MainWindow::MainWindow(int argc, char *argv[])
 {
     PRECONDITION(argc > 0);
+    PRECONDITION(argv != nullptr);
 
     // This call must come first. Otherwise, we call operation on the window without
     // the Gtkmm library being initialized and the application crashes (segmentation
