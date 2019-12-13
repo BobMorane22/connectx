@@ -45,7 +45,8 @@ public:
     /******************************************************************************************//**
      * @brief Handles a workflow.
      *
-     * @return A return code indicating if the workflow ran successfully (0) or not (1).
+     * @return A return code indicating if the workflow ran successfully (@c EXIT_SUCCESS) or
+     *         not (@c EXIT_FAILURE).
      *
      ********************************************************************************************/
     virtual int Handle() = 0;

@@ -37,18 +37,20 @@ cx::Application::Application(int argc, char *argv[])
     CmdArgWorkflowFactory factory;
 
     m_workflow = factory.Create(argc, argv);
+
+    POSTCONDITION(m_workflow != nullptr);
 }
 
 int cx::Application::Run()
 {
-    INVARIANT(m_workflow != nullptr);
-
     if(m_workflow)
     {
         return m_workflow->Handle();
     }
 
     const auto workflow = std::make_unique<cx::CmdArgNoStrategy>();
+
+    INVARIANT(m_workflow != nullptr);
 
     return workflow->Handle();
 }

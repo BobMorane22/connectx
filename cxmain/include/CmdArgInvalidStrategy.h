@@ -34,6 +34,8 @@ namespace cx
 /*********************************************************************************************//**
  * @brief Workflow for when an invalid argument is given to the command line.
  *
+ * @invariant The invalid argument string is never empty.
+ *
  ************************************************************************************************/
 class CmdArgInvalidStrategy : public ICmdArgWorkflowStrategy
 {

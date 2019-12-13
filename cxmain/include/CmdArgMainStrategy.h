@@ -33,12 +33,26 @@ namespace cx
 /*********************************************************************************************//**
  * @brief Main application workflow. This represents when the standard application logic is ran.
  *
+ * @invariant The UI manager is not @c nullptr.
+ *
  ************************************************************************************************/
 class CmdArgMainStrategy : public ICmdArgWorkflowStrategy
 {
 
 public:
 
+    /******************************************************************************************//**
+     * @brief Constructor.
+     *
+     * @pre The argument count is at least 1.
+     * @pre The argument list is not @c nullptr.
+     *
+     * @post m_uiMgr is not @c nullptr
+     *
+     * @param argc Command line argument count.
+     * @param argc A C-style array of arguments.
+     *
+     ********************************************************************************************/
     CmdArgMainStrategy(int argc, char *argv[]);
 
     int Handle() override;

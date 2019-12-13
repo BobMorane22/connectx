@@ -24,6 +24,8 @@
 #include <memory>
 #include <vector>
 
+#include <cxinv/include/assertion.h>
+
 #include <CmdArgWorkflowFactory.h>
 
 #include <CmdArgHelpStrategy.h>
@@ -43,15 +45,16 @@ const std::string VERSION_ARG = "--version";
 
 std::unique_ptr<cx::ICmdArgWorkflowStrategy> cx::CmdArgWorkflowFactory::Create(int argc, char *argv[])
 {
+    std::unique_ptr<cx::ICmdArgWorkflowStrategy> strategy = std::make_unique<CmdArgNoStrategy>();
+
     if(argc < 1)
     {
-        return std::make_unique<CmdArgNoStrategy>();
+        strategy = std::make_unique<CmdArgNoStrategy>();
     }
     else if(argc == 1)
     {
-        return std::make_unique<CmdArgMainStrategy>(argc, argv);
+        strategy = std::make_unique<CmdArgMainStrategy>(argc, argv);
     }
-
     else
     {
         std::vector<std::string> arguments;
@@ -75,20 +78,24 @@ std::unique_ptr<cx::ICmdArgWorkflowStrategy> cx::CmdArgWorkflowFactory::Create(i
 
         if(hasInvalidArguments)
         {
-            return std::make_unique<CmdArgInvalidStrategy>(firstInvalidArgument);
+            strategy = std::make_unique<CmdArgInvalidStrategy>(firstInvalidArgument);
         }
-
-        if(arguments.front() == HELP_ARG)
+        else
         {
-            return std::make_unique<CmdArgHelpStrategy>();
+            if(arguments.front() == HELP_ARG)
+            {
+                strategy = std::make_unique<CmdArgHelpStrategy>();
 
-        }
+            }
 
-        if(arguments.front() == VERSION_ARG)
-        {
-            return std::make_unique<CmdArgVersionStrategy>();
+            if(arguments.front() == VERSION_ARG)
+            {
+                strategy = std::make_unique<CmdArgVersionStrategy>();
+            }
         }
     }
 
-    return std::make_unique<CmdArgNoStrategy>();
+    POSTCONDITION(strategy != nullptr);
+
+    return strategy;
 }

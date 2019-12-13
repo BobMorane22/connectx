@@ -47,9 +47,10 @@ public:
 
 
     /******************************************************************************************//**
-     * @brief DESCRIPTION
+     * @brief Runs the application.
      *
-     * @return A return code indicating if the application ran successfully (0) or not (1).
+     * @return A return code indicating if the application ran successfully (@c EXIT_SUCCESS) or
+     *         not (@c EXIT_FAILURE).
      *
      * Runs the application. The content of this method should be equivalent of what would go in
      * the @c function.

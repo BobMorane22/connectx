@@ -47,11 +47,9 @@ public:
      * @param argv A C-style array containing the command line argument strings (including the
      *             executable).
      *
-     * @return The command line dependent workflow.
+     * @post The returned command line dependent workflow is not @c nullptr.
      *
-     * If no workflow has been found for the given command line arguments, an instance of
-     * @c cx::CmdArgNoStragegy will be returned, meaning that this method never returns
-     * @c nullptr.
+     * @return The command line dependent workflow.
      *
      ********************************************************************************************/
     std::unique_ptr<ICmdArgWorkflowStrategy> Create(int argc, char *argv[]);

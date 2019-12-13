@@ -24,16 +24,22 @@
 #include <cstdlib>
 #include <iostream>
 
+#include <cxinv/include/assertion.h>
+
 #include <CmdArgInvalidStrategy.h>
 
-cx::CmdArgInvalidStrategy::CmdArgInvalidStrategy(const std::string& p_invalidArg) : m_invalidArg{p_invalidArg}
+cx::CmdArgInvalidStrategy::CmdArgInvalidStrategy(const std::string& p_invalidArg)
+ : m_invalidArg{p_invalidArg}
 {
-    // Nothing to do...
+    PRECONDITION(!p_invalidArg.empty());
+    POSTCONDITION(!m_invalidArg.empty());
 }
 
 int cx::CmdArgInvalidStrategy::Handle()
 {
     std::cerr << "Connect X: invalid option '" + m_invalidArg + "'" << std::endl;
+
+    INVARIANT(!m_invalidArg.empty());
 
     return EXIT_FAILURE;
 }

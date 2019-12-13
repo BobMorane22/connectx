@@ -24,17 +24,25 @@
 #include <cstdlib>
 #include <iostream>
 
+#include <cxinv/include/assertion.h>
 #include <cxmodel/include/HelloWorld.h>
 
 #include <CmdArgMainStrategy.h>
 
 cx::CmdArgMainStrategy::CmdArgMainStrategy(int argc, char *argv[])
 {
+    PRECONDITION(argc > 0);
+    PRECONDITION(argv != nullptr);
+
     m_uiMgr = std::make_unique<cx::GtkmmUIManager>(argc, argv);
+
+    POSTCONDITION(m_uiMgr != nullptr);
 }
 
 int cx::CmdArgMainStrategy::Handle()
 {
+    INVARIANT(m_uiMgr != nullptr);
+
     if(m_uiMgr)
     {
         return m_uiMgr->Manage();

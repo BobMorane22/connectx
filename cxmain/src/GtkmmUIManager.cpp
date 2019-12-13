@@ -27,7 +27,12 @@
 
 cx::GtkmmUIManager::GtkmmUIManager(int argc, char *argv[])
 {
+    PRECONDITION(argc > 0);
+    PRECONDITION(argv != nullptr);
+
     m_mainWindow = std::make_unique<cxgui::MainWindow>(argc, argv);
+
+    POSTCONDITION(m_mainWindow != nullptr);
 }
 
 int cx::GtkmmUIManager::Manage()

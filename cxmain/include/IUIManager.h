@@ -50,6 +50,9 @@ public:
      *
      * Manages the execution of the user interface in an implementation independent fashion.
      *
+     * @return The application return code. @c EXIT_SUCCESS if the execution had no error,
+     *         @c EXIT_FAILURE otherwise.
+     *
      ********************************************************************************************/
     virtual int Manage() = 0;
 

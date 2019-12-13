@@ -54,6 +54,8 @@ public:
      * @pre The argument count is at least 1.
      * @pre The argument list is not @c nullptr.
      *
+     * @post m_mainWindow is not @c nullptr.
+     *
      * @param argc Command line argument count.
      * @param argc A C-style array of arguments.
      *
