@@ -28,7 +28,12 @@
 
 cxgui::MainWindow::MainWindow(int argc, char *argv[])
 {
-    m_app = Gtk::Application::create(argc, argv, "org.gtkmm.examples.base");
+    PRECONDITION(argc > 0);
+
+    // This call must come first. Otherwise, we call operation on the window without
+    // the Gtkmm library being initialized and the application crashes (segmentation
+    // fault) when launched.
+    InitializeGtkmm(argc, argv);
 
     const HelloWorld hw;
     m_helloWorld = std::make_unique<Gtk::Label>(hw.Make());
@@ -50,4 +55,11 @@ int cxgui::MainWindow::Show()
     INVARIANT(bool(m_app));
     INVARIANT(m_helloWorld != nullptr);
     INVARIANT(m_mainWindow != nullptr);
+}
+
+void cxgui::MainWindow::InitializeGtkmm(int argc, char *argv[])
+{
+    m_app = Gtk::Application::create(argc, argv, "bobmorane.connectx");
+
+    POSTCONDITION(bool(m_app));
 }

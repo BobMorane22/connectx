@@ -36,12 +36,14 @@ namespace cxgui
 {
 
 /*********************************************************************************************//**
- * @brief DESCRIPTION
+ * @brief The Connect X main application window.
  *
- * @invariant
- * @invariant
+ * @invariant m_app is not @c nullptr
+ * @invariant m_mainWindow is not @c nullptr
+ * @invariant m_helloWorld is not @c nullptr
  *
- * DESCRIPTION
+ * A Gtkmm window that acts as the application main window. It is the responsibility of this
+ * window to initialize the Gtkmm library and to show the window.
  *
  ************************************************************************************************/
 class MainWindow : public cxgui::IMainWindow
@@ -49,13 +51,35 @@ class MainWindow : public cxgui::IMainWindow
 
 public:
 
+    /******************************************************************************************//**
+     * @brief Constructor.
+     *
+     * @pre The argument count is at least 1.
+     * @pre The argument list is not @c nullptr.
+     *
+     * @post m_app is not @c nullptr
+     * @post m_mainWindow is not @c nullptr
+     * @post m_helloWorld is not @c nullptr
+     *
+     * @param argc Command line argument count.
+     * @param argc A C-style array of arguments.
+     *
+     ********************************************************************************************/
     MainWindow(int argc, char *argv[]);
 
     int Show() override;
 
+
 private:
 
+    void InitializeGtkmm(int argc, char *argv[]);
+
     Glib::RefPtr<Gtk::Application> m_app;
+
+    // These members must be pointers. They are default initialized to nullptr, so no widget is
+    // actually constructed. We construct is by hand, after the Gtkmm library initialization.
+    // This is necessary because until then, constructing a widget crashes the application. We
+    // can't, then, have stack members.
     std::unique_ptr<Gtk::ApplicationWindow> m_mainWindow;
     std::unique_ptr<Gtk::Label> m_helloWorld;
 };

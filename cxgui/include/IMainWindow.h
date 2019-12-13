@@ -28,12 +28,9 @@ namespace cxgui
 {
 
 /*********************************************************************************************//**
- * @brief DESCRIPTION
+ * @brief Interface for creating a main application window.
  *
- * @invariant
- * @invariant
- *
- * DESCRIPTION
+ * This interface presents the basic utilities needed to create main application windows.
  *
  ************************************************************************************************/
 class IMainWindow
@@ -41,8 +38,21 @@ class IMainWindow
 
 public:
 
+    /******************************************************************************************//**
+     * @brief Default destructor.
+     *
+     ********************************************************************************************/
     virtual ~IMainWindow() = default;
 
+    /******************************************************************************************//**
+     * @brief Shows the window on the screen.
+     *
+     * Shows the window on the screen for a user to see.
+     *
+     * @return @c EXIT_SUCCESS if the window if the window terminated the application without
+     *         errors, @c EXIT_FAILURE otherwise.
+     *
+     ********************************************************************************************/
     virtual int Show() = 0;
 
 };
