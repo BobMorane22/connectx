@@ -69,8 +69,8 @@ CLEAN := $(CLEAN) $(OBJS_$(d)) $(TGTS_$(d)) $(DEPS_$(d))
 # Since the executable needs to access all libraries, we make sure its include directory
 # is the project root. That way, all include files can be found.
 #
-$(OBJS_$(d)): CF_TGT := -I. -I$(d)/../include -I$(d)
-$(TGTS_$(d)): LL_TGT := cxgui/libcxgui.a cxmodel/libcxmodel.a cxinv/libcxinv.a -lgtest -lgtest_main -lpthread `pkg-config gtkmm-3.0 --cflags --libs`
+$(OBJS_$(d)): CF_TGT := -I. -I$(d)/../include -I$(d) `pkg-config gtkmm-3.0 --cflags --libs`
+$(TGTS_$(d)): LL_TGT := cxgui/libcxgui.a cxmodel/libcxmodel.a cxinv/libcxinv.a `pkg-config gtkmm-3.0 --cflags --libs` -lgtest -lgtest_main -lpthread
 
 $(TGTS_$(d)): $(OBJS_$(d)) $(LL_TGT)
 	@echo ~~~ Generating the cxmain unit tests executable ~~~
