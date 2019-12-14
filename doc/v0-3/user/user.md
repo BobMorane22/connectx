@@ -11,4 +11,4 @@ A minimal GUI has been created to show the "Hello World!" string previously prin
 
 ![A minimal GUI](./gui.png)
 
-Note that both `--help` and `--version` command line arguments behave exactly as in v0.2. No GUI has been created for them.
+Note that both `--help` and `--version` command line arguments behave exactly as in [v0.2](../../v0-2/user/user.md). No GUI has been created for them.
