@@ -49,7 +49,8 @@ include $(dir)/Rules.mk
 # To the global variable "CLEAN", we add the files that the rules present here may create,
 # i.e. the ones we want deleted by a "make clean" command.
 #
-OBJS_$(d) := $(d)/src/HelloWorld.o
+OBJS_$(d) := $(d)/src/HelloWorld.o \
+             $(d)/src/Subject.o
 
 DEPS_$(d) := $(OBJS_$(d):%=%.d)
 
@@ -65,7 +66,8 @@ CLEAN := $(CLEAN) $(OBJS_$(d)) $(DEPS_$(d)) \
 # includes seem natural within the library. For example, #include <localfile.h> can be used
 # instead of having to include the path.
 #
-$(OBJS_$(d)): CF_TGT := -I$(d)/include
+$(OBJS_$(d)): CF_TGT := -I. -I$(d)/include
+$(TGTS_$(d)): LL_TGT := cxinv/libcxinv.a
 
 $(d)/lib$(d).a: $(OBJS_$(d))
 	@echo ~~~ Generating the libcxmodel.a static library ~~~
