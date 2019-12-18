@@ -16,70 +16,50 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file IObserver.h
+ * @file DisableStdStreamsRAII.h
  * @date 2019
  *
  *************************************************************************************************/
 
-#ifndef IOBSERVER_H_CB32427D_3430_41D8_BE7A_992F2D139BB2
-#define IOBSERVER_H_CB32427D_3430_41D8_BE7A_992F2D139BB2
+#ifndef DISABLESTDSTREAMSRAII_H_96B3CE7F_EAD5_42AF_9745_53ADE74A7697
+#define DISABLESTDSTREAMSRAII_H_96B3CE7F_EAD5_42AF_9745_53ADE74A7697
 
-namespace cxmodel
-{
-    class Subject;
-}
-
-namespace cxmodel
-{
+#include <sstream>
 
 /*********************************************************************************************//**
- * @brief DESCRIPTION
+ * @brief Disable/enable @c stdout and @c stderr.
  *
- * @invariant
- * @invariant
- *
- * DESCRIPTION
+ * At construction, both streams are redirected to an @c std::stringstream (e.g. nothing gets
+ * printed to the console). At destruction, both streams are redirected back to their original
+ * targets. Use this class as a data member to either disable streaming to the console, or
+ * to access the streaming data in a @c std::string (e.g. for testing).
  *
  ************************************************************************************************/
-class IObserver
+class DisableStdStreamsRAII final
 {
 
 public:
 
-    /******************************************************************************************//**
-     * @brief DESCRIPTION
-     *
-     * @pre
-     * @post
-     *
-     * @param
-     * @param
-     *
-     * @return
-     *
-     * DESCRIPTION
-     *
-     ********************************************************************************************/
-    virtual ~IObserver() = default;
+    DisableStdStreamsRAII();
+    ~DisableStdStreamsRAII();
 
-    /******************************************************************************************//**
-     * @brief DESCRIPTION
-     *
-     * @pre
-     * @post
-     *
-     * @param
-     * @param
-     *
-     * @return
-     *
-     * DESCRIPTION
-     *
-     ********************************************************************************************/
-    virtual void Update(Subject* p_subject) = 0;
+    void DisableStdOut();
+    void EnableStdOut();
+    void DisableStdErr();
+    void EnableStdErr();
+
+    std::string GetStdOutContents() const;
+    std::string GetStdErrContents() const;
+
+
+private:
+
+    std::stringstream m_stdOutBuffer;
+    std::streambuf *m_stdOutBufferContents;
+
+    std::stringstream m_stdErrBuffer;
+    std::streambuf *m_stdErrBufferContents;
 
 };
 
-} // namespace cxmodel
-
-#endif // IOBSERVER_H_CB32427D_3430_41D8_BE7A_992F2D139BB2
+#endif // DISABLESTDSTREAMSRAII_H_96B3CE7F_EAD5_42AF_9745_53ADE74A7697

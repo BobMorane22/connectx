@@ -43,21 +43,28 @@ d := $(dir)
 # i.e. the ones we want deleted by a "make clean" command.
 #
 TGTS_$(d) := $(d)/cxmodeltests
+OBJS_$(d) := $(d)/ConcreteObserverMock.o \
+             $(d)/ConcreteSubjectMock.o \
+             $(d)/DisableStdStreamsRAII.o \
+             $(d)/HelloWorldTests.o \
+             $(d)/SubjectTestFixture.o \
+             $(d)/SubjectTests.o \
+             cxmodel/libcxmodel.a
 DEPS_$(d) := $(TGTS_$(d):%=%.d)
 TGT_BIN := $(TGT_BIN) $(TGTS_$(d))
-CLEAN := $(CLEAN) $(TGTS_$(d)) $(DEPS_$(d))
+CLEAN := $(CLEAN) $(OBJS_$(d)) $(TGTS_$(d)) $(DEPS_$(d))
 
 
 ### Local rules
 #
 # Executable is compiled and linked.
 #
-$(TGTS_$(d)): CF_TGT := -I$(d)/../include -I$(d)
-$(TGTS_$(d)): LL_TGT := cxmodel/libcxmodel.a -lgtest -lgtest_main -lpthread
+$(TGTS_$(d)): CF_TGT := -I$(d)/../include -I$(d) -I.
+$(TGTS_$(d)): LL_TGT := cxmodel/libcxmodel.a cxinv/libcxinv.a -lgtest -lgtest_main -lpthread
 
-$(TGTS_$(d)): $(d)/HelloWorldTests.cpp cxmodel/libcxmodel.a
+$(TGTS_$(d)): $(OBJS_$(d)) $(LL_TGT)
 	@echo ~~~ Generating the cxmodel unit tests executable ~~~
-	$(COMPLINK)
+	$(LINK)
 
 
 ### Restoring stack

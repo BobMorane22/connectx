@@ -70,6 +70,8 @@ void cxmodel::Subject::Attach(cxmodel::IObserver* const p_newObserver)
 
 void cxmodel::Subject::Detatch(cxmodel::IObserver* const p_oldObserver)
 {
+    PRECONDITION(p_oldObserver != nullptr);
+
     const std::size_t oldSize = m_observers.size();
     PRECONDITION(oldSize > 0);
 
@@ -98,6 +100,11 @@ void cxmodel::Subject::Detatch(cxmodel::IObserver* const p_oldObserver)
 
 void cxmodel::Subject::DetatchAll()
 {
+    // Here the fact that there might be no observer listed is not a problem.
+    // This is the case because we are not looking to detach a specific observer,
+    // but all of them, regardless of who they are. This might, for example, be
+    // called as some insurance that there really are no observers listed.
+
     m_observers.clear();
 
     POSTCONDITION(m_observers.size() == 0);
