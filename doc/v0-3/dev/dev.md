@@ -44,4 +44,7 @@ For more information, see _Design Patterns: Elements of Reusable Object-Oriented
 
 ## Next sprint
 
-In the next iteration...
+In the next iteration, we will:
+
+1. add the MVP architecture to the project through a minimal interactivity window;
+2. automate the process of running the unit test from the build. Every time a build will be performed, the related unit tests are going to be automatically run. If any one test fail, the build will fail.
