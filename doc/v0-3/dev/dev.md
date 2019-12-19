@@ -34,7 +34,12 @@ See the user documentation [here](../user/user.md).
 
 ## The Observer design pattern
 
-Soon...
+Two classes are now available:
+
+* `Subject`: an abstract class to inherit from to define an entity that you can subscribe to for notifications. Note that the abstractness of the class comes from is pure virtual constructor only. We do not want people using `Subject` instances.
+* `IObserver`: an interface to inherit from to define entities that can subscribe to a `Subject` instance. These entities can update their state following a notification from the subject.
+
+For more information, see _Design Patterns: Elements of Reusable Object-Oriented Software_ from Erich Gamma & al.
 
 
 ## Next sprint
