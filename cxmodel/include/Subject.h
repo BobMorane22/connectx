@@ -35,12 +35,16 @@ namespace cxmodel
 {
 
 /*********************************************************************************************//**
- * @brief DESCRIPTION
+ * @brief An object that can be subscribed to and notified from.
  *
- * @invariant
- * @invariant
+ * @invariant All of the registered observers have an address that is not @c nullptr.
  *
- * DESCRIPTION
+ * Inherit from this to enable subscription to instances of a class. Attached observers (i.e.
+ * @c IObserver instances) can be notified of any subject event and update themselves accordingly.
+ * For this to occur, the @c Notify() method must be called explicitly. Not calling @c Notify()
+ * will result on subscribed observers not receiving a notification.
+ *
+ * @see cxmodel::IObserver
  *
  ************************************************************************************************/
 class Subject
@@ -49,81 +53,64 @@ class Subject
 public:
 
     /******************************************************************************************//**
-     * @brief DESCRIPTION
-     *
-     * @pre
-     * @post
-     *
-     * @param
-     * @param
-     *
-     * @return
-     *
-     * DESCRIPTION
+     * @brief Default constructor.
      *
      ********************************************************************************************/
     Subject();
 
     /******************************************************************************************//**
-     * @brief DESCRIPTION
+     * @brief Default destructor.
      *
-     * @pre
-     * @post
-     *
-     * @param
-     * @param
-     *
-     * @return
-     *
-     * DESCRIPTION
+     * The destructor is pure virtual to ensure that the class is abstract. Not that upon
+     * destruction, all observers are automatically detached.
      *
      ********************************************************************************************/
     virtual ~Subject() = 0;
 
     /******************************************************************************************//**
-     * @brief DESCRIPTION
+     * @brief Attach an observer to the subject.
      *
-     * @pre
-     * @post
+     * @pre The new observer has a valid address.
+     * @pre The new observer has not been previously attached. Note that a copy of an attached
+     *      observer can be attached, but they cannot share the same address.
      *
-     * @param
-     * @param
+     * @post One more observer is attached to the subject.
      *
-     * @return
+     * @param p_newObserver The observer to attach.
      *
-     * DESCRIPTION
+     * Once an observer is attached, its @c Update() method is automatically called whenever
+     * @c Notify() is called from the subject.
+     *
+     * @warning Never call @c Update() directly from an observer. Always use @c Notify().
      *
      ********************************************************************************************/
     void Attach(IObserver* const p_newObserver);
 
     /******************************************************************************************//**
-     * @brief DESCRIPTION
+     * @brief Detach a specific observer from the subject.
      *
-     * @pre
-     * @post
+     * @pre The observer has a valid address.
+     * @pre There is at least one attached observer.
+     * @pre The observer has previously been attached to the subject.
      *
-     * @param
-     * @param
+     * @post There is one less observer attached to the subject.
      *
-     * @return
+     * @param p_oldObserver The observer to detach.
      *
-     * DESCRIPTION
+     * Detach a specific, previously attached, observer from the subject. One this method has
+     * been called, the detached observer will no longer receive any notification from the
+     * subject.
      *
      ********************************************************************************************/
     void Detatch(IObserver* const p_oldObserver);
 
     /******************************************************************************************//**
-     * @brief DESCRIPTION
+     * @brief Detach all observers.
      *
-     * @pre
-     * @post
+     * @post They are no more observers attached to the subject.
      *
-     * @param
-     * @param
-     *
-     * @return
-     *
-     * DESCRIPTION
+     * Detach all observers. Note that this can be called safely even if some observers have,
+     * for some reason, been invalidated.
      *
      ********************************************************************************************/
     void DetatchAll();
@@ -132,17 +119,14 @@ public:
 protected:
 
     /******************************************************************************************//**
-     * @brief DESCRIPTION
+     * @brief Notifies all observers that some event has occurred.
      *
-     * @pre
-     * @post
+     * @pre There is at least one observer attached to the subject.
      *
-     * @param
-     * @param
-     *
-     * @return
-     *
-     * DESCRIPTION
+     * For each event that need notifying the observers, this method must be called explicitly.
+     * It will in turn update to state of all attached observers. Note that if no observers
+     * are attached to the subject, this operation is not legal. There should always be
+     * attached observers to a subject.
      *
      ********************************************************************************************/
     void Notify();

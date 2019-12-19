@@ -33,12 +33,12 @@ namespace cxmodel
 {
 
 /*********************************************************************************************//**
- * @brief DESCRIPTION
+ * @brief Interface for objects that can update their state on some subject notification.
  *
- * @invariant
- * @invariant
+ * Inherit from this to make some class capable of subscribing to notifications from some
+ * Subject. For each notification, the @c IObserver instance can update its state.
  *
- * DESCRIPTION
+ * @see cxmodel::Subject
  *
  ************************************************************************************************/
 class IObserver
@@ -47,33 +47,23 @@ class IObserver
 public:
 
     /******************************************************************************************//**
-     * @brief DESCRIPTION
-     *
-     * @pre
-     * @post
-     *
-     * @param
-     * @param
-     *
-     * @return
-     *
-     * DESCRIPTION
+     * @brief Default destructor.
      *
      ********************************************************************************************/
     virtual ~IObserver() = default;
 
     /******************************************************************************************//**
-     * @brief DESCRIPTION
+     * @brief Update the state.
      *
-     * @pre
-     * @post
+     * @param p_subject The subject that has triggered the update through a notification.
      *
-     * @param
-     * @param
+     * Update the @c IObserver instance's state. When a subject notifies its observers that some
+     * event as occurred (through its @c Notify() method), this method is automatically called
+     * on each of the attached observer. Each observer can implement it its own way and update
+     * its state accordingly.
      *
-     * @return
-     *
-     * DESCRIPTION
+     * @warning Never call this method directly. Only a subject, through its notifications,
+     *          should call this.
      *
      ********************************************************************************************/
     virtual void Update(Subject* p_subject) = 0;
