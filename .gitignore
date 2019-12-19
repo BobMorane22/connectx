@@ -113,5 +113,6 @@ local.properties
 cxmain/connectx
 
 # Unit tests executables
+cxinv/test/cxinvtests
 cxmodel/test/cxmodeltests
 cxmain/test/cxmaintests
