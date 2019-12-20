@@ -58,6 +58,7 @@ $(TGTS_$(d)): LL_TGT := cxgui/libcxgui.a -lgtest -lgtest_main -lpthread
 $(TGTS_$(d)): $(d)/MainWindowTests.cpp cxgui/libcxgui.a
 	@echo ~~~ Generating the cxgui unit tests executable ~~~
 	$(COMPLINK)
+	$(SHELL) -c $@
 
 
 ### Restoring stack

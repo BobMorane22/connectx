@@ -66,6 +66,7 @@ $(TGTS_$(d)): LL_TGT := cxinv/libcxinv.a -lgtest -lgtest_main -lpthread
 $(TGTS_$(d)): $(OBJS_$(d)) $(LL_TGT)
 	@echo ~~~ Generating the cxinv unit tests executable ~~~
 	$(LINK)
+	$(SHELL) -c $@
 
 
 ### Restoring stack

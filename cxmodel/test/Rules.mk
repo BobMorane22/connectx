@@ -65,6 +65,7 @@ $(TGTS_$(d)): LL_TGT := cxmodel/libcxmodel.a cxinv/libcxinv.a -lgtest -lgtest_ma
 $(TGTS_$(d)): $(OBJS_$(d)) $(LL_TGT)
 	@echo ~~~ Generating the cxmodel unit tests executable ~~~
 	$(LINK)
+	$(SHELL) -c $@
 
 
 ### Restoring stack
