@@ -41,15 +41,19 @@ all: targets
 # directory's "Rules.mk" file for the recursive inclusion process to work as expected.
 #
 dir := cxinv
+UT_BIN := $(UT_BIN) $(dir)/test/$(dir)tests
 include $(dir)/Rules.mk
 
 dir := cxmodel
+UT_BIN := $(UT_BIN) $(dir)/test/$(dir)tests
 include $(dir)/Rules.mk
 
 dir := cxgui
+UT_BIN := $(UT_BIN) $(dir)/test/$(dir)tests
 include $(dir)/Rules.mk
 
 dir := cxmain
+UT_BIN := $(UT_BIN) $(dir)/test/$(dir)tests
 include $(dir)/Rules.mk
 
 
@@ -75,6 +79,9 @@ include $(dir)/Rules.mk
 #
 .PHONY: targets
 targets: $(TGT_BIN) $(TGT_SBIN) $(TGT_ETC) $(TGT_LIB)
+	for executable in $(UT_BIN) ; do \
+		$(SHELL) -c $$executable || break; \
+	done
 
 .PHONY: clean
 clean:
