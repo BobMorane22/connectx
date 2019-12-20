@@ -76,7 +76,11 @@ CLEAN := $(CLEAN) $(OBJS_$(d)) $(TGTS_$(d)) $(DEPS_$(d))
 $(OBJS_$(d)): CF_TGT := -I. -I$(d)/include `pkg-config gtkmm-3.0 --cflags --libs`
 $(TGTS_$(d)): LL_TGT := cxgui/libcxgui.a cxmodel/libcxmodel.a cxinv/libcxinv.a `pkg-config gtkmm-3.0 --cflags --libs`
 
-$(TGTS_$(d)): $(OBJS_$(d)) $(LL_TGT)
+# Here we add the unit test executable as an "order-only prerequisite" to make sure it is
+# not included in the build process (i.e. not listed in the $^ automatic variables contents).
+# In this way, we make it clear that the Connect X executable depends on its unit tests
+# having been built and run sucessfully.
+$(TGTS_$(d)): $(OBJS_$(d)) $(LL_TGT) | cxmain/test/cxmaintests
 	@echo ~~~ Generating the executable ~~~
 	$(LINK)
 

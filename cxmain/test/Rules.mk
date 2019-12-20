@@ -53,7 +53,6 @@ OBJS_$(d) := $(d)/../src/Application.o \
              $(d)/../src/GtkmmUIManager.o \
              $(d)/ApplicationTests.o \
              $(d)/ApplicationTestFixture.o \
-             $(d)/CmdArgStrategyFactoryTests.o \
              $(d)/CmdArgStrategyTests.o \
              $(d)/DisableStdStreamsRAII.o
 DEPS_$(d) := $(TGTS_$(d):%=%.d) $(OBJS_$(d):%=%.d)
@@ -76,7 +75,6 @@ $(TGTS_$(d)): $(OBJS_$(d)) $(LL_TGT)
 	@echo ~~~ Generating the cxmain unit tests executable ~~~
 	$(LINK)
 	$(SHELL) -c $@
-
 
 ### Restoring stack
 #
