@@ -47,6 +47,7 @@ OBJS_$(d) := $(d)/ConcreteObserverMock.o \
              $(d)/ConcreteSubjectMock.o \
              $(d)/DisableStdStreamsRAII.o \
              $(d)/HelloWorldTests.o \
+             $(d)/ModelTests.o \
              $(d)/SubjectTestFixture.o \
              $(d)/SubjectTests.o \
              cxmodel/libcxmodel.a

@@ -50,6 +50,7 @@ include $(dir)/Rules.mk
 # i.e. the ones we want deleted by a "make clean" command.
 #
 OBJS_$(d) := $(d)/src/HelloWorld.o \
+             $(d)/src/Model.o \
              $(d)/src/Subject.o
 
 DEPS_$(d) := $(OBJS_$(d):%=%.d)
