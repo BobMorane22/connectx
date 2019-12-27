@@ -21,6 +21,8 @@
  *
  *************************************************************************************************/
 
+#include <cxinv/include/assertion.h>
+
 #include <Model.h>
 
 cxmodel::Model::Model()
@@ -35,10 +37,16 @@ unsigned int cxmodel::Model::GetCurrentValue() const
 
 void cxmodel::Model::Increment()
 {
+    const unsigned int old = m_currentValue;
+
     ++m_currentValue;
+
+    POSTCONDITION(m_currentValue - old == 1);
 }
 
 void cxmodel::Model::Reinitialize()
 {
     m_currentValue = m_INITIAL_VALUE;
+
+    POSTCONDITION(m_currentValue == m_INITIAL_VALUE);
 }
