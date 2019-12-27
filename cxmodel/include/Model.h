@@ -25,20 +25,18 @@
 #define MODEL_H_8CC20E7E_7466_4977_9435_7E09ADBD10FC
 
 #include <IModel.h>
+#include <Subject.h>
 
 namespace cxmodel
 {
 
 /*********************************************************************************************//**
- * @brief DESCRIPTION
+ * @brief Connect X model.
  *
- * @invariant
- * @invariant
- *
- * DESCRIPTION
+ * This class holds the Connect X related business rules.
  *
  ************************************************************************************************/
-class Model : public IModel
+class Model : public IModel, Subject
 {
 
 public:
