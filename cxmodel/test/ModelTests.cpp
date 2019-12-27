@@ -30,5 +30,39 @@ TEST(Model, Constructor_NoOtherAction_CurrentValueIs0)
     cxmodel::Model concreteModel;
     cxmodel::IModel& model = concreteModel;
 
-    ASSERT_EQ(0, model.GetCurrentValue());
+    ASSERT_EQ(model.GetCurrentValue(), 0);
+}
+
+TEST(Model, GetCurrentValue_AfterIncrement_CurrentValueIsNot0)
+{
+    cxmodel::Model concreteModel;
+    cxmodel::IModel& model = concreteModel;
+
+    model.Increment();
+
+    ASSERT_NE(model.GetCurrentValue(), 0);
+}
+
+TEST(Model, Increment_InitialValueIs0_CurrentValueIs1)
+{
+    cxmodel::Model concreteModel;
+    cxmodel::IModel& model = concreteModel;
+
+    model.Increment();
+
+    ASSERT_EQ(model.GetCurrentValue(), 1);
+}
+
+TEST(Model, Reinitialize_InitialValueIs0_CurrentValueIs0)
+{
+    cxmodel::Model concreteModel;
+    cxmodel::IModel& model = concreteModel;
+
+    model.Increment();
+
+    ASSERT_EQ(model.GetCurrentValue(), 1);
+
+    model.Reinitialize();
+
+    ASSERT_EQ(model.GetCurrentValue(), 0);
 }
