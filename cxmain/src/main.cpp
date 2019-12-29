@@ -23,11 +23,16 @@
 
 #include <memory>
 
+#include <cxmodel/include/Model.h>
+
 #include <Application.h>
 
 int main(int argc, char *argv[])
 {
-    std::unique_ptr<cx::IApplication> app = std::make_unique<cx::Application>(argc, argv);
+    cxmodel::Model concreteModel;
+    cxmodel::IModel& model = concreteModel;
+
+    std::unique_ptr<cx::IApplication> app = std::make_unique<cx::Application>(argc, argv, model);
 
     return app->Run();
 }

@@ -16,14 +16,34 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file HelloWorld.cpp
+ * @file ModelMock.h
  * @date 2019
  *
  *************************************************************************************************/
 
-#include "HelloWorld.h"
+#ifndef MODELMOCK_H_CCCA3271_7466_48B8_B57F_5D37825DFECE
+#define MODELMOCK_H_CCCA3271_7466_48B8_B57F_5D37825DFECE
 
-std::string HelloWorld::Make() const
+#include <cxmodel/include/IModel.h>
+
+class ModelMock : public cxmodel::IModel
 {
-    return m_HELLO_WORLD;
-}
+
+public:
+
+    ModelMock();
+
+    unsigned int GetCurrentValue() const override;
+
+    void Increment() override;
+    void Reinitialize() override;
+
+
+private:
+
+    static constexpr unsigned int m_INITIAL_VALUE = 0u;
+    unsigned int m_currentValue;
+
+};
+
+#endif // MODELMOCK_H_CCCA3271_7466_48B8_B57F_5D37825DFECE

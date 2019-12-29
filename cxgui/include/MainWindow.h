@@ -28,9 +28,18 @@
 
 #include <gtkmm/application.h>
 #include <gtkmm/applicationwindow.h>
+#include <gtkmm/button.h>
+#include <gtkmm/grid.h>
 #include <gtkmm/label.h>
 
+#include <cxmodel/include/IObserver.h>
+
 #include "IMainWindow.h"
+
+namespace cxmodel
+{
+    class IModel;
+}
 
 namespace cxgui
 {
@@ -46,7 +55,7 @@ namespace cxgui
  * window to initialize the Gtkmm library and to show the window.
  *
  ************************************************************************************************/
-class MainWindow : public cxgui::IMainWindow
+class MainWindow : public cxgui::IMainWindow, cxmodel::IObserver
 {
 
 public:
@@ -59,29 +68,41 @@ public:
      *
      * @post m_app is not @c nullptr
      * @post m_mainWindow is not @c nullptr
-     * @post m_helloWorld is not @c nullptr
+     * @post m_mainLayout is not @c nullptr
+     * @post m_counterLabel is not @c nullptr
+     * @post m_incrementButton is not @c nullptr
+     * @post m_reinitButton is not @c nullptr
      *
      * @param argc Command line argument count.
      * @param argc A C-style array of arguments.
+     * @param p_model The Connect X compatible model.
      *
      ********************************************************************************************/
-    MainWindow(int argc, char *argv[]);
+    MainWindow(int argc, char *argv[], cxmodel::IModel& p_model);
 
     int Show() override;
 
 
 private:
 
+    void Update(cxmodel::Subject* p_subject) override;
+
     void InitializeGtkmm(int argc, char *argv[]);
 
     Glib::RefPtr<Gtk::Application> m_app;
+    cxmodel::IModel& m_model;
 
     // These members must be pointers. They are default initialized to nullptr, so no widget is
     // actually constructed. We construct is by hand, after the Gtkmm library initialization.
     // This is necessary because until then, constructing a widget crashes the application. We
     // can't, then, have stack members.
     std::unique_ptr<Gtk::ApplicationWindow> m_mainWindow;
-    std::unique_ptr<Gtk::Label> m_helloWorld;
+
+    std::unique_ptr<Gtk::Grid> m_mainLayout;
+
+    std::unique_ptr<Gtk::Label> m_counterLabel;
+    std::unique_ptr<Gtk::Button> m_incrementButton;
+    std::unique_ptr<Gtk::Button> m_reinitButton;
 };
 
 } // namespace cxgui

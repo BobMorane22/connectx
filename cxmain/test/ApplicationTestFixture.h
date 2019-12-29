@@ -26,7 +26,8 @@
 
 #include <gtest/gtest.h>
 
-#include <DisableStdStreamsRAII.h>
+#include "DisableStdStreamsRAII.h"
+#include "ModelMock.h"
 
 /*********************************************************************************************//**
  * @brief Test fixture for the class @c cx::Application
@@ -38,12 +39,14 @@ class ApplicationTestFixture : public ::testing::Test
 {
 public:
 
+    cxmodel::IModel& GetModel();
+
     std::string GetStdOutContents() const;
     std::string GetStdErrContents() const;
 
-
 private:
 
+    ModelMock m_model;
     DisableStdStreamsRAII m_disableStreamsRAII;
 };
 

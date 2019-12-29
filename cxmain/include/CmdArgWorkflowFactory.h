@@ -28,6 +28,11 @@
 
 #include <ICmdArgWorkflowStrategy.h>
 
+namespace cxmodel
+{
+    class IModel;
+}
+
 namespace cx
 {
 
@@ -46,13 +51,14 @@ public:
      * @param argc The number of command line arguments (including the executable).
      * @param argv A C-style array containing the command line argument strings (including the
      *             executable).
+     * @param p_model The Connect X compatible model.
      *
      * @post The returned command line dependent workflow is not @c nullptr.
      *
      * @return The command line dependent workflow.
      *
      ********************************************************************************************/
-    std::unique_ptr<ICmdArgWorkflowStrategy> Create(int argc, char *argv[]);
+    std::unique_ptr<ICmdArgWorkflowStrategy> Create(int argc, char *argv[], cxmodel::IModel& p_model);
 
 };
 

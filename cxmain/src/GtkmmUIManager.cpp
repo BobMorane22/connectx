@@ -22,15 +22,16 @@
  *************************************************************************************************/
 
 #include <cxinv/include/assertion.h>
+#include <cxmodel/include/IModel.h>
 
 #include <GtkmmUIManager.h>
 
-cx::GtkmmUIManager::GtkmmUIManager(int argc, char *argv[])
+cx::GtkmmUIManager::GtkmmUIManager(int argc, char *argv[], cxmodel::IModel& p_model)
 {
     PRECONDITION(argc > 0);
     PRECONDITION(argv != nullptr);
 
-    m_mainWindow = std::make_unique<cxgui::MainWindow>(argc, argv);
+    m_mainWindow = std::make_unique<cxgui::MainWindow>(argc, argv, p_model);
 
     POSTCONDITION(m_mainWindow != nullptr);
 }

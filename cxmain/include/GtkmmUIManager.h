@@ -30,6 +30,11 @@
 
 #include <IUIManager.h>
 
+namespace cxmodel
+{
+    class IModel;
+}
+
 namespace cx
 {
 
@@ -58,9 +63,10 @@ public:
      *
      * @param argc Command line argument count.
      * @param argc A C-style array of arguments.
+     * @param p_model The Connect X compatible model.
      *
      ********************************************************************************************/
-    GtkmmUIManager(int argc, char *argv[]);
+    GtkmmUIManager(int argc, char *argv[], cxmodel::IModel& p_model);
 
     int Manage() override;
 

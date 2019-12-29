@@ -25,16 +25,16 @@
 #include <iostream>
 
 #include <cxinv/include/assertion.h>
-#include <cxmodel/include/HelloWorld.h>
+#include <cxmodel/include/IModel.h>
 
 #include <CmdArgMainStrategy.h>
 
-cx::CmdArgMainStrategy::CmdArgMainStrategy(int argc, char *argv[])
+cx::CmdArgMainStrategy::CmdArgMainStrategy(int argc, char *argv[], cxmodel::IModel& p_model)
 {
     PRECONDITION(argc > 0);
     PRECONDITION(argv != nullptr);
 
-    m_uiMgr = std::make_unique<cx::GtkmmUIManager>(argc, argv);
+    m_uiMgr = std::make_unique<cx::GtkmmUIManager>(argc, argv, p_model);
 
     POSTCONDITION(m_uiMgr != nullptr);
 }

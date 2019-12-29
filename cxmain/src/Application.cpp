@@ -24,19 +24,20 @@
 #include <memory>
 
 #include <cxinv/include/assertion.h>
+#include <cxmodel/include/IModel.h>
 
 #include <Application.h>
 #include <CmdArgWorkflowFactory.h>
 #include <CmdArgNoStrategy.h>
 
-cx::Application::Application(int argc, char *argv[])
+cx::Application::Application(int argc, char *argv[], cxmodel::IModel& p_model)
 {
     PRECONDITION(argc >= 1);
     PRECONDITION(argv != nullptr);
 
     CmdArgWorkflowFactory factory;
 
-    m_workflow = factory.Create(argc, argv);
+    m_workflow = factory.Create(argc, argv, p_model);
 
     POSTCONDITION(m_workflow != nullptr);
 }

@@ -41,12 +41,16 @@ void cxmodel::Model::Increment()
 
     ++m_currentValue;
 
+    Notify();
+
     POSTCONDITION(m_currentValue - old == 1);
 }
 
 void cxmodel::Model::Reinitialize()
 {
     m_currentValue = m_INITIAL_VALUE;
+
+    Notify();
 
     POSTCONDITION(m_currentValue == m_INITIAL_VALUE);
 }

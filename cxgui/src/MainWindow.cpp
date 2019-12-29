@@ -21,12 +21,15 @@
  *
  *************************************************************************************************/
 
-#include <cxmodel/include/HelloWorld.h>
+#include <string>
+
+#include <cxmodel/include/IModel.h>
 #include <cxinv/include/assertion.h>
 
 #include <MainWindow.h>
 
-cxgui::MainWindow::MainWindow(int argc, char *argv[])
+cxgui::MainWindow::MainWindow(int argc, char *argv[], cxmodel::IModel& p_model)
+ : m_model{p_model}
 {
     PRECONDITION(argc > 0);
     PRECONDITION(argv != nullptr);
@@ -36,16 +39,25 @@ cxgui::MainWindow::MainWindow(int argc, char *argv[])
     // fault) when launched.
     InitializeGtkmm(argc, argv);
 
-    const HelloWorld hw;
-    m_helloWorld = std::make_unique<Gtk::Label>(hw.Make());
+    m_mainLayout = std::make_unique<Gtk::Grid>();
+    m_counterLabel = std::make_unique<Gtk::Label>(std::to_string(m_model.GetCurrentValue()));
+    m_incrementButton = std::make_unique<Gtk::Button>("Increment");
+    m_reinitButton = std::make_unique<Gtk::Button>("Reinitialize");
 
     m_mainWindow = std::make_unique<Gtk::ApplicationWindow>();
-    m_mainWindow->set_default_size(200, 200);
-    m_mainWindow->add(*m_helloWorld);
+
+    m_mainLayout->attach(*m_counterLabel, 0, 0, 2, 1);
+    m_mainLayout->attach_next_to(*m_incrementButton, *m_counterLabel, Gtk::PositionType::POS_BOTTOM, 1, 1);
+    m_mainLayout->attach_next_to(*m_reinitButton, *m_incrementButton, Gtk::PositionType::POS_RIGHT, 1, 1);
+
+    m_mainWindow->add(*m_mainLayout);
 
     POSTCONDITION(bool(m_app));
-    POSTCONDITION(m_helloWorld != nullptr);
     POSTCONDITION(m_mainWindow != nullptr);
+    POSTCONDITION(m_mainLayout != nullptr);
+    POSTCONDITION(m_counterLabel != nullptr);
+    POSTCONDITION(m_incrementButton != nullptr);
+    POSTCONDITION(m_reinitButton != nullptr);
 }
 
 int cxgui::MainWindow::Show()
@@ -54,7 +66,7 @@ int cxgui::MainWindow::Show()
     return m_app->run(*m_mainWindow);
 
     INVARIANT(bool(m_app));
-    INVARIANT(m_helloWorld != nullptr);
+    INVARIANT(m_counterLabel != nullptr);
     INVARIANT(m_mainWindow != nullptr);
 }
 
@@ -63,4 +75,9 @@ void cxgui::MainWindow::InitializeGtkmm(int argc, char *argv[])
     m_app = Gtk::Application::create(argc, argv, "bobmorane.connectx");
 
     POSTCONDITION(bool(m_app));
+}
+
+void cxgui::MainWindow::Update(cxmodel::Subject* p_subject)
+{
+    (void)p_subject;// Nothing for now...
 }

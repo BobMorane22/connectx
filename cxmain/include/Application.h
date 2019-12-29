@@ -29,6 +29,11 @@
 #include <IApplication.h>
 #include <ICmdArgWorkflowStrategy.h>
 
+namespace cxmodel
+{
+    class IModel;
+}
+
 namespace cx
 {
 
@@ -53,9 +58,10 @@ public:
      *
      * @param argc Command line argument count.
      * @param argc A C-style array of arguments.
+     * @param p_model The Connect X compatible model.
      *
      ********************************************************************************************/
-    Application(int argc, char *argv[]);
+    Application(int argc, char *argv[], cxmodel::IModel& p_model);
 
     int Run() override;
 

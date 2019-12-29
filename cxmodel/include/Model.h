@@ -24,8 +24,8 @@
 #ifndef MODEL_H_8CC20E7E_7466_4977_9435_7E09ADBD10FC
 #define MODEL_H_8CC20E7E_7466_4977_9435_7E09ADBD10FC
 
-#include <IModel.h>
-#include <Subject.h>
+#include "IModel.h"
+#include "Subject.h"
 
 namespace cxmodel
 {

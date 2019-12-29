@@ -21,7 +21,12 @@
  *
  *************************************************************************************************/
 
-#include <ApplicationTestFixture.h>
+#include "ApplicationTestFixture.h"
+
+cxmodel::IModel& ApplicationTestFixture::GetModel()
+{
+    return m_model;
+}
 
 std::string ApplicationTestFixture::GetStdOutContents() const
 {

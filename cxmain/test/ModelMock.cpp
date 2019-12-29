@@ -16,20 +16,29 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * Unit tests for the HelloWorld class.
- *
- * @file HelloWorldTests.cpp
+ * @file ModelMock.h
  * @date 2019
  *
  *************************************************************************************************/
 
-#include <gtest/gtest.h>
+#include "ModelMock.h"
 
-#include "../include/HelloWorld.h"
-
-TEST(HelloWorld, SimpleExample)
+ModelMock::ModelMock()
+ : m_currentValue{m_INITIAL_VALUE}
 {
-    const HelloWorld hw;
+}
 
-    EXPECT_EQ(hw.Make(), "Hello World!");
+unsigned int ModelMock::GetCurrentValue() const
+{
+    return m_currentValue;
+}
+
+void ModelMock::Increment()
+{
+    ++m_currentValue;
+}
+
+void ModelMock::Reinitialize()
+{
+    m_currentValue = m_INITIAL_VALUE;
 }

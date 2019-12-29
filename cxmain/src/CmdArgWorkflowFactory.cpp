@@ -25,6 +25,7 @@
 #include <vector>
 
 #include <cxinv/include/assertion.h>
+#include <cxmodel/include/IModel.h>
 
 #include <CmdArgWorkflowFactory.h>
 
@@ -43,7 +44,7 @@ const std::string VERSION_ARG = "--version";
 } // namespace cx
 
 
-std::unique_ptr<cx::ICmdArgWorkflowStrategy> cx::CmdArgWorkflowFactory::Create(int argc, char *argv[])
+std::unique_ptr<cx::ICmdArgWorkflowStrategy> cx::CmdArgWorkflowFactory::Create(int argc, char *argv[], cxmodel::IModel& p_model)
 {
     std::unique_ptr<cx::ICmdArgWorkflowStrategy> strategy = std::make_unique<CmdArgNoStrategy>();
 
@@ -53,7 +54,7 @@ std::unique_ptr<cx::ICmdArgWorkflowStrategy> cx::CmdArgWorkflowFactory::Create(i
     }
     else if(argc == 1)
     {
-        strategy = std::make_unique<CmdArgMainStrategy>(argc, argv);
+        strategy = std::make_unique<CmdArgMainStrategy>(argc, argv, p_model);
     }
     else
     {

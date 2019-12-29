@@ -52,7 +52,7 @@ CLEAN := $(CLEAN) $(TGTS_$(d)) $(DEPS_$(d))
 #
 # Executable is compiled and linked.
 #
-$(TGTS_$(d)): CF_TGT := -I$(d)/../include -I$(d) `pkg-config gtkmm-3.0 --cflags --libs`
+$(TGTS_$(d)): CF_TGT := -I. -I$(d)/../include -I$(d) `pkg-config gtkmm-3.0 --cflags --libs`
 $(TGTS_$(d)): LL_TGT := cxgui/libcxgui.a -lgtest -lgtest_main -lpthread
 
 $(TGTS_$(d)): $(d)/MainWindowTests.cpp cxgui/libcxgui.a
