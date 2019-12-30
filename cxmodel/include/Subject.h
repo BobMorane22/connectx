@@ -121,12 +121,8 @@ protected:
     /******************************************************************************************//**
      * @brief Notifies all observers that some event has occurred.
      *
-     * @pre There is at least one observer attached to the subject.
-     *
      * For each event that need notifying the observers, this method must be called explicitly.
-     * It will in turn update to state of all attached observers. Note that if no observers
-     * are attached to the subject, this operation is not legal. There should always be
-     * attached observers to a subject.
+     * It will in turn update to state of all attached observers.
      *
      ********************************************************************************************/
     void Notify();

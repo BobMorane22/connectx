@@ -114,8 +114,6 @@ void cxmodel::Subject::DetatchAll()
 
 void cxmodel::Subject::Notify()
 {
-    PRECONDITION(m_observers.size() > 0);
-
     for(const auto observer : m_observers)
     {
         if(observer != nullptr)
