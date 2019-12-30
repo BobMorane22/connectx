@@ -40,6 +40,7 @@ public:
 
     bool IsReinitializeBtnEnabled() const override;
     unsigned int GetCounterValue() const override;
+    std::string GetWindowTitle() const override;
     std::string GetIncrementBtnLabel() const override;
     std::string GetReinitializeBtnLabel() const override;
 
@@ -51,6 +52,7 @@ private:
     unsigned int m_counterValue;
     bool m_isIncrementBtnEnabled;
 
+    static constexpr char m_windowTitle[] = "Connect X";
     static constexpr char m_incrementBtnLabel[] = "Increment";
     static constexpr char m_reinitializeBtnLabel[] = "Reinitialize";
 

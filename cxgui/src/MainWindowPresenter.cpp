@@ -56,6 +56,11 @@ void cxgui::MainWindowPresenter::Update(cxmodel::Subject* p_subject)
     }
 }
 
+std::string cxgui::MainWindowPresenter::GetWindowTitle() const
+{
+    return std::string{m_windowTitle};
+}
+
 std::string cxgui::MainWindowPresenter::GetIncrementBtnLabel() const
 {
     return std::string{m_incrementBtnLabel};

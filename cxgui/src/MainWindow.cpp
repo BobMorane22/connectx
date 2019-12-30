@@ -54,6 +54,7 @@ cxgui::MainWindow::MainWindow(int argc,
     m_reinitButton->signal_clicked().connect([&controller = m_controller](){controller.OnReinitializeBthPressed();});
 
     m_mainWindow = std::make_unique<Gtk::ApplicationWindow>();
+    m_mainWindow->set_title(m_presenter.GetWindowTitle());
 
     m_counterLabel->set_margin_top(10);
     m_counterLabel->set_margin_bottom(10);
