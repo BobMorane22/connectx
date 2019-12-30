@@ -16,44 +16,46 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file Model.h
+ * @file MainWindowPresenter.h
  * @date 2019
  *
  *************************************************************************************************/
 
-#ifndef MODEL_H_8CC20E7E_7466_4977_9435_7E09ADBD10FC
-#define MODEL_H_8CC20E7E_7466_4977_9435_7E09ADBD10FC
+#ifndef MAINWINDOWPRESENTER_H_B80CACC4_E075_49C0_9DFD_29C6C1BCFE67
+#define MAINWINDOWPRESENTER_H_B80CACC4_E075_49C0_9DFD_29C6C1BCFE67
 
-#include "IModel.h"
+#include <string>
 
-namespace cxmodel
+#include "IMainWindowPresenter.h"
+
+namespace cxgui
 {
 
-/*********************************************************************************************//**
- * @brief Connect X model.
- *
- * This class holds the Connect X related business rules.
- *
- ************************************************************************************************/
-class Model : public IModel
+class MainWindowPresenter : public cxgui::IMainWindowPresenter
 {
 
 public:
 
-    Model();
+    MainWindowPresenter();
 
-    unsigned int GetCurrentValue() const override;
+    bool IsReinitializeBtnEnabled() const override;
+    unsigned int GetCounterValue() const override;
+    std::string GetIncrementBtnLabel() const override;
+    std::string GetReinitializeBtnLabel() const override;
 
-    void Increment() override;
-    void Reinitialize() override;
+    void Update(cxmodel::Subject* p_subject) override;
+
 
 private:
 
-    static constexpr unsigned int m_INITIAL_VALUE = 0u;
+    unsigned int m_counterValue;
+    bool m_isIncrementBtnEnabled;
 
-    unsigned int m_currentValue;
+    static constexpr char m_incrementBtnLabel[] = "Increment";
+    static constexpr char m_reinitializeBtnLabel[] = "Reinitialize";
+
 };
 
-} // namespace cxmodel
+} // namespace cxgui
 
-#endif // MODEL_H_8CC20E7E_7466_4977_9435_7E09ADBD10FC
+#endif // MAINWINDOWPRESENTER_H_B80CACC4_E075_49C0_9DFD_29C6C1BCFE67

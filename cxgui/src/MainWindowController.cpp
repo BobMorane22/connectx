@@ -16,44 +16,26 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file Model.h
+ * @file MainWindowController.cpp
  * @date 2019
  *
  *************************************************************************************************/
 
-#ifndef MODEL_H_8CC20E7E_7466_4977_9435_7E09ADBD10FC
-#define MODEL_H_8CC20E7E_7466_4977_9435_7E09ADBD10FC
+#include <cxmodel/include/IModel.h>
 
-#include "IModel.h"
+#include <MainWindowController.h>
 
-namespace cxmodel
+cxgui::MainWindowController::MainWindowController(cxmodel::IModel& p_model)
+ : m_model{p_model}
 {
+}
 
-/*********************************************************************************************//**
- * @brief Connect X model.
- *
- * This class holds the Connect X related business rules.
- *
- ************************************************************************************************/
-class Model : public IModel
+void cxgui::MainWindowController::OnIncrementBtnPressed()
 {
+    m_model.Increment();
+}
 
-public:
-
-    Model();
-
-    unsigned int GetCurrentValue() const override;
-
-    void Increment() override;
-    void Reinitialize() override;
-
-private:
-
-    static constexpr unsigned int m_INITIAL_VALUE = 0u;
-
-    unsigned int m_currentValue;
-};
-
-} // namespace cxmodel
-
-#endif // MODEL_H_8CC20E7E_7466_4977_9435_7E09ADBD10FC
+void cxgui::MainWindowController::OnReinitializeBthPressed()
+{
+    m_model.Reinitialize();
+}

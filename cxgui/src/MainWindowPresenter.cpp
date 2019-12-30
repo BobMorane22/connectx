@@ -16,44 +16,52 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file Model.h
+ * @file MainWindowPresenter.cpp
  * @date 2019
  *
  *************************************************************************************************/
 
-#ifndef MODEL_H_8CC20E7E_7466_4977_9435_7E09ADBD10FC
-#define MODEL_H_8CC20E7E_7466_4977_9435_7E09ADBD10FC
+#include <cxmodel/include/Model.h>
 
-#include "IModel.h"
+#include <MainWindowPresenter.h>
 
-namespace cxmodel
+cxgui::MainWindowPresenter::MainWindowPresenter()
+ : m_counterValue{0}
+ , m_isIncrementBtnEnabled{false}
 {
+}
 
-/*********************************************************************************************//**
- * @brief Connect X model.
- *
- * This class holds the Connect X related business rules.
- *
- ************************************************************************************************/
-class Model : public IModel
+bool cxgui::MainWindowPresenter::IsReinitializeBtnEnabled() const
 {
+    return m_isIncrementBtnEnabled;
+}
 
-public:
+unsigned int cxgui::MainWindowPresenter::GetCounterValue() const
+{
+    return m_counterValue;
+}
 
-    Model();
+void cxgui::MainWindowPresenter::Update(cxmodel::Subject* p_subject)
+{
+    if(p_subject)
+    {
+        cxmodel::IModel* model = static_cast<cxmodel::Model*>(p_subject);
 
-    unsigned int GetCurrentValue() const override;
+        const unsigned int value = model->GetCurrentValue();
 
-    void Increment() override;
-    void Reinitialize() override;
+        m_isIncrementBtnEnabled = value > 0;
+        m_counterValue = value;
 
-private:
+        Notify();
+    }
+}
 
-    static constexpr unsigned int m_INITIAL_VALUE = 0u;
+std::string cxgui::MainWindowPresenter::GetIncrementBtnLabel() const
+{
+    return std::string{m_incrementBtnLabel};
+}
 
-    unsigned int m_currentValue;
-};
-
-} // namespace cxmodel
-
-#endif // MODEL_H_8CC20E7E_7466_4977_9435_7E09ADBD10FC
+std::string cxgui::MainWindowPresenter::GetReinitializeBtnLabel() const
+{
+    return std::string{m_reinitializeBtnLabel};
+}

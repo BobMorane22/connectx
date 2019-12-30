@@ -32,13 +32,12 @@
 #include <gtkmm/grid.h>
 #include <gtkmm/label.h>
 
-#include <cxmodel/include/IObserver.h>
-
 #include "IMainWindow.h"
 
-namespace cxmodel
+namespace cxgui
 {
-    class IModel;
+    class IMainWindowController;
+    class IMainWindowPresenter;
 }
 
 namespace cxgui
@@ -55,7 +54,7 @@ namespace cxgui
  * window to initialize the Gtkmm library and to show the window.
  *
  ************************************************************************************************/
-class MainWindow : public cxgui::IMainWindow, cxmodel::IObserver
+class MainWindow : public cxgui::IMainWindow
 {
 
 public:
@@ -78,7 +77,10 @@ public:
      * @param p_model The Connect X compatible model.
      *
      ********************************************************************************************/
-    MainWindow(int argc, char *argv[], cxmodel::IModel& p_model);
+    MainWindow(int argc,
+               char *argv[],
+               IMainWindowController& p_controller,
+               IMainWindowPresenter& p_presenter);
 
     int Show() override;
 
@@ -90,7 +92,9 @@ private:
     void InitializeGtkmm(int argc, char *argv[]);
 
     Glib::RefPtr<Gtk::Application> m_app;
-    cxmodel::IModel& m_model;
+
+    IMainWindowController& m_controller;
+    IMainWindowPresenter& m_presenter;
 
     // These members must be pointers. They are default initialized to nullptr, so no widget is
     // actually constructed. We construct is by hand, after the Gtkmm library initialization.

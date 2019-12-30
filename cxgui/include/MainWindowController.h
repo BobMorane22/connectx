@@ -16,44 +16,39 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file Model.h
+ * @file MainWindowController.h
  * @date 2019
  *
  *************************************************************************************************/
 
-#ifndef MODEL_H_8CC20E7E_7466_4977_9435_7E09ADBD10FC
-#define MODEL_H_8CC20E7E_7466_4977_9435_7E09ADBD10FC
+#ifndef MAINWINDOWCONTROLLER_H_2377676C_13C5_4D43_8AFA_0C90ABC44C5C
+#define MAINWINDOWCONTROLLER_H_2377676C_13C5_4D43_8AFA_0C90ABC44C5C
 
-#include "IModel.h"
+#include "IMainWindowController.h"
 
 namespace cxmodel
 {
+    class IModel;
+}
 
-/*********************************************************************************************//**
- * @brief Connect X model.
- *
- * This class holds the Connect X related business rules.
- *
- ************************************************************************************************/
-class Model : public IModel
+namespace cxgui
+{
+
+class MainWindowController : public cxgui::IMainWindowController
 {
 
 public:
 
-    Model();
+    MainWindowController(cxmodel::IModel& p_model);
 
-    unsigned int GetCurrentValue() const override;
-
-    void Increment() override;
-    void Reinitialize() override;
+    void OnIncrementBtnPressed() override;
+    void OnReinitializeBthPressed() override;
 
 private:
 
-    static constexpr unsigned int m_INITIAL_VALUE = 0u;
-
-    unsigned int m_currentValue;
+    cxmodel::IModel& m_model;
 };
 
-} // namespace cxmodel
+} // namespace cxgui
 
-#endif // MODEL_H_8CC20E7E_7466_4977_9435_7E09ADBD10FC
+#endif // MAINWINDOWCONTROLLER_H_2377676C_13C5_4D43_8AFA_0C90ABC44C5C

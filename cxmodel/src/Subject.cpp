@@ -133,6 +133,6 @@ void cxmodel::Subject::CheckInvariants()
                            m_observers.cend(),
                            [](cxmodel::IObserver* const p_observer)
                            {
-                                return p_observer != nullptr;
+                                return p_observer == nullptr;
                            }));
 }

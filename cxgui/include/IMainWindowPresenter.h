@@ -16,26 +16,33 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file IModel.h
+ * @file IMainWindowPresenter.h
  * @date 2019
  *
  *************************************************************************************************/
 
-#ifndef IMODEL_H_CC50381B_15B7_4586_A5F6_5F244A4289BA
-#define IMODEL_H_CC50381B_15B7_4586_A5F6_5F244A4289BA
+#ifndef IMAINWINDOWPRESENTER_H_D8C76920_83D9_4D15_B95A_63282E742221
+#define IMAINWINDOWPRESENTER_H_D8C76920_83D9_4D15_B95A_63282E742221
 
-#include "Subject.h"
+#include <cxmodel/include/IObserver.h>
+#include <cxmodel/include/Subject.h>
 
-namespace cxmodel
+namespace cxgui
 {
 
 /*********************************************************************************************//**
- * @brief Interface for a Connect X compatible model.
+ * @brief Interface for creating a main window presenter.
  *
- * Inherit from this to create a compatible Connect X model class.
+ * The main window presenter is responsible for making sure the UI logic is up to date, in
+ * a UI framework independent fashion. This makes it possible to create a main window with
+ * minimal logic.
+ *
+ * @note Because the class inherits the cxmodel::Subject class, which is an abstract class,
+ *       this class is not a pure interface. It is named as if it were a pure interface
+ *       because conceptually, it acts like one as far as the presenter is concerned.
  *
  ************************************************************************************************/
-class IModel : public Subject
+class IMainWindowPresenter : public cxmodel::IObserver, public cxmodel::Subject
 {
 
 public:
@@ -44,40 +51,42 @@ public:
      * @brief Default destructor.
      *
      ********************************************************************************************/
-    virtual ~IModel() = default;
+    virtual ~IMainWindowPresenter() = default;
 
     /******************************************************************************************//**
-     * @brief Access the current value.
+     * @brief Checks if the "Reinitialize" button is enabled.
      *
-     * @return The current value as stored in the model.
+     * @return @c true if the button is enabled, @c false otherwise.
      *
      ********************************************************************************************/
-    virtual unsigned int GetCurrentValue() const = 0;
+    virtual bool IsReinitializeBtnEnabled() const = 0;
 
     /******************************************************************************************//**
-     * @brief Increments the current value in the model.
+     * @brief Accesses the current counter value.
      *
-     * @post The value in the model is incremented by one.
-     *
-     * Increments by one the value stored in the model.
+     * @return The current counter value.
      *
      ********************************************************************************************/
-    virtual void Increment() = 0;
+    virtual unsigned int GetCounterValue() const = 0;
 
     /******************************************************************************************//**
-     * @brief Reinitialize the value stored in the model to its initial value.
+     * @brief Accesses the "Increment" button label.
      *
-     * @post The value in the model is back to its initial value.
-     *
-     * At the model creation, an initial value is given to the current value. When this method
-     * is called, the current value is reinitialized to this initial value, as if the model had
-     * just been created.
+     * @return The "Increment" button label.
      *
      ********************************************************************************************/
-    virtual void Reinitialize() = 0;
+    virtual std::string GetIncrementBtnLabel() const = 0;
+
+    /******************************************************************************************//**
+     * @brief Accesses the "Reinitialize" button label.
+     *
+     * @return The "Reinitialize" button label.
+     *
+     ********************************************************************************************/
+    virtual std::string GetReinitializeBtnLabel() const = 0;
 
 };
 
-} // namespace cxmodel
+} // namespace cxgui
 
-#endif // IMODEL_H_CC50381B_15B7_4586_A5F6_5F244A4289BA
+#endif // IMAINWINDOWPRESENTER_H_D8C76920_83D9_4D15_B95A_63282E742221

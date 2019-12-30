@@ -21,6 +21,9 @@
  *
  *************************************************************************************************/
 
+#include <cxgui/include/MainWindow.h>
+#include <cxgui/include/MainWindowController.h>
+#include <cxgui/include/MainWindowPresenter.h>
 #include <cxinv/include/assertion.h>
 #include <cxmodel/include/IModel.h>
 
@@ -31,14 +34,21 @@ cx::GtkmmUIManager::GtkmmUIManager(int argc, char *argv[], cxmodel::IModel& p_mo
     PRECONDITION(argc > 0);
     PRECONDITION(argv != nullptr);
 
-    m_mainWindow = std::make_unique<cxgui::MainWindow>(argc, argv, p_model);
+    m_controller = std::make_unique<cxgui::MainWindowController>(p_model);
+    m_presenter = std::make_unique<cxgui::MainWindowPresenter>();
+    m_mainWindow = std::make_unique<cxgui::MainWindow>(argc, argv, *m_controller, *m_presenter);
+
+    p_model.Attach(m_presenter.get());
+    m_presenter->Attach(m_mainWindow.get());
 
     POSTCONDITION(m_mainWindow != nullptr);
+
+    CheckInvariants();
 }
 
 int cx::GtkmmUIManager::Manage()
 {
-    INVARIANT(m_mainWindow != nullptr);
+    CheckInvariants();
 
     if(m_mainWindow)
     {
@@ -46,4 +56,11 @@ int cx::GtkmmUIManager::Manage()
     }
 
     return EXIT_FAILURE;
+}
+
+void cx::GtkmmUIManager::CheckInvariants()
+{
+    INVARIANT(m_controller != nullptr);
+    INVARIANT(m_presenter != nullptr);
+    INVARIANT(m_mainWindow != nullptr);
 }

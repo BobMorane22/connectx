@@ -23,13 +23,18 @@
 
 #include <string>
 
-#include <cxmodel/include/IModel.h>
+#include <cxgui/include/IMainWindowController.h>
+#include <cxgui/include/IMainWindowPresenter.h>
 #include <cxinv/include/assertion.h>
 
 #include <MainWindow.h>
 
-cxgui::MainWindow::MainWindow(int argc, char *argv[], cxmodel::IModel& p_model)
- : m_model{p_model}
+cxgui::MainWindow::MainWindow(int argc,
+                              char *argv[],
+                              cxgui::IMainWindowController& p_controller,
+                              cxgui::IMainWindowPresenter& p_presenter)
+ : m_controller{p_controller}
+ , m_presenter{p_presenter}
 {
     PRECONDITION(argc > 0);
     PRECONDITION(argv != nullptr);
@@ -40,11 +45,18 @@ cxgui::MainWindow::MainWindow(int argc, char *argv[], cxmodel::IModel& p_model)
     InitializeGtkmm(argc, argv);
 
     m_mainLayout = std::make_unique<Gtk::Grid>();
-    m_counterLabel = std::make_unique<Gtk::Label>(std::to_string(m_model.GetCurrentValue()));
-    m_incrementButton = std::make_unique<Gtk::Button>("Increment");
-    m_reinitButton = std::make_unique<Gtk::Button>("Reinitialize");
+    m_counterLabel = std::make_unique<Gtk::Label>(std::to_string(m_presenter.GetCounterValue()));
+    m_incrementButton = std::make_unique<Gtk::Button>(m_presenter.GetIncrementBtnLabel());
+    m_reinitButton = std::make_unique<Gtk::Button>(m_presenter.GetReinitializeBtnLabel());
+
+    m_reinitButton->set_sensitive(m_presenter.IsReinitializeBtnEnabled());
+    m_incrementButton->signal_clicked().connect([&controller = m_controller](){controller.OnIncrementBtnPressed();});
+    m_reinitButton->signal_clicked().connect([&controller = m_controller](){controller.OnReinitializeBthPressed();});
 
     m_mainWindow = std::make_unique<Gtk::ApplicationWindow>();
+
+    m_counterLabel->set_margin_top(10);
+    m_counterLabel->set_margin_bottom(10);
 
     m_mainLayout->attach(*m_counterLabel, 0, 0, 2, 1);
     m_mainLayout->attach_next_to(*m_incrementButton, *m_counterLabel, Gtk::PositionType::POS_BOTTOM, 1, 1);
@@ -77,7 +89,8 @@ void cxgui::MainWindow::InitializeGtkmm(int argc, char *argv[])
     POSTCONDITION(bool(m_app));
 }
 
-void cxgui::MainWindow::Update(cxmodel::Subject* p_subject)
+void cxgui::MainWindow::Update(cxmodel::Subject*)
 {
-    (void)p_subject;// Nothing for now...
+    m_reinitButton->set_sensitive(m_presenter.IsReinitializeBtnEnabled());
+    m_counterLabel->set_text(std::to_string(m_presenter.GetCounterValue()));
 }

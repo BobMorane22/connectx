@@ -26,7 +26,9 @@
 
 #include <memory>
 
-#include <cxgui/include/MainWindow.h>
+#include <cxgui/include/IMainWindowController.h>
+#include <cxgui/include/IMainWindowPresenter.h>
+#include <cxgui/include/IMainWindow.h>
 
 #include <IUIManager.h>
 
@@ -41,6 +43,8 @@ namespace cx
 /*********************************************************************************************//**
  * @brief A Gtkmm UI manager.
  *
+ * @invariant @c m_controller is not @c nullptr.
+ * @invariant @c m_presenter is not @c nullptr.
  * @invariant @c m_mainWindow is not @c nullptr.
  *
  * Manages a Gtkmm implemented UI. For more information, see:
@@ -73,6 +77,10 @@ public:
 
 private:
 
+    void CheckInvariants();
+
+    std::unique_ptr<cxgui::IMainWindowController> m_controller;
+    std::unique_ptr<cxgui::IMainWindowPresenter> m_presenter;
     std::unique_ptr<cxgui::IMainWindow> m_mainWindow;
 };
 

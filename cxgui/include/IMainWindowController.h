@@ -16,26 +16,26 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file IModel.h
+ * @file IMainWindowController.h
  * @date 2019
  *
  *************************************************************************************************/
 
-#ifndef IMODEL_H_CC50381B_15B7_4586_A5F6_5F244A4289BA
-#define IMODEL_H_CC50381B_15B7_4586_A5F6_5F244A4289BA
+#ifndef IMAINWINDOWCONTROLLER_H_B4A715D5_611A_42C2_8C60_16C5C14FD28A
+#define IMAINWINDOWCONTROLLER_H_B4A715D5_611A_42C2_8C60_16C5C14FD28A
 
-#include "Subject.h"
-
-namespace cxmodel
+namespace cxgui
 {
 
 /*********************************************************************************************//**
- * @brief Interface for a Connect X compatible model.
+ * @brief Interface for creating a main window controller.
  *
- * Inherit from this to create a compatible Connect X model class.
+ * The main window controller is responsible to handle all user events directed on the main
+ * window. It is the controller which calls the right operations sequence on the model to
+ * reflect what the user is doing on the UI.
  *
  ************************************************************************************************/
-class IModel : public Subject
+class IMainWindowController
 {
 
 public:
@@ -44,40 +44,22 @@ public:
      * @brief Default destructor.
      *
      ********************************************************************************************/
-    virtual ~IModel() = default;
+    virtual ~IMainWindowController() = default;
 
     /******************************************************************************************//**
-     * @brief Access the current value.
-     *
-     * @return The current value as stored in the model.
+     * @brief Reacts to changes on the "Increment" button.
      *
      ********************************************************************************************/
-    virtual unsigned int GetCurrentValue() const = 0;
+    virtual void OnIncrementBtnPressed() = 0;
 
     /******************************************************************************************//**
-     * @brief Increments the current value in the model.
-     *
-     * @post The value in the model is incremented by one.
-     *
-     * Increments by one the value stored in the model.
+     * @brief Reacts to changes on the "Reinitialize" button.
      *
      ********************************************************************************************/
-    virtual void Increment() = 0;
-
-    /******************************************************************************************//**
-     * @brief Reinitialize the value stored in the model to its initial value.
-     *
-     * @post The value in the model is back to its initial value.
-     *
-     * At the model creation, an initial value is given to the current value. When this method
-     * is called, the current value is reinitialized to this initial value, as if the model had
-     * just been created.
-     *
-     ********************************************************************************************/
-    virtual void Reinitialize() = 0;
+    virtual void OnReinitializeBthPressed() = 0;
 
 };
 
-} // namespace cxmodel
+} // namespace cxgui
 
-#endif // IMODEL_H_CC50381B_15B7_4586_A5F6_5F244A4289BA
+#endif // IMAINWINDOWCONTROLLER_H_B4A715D5_611A_42C2_8C60_16C5C14FD28A

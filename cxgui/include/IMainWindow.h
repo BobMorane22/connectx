@@ -24,6 +24,8 @@
 #ifndef IMAINWINDOW_H_87FB17B9_ABA6_42D6_8B00_1B898BCD3C94
 #define IMAINWINDOW_H_87FB17B9_ABA6_42D6_8B00_1B898BCD3C94
 
+#include <cxmodel/include/IObserver.h>
+
 namespace cxgui
 {
 
@@ -33,7 +35,7 @@ namespace cxgui
  * This interface presents the basic utilities needed to create main application windows.
  *
  ************************************************************************************************/
-class IMainWindow
+class IMainWindow : public cxmodel::IObserver
 {
 
 public:
