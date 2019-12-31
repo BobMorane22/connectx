@@ -44,6 +44,8 @@ d := $(dir)
 #
 TGTS_$(d) := $(d)/cxguitests
 OBJS_$(d) := $(d)/MainWindowPresenterTestFixture.o \
+             $(d)/MainWindowControllerTests.o \
+             $(d)/MainWindowControllerTestFixture.o \
              $(d)/MainWindowPresenterTests.o \
              $(d)/ModelMock.o \
              cxgui/libcxgui.a
