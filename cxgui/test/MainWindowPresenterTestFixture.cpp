@@ -16,16 +16,39 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file MainWindowTests.cpp
+ * @file MainWindowPresenterTestFixture.cpp
  * @date 2019
  *
  *************************************************************************************************/
 
 #include <gtest/gtest.h>
 
-#include <MainWindow.h>
+#include <cxgui/include/MainWindowPresenter.h>
 
-TEST(MainWindow, BasicTest)
+#include "MainWindowPresenterTestFixture.h"
+#include "ModelMock.h"
+
+MainWindowPresenterTestFixture::MainWindowPresenterTestFixture()
 {
-    EXPECT_EQ(1, 1);
+    m_model = std::make_unique<ModelMock>();
+    m_presenter = std::make_unique<cxgui::MainWindowPresenter>();
+
+    EXPECT_TRUE(m_presenter != nullptr);
+    EXPECT_TRUE(m_model != nullptr);
+
+    m_model->Attach(m_presenter.get());
+}
+
+cxgui::IMainWindowPresenter& MainWindowPresenterTestFixture::GetPresenter()
+{
+    EXPECT_TRUE(m_presenter != nullptr);
+
+    return *m_presenter;
+}
+
+cxmodel::IModel& MainWindowPresenterTestFixture::GetModel()
+{
+    EXPECT_TRUE(m_model != nullptr);
+
+    return *m_model;
 }

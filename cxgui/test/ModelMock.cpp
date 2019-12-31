@@ -16,48 +16,30 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file MainWindowPresenter.h
+ * @file ModelMock.cpp
  * @date 2019
  *
  *************************************************************************************************/
 
-#ifndef MAINWINDOWPRESENTER_H_B80CACC4_E075_49C0_9DFD_29C6C1BCFE67
-#define MAINWINDOWPRESENTER_H_B80CACC4_E075_49C0_9DFD_29C6C1BCFE67
+#include <gtest/gtest.h>
 
-#include <string>
+#include "ModelMock.h"
 
-#include "IMainWindowPresenter.h"
-
-namespace cxgui
+unsigned int ModelMock::GetCurrentValue() const
 {
+    return m_currentValue;
+}
 
-class MainWindowPresenter : public cxgui::IMainWindowPresenter
+void ModelMock::Increment()
 {
+    ++m_currentValue;
 
-public:
+    Notify();
+}
 
-    MainWindowPresenter();
+void ModelMock::Reinitialize()
+{
+    m_currentValue = 0;
 
-    bool IsReinitializeBtnEnabled() const override;
-    unsigned int GetCounterValue() const override;
-    std::string GetWindowTitle() const override;
-    std::string GetIncrementBtnLabel() const override;
-    std::string GetReinitializeBtnLabel() const override;
-
-
-private:
-
-    void Update(cxmodel::Subject* p_subject) override;
-
-    unsigned int m_counterValue;
-    bool m_isIncrementBtnEnabled;
-
-    static constexpr char m_windowTitle[] = "Connect X";
-    static constexpr char m_incrementBtnLabel[] = "Increment";
-    static constexpr char m_reinitializeBtnLabel[] = "Reinitialize";
-
-};
-
-} // namespace cxgui
-
-#endif // MAINWINDOWPRESENTER_H_B80CACC4_E075_49C0_9DFD_29C6C1BCFE67
+    Notify();
+}

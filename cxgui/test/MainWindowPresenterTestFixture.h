@@ -16,48 +16,33 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file MainWindowPresenter.h
+ * @file MainWindowPresenterTestFixture.h
  * @date 2019
  *
  *************************************************************************************************/
 
-#ifndef MAINWINDOWPRESENTER_H_B80CACC4_E075_49C0_9DFD_29C6C1BCFE67
-#define MAINWINDOWPRESENTER_H_B80CACC4_E075_49C0_9DFD_29C6C1BCFE67
+#ifndef MAINWINDOWPRESENTERTESTFIXTURE_H_BF5C449E_46ED_4C25_A8AE_98F606AEC840
+#define MAINWINDOWPRESENTERTESTFIXTURE_H_BF5C449E_46ED_4C25_A8AE_98F606AEC840
 
-#include <string>
+#include <memory>
 
-#include "IMainWindowPresenter.h"
+#include <cxgui/include/IMainWindowPresenter.h>
+#include <cxmodel/include/IModel.h>
 
-namespace cxgui
-{
-
-class MainWindowPresenter : public cxgui::IMainWindowPresenter
+class MainWindowPresenterTestFixture : public testing::Test
 {
 
 public:
 
-    MainWindowPresenter();
+    MainWindowPresenterTestFixture();
 
-    bool IsReinitializeBtnEnabled() const override;
-    unsigned int GetCounterValue() const override;
-    std::string GetWindowTitle() const override;
-    std::string GetIncrementBtnLabel() const override;
-    std::string GetReinitializeBtnLabel() const override;
-
+    cxgui::IMainWindowPresenter& GetPresenter();
+    cxmodel::IModel& GetModel();
 
 private:
 
-    void Update(cxmodel::Subject* p_subject) override;
-
-    unsigned int m_counterValue;
-    bool m_isIncrementBtnEnabled;
-
-    static constexpr char m_windowTitle[] = "Connect X";
-    static constexpr char m_incrementBtnLabel[] = "Increment";
-    static constexpr char m_reinitializeBtnLabel[] = "Reinitialize";
-
+    std::unique_ptr<cxgui::IMainWindowPresenter> m_presenter;
+    std::unique_ptr<cxmodel::IModel> m_model;
 };
 
-} // namespace cxgui
-
-#endif // MAINWINDOWPRESENTER_H_B80CACC4_E075_49C0_9DFD_29C6C1BCFE67
+#endif // MAINWINDOWPRESENTERTESTFIXTURE_H_BF5C449E_46ED_4C25_A8AE_98F606AEC840

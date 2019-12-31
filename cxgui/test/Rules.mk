@@ -43,21 +43,30 @@ d := $(dir)
 # i.e. the ones we want deleted by a "make clean" command.
 #
 TGTS_$(d) := $(d)/cxguitests
+OBJS_$(d) := $(d)/MainWindowPresenterTestFixture.o \
+             $(d)/MainWindowPresenterTests.o \
+             $(d)/ModelMock.o \
+             cxgui/libcxgui.a
 DEPS_$(d) := $(TGTS_$(d):%=%.d)
 TGT_BIN := $(TGT_BIN) $(TGTS_$(d))
-CLEAN := $(CLEAN) $(TGTS_$(d)) $(DEPS_$(d))
+CLEAN := $(CLEAN) $(OBJS_$(d)) $(TGTS_$(d)) $(DEPS_$(d))
 
 
 ### Local rules
 #
 # Executable is compiled and linked.
 #
-$(TGTS_$(d)): CF_TGT := -I. -I$(d)/../include -I$(d) `pkg-config gtkmm-3.0 --cflags --libs`
-$(TGTS_$(d)): LL_TGT := cxgui/libcxgui.a -lgtest -lgtest_main -lpthread
+$(TGTS_$(d)): CF_TGT := -I. -I$(d)/../include `pkg-config gtkmm-3.0 --cflags --libs`
+$(TGTS_$(d)): LL_TGT := cxgui/libcxgui.a \
+                        cxmodel/libcxmodel.a \
+                        cxinv/libcxinv.a \
+                        -lgtest \
+                        -lgtest_main \
+                        -lpthread
 
-$(TGTS_$(d)): $(d)/MainWindowTests.cpp cxgui/libcxgui.a
+$(TGTS_$(d)): $(OBJS_$(d)) $(LL_TGT)
 	@echo ~~~ Generating the cxgui unit tests executable ~~~
-	$(COMPLINK)
+	$(LINK)
 	$(SHELL) -c $@
 
 
