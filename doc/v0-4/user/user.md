@@ -1,4 +1,4 @@
-# Connect X v0.4 (January 12, 2019)
+# Connect X v0.4 (January 12, 2020)
 
 ## New features
 
