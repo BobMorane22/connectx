@@ -86,3 +86,16 @@ In the next iteration, we will:
 1. add undo/redo support to the application;
 2. review the Connect X model design (development of the real business rules should start soon).
 
+
+## Out of sprint features
+
+Available extra time made it possible to add code coverage report generation to the build process. Using `gcov` and `lcov`, we can now produce, from `make`, HTML code coverage reports. To do so, one must:
+
+1. rebuild the software (`make clean` followed by `make`);
+2. run the coverage script (`make coverage` will take care of this).
+
+At this point, an HTML report is available from `coverage/report/index.html` and looks like this:
+
+![HTML report](./report.png)
+
+Note that code coverage for the `cxmain` sources is not available. This is because the executable has not been run. To add it, run Connect X, re-run the coverage script (`make coverage`) and the coverage should appear in the report. This is not ideal, but once automatic functional testing will be added, it will no longer have to be done by hand. The process of building the report generates a lot of files, all of which can be cleaned using `make clean`.
