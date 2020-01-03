@@ -98,4 +98,4 @@ At this point, an HTML report is available from `coverage/report/index.html` and
 
 ![HTML report](./report.png)
 
-Note that code coverage for the `cxmain` sources is not available. This is because the executable has not been run. To add it, run Connect X, re-run the coverage script (`make coverage`) and the coverage should appear in the report. This is not ideal, but once automatic functional testing will be added, it will no longer have to be done by hand. The process of building the report generates a lot of files, all of which can be cleaned using `make clean`.
+Note that code coverage for the `cxmain` sources is not available. This is because the executable has not been run. To add it, run Connect X. If you re-run the coverage script (`make coverage`), the coverage should appear in the report. At this point, the coverage value in the report is not the true value, since unit tests have not been run. To correct this, run the `cxmaintests`  executable and re-run the coverage script (`make coverage`). The value now should reflect the testing. The process of building the report generates a lot of files, all of which can be cleaned using `make clean`.
