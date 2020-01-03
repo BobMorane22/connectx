@@ -58,7 +58,7 @@ CLEAN := $(CLEAN) $(shell find . -type f -name '*.gcno' -o \
 .PHONY: coverage
 coverage: 
 	@echo ~~~ Generating code coverage report ~~~
-	$(SHELL) -c ./coverage/coverage.sh
+	$(SHELL) -c ./tools/coverage.sh
 
 
 ### Restoring stack
