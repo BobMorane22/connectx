@@ -44,11 +44,19 @@ d := $(dir)
 # To the global variable "CLEAN", we add the files that the rules present here may create,
 # i.e. the ones we want deleted by a "make clean" command.
 #
-CLEAN := $(CLEAN) $(shell find . -type f -name '*.gcno' -o \
-                                 -type f -name '*.gcda' -o \
-                                 -type f -name '*.gcov' -o \
-                                 -type f -wholename './coverage/*.info' -o \
-                                 -type f -wholename './coverage/report/*')
+# Note that 'find' is not part of the utilities one can use in a Makefile according
+# to the GNU Coding style. See
+#
+#     https://www.gnu.org/prep/standards/standards.html#Utilities-in-Makefiles
+#
+# for more information.
+#
+CLEAN := $(CLEAN) $(shell find . -type f -name '*.gcno' -or \
+                                 -type f -name '*.gcda' -or \
+                                 -type f -name '*.gcov' -or \
+                                 -type f -wholename './coverage/*.info' -or \
+                                 -type f -wholename './coverage/report/*' -or \
+                                 -type d -wholename './coverage/*')
 
 
 ### Local rules

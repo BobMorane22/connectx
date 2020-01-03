@@ -82,6 +82,6 @@ targets: $(TGT_BIN) $(TGT_SBIN) $(TGT_ETC) $(TGT_LIB)
 
 .PHONY: clean
 clean:
-	rm -f $(CLEAN)
+	rm -Rf $(CLEAN)
 
 .SECONDARY: $(CLEAN)
