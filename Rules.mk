@@ -52,6 +52,10 @@ include $(dir)/Rules.mk
 dir := cxmain
 include $(dir)/Rules.mk
 
+# Code coverage
+dir := coverage
+include $(dir)/Rules.mk
+
 
 ### General directory independent rules
 #

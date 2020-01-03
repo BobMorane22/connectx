@@ -117,3 +117,12 @@ cxinv/test/cxinvtests
 cxmodel/test/cxmodeltests
 cxgui/test/cxguitests
 cxmain/test/cxmaintests
+
+# Unit test coverage
+coverage/report
+coverage/*.html
+coverage/*.css
+coverage/*.gcov
+coverage/*.info
+*.gcda
+*.gcno
