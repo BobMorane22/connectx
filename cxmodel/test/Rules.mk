@@ -43,7 +43,11 @@ d := $(dir)
 # i.e. the ones we want deleted by a "make clean" command.
 #
 TGTS_$(d) := $(d)/cxmodeltests
-OBJS_$(d) := $(d)/ConcreteObserverMock.o \
+OBJS_$(d) := $(d)/CommandAddTwoMock.o \
+             $(d)/CommandStackTestFixture.o \
+             $(d)/CommandStackTests.o \
+             $(d)/CommandTimesThreeMock.o \
+             $(d)/ConcreteObserverMock.o \
              $(d)/ConcreteSubjectMock.o \
              $(d)/DisableStdStreamsRAII.o \
              $(d)/ModelTests.o \
