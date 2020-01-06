@@ -123,7 +123,7 @@ void cxmodel::CommandStack::Redo()
         m_allCmdUndoed = false;
     }
 
-    if(m_currentPosition != m_endPosition)
+    if(m_currentPosition < m_commands.size())
     {
         m_commands[m_currentPosition]->Execute();
         ++m_currentPosition;

@@ -181,9 +181,25 @@ TEST_F(CommandStackTestFixture, Undo_NoCommand_NothingHappens)
     ASSERT_TRUE(GetCommandStack()->IsEmpty());
 }
 
-TEST_F(CommandStackTestFixture, DISABLED_Undo_TooManyUndoes_AllCommandsUndoed)
+TEST_F(CommandStackTestFixture, Undo_TooManyUndoes_AllCommandsUndoed)
 {
-    ASSERT_TRUE(false);
+    double result{0.0};
+
+    std::unique_ptr<cxmodel::ICommand> cmd1{new CommandAddTwoMock{result}};
+    std::unique_ptr<cxmodel::ICommand> cmd2{new CommandTimesThreeMock{result}};
+    cmd1->Execute();
+    cmd2->Execute();
+
+    ASSERT_EQ(result, 6.0);
+
+    GetCommandStack()->Add(std::move(cmd1));
+    GetCommandStack()->Add(std::move(cmd2));
+
+    GetCommandStack()->Undo();
+    GetCommandStack()->Undo();
+    GetCommandStack()->Undo();
+
+    ASSERT_EQ(result, 0.0);
 }
 
 TEST_F(CommandStackTestFixture, Redo_SingleCommand_CommandRedoed)
@@ -238,17 +254,42 @@ TEST_F(CommandStackTestFixture, Redo_NoCommand_NothingHappens)
 }
 
 
-TEST_F(CommandStackTestFixture, DISABLED_Redo_TooManyRedoes_AllCommandsRedoed)
+TEST_F(CommandStackTestFixture, Redo_TooManyRedoes_AllCommandsRedoed)
 {
-    ASSERT_TRUE(false);
+    double result{0.0};
+
+    std::unique_ptr<cxmodel::ICommand> cmd1{new CommandAddTwoMock{result}};
+    std::unique_ptr<cxmodel::ICommand> cmd2{new CommandTimesThreeMock{result}};
+    cmd1->Execute();
+    cmd2->Execute();
+
+    ASSERT_EQ(result, 6.0);
+
+    GetCommandStack()->Add(std::move(cmd1));
+    GetCommandStack()->Add(std::move(cmd2));
+
+    GetCommandStack()->Undo();
+    GetCommandStack()->Undo();
+    GetCommandStack()->Redo();
+    GetCommandStack()->Redo();
+    GetCommandStack()->Redo();
+
+    ASSERT_EQ(result, 6.0);
 }
 
-TEST_F(CommandStackTestFixture, DISABLED_UndoRedo_SingleCommand_StateIsUnchaged)
+TEST_F(CommandStackTestFixture, UndoRedo_SingleCommand_StateIsUnchaged)
 {
-    ASSERT_TRUE(false);
-}
+    double result{0.0};
 
-TEST_F(CommandStackTestFixture, DISABLED_UndoRedo_MultipleCommands_StateIsUnchaged)
-{
-    ASSERT_TRUE(false);
+    std::unique_ptr<cxmodel::ICommand> cmd{new CommandAddTwoMock{result}};
+    cmd->Execute();
+
+    ASSERT_EQ(result, 2.0);
+
+    GetCommandStack()->Add(std::move(cmd));
+
+    GetCommandStack()->Undo();
+    GetCommandStack()->Redo();
+
+    ASSERT_EQ(result, 2.0);
 }
