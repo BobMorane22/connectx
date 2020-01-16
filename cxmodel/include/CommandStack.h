@@ -26,7 +26,7 @@
 
 #include <vector>
 
-#include "ICommandStack.h"
+#include <ICommandStack.h>
 
 namespace cxmodel
 {
@@ -44,7 +44,7 @@ public:
 
     CommandStack(const size_t p_capacity);
 
-    void Add(std::unique_ptr<ICommand>&& p_command) override;
+    void Execute(std::unique_ptr<ICommand>&& p_newCommand) override;
     void Clear() override;
 
     void Undo() override;
@@ -57,8 +57,9 @@ public:
 
 private:
 
-    bool AreNoCommandUndoed() const;
     size_t GetLastCommandPosition() const;
+    bool NoCommandUndoed() const;
+    bool SomeCommandUndoed() const;
 
     void CheckInvariants();
 

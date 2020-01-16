@@ -27,18 +27,17 @@
 #include "CommandStackTestFixture.h"
 #include "CommandTimesThreeMock.h"
 
-TEST_F(CommandStackTestFixture, Add_ValidCommand_CommandAdded)
+TEST_F(CommandStackTestFixture, /*DISABLED_*/Execute_ValidCommand_CommandAdded)
 {
     double result{0.0};
 
-    std::unique_ptr<cxmodel::ICommand> cmd{new CommandAddTwoMock{result}};
-    GetCommandStack()->Add(std::move(cmd));
+    GetCommandStack()->Execute(std::make_unique<CommandAddTwoMock>(result));
 
     ASSERT_FALSE(GetCommandStack()->IsEmpty());
     ASSERT_EQ(GetCommandStack()->GetNbCommands(), 1);
 }
 
-TEST_F(CommandStackTestFixture, Add_InvalidCommand_CommandNotAdded)
+TEST_F(CommandStackTestFixture, /*DISABLED_*/Execute_InvalidCommand_CommandNotAdded)
 {
     double result{0.0};
     (void)result; // unused
@@ -46,34 +45,31 @@ TEST_F(CommandStackTestFixture, Add_InvalidCommand_CommandNotAdded)
     std::unique_ptr<cxmodel::ICommand> cmd;
     ASSERT_FALSE(cmd);
 
-    GetCommandStack()->Add(std::move(cmd));
+    GetCommandStack()->Execute(std::move(cmd));
 
     ASSERT_TRUE(GetCommandStack()->IsEmpty());
 }
 
-TEST_F(CommandStackTestFixture, Add_ManyValidCommands_CommandsAdded)
+TEST_F(CommandStackTestFixture, /*DISABLED_*/Execute_ManyValidCommands_CommandsAdded)
 {
     double result{0.0};
 
     for(size_t index = 0; index < 5; ++index)
     {
-        std::unique_ptr<cxmodel::ICommand> cmd{new CommandAddTwoMock{result}};
-        GetCommandStack()->Add(std::move(cmd));
+        GetCommandStack()->Execute(std::make_unique<CommandAddTwoMock>(result));
     }
 
     ASSERT_FALSE(GetCommandStack()->IsEmpty());
     ASSERT_EQ(GetCommandStack()->GetNbCommands(), 5);
 }
 
-TEST_F(CommandStackTestFixture, Add_TooManyValidCommands_LastCommandIsLastInStack)
+TEST_F(CommandStackTestFixture, /*DISABLED_*/Execute_TooManyValidCommands_LastCommandIsLastInStack)
 {
     double result{0.0};
 
     for(size_t index = 0; index < GetCommandStackSize(); ++index)
     {
-        std::unique_ptr<cxmodel::ICommand> cmd{new CommandAddTwoMock{result}};
-        cmd->Execute();
-        GetCommandStack()->Add(std::move(cmd));
+        GetCommandStack()->Execute(std::make_unique<CommandAddTwoMock>(result));
     }
 
     ASSERT_TRUE(GetCommandStack()->IsFull());
@@ -81,9 +77,7 @@ TEST_F(CommandStackTestFixture, Add_TooManyValidCommands_LastCommandIsLastInStac
     ASSERT_EQ(result, 400.0);
 
     // Add one too many:
-    std::unique_ptr<cxmodel::ICommand> cmd{new CommandTimesThreeMock{result}};
-    cmd->Execute();
-    GetCommandStack()->Add(std::move(cmd));
+    GetCommandStack()->Execute(std::make_unique<CommandTimesThreeMock>(result));
 
     ASSERT_TRUE(GetCommandStack()->IsFull());
     ASSERT_EQ(GetCommandStack()->GetNbCommands(), GetCommandStackSize());
@@ -96,12 +90,11 @@ TEST_F(CommandStackTestFixture, Add_TooManyValidCommands_LastCommandIsLastInStac
     ASSERT_EQ(result, 400.0);
 }
 
-TEST_F(CommandStackTestFixture, Clear_SingleCommand_CommandCleared)
+TEST_F(CommandStackTestFixture, /*DISABLED_*/Clear_SingleCommand_CommandCleared)
 {
     double result{0.0};
 
-    std::unique_ptr<cxmodel::ICommand> cmd{new CommandAddTwoMock{result}};
-    GetCommandStack()->Add(std::move(cmd));
+    GetCommandStack()->Execute(std::make_unique<CommandAddTwoMock>(result));
 
     ASSERT_FALSE(GetCommandStack()->IsEmpty());
 
@@ -110,63 +103,51 @@ TEST_F(CommandStackTestFixture, Clear_SingleCommand_CommandCleared)
     ASSERT_TRUE(GetCommandStack()->IsEmpty());
 }
 
-TEST_F(CommandStackTestFixture, Clear_ManyCommands_CommandsCleared)
+TEST_F(CommandStackTestFixture, /*DISABLED_*/Clear_ManyCommands_CommandsCleared)
 {
     double result{0.0};
 
     for(size_t index = 0; index < 5; ++index)
     {
-        std::unique_ptr<cxmodel::ICommand> cmd{new CommandAddTwoMock{result}};
-        GetCommandStack()->Add(std::move(cmd));
+        GetCommandStack()->Execute(std::make_unique<CommandAddTwoMock>(result));
     }
 
     ASSERT_FALSE(GetCommandStack()->IsEmpty());
-
     GetCommandStack()->Clear();
-
     ASSERT_TRUE(GetCommandStack()->IsEmpty());
 }
 
-TEST_F(CommandStackTestFixture, Clear_NoCommand_NothingHappens)
+TEST_F(CommandStackTestFixture, /*DISABLED_*/Clear_NoCommand_NothingHappens)
 {
+    ASSERT_TRUE(GetCommandStack()->IsEmpty());
     GetCommandStack()->Clear();
-
     ASSERT_TRUE(GetCommandStack()->IsEmpty());
 }
 
 
-TEST_F(CommandStackTestFixture, Undo_SingleCommand_CommandUndoed)
+TEST_F(CommandStackTestFixture, /*DISABLED_*/Undo_SingleCommand_CommandUndoed)
 {
     double result{0.0};
 
-    std::unique_ptr<cxmodel::ICommand> cmd{new CommandAddTwoMock{result}};
-    cmd->Execute();
+    GetCommandStack()->Execute(std::make_unique<CommandAddTwoMock>(result));
 
     ASSERT_EQ(result, 2.0);
 
-    GetCommandStack()->Add(std::move(cmd));
     GetCommandStack()->Undo();
 
     ASSERT_EQ(result, 0.0);
 }
 
-TEST_F(CommandStackTestFixture, Undo_MultipleCommands_AllCommandsUndoed)
+TEST_F(CommandStackTestFixture, /*DISABLED_*/Undo_MultipleCommands_AllCommandsUndoed)
 {
     double result{0.0};
 
-    std::unique_ptr<cxmodel::ICommand> cmd1{new CommandAddTwoMock{result}};
-    std::unique_ptr<cxmodel::ICommand> cmd2{new CommandTimesThreeMock{result}};
-    std::unique_ptr<cxmodel::ICommand> cmd3{new CommandAddTwoMock{result}};
-    cmd1->Execute();
-    cmd2->Execute();
-    cmd3->Execute();
+    GetCommandStack()->Execute(std::make_unique<CommandAddTwoMock>(result));
+    GetCommandStack()->Execute(std::make_unique<CommandTimesThreeMock>(result));
+    GetCommandStack()->Execute(std::make_unique<CommandAddTwoMock>(result));
 
     ASSERT_EQ(result, 8.0);
 
-    GetCommandStack()->Add(std::move(cmd1));
-    GetCommandStack()->Add(std::move(cmd2));
-    GetCommandStack()->Add(std::move(cmd3));
-
     GetCommandStack()->Undo();
     GetCommandStack()->Undo();
     GetCommandStack()->Undo();
@@ -174,26 +155,21 @@ TEST_F(CommandStackTestFixture, Undo_MultipleCommands_AllCommandsUndoed)
     ASSERT_EQ(result, 0.0);
 }
 
-TEST_F(CommandStackTestFixture, Undo_NoCommand_NothingHappens)
+TEST_F(CommandStackTestFixture, /*DISABLED_*/Undo_NoCommand_NothingHappens)
 {
+    ASSERT_TRUE(GetCommandStack()->IsEmpty());
     GetCommandStack()->Undo();
-
     ASSERT_TRUE(GetCommandStack()->IsEmpty());
 }
 
-TEST_F(CommandStackTestFixture, Undo_TooManyUndoes_AllCommandsUndoed)
+TEST_F(CommandStackTestFixture, /*DISABLED_*/Undo_TooManyUndoes_AllCommandsUndoed)
 {
     double result{0.0};
 
-    std::unique_ptr<cxmodel::ICommand> cmd1{new CommandAddTwoMock{result}};
-    std::unique_ptr<cxmodel::ICommand> cmd2{new CommandTimesThreeMock{result}};
-    cmd1->Execute();
-    cmd2->Execute();
+    GetCommandStack()->Execute(std::make_unique<CommandAddTwoMock>(result));
+    GetCommandStack()->Execute(std::make_unique<CommandTimesThreeMock>(result));
 
     ASSERT_EQ(result, 6.0);
-
-    GetCommandStack()->Add(std::move(cmd1));
-    GetCommandStack()->Add(std::move(cmd2));
 
     GetCommandStack()->Undo();
     GetCommandStack()->Undo();
@@ -202,38 +178,29 @@ TEST_F(CommandStackTestFixture, Undo_TooManyUndoes_AllCommandsUndoed)
     ASSERT_EQ(result, 0.0);
 }
 
-TEST_F(CommandStackTestFixture, Redo_SingleCommand_CommandRedoed)
+TEST_F(CommandStackTestFixture, /*DISABLED_*/Redo_SingleCommand_CommandRedoed)
 {
     double result{0.0};
 
-    std::unique_ptr<cxmodel::ICommand> cmd{new CommandAddTwoMock{result}};
-    cmd->Execute();
+    GetCommandStack()->Execute(std::make_unique<CommandAddTwoMock>(result));
 
     ASSERT_EQ(result, 2.0);
 
-    GetCommandStack()->Add(std::move(cmd));
     GetCommandStack()->Undo();
     GetCommandStack()->Redo();
 
     ASSERT_EQ(result, 2.0);
 }
 
-TEST_F(CommandStackTestFixture, Redo_MultipleCommands_AllCommandsRedoed)
+TEST_F(CommandStackTestFixture, /*DISABLED_*/Redo_MultipleCommands_AllCommandsRedoed)
 {
     double result{0.0};
 
-    std::unique_ptr<cxmodel::ICommand> cmd1{new CommandAddTwoMock{result}};
-    std::unique_ptr<cxmodel::ICommand> cmd2{new CommandTimesThreeMock{result}};
-    std::unique_ptr<cxmodel::ICommand> cmd3{new CommandAddTwoMock{result}};
-    cmd1->Execute();
-    cmd2->Execute();
-    cmd3->Execute();
+    GetCommandStack()->Execute(std::make_unique<CommandAddTwoMock>(result));
+    GetCommandStack()->Execute(std::make_unique<CommandTimesThreeMock>(result));
+    GetCommandStack()->Execute(std::make_unique<CommandAddTwoMock>(result));
 
     ASSERT_EQ(result, 8.0);
-
-    GetCommandStack()->Add(std::move(cmd1));
-    GetCommandStack()->Add(std::move(cmd2));
-    GetCommandStack()->Add(std::move(cmd3));
 
     GetCommandStack()->Undo();
     GetCommandStack()->Undo();
@@ -246,27 +213,21 @@ TEST_F(CommandStackTestFixture, Redo_MultipleCommands_AllCommandsRedoed)
     ASSERT_EQ(result, 8.0);
 }
 
-TEST_F(CommandStackTestFixture, Redo_NoCommand_NothingHappens)
+TEST_F(CommandStackTestFixture, /*DISABLED_*/Redo_NoCommand_NothingHappens)
 {
+    ASSERT_TRUE(GetCommandStack()->IsEmpty());
     GetCommandStack()->Redo();
-
     ASSERT_TRUE(GetCommandStack()->IsEmpty());
 }
 
-
-TEST_F(CommandStackTestFixture, Redo_TooManyRedoes_AllCommandsRedoed)
+TEST_F(CommandStackTestFixture, /*DISABLED_*/Redo_TooManyRedoes_AllCommandsRedoed)
 {
     double result{0.0};
 
-    std::unique_ptr<cxmodel::ICommand> cmd1{new CommandAddTwoMock{result}};
-    std::unique_ptr<cxmodel::ICommand> cmd2{new CommandTimesThreeMock{result}};
-    cmd1->Execute();
-    cmd2->Execute();
+    GetCommandStack()->Execute(std::make_unique<CommandAddTwoMock>(result));
+    GetCommandStack()->Execute(std::make_unique<CommandTimesThreeMock>(result));
 
     ASSERT_EQ(result, 6.0);
-
-    GetCommandStack()->Add(std::move(cmd1));
-    GetCommandStack()->Add(std::move(cmd2));
 
     GetCommandStack()->Undo();
     GetCommandStack()->Undo();
@@ -277,19 +238,37 @@ TEST_F(CommandStackTestFixture, Redo_TooManyRedoes_AllCommandsRedoed)
     ASSERT_EQ(result, 6.0);
 }
 
-TEST_F(CommandStackTestFixture, UndoRedo_SingleCommand_StateIsUnchaged)
+TEST_F(CommandStackTestFixture, /*DISABLED_*/UndoRedo_SingleCommand_StateIsUnchaged)
 {
     double result{0.0};
 
-    std::unique_ptr<cxmodel::ICommand> cmd{new CommandAddTwoMock{result}};
-    cmd->Execute();
+    GetCommandStack()->Execute(std::make_unique<CommandAddTwoMock>(result));
 
     ASSERT_EQ(result, 2.0);
-
-    GetCommandStack()->Add(std::move(cmd));
 
     GetCommandStack()->Undo();
     GetCommandStack()->Redo();
 
     ASSERT_EQ(result, 2.0);
+}
+
+TEST_F(CommandStackTestFixture, /*DISABLED_*/UndoRedo_CommandExecuteedInBetween_RedoHasNoEffect)
+{
+    double result{0.0};
+
+    GetCommandStack()->Execute(std::make_unique<CommandAddTwoMock>(result));
+    GetCommandStack()->Execute(std::make_unique<CommandTimesThreeMock>(result));
+    GetCommandStack()->Execute(std::make_unique<CommandAddTwoMock>(result));
+
+    // Undo last command
+    GetCommandStack()->Undo();
+
+    ASSERT_EQ(GetCommandStack()->GetNbCommands(), 3);
+    ASSERT_EQ(result, 6.0);
+
+    // Overwrite it with a new command:
+    GetCommandStack()->Execute(std::make_unique<CommandTimesThreeMock>(result));
+
+    ASSERT_EQ(GetCommandStack()->GetNbCommands(), 3);
+    ASSERT_EQ(result, 18.0);
 }

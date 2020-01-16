@@ -21,6 +21,8 @@
  *
  *************************************************************************************************/
 
+#include <iostream>
+
 #include <cxinv/include/assertion.h>
 
 #include <CommandStack.h>
@@ -39,41 +41,50 @@ cxmodel::CommandStack::CommandStack(const size_t p_capacity)
     CheckInvariants();
 }
 
-void cxmodel::CommandStack::Add(std::unique_ptr<cxmodel::ICommand>&& p_command)
+void cxmodel::CommandStack::Execute(std::unique_ptr<cxmodel::ICommand>&& p_newCommand)
 {
-    PRECONDITION(p_command != nullptr);
+    PRECONDITION(p_newCommand != nullptr);
 
-    if(!p_command)
+    if(!p_newCommand)
     {
         return;
     }
 
-    if(IsFull() && AreNoCommandUndoed())
+    if(NoCommandUndoed())
     {
-        m_commands.erase(m_commands.cbegin());
-        m_commands.push_back(std::move(p_command));
-    }
-    else if(!IsFull() && AreNoCommandUndoed())
-    {
-        m_commands.push_back(std::move(p_command));
-
-        // If this is the first added command, the current position
-        // is still 0.
-        if(m_commands.size() != 1)
+        if(IsFull())
         {
-            ++m_currentPosition;
+            // We remove the oldest command (front) and add the new one
+            // at the end (back):
+            m_commands.erase(m_commands.cbegin());
+            m_commands.push_back(std::move(p_newCommand));
+
+            // We remove one to make sure the new command can be executed:
+            m_currentPosition = m_commands.size() - 1;
+        }
+        else
+        {
+            m_commands.push_back(std::move(p_newCommand));
         }
     }
-    else
+    else if(SomeCommandUndoed())
     {
-        // Strip all previously undoed commands:
+        // Some commands were undoed and never redoed before new ones
+        // were added. In this case, we strip all previously undoed commands.
+        // We will forget about them and replace them by the new addedcommand:
         m_commands.erase(m_commands.cbegin() + m_currentPosition,
                          m_commands.cend());
 
-        m_commands.shrink_to_fit();
+        m_currentPosition = m_commands.size();
 
-        // Add the command:
-        m_commands.push_back(std::move(p_command));
+        // Add the new command:
+        m_commands.push_back(std::move(p_newCommand));
+    }
+
+    // At this point a new command was added. We execute it:
+    if(m_currentPosition < m_commands.size())
+    {
+        m_commands.back()->Execute();
         ++m_currentPosition;
     }
 
@@ -97,15 +108,15 @@ void cxmodel::CommandStack::Undo()
         return;
     }
 
-    if(m_currentPosition != 0)
+    if(m_currentPosition == 0)
     {
-        m_commands[m_currentPosition]->Undo();
-        --m_currentPosition;
+        return;
     }
-    else if(m_currentPosition == 0 && !m_allCmdUndoed)
+
+    if(m_currentPosition > 0)
     {
-        m_commands[m_currentPosition]->Undo();
-        m_allCmdUndoed = true;
+        m_commands[m_currentPosition - 1]->Undo();
+        --m_currentPosition;
     }
 
     CheckInvariants();
@@ -118,9 +129,9 @@ void cxmodel::CommandStack::Redo()
         return;
     }
 
-    if(m_currentPosition == 0)
+    if(m_currentPosition == m_commands.size())
     {
-        m_allCmdUndoed = false;
+        return;
     }
 
     if(m_currentPosition < m_commands.size())
@@ -147,19 +158,19 @@ size_t cxmodel::CommandStack::GetNbCommands() const
     return m_commands.size();
 }
 
-bool cxmodel::CommandStack::AreNoCommandUndoed() const
-{
-    if(m_commands.empty())
-    {
-        return true;
-    }
-
-    return m_currentPosition == GetLastCommandPosition();
-}
-
 size_t cxmodel::CommandStack::GetLastCommandPosition() const
 {
     return m_commands.size() - 1;
+}
+
+bool cxmodel::CommandStack::NoCommandUndoed() const
+{
+    return m_currentPosition == m_commands.size();
+}
+
+bool cxmodel::CommandStack::SomeCommandUndoed() const
+{
+    return m_currentPosition < m_commands.size();
 }
 
 void cxmodel::CommandStack::CheckInvariants()

@@ -26,7 +26,7 @@
 
 #include <memory>
 
-#include "ICommand.h"
+#include <ICommand.h>
 
 namespace cxmodel
 {
@@ -57,23 +57,23 @@ public:
     virtual ~ICommandStack() = default;
 
     /******************************************************************************************//**
-     * @brief Add a command to the stack.
+     * @brief Add a command to the stack and execute it.
      *
-     * @pre @c p_command is not @c nullptr
+     * @pre @c p_newCommand is not @c nullptr
      *
-     * @param p_command The command to add to the stack.
+     * @param p_newCommand The command to add to the stack and execute.
      *
-     * Adds a new command to the stack (and takes ownership).
+     * Adds a new command to the stack (and takes ownership). The new command is then executed.
      *
      ********************************************************************************************/
-    virtual void Add(std::unique_ptr<ICommand>&& p_command) = 0;
+    virtual void Execute(std::unique_ptr<ICommand>&& p_newCommand) = 0;
 
     /******************************************************************************************//**
      * @brief Clear the stack.
      *
      * @post There are no more commands in the stack.
      *
-     * Clear the stack of all its commands.
+     * Clears the stack of all its commands.
      *
      ********************************************************************************************/
     virtual void Clear() = 0;
@@ -82,7 +82,8 @@ public:
      * @brief Undo the current command in the stack.
      *
      * Reverses the actions of the current command in the stack. If there are no commands in the
-     * stack, this is a noop.
+     * stack, this is a noop. If all commands in the stack have been undoed, this call has no
+     * effect.
      *
      ********************************************************************************************/
     virtual void Undo() = 0;
@@ -91,7 +92,8 @@ public:
      * @brief Redo the action of the last undoed command in the stack.
      *
      * Re-executes the action of the last undoed command in the stack. If there are no commands
-     * in the stack, this is a noop.
+     * in the stack, this is a noop. If the current command is the last added command in the
+     * stack, this call has no effect.
      *
      ********************************************************************************************/
     virtual void Redo() = 0;

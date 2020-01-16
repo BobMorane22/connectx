@@ -21,6 +21,8 @@
  *
  *************************************************************************************************/
 
+#include <gtest/gtest.h>
+
 #include "CommandStackTestFixture.h"
 
 CommandStackTestFixture::CommandStackTestFixture()
