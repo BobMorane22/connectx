@@ -23,11 +23,12 @@
 
 #include <gtest/gtest.h>
 
+#include <CommandStack.h>
 #include <Model.h>
 
 TEST(Model, Constructor_NoOtherAction_CurrentValueIs0)
 {
-    cxmodel::Model concreteModel;
+    cxmodel::Model concreteModel{std::make_unique<cxmodel::CommandStack>(200)};
     cxmodel::IModel& model = concreteModel;
 
     ASSERT_EQ(model.GetCurrentValue(), 0);
@@ -35,7 +36,7 @@ TEST(Model, Constructor_NoOtherAction_CurrentValueIs0)
 
 TEST(Model, GetCurrentValue_AfterIncrement_CurrentValueIsNot0)
 {
-    cxmodel::Model concreteModel;
+    cxmodel::Model concreteModel{std::make_unique<cxmodel::CommandStack>(200)};
     cxmodel::IModel& model = concreteModel;
 
     model.Increment();
@@ -45,7 +46,7 @@ TEST(Model, GetCurrentValue_AfterIncrement_CurrentValueIsNot0)
 
 TEST(Model, Increment_InitialValueIs0_CurrentValueIs1)
 {
-    cxmodel::Model concreteModel;
+    cxmodel::Model concreteModel{std::make_unique<cxmodel::CommandStack>(200)};
     cxmodel::IModel& model = concreteModel;
 
     model.Increment();
@@ -55,7 +56,7 @@ TEST(Model, Increment_InitialValueIs0_CurrentValueIs1)
 
 TEST(Model, Reinitialize_InitialValueIs0_CurrentValueIs0)
 {
-    cxmodel::Model concreteModel;
+    cxmodel::Model concreteModel{std::make_unique<cxmodel::CommandStack>(200)};
     cxmodel::IModel& model = concreteModel;
 
     model.Increment();

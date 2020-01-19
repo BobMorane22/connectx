@@ -43,3 +43,13 @@ void ModelMock::Reinitialize()
 
     Notify();
 }
+
+void ModelMock::Undo()
+{
+    // Nothing to do for now...
+}
+
+void ModelMock::Redo()
+{
+    // Nothing to do for now...
+}

@@ -42,3 +42,13 @@ void ModelMock::Reinitialize()
 {
     m_currentValue = m_INITIAL_VALUE;
 }
+
+void ModelMock::Undo()
+{
+    // Nothing to do for now...
+}
+
+void ModelMock::Redo()
+{
+    // Nothing to do for now...
+}

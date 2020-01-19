@@ -26,7 +26,7 @@
 
 #include <vector>
 
-#include <ICommandStack.h>
+#include "ICommandStack.h"
 
 namespace cxmodel
 {

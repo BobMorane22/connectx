@@ -16,37 +16,25 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file ModelMock.h
- * @date 2019
+ * @file CommandIncrementByOne.cpp
+ * @date 2020
  *
  *************************************************************************************************/
 
-#ifndef MODELMOCK_H_CCCA3271_7466_48B8_B57F_5D37825DFECE
-#define MODELMOCK_H_CCCA3271_7466_48B8_B57F_5D37825DFECE
+#include <CommandIncrementByOne.h>
 
-#include <cxmodel/include/IModel.h>
-
-class ModelMock : public cxmodel::IModel
+cxmodel::CommandIncrementByOne::CommandIncrementByOne(unsigned int& p_value)
+ : m_value{p_value}
+ , m_undoValue{p_value}
 {
+}
 
-public:
+void cxmodel::CommandIncrementByOne::Execute()
+{
+    ++m_value;
+}
 
-    ModelMock();
-
-    unsigned int GetCurrentValue() const override;
-
-    void Increment() override;
-    void Reinitialize() override;
-
-    void Undo() override;
-    void Redo() override;
-
-
-private:
-
-    static constexpr unsigned int m_INITIAL_VALUE = 0u;
-    unsigned int m_currentValue;
-
-};
-
-#endif // MODELMOCK_H_CCCA3271_7466_48B8_B57F_5D37825DFECE
+void cxmodel::CommandIncrementByOne::Undo()
+{
+    m_value = m_undoValue;
+}

@@ -26,7 +26,7 @@
 
 #include <memory>
 
-#include <ICommand.h>
+#include "ICommand.h"
 
 namespace cxmodel
 {

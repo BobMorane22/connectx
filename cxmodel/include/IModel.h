@@ -76,6 +76,29 @@ public:
      ********************************************************************************************/
     virtual void Reinitialize() = 0;
 
+    /******************************************************************************************//**
+     * @brief Undo the last action, if possible.
+     *
+     * If some undoeable actions were done, the last one will be undoed.
+     *
+     * @note An action that is undoed must put the model back at the same state is was before
+     *       the action was ever done.
+     *
+     ********************************************************************************************/
+    virtual void Undo() = 0;
+
+    /******************************************************************************************//**
+     * @brief Redo the last action, if possible.
+     *
+     * If some redoable actions were undoed, the last one that was undoed will be redoed.
+     * Otherwise, nothing happens.
+     *
+     * @note An action that is redoed must put the model back at the same state it was before
+     *       the action was undoed.
+     *
+     ********************************************************************************************/
+    virtual void Redo() = 0;
+
 };
 
 } // namespace cxmodel

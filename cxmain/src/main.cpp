@@ -23,13 +23,16 @@
 
 #include <memory>
 
+#include <cxmodel/include/CommandStack.h>
 #include <cxmodel/include/Model.h>
 
 #include <Application.h>
 
+constexpr size_t CMD_STACK_SIZE = 200;
+
 int main(int argc, char *argv[])
 {
-    cxmodel::Model concreteModel;
+    cxmodel::Model concreteModel{std::make_unique<cxmodel::CommandStack>(CMD_STACK_SIZE)};
     cxmodel::IModel& model = concreteModel;
 
     std::unique_ptr<cx::IApplication> app = std::make_unique<cx::Application>(argc, argv, model);

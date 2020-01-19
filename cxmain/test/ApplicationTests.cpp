@@ -47,8 +47,6 @@ TEST_F(ApplicationTestFixture, Run_BadArgument_ExitFailure)
     const int argc = 2;
     const char *argv[] = {"connectx", "--bad"};
 
-    cxmodel::Model model;
-
     std::unique_ptr<cx::IApplication> app = std::make_unique<cx::Application>(argc, (char**)argv, GetModel());
 
     EXPECT_EQ(app->Run(), EXIT_FAILURE);
@@ -58,8 +56,6 @@ TEST_F(ApplicationTestFixture, Run_Help_ExitSuccess)
 {
     const int argc = 2;
     const char *argv[] = {"connectx", "--help"};
-
-    cxmodel::Model model;
 
     std::unique_ptr<cx::IApplication> app = std::make_unique<cx::Application>(argc, (char**)argv, GetModel());
 
@@ -71,8 +67,6 @@ TEST_F(ApplicationTestFixture, Run_Version_ExitSuccess)
     const int argc = 2;
     const char *argv[] = {"connectx", "--version"};
 
-    cxmodel::Model model;
-
     std::unique_ptr<cx::IApplication> app = std::make_unique<cx::Application>(argc, (char**)argv, GetModel());
 
     EXPECT_EQ(app->Run(), EXIT_SUCCESS);
@@ -82,8 +76,6 @@ TEST_F(ApplicationTestFixture, Run_HelpAndVersion_ExitSuccess)
 {
     const int argc = 3;
     const char *argv[] = {"connectx", "--help", "--version"};
-
-    cxmodel::Model model;
 
     std::unique_ptr<cx::IApplication> app = std::make_unique<cx::Application>(argc, (char**)argv, GetModel());
 
@@ -95,8 +87,6 @@ TEST_F(ApplicationTestFixture, Run_VersionAndHelp_ExitSuccess)
     const int argc = 3;
     const char *argv[] = {"connectx", "--version", "--help"};
 
-    cxmodel::Model model;
-
     std::unique_ptr<cx::IApplication> app = std::make_unique<cx::Application>(argc, (char**)argv, GetModel());
 
     EXPECT_EQ(app->Run(), EXIT_SUCCESS);
@@ -107,8 +97,6 @@ TEST_F(ApplicationTestFixture, Run_TwoManyValidArguments_ExitSuccess)
     const int argc = 4;
     const char *argv[] = {"connectx", "--help", "--version", "--help"};
 
-    cxmodel::Model model;
-
     std::unique_ptr<cx::IApplication> app = std::make_unique<cx::Application>(argc, (char**)argv, GetModel());
 
     EXPECT_EQ(app->Run(), EXIT_SUCCESS);
@@ -118,8 +106,6 @@ TEST_F(ApplicationTestFixture, Run_MixedArguments_ExitFailure)
 {
     const int argc = 4;
     const char *argv[] = {"connectx", "--version", "--bad", "--help"};
-
-    cxmodel::Model model;
 
     std::unique_ptr<cx::IApplication> app = std::make_unique<cx::Application>(argc, (char**)argv, GetModel());
 

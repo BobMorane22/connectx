@@ -23,11 +23,23 @@
 
 #include <cxinv/include/assertion.h>
 
+#include <CommandIncrementByOne.h>
+#include <CommandStack.h>
 #include <Model.h>
 
-cxmodel::Model::Model()
+cxmodel::Model::Model(std::unique_ptr<ICommandStack>&& p_cmdStack)
+ : m_cmdStack{std::move(p_cmdStack)}
 {
+    PRECONDITION(m_cmdStack != nullptr);
+
+    if(m_cmdStack != nullptr)
+    {
+        PRECONDITION(m_cmdStack->IsEmpty());
+    }
+
     m_currentValue = m_INITIAL_VALUE;
+
+    CheckInvariants();
 }
 
 unsigned int cxmodel::Model::GetCurrentValue() const
@@ -39,11 +51,13 @@ void cxmodel::Model::Increment()
 {
     const unsigned int old = m_currentValue;
 
-    ++m_currentValue;
+    m_cmdStack->Execute(std::make_unique<CommandIncrementByOne>(m_currentValue));
 
     Notify();
 
     POSTCONDITION(m_currentValue - old == 1);
+
+    CheckInvariants();
 }
 
 void cxmodel::Model::Reinitialize()
@@ -53,4 +67,25 @@ void cxmodel::Model::Reinitialize()
     Notify();
 
     POSTCONDITION(m_currentValue == m_INITIAL_VALUE);
+
+    CheckInvariants();
+}
+
+void cxmodel::Model::Undo()
+{
+    m_cmdStack->Undo();
+
+    CheckInvariants();
+}
+
+void cxmodel::Model::Redo()
+{
+    m_cmdStack->Redo();
+
+    CheckInvariants();
+}
+
+void cxmodel::Model::CheckInvariants()
+{
+    INVARIANT(m_cmdStack != nullptr);
 }

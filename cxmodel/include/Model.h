@@ -24,6 +24,9 @@
 #ifndef MODEL_H_8CC20E7E_7466_4977_9435_7E09ADBD10FC
 #define MODEL_H_8CC20E7E_7466_4977_9435_7E09ADBD10FC
 
+#include <memory>
+
+#include "ICommandStack.h"
 #include "IModel.h"
 
 namespace cxmodel
@@ -31,6 +34,8 @@ namespace cxmodel
 
 /*********************************************************************************************//**
  * @brief Connect X model.
+ *
+ * @invariant The command stack is valid.
  *
  * This class holds the Connect X related business rules.
  *
@@ -40,17 +45,33 @@ class Model : public IModel
 
 public:
 
-    Model();
+    /******************************************************************************************//**
+     * @brief Constructor.
+     *
+     * @pre p_cmdStack is valid.
+     * @pre p_cmdStack is empty.
+     *
+     * @param p_cmdStack The command stack.
+     *
+     ********************************************************************************************/
+    Model(std::unique_ptr<ICommandStack>&& p_cmdStack);
 
     unsigned int GetCurrentValue() const override;
 
     void Increment() override;
     void Reinitialize() override;
 
+    void Undo() override;
+    void Redo() override;
+
+
 private:
 
-    static constexpr unsigned int m_INITIAL_VALUE = 0u;
+    void CheckInvariants();
 
+    std::unique_ptr<ICommandStack> m_cmdStack;
+
+    static constexpr unsigned int m_INITIAL_VALUE = 0u;
     unsigned int m_currentValue;
 };
 

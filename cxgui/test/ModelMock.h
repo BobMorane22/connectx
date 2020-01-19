@@ -36,6 +36,9 @@ public:
     virtual void Increment() override;
     virtual void Reinitialize() override;
 
+    virtual void Undo() override;
+    virtual void Redo() override;
+
 
 private:
 
