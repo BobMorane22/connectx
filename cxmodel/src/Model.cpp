@@ -24,6 +24,7 @@
 #include <cxinv/include/assertion.h>
 
 #include <CommandIncrementByOne.h>
+#include <CommandReinitialize.h>
 #include <CommandStack.h>
 #include <Model.h>
 
@@ -62,7 +63,8 @@ void cxmodel::Model::Increment()
 
 void cxmodel::Model::Reinitialize()
 {
-    m_currentValue = m_INITIAL_VALUE;
+
+    m_cmdStack->Execute(std::make_unique<CommandReinitialize>(m_INITIAL_VALUE, m_currentValue, m_currentValue));
 
     Notify();
 
@@ -75,12 +77,16 @@ void cxmodel::Model::Undo()
 {
     m_cmdStack->Undo();
 
+    Notify();
+
     CheckInvariants();
 }
 
 void cxmodel::Model::Redo()
 {
     m_cmdStack->Redo();
+
+    Notify();
 
     CheckInvariants();
 }

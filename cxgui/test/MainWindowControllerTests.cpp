@@ -38,7 +38,7 @@ TEST_F(MainWindowControllerTestFixture, OnReinitializeBthPressed_CountIsOne_Coun
 
     ASSERT_EQ(GetModel().GetCurrentValue(), 1);
 
-    GetController().OnReinitializeBthPressed();
+    GetController().OnReinitializeBtnPressed();
 
     ASSERT_EQ(GetModel().GetCurrentValue(), 0);
 }

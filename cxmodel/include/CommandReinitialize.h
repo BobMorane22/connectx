@@ -16,13 +16,13 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file CommandIncrementByOne.h
+ * @file CommandReinitialize.h
  * @date 2020
  *
  *************************************************************************************************/
 
-#ifndef COMMANDINCREMENTBYONE_H_940FBEA4_4F38_4D83_960D_B7316380C018
-#define COMMANDINCREMENTBYONE_H_940FBEA4_4F38_4D83_960D_B7316380C018
+#ifndef COMMANDREINITIALIZE_H_D036C481_8FC6_410B_8B2F_397136AC1038
+#define COMMANDREINITIALIZE_H_D036C481_8FC6_410B_8B2F_397136AC1038
 
 #include "ICommand.h"
 
@@ -38,12 +38,14 @@ namespace cxmodel
  * DESCRIPTION
  *
  ************************************************************************************************/
-class CommandIncrementByOne : public ICommand
+class CommandReinitialize : public ICommand
 {
 
 public:
 
-    CommandIncrementByOne(unsigned int& p_value);
+    CommandReinitialize(unsigned int p_reinitValue,
+                        unsigned int p_initialValue,
+                        unsigned int& p_value);
 
     void Execute() override;
     void Undo() override;
@@ -51,11 +53,11 @@ public:
 
 private:
 
+    const unsigned int m_reinitValue;
+    const unsigned int m_initialValue;
     unsigned int& m_value;
-    const unsigned int m_undoValue;
-
 };
 
 } // namespace cxmodel
 
-#endif // COMMANDINCREMENTBYONE_H_940FBEA4_4F38_4D83_960D_B7316380C018
+#endif // COMMANDREINITIALIZE_H_D036C481_8FC6_410B_8B2F_397136AC1038

@@ -56,7 +56,19 @@ public:
      * @brief Reacts to changes on the "Reinitialize" button.
      *
      ********************************************************************************************/
-    virtual void OnReinitializeBthPressed() = 0;
+    virtual void OnReinitializeBtnPressed() = 0;
+
+    /******************************************************************************************//**
+     * @brief Reacts to changes on the "Undo" button.
+     *
+     ********************************************************************************************/
+    virtual void OnUndoBtnPressed() = 0;
+
+    /******************************************************************************************//**
+     * @brief Reacts to changes on the "Redo" button.
+     *
+     ********************************************************************************************/
+    virtual void OnRedoBtnPressed() = 0;
 
 };
 

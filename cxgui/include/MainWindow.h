@@ -48,7 +48,12 @@ namespace cxgui
  *
  * @invariant m_app is not @c nullptr
  * @invariant m_mainWindow is not @c nullptr
- * @invariant m_helloWorld is not @c nullptr
+ * @invariant m_mainLayout is not @c nullptr
+ * @invariant m_undoButton is not @c nullptr
+ * @invariant m_redoButton is not @c nullptr
+ * @invariant m_counterLabel is not @c nullptr
+ * @invariant m_incrementButton is not @c nullptr
+ * @invariant m_reinitButton is not @c nullptr
  *
  * A Gtkmm window that acts as the application main window. It is the responsibility of this
  * window to initialize the Gtkmm library and to show the window.
@@ -68,6 +73,8 @@ public:
      * @post m_app is not @c nullptr
      * @post m_mainWindow is not @c nullptr
      * @post m_mainLayout is not @c nullptr
+     * @post m_undoButton is not @c nullptr
+     * @post m_redoButton is not @c nullptr
      * @post m_counterLabel is not @c nullptr
      * @post m_incrementButton is not @c nullptr
      * @post m_reinitButton is not @c nullptr
@@ -90,6 +97,7 @@ private:
     void Update(cxmodel::Subject* p_subject) override;
 
     void InitializeGtkmm(int argc, char *argv[]);
+    void CheckInvariants();
 
     Glib::RefPtr<Gtk::Application> m_app;
 
@@ -104,6 +112,8 @@ private:
 
     std::unique_ptr<Gtk::Grid> m_mainLayout;
 
+    std::unique_ptr<Gtk::Button> m_undoButton;
+    std::unique_ptr<Gtk::Button> m_redoButton;
     std::unique_ptr<Gtk::Label> m_counterLabel;
     std::unique_ptr<Gtk::Button> m_incrementButton;
     std::unique_ptr<Gtk::Button> m_reinitButton;

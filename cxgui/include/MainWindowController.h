@@ -42,7 +42,11 @@ public:
     MainWindowController(cxmodel::IModel& p_model);
 
     void OnIncrementBtnPressed() override;
-    void OnReinitializeBthPressed() override;
+    void OnReinitializeBtnPressed() override;
+
+    void OnUndoBtnPressed() override;
+
+    void OnRedoBtnPressed() override;
 
 private:
 

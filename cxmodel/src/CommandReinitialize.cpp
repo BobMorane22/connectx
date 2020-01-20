@@ -16,46 +16,28 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file CommandIncrementByOne.h
+ * @file CommandReinitialize.cpp
  * @date 2020
  *
  *************************************************************************************************/
 
-#ifndef COMMANDINCREMENTBYONE_H_940FBEA4_4F38_4D83_960D_B7316380C018
-#define COMMANDINCREMENTBYONE_H_940FBEA4_4F38_4D83_960D_B7316380C018
+#include <CommandReinitialize.h>
 
-#include "ICommand.h"
-
-namespace cxmodel
+cxmodel::CommandReinitialize::CommandReinitialize(unsigned int p_reinitValue,
+                                                  unsigned int p_initialValue,
+                                                  unsigned int& p_value)
+ : m_reinitValue{p_reinitValue}
+ , m_initialValue{p_initialValue}
+ , m_value{p_value}
 {
+}
 
-/*********************************************************************************************//**
- * @brief DESCRIPTION
- *
- * @invariant
- * @invariant
- *
- * DESCRIPTION
- *
- ************************************************************************************************/
-class CommandIncrementByOne : public ICommand
+void cxmodel::CommandReinitialize::Execute()
 {
+    m_value = m_reinitValue;
+}
 
-public:
-
-    CommandIncrementByOne(unsigned int& p_value);
-
-    void Execute() override;
-    void Undo() override;
-
-
-private:
-
-    unsigned int& m_value;
-    const unsigned int m_undoValue;
-
-};
-
-} // namespace cxmodel
-
-#endif // COMMANDINCREMENTBYONE_H_940FBEA4_4F38_4D83_960D_B7316380C018
+void cxmodel::CommandReinitialize::Undo()
+{
+    m_value = m_initialValue;
+}

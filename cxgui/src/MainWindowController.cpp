@@ -35,7 +35,17 @@ void cxgui::MainWindowController::OnIncrementBtnPressed()
     m_model.Increment();
 }
 
-void cxgui::MainWindowController::OnReinitializeBthPressed()
+void cxgui::MainWindowController::OnReinitializeBtnPressed()
 {
     m_model.Reinitialize();
+}
+
+void cxgui::MainWindowController::OnUndoBtnPressed()
+{
+    m_model.Undo();
+}
+
+void cxgui::MainWindowController::OnRedoBtnPressed()
+{
+    m_model.Redo();
 }

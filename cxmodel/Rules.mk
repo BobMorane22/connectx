@@ -50,6 +50,7 @@ include $(dir)/Rules.mk
 # i.e. the ones we want deleted by a "make clean" command.
 #
 OBJS_$(d) := $(d)/src/CommandIncrementByOne.o \
+             $(d)/src/CommandReinitialize.o \
              $(d)/src/CommandStack.o \
              $(d)/src/Model.o \
              $(d)/src/Subject.o
