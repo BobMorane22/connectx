@@ -16,34 +16,34 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file MainWindowControllerTestFixture.cpp
- * @date 2019
+ * @file ModelMockPresenter.h
+ * @date 2020
  *
  *************************************************************************************************/
 
-#include <cxgui/test/ModelMockController.h>
-#include "MainWindowController.h"
-#include "MainWindowControllerTestFixture.h"
+#ifndef MODELMOCKPRESENTER_H_A4A9F6D9_7463_47D5_A25A_00880ACB678C
+#define MODELMOCKPRESENTER_H_A4A9F6D9_7463_47D5_A25A_00880ACB678C
 
-MainWindowControllerTestFixture::MainWindowControllerTestFixture()
+#include <cxmodel/include/IModel.h>
+
+class ModelMockPresenter : public cxmodel::IModel
 {
-    m_model = std::make_unique<ModelMockController>();
-    m_controller = std::make_unique<cxgui::MainWindowController>(*m_model);
 
-    EXPECT_TRUE(m_model != nullptr);
-    EXPECT_TRUE(m_controller != nullptr);
-}
+public:
 
-cxmodel::IModel& MainWindowControllerTestFixture::GetModel()
-{
-    EXPECT_TRUE(m_model != nullptr);
+    virtual unsigned int GetCurrentValue() const override;
 
-    return *m_model;
-}
+    virtual void Increment() override;
+    virtual void Reinitialize() override;
 
-cxgui::IMainWindowController& MainWindowControllerTestFixture::GetController()
-{
-    EXPECT_TRUE(m_controller != nullptr);
+    virtual void Undo() override;
+    virtual void Redo() override;
 
-    return *m_controller;
-}
+
+private:
+
+    unsigned int m_currentValue;
+
+};
+
+#endif // MODELMOCK_H_A4A9F6D9_7463_47D5_A25A_00880ACB678C

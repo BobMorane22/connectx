@@ -21,24 +21,41 @@
  *
  *************************************************************************************************/
 
+#include <cxgui/test/ModelMockController.h>
 #include "MainWindowControllerTestFixture.h"
 
-TEST_F(MainWindowControllerTestFixture, OnIncrementBtnPressed_PressedOnce_IncrementedByOne)
+TEST_F(MainWindowControllerTestFixture, OnIncrementBtnPressed_PressedOnce_IncrementCalledOnModel)
 {
-    ASSERT_EQ(GetModel().GetCurrentValue(), 0);
-
     GetController().OnIncrementBtnPressed();
 
-    ASSERT_EQ(GetModel().GetCurrentValue(), 1);
+    ModelMockController& model = static_cast<ModelMockController&>(GetModel());
+
+    ASSERT_TRUE(model.GetIncremented());
 }
 
-TEST_F(MainWindowControllerTestFixture, OnReinitializeBthPressed_CountIsOne_CountIsZero)
+TEST_F(MainWindowControllerTestFixture, OnReinitializeBtnPressed_PressedOnce_ReinitializeCalledOnModel)
 {
-    GetController().OnIncrementBtnPressed();
-
-    ASSERT_EQ(GetModel().GetCurrentValue(), 1);
-
     GetController().OnReinitializeBtnPressed();
 
-    ASSERT_EQ(GetModel().GetCurrentValue(), 0);
+    ModelMockController& model = static_cast<ModelMockController&>(GetModel());
+
+    ASSERT_TRUE(model.GetReinitialized());
+}
+
+TEST_F(MainWindowControllerTestFixture, OnUndoBtnPressed_PressedOnce_UndoCalledOnModel)
+{
+    GetController().OnUndoBtnPressed();
+
+    ModelMockController& model = static_cast<ModelMockController&>(GetModel());
+
+    ASSERT_TRUE(model.GetUndoed());
+}
+
+TEST_F(MainWindowControllerTestFixture, OnRedoBtnPressed_PressedOnce_UndoCalledOnModel)
+{
+    GetController().OnRedoBtnPressed();
+
+    ModelMockController& model = static_cast<ModelMockController&>(GetModel());
+
+    ASSERT_TRUE(model.GetRedoed());
 }

@@ -67,3 +67,35 @@ TEST(Model, Reinitialize_InitialValueIs0_CurrentValueIs0)
 
     ASSERT_EQ(model.GetCurrentValue(), 0);
 }
+
+TEST(Model, UndoIncrement_InitialValueIs0_BackTo0)
+{
+    cxmodel::Model concreteModel{std::make_unique<cxmodel::CommandStack>(200)};
+    cxmodel::IModel& model = concreteModel;
+
+    model.Increment();
+
+    ASSERT_EQ(model.GetCurrentValue(), 1);
+
+    model.Undo();
+
+    ASSERT_EQ(model.GetCurrentValue(), 0);
+}
+
+TEST(Model, RedoIncrement_InitialValueIs0_BackTo1)
+{
+    cxmodel::Model concreteModel{std::make_unique<cxmodel::CommandStack>(200)};
+    cxmodel::IModel& model = concreteModel;
+
+    model.Increment();
+
+    ASSERT_EQ(model.GetCurrentValue(), 1);
+
+    model.Undo();
+
+    ASSERT_EQ(model.GetCurrentValue(), 0);
+
+    model.Redo();
+
+    ASSERT_EQ(model.GetCurrentValue(), 1);
+}

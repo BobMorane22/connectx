@@ -46,6 +46,7 @@ TGTS_$(d) := $(d)/cxmodeltests
 OBJS_$(d) := $(d)/CommandAddTwoMock.o \
              $(d)/CommandStackTestFixture.o \
              $(d)/CommandStackTests.o \
+             $(d)/CommandTests.o \
              $(d)/CommandTimesThreeMock.o \
              $(d)/ConcreteObserverMock.o \
              $(d)/ConcreteSubjectMock.o \

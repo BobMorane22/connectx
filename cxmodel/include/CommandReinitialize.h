@@ -30,12 +30,7 @@ namespace cxmodel
 {
 
 /*********************************************************************************************//**
- * @brief DESCRIPTION
- *
- * @invariant
- * @invariant
- *
- * DESCRIPTION
+ * @brief Command that reinitializes a value to an initial value.
  *
  ************************************************************************************************/
 class CommandReinitialize : public ICommand
@@ -43,11 +38,30 @@ class CommandReinitialize : public ICommand
 
 public:
 
+    /******************************************************************************************//**
+     * @brief Constructor.
+     *
+     * @param      p_reinitValue   The value to reinitialize to.
+     * @param      p_initialValue  The initial value before anything was done.
+     * @param[out] p_value         The actual value that will be reinitialized.
+     *
+     * Creates a command thats lets a user reinitialize something to a predefined value.
+     *
+     ********************************************************************************************/
     CommandReinitialize(unsigned int p_reinitValue,
                         unsigned int p_initialValue,
                         unsigned int& p_value);
 
+    /******************************************************************************************//**
+     * @brief Reinitializes the value.
+     *
+     ********************************************************************************************/
     void Execute() override;
+
+    /******************************************************************************************//**
+     * @brief Undoes a reinitialization.
+     *
+     ********************************************************************************************/
     void Undo() override;
 
 

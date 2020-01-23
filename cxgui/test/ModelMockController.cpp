@@ -16,40 +16,64 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file ModelMock.cpp
+ * @file ModelMockController.cpp
  * @date 2019
  *
  *************************************************************************************************/
 
 #include <gtest/gtest.h>
 
-#include "ModelMock.h"
+#include "ModelMockController.h"
 
-unsigned int ModelMock::GetCurrentValue() const
+ModelMockController::ModelMockController()
+ : m_incremented{false}
+ , m_reinitialized{false}
+ , m_undoed{false}
+ , m_redoed{false}
 {
-    return m_currentValue;
 }
 
-void ModelMock::Increment()
+unsigned int ModelMockController::GetCurrentValue() const
 {
-    ++m_currentValue;
-
-    Notify();
+    return 0u; // Not used...
 }
 
-void ModelMock::Reinitialize()
+void ModelMockController::Increment()
 {
-    m_currentValue = 0;
-
-    Notify();
+    m_incremented = true;
 }
 
-void ModelMock::Undo()
+void ModelMockController::Reinitialize()
 {
-    // Nothing to do for now...
+    m_reinitialized = true;
 }
 
-void ModelMock::Redo()
+void ModelMockController::Undo()
 {
-    // Nothing to do for now...
+    m_undoed = true;
+}
+
+void ModelMockController::Redo()
+{
+    m_redoed = true;
+}
+
+bool ModelMockController::GetIncremented() const
+{
+    return m_incremented;
+}
+
+bool ModelMockController::GetReinitialized() const
+{
+    return m_reinitialized;
+}
+
+bool ModelMockController::GetUndoed() const
+{
+    return m_undoed;
+}
+
+bool ModelMockController::GetRedoed() const
+{
+    return m_redoed;
 }

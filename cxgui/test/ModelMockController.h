@@ -16,21 +16,24 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file ModelMock.h
+ * @file ModelMockController.h
  * @date 2019
  *
  *************************************************************************************************/
 
-#ifndef MODELMOCK_H_A4A9F6D9_7463_47D5_A25A_00880ACB678C
-#define MODELMOCK_H_A4A9F6D9_7463_47D5_A25A_00880ACB678C
+#ifndef MODELMOCKCONTROLLER_H_A4A9F6D9_7463_47D5_A25A_00880ACB678C
+#define MODELMOCKCONTROLLER_H_A4A9F6D9_7463_47D5_A25A_00880ACB678C
 
 #include <cxmodel/include/IModel.h>
 
-class ModelMock : public cxmodel::IModel
+class ModelMockController : public cxmodel::IModel
 {
 
 public:
 
+    ModelMockController();
+
+    // IModel
     virtual unsigned int GetCurrentValue() const override;
 
     virtual void Increment() override;
@@ -40,9 +43,19 @@ public:
     virtual void Redo() override;
 
 
+    // Mock helpers
+    bool GetIncremented() const;
+    bool GetReinitialized() const;
+    bool GetUndoed() const;
+    bool GetRedoed() const;
+
+
 private:
 
-    unsigned int m_currentValue;
+    bool m_incremented;
+    bool m_reinitialized;
+    bool m_undoed;
+    bool m_redoed;
 
 };
 

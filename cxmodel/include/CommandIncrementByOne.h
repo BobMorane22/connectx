@@ -30,12 +30,7 @@ namespace cxmodel
 {
 
 /*********************************************************************************************//**
- * @brief DESCRIPTION
- *
- * @invariant
- * @invariant
- *
- * DESCRIPTION
+ * @brief Command to increment a value by one.
  *
  ************************************************************************************************/
 class CommandIncrementByOne : public ICommand
@@ -43,9 +38,26 @@ class CommandIncrementByOne : public ICommand
 
 public:
 
+    /******************************************************************************************//**
+     * @brief Constructor.
+     *
+     * @param[out] p_value The value to increment by one.
+     *
+     * Creates a command to increment a value by one.
+     *
+     ********************************************************************************************/
     CommandIncrementByOne(unsigned int& p_value);
 
+    /******************************************************************************************//**
+     * @brief Increments by one.
+     *
+     ********************************************************************************************/
     void Execute() override;
+
+    /******************************************************************************************//**
+     * @brief Undoes an increments of one.
+     *
+     ********************************************************************************************/
     void Undo() override;
 
 

@@ -24,13 +24,13 @@
 #include <gtest/gtest.h>
 
 #include <cxgui/include/MainWindowPresenter.h>
+#include <cxgui/test/ModelMockPresenter.h>
 
 #include "MainWindowPresenterTestFixture.h"
-#include "ModelMock.h"
 
 MainWindowPresenterTestFixture::MainWindowPresenterTestFixture()
 {
-    m_model = std::make_unique<ModelMock>();
+    m_model = std::make_unique<ModelMockPresenter>();
     m_presenter = std::make_unique<cxgui::MainWindowPresenter>();
 
     EXPECT_TRUE(m_presenter != nullptr);
