@@ -69,8 +69,6 @@ void cxlog::IncrementalLogger::Log(const VerbosityLevel p_verbosityLevel,
     // Create well formatted message:
     const std::string msg{m_msgFormatter->FormatMessage(p_verbosityLevel, p_fileName, p_functionName, p_lineNumber, p_message)};
 
-    std::cout << "Formatted : " << msg << std::endl;
-
     if(!m_logTarget)
     {
         ASSERT_ERROR_MSG("No reference to a log target.");
