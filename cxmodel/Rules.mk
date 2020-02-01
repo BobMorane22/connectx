@@ -70,7 +70,7 @@ CLEAN := $(CLEAN) $(OBJS_$(d)) $(DEPS_$(d)) \
 # instead of having to include the path.
 #
 $(OBJS_$(d)): CF_TGT := -I. -I$(d)/include
-$(TGTS_$(d)): LL_TGT := cxinv/libcxinv.a
+$(TGTS_$(d)): LL_TGT := cxlog/libcxlog.a cxinv/libcxinv.a
 
 $(d)/lib$(d).a: $(OBJS_$(d))
 	@echo ~~~ Generating the libcxmodel.a static library ~~~

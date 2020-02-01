@@ -26,6 +26,8 @@
 
 #include <memory>
 
+#include <cxlog/include/ILogger.h>
+
 #include "ICommandStack.h"
 #include "IModel.h"
 
@@ -40,7 +42,7 @@ namespace cxmodel
  * This class holds the Connect X related business rules.
  *
  ************************************************************************************************/
-class Model : public IModel
+class Model : public IModel, public cxlog::ILogger
 {
 
 public:
@@ -54,8 +56,10 @@ public:
      * @param p_cmdStack The command stack.
      *
      ********************************************************************************************/
-    Model(std::unique_ptr<ICommandStack>&& p_cmdStack);
+    Model(std::unique_ptr<ICommandStack>&& p_cmdStack, cxlog::ILogger& p_logger);
+    ~Model() override;
 
+    // IModel
     unsigned int GetCurrentValue() const override;
 
     void Increment() override;
@@ -63,6 +67,11 @@ public:
 
     void Undo() override;
     void Redo() override;
+
+    // ILogger
+    void Log(const cxlog::VerbosityLevel p_verbosityLevel, const std::string& p_fileName, const std::string& p_functionName, const size_t p_lineNumber, const std::string& p_message) override;
+    void SetVerbosityLevel(const cxlog::VerbosityLevel p_verbosityLevel) override;
+    cxlog::VerbosityLevel GetVerbosityLevel() const override;
 
 
 private:
@@ -73,6 +82,8 @@ private:
 
     static constexpr unsigned int m_INITIAL_VALUE = 0u;
     unsigned int m_currentValue;
+
+    cxlog::ILogger& m_logger;
 };
 
 } // namespace cxmodel

@@ -28,8 +28,9 @@
 #include <CommandStack.h>
 #include <Model.h>
 
-cxmodel::Model::Model(std::unique_ptr<ICommandStack>&& p_cmdStack)
+cxmodel::Model::Model(std::unique_ptr<ICommandStack>&& p_cmdStack, cxlog::ILogger& p_logger)
  : m_cmdStack{std::move(p_cmdStack)}
+ , m_logger{p_logger}
 {
     PRECONDITION(m_cmdStack != nullptr);
 
@@ -40,7 +41,16 @@ cxmodel::Model::Model(std::unique_ptr<ICommandStack>&& p_cmdStack)
 
     m_currentValue = m_INITIAL_VALUE;
 
+    Log(cxlog::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__,
+        "Initializing model.");
+
     CheckInvariants();
+}
+
+cxmodel::Model::~Model()
+{
+    Log(cxlog::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__,
+        "Uninitializing model.");
 }
 
 unsigned int cxmodel::Model::GetCurrentValue() const
@@ -58,6 +68,9 @@ void cxmodel::Model::Increment()
 
     POSTCONDITION(m_currentValue - old == 1);
 
+    Log(cxlog::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__,
+        "Incremented value.");
+
     CheckInvariants();
 }
 
@@ -70,6 +83,9 @@ void cxmodel::Model::Reinitialize()
 
     POSTCONDITION(m_currentValue == m_INITIAL_VALUE);
 
+    Log(cxlog::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__,
+        "Reinitialized value.");
+
     CheckInvariants();
 }
 
@@ -78,6 +94,9 @@ void cxmodel::Model::Undo()
     m_cmdStack->Undo();
 
     Notify();
+
+    Log(cxlog::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__,
+        "Last action undoed.");
 
     CheckInvariants();
 }
@@ -88,7 +107,25 @@ void cxmodel::Model::Redo()
 
     Notify();
 
+    Log(cxlog::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__,
+        "Last action redoed.");
+
     CheckInvariants();
+}
+
+void cxmodel::Model::Log(const cxlog::VerbosityLevel p_verbosityLevel, const std::string& p_fileName, const std::string& p_functionName, const size_t p_lineNumber, const std::string& p_message)
+{
+    m_logger.Log(p_verbosityLevel, p_fileName, p_functionName, p_lineNumber, p_message);
+}
+
+void cxmodel::Model::SetVerbosityLevel(const cxlog::VerbosityLevel p_verbosityLevel)
+{
+    m_logger.SetVerbosityLevel(p_verbosityLevel);
+}
+
+cxlog::VerbosityLevel cxmodel::Model::GetVerbosityLevel() const
+{
+    return m_logger.GetVerbosityLevel();
 }
 
 void cxmodel::Model::CheckInvariants()
