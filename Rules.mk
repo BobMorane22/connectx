@@ -43,6 +43,9 @@ all: targets
 dir := cxinv
 include $(dir)/Rules.mk
 
+dir := cxlog
+include $(dir)/Rules.mk
+
 dir := cxmodel
 include $(dir)/Rules.mk
 
