@@ -48,7 +48,6 @@ std::unique_ptr<cxlog::ILogger> CreateLogger(cxlog::VerbosityLevel p_verbosity)
 
 int main(int argc, char *argv[])
 {
-
     std::unique_ptr<cxlog::ILogger> logger = CreateLogger(cxlog::VerbosityLevel::DEBUG);
     cxmodel::Model concreteModel{std::make_unique<cxmodel::CommandStack>(CMD_STACK_SIZE), *logger};
     cxmodel::IModel& model = concreteModel;
