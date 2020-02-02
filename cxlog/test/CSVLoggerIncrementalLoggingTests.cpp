@@ -47,7 +47,7 @@ void LogAtAllLevels(std::unique_ptr<cxlog::ILogger> p_logger)
 TEST(CSVIncrementalLogging, CSVStringLogger_TargetNONE_VerbosityLevelRespected)
 {
     std::ostringstream t_stream;
-    auto t_logger{CreateCVSStringStreamLogger(t_stream)};
+    auto t_logger{CreateCSVStringStreamLogger(t_stream)};
 
     t_logger->SetVerbosityLevel(cxlog::VerbosityLevel::NONE);
 
@@ -59,7 +59,7 @@ TEST(CSVIncrementalLogging, CSVStringLogger_TargetNONE_VerbosityLevelRespected)
 TEST(CSVIncrementalLogging, CSVStringLogger_TargetFATAL_VerbosityLevelRespected)
 {
     std::ostringstream t_stream;
-    auto t_logger{CreateCVSStringStreamLogger(t_stream)};
+    auto t_logger{CreateCSVStringStreamLogger(t_stream)};
 
     t_logger->SetVerbosityLevel(cxlog::VerbosityLevel::FATAL);
 
@@ -73,7 +73,7 @@ TEST(CSVIncrementalLogging, CSVStringLogger_TargetFATAL_VerbosityLevelRespected)
 TEST(CSVIncrementalLogging, CSVStringLogger_TargetERROR_VerbosityLevelRespected)
 {
     std::ostringstream t_stream;
-    auto t_logger{CreateCVSStringStreamLogger(t_stream)};
+    auto t_logger{CreateCSVStringStreamLogger(t_stream)};
 
     t_logger->SetVerbosityLevel(cxlog::VerbosityLevel::ERROR);
 
@@ -87,7 +87,7 @@ TEST(CSVIncrementalLogging, CSVStringLogger_TargetERROR_VerbosityLevelRespected)
 TEST(CSVIncrementalLogging, CSVStringLogger_TargetWARNING_VerbosityLevelRespected)
 {
     std::ostringstream t_stream;
-    auto t_logger{CreateCVSStringStreamLogger(t_stream)};
+    auto t_logger{CreateCSVStringStreamLogger(t_stream)};
 
     t_logger->SetVerbosityLevel(cxlog::VerbosityLevel::WARNING);
 
@@ -101,7 +101,7 @@ TEST(CSVIncrementalLogging, CSVStringLogger_TargetWARNING_VerbosityLevelRespecte
 TEST(CSVIncrementalLogging, CSVStringLogger_TargetINFO_VerbosityLevelRespected)
 {
     std::ostringstream t_stream;
-    auto t_logger{CreateCVSStringStreamLogger(t_stream)};
+    auto t_logger{CreateCSVStringStreamLogger(t_stream)};
 
     t_logger->SetVerbosityLevel(cxlog::VerbosityLevel::INFO);
 
@@ -115,7 +115,7 @@ TEST(CSVIncrementalLogging, CSVStringLogger_TargetINFO_VerbosityLevelRespected)
 TEST(CSVIncrementalLogging, CSVStringLogger_TargetDEBUG_VerbosityLevelRespected)
 {
     std::ostringstream t_stream;
-    auto t_logger{CreateCVSStringStreamLogger(t_stream)};
+    auto t_logger{CreateCSVStringStreamLogger(t_stream)};
 
     t_logger->SetVerbosityLevel(cxlog::VerbosityLevel::DEBUG);
 
@@ -129,7 +129,7 @@ TEST(CSVIncrementalLogging, CSVStringLogger_TargetDEBUG_VerbosityLevelRespected)
 TEST(CSVIncrementalLogging, CSVStringChainedLogger_TargetNONE_VerbosityLevelRespected)
 {
     std::ostringstream t_stream;
-    auto t_logger{CreateCVSStringStreamChainLogger(t_stream)};
+    auto t_logger{CreateCSVStringStreamChainLogger(t_stream)};
 
     t_logger->SetVerbosityLevel(cxlog::VerbosityLevel::NONE);
 
@@ -141,7 +141,7 @@ TEST(CSVIncrementalLogging, CSVStringChainedLogger_TargetNONE_VerbosityLevelResp
 TEST(CSVIncrementalLogging, CSVStringChainedLogger_TargetFATAL_VerbosityLevelRespected)
 {
     std::ostringstream t_stream;
-    auto t_logger{CreateCVSStringStreamChainLogger(t_stream)};
+    auto t_logger{CreateCSVStringStreamChainLogger(t_stream)};
 
     t_logger->SetVerbosityLevel(cxlog::VerbosityLevel::FATAL);
 
@@ -155,7 +155,7 @@ TEST(CSVIncrementalLogging, CSVStringChainedLogger_TargetFATAL_VerbosityLevelRes
 TEST(CSVIncrementalLogging, CSVStringChainedLogger_TargetERROR_VerbosityLevelRespected)
 {
     std::ostringstream t_stream;
-    auto t_logger{CreateCVSStringStreamChainLogger(t_stream)};
+    auto t_logger{CreateCSVStringStreamChainLogger(t_stream)};
 
     t_logger->SetVerbosityLevel(cxlog::VerbosityLevel::ERROR);
 
@@ -169,7 +169,7 @@ TEST(CSVIncrementalLogging, CSVStringChainedLogger_TargetERROR_VerbosityLevelRes
 TEST(CSVIncrementalLogging, CSVStringChainedLogger_TargetWARNING_VerbosityLevelRespected)
 {
     std::ostringstream t_stream;
-    auto t_logger{CreateCVSStringStreamChainLogger(t_stream)};
+    auto t_logger{CreateCSVStringStreamChainLogger(t_stream)};
 
     t_logger->SetVerbosityLevel(cxlog::VerbosityLevel::WARNING);
 
@@ -183,7 +183,7 @@ TEST(CSVIncrementalLogging, CSVStringChainedLogger_TargetWARNING_VerbosityLevelR
 TEST(CSVIncrementalLogging, CSVStringChainedLogger_TargetINFO_VerbosityLevelRespected)
 {
     std::ostringstream t_stream;
-    auto t_logger{CreateCVSStringStreamChainLogger(t_stream)};
+    auto t_logger{CreateCSVStringStreamChainLogger(t_stream)};
 
     t_logger->SetVerbosityLevel(cxlog::VerbosityLevel::INFO);
 
@@ -197,7 +197,7 @@ TEST(CSVIncrementalLogging, CSVStringChainedLogger_TargetINFO_VerbosityLevelResp
 TEST(CSVIncrementalLogging, CSVStringChainedLogger_TargetDEBUG_VerbosityLevelRespected)
 {
     std::ostringstream t_stream;
-    auto t_logger{CreateCVSStringStreamChainLogger(t_stream)};
+    auto t_logger{CreateCSVStringStreamChainLogger(t_stream)};
 
     t_logger->SetVerbosityLevel(cxlog::VerbosityLevel::DEBUG);
 

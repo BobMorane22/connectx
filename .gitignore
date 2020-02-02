@@ -114,6 +114,7 @@ cxmain/connectx
 
 # Unit tests executables
 cxinv/test/cxinvtests
+cxlog/test/cxlogtests
 cxmodel/test/cxmodeltests
 cxgui/test/cxguitests
 cxmain/test/cxmaintests
@@ -126,3 +127,6 @@ coverage/*.gcov
 coverage/*.info
 *.gcda
 *.gcno
+
+# Log files
+*.log

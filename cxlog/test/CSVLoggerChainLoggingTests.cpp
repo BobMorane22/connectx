@@ -34,8 +34,8 @@ TEST(ChainLogging, ChainLogging_TwoSuccessiveLoggers_FirstHasSuccessorSecondDoes
     std::ostringstream t_stream;
     std::ostringstream t_streamSuccessor;
 
-    auto t_logger{CreateCVSStringStreamChainLogger(t_stream)};
-    auto t_loggerSuccessor{CreateCVSStringStreamChainLogger(t_streamSuccessor)};
+    auto t_logger{CreateCSVStringStreamChainLogger(t_stream)};
+    auto t_loggerSuccessor{CreateCSVStringStreamChainLogger(t_streamSuccessor)};
 
     ASSERT_FALSE(t_logger->HasSucessor());
 
@@ -50,8 +50,8 @@ TEST(ChainLogging, ChainLogging_ValidStringAsInfo_AllLoggersLog)
     std::ostringstream t_stream;
     std::ostringstream t_streamSuccessor;
 
-    auto t_logger{CreateCVSStringStreamChainLogger(t_stream)};
-    auto t_loggerSuccessor{CreateCVSStringStreamChainLogger(t_streamSuccessor)};
+    auto t_logger{CreateCSVStringStreamChainLogger(t_stream)};
+    auto t_loggerSuccessor{CreateCSVStringStreamChainLogger(t_streamSuccessor)};
 
     t_logger->SetSucessor(std::move(t_loggerSuccessor));
 
@@ -73,9 +73,9 @@ TEST(ChainLogging, ChainLogging_ValidStringAsInfo_AllLoggersLogExceptNone)
                        t_streamFirstSuccessor,
                        t_streamSecondSuccessor;
 
-    auto t_logger               {CreateCVSStringStreamChainLogger(t_stream)};
-    auto t_loggerFirstSuccessor {CreateCVSStringStreamChainLogger(t_streamFirstSuccessor)};
-    auto t_loggerSecondSuccessor{CreateCVSStringStreamChainLogger(t_streamSecondSuccessor)};
+    auto t_logger               {CreateCSVStringStreamChainLogger(t_stream)};
+    auto t_loggerFirstSuccessor {CreateCSVStringStreamChainLogger(t_streamFirstSuccessor)};
+    auto t_loggerSecondSuccessor{CreateCSVStringStreamChainLogger(t_streamSecondSuccessor)};
 
     // Middle successor is silenced:
     t_loggerFirstSuccessor->SetVerbosityLevel(cxlog::VerbosityLevel::NONE);

@@ -30,8 +30,8 @@
 
 TEST(CSVMessageFormatter, FormatHeaders_ValidMessageFormatter_FormatsHeadersAccordingly)
 {
-    std::unique_ptr<TimestampFormatterMock> tsmpFormatter{new TimestampFormatterMock()};
-    std::unique_ptr<cxlog::IMessageFormatter> formatter{new cxlog::CSVMessageFormatter{std::move(tsmpFormatter)}};
+    std::unique_ptr<TimestampFormatterMock> tsmpFormatter= std::make_unique<TimestampFormatterMock>();
+    std::unique_ptr<cxlog::IMessageFormatter> formatter = std::make_unique<cxlog::CSVMessageFormatter>(std::move(tsmpFormatter));
 
     const std::string result  {formatter->FormatHeaders()};
     const std::string expected{HeaderLine()};
@@ -41,8 +41,8 @@ TEST(CSVMessageFormatter, FormatHeaders_ValidMessageFormatter_FormatsHeadersAcco
 
 TEST(CSVMessageFormatter, FormatMessage_ValidLineAsFatal_FormatsCSVMessageAccordingly)
 {
-    std::unique_ptr<TimestampFormatterMock> tsmpFormatter{new TimestampFormatterMock()};
-    std::unique_ptr<cxlog::IMessageFormatter> formatter{new cxlog::CSVMessageFormatter{std::move(tsmpFormatter)}};
+    std::unique_ptr<TimestampFormatterMock> tsmpFormatter= std::make_unique<TimestampFormatterMock>();
+    std::unique_ptr<cxlog::IMessageFormatter> formatter = std::make_unique<cxlog::CSVMessageFormatter>(std::move(tsmpFormatter));
 
     const std::string result{formatter->FormatMessage(cxlog::VerbosityLevel::FATAL,
                                                       _FILE_,
@@ -56,8 +56,8 @@ TEST(CSVMessageFormatter, FormatMessage_ValidLineAsFatal_FormatsCSVMessageAccord
 
 TEST(CSVMessageFormatter, FormatMessage_ValidLineAsError_FormatsCSVMessageAccordingly)
 {
-    std::unique_ptr<TimestampFormatterMock> tsmpFormatter{new TimestampFormatterMock()};
-    std::unique_ptr<cxlog::IMessageFormatter> formatter{new cxlog::CSVMessageFormatter{std::move(tsmpFormatter)}};
+    std::unique_ptr<TimestampFormatterMock> tsmpFormatter= std::make_unique<TimestampFormatterMock>();
+    std::unique_ptr<cxlog::IMessageFormatter> formatter = std::make_unique<cxlog::CSVMessageFormatter>(std::move(tsmpFormatter));
 
     const std::string result{formatter->FormatMessage(cxlog::VerbosityLevel::ERROR,
                                                       _FILE_,
@@ -71,8 +71,8 @@ TEST(CSVMessageFormatter, FormatMessage_ValidLineAsError_FormatsCSVMessageAccord
 
 TEST(CSVMessageFormatter, FormatMessage_ValidLineAsWarning_FormatsCSVMessageAccordingly)
 {
-    std::unique_ptr<TimestampFormatterMock> tsmpFormatter{new TimestampFormatterMock()};
-    std::unique_ptr<cxlog::IMessageFormatter> formatter{new cxlog::CSVMessageFormatter{std::move(tsmpFormatter)}};
+    std::unique_ptr<TimestampFormatterMock> tsmpFormatter= std::make_unique<TimestampFormatterMock>();
+    std::unique_ptr<cxlog::IMessageFormatter> formatter = std::make_unique<cxlog::CSVMessageFormatter>(std::move(tsmpFormatter));
 
     const std::string result{formatter->FormatMessage(cxlog::VerbosityLevel::WARNING,
                                                       _FILE_,
@@ -86,8 +86,8 @@ TEST(CSVMessageFormatter, FormatMessage_ValidLineAsWarning_FormatsCSVMessageAcco
 
 TEST(CSVMessageFormatter, FormatMessage_ValidLineAsInfo_FormatsCSVMessageAccordingly)
 {
-    std::unique_ptr<TimestampFormatterMock> tsmpFormatter{new TimestampFormatterMock()};
-    std::unique_ptr<cxlog::IMessageFormatter> formatter{new cxlog::CSVMessageFormatter{std::move(tsmpFormatter)}};
+    std::unique_ptr<TimestampFormatterMock> tsmpFormatter= std::make_unique<TimestampFormatterMock>();
+    std::unique_ptr<cxlog::IMessageFormatter> formatter = std::make_unique<cxlog::CSVMessageFormatter>(std::move(tsmpFormatter));
 
     const std::string result{formatter->FormatMessage(cxlog::VerbosityLevel::INFO,
                                                       _FILE_,
@@ -101,8 +101,8 @@ TEST(CSVMessageFormatter, FormatMessage_ValidLineAsInfo_FormatsCSVMessageAccordi
 
 TEST(CSVMessageFormatter, FormatMessage_ValidLineAsDebug_FormatsCSVMessageAccordingly)
 {
-    std::unique_ptr<TimestampFormatterMock> tsmpFormatter{new TimestampFormatterMock()};
-    std::unique_ptr<cxlog::IMessageFormatter> formatter{new cxlog::CSVMessageFormatter{std::move(tsmpFormatter)}};
+    std::unique_ptr<TimestampFormatterMock> tsmpFormatter= std::make_unique<TimestampFormatterMock>();
+    std::unique_ptr<cxlog::IMessageFormatter> formatter = std::make_unique<cxlog::CSVMessageFormatter>(std::move(tsmpFormatter));
 
     const std::string result{formatter->FormatMessage(cxlog::VerbosityLevel::DEBUG,
                                                       _FILE_,

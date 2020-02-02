@@ -54,10 +54,10 @@ std::string InfoResult();
 std::string DebugResult();
 std::string HeaderLine();
 
-std::unique_ptr<cxlog::ILogger> CreateCVSStringStreamLogger(std::ostringstream& p_stream,
+std::unique_ptr<cxlog::ILogger> CreateCSVStringStreamLogger(std::ostringstream& p_stream,
                                                             const bool p_generateHeader = false);
 
-std::unique_ptr<cxlog::ChainLogger> CreateCVSStringStreamChainLogger(std::ostringstream& p_stream,
-                                                                     const bool p_generateHeader = false);
+std::unique_ptr<cxlog::ChainLogger> CreateCSVStringStreamChainLogger(std::ostringstream& p_stream,
+                                                                    const bool p_generateHeader = false);
 
 #endif // CSVLOGGERUTIL_H_E188DB4B_30F1_4D3A_AB1B_54E82EBF753B

@@ -52,6 +52,7 @@ OBJS_$(d) := $(d)/CommandAddTwoMock.o \
              $(d)/ConcreteSubjectMock.o \
              $(d)/DisableStdStreamsRAII.o \
              $(d)/ModelTests.o \
+             $(d)/LoggerMock.o \
              $(d)/SubjectTestFixture.o \
              $(d)/SubjectTests.o \
              cxmodel/libcxmodel.a
@@ -65,7 +66,7 @@ CLEAN := $(CLEAN) $(OBJS_$(d)) $(TGTS_$(d)) $(DEPS_$(d))
 # Executable is compiled and linked.
 #
 $(TGTS_$(d)): CF_TGT := -I$(d)/../include -I$(d) -I.
-$(TGTS_$(d)): LL_TGT := cxmodel/libcxmodel.a cxinv/libcxinv.a -lgtest -lgtest_main -lpthread
+$(TGTS_$(d)): LL_TGT := cxmodel/libcxmodel.a cxlog/libcxlog.a cxinv/libcxinv.a -lgtest -lgtest_main -lpthread
 
 $(TGTS_$(d)): $(OBJS_$(d)) $(LL_TGT)
 	@echo ~~~ Generating the cxmodel unit tests executable ~~~

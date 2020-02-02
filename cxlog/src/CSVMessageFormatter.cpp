@@ -57,10 +57,10 @@ cxlog::CSVMessageFormatter::CSVMessageFormatter(std::unique_ptr<cxlog::ITimestam
 std::string cxlog::CSVMessageFormatter::FormatHeaders() const
 {
     return "Timestamp"       + SEPARATOR +
+           "Verbosity level" + SEPARATOR +
            "File name"       + SEPARATOR +
            "Function name"   + SEPARATOR +
            "Line number"     + SEPARATOR +
-           "Verbosity level" + SEPARATOR +
            "Message"         + NEWLINE;
 }
 

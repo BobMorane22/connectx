@@ -26,9 +26,12 @@
 #include <CommandStack.h>
 #include <Model.h>
 
+#include "LoggerMock.h"
+
 TEST(Model, Constructor_NoOtherAction_CurrentValueIs0)
 {
-    cxmodel::Model concreteModel{std::make_unique<cxmodel::CommandStack>(200)};
+    LoggerMock logger;
+    cxmodel::Model concreteModel{std::make_unique<cxmodel::CommandStack>(200), logger};
     cxmodel::IModel& model = concreteModel;
 
     ASSERT_EQ(model.GetCurrentValue(), 0);
@@ -36,7 +39,8 @@ TEST(Model, Constructor_NoOtherAction_CurrentValueIs0)
 
 TEST(Model, GetCurrentValue_AfterIncrement_CurrentValueIsNot0)
 {
-    cxmodel::Model concreteModel{std::make_unique<cxmodel::CommandStack>(200)};
+    LoggerMock logger;
+    cxmodel::Model concreteModel{std::make_unique<cxmodel::CommandStack>(200), logger};
     cxmodel::IModel& model = concreteModel;
 
     model.Increment();
@@ -46,7 +50,8 @@ TEST(Model, GetCurrentValue_AfterIncrement_CurrentValueIsNot0)
 
 TEST(Model, Increment_InitialValueIs0_CurrentValueIs1)
 {
-    cxmodel::Model concreteModel{std::make_unique<cxmodel::CommandStack>(200)};
+    LoggerMock logger;
+    cxmodel::Model concreteModel{std::make_unique<cxmodel::CommandStack>(200), logger};
     cxmodel::IModel& model = concreteModel;
 
     model.Increment();
@@ -56,7 +61,8 @@ TEST(Model, Increment_InitialValueIs0_CurrentValueIs1)
 
 TEST(Model, Reinitialize_InitialValueIs0_CurrentValueIs0)
 {
-    cxmodel::Model concreteModel{std::make_unique<cxmodel::CommandStack>(200)};
+    LoggerMock logger;
+    cxmodel::Model concreteModel{std::make_unique<cxmodel::CommandStack>(200), logger};
     cxmodel::IModel& model = concreteModel;
 
     model.Increment();
@@ -70,7 +76,8 @@ TEST(Model, Reinitialize_InitialValueIs0_CurrentValueIs0)
 
 TEST(Model, UndoIncrement_InitialValueIs0_BackTo0)
 {
-    cxmodel::Model concreteModel{std::make_unique<cxmodel::CommandStack>(200)};
+    LoggerMock logger;
+    cxmodel::Model concreteModel{std::make_unique<cxmodel::CommandStack>(200), logger};
     cxmodel::IModel& model = concreteModel;
 
     model.Increment();
@@ -84,7 +91,8 @@ TEST(Model, UndoIncrement_InitialValueIs0_BackTo0)
 
 TEST(Model, RedoIncrement_InitialValueIs0_BackTo1)
 {
-    cxmodel::Model concreteModel{std::make_unique<cxmodel::CommandStack>(200)};
+    LoggerMock logger;
+    cxmodel::Model concreteModel{std::make_unique<cxmodel::CommandStack>(200), logger};
     cxmodel::IModel& model = concreteModel;
 
     model.Increment();
