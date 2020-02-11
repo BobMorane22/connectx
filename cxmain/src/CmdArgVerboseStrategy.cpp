@@ -16,27 +16,25 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file main.cpp
- * @date 2019
+ * @file CmdArgVerboseStrategy.cpp
+ * @date 2020
  *
  *************************************************************************************************/
 
-#include <memory>
+#include <type_traits>
 
 #include <cxinv/include/assertion.h>
 #include <cxlog/include/CSVMessageFormatter.h>
-#include <cxlog/include/FileLogTarget.h>
+#include <cxlog/include/StdLogTarget.h>
+#include <cxlog/include/IChainLogging.h>
 #include <cxlog/include/IncrementalChainedLogger.h>
 #include <cxlog/include/ISO8601TimestampFormatter.h>
-#include <cxmodel/include/CommandStack.h>
-#include <cxmodel/include/Model.h>
 
-#include <Application.h>
-
-constexpr size_t CMD_STACK_SIZE = 200;
+#include <CmdArgMainStrategy.h>
+#include <CmdArgVerboseStrategy.h>
 
 /******************************************************************************************//**
- * @brief Creates a logger that logs to a file.
+ * @brief Creates a logger for the standard output.
  *
  * @post The logger is not @c nullptr
  *
@@ -45,39 +43,55 @@ constexpr size_t CMD_STACK_SIZE = 200;
  * @return The newly created logger.
  *
  ********************************************************************************************/
-std::unique_ptr<cxlog::ILogger> CreateFileLogger(cxlog::VerbosityLevel p_verbosity)
+std::unique_ptr<cxlog::ILogger> CreateVerboseLogger(cxlog::VerbosityLevel p_verbosity)
 {
     std::unique_ptr<cxlog::ITimestampFormatter> timestampFormatter = std::make_unique<cxlog::ISO8601TimestampFormatter>(cxlog::TimePrecision::MILLISECONDS);
-    std::unique_ptr<cxlog::ILogTarget> logTarget = std::make_unique<cxlog::FileLogTarget>("connectx.log");
+    std::unique_ptr<cxlog::ILogTarget> logTarget = std::make_unique<cxlog::StdLogTarget>();
     std::unique_ptr<cxlog::IMessageFormatter> formatter = std::make_unique<cxlog::CSVMessageFormatter>(std::move(timestampFormatter));
     std::unique_ptr<cxlog::ILogger> logger = std::make_unique<cxlog::IncrementalChainedLogger>(std::move(formatter), std::move(logTarget), true);
-
-    if(!logger)
-    {
-        ASSERT_ERROR_MSG("Logger was never initialized.");
-        return nullptr;
-    }
 
     logger->SetVerbosityLevel(p_verbosity);
 
     POSTCONDITION(logger != nullptr);
 
-    return logger;
+    return std::move(logger);
 }
 
-int main(int argc, char *argv[])
+cx::CmdArgVerboseStrategy::CmdArgVerboseStrategy(int argc, char *argv[], cxmodel::IModel& p_model, cxlog::ILogger* p_logger)
+ : m_argc{argc}
+ , m_argv{argv}
+ , m_model{p_model}
+ , m_logger{p_logger}
 {
-    std::unique_ptr<cxlog::ILogger> logger = CreateFileLogger(cxlog::VerbosityLevel::DEBUG);
+    PRECONDITION(p_logger != nullptr);
+}
 
-    if(!logger)
+int cx::CmdArgVerboseStrategy::Handle()
+{
+    if(!m_logger)
     {
+        ASSERT_ERROR_MSG("Main logger uninitialized.");
+
         return EXIT_FAILURE;
     }
 
-    cxmodel::Model concreteModel{std::make_unique<cxmodel::CommandStack>(CMD_STACK_SIZE), *logger};
-    cxmodel::IModel& model = concreteModel;
+    cxlog::IChainLogging* chainLogger = dynamic_cast<cxlog::IChainLogging*>(m_logger);
 
-    std::unique_ptr<cx::IApplication> app = std::make_unique<cx::Application>(argc, argv, model, *logger);
+    // Should never happen if the code compiles (see static_asset above):
+    if(!chainLogger)
+    {
+        ASSERT_ERROR_MSG("The main logger does not allow incremental logging");
 
-    return app->Run();
+        return EXIT_FAILURE;
+    }
+
+    const cxlog::VerbosityLevel verbosityLevel = m_logger->GetVerbosityLevel();
+    chainLogger->SetSucessor(CreateVerboseLogger(verbosityLevel));
+
+    ASSERT_MSG(chainLogger->HasSucessor(), "Setting a logger successor failed.");
+
+    // Now that the verbose logger is set, we go on with the standard execution:
+    cx::CmdArgMainStrategy mainStrategy{m_argc, m_argv, m_model};
+
+    return mainStrategy.Handle();
 }

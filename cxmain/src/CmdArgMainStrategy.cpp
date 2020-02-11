@@ -22,7 +22,6 @@
  *************************************************************************************************/
 
 #include <cstdlib>
-#include <iostream>
 
 #include <cxinv/include/assertion.h>
 #include <cxmodel/include/IModel.h>
@@ -34,6 +33,7 @@ cx::CmdArgMainStrategy::CmdArgMainStrategy(int argc, char *argv[], cxmodel::IMod
     PRECONDITION(argc > 0);
     PRECONDITION(argv != nullptr);
 
+    argc = 1;
     m_uiMgr = std::make_unique<cx::GtkmmUIManager>(argc, argv, p_model);
 
     POSTCONDITION(m_uiMgr != nullptr);

@@ -16,32 +16,29 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file CmdArgMainStrategy.h
- * @date 2019
+ * @file CmdArgVerboseStrategy.h
+ * @date 2020
  *
  *************************************************************************************************/
 
-#ifndef CMDARGMAINSTRATEGY_H_687BF302_DBF1_4EB7_B096_8DD7B233614A
-#define CMDARGMAINSTRATEGY_H_687BF302_DBF1_4EB7_B096_8DD7B233614A
+#ifndef CMDARGVERBOSESTRATEGY_H_B2A8C38D_7DA1_4B38_9D16_B317EBF164A5
+#define CMDARGVERBOSESTRATEGY_H_B2A8C38D_7DA1_4B38_9D16_B317EBF164A5
 
-#include <GtkmmUIManager.h>
 #include <ICmdArgWorkflowStrategy.h>
 
-namespace cxmodel
+namespace cxlog
 {
-    class IModel;
+    class ILogger;
 }
 
 namespace cx
 {
 
 /*********************************************************************************************//**
- * @brief Main application workflow. This represents when the standard application logic is ran.
- *
- * @invariant The UI manager is not @c nullptr.
+ * @brief Workflow for when the @c --verbose command line argument is passed.
  *
  ************************************************************************************************/
-class CmdArgMainStrategy : public ICmdArgWorkflowStrategy
+class CmdArgVerboseStrategy : public ICmdArgWorkflowStrategy
 {
 
 public:
@@ -49,27 +46,26 @@ public:
     /******************************************************************************************//**
      * @brief Constructor.
      *
-     * @pre The argument count is at least 1.
-     * @pre The argument list is not @c nullptr.
-     *
-     * @post m_uiMgr is not @c nullptr
-     *
      * @param argc Command line argument count.
      * @param argv A C-style array of arguments.
      * @param p_model The Connect X compatible model.
+     * @param p_logger A chain logger.
      *
      ********************************************************************************************/
-    CmdArgMainStrategy(int argc, char *argv[], cxmodel::IModel& p_model);
+    CmdArgVerboseStrategy(int argc, char *argv[], cxmodel::IModel& p_model, cxlog::ILogger* p_logger);
 
     int Handle() override;
 
 
 private:
 
-    std::unique_ptr<cx::IUIManager> m_uiMgr;
+    int m_argc;
+    char **m_argv;
+    cxmodel::IModel& m_model;
+    cxlog::ILogger* m_logger;
 
 };
 
 } // namespace cx
 
-#endif // CMDARGMAINSTRATEGY_H_687BF302_DBF1_4EB7_B096_8DD7B233614A
+#endif // CMDARGVERBOSESTRATEGY_H_B2A8C38D_7DA1_4B38_9D16_B317EBF164A5

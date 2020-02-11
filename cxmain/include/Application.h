@@ -29,6 +29,11 @@
 #include <IApplication.h>
 #include <ICmdArgWorkflowStrategy.h>
 
+namespace cxlog
+{
+    class ILogger;
+}
+
 namespace cxmodel
 {
     class IModel;
@@ -59,9 +64,10 @@ public:
      * @param argc Command line argument count.
      * @param argc A C-style array of arguments.
      * @param p_model The Connect X compatible model.
+     * @param p_logger A chain logger.
      *
      ********************************************************************************************/
-    Application(int argc, char *argv[], cxmodel::IModel& p_model);
+    Application(int argc, char *argv[], cxmodel::IModel& p_model, cxlog::ILogger& p_logger);
 
     int Run() override;
 

@@ -57,6 +57,7 @@ OBJS_$(d) := $(d)/src/main.o \
              $(d)/src/CmdArgInvalidStrategy.o \
              $(d)/src/CmdArgMainStrategy.o \
              $(d)/src/CmdArgNoStrategy.o \
+             $(d)/src/CmdArgVerboseStrategy.o \
              $(d)/src/CmdArgVersionStrategy.o \
              $(d)/src/CmdArgWorkflowFactory.o \
              $(d)/src/GtkmmUIManager.o

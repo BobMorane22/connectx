@@ -21,10 +21,12 @@
  *
  *************************************************************************************************/
 
+#include <algorithm>
 #include <memory>
 #include <vector>
 
 #include <cxinv/include/assertion.h>
+#include <cxlog/include/ILogger.h>
 #include <cxmodel/include/IModel.h>
 
 #include <CmdArgWorkflowFactory.h>
@@ -33,18 +35,20 @@
 #include <CmdArgInvalidStrategy.h>
 #include <CmdArgMainStrategy.h>
 #include <CmdArgNoStrategy.h>
+#include <CmdArgVerboseStrategy.h>
 #include <CmdArgVersionStrategy.h>
 
 namespace
 {
 
-const std::string HELP_ARG = "--help";
+const std::string HELP_ARG    = "--help";
 const std::string VERSION_ARG = "--version";
+const std::string VERBOSE_ARG = "--verbose";
 
 } // namespace cx
 
 
-std::unique_ptr<cx::ICmdArgWorkflowStrategy> cx::CmdArgWorkflowFactory::Create(int argc, char *argv[], cxmodel::IModel& p_model)
+std::unique_ptr<cx::ICmdArgWorkflowStrategy> cx::CmdArgWorkflowFactory::Create(int argc, char *argv[], cxmodel::IModel& p_model, cxlog::ILogger& p_logger)
 {
     std::unique_ptr<cx::ICmdArgWorkflowStrategy> strategy = std::make_unique<CmdArgNoStrategy>();
 
@@ -68,7 +72,7 @@ std::unique_ptr<cx::ICmdArgWorkflowStrategy> cx::CmdArgWorkflowFactory::Create(i
         std::string firstInvalidArgument;
         for(const auto& argument : arguments)
         {
-            if(argument != HELP_ARG && argument != VERSION_ARG)
+            if(argument != HELP_ARG && argument != VERSION_ARG && argument != VERBOSE_ARG)
             {
                 hasInvalidArguments = true;
                 firstInvalidArgument = argument;
@@ -83,15 +87,34 @@ std::unique_ptr<cx::ICmdArgWorkflowStrategy> cx::CmdArgWorkflowFactory::Create(i
         }
         else
         {
-            if(arguments.front() == HELP_ARG)
-            {
-                strategy = std::make_unique<CmdArgHelpStrategy>();
+            const auto helpIt = std::find(arguments.cbegin(), arguments.cend(), HELP_ARG);
+            const auto versionIt = std::find(arguments.cbegin(), arguments.cend(), VERSION_ARG);
+            const auto verboseIt = std::find(arguments.cbegin(), arguments.cend(), VERBOSE_ARG);
 
+            if(helpIt != arguments.cend() || versionIt != arguments.cend())
+            {
+                // First, we deal with the --help and --version arguments, which precede any other:
+                const std::size_t helpPos = std::distance(arguments.cbegin(), helpIt);
+                const std::size_t versionPos = std::distance(arguments.cbegin(), versionIt);
+
+                if(helpPos < versionPos)
+                {
+                    strategy = std::make_unique<CmdArgHelpStrategy>();
+                }
+                else if(helpPos > versionPos)
+                {
+                    strategy = std::make_unique<CmdArgVersionStrategy>();
+                }
+                else
+                {
+                    ASSERT_ERROR_MSG("--help and --version can't have the same position");
+                }
             }
-
-            if(arguments.front() == VERSION_ARG)
+            else
             {
-                strategy = std::make_unique<CmdArgVersionStrategy>();
+                ASSERT_MSG(verboseIt != arguments.cend(), "There must be at least one argument.");
+
+                strategy = std::make_unique<CmdArgVerboseStrategy>(argc, argv, p_model, &p_logger);
             }
         }
     }

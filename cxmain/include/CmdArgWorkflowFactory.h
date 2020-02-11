@@ -33,6 +33,11 @@ namespace cxmodel
     class IModel;
 }
 
+namespace cxlog
+{
+    class IChainLogging;
+}
+
 namespace cx
 {
 
@@ -52,13 +57,14 @@ public:
      * @param argv A C-style array containing the command line argument strings (including the
      *             executable).
      * @param p_model The Connect X compatible model.
+     * @param p_logger A chain logger.
      *
      * @post The returned command line dependent workflow is not @c nullptr.
      *
      * @return The command line dependent workflow.
      *
      ********************************************************************************************/
-    std::unique_ptr<ICmdArgWorkflowStrategy> Create(int argc, char *argv[], cxmodel::IModel& p_model);
+    std::unique_ptr<ICmdArgWorkflowStrategy> Create(int argc, char *argv[], cxmodel::IModel& p_model, cxlog::ILogger& p_logger);
 
 };
 
