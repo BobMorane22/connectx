@@ -26,8 +26,6 @@
 
 #include <gtest/gtest.h>
 
-#include <cxmodel/include/Model.h>
-
 #include <Application.h>
 
 #include "ApplicationTestFixture.h"
@@ -37,7 +35,7 @@ TEST_F(ApplicationTestFixture, Run_BadArgumentCount_ExitFailure)
     const int argc = 0;
     const char *argv[] = {"connectx"};
 
-    std::unique_ptr<cx::IApplication> app = std::make_unique<cx::Application>(argc, (char**)argv, GetModel());
+    std::unique_ptr<cx::IApplication> app = std::make_unique<cx::Application>(argc, (char**)argv, GetModel(), GetLogger());
 
     EXPECT_EQ(app->Run(), EXIT_FAILURE);
 }
@@ -47,7 +45,7 @@ TEST_F(ApplicationTestFixture, Run_BadArgument_ExitFailure)
     const int argc = 2;
     const char *argv[] = {"connectx", "--bad"};
 
-    std::unique_ptr<cx::IApplication> app = std::make_unique<cx::Application>(argc, (char**)argv, GetModel());
+    std::unique_ptr<cx::IApplication> app = std::make_unique<cx::Application>(argc, (char**)argv, GetModel(), GetLogger());
 
     EXPECT_EQ(app->Run(), EXIT_FAILURE);
 }
@@ -57,7 +55,7 @@ TEST_F(ApplicationTestFixture, Run_Help_ExitSuccess)
     const int argc = 2;
     const char *argv[] = {"connectx", "--help"};
 
-    std::unique_ptr<cx::IApplication> app = std::make_unique<cx::Application>(argc, (char**)argv, GetModel());
+    std::unique_ptr<cx::IApplication> app = std::make_unique<cx::Application>(argc, (char**)argv, GetModel(), GetLogger());
 
     EXPECT_EQ(app->Run(), EXIT_SUCCESS);
 }
@@ -67,7 +65,7 @@ TEST_F(ApplicationTestFixture, Run_Version_ExitSuccess)
     const int argc = 2;
     const char *argv[] = {"connectx", "--version"};
 
-    std::unique_ptr<cx::IApplication> app = std::make_unique<cx::Application>(argc, (char**)argv, GetModel());
+    std::unique_ptr<cx::IApplication> app = std::make_unique<cx::Application>(argc, (char**)argv, GetModel(), GetLogger());
 
     EXPECT_EQ(app->Run(), EXIT_SUCCESS);
 }
@@ -77,7 +75,7 @@ TEST_F(ApplicationTestFixture, Run_HelpAndVersion_ExitSuccess)
     const int argc = 3;
     const char *argv[] = {"connectx", "--help", "--version"};
 
-    std::unique_ptr<cx::IApplication> app = std::make_unique<cx::Application>(argc, (char**)argv, GetModel());
+    std::unique_ptr<cx::IApplication> app = std::make_unique<cx::Application>(argc, (char**)argv, GetModel(), GetLogger());
 
     EXPECT_EQ(app->Run(), EXIT_SUCCESS);
 }
@@ -87,7 +85,7 @@ TEST_F(ApplicationTestFixture, Run_VersionAndHelp_ExitSuccess)
     const int argc = 3;
     const char *argv[] = {"connectx", "--version", "--help"};
 
-    std::unique_ptr<cx::IApplication> app = std::make_unique<cx::Application>(argc, (char**)argv, GetModel());
+    std::unique_ptr<cx::IApplication> app = std::make_unique<cx::Application>(argc, (char**)argv, GetModel(), GetLogger());
 
     EXPECT_EQ(app->Run(), EXIT_SUCCESS);
 }
@@ -97,7 +95,7 @@ TEST_F(ApplicationTestFixture, Run_TwoManyValidArguments_ExitSuccess)
     const int argc = 4;
     const char *argv[] = {"connectx", "--help", "--version", "--help"};
 
-    std::unique_ptr<cx::IApplication> app = std::make_unique<cx::Application>(argc, (char**)argv, GetModel());
+    std::unique_ptr<cx::IApplication> app = std::make_unique<cx::Application>(argc, (char**)argv, GetModel(), GetLogger());
 
     EXPECT_EQ(app->Run(), EXIT_SUCCESS);
 }
@@ -107,7 +105,7 @@ TEST_F(ApplicationTestFixture, Run_MixedArguments_ExitFailure)
     const int argc = 4;
     const char *argv[] = {"connectx", "--version", "--bad", "--help"};
 
-    std::unique_ptr<cx::IApplication> app = std::make_unique<cx::Application>(argc, (char**)argv, GetModel());
+    std::unique_ptr<cx::IApplication> app = std::make_unique<cx::Application>(argc, (char**)argv, GetModel(), GetLogger());
 
     EXPECT_EQ(app->Run(), EXIT_FAILURE);
 }

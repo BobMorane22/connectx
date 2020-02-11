@@ -16,29 +16,36 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file ApplicationTestFixture.cpp
- * @date 2019
+ * @file LoggerMock.h
+ * @date 2020
  *
  *************************************************************************************************/
 
-#include "ApplicationTestFixture.h"
+#ifndef LOGGERMOCK_H_D51FFCF0_E2EC_411A_9612_6EB6A529B13A
+#define LOGGERMOCK_H_D51FFCF0_E2EC_411A_9612_6EB6A529B13A
 
-cxlog::ILogger& ApplicationTestFixture::GetLogger()
-{
-    return m_logger;
-}
+#include <cxlog/include/IChainLogging.h>
+#include <cxlog/include/ILogger.h>
 
-cxmodel::IModel& ApplicationTestFixture::GetModel()
+class LoggerMock : public cxlog::ILogger,
+                   public cxlog::IChainLogging
 {
-    return m_model;
-}
+public:
 
-std::string ApplicationTestFixture::GetStdOutContents() const
-{
-    return m_disableStreamsRAII.GetStdOutContents();
-}
+    ~LoggerMock() override = default;
 
-std::string ApplicationTestFixture::GetStdErrContents() const
-{
-    return m_disableStreamsRAII.GetStdErrContents();
-}
+    // ILogger
+    void Log(const cxlog::VerbosityLevel p_verbosityLevel,
+             const std::string&   p_fileName,
+             const std::string&   p_functionName,
+             const size_t         p_lineNumber,
+             const std::string&   p_message) override;
+    void SetVerbosityLevel(const cxlog::VerbosityLevel p_verbosityLevel) override;
+    cxlog::VerbosityLevel GetVerbosityLevel() const override;
+
+    // IChainLogging
+    void SetSucessor(std::unique_ptr<ILogger>&& p_sucessor) override;
+    bool HasSucessor() const override;
+};
+
+#endif // LOGGERMOCK_H_D51FFCF0_E2EC_411A_9612_6EB6A529B13A

@@ -26,17 +26,25 @@
 
 #include <gtest/gtest.h>
 
+#include <cxlog/include/IncrementalLogger.h>
+#include <cxlog/include/ISO8601TimestampFormatter.h>
+#include <cxlog/include/CSVMessageFormatter.h>
+#include <cxlog/include/StdLogTarget.h>
+
 #include <ApplicationTestFixture.h>
 
 #include <CmdArgHelpStrategy.h>
 #include <CmdArgInvalidStrategy.h>
 #include <CmdArgNoStrategy.h>
+#include <CmdArgVerboseStrategy.h>
 #include <CmdArgVersionStrategy.h>
 
 
 TEST_F(ApplicationTestFixture, Handle_NoStrategy_NothingPrinted)
 {
     const std::unique_ptr<cx::ICmdArgWorkflowStrategy> strategy = std::make_unique<cx::CmdArgNoStrategy>();
+
+    ASSERT_TRUE(strategy);
 
     std::string stdOutContents, stdErrContents;
 
@@ -58,6 +66,8 @@ TEST_F(ApplicationTestFixture, Handle_NoStrategy_NothingPrinted)
 TEST_F(ApplicationTestFixture, Handle_HelpStrategy_HelpStringIsValid)
 {
     const std::unique_ptr<cx::ICmdArgWorkflowStrategy> strategy = std::make_unique<cx::CmdArgHelpStrategy>();
+
+    ASSERT_TRUE(strategy);
 
     std::string stdOutContents, stdErrContents;
 
@@ -90,6 +100,8 @@ TEST_F(ApplicationTestFixture, Handle_VersionStrategy_VersionStringIsValid)
 {
     const std::unique_ptr<cx::ICmdArgWorkflowStrategy> strategy = std::make_unique<cx::CmdArgVersionStrategy>();
 
+    ASSERT_TRUE(strategy);
+
     std::string stdOutContents, stdErrContents;
 
     ASSERT_EQ(std::string(), stdOutContents);
@@ -117,9 +129,41 @@ TEST_F(ApplicationTestFixture, Handle_VersionStrategy_VersionStringIsValid)
     ASSERT_EQ(expectedStdErrContents, stdErrContents);
 }
 
+TEST_F(ApplicationTestFixture, Handle_VerboseStrategy_InvalidLoggerError)
+{
+    const int argc = 2;
+    const char *argv[] = {"connectx", "--verbose"};
+
+    const std::unique_ptr<cx::ICmdArgWorkflowStrategy> strategy = std::make_unique<cx::CmdArgVerboseStrategy>(argc, (char**)argv, GetModel(), nullptr);
+
+    ASSERT_TRUE(strategy);
+
+    ASSERT_EQ(strategy->Handle(), EXIT_FAILURE);
+}
+
+TEST_F(ApplicationTestFixture, Handle_VerboseStrategy_LoggerIsNotAChainLoggerError)
+{
+    const int argc = 2;
+    const char *argv[] = {"connectx", "--verbose"};
+
+    std::unique_ptr<cxlog::ITimestampFormatter> timestampFormatter = std::make_unique<cxlog::ISO8601TimestampFormatter>(cxlog::TimePrecision::MILLISECONDS);
+    std::unique_ptr<cxlog::IMessageFormatter> messageFormatter = std::make_unique<cxlog::CSVMessageFormatter>(std::move(timestampFormatter));
+    std::unique_ptr<cxlog::ILogTarget> logTarget = std::make_unique<cxlog::StdLogTarget>();
+    std::unique_ptr<cxlog::ILogger> logger = std::make_unique<cxlog::IncrementalLogger>(std::move(messageFormatter), std::move(logTarget));
+
+    ASSERT_TRUE(logger);
+
+    const std::unique_ptr<cx::ICmdArgWorkflowStrategy> strategy = std::make_unique<cx::CmdArgVerboseStrategy>(argc, (char**)argv, GetModel(), logger.get());
+
+    ASSERT_TRUE(strategy);
+    ASSERT_EQ(strategy->Handle(), EXIT_FAILURE);
+}
+
 TEST_F(ApplicationTestFixture, Handle_InvalidArgStrategy_ErrorPrinted)
 {
     const std::unique_ptr<cx::ICmdArgWorkflowStrategy> strategy = std::make_unique<cx::CmdArgInvalidStrategy>("--invalid");
+
+    ASSERT_TRUE(strategy);
 
     std::string stdOutContents, stdErrContents;
 

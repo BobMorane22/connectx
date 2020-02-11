@@ -16,29 +16,42 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file ApplicationTestFixture.cpp
- * @date 2019
+ * @file LoggerMock.cpp
+ * @date 2020
  *
  *************************************************************************************************/
 
-#include "ApplicationTestFixture.h"
+#include "LoggerMock.h"
 
-cxlog::ILogger& ApplicationTestFixture::GetLogger()
+void LoggerMock::Log(const cxlog::VerbosityLevel p_verbosityLevel,
+                     const std::string&   p_fileName,
+                     const std::string&   p_functionName,
+                     const size_t         p_lineNumber,
+                     const std::string&   p_message)
 {
-    return m_logger;
+    (void)p_verbosityLevel;
+    (void)p_fileName;
+    (void)p_functionName;
+    (void)p_lineNumber;
+    (void)p_message;
 }
 
-cxmodel::IModel& ApplicationTestFixture::GetModel()
+void LoggerMock::SetVerbosityLevel(const cxlog::VerbosityLevel p_verbosityLevel)
 {
-    return m_model;
+    (void)p_verbosityLevel;
 }
 
-std::string ApplicationTestFixture::GetStdOutContents() const
+cxlog::VerbosityLevel LoggerMock::GetVerbosityLevel() const
 {
-    return m_disableStreamsRAII.GetStdOutContents();
+    return cxlog::VerbosityLevel::NONE;
 }
 
-std::string ApplicationTestFixture::GetStdErrContents() const
+void LoggerMock::SetSucessor(std::unique_ptr<cxlog::ILogger>&& p_sucessor)
 {
-    return m_disableStreamsRAII.GetStdErrContents();
+    (void)p_sucessor;
+}
+
+bool LoggerMock::HasSucessor() const
+{
+    return true;
 }

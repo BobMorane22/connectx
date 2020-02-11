@@ -27,6 +27,7 @@
 #include <gtest/gtest.h>
 
 #include "DisableStdStreamsRAII.h"
+#include "LoggerMock.h"
 #include "ModelMock.h"
 
 /*********************************************************************************************//**
@@ -39,13 +40,16 @@ class ApplicationTestFixture : public ::testing::Test
 {
 public:
 
+    cxlog::ILogger& GetLogger();
     cxmodel::IModel& GetModel();
 
     std::string GetStdOutContents() const;
     std::string GetStdErrContents() const;
 
+
 private:
 
+    LoggerMock m_logger;
     ModelMock m_model;
     DisableStdStreamsRAII m_disableStreamsRAII;
 };
