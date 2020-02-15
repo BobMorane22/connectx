@@ -29,7 +29,7 @@
 namespace
 {
 
-const std::string VERSION = "v0.6";
+const std::string VERSION = "v0.7";
 const std::string COPYRIGHT_OWNER = "Eric Poirier";
 const std::string COPYRIGHT_YEAR = "2019";
 
