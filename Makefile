@@ -43,12 +43,22 @@ SHELL = /bin/sh
 #  LF_ALL : Global linker flags
 #  LL_ALL : Global link libraries
 #
+ifeq ($(NDEBUG), 1)
+# Release configuration:
 CF_ALL          = -std=c++17 \
-                  -g -o0 \
+                   -O3 \
+                  -Wall -Wextra -Wshadow -Wpedantic -pedantic-errors -Werror
+LF_ALL          =
+LL_ALL          =
+else
+# Debug configuration:
+CF_ALL          = -std=c++17 \
+                  -ggdb3 -Og \
                   -Wall -Wextra -Wshadow -Wpedantic -pedantic-errors -Werror \
                   -fprofile-arcs -ftest-coverage
 LF_ALL          = -lgcov --coverage
-LL_ALL          = 
+LL_ALL          =
+endif
 
 
 ### Build tools

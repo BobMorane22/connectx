@@ -56,8 +56,10 @@ dir := cxmain
 include $(dir)/Rules.mk
 
 # Code coverage
+ifeq ($(NDEBUG), 0)
 dir := coverage
 include $(dir)/Rules.mk
+endif
 
 
 ### General directory independent rules
