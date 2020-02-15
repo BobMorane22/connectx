@@ -48,7 +48,7 @@ std::unique_ptr<cxlog::ILogger> CreateVerboseLogger(cxlog::VerbosityLevel p_verb
     std::unique_ptr<cxlog::ITimestampFormatter> timestampFormatter = std::make_unique<cxlog::ISO8601TimestampFormatter>(cxlog::TimePrecision::MILLISECONDS);
     std::unique_ptr<cxlog::ILogTarget> logTarget = std::make_unique<cxlog::StdLogTarget>();
     std::unique_ptr<cxlog::IMessageFormatter> formatter = std::make_unique<cxlog::CSVMessageFormatter>(std::move(timestampFormatter));
-    std::unique_ptr<cxlog::ILogger> logger = std::make_unique<cxlog::IncrementalChainedLogger>(std::move(formatter), std::move(logTarget), true);
+    std::unique_ptr<cxlog::ILogger> logger = std::make_unique<cxlog::IncrementalChainedLogger>(std::move(formatter), std::move(logTarget));
 
     logger->SetVerbosityLevel(p_verbosity);
 

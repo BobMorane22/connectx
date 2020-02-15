@@ -41,17 +41,10 @@ cxmodel::Model::Model(std::unique_ptr<ICommandStack>&& p_cmdStack, cxlog::ILogge
 
     m_currentValue = m_INITIAL_VALUE;
 
-    Log(cxlog::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__,
-        "Initializing model.");
-
     CheckInvariants();
 }
 
-cxmodel::Model::~Model()
-{
-    Log(cxlog::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__,
-        "Uninitializing model.");
-}
+cxmodel::Model::~Model() = default;
 
 unsigned int cxmodel::Model::GetCurrentValue() const
 {
