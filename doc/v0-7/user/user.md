@@ -6,7 +6,7 @@ In this release, a new verbose mode has been introduced.
 
 ## Verbose mode
 
-A new `--verbose` switch has been added to make all user actions loggable to the console (standard ouptut to be more precise). You can now start Connect X with this switch and get visual feedback on the user actions:
+A new `--verbose` switch has been added to make all user actions become loggable to the console (standard ouptut to be more precise). You can now start Connect X with this switch and get visual feedback on the user actions:
 
 ```
 > connectx@doc: ~/connectx$ ./connectx --verbose
