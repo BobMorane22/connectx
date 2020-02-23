@@ -16,51 +16,48 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file GtkmmUIManager.cpp
- * @date 2019
+ * @file StatusBarPresenter.cpp
+ * @date 2020
  *
  *************************************************************************************************/
 
-#include <cxgui/include/MainWindow.h>
-#include <cxgui/include/MainWindowController.h>
-#include <cxgui/include/MainWindowPresenter.h>
 #include <cxinv/include/assertion.h>
-#include <cxmodel/include/IModel.h>
 
-#include <GtkmmUIManager.h>
+#include <StatusBarPresenter.h>
 
-cx::GtkmmUIManager::GtkmmUIManager(int argc, char *argv[], cxmodel::IModel& p_model)
+std::string cxgui::StatusBarPresenter::GetStatusBarMessage() const
 {
-    PRECONDITION(argc > 0);
-    PRECONDITION(argv != nullptr);
-
-    m_controller = std::make_unique<cxgui::MainWindowController>(p_model);
-    m_presenter = std::make_unique<cxgui::MainWindowPresenter>();
-    m_mainWindow = std::make_unique<cxgui::MainWindow>(argc, argv, p_model, *m_controller, *m_presenter);
-
-    p_model.Attach(m_presenter.get());
-    m_presenter->Attach(m_mainWindow.get());
-
-    POSTCONDITION(m_mainWindow != nullptr);
-
-    CheckInvariants();
+    return m_statusBarMessage;
 }
 
-int cx::GtkmmUIManager::Manage()
+void cxgui::StatusBarPresenter::Update(cxmodel::NotificationContext p_context, cxmodel::Subject* p_subject)
 {
-    CheckInvariants();
-
-    if(m_mainWindow)
+    if(p_subject)
     {
-        return m_mainWindow->Show();
-    }
+        m_statusBarMessage = MakeStatusBarContextString(p_context);
 
-    return EXIT_FAILURE;
+        Notify(p_context);
+    }
 }
 
-void cx::GtkmmUIManager::CheckInvariants()
+std::string cxgui::MakeStatusBarContextString(cxmodel::NotificationContext p_context)
 {
-    INVARIANT(m_controller != nullptr);
-    INVARIANT(m_presenter != nullptr);
-    INVARIANT(m_mainWindow != nullptr);
+    switch(p_context)
+    {
+        case cxmodel::NotificationContext::INCREMENT :
+            return "Increment.";
+
+        case cxmodel::NotificationContext::REDO :
+            return "Redo.";
+
+        case cxmodel::NotificationContext::REINITIALIZE :
+            return "Reinitialize.";
+
+        case cxmodel::NotificationContext::UNDO :
+            return "Undo.";
+
+        default:
+            ASSERT_ERROR_MSG("Unknown notification context.");
+            return {};
+    }
 }

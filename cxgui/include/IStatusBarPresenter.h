@@ -16,48 +16,31 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file MainWindowPresenter.h
- * @date 2019
+ * @file IStatusBarPresenter.h
+ * @date 2020
  *
  *************************************************************************************************/
 
-#ifndef MAINWINDOWPRESENTER_H_B80CACC4_E075_49C0_9DFD_29C6C1BCFE67
-#define MAINWINDOWPRESENTER_H_B80CACC4_E075_49C0_9DFD_29C6C1BCFE67
+#ifndef ISTATUSBARPRESENTER_H_ABE6731E_14D3_4B54_B017_22D806A7BC0B
+#define ISTATUSBARPRESENTER_H_ABE6731E_14D3_4B54_B017_22D806A7BC0B
 
 #include <string>
 
-#include "IMainWindowPresenter.h"
+#include <cxmodel/include/IObserver.h>
+#include <cxmodel/include/Subject.h>
 
 namespace cxgui
 {
 
-class MainWindowPresenter : public cxgui::IMainWindowPresenter
+class IStatusBarPresenter : public cxmodel::IObserver, public cxmodel::Subject
 {
 
 public:
 
-    MainWindowPresenter();
-
-    bool IsReinitializeBtnEnabled() const override;
-    unsigned int GetCounterValue() const override;
-    std::string GetWindowTitle() const override;
-    std::string GetIncrementBtnLabel() const override;
-    std::string GetReinitializeBtnLabel() const override;
-
-
-private:
-
-    void Update(cxmodel::NotificationContext p_context, cxmodel::Subject* p_subject) override;
-
-    unsigned int m_counterValue;
-    bool m_isIncrementBtnEnabled;
-
-    static constexpr char m_windowTitle[] = "Connect X";
-    static constexpr char m_incrementBtnLabel[] = "Increment";
-    static constexpr char m_reinitializeBtnLabel[] = "Reinitialize";
+    virtual std::string GetStatusBarMessage() const = 0;
 
 };
 
 } // namespace cxgui
 
-#endif // MAINWINDOWPRESENTER_H_B80CACC4_E075_49C0_9DFD_29C6C1BCFE67
+#endif // ISTATUSBARPRESENTER_H_ABE6731E_14D3_4B54_B017_22D806A7BC0B

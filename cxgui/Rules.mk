@@ -52,7 +52,9 @@ include $(dir)/Rules.mk
 #
 OBJS_$(d) := $(d)/src/MainWindow.o \
              $(d)/src/MainWindowController.o \
-             $(d)/src/MainWindowPresenter.o
+             $(d)/src/MainWindowPresenter.o \
+             $(d)/src/StatusBar.o \
+             $(d)/src/StatusBarPresenter.o
 
 DEPS_$(d) := $(OBJS_$(d):%=%.d)
 

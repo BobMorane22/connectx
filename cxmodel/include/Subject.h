@@ -26,6 +26,8 @@
 
 #include <vector>
 
+#include "NotificationContext.h"
+
 namespace cxmodel
 {
     class IObserver;
@@ -125,7 +127,7 @@ protected:
      * It will in turn update to state of all attached observers.
      *
      ********************************************************************************************/
-    void Notify();
+    void Notify(NotificationContext p_context);
 
 
 private:

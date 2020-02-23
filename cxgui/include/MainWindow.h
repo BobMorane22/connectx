@@ -33,6 +33,8 @@
 #include <gtkmm/label.h>
 
 #include "IMainWindow.h"
+#include "IStatusBar.h"
+#include "IStatusBarPresenter.h"
 
 namespace cxgui
 {
@@ -86,6 +88,7 @@ public:
      ********************************************************************************************/
     MainWindow(int argc,
                char *argv[],
+               cxmodel::Subject& p_model,
                IMainWindowController& p_controller,
                IMainWindowPresenter& p_presenter);
 
@@ -94,15 +97,17 @@ public:
 
 private:
 
-    void Update(cxmodel::Subject* p_subject) override;
+    void Update(cxmodel::NotificationContext p_context, cxmodel::Subject* p_subject) override;
 
     void InitializeGtkmm(int argc, char *argv[]);
+
     void CheckInvariants();
 
     Glib::RefPtr<Gtk::Application> m_app;
 
     IMainWindowController& m_controller;
     IMainWindowPresenter& m_presenter;
+    std::unique_ptr<IStatusBarPresenter> m_statusbarPresenter;
 
     // These members must be pointers. They are default initialized to nullptr, so no widget is
     // actually constructed. We construct is by hand, after the Gtkmm library initialization.
@@ -117,6 +122,8 @@ private:
     std::unique_ptr<Gtk::Label> m_counterLabel;
     std::unique_ptr<Gtk::Button> m_incrementButton;
     std::unique_ptr<Gtk::Button> m_reinitButton;
+
+    std::unique_ptr<IStatusBar> m_statusbar;
 };
 
 } // namespace cxgui

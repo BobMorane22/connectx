@@ -16,48 +16,25 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file MainWindowPresenter.h
- * @date 2019
+ * @file NotificationContext.h
+ * @date 2020
  *
  *************************************************************************************************/
 
-#ifndef MAINWINDOWPRESENTER_H_B80CACC4_E075_49C0_9DFD_29C6C1BCFE67
-#define MAINWINDOWPRESENTER_H_B80CACC4_E075_49C0_9DFD_29C6C1BCFE67
+#ifndef NOTIFICATIONCONTEXT_H_3B763656_2127_4F2A_B522_85ECBA656CB8
+#define NOTIFICATIONCONTEXT_H_3B763656_2127_4F2A_B522_85ECBA656CB8
 
-#include <string>
-
-#include "IMainWindowPresenter.h"
-
-namespace cxgui
+namespace cxmodel
 {
 
-class MainWindowPresenter : public cxgui::IMainWindowPresenter
+enum class NotificationContext
 {
-
-public:
-
-    MainWindowPresenter();
-
-    bool IsReinitializeBtnEnabled() const override;
-    unsigned int GetCounterValue() const override;
-    std::string GetWindowTitle() const override;
-    std::string GetIncrementBtnLabel() const override;
-    std::string GetReinitializeBtnLabel() const override;
-
-
-private:
-
-    void Update(cxmodel::NotificationContext p_context, cxmodel::Subject* p_subject) override;
-
-    unsigned int m_counterValue;
-    bool m_isIncrementBtnEnabled;
-
-    static constexpr char m_windowTitle[] = "Connect X";
-    static constexpr char m_incrementBtnLabel[] = "Increment";
-    static constexpr char m_reinitializeBtnLabel[] = "Reinitialize";
-
+    INCREMENT,
+    REINITIALIZE,
+    REDO,
+    UNDO
 };
 
-} // namespace cxgui
+} // namespace cxmodel
 
-#endif // MAINWINDOWPRESENTER_H_B80CACC4_E075_49C0_9DFD_29C6C1BCFE67
+#endif // NOTIFICATIONCONTEXT_H_3B763656_2127_4F2A_B522_85ECBA656CB8

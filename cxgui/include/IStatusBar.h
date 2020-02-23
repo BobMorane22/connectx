@@ -16,65 +16,54 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file IObserver.h
- * @date 2019
+ * @file IStatusBar.h
+ * @date 2020
  *
  *************************************************************************************************/
 
-#ifndef IOBSERVER_H_CB32427D_3430_41D8_BE7A_992F2D139BB2
-#define IOBSERVER_H_CB32427D_3430_41D8_BE7A_992F2D139BB2
+#ifndef ISTATUSBAR_H_B9E6A5FA_CB18_4646_9BD1_F38CE15F1A62
+#define ISTATUSBAR_H_B9E6A5FA_CB18_4646_9BD1_F38CE15F1A62
 
-#include <any>
-#include <optional>
+#include <string>
 
-#include "NotificationContext.h"
-
-namespace cxmodel
-{
-    class Subject;
-}
-
-namespace cxmodel
-{
+#include <cxmodel/include/IObserver.h>
 
 /*********************************************************************************************//**
- * @brief Interface for objects that can update their state on some subject notification.
+ * @brief DESCRIPTION
  *
- * Inherit from this to make some class capable of subscribing to notifications from some
- * Subject. For each notification, the @c IObserver instance can update its state.
+ * @invariant
+ * @invariant
  *
- * @see cxmodel::Subject
+ * DESCRIPTION
  *
  ************************************************************************************************/
-class IObserver
+class IStatusBar : public cxmodel::IObserver
 {
 
 public:
 
     /******************************************************************************************//**
-     * @brief Default destructor.
+     * @brief Destructor.
      *
      ********************************************************************************************/
-    virtual ~IObserver() = default;
+    virtual ~IStatusBar() = default;
 
     /******************************************************************************************//**
-     * @brief Update the state.
+     * @brief DESCRIPTION
      *
-     * @param p_subject The subject that has triggered the update through a notification.
+     * @pre
+     * @post
      *
-     * Update the @c IObserver instance's state. When a subject notifies its observers that some
-     * event as occurred (through its @c Notify() method), this method is automatically called
-     * on each of the attached observer. Each observer can implement it its own way and update
-     * its state accordingly.
+     * @param
+     * @param
      *
-     * @warning Never call this method directly. Only a subject, through its notifications,
-     *          should call this.
+     * @return
+     *
+     * DESCRIPTION
      *
      ********************************************************************************************/
-    virtual void Update(NotificationContext p_context, Subject* p_subject) = 0;
+    virtual void SetLastUserActionStatus(const std::string& p_lastUserActionDescription) = 0;
 
 };
 
-} // namespace cxmodel
-
-#endif // IOBSERVER_H_CB32427D_3430_41D8_BE7A_992F2D139BB2
+#endif // ISTATUSBAR_H_B9E6A5FA_CB18_4646_9BD1_F38CE15F1A62

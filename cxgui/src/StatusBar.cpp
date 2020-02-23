@@ -16,57 +16,34 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file MainWindowPresenter.cpp
- * @date 2019
+ * @file StatusBar.cpp
+ * @date 2020
  *
  *************************************************************************************************/
 
-#include <cxmodel/include/Model.h>
+#include <StatusBar.h>
 
-#include <MainWindowPresenter.h>
+cxgui::StatusBar::~StatusBar() = default;
 
-cxgui::MainWindowPresenter::MainWindowPresenter()
- : m_counterValue{0}
- , m_isIncrementBtnEnabled{false}
+cxgui::StatusBar::StatusBar(IStatusBarPresenter& p_presenter)
+ : m_presenter{p_presenter}
 {
 }
 
-bool cxgui::MainWindowPresenter::IsReinitializeBtnEnabled() const
+void cxgui::StatusBar::SetLastUserActionStatus(const std::string& p_lastUserActionDescription)
 {
-    return m_isIncrementBtnEnabled;
+    m_statusbar.push(p_lastUserActionDescription);
 }
 
-unsigned int cxgui::MainWindowPresenter::GetCounterValue() const
-{
-    return m_counterValue;
-}
-
-void cxgui::MainWindowPresenter::Update(cxmodel::NotificationContext p_context, cxmodel::Subject* p_subject)
+void cxgui::StatusBar::Update(cxmodel::NotificationContext, cxmodel::Subject* p_subject)
 {
     if(p_subject)
     {
-        cxmodel::IModel* model = static_cast<cxmodel::Model*>(p_subject);
-
-        const unsigned int value = model->GetCurrentValue();
-
-        m_isIncrementBtnEnabled = value > 0;
-        m_counterValue = value;
-
-        Notify(p_context);
+        SetLastUserActionStatus(m_presenter.GetStatusBarMessage());
     }
 }
 
-std::string cxgui::MainWindowPresenter::GetWindowTitle() const
+Gtk::Statusbar& cxgui::StatusBar::GetGtkStatusBar()
 {
-    return std::string{m_windowTitle};
-}
-
-std::string cxgui::MainWindowPresenter::GetIncrementBtnLabel() const
-{
-    return std::string{m_incrementBtnLabel};
-}
-
-std::string cxgui::MainWindowPresenter::GetReinitializeBtnLabel() const
-{
-    return std::string{m_reinitializeBtnLabel};
+    return m_statusbar;
 }

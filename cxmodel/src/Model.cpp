@@ -27,6 +27,7 @@
 #include <CommandReinitialize.h>
 #include <CommandStack.h>
 #include <Model.h>
+#include <NotificationContext.h>
 
 cxmodel::Model::Model(std::unique_ptr<ICommandStack>&& p_cmdStack, cxlog::ILogger& p_logger)
  : m_cmdStack{std::move(p_cmdStack)}
@@ -57,7 +58,7 @@ void cxmodel::Model::Increment()
 
     m_cmdStack->Execute(std::make_unique<CommandIncrementByOne>(m_currentValue));
 
-    Notify();
+    Notify(NotificationContext::INCREMENT);
 
     POSTCONDITION(m_currentValue - old == 1);
 
@@ -72,7 +73,7 @@ void cxmodel::Model::Reinitialize()
 
     m_cmdStack->Execute(std::make_unique<CommandReinitialize>(m_INITIAL_VALUE, m_currentValue, m_currentValue));
 
-    Notify();
+    Notify(NotificationContext::REINITIALIZE);
 
     POSTCONDITION(m_currentValue == m_INITIAL_VALUE);
 
@@ -86,7 +87,7 @@ void cxmodel::Model::Undo()
 {
     m_cmdStack->Undo();
 
-    Notify();
+    Notify(NotificationContext::UNDO);
 
     Log(cxlog::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__,
         "Last action undoed.");
@@ -98,7 +99,7 @@ void cxmodel::Model::Redo()
 {
     m_cmdStack->Redo();
 
-    Notify();
+    Notify(NotificationContext::REDO);
 
     Log(cxlog::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__,
         "Last action redoed.");

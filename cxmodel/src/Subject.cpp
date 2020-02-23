@@ -112,13 +112,13 @@ void cxmodel::Subject::DetatchAll()
     CheckInvariants();
 }
 
-void cxmodel::Subject::Notify()
+void cxmodel::Subject::Notify(NotificationContext p_context)
 {
     for(const auto observer : m_observers)
     {
         if(observer != nullptr)
         {
-            observer->Update(this);
+            observer->Update(p_context, this);
         }
     }
 
