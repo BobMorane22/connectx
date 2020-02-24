@@ -37,5 +37,5 @@ void ConcreteSubjectMock::IncrementData()
 {
     ++m_data;
 
-    Notify();
+    Notify(cxmodel::NotificationContext::INCREMENT);
 }

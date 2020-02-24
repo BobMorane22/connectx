@@ -57,14 +57,14 @@ void ModelMockPresenter::Increment()
 {
     ++m_currentValue;
 
-    Notify();
+    Notify(cxmodel::NotificationContext::INCREMENT);
 }
 
 void ModelMockPresenter::Reinitialize()
 {
     m_currentValue = 0;
 
-    Notify();
+    Notify(cxmodel::NotificationContext::INCREMENT);
 }
 
 void ModelMockPresenter::Undo()

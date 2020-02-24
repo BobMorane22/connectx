@@ -35,7 +35,7 @@ public:
 
     int GetData() const;
 
-    void Update(cxmodel::Subject* p_subject) override;
+    void Update(cxmodel::NotificationContext p_context, cxmodel::Subject* p_subject) override;
 
 private:
 
