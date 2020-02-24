@@ -100,6 +100,7 @@ private:
     void Update(cxmodel::NotificationContext p_context, cxmodel::Subject* p_subject) override;
 
     void InitializeGtkmm(int argc, char *argv[]);
+    void CreateStatusBar(cxmodel::Subject& p_model);
 
     void CheckInvariants();
 

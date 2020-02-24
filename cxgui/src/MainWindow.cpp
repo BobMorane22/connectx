@@ -57,9 +57,6 @@ cxgui::MainWindow::MainWindow(int argc,
     m_incrementButton = std::make_unique<Gtk::Button>(m_presenter.GetIncrementBtnLabel());
     m_reinitButton = std::make_unique<Gtk::Button>(m_presenter.GetReinitializeBtnLabel());
 
-    m_statusbarPresenter = std::make_unique<StatusBarPresenter>();
-    std::unique_ptr<StatusBar> concreteStatusBar = std::make_unique<StatusBar>(*m_statusbarPresenter);
-
     m_reinitButton->set_sensitive(m_presenter.IsReinitializeBtnEnabled());
     m_undoButton->signal_clicked().connect([&controller = m_controller](){controller.OnUndoBtnPressed();});
     m_redoButton->signal_clicked().connect([&controller = m_controller](){controller.OnRedoBtnPressed();});
@@ -77,11 +74,8 @@ cxgui::MainWindow::MainWindow(int argc,
     m_mainLayout->attach_next_to(*m_counterLabel, *m_undoButton, Gtk::PositionType::POS_BOTTOM, 2, 1);
     m_mainLayout->attach_next_to(*m_incrementButton, *m_counterLabel, Gtk::PositionType::POS_BOTTOM, 1, 1);
     m_mainLayout->attach_next_to(*m_reinitButton, *m_incrementButton, Gtk::PositionType::POS_RIGHT, 1, 1);
-    m_mainLayout->attach_next_to(concreteStatusBar->GetGtkStatusBar(), *m_incrementButton, Gtk::PositionType::POS_BOTTOM, 2, 1);
 
-    p_model.Attach(m_statusbarPresenter.get());
-    m_statusbar = std::move(concreteStatusBar);
-    m_statusbarPresenter->Attach(m_statusbar.get());
+    CreateStatusBar(p_model);
 
     m_mainWindow->add(*m_mainLayout);
 
@@ -116,6 +110,18 @@ void cxgui::MainWindow::Update(cxmodel::NotificationContext, cxmodel::Subject*)
     m_counterLabel->set_text(std::to_string(m_presenter.GetCounterValue()));
 
     CheckInvariants();
+}
+
+void cxgui::MainWindow::CreateStatusBar(cxmodel::Subject& p_model)
+{
+    m_statusbarPresenter = std::make_unique<StatusBarPresenter>();
+    std::unique_ptr<StatusBar> concreteStatusBar = std::make_unique<StatusBar>(*m_statusbarPresenter);
+
+    m_mainLayout->attach_next_to(concreteStatusBar->GetGtkStatusBar(), *m_incrementButton, Gtk::PositionType::POS_BOTTOM, 2, 1);
+
+    p_model.Attach(m_statusbarPresenter.get());
+    m_statusbar = std::move(concreteStatusBar);
+    m_statusbarPresenter->Attach(m_statusbar.get());
 }
 
 void cxgui::MainWindow::CheckInvariants()
