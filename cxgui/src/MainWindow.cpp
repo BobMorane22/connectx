@@ -122,6 +122,11 @@ void cxgui::MainWindow::CreateStatusBar(cxmodel::Subject& p_model)
     p_model.Attach(m_statusbarPresenter.get());
     m_statusbar = std::move(concreteStatusBar);
     m_statusbarPresenter->Attach(m_statusbar.get());
+
+    POSTCONDITION(m_statusbarPresenter != nullptr);
+    POSTCONDITION(m_statusbar != nullptr);
+
+    CheckInvariants();
 }
 
 void cxgui::MainWindow::CheckInvariants()
@@ -134,4 +139,7 @@ void cxgui::MainWindow::CheckInvariants()
     INVARIANT(m_counterLabel != nullptr);
     INVARIANT(m_incrementButton != nullptr);
     INVARIANT(m_reinitButton != nullptr);
+    INVARIANT(m_statusbarPresenter != nullptr);
+    INVARIANT(m_statusbar != nullptr);
+
 }
