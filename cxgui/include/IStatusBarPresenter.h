@@ -32,11 +32,21 @@
 namespace cxgui
 {
 
+/*********************************************************************************************//**
+ * @brief Interface for status bar presenters.
+ *
+ ************************************************************************************************/
 class IStatusBarPresenter : public cxmodel::IObserver, public cxmodel::Subject
 {
 
 public:
 
+    /******************************************************************************************//**
+     * @brief Retrieves the message to display in the status bar.
+     *
+     * @return The message to display in the status bar.
+     *
+     ********************************************************************************************/
     virtual std::string GetStatusBarMessage() const = 0;
 
 };

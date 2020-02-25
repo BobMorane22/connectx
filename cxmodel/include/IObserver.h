@@ -60,6 +60,7 @@ public:
     /******************************************************************************************//**
      * @brief Update the state.
      *
+     * @param p_context The context in which the notification occurs.
      * @param p_subject The subject that has triggered the update through a notification.
      *
      * Update the @c IObserver instance's state. When a subject notifies its observers that some

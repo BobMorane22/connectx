@@ -123,6 +123,8 @@ protected:
     /******************************************************************************************//**
      * @brief Notifies all observers that some event has occurred.
      *
+     * @param p_context The context in which the notification occurs.
+     *
      * For each event that need notifying the observers, this method must be called explicitly.
      * It will in turn update to state of all attached observers.
      *

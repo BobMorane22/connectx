@@ -56,6 +56,8 @@ namespace cxgui
  * @invariant m_counterLabel is not @c nullptr
  * @invariant m_incrementButton is not @c nullptr
  * @invariant m_reinitButton is not @c nullptr
+ * @invariant m_statusbarPresenter is not @c nullptr
+ * @invariant m_statusbar is not @c nullptr
  *
  * A Gtkmm window that acts as the application main window. It is the responsibility of this
  * window to initialize the Gtkmm library and to show the window.

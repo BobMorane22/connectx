@@ -27,8 +27,15 @@
 namespace cxmodel
 {
 
+/**********************************************************************************************//**
+ * @brief Connect X model notification context.
+ *
+ * Describes all the contexts from which the Connect X model may notify.
+ *
+ ************************************************************************************************/
 enum class NotificationContext
 {
+    // User operations:
     INCREMENT,
     REINITIALIZE,
     REDO,

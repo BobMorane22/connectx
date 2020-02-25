@@ -38,6 +38,7 @@ public:
 
     virtual void Update(cxmodel::NotificationContext p_context, Subject* p_subject) override;
 
+
 private:
 
     std::string m_statusBarMessage;

@@ -141,5 +141,4 @@ void cxgui::MainWindow::CheckInvariants()
     INVARIANT(m_reinitButton != nullptr);
     INVARIANT(m_statusbarPresenter != nullptr);
     INVARIANT(m_statusbar != nullptr);
-
 }
