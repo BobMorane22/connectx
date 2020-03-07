@@ -49,6 +49,7 @@ OBJS_$(d) := $(d)/MainWindowPresenterTestFixture.o \
              $(d)/MainWindowPresenterTests.o \
              $(d)/ModelMockController.o \
              $(d)/ModelMockPresenter.o \
+             $(d)/StatusBarPresenterTests.o \
              cxgui/libcxgui.a
 DEPS_$(d) := $(TGTS_$(d):%=%.d)
 TGT_BIN := $(TGT_BIN) $(TGTS_$(d))
