@@ -53,6 +53,7 @@ include $(dir)/Rules.mk
 OBJS_$(d) := $(d)/src/MainWindow.o \
              $(d)/src/MainWindowController.o \
              $(d)/src/MainWindowPresenter.o \
+             $(d)/src/MenuItem.o \
              $(d)/src/StatusBar.o \
              $(d)/src/StatusBarPresenter.o
 

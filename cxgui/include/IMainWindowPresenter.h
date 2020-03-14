@@ -27,6 +27,8 @@
 #include <cxmodel/include/IObserver.h>
 #include <cxmodel/include/Subject.h>
 
+#include "MenuItem.h"
+
 namespace cxgui
 {
 
@@ -93,6 +95,16 @@ public:
      *
      ********************************************************************************************/
     virtual std::string GetReinitializeBtnLabel() const = 0;
+
+    /******************************************************************************************//**
+     * @brief Accesses menu labels.
+     *
+     * @param p_menuItem The menu item to get the label of.
+     *
+     * @return The menu label.
+     *
+     ********************************************************************************************/
+    virtual std::string GetMenuLabel(MenuItem p_menuItem) const = 0;
 
 };
 

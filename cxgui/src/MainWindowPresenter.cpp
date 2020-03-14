@@ -70,3 +70,8 @@ std::string cxgui::MainWindowPresenter::GetReinitializeBtnLabel() const
 {
     return std::string{m_reinitializeBtnLabel};
 }
+
+std::string cxgui::MainWindowPresenter::GetMenuLabel(MenuItem p_menuItem) const
+{
+    return MakeLabel(p_menuItem);
+}

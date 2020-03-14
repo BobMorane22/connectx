@@ -30,7 +30,11 @@
 #include <gtkmm/applicationwindow.h>
 #include <gtkmm/button.h>
 #include <gtkmm/grid.h>
+#include <gtkmm/imagemenuitem.h>
 #include <gtkmm/label.h>
+#include <gtkmm/menubar.h>
+#include <gtkmm/menuitem.h>
+#include <gtkmm/menu.h>
 
 #include "IMainWindow.h"
 #include "IStatusBar.h"
@@ -127,6 +131,12 @@ private:
     std::unique_ptr<Gtk::Button> m_reinitButton;
 
     std::unique_ptr<IStatusBar> m_statusbar;
+
+    std::unique_ptr<Gtk::MenuBar> m_menubar;
+    std::unique_ptr<Gtk::MenuItem> m_gameMenuItem;
+    std::unique_ptr<Gtk::Menu> m_gameMenu;
+    std::unique_ptr<Gtk::MenuItem> m_reinitializeMenuItem;
+    std::unique_ptr<Gtk::ImageMenuItem> m_quitMenuItem;
 };
 
 } // namespace cxgui
