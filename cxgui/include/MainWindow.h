@@ -54,14 +54,19 @@ namespace cxgui
  *
  * @invariant m_app is not @c nullptr
  * @invariant m_mainWindow is not @c nullptr
+ * @invariant m_statusbarPresenter is not @c nullptr
  * @invariant m_mainLayout is not @c nullptr
  * @invariant m_undoButton is not @c nullptr
  * @invariant m_redoButton is not @c nullptr
  * @invariant m_counterLabel is not @c nullptr
  * @invariant m_incrementButton is not @c nullptr
  * @invariant m_reinitButton is not @c nullptr
- * @invariant m_statusbarPresenter is not @c nullptr
  * @invariant m_statusbar is not @c nullptr
+ * @invariant m_menubar is not @c nullptr
+ * @invariant m_gameMenuItem is not @c nullptr
+ * @invariant m_gameMenu is not @c nullptr
+ * @invariant m_reinitializeMenuItem is not @c nullptr
+ * @invariant m_quitMenuItem is not @c nullptr
  *
  * A Gtkmm window that acts as the application main window. It is the responsibility of this
  * window to initialize the Gtkmm library and to show the window.
@@ -80,16 +85,25 @@ public:
      *
      * @post m_app is not @c nullptr
      * @post m_mainWindow is not @c nullptr
+     * @post m_statusbarPresenter is not @c nullptr
      * @post m_mainLayout is not @c nullptr
      * @post m_undoButton is not @c nullptr
      * @post m_redoButton is not @c nullptr
      * @post m_counterLabel is not @c nullptr
      * @post m_incrementButton is not @c nullptr
      * @post m_reinitButton is not @c nullptr
+     * @post m_statusbar is not @c nullptr
+     * @port m_menubar is not @c nullptr
+     * @port m_gameMenuItem is not @c nullptr
+     * @port m_gameMenu is not @c nullptr
+     * @port m_reinitializeMenuItem is not @c nullptr
+     * @port m_quitMenuItem is not @c nullptr
      *
-     * @param argc Command line argument count.
-     * @param argc A C-style array of arguments.
-     * @param p_model The Connect X compatible model.
+     * @param argc         Command line argument count.
+     * @param argc         A C-style array of arguments.
+     * @param p_model      The Connect X compatible model.
+     * @param p_controller The main window controller.
+     * @param p_presenter  The main window presenter.
      *
      ********************************************************************************************/
     MainWindow(int argc,

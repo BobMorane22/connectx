@@ -47,6 +47,7 @@ OBJS_$(d) := $(d)/MainWindowPresenterTestFixture.o \
              $(d)/MainWindowControllerTests.o \
              $(d)/MainWindowControllerTestFixture.o \
              $(d)/MainWindowPresenterTests.o \
+             $(d)/MenuItemTests.o \
              $(d)/ModelMockController.o \
              $(d)/ModelMockPresenter.o \
              $(d)/StatusBarPresenterTests.o \

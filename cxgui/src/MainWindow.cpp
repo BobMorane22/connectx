@@ -97,18 +97,20 @@ cxgui::MainWindow::MainWindow(int argc,
     m_mainWindow->add(*m_mainLayout);
 
     POSTCONDITION(bool(m_app));
+    POSTCONDITION(bool(m_statusbarPresenter));
     POSTCONDITION(m_mainWindow != nullptr);
     POSTCONDITION(m_mainLayout != nullptr);
-    POSTCONDITION(m_menubar != nullptr);
-    POSTCONDITION(m_gameMenuItem != nullptr);
-    POSTCONDITION(m_gameMenu != nullptr);
-    POSTCONDITION(m_reinitializeMenuItem != nullptr);
-    POSTCONDITION(m_quitMenuItem != nullptr);
     POSTCONDITION(m_undoButton != nullptr);
     POSTCONDITION(m_redoButton != nullptr);
     POSTCONDITION(m_counterLabel != nullptr);
     POSTCONDITION(m_incrementButton != nullptr);
     POSTCONDITION(m_reinitButton != nullptr);
+    POSTCONDITION(m_statusbar != nullptr);
+    POSTCONDITION(m_menubar != nullptr);
+    POSTCONDITION(m_gameMenuItem != nullptr);
+    POSTCONDITION(m_gameMenu != nullptr);
+    POSTCONDITION(m_reinitializeMenuItem != nullptr);
+    POSTCONDITION(m_quitMenuItem != nullptr);
 
     CheckInvariants();
 }
@@ -154,18 +156,18 @@ void cxgui::MainWindow::CreateStatusBar(cxmodel::Subject& p_model)
 void cxgui::MainWindow::CheckInvariants()
 {
     INVARIANT(bool(m_app));
+    INVARIANT(bool(m_statusbarPresenter));
     INVARIANT(m_mainWindow != nullptr);
     INVARIANT(m_mainLayout != nullptr);
-    INVARIANT(m_menubar != nullptr);
-    INVARIANT(m_gameMenuItem != nullptr);
-    INVARIANT(m_gameMenu != nullptr);
-    INVARIANT(m_reinitializeMenuItem != nullptr);
-    INVARIANT(m_quitMenuItem != nullptr);
     INVARIANT(m_undoButton != nullptr);
     INVARIANT(m_redoButton != nullptr);
     INVARIANT(m_counterLabel != nullptr);
     INVARIANT(m_incrementButton != nullptr);
     INVARIANT(m_reinitButton != nullptr);
-    INVARIANT(m_statusbarPresenter != nullptr);
     INVARIANT(m_statusbar != nullptr);
+    INVARIANT(m_menubar != nullptr);
+    INVARIANT(m_gameMenuItem != nullptr);
+    INVARIANT(m_gameMenu != nullptr);
+    INVARIANT(m_reinitializeMenuItem != nullptr);
+    INVARIANT(m_quitMenuItem != nullptr);
 }

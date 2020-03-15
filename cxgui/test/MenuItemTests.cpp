@@ -16,34 +16,26 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file MenuItem.h
+ * @file MenuItemTests.cpp
  * @date 2020
  *
  *************************************************************************************************/
 
-#ifndef MENUITEM_H_A0647363_208A_493B_A9B8_4C275516DCCC
-#define MENUITEM_H_A0647363_208A_493B_A9B8_4C275516DCCC
+#include <gtest/gtest.h>
 
-namespace cxgui
+#include <MenuItem.h>
+
+TEST(MenuItem, MakeLabel_Game_GameLabelReturned)
 {
+    ASSERT_EQ("Game", cxgui::MakeLabel(cxgui::MenuItem::GAME));
+}
 
-enum class MenuItem
+TEST(MenuItem, MakeLabel_Quit_QuitLabelReturned)
 {
-    GAME,
-    QUIT,
-    REINITIALIZE,
-};
+    ASSERT_EQ("Quit", cxgui::MakeLabel(cxgui::MenuItem::QUIT));
+}
 
-/******************************************************************************************//**
- * @brief Creates a label associated to a menu item.
- *
- * @param p_menuItem The menu item to get the label for.
- *
- * @return The associated label.
- *
- ********************************************************************************************/
-std::string MakeLabel(MenuItem p_menuItem);
-
-} // namespace cxgui
-
-#endif // MENUITEM_H_A0647363_208A_493B_A9B8_4C275516DCCC
+TEST(MenuItem, MakeLabel_Reinitialize_ReinitializeLabelReturned)
+{
+    ASSERT_EQ("Reinitialize", cxgui::MakeLabel(cxgui::MenuItem::REINITIALIZE));
+}

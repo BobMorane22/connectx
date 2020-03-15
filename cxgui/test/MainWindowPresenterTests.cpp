@@ -63,3 +63,19 @@ TEST_F(MainWindowPresenterTestFixture, GetReinitializeBtnLabel_Initial_GoodLabel
 {
     ASSERT_EQ(GetPresenter().GetReinitializeBtnLabel(), "Reinitialize");
 }
+
+TEST_F(MainWindowPresenterTestFixture, GetMenuLabel_GameMenu_GameMenuLabelReturned)
+{
+    ASSERT_EQ(GetPresenter().GetMenuLabel(cxgui::MenuItem::GAME), "Game");
+}
+
+TEST_F(MainWindowPresenterTestFixture, GetMenuLabel_QuitMenu_QuitMenuLabelReturned)
+{
+    ASSERT_EQ(GetPresenter().GetMenuLabel(cxgui::MenuItem::QUIT), "Quit");
+}
+
+TEST_F(MainWindowPresenterTestFixture, GetMenuLabel_ReinitializeMenu_ReinitializeMenuLabelReturned)
+{
+    ASSERT_EQ(GetPresenter().GetMenuLabel(cxgui::MenuItem::REINITIALIZE), "Reinitialize");
+}
+
