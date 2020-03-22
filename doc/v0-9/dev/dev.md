@@ -22,3 +22,9 @@ release:
 
 
 ## Next sprint
+
+In the next sprint, the objectives will be:
+
+1. analyse and create a mock of the New Game dialog;
+2. analyse and create a mock of the About dialog;
+3. implement the About dialog.
