@@ -98,7 +98,7 @@ TEST_F(ApplicationTestFixture, Handle_HelpStrategy_HelpStringIsValid)
 
 TEST_F(ApplicationTestFixture, Handle_VersionStrategy_VersionStringIsValid)
 {
-    const std::unique_ptr<cx::ICmdArgWorkflowStrategy> strategy = std::make_unique<cx::CmdArgVersionStrategy>();
+    const std::unique_ptr<cx::ICmdArgWorkflowStrategy> strategy = std::make_unique<cx::CmdArgVersionStrategy>(GetModel());
 
     ASSERT_TRUE(strategy);
 
@@ -114,7 +114,7 @@ TEST_F(ApplicationTestFixture, Handle_VersionStrategy_VersionStringIsValid)
 
     // In this case we use a regex so that the test is independent of the version number. It only
     // depends on the syntax of the version number, which must remain constant across releases.
-    const std::regex expectedStdOutContents{ "Connect X v\\d\\.\\d\\n"
+    const std::regex expectedStdOutContents{ "Connect X v\\d\\.(\\d)+\\n"
                                              "\\n"
                                              "Copyright \\(C\\) 20\\d\\d Eric Poirier.\\n"
                                              "License GPLv3\\+: GNU GPL version 3 or later <gnu.org/licenses/gpl.html>.\\n"

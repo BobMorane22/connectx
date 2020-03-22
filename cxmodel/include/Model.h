@@ -65,6 +65,9 @@ public:
     void Increment() override;
     void Reinitialize() override;
 
+    std::string GetName() const override;
+    std::string GetVersionNumber() const override;
+
     void Undo() override;
     void Redo() override;
 
@@ -81,6 +84,10 @@ private:
     std::unique_ptr<ICommandStack> m_cmdStack;
 
     static constexpr unsigned int m_INITIAL_VALUE = 0u;
+    static constexpr char m_NAME[] = "Connect X";
+    static constexpr unsigned int m_MAJOR_VERSION_NB = 0u;
+    static constexpr unsigned int m_MINOR_VERSION_NB = 10u;
+
     unsigned int m_currentValue;
 
     cxlog::ILogger& m_logger;

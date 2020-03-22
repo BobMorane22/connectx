@@ -43,6 +43,16 @@ void ModelMock::Reinitialize()
     m_currentValue = m_INITIAL_VALUE;
 }
 
+std::string ModelMock::GetName() const
+{
+    return "Connect X";
+}
+
+std::string ModelMock::GetVersionNumber() const
+{
+    return "v0.0";
+}
+
 void ModelMock::Undo()
 {
     // Nothing to do for now...

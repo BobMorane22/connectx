@@ -29,15 +29,19 @@
 namespace
 {
 
-const std::string VERSION = "v0.9";
 const std::string COPYRIGHT_OWNER = "Eric Poirier";
 const std::string COPYRIGHT_YEAR = "2019";
 
 } // namespace
 
+cx::CmdArgVersionStrategy::CmdArgVersionStrategy(cxmodel::IModel& p_model)
+ : m_model{p_model}
+{
+}
+
 int cx::CmdArgVersionStrategy::Handle()
 {
-    std::cout << "Connect X " << VERSION << std::endl
+    std::cout << m_model.GetName() << " " << m_model.GetVersionNumber() << std::endl
     << std::endl
     << "Copyright (C) " << COPYRIGHT_YEAR << " " <<  COPYRIGHT_OWNER << "." << std::endl
     << "License GPLv3+: GNU GPL version 3 or later <gnu.org/licenses/gpl.html>." << std::endl

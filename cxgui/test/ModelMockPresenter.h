@@ -31,13 +31,16 @@ class ModelMockPresenter : public cxmodel::IModel
 
 public:
 
-    virtual unsigned int GetCurrentValue() const override;
+    unsigned int GetCurrentValue() const override;
 
-    virtual void Increment() override;
-    virtual void Reinitialize() override;
+    void Increment() override;
+    void Reinitialize() override;
 
-    virtual void Undo() override;
-    virtual void Redo() override;
+    std::string GetName() const override;
+    std::string GetVersionNumber() const override;
+
+    void Undo() override;
+    void Redo() override;
 
 
 private:

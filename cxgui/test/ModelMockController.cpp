@@ -48,6 +48,16 @@ void ModelMockController::Reinitialize()
     m_reinitialized = true;
 }
 
+std::string ModelMockController::GetName() const
+{
+    return "Connect X";
+}
+
+std::string ModelMockController::GetVersionNumber() const
+{
+    return "v0.0";
+}
+
 void ModelMockController::Undo()
 {
     m_undoed = true;

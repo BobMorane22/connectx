@@ -21,6 +21,8 @@
  *
  *************************************************************************************************/
 
+#include <sstream>
+
 #include <cxinv/include/assertion.h>
 
 #include <CommandIncrementByOne.h>
@@ -81,6 +83,20 @@ void cxmodel::Model::Reinitialize()
         "Reinitialized value.");
 
     CheckInvariants();
+}
+
+std::string cxmodel::Model::GetName() const
+{
+    return std::string{m_NAME};
+}
+
+std::string cxmodel::Model::GetVersionNumber() const
+{
+    std::stringstream stream;
+
+    stream << "v" << m_MAJOR_VERSION_NB << "." << m_MINOR_VERSION_NB;
+
+    return stream.str();
 }
 
 void cxmodel::Model::Undo()

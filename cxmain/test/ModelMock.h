@@ -38,6 +38,9 @@ public:
     void Increment() override;
     void Reinitialize() override;
 
+    std::string GetName() const override;
+    std::string GetVersionNumber() const override;
+
     void Undo() override;
     void Redo() override;
 

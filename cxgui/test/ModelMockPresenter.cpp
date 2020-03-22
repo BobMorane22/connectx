@@ -67,6 +67,16 @@ void ModelMockPresenter::Reinitialize()
     Notify(cxmodel::NotificationContext::INCREMENT);
 }
 
+std::string ModelMockPresenter::GetName() const
+{
+    return "Connect X";
+}
+
+std::string ModelMockPresenter::GetVersionNumber() const
+{
+    return "v0.0";
+}
+
 void ModelMockPresenter::Undo()
 {
     // Nothing to do for now...

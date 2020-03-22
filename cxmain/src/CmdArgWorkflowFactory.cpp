@@ -103,7 +103,7 @@ std::unique_ptr<cx::ICmdArgWorkflowStrategy> cx::CmdArgWorkflowFactory::Create(i
                 }
                 else if(helpPos > versionPos)
                 {
-                    strategy = std::make_unique<CmdArgVersionStrategy>();
+                    strategy = std::make_unique<CmdArgVersionStrategy>(p_model);
                 }
                 else
                 {

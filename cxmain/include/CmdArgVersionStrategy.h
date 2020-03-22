@@ -24,6 +24,8 @@
 #ifndef CMDARGVERSIONSTRATEGY_H_5A1B3137_4CCC_43BC_B86B_5CFD2649C858
 #define CMDARGVERSIONSTRATEGY_H_5A1B3137_4CCC_43BC_B86B_5CFD2649C858
 
+#include <cxmodel/include/IModel.h>
+
 #include <ICmdArgWorkflowStrategy.h>
 
 namespace cx
@@ -38,7 +40,19 @@ class CmdArgVersionStrategy : public ICmdArgWorkflowStrategy
 
 public:
 
+    /******************************************************************************************//**
+     * @brief Constructor.
+     *
+     * @param p_model The Connect X compatible model.
+     *
+     ********************************************************************************************/
+    CmdArgVersionStrategy(cxmodel::IModel& p_model);
+
     int Handle() override;
+
+private:
+
+    cxmodel::IModel& m_model;
 
 };
 
