@@ -59,10 +59,11 @@ cxgui::MainWindow::MainWindow(int argc,
     m_menubar = std::make_unique<Gtk::MenuBar>();
     m_gameMenuItem = std::make_unique<Gtk::MenuItem>();
     m_gameMenu = std::make_unique<Gtk::Menu>();
-    m_reinitializeMenuItem = std::make_unique<Gtk::MenuItem>();
+    m_reinitMenuItem = std::make_unique<Gtk::MenuItem>();
     m_quitMenuItem = std::make_unique<Gtk::ImageMenuItem>(Gtk::Stock::QUIT);
 
     m_reinitButton->set_sensitive(m_presenter.IsReinitializeBtnEnabled());
+    m_reinitMenuItem->set_sensitive(m_presenter.IsReinitializeBtnEnabled());
     m_undoButton->signal_clicked().connect([&controller = m_controller](){controller.OnUndoBtnPressed();});
     m_redoButton->signal_clicked().connect([&controller = m_controller](){controller.OnRedoBtnPressed();});
     m_incrementButton->signal_clicked().connect([&controller = m_controller](){controller.OnIncrementBtnPressed();});
@@ -76,14 +77,14 @@ cxgui::MainWindow::MainWindow(int argc,
 
     m_menubar->append(*m_gameMenuItem);
     m_gameMenuItem->set_submenu(*m_gameMenu);
-    m_gameMenu->append(*m_reinitializeMenuItem);
+    m_gameMenu->append(*m_reinitMenuItem);
     m_gameMenu->append(*m_quitMenuItem);
 
     m_gameMenuItem->set_label(m_presenter.GetMenuLabel(MenuItem::GAME));
-    m_reinitializeMenuItem->set_label(m_presenter.GetMenuLabel(MenuItem::REINITIALIZE));
+    m_reinitMenuItem->set_label(m_presenter.GetMenuLabel(MenuItem::REINITIALIZE));
 
     m_quitMenuItem->signal_activate().connect([this](){m_mainWindow->close();});
-    m_reinitializeMenuItem->signal_activate().connect([this](){m_controller.OnReinitializeBtnPressed();});
+    m_reinitMenuItem->signal_activate().connect([this](){m_controller.OnReinitializeBtnPressed();});
 
     m_mainLayout->attach(*m_menubar, 0, 0, 2, 1);
     m_mainLayout->attach_next_to(*m_undoButton, *m_menubar, Gtk::PositionType::POS_BOTTOM, 1, 1);
@@ -109,7 +110,7 @@ cxgui::MainWindow::MainWindow(int argc,
     POSTCONDITION(m_menubar != nullptr);
     POSTCONDITION(m_gameMenuItem != nullptr);
     POSTCONDITION(m_gameMenu != nullptr);
-    POSTCONDITION(m_reinitializeMenuItem != nullptr);
+    POSTCONDITION(m_reinitMenuItem != nullptr);
     POSTCONDITION(m_quitMenuItem != nullptr);
 
     CheckInvariants();
@@ -131,6 +132,7 @@ void cxgui::MainWindow::InitializeGtkmm(int argc, char *argv[])
 void cxgui::MainWindow::Update(cxmodel::NotificationContext, cxmodel::Subject*)
 {
     m_reinitButton->set_sensitive(m_presenter.IsReinitializeBtnEnabled());
+    m_reinitMenuItem->set_sensitive(m_presenter.IsReinitializeBtnEnabled());
     m_counterLabel->set_text(std::to_string(m_presenter.GetCounterValue()));
 
     CheckInvariants();
@@ -168,6 +170,6 @@ void cxgui::MainWindow::CheckInvariants()
     INVARIANT(m_menubar != nullptr);
     INVARIANT(m_gameMenuItem != nullptr);
     INVARIANT(m_gameMenu != nullptr);
-    INVARIANT(m_reinitializeMenuItem != nullptr);
+    INVARIANT(m_reinitMenuItem != nullptr);
     INVARIANT(m_quitMenuItem != nullptr);
 }

@@ -65,7 +65,7 @@ namespace cxgui
  * @invariant m_menubar is not @c nullptr
  * @invariant m_gameMenuItem is not @c nullptr
  * @invariant m_gameMenu is not @c nullptr
- * @invariant m_reinitializeMenuItem is not @c nullptr
+ * @invariant m_reinitMenuItem is not @c nullptr
  * @invariant m_quitMenuItem is not @c nullptr
  *
  * A Gtkmm window that acts as the application main window. It is the responsibility of this
@@ -96,7 +96,7 @@ public:
      * @port m_menubar is not @c nullptr
      * @port m_gameMenuItem is not @c nullptr
      * @port m_gameMenu is not @c nullptr
-     * @port m_reinitializeMenuItem is not @c nullptr
+     * @port m_reinitMenuItem is not @c nullptr
      * @port m_quitMenuItem is not @c nullptr
      *
      * @param argc         Command line argument count.
@@ -149,7 +149,7 @@ private:
     std::unique_ptr<Gtk::MenuBar> m_menubar;
     std::unique_ptr<Gtk::MenuItem> m_gameMenuItem;
     std::unique_ptr<Gtk::Menu> m_gameMenu;
-    std::unique_ptr<Gtk::MenuItem> m_reinitializeMenuItem;
+    std::unique_ptr<Gtk::MenuItem> m_reinitMenuItem;
     std::unique_ptr<Gtk::ImageMenuItem> m_quitMenuItem;
 };
 
