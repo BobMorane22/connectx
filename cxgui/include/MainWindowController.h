@@ -43,10 +43,10 @@ public:
 
     void OnIncrementBtnPressed() override;
     void OnReinitializeBtnPressed() override;
-
     void OnUndoBtnPressed() override;
-
     void OnRedoBtnPressed() override;
+    void OnAboutMenuPressed() override;
+
 
 private:
 

@@ -16,113 +16,80 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file IModel.h
- * @date 2019
+ * @file IAboutWindowPresenter.h
+ * @date 2020
  *
  *************************************************************************************************/
 
-#ifndef IMODEL_H_CC50381B_15B7_4586_A5F6_5F244A4289BA
-#define IMODEL_H_CC50381B_15B7_4586_A5F6_5F244A4289BA
+#ifndef IABOUTWINDOWPRESENTER_H_D80BCE23_D0F8_42C9_BB00_E4AB9DD557F5
+#define IABOUTWINDOWPRESENTER_H_D80BCE23_D0F8_42C9_BB00_E4AB9DD557F5
 
 #include <string>
 
-#include "Subject.h"
+#include <cxmodel/include/IObserver.h>
+#include <cxmodel/include/Subject.h>
 
-namespace cxmodel
+namespace cxgui
 {
 
 /*********************************************************************************************//**
- * @brief Interface for a Connect X compatible model.
- *
- * Inherit from this to create a compatible Connect X model class.
+ * @brief Presenter for the About window.
  *
  ************************************************************************************************/
-class IModel : public Subject
+class IAboutWindowPresenter : public cxmodel::IObserver, public cxmodel::Subject
 {
 
 public:
 
     /******************************************************************************************//**
-     * @brief Default destructor.
+     * @brief Destructor.
      *
      ********************************************************************************************/
-    virtual ~IModel() = default;
+    virtual ~IAboutWindowPresenter() = default;
 
     /******************************************************************************************//**
-     * @brief Access the current value.
-     *
-     * @return The current value as stored in the model.
+     * @brief Gets the window title text.
      *
      ********************************************************************************************/
-    virtual unsigned int GetCurrentValue() const = 0;
+    virtual std::string GetWindowTitle() const = 0;
 
     /******************************************************************************************//**
-     * @brief Increments the current value in the model.
-     *
-     * @post The value in the model is incremented by one.
-     *
-     * Increments by one the value stored in the model.
+     * @brief Gets the name of the application.
      *
      ********************************************************************************************/
-    virtual void Increment() = 0;
+    virtual std::string GetApplicationName() const = 0;
 
     /******************************************************************************************//**
-     * @brief Reinitialize the value stored in the model to its initial value.
-     *
-     * @post The value in the model is back to its initial value.
-     *
-     * At the model creation, an initial value is given to the current value. When this method
-     * is called, the current value is reinitialized to this initial value, as if the model had
-     * just been created.
-     *
-     ********************************************************************************************/
-    virtual void Reinitialize() = 0;
-
-    /******************************************************************************************//**
-     * @brief Get the model name.
-     *
-     ********************************************************************************************/
-    virtual std::string GetName() const = 0;
-
-    /******************************************************************************************//**
-     * @brief Get the model version number, formatted as a string.
+     * @brief Gets the application version number text.
      *
      ********************************************************************************************/
     virtual std::string GetVersionNumber() const = 0;
 
     /******************************************************************************************//**
-     * @brief Undo the last action, if possible.
-     *
-     * If some undoeable actions were done, the last one will be undoed.
-     *
-     * @note An action that is undoed must put the model back at the same state is was before
-     *       the action was ever done.
+     * @brief Gets the application description text.
      *
      ********************************************************************************************/
-    virtual void Undo() = 0;
+    virtual std::string GetApplicationDescription() const = 0;
 
     /******************************************************************************************//**
-     * @brief Redo the last action, if possible.
-     *
-     * If some redoable actions were undoed, the last one that was undoed will be redoed.
-     * Otherwise, nothing happens.
-     *
-     * @note An action that is redoed must put the model back at the same state it was before
-     *       the action was undoed.
+     * @brief Gets the window title text.
      *
      ********************************************************************************************/
-    virtual void Redo() = 0;
+    virtual std::string GetLicenseDescription() const = 0;
 
     /******************************************************************************************//**
-     * @brief Sends an update to every observers with the SIGNAL notification context.
-     *
-     * Use this to update observers that are not triggered from any user action.
+     * @brief Gets the copyright notice text.
      *
      ********************************************************************************************/
-    virtual void Signal() = 0;
+    virtual std::string GetCopyrightNotice() const = 0;
 
+    /******************************************************************************************//**
+     * @brief Gets the close widget text.
+     *
+     ********************************************************************************************/
+    virtual std::string GetCloseText() const = 0;
 };
 
-} // namespace cxmodel
+} // namespace cxgui
 
-#endif // IMODEL_H_CC50381B_15B7_4586_A5F6_5F244A4289BA
+#endif // IABOUTWINDOWPRESENTER_H_D80BCE23_D0F8_42C9_BB00_E4AB9DD557F5

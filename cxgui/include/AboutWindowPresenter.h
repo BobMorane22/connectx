@@ -16,35 +16,48 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file NotificationContext.h
+ * @file AboutWindowPresenter.h
  * @date 2020
  *
  *************************************************************************************************/
 
-#ifndef NOTIFICATIONCONTEXT_H_3B763656_2127_4F2A_B522_85ECBA656CB8
-#define NOTIFICATIONCONTEXT_H_3B763656_2127_4F2A_B522_85ECBA656CB8
+#ifndef ABOUTWINDOWPRESENTER_H_FF0579FF_28AC_4A2E_8900_B3D1A73C3E38
+#define ABOUTWINDOWPRESENTER_H_FF0579FF_28AC_4A2E_8900_B3D1A73C3E38
 
 namespace cxmodel
 {
+    class IModel;
+}
 
-/**********************************************************************************************//**
- * @brief Connect X model notification context.
- *
- * Describes all the contexts from which the Connect X model may notify.
- *
- ************************************************************************************************/
-enum class NotificationContext
+#include "IAboutWindowPresenter.h"
+
+namespace cxgui
 {
-    // Model internal
-    SIGNAL,
 
-    // User operations:
-    INCREMENT,
-    REINITIALIZE,
-    REDO,
-    UNDO
+class AboutWindowPresenter : public IAboutWindowPresenter
+{
+
+public:
+
+    ~AboutWindowPresenter() override = default;
+
+    void Update(cxmodel::NotificationContext p_context, Subject* p_subject) override;
+
+    std::string GetWindowTitle() const override;
+    std::string GetApplicationName() const override;
+    std::string GetVersionNumber() const override;
+    std::string GetApplicationDescription() const override;
+    std::string GetLicenseDescription() const override;
+    std::string GetCopyrightNotice() const override;
+    std::string GetCloseText() const override;
+
+
+private:
+
+    std::string m_applicationName;
+    std::string m_versionNumber;
 };
 
-} // namespace cxmodel
+} // namespace cxgui
 
-#endif // NOTIFICATIONCONTEXT_H_3B763656_2127_4F2A_B522_85ECBA656CB8
+#endif // ABOUTWINDOWPRESENTER_H_FF0579FF_28AC_4A2E_8900_B3D1A73C3E38

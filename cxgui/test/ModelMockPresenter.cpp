@@ -86,3 +86,8 @@ void ModelMockPresenter::Redo()
 {
     // Nothing to do for now...
 }
+
+void ModelMockPresenter::Signal()
+{
+    // Nothing to do for now...
+}

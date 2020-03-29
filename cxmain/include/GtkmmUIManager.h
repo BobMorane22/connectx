@@ -28,9 +28,8 @@
 
 #include <cxgui/include/IMainWindowController.h>
 #include <cxgui/include/IMainWindowPresenter.h>
-#include <cxgui/include/IMainWindow.h>
-
 #include <IUIManager.h>
+#include "../../cxgui/include/IMainWindow.h"
 
 namespace cxmodel
 {

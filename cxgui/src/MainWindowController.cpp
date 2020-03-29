@@ -49,3 +49,8 @@ void cxgui::MainWindowController::OnRedoBtnPressed()
 {
     m_model.Redo();
 }
+
+void cxgui::MainWindowController::OnAboutMenuPressed()
+{
+    m_model.Signal();
+}

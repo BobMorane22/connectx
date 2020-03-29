@@ -1,4 +1,4 @@
-/**************************************************************************************************
+ /**************************************************************************************************
  *  This file is part of Connect X.
  *
  *  Connect X is free software: you can redistribute it and/or modify
@@ -34,12 +34,6 @@ cxgui::StatusBar::StatusBar(IStatusBarPresenter& p_presenter)
 
 void cxgui::StatusBar::SetLastUserActionStatus(const std::string& p_lastUserActionDescription)
 {
-    if(p_lastUserActionDescription.empty())
-    {
-        ASSERT_ERROR_MSG("User action string is empty for the status bar.");
-        return;
-    }
-
     m_statusbar.push(p_lastUserActionDescription);
 }
 

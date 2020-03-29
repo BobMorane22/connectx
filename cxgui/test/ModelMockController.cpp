@@ -68,6 +68,11 @@ void ModelMockController::Redo()
     m_redoed = true;
 }
 
+void ModelMockController::Signal()
+{
+    // Nothing to do for now...
+}
+
 bool ModelMockController::GetIncremented() const
 {
     return m_incremented;

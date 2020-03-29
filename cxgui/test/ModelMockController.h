@@ -45,6 +45,8 @@ public:
     virtual void Undo() override;
     virtual void Redo() override;
 
+    virtual void Signal() override;
+
 
     // Mock helpers
     bool GetIncremented() const;

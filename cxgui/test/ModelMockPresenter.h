@@ -42,6 +42,8 @@ public:
     void Undo() override;
     void Redo() override;
 
+    void Signal() override;
+
 
 private:
 

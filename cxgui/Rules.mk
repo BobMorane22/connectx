@@ -50,7 +50,9 @@ include $(dir)/Rules.mk
 # To the global variable "CLEAN", we add the files that the rules present here may create,
 # i.e. the ones we want deleted by a "make clean" command.
 #
-OBJS_$(d) := $(d)/src/MainWindow.o \
+OBJS_$(d) := $(d)/src/About.o \
+             $(d)/src/AboutWindowPresenter.o \
+             $(d)/src/MainWindow.o \
              $(d)/src/MainWindowController.o \
              $(d)/src/MainWindowPresenter.o \
              $(d)/src/MenuItem.o \

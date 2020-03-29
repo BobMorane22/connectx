@@ -39,3 +39,13 @@ TEST(MenuItem, MakeLabel_Reinitialize_ReinitializeLabelReturned)
 {
     ASSERT_EQ("Reinitialize", cxgui::MakeLabel(cxgui::MenuItem::REINITIALIZE));
 }
+
+TEST(MenuItem, MakeLabel_Help_HelpLabelReturned)
+{
+    ASSERT_EQ("Help", cxgui::MakeLabel(cxgui::MenuItem::HELP));
+}
+
+TEST(MenuItem, MakeLabel_About_AboutLabelReturned)
+{
+    ASSERT_EQ("About", cxgui::MakeLabel(cxgui::MenuItem::ABOUT));
+}

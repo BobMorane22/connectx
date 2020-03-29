@@ -123,6 +123,11 @@ void cxmodel::Model::Redo()
     CheckInvariants();
 }
 
+void cxmodel::Model::Signal()
+{
+    Notify(NotificationContext::SIGNAL);
+}
+
 void cxmodel::Model::Log(const cxlog::VerbosityLevel p_verbosityLevel, const std::string& p_fileName, const std::string& p_functionName, const size_t p_lineNumber, const std::string& p_message)
 {
     m_logger.Log(p_verbosityLevel, p_fileName, p_functionName, p_lineNumber, p_message);

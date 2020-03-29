@@ -39,6 +39,7 @@
 #include "IMainWindow.h"
 #include "IStatusBar.h"
 #include "IStatusBarPresenter.h"
+#include "IWindow.h"
 
 namespace cxgui
 {
@@ -93,11 +94,6 @@ public:
      * @post m_incrementButton is not @c nullptr
      * @post m_reinitButton is not @c nullptr
      * @post m_statusbar is not @c nullptr
-     * @port m_menubar is not @c nullptr
-     * @port m_gameMenuItem is not @c nullptr
-     * @port m_gameMenu is not @c nullptr
-     * @port m_reinitMenuItem is not @c nullptr
-     * @port m_quitMenuItem is not @c nullptr
      *
      * @param argc         Command line argument count.
      * @param argc         A C-style array of arguments.
@@ -120,7 +116,10 @@ private:
     void Update(cxmodel::NotificationContext p_context, cxmodel::Subject* p_subject) override;
 
     void InitializeGtkmm(int argc, char *argv[]);
+
+    void CreateMenuBar(cxmodel::Subject& p_model);
     void CreateStatusBar(cxmodel::Subject& p_model);
+    void CreateAboutWindow(cxmodel::Subject& p_model);
 
     void CheckInvariants();
 
@@ -151,6 +150,11 @@ private:
     std::unique_ptr<Gtk::Menu> m_gameMenu;
     std::unique_ptr<Gtk::MenuItem> m_reinitMenuItem;
     std::unique_ptr<Gtk::ImageMenuItem> m_quitMenuItem;
+    std::unique_ptr<Gtk::MenuItem> m_helpMenuItem;
+    std::unique_ptr<Gtk::Menu> m_helpMenu;
+    std::unique_ptr<Gtk::MenuItem> m_aboutMenuItem;
+
+    std::unique_ptr<IWindow> m_about;
 };
 
 } // namespace cxgui

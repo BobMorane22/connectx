@@ -56,6 +56,9 @@ std::string cxgui::MakeStatusBarContextString(cxmodel::NotificationContext p_con
         case cxmodel::NotificationContext::UNDO :
             return "Undo.";
 
+        case cxmodel::NotificationContext::SIGNAL :
+            return {};
+
         default:
             ASSERT_ERROR_MSG("Unknown notification context.");
             return {};

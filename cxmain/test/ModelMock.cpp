@@ -62,3 +62,9 @@ void ModelMock::Redo()
 {
     // Nothing to do for now...
 }
+
+void ModelMock::Signal()
+{
+    // Nothing to do for now...
+}
+

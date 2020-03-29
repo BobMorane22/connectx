@@ -16,35 +16,56 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file NotificationContext.h
+ * @file About.cpp
  * @date 2020
  *
  *************************************************************************************************/
 
-#ifndef NOTIFICATIONCONTEXT_H_3B763656_2127_4F2A_B522_85ECBA656CB8
-#define NOTIFICATIONCONTEXT_H_3B763656_2127_4F2A_B522_85ECBA656CB8
+#ifndef ABOUT_H_396864CD_88A3_43F2_B08B_3F9FEBE89DE1
+#define ABOUT_H_396864CD_88A3_43F2_B08B_3F9FEBE89DE1
 
-namespace cxmodel
+#include <gtkmm/button.h>
+#include <gtkmm/label.h>
+#include <gtkmm/window.h>
+
+#include "IAboutWindowPresenter.h"
+#include "Window.h"
+
+namespace cxgui
 {
 
-/**********************************************************************************************//**
- * @brief Connect X model notification context.
- *
- * Describes all the contexts from which the Connect X model may notify.
- *
- ************************************************************************************************/
-enum class NotificationContext
+class About : public Window<Gtk::Window>
 {
-    // Model internal
-    SIGNAL,
 
-    // User operations:
-    INCREMENT,
-    REINITIALIZE,
-    REDO,
-    UNDO
+public:
+
+    About(std::unique_ptr<IAboutWindowPresenter>&& p_presenter);
+
+    void Update(cxmodel::NotificationContext p_context, cxmodel::Subject* p_subject) override;
+
+
+private:
+
+    void ConfigureWindowIcon() override;
+    void ConfigureWindow() override;
+    void RegisterLayouts() override;
+    void RegisterWidgets() override;
+    void ConfigureLayouts() override;
+    void ConfigureWidgets() override;
+    void ConfigureSignalHandlers() override;
+
+    std::unique_ptr<IAboutWindowPresenter> m_presenter;
+
+    Gtk::Label m_name;
+    Gtk::Label m_version;
+    Gtk::Label m_description;
+    Gtk::Label m_license;
+    Gtk::Label m_copyright;
+
+    Gtk::Button m_close;
+
 };
 
-} // namespace cxmodel
+} // namespace cxgui
 
-#endif // NOTIFICATIONCONTEXT_H_3B763656_2127_4F2A_B522_85ECBA656CB8
+#endif // ABOUT_H_396864CD_88A3_43F2_B08B_3F9FEBE89DE1

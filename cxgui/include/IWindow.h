@@ -16,35 +16,46 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file NotificationContext.h
+ * @file IWindow.h
  * @date 2020
  *
  *************************************************************************************************/
 
-#ifndef NOTIFICATIONCONTEXT_H_3B763656_2127_4F2A_B522_85ECBA656CB8
-#define NOTIFICATIONCONTEXT_H_3B763656_2127_4F2A_B522_85ECBA656CB8
+#ifndef IWINDOW_H_4807796E_6C76_4D0A_BF7D_81534795BA29
+#define IWINDOW_H_4807796E_6C76_4D0A_BF7D_81534795BA29
 
-namespace cxmodel
+#include <cxmodel/include/IObserver.h>
+
+namespace cxgui
 {
 
-/**********************************************************************************************//**
- * @brief Connect X model notification context.
+/*********************************************************************************************//**
+ * @brief Interface for creating a standard window.
  *
- * Describes all the contexts from which the Connect X model may notify.
+ * This interface presents the basic utilities needed to create windows.
  *
  ************************************************************************************************/
-enum class NotificationContext
+class IWindow : public cxmodel::IObserver
 {
-    // Model internal
-    SIGNAL,
 
-    // User operations:
-    INCREMENT,
-    REINITIALIZE,
-    REDO,
-    UNDO
+public:
+
+    /******************************************************************************************//**
+     * @brief Default destructor.
+     *
+     ********************************************************************************************/
+    virtual ~IWindow() = default;
+
+    /******************************************************************************************//**
+     * @brief Shows the window on the screen.
+     *
+     * Shows the window on the screen for a user to see.
+     *
+     ********************************************************************************************/
+    virtual void Show() = 0;
+
 };
 
-} // namespace cxmodel
+} // namespace cxgui
 
-#endif // NOTIFICATIONCONTEXT_H_3B763656_2127_4F2A_B522_85ECBA656CB8
+#endif // IWINDOW_H_4807796E_6C76_4D0A_BF7D_81534795BA29
