@@ -155,6 +155,11 @@ void Window<GtkmmWindow>::Init()
     ConfigureWindow();
     RegisterLayouts();
     RegisterWidgets();
+
+    // Necessary to make sure child widgets are realized with
+    // the parent window:
+    m_window.show_all_children();
+
     ConfigureLayouts();
     ConfigureWidgets();
     ConfigureSignalHandlers();

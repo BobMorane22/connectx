@@ -71,8 +71,6 @@ void cxgui::About::RegisterWidgets()
     m_mainLayout.attach_next_to(m_license, m_description, Gtk::PositionType::POS_BOTTOM, 1, 1);
     m_mainLayout.attach_next_to(m_copyright, m_license, Gtk::PositionType::POS_BOTTOM, 1, 1);
     m_mainLayout.attach_next_to(m_close, m_copyright, Gtk::PositionType::POS_BOTTOM, 1, 1);
-
-    m_window.show_all_children();
 }
 
 void cxgui::About::ConfigureLayouts()
