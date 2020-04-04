@@ -21,8 +21,11 @@
  *
  *************************************************************************************************/
 
+#include <regex>
+
 #include <gtest/gtest.h>
 
+#include <IObserver.h>
 #include <CommandStack.h>
 #include <Model.h>
 
@@ -74,6 +77,26 @@ TEST(Model, Reinitialize_InitialValueIs0_CurrentValueIs0)
     ASSERT_EQ(model.GetCurrentValue(), 0);
 }
 
+TEST(Model, GetName_ValidModel_NameReturned)
+{
+    LoggerMock logger;
+    cxmodel::Model concreteModel{std::make_unique<cxmodel::CommandStack>(200), logger};
+    cxmodel::IModel& model = concreteModel;
+
+    ASSERT_EQ(model.GetName(), "Connect X");
+}
+
+TEST(Model, GetVersionNumber_ValidModel_ValidVersionNumberReturned)
+{
+    LoggerMock logger;
+    cxmodel::Model concreteModel{std::make_unique<cxmodel::CommandStack>(200), logger};
+    cxmodel::IModel& model = concreteModel;
+
+    std::regex expected{"v(\\d)\\.(\\d)+"};
+
+    ASSERT_TRUE(std::regex_match(model.GetVersionNumber(), expected));
+}
+
 TEST(Model, UndoIncrement_InitialValueIs0_BackTo0)
 {
     LoggerMock logger;
@@ -106,4 +129,29 @@ TEST(Model, RedoIncrement_InitialValueIs0_BackTo1)
     model.Redo();
 
     ASSERT_EQ(model.GetCurrentValue(), 1);
+}
+
+TEST(Model, Signal_ObserverAttached_SignalNotificationReceived)
+{
+    // We create an observer specific to the SIGNAL notification context:
+    class SignalObserver : public cxmodel::IObserver
+    {
+        void Update(cxmodel::NotificationContext p_context, cxmodel::Subject* p_subject) override
+        {
+            ASSERT_TRUE(p_subject);
+            ASSERT_TRUE(p_context == cxmodel::NotificationContext::SIGNAL);
+        }
+    };
+
+    // We create a model:
+    LoggerMock logger;
+    cxmodel::Model concreteModel{std::make_unique<cxmodel::CommandStack>(200), logger};
+    cxmodel::IModel& model = concreteModel;
+
+    // And attach it to our observer:
+    SignalObserver observer;
+    model.Attach(&observer);
+
+    // From this call, our observer's Update method should be called, and contexts checked:
+    model.Signal();
 }

@@ -24,8 +24,8 @@
 #include <gtest/gtest.h>
 
 #include <cxgui/include/MainWindowPresenter.h>
-#include <cxgui/test/ModelMockPresenter.h>
 
+#include "ModelMockPresenter.h"
 #include "MainWindowPresenterTestFixture.h"
 
 MainWindowPresenterTestFixture::MainWindowPresenterTestFixture()

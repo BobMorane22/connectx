@@ -30,6 +30,7 @@ ModelMockController::ModelMockController()
  , m_reinitialized{false}
  , m_undoed{false}
  , m_redoed{false}
+ , m_signaled{false}
 {
 }
 
@@ -70,7 +71,7 @@ void ModelMockController::Redo()
 
 void ModelMockController::Signal()
 {
-    // Nothing to do for now...
+    m_signaled = true;
 }
 
 bool ModelMockController::GetIncremented() const
@@ -91,4 +92,9 @@ bool ModelMockController::GetUndoed() const
 bool ModelMockController::GetRedoed() const
 {
     return m_redoed;
+}
+
+bool ModelMockController::GetSignaled() const
+{
+    return m_signaled;
 }

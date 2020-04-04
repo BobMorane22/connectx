@@ -59,3 +59,12 @@ TEST_F(MainWindowControllerTestFixture, OnRedoBtnPressed_PressedOnce_UndoCalledO
 
     ASSERT_TRUE(model.GetRedoed());
 }
+
+TEST_F(MainWindowControllerTestFixture, OnAboutMenuPressed_PressedOnce_SignalCalledOnModel)
+{
+    GetController().OnAboutMenuPressed();
+
+    ModelMockController& model = static_cast<ModelMockController&>(GetModel());
+
+    ASSERT_TRUE(model.GetSignaled());
+}

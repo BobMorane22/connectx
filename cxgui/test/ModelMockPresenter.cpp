@@ -46,6 +46,8 @@
 
 #include <gtest/gtest.h>
 
+#include <cxmodel/include/NotificationContext.h>
+
 #include "ModelMockPresenter.h"
 
 unsigned int ModelMockPresenter::GetCurrentValue() const
@@ -89,5 +91,5 @@ void ModelMockPresenter::Redo()
 
 void ModelMockPresenter::Signal()
 {
-    // Nothing to do for now...
+    Notify(cxmodel::NotificationContext::SIGNAL);
 }

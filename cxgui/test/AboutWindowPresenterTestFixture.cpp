@@ -16,54 +16,35 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file ModelMockController.h
- * @date 2019
+ * @file AboutWindowPresenterTestFixture.cpp
+ * @date 2020
  *
  *************************************************************************************************/
 
-#ifndef MODELMOCKCONTROLLER_H_A4A9F6D9_7463_47D5_A25A_00880ACB678C
-#define MODELMOCKCONTROLLER_H_A4A9F6D9_7463_47D5_A25A_00880ACB678C
+#include <cxgui/include/AboutWindowPresenter.h>
 
-#include <cxmodel/include/IModel.h>
+#include "ModelMockPresenter.h"
+#include "AboutWindowPresenterTestFixture.h"
 
-class ModelMockController : public cxmodel::IModel
+AboutWindowPresenterTestFixture::AboutWindowPresenterTestFixture()
 {
+    m_model = std::make_unique<ModelMockPresenter>();
+    EXPECT_TRUE(m_model);
 
-public:
+    m_presenter = std::make_unique<cxgui::AboutWindowPresenter>();
+    EXPECT_TRUE(m_presenter);
 
-    ModelMockController();
+    m_model->Attach(m_presenter.get());
+}
 
-    // IModel
-    virtual unsigned int GetCurrentValue() const override;
+cxgui::IAboutWindowPresenter& AboutWindowPresenterTestFixture::GetPresenter()
+{
+    EXPECT_TRUE(m_presenter);
+    return *m_presenter;
+}
 
-    virtual void Increment() override;
-    virtual void Reinitialize() override;
-
-    std::string GetName() const override;
-    std::string GetVersionNumber() const override;
-
-    virtual void Undo() override;
-    virtual void Redo() override;
-
-    virtual void Signal() override;
-
-
-    // Mock helpers
-    bool GetIncremented() const;
-    bool GetReinitialized() const;
-    bool GetUndoed() const;
-    bool GetRedoed() const;
-    bool GetSignaled() const;
-
-
-private:
-
-    bool m_incremented;
-    bool m_reinitialized;
-    bool m_undoed;
-    bool m_redoed;
-    bool m_signaled;
-
-};
-
-#endif // MODELMOCK_H_A4A9F6D9_7463_47D5_A25A_00880ACB678C
+cxmodel::IModel& AboutWindowPresenterTestFixture::GetModel()
+{
+    EXPECT_TRUE(m_model);
+    return *m_model;
+}

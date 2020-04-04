@@ -16,54 +16,37 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file ModelMockController.h
- * @date 2019
+ * @file AboutWindowPresenterTestFixture.h
+ * @date 2020
  *
  *************************************************************************************************/
 
-#ifndef MODELMOCKCONTROLLER_H_A4A9F6D9_7463_47D5_A25A_00880ACB678C
-#define MODELMOCKCONTROLLER_H_A4A9F6D9_7463_47D5_A25A_00880ACB678C
+#ifndef ABOUTWINDOWPRESENTERTESTFIXTURE_H_5D562FE4_BBBF_47B1_A39F_3A64389FB0CF
+#define ABOUTWINDOWPRESENTERTESTFIXTURE_H_5D562FE4_BBBF_47B1_A39F_3A64389FB0CF
+
+#include <memory>
+
+#include <gtest/gtest.h>
 
 #include <cxmodel/include/IModel.h>
 
-class ModelMockController : public cxmodel::IModel
+#include <IAboutWindowPresenter.h>
+
+class AboutWindowPresenterTestFixture : public testing::Test
 {
 
 public:
 
-    ModelMockController();
+    AboutWindowPresenterTestFixture();
 
-    // IModel
-    virtual unsigned int GetCurrentValue() const override;
-
-    virtual void Increment() override;
-    virtual void Reinitialize() override;
-
-    std::string GetName() const override;
-    std::string GetVersionNumber() const override;
-
-    virtual void Undo() override;
-    virtual void Redo() override;
-
-    virtual void Signal() override;
-
-
-    // Mock helpers
-    bool GetIncremented() const;
-    bool GetReinitialized() const;
-    bool GetUndoed() const;
-    bool GetRedoed() const;
-    bool GetSignaled() const;
-
+    cxgui::IAboutWindowPresenter& GetPresenter();
+    cxmodel::IModel& GetModel();
 
 private:
 
-    bool m_incremented;
-    bool m_reinitialized;
-    bool m_undoed;
-    bool m_redoed;
-    bool m_signaled;
+    std::unique_ptr<cxgui::IAboutWindowPresenter> m_presenter;
+    std::unique_ptr<cxmodel::IModel> m_model;
 
 };
 
-#endif // MODELMOCK_H_A4A9F6D9_7463_47D5_A25A_00880ACB678C
+#endif // ABOUTWINDOWPRESENTERTESTFIXTURE_H_5D562FE4_BBBF_47B1_A39F_3A64389FB0CF

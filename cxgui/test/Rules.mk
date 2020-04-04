@@ -43,7 +43,9 @@ d := $(dir)
 # i.e. the ones we want deleted by a "make clean" command.
 #
 TGTS_$(d) := $(d)/cxguitests
-OBJS_$(d) := $(d)/MainWindowPresenterTestFixture.o \
+OBJS_$(d) := $(d)/AboutWindowPresenterTestFixture.o \
+             $(d)/AboutWindowPresenterTests.o \
+             $(d)/MainWindowPresenterTestFixture.o \
              $(d)/MainWindowControllerTests.o \
              $(d)/MainWindowControllerTestFixture.o \
              $(d)/MainWindowPresenterTests.o \

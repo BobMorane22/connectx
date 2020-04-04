@@ -56,6 +56,11 @@ TEST(StatusBarPresenter, MakeStatusBarContextString_Redo_RedoStringCreated)
     ASSERT_EQ(cxgui::MakeStatusBarContextString(cxmodel::NotificationContext::REDO), "Redo.");
 }
 
+TEST(StatusBarPresenter, MakeStatusBarContextString_Signal_SignalStringCreated)
+{
+    ASSERT_EQ(cxgui::MakeStatusBarContextString(cxmodel::NotificationContext::SIGNAL), "");
+}
+
 TEST(StatusBarPresenter, Constructor_NoAction_NoMessage)
 {
     cxgui::StatusBarPresenter presenter;

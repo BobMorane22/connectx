@@ -47,7 +47,10 @@ cxmodel::Model::Model(std::unique_ptr<ICommandStack>&& p_cmdStack, cxlog::ILogge
     CheckInvariants();
 }
 
-cxmodel::Model::~Model() = default;
+cxmodel::Model::~Model()
+{
+    DetatchAll();
+}
 
 unsigned int cxmodel::Model::GetCurrentValue() const
 {
