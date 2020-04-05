@@ -88,7 +88,7 @@ private:
     static constexpr unsigned int m_INITIAL_VALUE = 0u;
     static constexpr char m_NAME[] = "Connect X";
     static constexpr unsigned int m_MAJOR_VERSION_NB = 0u;
-    static constexpr unsigned int m_MINOR_VERSION_NB = 10u;
+    static constexpr unsigned int m_MINOR_VERSION_NB = 11u;
 
     unsigned int m_currentValue;
 
