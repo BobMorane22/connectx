@@ -26,12 +26,22 @@
 
 #!/bin/sh
 
+# For all test directories containing unit test files, create the associated
+# gcov log files:
 for sourceFile in $(find . -name '*Tests.cpp') ; do
     dir=$(dirname "${sourceFile}")
     gcov --relative-only $sourceFile -o $dir
 done
 
+# Move these logfiles to the 'coverage' directory, where they will be processed:
 mv *.gcov coverage
 
+# Collect coverage statistics from gcov logfiles using lcov:
 lcov --no-external --capture --directory . --output-file coverage/coverage.info
-genhtml coverage/coverage.info --output-directory coverage/report
+
+# Remove 'include' and 'test' directories from the coverage statistics. They
+# only pollute the report and often are useless:
+lcov --remove coverage/coverage.info '*/include/*' '*/test/*' -o coverage/filtered_coverage.info
+
+# Create HTML pages with the statistics, for an easier read:
+genhtml coverage/filtered_coverage.info --output-directory coverage/report
