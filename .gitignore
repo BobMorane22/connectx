@@ -110,16 +110,16 @@ local.properties
 ### Connect X ###
 
 # Main executable
-cxmain/connectx
+connectx/connectx
 
 # Unit tests executables
 cxinv/test/cxinvtests
 cxlog/test/cxlogtests
 cxmodel/test/cxmodeltests
 cxgui/test/cxguitests
-cxmain/test/cxmaintests
+cxexec/test/cxmaintests
 
-# Unit test coverage
+# Coverage
 coverage/report
 coverage/*.html
 coverage/*.css

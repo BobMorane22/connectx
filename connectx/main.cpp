@@ -30,8 +30,7 @@
 #include <cxlog/include/ISO8601TimestampFormatter.h>
 #include <cxmodel/include/CommandStack.h>
 #include <cxmodel/include/Model.h>
-
-#include <Application.h>
+#include <cxexec/include/Application.h>
 
 constexpr size_t CMD_STACK_SIZE = 200;
 

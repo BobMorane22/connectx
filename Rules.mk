@@ -52,7 +52,10 @@ include $(dir)/Rules.mk
 dir := cxgui
 include $(dir)/Rules.mk
 
-dir := cxmain
+dir := cxexec
+include $(dir)/Rules.mk
+
+dir := connectx
 include $(dir)/Rules.mk
 
 # Code coverage

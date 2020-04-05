@@ -26,8 +26,8 @@
 
 #include <memory>
 
-#include <IApplication.h>
-#include <ICmdArgWorkflowStrategy.h>
+#include "IApplication.h"
+#include "ICmdArgWorkflowStrategy.h"
 
 namespace cxlog
 {
