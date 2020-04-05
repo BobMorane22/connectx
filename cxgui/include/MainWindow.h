@@ -26,7 +26,6 @@
 
 #include <memory>
 
-#include <gtkmm/application.h>
 #include <gtkmm/applicationwindow.h>
 #include <gtkmm/button.h>
 #include <gtkmm/grid.h>
@@ -47,27 +46,16 @@ namespace cxgui
     class IMainWindowPresenter;
 }
 
+namespace Gtk
+{
+ class Application;
+}
+
 namespace cxgui
 {
 
 /*********************************************************************************************//**
  * @brief The Connect X main application window.
- *
- * @invariant m_app is not @c nullptr
- * @invariant m_mainWindow is not @c nullptr
- * @invariant m_statusbarPresenter is not @c nullptr
- * @invariant m_mainLayout is not @c nullptr
- * @invariant m_undoButton is not @c nullptr
- * @invariant m_redoButton is not @c nullptr
- * @invariant m_counterLabel is not @c nullptr
- * @invariant m_incrementButton is not @c nullptr
- * @invariant m_reinitButton is not @c nullptr
- * @invariant m_statusbar is not @c nullptr
- * @invariant m_menubar is not @c nullptr
- * @invariant m_gameMenuItem is not @c nullptr
- * @invariant m_gameMenu is not @c nullptr
- * @invariant m_reinitMenuItem is not @c nullptr
- * @invariant m_quitMenuItem is not @c nullptr
  *
  * A Gtkmm window that acts as the application main window. It is the responsibility of this
  * window to initialize the Gtkmm library and to show the window.
@@ -81,29 +69,13 @@ public:
     /******************************************************************************************//**
      * @brief Constructor.
      *
-     * @pre The argument count is at least 1.
-     * @pre The argument list is not @c nullptr.
-     *
-     * @post m_app is not @c nullptr
-     * @post m_mainWindow is not @c nullptr
-     * @post m_statusbarPresenter is not @c nullptr
-     * @post m_mainLayout is not @c nullptr
-     * @post m_undoButton is not @c nullptr
-     * @post m_redoButton is not @c nullptr
-     * @post m_counterLabel is not @c nullptr
-     * @post m_incrementButton is not @c nullptr
-     * @post m_reinitButton is not @c nullptr
-     * @post m_statusbar is not @c nullptr
-     *
-     * @param argc         Command line argument count.
-     * @param argc         A C-style array of arguments.
+     * @param p_gtkApplication The Gtkmm application object
      * @param p_model      The Connect X compatible model.
      * @param p_controller The main window controller.
      * @param p_presenter  The main window presenter.
      *
      ********************************************************************************************/
-    MainWindow(int argc,
-               char *argv[],
+    MainWindow(Gtk::Application& p_gtkApplication,
                cxmodel::Subject& p_model,
                IMainWindowController& p_controller,
                IMainWindowPresenter& p_presenter);
@@ -115,19 +87,17 @@ private:
 
     void Update(cxmodel::NotificationContext p_context, cxmodel::Subject* p_subject) override;
 
-    void InitializeGtkmm(int argc, char *argv[]);
-
     void CreateMenuBar(cxmodel::Subject& p_model);
     void CreateStatusBar(cxmodel::Subject& p_model);
     void CreateAboutWindow(cxmodel::Subject& p_model);
 
     void CheckInvariants();
 
-    Glib::RefPtr<Gtk::Application> m_app;
-
     IMainWindowController& m_controller;
     IMainWindowPresenter& m_presenter;
     std::unique_ptr<IStatusBarPresenter> m_statusbarPresenter;
+
+    Gtk::Application& m_gtkApplication;
 
     // These members must be pointers. They are default initialized to nullptr, so no widget is
     // actually constructed. We construct is by hand, after the Gtkmm library initialization.

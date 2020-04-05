@@ -26,10 +26,12 @@
 
 #include <memory>
 
+#include <gtkmm/application.h>
+
+#include <cxgui/include/IMainWindow.h>
 #include <cxgui/include/IMainWindowController.h>
 #include <cxgui/include/IMainWindowPresenter.h>
 #include <IUIManager.h>
-#include "../../cxgui/include/IMainWindow.h"
 
 namespace cxmodel
 {
@@ -76,7 +78,11 @@ public:
 
 private:
 
+    void InitializeGtkmm(int argc, char *argv[]);
+
     void CheckInvariants();
+
+    Glib::RefPtr<Gtk::Application> m_app;
 
     std::unique_ptr<cxgui::IMainWindowController> m_controller;
     std::unique_ptr<cxgui::IMainWindowPresenter> m_presenter;

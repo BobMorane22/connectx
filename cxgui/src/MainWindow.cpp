@@ -23,6 +23,7 @@
 
 #include <string>
 
+#include <gtkmm/application.h>
 #include <gtkmm/statusbar.h>
 #include <gtkmm/stock.h>
 
@@ -36,22 +37,14 @@
 #include <StatusBar.h>
 #include <StatusBarPresenter.h>
 
-cxgui::MainWindow::MainWindow(int argc,
-                              char *argv[],
+cxgui::MainWindow::MainWindow(Gtk::Application& p_gtkApplication,
                               cxmodel::Subject& p_model,
                               cxgui::IMainWindowController& p_controller,
                               cxgui::IMainWindowPresenter& p_presenter)
  : m_controller{p_controller}
  , m_presenter{p_presenter}
+ , m_gtkApplication{p_gtkApplication}
 {
-    PRECONDITION(argc > 0);
-    PRECONDITION(argv != nullptr);
-
-    // This call must come first. Otherwise, we call operation on the window without
-    // the Gtkmm library being initialized and the application crashes (segmentation
-    // fault) when launched.
-    InitializeGtkmm(argc, argv);
-
     m_mainLayout = std::make_unique<Gtk::Grid>();
     m_undoButton = std::make_unique<Gtk::Button>(Gtk::Stock::UNDO);
     m_redoButton = std::make_unique<Gtk::Button>(Gtk::Stock::REDO);
@@ -84,7 +77,6 @@ cxgui::MainWindow::MainWindow(int argc,
 
     m_mainWindow->add(*m_mainLayout);
 
-    POSTCONDITION(bool(m_app));
     POSTCONDITION(bool(m_statusbarPresenter));
     POSTCONDITION(m_mainWindow != nullptr);
     POSTCONDITION(m_mainLayout != nullptr);
@@ -101,14 +93,7 @@ cxgui::MainWindow::MainWindow(int argc,
 int cxgui::MainWindow::Show()
 {
     m_mainWindow->show_all();
-    return m_app->run(*m_mainWindow);
-}
-
-void cxgui::MainWindow::InitializeGtkmm(int argc, char *argv[])
-{
-    m_app = Gtk::Application::create(argc, argv, "bobmorane.connectx");
-
-    POSTCONDITION(bool(m_app));
+    return m_gtkApplication.run(*m_mainWindow);
 }
 
 void cxgui::MainWindow::Update(cxmodel::NotificationContext, cxmodel::Subject*)
@@ -194,7 +179,6 @@ void cxgui::MainWindow::CreateAboutWindow(cxmodel::Subject& p_model)
 
 void cxgui::MainWindow::CheckInvariants()
 {
-    INVARIANT(bool(m_app));
     INVARIANT(bool(m_statusbarPresenter));
     INVARIANT(m_mainWindow != nullptr);
     INVARIANT(m_mainLayout != nullptr);
