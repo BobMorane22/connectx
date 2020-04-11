@@ -53,7 +53,7 @@ void cxgui::About::ConfigureWindowIcon()
 
 void cxgui::About::ConfigureWindow()
 {
-    m_window.set_title("About");
+    m_window.set_title(m_presenter->GetWindowTitle());
     m_window.set_position(Gtk::WIN_POS_CENTER);
     m_window.set_resizable(false);
 }

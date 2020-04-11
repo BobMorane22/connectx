@@ -34,11 +34,11 @@
 #include <gtkmm/menubar.h>
 #include <gtkmm/menuitem.h>
 #include <gtkmm/menu.h>
+#include <gtkmm/stock.h>
 
-#include "IMainWindow.h"
 #include "IStatusBar.h"
 #include "IStatusBarPresenter.h"
-#include "IWindow.h"
+#include "Window.h"
 
 namespace cxgui
 {
@@ -61,7 +61,7 @@ namespace cxgui
  * window to initialize the Gtkmm library and to show the window.
  *
  ************************************************************************************************/
-class MainWindow : public cxgui::IMainWindow
+class MainWindow : public cxgui::Window<Gtk::ApplicationWindow>
 {
 
 public:
@@ -87,42 +87,43 @@ private:
 
     void Update(cxmodel::NotificationContext p_context, cxmodel::Subject* p_subject) override;
 
-    void CreateMenuBar(cxmodel::Subject& p_model);
-    void CreateStatusBar(cxmodel::Subject& p_model);
-    void CreateAboutWindow(cxmodel::Subject& p_model);
+    void ConfigureWindowIcon() override;
+    void ConfigureWindow() override;
+    void RegisterLayouts() override;
+    void RegisterWidgets() override;
+    void ConfigureLayouts() override;
+    void ConfigureWidgets() override;
+    void ConfigureSignalHandlers() override;
 
-    void CheckInvariants();
+    void RegisterStatusBar();
+    void RegisterMenuBar();
+
+    void CreateAboutWindow();
+
+    Gtk::Application& m_gtkApplication;
+
+    cxmodel::Subject& m_model;
 
     IMainWindowController& m_controller;
     IMainWindowPresenter& m_presenter;
     std::unique_ptr<IStatusBarPresenter> m_statusbarPresenter;
 
-    Gtk::Application& m_gtkApplication;
-
-    // These members must be pointers. They are default initialized to nullptr, so no widget is
-    // actually constructed. We construct is by hand, after the Gtkmm library initialization.
-    // This is necessary because until then, constructing a widget crashes the application. We
-    // can't, then, have stack members.
-    std::unique_ptr<Gtk::ApplicationWindow> m_mainWindow;
-
-    std::unique_ptr<Gtk::Grid> m_mainLayout;
-
-    std::unique_ptr<Gtk::Button> m_undoButton;
-    std::unique_ptr<Gtk::Button> m_redoButton;
-    std::unique_ptr<Gtk::Label> m_counterLabel;
-    std::unique_ptr<Gtk::Button> m_incrementButton;
-    std::unique_ptr<Gtk::Button> m_reinitButton;
+    Gtk::Button m_undoButton{Gtk::Stock::UNDO};
+    Gtk::Button m_redoButton{Gtk::Stock::REDO};
+    Gtk::Label m_counterLabel;
+    Gtk::Button m_incrementButton;
+    Gtk::Button m_reinitButton;
 
     std::unique_ptr<IStatusBar> m_statusbar;
 
-    std::unique_ptr<Gtk::MenuBar> m_menubar;
-    std::unique_ptr<Gtk::MenuItem> m_gameMenuItem;
-    std::unique_ptr<Gtk::Menu> m_gameMenu;
-    std::unique_ptr<Gtk::MenuItem> m_reinitMenuItem;
-    std::unique_ptr<Gtk::ImageMenuItem> m_quitMenuItem;
-    std::unique_ptr<Gtk::MenuItem> m_helpMenuItem;
-    std::unique_ptr<Gtk::Menu> m_helpMenu;
-    std::unique_ptr<Gtk::MenuItem> m_aboutMenuItem;
+    Gtk::MenuBar m_menubar;
+    Gtk::MenuItem m_gameMenuItem;
+    Gtk::Menu m_gameMenu;
+    Gtk::MenuItem m_reinitMenuItem;
+    Gtk::ImageMenuItem m_quitMenuItem{Gtk::Stock::QUIT};
+    Gtk::MenuItem m_helpMenuItem;
+    Gtk::Menu m_helpMenu;
+    Gtk::ImageMenuItem m_aboutMenuItem{Gtk::Stock::ABOUT};
 
     std::unique_ptr<IWindow> m_about;
 };

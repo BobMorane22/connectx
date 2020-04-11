@@ -28,7 +28,7 @@
 
 #include <gtkmm/application.h>
 
-#include <cxgui/include/IMainWindow.h>
+#include <cxgui/include/IWindow.h>
 #include <cxgui/include/IMainWindowController.h>
 #include <cxgui/include/IMainWindowPresenter.h>
 #include <IUIManager.h>
@@ -86,7 +86,7 @@ private:
 
     std::unique_ptr<cxgui::IMainWindowController> m_controller;
     std::unique_ptr<cxgui::IMainWindowPresenter> m_presenter;
-    std::unique_ptr<cxgui::IMainWindow> m_mainWindow;
+    std::unique_ptr<cxgui::IWindow> m_mainWindow;
 };
 
 } // namespace cx

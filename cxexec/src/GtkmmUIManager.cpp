@@ -44,7 +44,12 @@ cx::GtkmmUIManager::GtkmmUIManager(int argc, char *argv[], cxmodel::IModel& p_mo
 
     // Note: we must use the 'get' method with the 'operator*' because Gtk::RefPtr does not
     // support, like most smart pointers, accessing the underlying instance through 'operator*':
-    m_mainWindow = std::make_unique<cxgui::MainWindow>(*(m_app.get()), p_model, *m_controller, *m_presenter);
+    {
+        auto mainWindow = std::make_unique<cxgui::MainWindow>(*(m_app.get()), p_model, *m_controller, *m_presenter);
+        mainWindow->Init();
+
+        m_mainWindow = std::move(mainWindow);
+    }
 
     p_model.Attach(m_presenter.get());
     m_presenter->Attach(m_mainWindow.get());

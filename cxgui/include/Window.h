@@ -24,8 +24,6 @@
 #ifndef WINDOW_H_861FC628_597C_407E_8206_E67F71000A55
 #define WINDOW_H_861FC628_597C_407E_8206_E67F71000A55
 
-#include <iostream>
-
 #include <gtkmm/grid.h>
 
 #include "IWindow.h"
@@ -54,10 +52,10 @@ public:
 
     Window();
 
-    void Show() override;
+    int Show() override;
 
 
-protected:
+//protected:
 
     /*******************************************************************************************//**
      * @brief Configures the window icon.
@@ -137,15 +135,15 @@ protected:
 template<typename GtkmmWindow>
 Window<GtkmmWindow>::Window()
 {
-    m_window.signal_realize().connect([this](){Init();});
-
     m_window.add(m_mainLayout);
 }
 
 template<typename GtkmmWindow>
-void Window<GtkmmWindow>::Show()
+int Window<GtkmmWindow>::Show()
 {
     m_window.show_all();
+
+    return EXIT_SUCCESS;
 }
 
 template<typename GtkmmWindow>
@@ -155,11 +153,6 @@ void Window<GtkmmWindow>::Init()
     ConfigureWindow();
     RegisterLayouts();
     RegisterWidgets();
-
-    // Necessary to make sure child widgets are realized with
-    // the parent window:
-    m_window.show_all_children();
-
     ConfigureLayouts();
     ConfigureWidgets();
     ConfigureSignalHandlers();
