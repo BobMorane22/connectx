@@ -46,11 +46,6 @@ void cxgui::About::Update(cxmodel::NotificationContext /*p_context*/, cxmodel::S
     }
 }
 
-void cxgui::About::ConfigureWindowIcon()
-{
-    // Nothing to do.
-}
-
 void cxgui::About::ConfigureWindow()
 {
     m_window.set_title(m_presenter->GetWindowTitle());

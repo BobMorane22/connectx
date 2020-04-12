@@ -53,7 +53,8 @@ OBJS_$(d) := $(d)/src/CommandIncrementByOne.o \
              $(d)/src/CommandReinitialize.o \
              $(d)/src/CommandStack.o \
              $(d)/src/Model.o \
-             $(d)/src/Subject.o
+             $(d)/src/Subject.o \
+             $(d)/src/OS.o
 
 DEPS_$(d) := $(OBJS_$(d):%=%.d)
 

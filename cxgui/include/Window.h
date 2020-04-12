@@ -24,6 +24,9 @@
 #ifndef WINDOW_H_861FC628_597C_407E_8206_E67F71000A55
 #define WINDOW_H_861FC628_597C_407E_8206_E67F71000A55
 
+#include <cxinv/include/assertion.h>
+#include <cxmodel/include/OS.h>
+
 #include <gtkmm/grid.h>
 
 #include "IWindow.h"
@@ -39,6 +42,7 @@ namespace cxgui
  *                      1. Gtk::Container::add
  *                      2. Gtk::Widget::signal_realize
  *                      3. Gtk::Widget::show_all
+ *                      4. Gtk::Window::set_icon_from_file
  *
  * This class provides methods that can be overridden to configure the window items, such as
  * child widgets, layouts and the window itself.
@@ -63,7 +67,10 @@ public:
      * Override this method to specify a path for the window icon.
      *
      **********************************************************************************************/
-    virtual void ConfigureWindowIcon() = 0;
+    virtual void ConfigureWindowIcon()
+    {
+        m_window.set_icon_from_file(cxmodel::GetCurrentExecutablePath(true) + "/icons/cxicon16.png");
+    }
 
     /*******************************************************************************************//**
      * @brief Configures the window.

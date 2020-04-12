@@ -48,11 +48,6 @@ cxgui::MainWindow::MainWindow(Gtk::Application& p_gtkApplication,
 {
 }
 
-void cxgui::MainWindow::ConfigureWindowIcon()
-{
-    // Nothing to do...
-}
-
 void cxgui::MainWindow::ConfigureWindow()
 {
     m_window.set_title(m_presenter.GetWindowTitle());

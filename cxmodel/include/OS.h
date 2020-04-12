@@ -16,55 +16,32 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file About.cpp
+ * @file OS.h
  * @date 2020
  *
  *************************************************************************************************/
 
-#ifndef ABOUT_H_396864CD_88A3_43F2_B08B_3F9FEBE89DE1
-#define ABOUT_H_396864CD_88A3_43F2_B08B_3F9FEBE89DE1
+#ifndef OS_H_706C5CF5_7AE1_4F00_88E3_BD79BA7F2F6A
+#define OS_H_706C5CF5_7AE1_4F00_88E3_BD79BA7F2F6A
 
-#include <gtkmm/button.h>
-#include <gtkmm/label.h>
-#include <gtkmm/window.h>
+#include <string>
 
-#include "IAboutWindowPresenter.h"
-#include "Window.h"
-
-namespace cxgui
+namespace cxmodel
 {
 
-class About : public Window<Gtk::Window>
-{
+/******************************************************************************************//**
+ * @brief Produces a string containing the path for the current executable.
+ *
+ * @param p_pathOnly @c true if only the path is needed, @c false if the executable name is to be
+ *                   included in the string.
+ *
+ * @return The path where the current executable is located, as a string.
+ *
+ * @note As of now, only barely supported on Linux (only tested on Ubuntu 16.04 and 18.04).
+ *
+ ********************************************************************************************/
+std::string GetCurrentExecutablePath(const bool p_pathOnly);
 
-public:
+} // namespace cxmodel
 
-    About(std::unique_ptr<IAboutWindowPresenter>&& p_presenter);
-
-    void Update(cxmodel::NotificationContext p_context, cxmodel::Subject* p_subject) override;
-
-
-private:
-
-    void ConfigureWindow() override;
-    void RegisterLayouts() override;
-    void RegisterWidgets() override;
-    void ConfigureLayouts() override;
-    void ConfigureWidgets() override;
-    void ConfigureSignalHandlers() override;
-
-    std::unique_ptr<IAboutWindowPresenter> m_presenter;
-
-    Gtk::Label m_name;
-    Gtk::Label m_version;
-    Gtk::Label m_description;
-    Gtk::Label m_license;
-    Gtk::Label m_copyright;
-
-    Gtk::Button m_close;
-
-};
-
-} // namespace cxgui
-
-#endif // ABOUT_H_396864CD_88A3_43F2_B08B_3F9FEBE89DE1
+#endif // OS_H_706C5CF5_7AE1_4F00_88E3_BD79BA7F2F6A
