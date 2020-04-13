@@ -34,6 +34,14 @@ It used to be that the coverage report for a library `cxfoo` included in its ana
 The main window now uses the `cxgui::Window<T>` class for its implementation. To acheive this, the realize signal is not used anymore and `cxgui::Window<T>::Init` now needs to be called by hand.
 
 
+## Out of sprint issues
+
+Because of available extra time, two issues have been resolved:
+
+1. In release (`NDEBUG=1`), coverage is not available. This means that the command `make coverage NDEBUG=1` will fail.
+2. The `make clean` command now also cleans coverage information (or `make clean NDEBUG=0`).
+
+
 ## Next sprint
 
 In the next sprint, the objectives will be:
