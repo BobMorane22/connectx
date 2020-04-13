@@ -24,6 +24,13 @@
 #
 #************************************************************************************************/
 
+### Configurations.
+#
+# If nothing has been specified when calling 'make' use the debug configuration. This is
+# the most typical case when developping.
+#
+NDEBUG ?= 0
+
 ### Standard parts
 #
 .SUFFIXES:
