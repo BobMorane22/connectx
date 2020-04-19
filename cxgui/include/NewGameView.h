@@ -39,8 +39,11 @@ namespace cxgui
  * @brief View for creating new games.
  *
  ************************************************************************************************/
-struct NewGameView : public cxgui::IView
+class NewGameView : public cxgui::IView
 {
+
+public:
+
     NewGameView(INewGameViewPresenter& p_presenter,
                 INewGameViewController& p_controller,
                 Gtk::Grid& p_mainLayout,
@@ -49,8 +52,22 @@ struct NewGameView : public cxgui::IView
 
     void Activate() override;
 
+private:
+
+    void SetLayout();
+    void PopulateWidgets();
+
+    INewGameViewPresenter& m_presenter;
+    INewGameViewController& m_controller;
+
+    Gtk::Grid& m_mainLayout;
+
+    const int m_viewLeft;
+    const int m_viewTop;
+
     Gtk::Grid m_viewLayout;
 
+    // Controls:
     Gtk::Label m_title;
 
     Gtk::Label m_gameSectionTitle;
@@ -72,19 +89,6 @@ struct NewGameView : public cxgui::IView
     Gtk::Entry m_disc2Entry;
 
     Gtk::Button m_startButton;
-
-private:
-
-    void SetLayout();
-    void PopulateWidgets();
-
-    INewGameViewPresenter& m_presenter;
-    INewGameViewController& m_controller;
-
-    Gtk::Grid& m_mainLayout;
-
-    const int m_viewLeft;
-    const int m_viewTop;
 };
 
 } // namespace cxgui

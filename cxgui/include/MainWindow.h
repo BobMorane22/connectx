@@ -145,7 +145,7 @@ private:
     // Views:
     const int m_viewLeft;
     const int m_viewTop;
-    std::unique_ptr<NewGameView> m_newGameView;
+    std::unique_ptr<IView> m_newGameView;
 
     // Other windows:
     std::unique_ptr<IWindow> m_about;
