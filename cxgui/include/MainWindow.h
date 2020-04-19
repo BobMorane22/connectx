@@ -38,6 +38,7 @@
 
 #include "IStatusBar.h"
 #include "IStatusBarPresenter.h"
+#include "NewGameView.h"
 #include "Window.h"
 
 namespace cxgui
@@ -57,8 +58,32 @@ namespace cxgui
 /*********************************************************************************************//**
  * @brief The Connect X main application window.
  *
- * A Gtkmm window that acts as the application main window. It is the responsibility of this
- * window to initialize the Gtkmm library and to show the window.
+ * A Gtkmm window that acts as the application main window. This main window is composed of
+ * three components:
+ *
+ *  1. A menu bar
+ *  2. A view (which can be swapped for another)
+ *  3. A status bar.
+ *
+ * Visually:
+ *
+ *                                 +------------------------+
+ *                                 |        Menu bar        |
+ *                                 |------------------------|
+ *                                 |                        |
+ *                                 |                        |
+ *                                 |          View          |
+ *                                 |                        |
+ *                                 |                        |
+ *                                 |------------------------|
+ *                                 |       Status bar       |
+ *                                 +------------------------+
+ *
+ * The view area is the meat of the window and contains all of its contents. Views are lazy
+ * evaluated and can be swapped at runtime, depending on the state of the game. For example,
+ * when the application is launched, the 'New Game' view is made available. When the user
+ * starts the game, the 'New Game' view is swapped for the 'Game' view, which contains all
+ * the gaming widgets, such as the board.
  *
  ************************************************************************************************/
 class MainWindow : public cxgui::Window<Gtk::ApplicationWindow>
@@ -107,23 +132,22 @@ private:
     IMainWindowPresenter& m_presenter;
     std::unique_ptr<IStatusBarPresenter> m_statusbarPresenter;
 
-    Gtk::Button m_undoButton{Gtk::Stock::UNDO};
-    Gtk::Button m_redoButton{Gtk::Stock::REDO};
-    Gtk::Label m_counterLabel;
-    Gtk::Button m_incrementButton;
-    Gtk::Button m_reinitButton;
-
     std::unique_ptr<IStatusBar> m_statusbar;
 
     Gtk::MenuBar m_menubar;
     Gtk::MenuItem m_gameMenuItem;
     Gtk::Menu m_gameMenu;
-    Gtk::MenuItem m_reinitMenuItem;
     Gtk::ImageMenuItem m_quitMenuItem{Gtk::Stock::QUIT};
     Gtk::MenuItem m_helpMenuItem;
     Gtk::Menu m_helpMenu;
     Gtk::ImageMenuItem m_aboutMenuItem{Gtk::Stock::ABOUT};
 
+    // Views:
+    const int m_viewLeft;
+    const int m_viewTop;
+    std::unique_ptr<NewGameView> m_newGameView;
+
+    // Other windows:
     std::unique_ptr<IWindow> m_about;
 };
 

@@ -56,6 +56,7 @@ OBJS_$(d) := $(d)/src/About.o \
              $(d)/src/MainWindowController.o \
              $(d)/src/MainWindowPresenter.o \
              $(d)/src/MenuItem.o \
+             $(d)/src/NewGameView.o \
              $(d)/src/StatusBar.o \
              $(d)/src/StatusBarPresenter.o
 

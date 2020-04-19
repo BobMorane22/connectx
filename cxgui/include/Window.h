@@ -58,8 +58,17 @@ public:
 
     int Show() override;
 
+    /******************************************************************************************//**
+     * @brief Initializes the window widgets.
+     *
+     * This method is automatically called when the "Realize" signal is emitted from the
+     * underlying Gtkmm window.
+     *
+     ********************************************************************************************/
+    void Init();
 
-//protected:
+
+protected:
 
     /*******************************************************************************************//**
      * @brief Configures the window icon.
@@ -123,16 +132,6 @@ public:
      *
      **********************************************************************************************/
     virtual void ConfigureSignalHandlers() = 0;
-
-    /******************************************************************************************//**
-     * @brief Initializes the window widgets.
-     *
-     * This method is automatically called when the "Realize" signal is emitted from the
-     * underlying Gtkmm window.
-     *
-     ********************************************************************************************/
-    void Init();
-
 
     Gtk::Grid m_mainLayout;
     GtkmmWindow m_window;
