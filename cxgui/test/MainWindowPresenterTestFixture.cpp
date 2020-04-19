@@ -46,6 +46,13 @@ cxgui::IMainWindowPresenter& MainWindowPresenterTestFixture::GetPresenter()
     return *m_presenter;
 }
 
+cxgui::INewGameViewPresenter& MainWindowPresenterTestFixture::GetNewGameViewPresenter()
+{
+    EXPECT_TRUE(m_presenter != nullptr);
+
+    return *m_presenter;
+}
+
 cxmodel::IModel& MainWindowPresenterTestFixture::GetModel()
 {
     EXPECT_TRUE(m_model != nullptr);

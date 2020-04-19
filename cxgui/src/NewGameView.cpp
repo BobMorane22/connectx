@@ -25,10 +25,40 @@
 
 #include <NewGameView.h>
 
-cxgui::NewGameView::NewGameView(Gtk::Grid& p_mainLayout, int p_viewLeft, int p_viewTop)
- : m_mainLayout{p_mainLayout}
+cxgui::NewGameView::NewGameView(INewGameViewPresenter& p_presenter,
+                                Gtk::Grid& p_mainLayout,
+                                int p_viewLeft,
+                                int p_viewTop)
+ : m_presenter{p_presenter}
+ , m_mainLayout{p_mainLayout}
  , m_viewLeft{p_viewLeft}
  , m_viewTop{p_viewTop}
+{
+    SetLayout();
+    PopulateWidgets();
+}
+
+void cxgui::NewGameView::Activate()
+{
+    auto* currentViewLayout = m_mainLayout.get_child_at(m_viewLeft, m_viewTop);
+
+    if(!currentViewLayout)
+    {
+        // This is probali the init phase, so there is nothing to remove. In this
+        // case, we simply add it:
+        m_mainLayout.attach(m_viewLayout, m_viewLeft, m_viewTop, 2, 1);
+
+        return;
+    }
+
+    // Remove previous view layout:
+    m_mainLayout.remove(*currentViewLayout);
+
+    // Add new view layout:
+    m_mainLayout.attach(m_viewLayout, m_viewLeft, m_viewTop, 2, 1);
+}
+
+void cxgui::NewGameView::SetLayout()
 {
     constexpr int TOTAL_WIDTH = 2;
 
@@ -55,22 +85,20 @@ cxgui::NewGameView::NewGameView(Gtk::Grid& p_mainLayout, int p_viewLeft, int p_v
     m_viewLayout.attach(m_startButton, 0, 10, TOTAL_WIDTH, 1);
 }
 
-void cxgui::NewGameView::Activate()
+void cxgui::NewGameView::PopulateWidgets()
 {
-    auto* currentViewLayout = m_mainLayout.get_child_at(m_viewLeft, m_viewTop);
+    m_title.set_text(m_presenter.GetNewGameViewTitle());
 
-    if(!currentViewLayout)
-    {
-        // This is probali the init phase, so there is nothing to remove. In this
-        // case, we simply add it:
-        m_mainLayout.attach(m_viewLayout, m_viewLeft, m_viewTop, 2, 1);
+    m_gameSectionTitle.set_text(m_presenter.GetNewGameViewGameSectionTitle());
+    m_inARowLabel.set_text(m_presenter.GetNewGameViewInARowLabelText());
 
-        return;
-    }
+    m_gridSectionTitle.set_text(m_presenter.GetNewGameViewGridSectionTitle());
+    m_gridWidthLabel.set_text(m_presenter.GetNewGameViewWidthLabelText());
+    m_gridHeightLabel.set_text(m_presenter.GetNewGameViewHeightLabelText());
 
-    // Remove previous view layout:
-    m_mainLayout.remove(*currentViewLayout);
+    m_playersSectionTitle.set_text(m_presenter.GetNewGameViewPlayersSectionTitle());
+    m_nameRowTitle.set_text(m_presenter.GetNewGameViewNameColumnHeaderText());
+    m_discRowTitle.set_text(m_presenter.GetNewGameViewDiscColumnHeaderText());
 
-    // Add new view layout:
-    m_mainLayout.attach(m_viewLayout, m_viewLeft, m_viewTop, 2, 1);
+    m_startButton.set_label(m_presenter.GetNewGameViewStartButtonText());
 }

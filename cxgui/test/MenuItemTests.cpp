@@ -35,11 +35,6 @@ TEST(MenuItem, MakeLabel_Quit_QuitLabelReturned)
     ASSERT_EQ("Quit", cxgui::MakeLabel(cxgui::MenuItem::QUIT));
 }
 
-TEST(MenuItem, MakeLabel_Reinitialize_ReinitializeLabelReturned)
-{
-    ASSERT_EQ("Reinitialize", cxgui::MakeLabel(cxgui::MenuItem::REINITIALIZE));
-}
-
 TEST(MenuItem, MakeLabel_Help_HelpLabelReturned)
 {
     ASSERT_EQ("Help", cxgui::MakeLabel(cxgui::MenuItem::HELP));

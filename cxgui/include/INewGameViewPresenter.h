@@ -16,52 +16,29 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file IMainWindowPresenter.h
- * @date 2019
+ * @file INewGameViewPresenter.h
+ * @date 2020
  *
  *************************************************************************************************/
 
-#ifndef IMAINWINDOWPRESENTER_H_D8C76920_83D9_4D15_B95A_63282E742221
-#define IMAINWINDOWPRESENTER_H_D8C76920_83D9_4D15_B95A_63282E742221
+#ifndef INEWVIEWPRESENTER_H_8159479B_ECAB_4CD5_9CC6_B818FCBC26C8
+#define INEWVIEWPRESENTER_H_8159479B_ECAB_4CD5_9CC6_B818FCBC26C8
 
-#include <cxmodel/include/IObserver.h>
-#include <cxmodel/include/Subject.h>
-
-#include "INewGameViewPresenter.h"
-#include "MenuItem.h"
+#include <string>
 
 namespace cxgui
 {
 
 /*********************************************************************************************//**
- * @brief Interface for creating a main window presenter.
- *
- * The main window presenter is responsible for making sure the UI logic is up to date, in
- * a UI framework independent fashion. This makes it possible to create a main window with
- * minimal logic.
- *
- * @note Because the class inherits the cxmodel::Subject class, which is an abstract class,
- *       this class is not a pure interface. It is named as if it were a pure interface
- *       because conceptually, it acts like one as far as the presenter is concerned.
+ * @brief Presenter for the 'New Game' view.
  *
  ************************************************************************************************/
-class IMainWindowPresenter : public cxmodel::IObserver,
-                             public cxmodel::Subject,
-                             public INewGameViewPresenter
+class INewGameViewPresenter
 {
 
 public:
 
-///@{ @name Main Window
-// -----------------------------------------------------------------------------------------------
-
-    virtual std::string GetWindowTitle() const = 0;
-    virtual std::string GetMenuLabel(MenuItem p_menuItem) const = 0;
-
-///@}
-
-///@{ @name New Game View
-// -----------------------------------------------------------------------------------------------
+    virtual ~INewGameViewPresenter() = default;
 
     virtual std::string GetNewGameViewTitle() const = 0;
 
@@ -77,10 +54,8 @@ public:
     virtual std::string GetNewGameViewDiscColumnHeaderText() const = 0;
     virtual std::string GetNewGameViewStartButtonText() const = 0;
 
-///@}
-
 };
 
-} // namespace cxgui
+}
 
-#endif // IMAINWINDOWPRESENTER_H_D8C76920_83D9_4D15_B95A_63282E742221
+#endif // INEWVIEWPRESENTER_H_8159479B_ECAB_4CD5_9CC6_B818FCBC26C8

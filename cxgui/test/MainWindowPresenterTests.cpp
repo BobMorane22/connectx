@@ -25,43 +25,9 @@
 
 #include "MainWindowPresenterTestFixture.h"
 
-TEST_F(MainWindowPresenterTestFixture, IsReinitializeBtnEnabled_Initial_Disabeled)
-{
-    ASSERT_EQ(GetPresenter().IsReinitializeBtnEnabled(), false);
-}
-
-TEST_F(MainWindowPresenterTestFixture, IsReinitializeBtnEnabled_OneIncrement_Enabled)
-{
-    GetModel().Increment();
-
-    ASSERT_EQ(GetPresenter().IsReinitializeBtnEnabled(), true);
-}
-
-TEST_F(MainWindowPresenterTestFixture, GetCounterValue_Initial_Zero)
-{
-    ASSERT_EQ(GetPresenter().GetCounterValue(), 0);
-}
-
-TEST_F(MainWindowPresenterTestFixture, GetCounterValue_OneIncrement_One)
-{
-    GetModel().Increment();
-
-    ASSERT_EQ(GetPresenter().GetCounterValue(), 1);
-}
-
-TEST_F(MainWindowPresenterTestFixture, GetWindowTitle_Initial_GoodLabel)
+TEST_F(MainWindowPresenterTestFixture, GetWindowTitle_GetWindowTitle_GetWindowTitleLabelReturned)
 {
     ASSERT_EQ(GetPresenter().GetWindowTitle(), "Connect X");
-}
-
-TEST_F(MainWindowPresenterTestFixture, GetIncrementBtnLabel_Initial_GoodLabel)
-{
-    ASSERT_EQ(GetPresenter().GetIncrementBtnLabel(), "Increment");
-}
-
-TEST_F(MainWindowPresenterTestFixture, GetReinitializeBtnLabel_Initial_GoodLabel)
-{
-    ASSERT_EQ(GetPresenter().GetReinitializeBtnLabel(), "Reinitialize");
 }
 
 TEST_F(MainWindowPresenterTestFixture, GetMenuLabel_GameMenu_GameMenuLabelReturned)
@@ -74,8 +40,12 @@ TEST_F(MainWindowPresenterTestFixture, GetMenuLabel_QuitMenu_QuitMenuLabelReturn
     ASSERT_EQ(GetPresenter().GetMenuLabel(cxgui::MenuItem::QUIT), "Quit");
 }
 
-TEST_F(MainWindowPresenterTestFixture, GetMenuLabel_ReinitializeMenu_ReinitializeMenuLabelReturned)
+TEST_F(MainWindowPresenterTestFixture, GetMenuLabel_HelpMenu_HelpMenuLabelReturned)
 {
-    ASSERT_EQ(GetPresenter().GetMenuLabel(cxgui::MenuItem::REINITIALIZE), "Reinitialize");
+    ASSERT_EQ(GetPresenter().GetMenuLabel(cxgui::MenuItem::HELP), "Help");
 }
 
+TEST_F(MainWindowPresenterTestFixture, GetMenuLabel_AboutMenu_AboutMenuLabelReturned)
+{
+    ASSERT_EQ(GetPresenter().GetMenuLabel(cxgui::MenuItem::ABOUT), "About");
+}

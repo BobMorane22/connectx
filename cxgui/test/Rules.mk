@@ -52,6 +52,7 @@ OBJS_$(d) := $(d)/AboutWindowPresenterTestFixture.o \
              $(d)/MenuItemTests.o \
              $(d)/ModelMockController.o \
              $(d)/ModelMockPresenter.o \
+             $(d)/NewGamePresenterTests.o \
              $(d)/StatusBarPresenterTests.o \
              cxgui/libcxgui.a
 DEPS_$(d) := $(TGTS_$(d):%=%.d)

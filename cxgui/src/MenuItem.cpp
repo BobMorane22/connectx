@@ -35,9 +35,6 @@ std::string cxgui::MakeLabel(MenuItem p_menuItem)
         case MenuItem::QUIT:
             return "Quit";
 
-        case MenuItem::REINITIALIZE:
-            return "Reinitialize";
-
         case MenuItem::HELP:
             return "Help";
 

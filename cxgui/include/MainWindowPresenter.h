@@ -36,26 +36,36 @@ class MainWindowPresenter : public cxgui::IMainWindowPresenter
 
 public:
 
-    MainWindowPresenter();
+///@{ @name Main Window
+// -----------------------------------------------------------------------------------------------
 
-    bool IsReinitializeBtnEnabled() const override;
-    unsigned int GetCounterValue() const override;
     std::string GetWindowTitle() const override;
-    std::string GetIncrementBtnLabel() const override;
-    std::string GetReinitializeBtnLabel() const override;
     std::string GetMenuLabel(MenuItem p_menuItem) const override;
 
+///@}
+
+///@{ @name New Game View
+// -----------------------------------------------------------------------------------------------
+
+    virtual std::string GetNewGameViewTitle() const override;
+
+    virtual std::string GetNewGameViewGameSectionTitle() const override;
+    virtual std::string GetNewGameViewInARowLabelText() const override;
+
+    virtual std::string GetNewGameViewGridSectionTitle() const override;
+    virtual std::string GetNewGameViewWidthLabelText() const override;
+    virtual std::string GetNewGameViewHeightLabelText() const override;
+
+    virtual std::string GetNewGameViewPlayersSectionTitle() const override;
+    virtual std::string GetNewGameViewNameColumnHeaderText() const override;
+    virtual std::string GetNewGameViewDiscColumnHeaderText() const override;
+    virtual std::string GetNewGameViewStartButtonText() const override;
+
+///@}
 
 private:
 
     void Update(cxmodel::NotificationContext p_context, cxmodel::Subject* p_subject) override;
-
-    unsigned int m_counterValue;
-    bool m_isIncrementBtnEnabled;
-
-    static constexpr char m_windowTitle[] = "Connect X";
-    static constexpr char m_incrementBtnLabel[] = "Increment";
-    static constexpr char m_reinitializeBtnLabel[] = "Reinitialize";
 
 };
 

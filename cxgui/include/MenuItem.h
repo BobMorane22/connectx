@@ -31,7 +31,6 @@ enum class MenuItem
 {
     GAME,
     QUIT,
-    REINITIALIZE,
 
     HELP,
     ABOUT,

@@ -67,7 +67,7 @@ void cxgui::MainWindow::RegisterWidgets()
 
     m_mainLayout.attach(m_menubar, 0, 0, 2, 1);
 
-    m_newGameView = std::make_unique<NewGameView>(m_mainLayout, m_viewLeft, m_viewTop);
+    m_newGameView = std::make_unique<NewGameView>(m_presenter, m_mainLayout, m_viewLeft, m_viewTop);
     m_newGameView->Activate();
 
     RegisterStatusBar();

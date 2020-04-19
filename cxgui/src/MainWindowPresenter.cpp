@@ -25,53 +25,70 @@
 
 #include <MainWindowPresenter.h>
 
-cxgui::MainWindowPresenter::MainWindowPresenter()
- : m_counterValue{0}
- , m_isIncrementBtnEnabled{false}
-{
-}
-
-bool cxgui::MainWindowPresenter::IsReinitializeBtnEnabled() const
-{
-    return m_isIncrementBtnEnabled;
-}
-
-unsigned int cxgui::MainWindowPresenter::GetCounterValue() const
-{
-    return m_counterValue;
-}
-
 void cxgui::MainWindowPresenter::Update(cxmodel::NotificationContext p_context, cxmodel::Subject* p_subject)
 {
     if(p_subject)
     {
-        cxmodel::IModel* model = static_cast<cxmodel::Model*>(p_subject);
-
-        const unsigned int value = model->GetCurrentValue();
-
-        m_isIncrementBtnEnabled = value > 0;
-        m_counterValue = value;
-
         Notify(p_context);
     }
 }
 
 std::string cxgui::MainWindowPresenter::GetWindowTitle() const
 {
-    return std::string{m_windowTitle};
-}
-
-std::string cxgui::MainWindowPresenter::GetIncrementBtnLabel() const
-{
-    return std::string{m_incrementBtnLabel};
-}
-
-std::string cxgui::MainWindowPresenter::GetReinitializeBtnLabel() const
-{
-    return std::string{m_reinitializeBtnLabel};
+    return "Connect X";
 }
 
 std::string cxgui::MainWindowPresenter::GetMenuLabel(MenuItem p_menuItem) const
 {
     return MakeLabel(p_menuItem);
+}
+
+std::string cxgui::MainWindowPresenter::GetNewGameViewTitle() const
+{
+    return "New Game";
+}
+
+std::string cxgui::MainWindowPresenter::GetNewGameViewGameSectionTitle() const
+{
+    return "Game";
+}
+
+std::string cxgui::MainWindowPresenter::GetNewGameViewInARowLabelText() const
+{
+    return "In a row:";
+}
+
+std::string cxgui::MainWindowPresenter::GetNewGameViewGridSectionTitle() const
+{
+    return "Grid";
+}
+
+std::string cxgui::MainWindowPresenter::GetNewGameViewWidthLabelText() const
+{
+    return "Width:";
+}
+
+std::string cxgui::MainWindowPresenter::GetNewGameViewHeightLabelText() const
+{
+    return "Height:";
+}
+
+std::string cxgui::MainWindowPresenter::GetNewGameViewPlayersSectionTitle() const
+{
+    return "Players";
+}
+
+std::string cxgui::MainWindowPresenter::GetNewGameViewNameColumnHeaderText() const
+{
+    return "Name";
+}
+
+std::string cxgui::MainWindowPresenter::GetNewGameViewDiscColumnHeaderText() const
+{
+    return "Disc";
+}
+
+std::string cxgui::MainWindowPresenter::GetNewGameViewStartButtonText() const
+{
+    return "Start";
 }

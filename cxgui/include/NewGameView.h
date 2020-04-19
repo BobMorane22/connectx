@@ -27,24 +27,20 @@
 #include <gtkmm/button.h>
 #include <gtkmm/entry.h>
 
-#include "Window.h"
+#include "INewGameViewPresenter.h"
 #include "IView.h"
+#include "Window.h"
 
 namespace cxgui
 {
 
 /*********************************************************************************************//**
- * @brief DESCRIPTION
- *
- * @invariant
- * @invariant
- *
- * DESCRIPTION
+ * @brief View for creating new games.
  *
  ************************************************************************************************/
 struct NewGameView : public cxgui::IView
 {
-    NewGameView(Gtk::Grid& p_mainLayout, int p_viewLeft, int p_viewTop);
+    NewGameView(INewGameViewPresenter& p_presenter, Gtk::Grid& p_mainLayout, int p_viewLeft, int p_viewTop);
 
     void Activate() override;
 
@@ -73,6 +69,11 @@ struct NewGameView : public cxgui::IView
     Gtk::Button m_startButton{"Start"};
 
 private:
+
+    void SetLayout();
+    void PopulateWidgets();
+
+    INewGameViewPresenter& m_presenter;
 
     Gtk::Grid& m_mainLayout;
 
