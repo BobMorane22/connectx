@@ -24,42 +24,6 @@
 #include <cxgui/test/ModelMockController.h>
 #include "MainWindowControllerTestFixture.h"
 
-TEST_F(MainWindowControllerTestFixture, OnIncrementBtnPressed_PressedOnce_IncrementCalledOnModel)
-{
-    GetController().OnIncrementBtnPressed();
-
-    ModelMockController& model = static_cast<ModelMockController&>(GetModel());
-
-    ASSERT_TRUE(model.GetIncremented());
-}
-
-TEST_F(MainWindowControllerTestFixture, OnReinitializeBtnPressed_PressedOnce_ReinitializeCalledOnModel)
-{
-    GetController().OnReinitializeBtnPressed();
-
-    ModelMockController& model = static_cast<ModelMockController&>(GetModel());
-
-    ASSERT_TRUE(model.GetReinitialized());
-}
-
-TEST_F(MainWindowControllerTestFixture, OnUndoBtnPressed_PressedOnce_UndoCalledOnModel)
-{
-    GetController().OnUndoBtnPressed();
-
-    ModelMockController& model = static_cast<ModelMockController&>(GetModel());
-
-    ASSERT_TRUE(model.GetUndoed());
-}
-
-TEST_F(MainWindowControllerTestFixture, OnRedoBtnPressed_PressedOnce_UndoCalledOnModel)
-{
-    GetController().OnRedoBtnPressed();
-
-    ModelMockController& model = static_cast<ModelMockController&>(GetModel());
-
-    ASSERT_TRUE(model.GetRedoed());
-}
-
 TEST_F(MainWindowControllerTestFixture, OnAboutMenuPressed_PressedOnce_SignalCalledOnModel)
 {
     GetController().OnAboutMenuPressed();

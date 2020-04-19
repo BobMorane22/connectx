@@ -24,6 +24,8 @@
 #ifndef IMAINWINDOWCONTROLLER_H_B4A715D5_611A_42C2_8C60_16C5C14FD28A
 #define IMAINWINDOWCONTROLLER_H_B4A715D5_611A_42C2_8C60_16C5C14FD28A
 
+#include "INewGameViewController.h"
+
 namespace cxgui
 {
 
@@ -35,7 +37,7 @@ namespace cxgui
  * reflect what the user is doing on the UI.
  *
  ************************************************************************************************/
-class IMainWindowController
+class IMainWindowController : public INewGameViewController
 {
 
 public:
@@ -46,35 +48,23 @@ public:
      ********************************************************************************************/
     virtual ~IMainWindowController() = default;
 
-    /******************************************************************************************//**
-     * @brief Reacts to changes on the "Increment" button.
-     *
-     ********************************************************************************************/
-    virtual void OnIncrementBtnPressed() = 0;
-
-    /******************************************************************************************//**
-     * @brief Reacts to changes on the "Reinitialize" button.
-     *
-     ********************************************************************************************/
-    virtual void OnReinitializeBtnPressed() = 0;
-
-    /******************************************************************************************//**
-     * @brief Reacts to changes on the "Undo" button.
-     *
-     ********************************************************************************************/
-    virtual void OnUndoBtnPressed() = 0;
-
-    /******************************************************************************************//**
-     * @brief Reacts to changes on the "Redo" button.
-     *
-     ********************************************************************************************/
-    virtual void OnRedoBtnPressed() = 0;
+///@{ @name Main Window
+// ------------------------------------------------------------------------------------------------
 
     /******************************************************************************************//**
      * @brief Reacts to changes on the "About" menu item.
      *
      ********************************************************************************************/
     virtual void OnAboutMenuPressed() = 0;
+
+///@}
+
+///@{ @name New Game View
+// ------------------------------------------------------------------------------------------------
+
+    void OnStart() override = 0;
+
+///@}
 
 };
 

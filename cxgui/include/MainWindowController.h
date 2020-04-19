@@ -41,12 +41,19 @@ public:
 
     MainWindowController(cxmodel::IModel& p_model);
 
-    void OnIncrementBtnPressed() override;
-    void OnReinitializeBtnPressed() override;
-    void OnUndoBtnPressed() override;
-    void OnRedoBtnPressed() override;
+///@{ @name Main Window
+// ------------------------------------------------------------------------------------------------
+
     void OnAboutMenuPressed() override;
 
+///@}
+
+///@{ @name New Game View
+// ------------------------------------------------------------------------------------------------
+
+    void OnStart() override;
+
+///@}
 
 private:
 

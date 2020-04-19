@@ -26,16 +26,20 @@
 #include <NewGameView.h>
 
 cxgui::NewGameView::NewGameView(INewGameViewPresenter& p_presenter,
+                                INewGameViewController& p_controller,
                                 Gtk::Grid& p_mainLayout,
                                 int p_viewLeft,
                                 int p_viewTop)
  : m_presenter{p_presenter}
+ , m_controller{p_controller}
  , m_mainLayout{p_mainLayout}
  , m_viewLeft{p_viewLeft}
  , m_viewTop{p_viewTop}
 {
     SetLayout();
     PopulateWidgets();
+
+    m_startButton.signal_clicked().connect([this](){m_controller.OnStart();});
 }
 
 void cxgui::NewGameView::Activate()
@@ -44,7 +48,7 @@ void cxgui::NewGameView::Activate()
 
     if(!currentViewLayout)
     {
-        // This is probali the init phase, so there is nothing to remove. In this
+        // This is probably the init phase, so there is nothing to remove. In this
         // case, we simply add it:
         m_mainLayout.attach(m_viewLayout, m_viewLeft, m_viewTop, 2, 1);
 

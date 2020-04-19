@@ -21,6 +21,8 @@
  *
  *************************************************************************************************/
 
+#include <iostream>
+
 #include <cxmodel/include/IModel.h>
 
 #include <MainWindowController.h>
@@ -30,27 +32,12 @@ cxgui::MainWindowController::MainWindowController(cxmodel::IModel& p_model)
 {
 }
 
-void cxgui::MainWindowController::OnIncrementBtnPressed()
-{
-    m_model.Increment();
-}
-
-void cxgui::MainWindowController::OnReinitializeBtnPressed()
-{
-    m_model.Reinitialize();
-}
-
-void cxgui::MainWindowController::OnUndoBtnPressed()
-{
-    m_model.Undo();
-}
-
-void cxgui::MainWindowController::OnRedoBtnPressed()
-{
-    m_model.Redo();
-}
-
 void cxgui::MainWindowController::OnAboutMenuPressed()
 {
     m_model.Signal();
+}
+
+void cxgui::MainWindowController::OnStart()
+{
+    std::cout << "Start game!" << std::endl;
 }

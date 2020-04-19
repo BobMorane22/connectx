@@ -16,37 +16,32 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file MainWindowControllerTestFixture.h
- * @date 2019
+ * @file INewGameViewController.h
+ * @date 2020
  *
  *************************************************************************************************/
 
-#ifndef MAINWINDOWCONTROLLERTESTFIXTURE_H_797225B7_98E8_412C_BF3D_6976E0C5B6AD
-#define MAINWINDOWCONTROLLERTESTFIXTURE_H_797225B7_98E8_412C_BF3D_6976E0C5B6AD
+#ifndef INEWGAMEVIEWCONTROLLER_H_C4599F8B_25C5_4F7A_9A04_07CE371790CE
+#define INEWGAMEVIEWCONTROLLER_H_C4599F8B_25C5_4F7A_9A04_07CE371790CE
 
-#include <memory>
+namespace cxgui
+{
 
-#include <gtest/gtest.h>
-
-#include <cxgui/include/IMainWindowController.h>
-#include <cxmodel/include/IModel.h>
-
-class MainWindowControllerTestFixture : public testing::Test
+/*********************************************************************************************//**
+ * @brief Controller for the 'New Game' view.
+ *
+ ************************************************************************************************/
+class INewGameViewController
 {
 
 public:
 
-    MainWindowControllerTestFixture();
+    virtual ~INewGameViewController() = default;
 
-    cxmodel::IModel& GetModel();
-    cxgui::IMainWindowController& GetController();
-    cxgui::INewGameViewController& GetNewGameViewController();
-
-private:
-
-    std::unique_ptr<cxgui::IMainWindowController> m_controller;
-    std::unique_ptr<cxmodel::IModel> m_model;
+    virtual void OnStart() = 0;
 
 };
 
-#endif // MAINWINDOWCONTROLLERTESTFIXTURE_H_797225B7_98E8_412C_BF3D_6976E0C5B6AD
+} // namespace cxgui
+
+#endif // INEWGAMEVIEWCONTROLLER_H_C4599F8B_25C5_4F7A_9A04_07CE371790CE

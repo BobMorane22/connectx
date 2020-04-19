@@ -47,3 +47,10 @@ cxgui::IMainWindowController& MainWindowControllerTestFixture::GetController()
 
     return *m_controller;
 }
+
+cxgui::INewGameViewController& MainWindowControllerTestFixture::GetNewGameViewController()
+{
+    EXPECT_TRUE(m_controller != nullptr);
+
+    return *m_controller;
+}

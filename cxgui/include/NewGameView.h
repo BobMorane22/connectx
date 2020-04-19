@@ -27,6 +27,7 @@
 #include <gtkmm/button.h>
 #include <gtkmm/entry.h>
 
+#include "INewGameViewController.h"
 #include "INewGameViewPresenter.h"
 #include "IView.h"
 #include "Window.h"
@@ -40,33 +41,37 @@ namespace cxgui
  ************************************************************************************************/
 struct NewGameView : public cxgui::IView
 {
-    NewGameView(INewGameViewPresenter& p_presenter, Gtk::Grid& p_mainLayout, int p_viewLeft, int p_viewTop);
+    NewGameView(INewGameViewPresenter& p_presenter,
+                INewGameViewController& p_controller,
+                Gtk::Grid& p_mainLayout,
+                int p_viewLeft,
+                int p_viewTop);
 
     void Activate() override;
 
     Gtk::Grid m_viewLayout;
 
-    Gtk::Label m_title{"New Game"};
+    Gtk::Label m_title;
 
-    Gtk::Label m_gameSectionTitle{"Game"};
-    Gtk::Label m_inARowLabel{"In a row:"};
+    Gtk::Label m_gameSectionTitle;
+    Gtk::Label m_inARowLabel;
     Gtk::Entry m_inARowEntry;
 
-    Gtk::Label m_gridSectionTitle{"Grid"};
-    Gtk::Label m_gridWidthLabel{"Width:"};
+    Gtk::Label m_gridSectionTitle;
+    Gtk::Label m_gridWidthLabel;
     Gtk::Entry m_gridWidthEntry;
-    Gtk::Label m_gridHeightLabel{"Height:"};
+    Gtk::Label m_gridHeightLabel;
     Gtk::Entry m_gridHeightEntry;
 
-    Gtk::Label m_playersSectionTitle{"Players"};
-    Gtk::Label m_nameRowTitle{"Name"};
+    Gtk::Label m_playersSectionTitle;
+    Gtk::Label m_nameRowTitle;
     Gtk::Entry m_player1NameEntry;
     Gtk::Entry m_player2NameEntry;
-    Gtk::Label m_discRowTitle{"Disc"};
+    Gtk::Label m_discRowTitle;
     Gtk::Entry m_disc1Entry;
     Gtk::Entry m_disc2Entry;
 
-    Gtk::Button m_startButton{"Start"};
+    Gtk::Button m_startButton;
 
 private:
 
@@ -74,6 +79,7 @@ private:
     void PopulateWidgets();
 
     INewGameViewPresenter& m_presenter;
+    INewGameViewController& m_controller;
 
     Gtk::Grid& m_mainLayout;
 

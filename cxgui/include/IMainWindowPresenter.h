@@ -63,19 +63,19 @@ public:
 ///@{ @name New Game View
 // -----------------------------------------------------------------------------------------------
 
-    virtual std::string GetNewGameViewTitle() const = 0;
+    std::string GetNewGameViewTitle() const override = 0;
 
-    virtual std::string GetNewGameViewGameSectionTitle() const = 0;
-    virtual std::string GetNewGameViewInARowLabelText() const = 0;
+    std::string GetNewGameViewGameSectionTitle() const override = 0;
+    std::string GetNewGameViewInARowLabelText() const override = 0;
 
-    virtual std::string GetNewGameViewGridSectionTitle() const = 0;
-    virtual std::string GetNewGameViewWidthLabelText() const = 0;
-    virtual std::string GetNewGameViewHeightLabelText() const = 0;
+    std::string GetNewGameViewGridSectionTitle() const override = 0;
+    std::string GetNewGameViewWidthLabelText() const override = 0;
+    std::string GetNewGameViewHeightLabelText() const override = 0;
 
-    virtual std::string GetNewGameViewPlayersSectionTitle() const = 0;
-    virtual std::string GetNewGameViewNameColumnHeaderText() const = 0;
-    virtual std::string GetNewGameViewDiscColumnHeaderText() const = 0;
-    virtual std::string GetNewGameViewStartButtonText() const = 0;
+    std::string GetNewGameViewPlayersSectionTitle() const override = 0;
+    std::string GetNewGameViewNameColumnHeaderText() const override = 0;
+    std::string GetNewGameViewDiscColumnHeaderText() const override = 0;
+    std::string GetNewGameViewStartButtonText() const override = 0;
 
 ///@}
 
