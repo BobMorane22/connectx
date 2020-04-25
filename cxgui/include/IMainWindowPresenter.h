@@ -56,8 +56,25 @@ public:
 
 ///@{ @name Main Window
 // -----------------------------------------------------------------------------------------------
+
+    /******************************************************************************************//**
+     * @brief Main window title accessor.
+     *
+     * @return The main window title.
+     *
+     ********************************************************************************************/
     virtual std::string GetWindowTitle() const = 0;
+
+    /******************************************************************************************//**
+     * @brief Menu item label accessor.
+     *
+     * @param p_menuItem The item to get the label of.
+     *
+     * @return The label for the given item.
+     *
+     ********************************************************************************************/
     virtual std::string GetMenuLabel(MenuItem p_menuItem) const = 0;
+
 ///@}
 
 ///@{ @name New Game View

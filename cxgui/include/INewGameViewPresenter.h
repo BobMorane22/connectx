@@ -38,20 +38,90 @@ class INewGameViewPresenter
 
 public:
 
+    /******************************************************************************************//**
+     * @brief Destructor.
+     *
+     ********************************************************************************************/
     virtual ~INewGameViewPresenter() = default;
 
+    /******************************************************************************************//**
+     * @brief New Game view title accessor.
+     *
+     * @return The New Game view title.
+     *
+     ********************************************************************************************/
     virtual std::string GetNewGameViewTitle() const = 0;
 
+    /******************************************************************************************//**
+     * @brief Game section title accessor.
+     *
+     * @return The Game section title.
+     *
+     ********************************************************************************************/
     virtual std::string GetNewGameViewGameSectionTitle() const = 0;
+
+    /******************************************************************************************//**
+     * @brief In-a-row label accessor.
+     *
+     * @return the in-a-row label text.
+     *
+     ********************************************************************************************/
     virtual std::string GetNewGameViewInARowLabelText() const = 0;
 
+    /******************************************************************************************//**
+     * @brief Grid section title accessor.
+     *
+     * @return The gird section title.
+     *
+     ********************************************************************************************/
     virtual std::string GetNewGameViewGridSectionTitle() const = 0;
+
+    /******************************************************************************************//**
+     * @brief Width label accessor.
+     *
+     * @return The Width label text.
+     *
+     ********************************************************************************************/
     virtual std::string GetNewGameViewWidthLabelText() const = 0;
+
+    /******************************************************************************************//**
+     * @brief Height label accessor.
+     *
+     * @return The height label text.
+     *
+     ********************************************************************************************/
     virtual std::string GetNewGameViewHeightLabelText() const = 0;
 
+    /******************************************************************************************//**
+     * @brief Players section title accessor.
+     *
+     * @return The Players section title.
+     *
+     ********************************************************************************************/
     virtual std::string GetNewGameViewPlayersSectionTitle() const = 0;
+
+    /******************************************************************************************//**
+     * @brief Name column header text accessor.
+     *
+     * @return The Name column header text.
+     *
+     ********************************************************************************************/
     virtual std::string GetNewGameViewNameColumnHeaderText() const = 0;
+
+    /******************************************************************************************//**
+     * @brief Disc column header text accessor.
+     *
+     * @return The Disc column header text.
+     *
+     ********************************************************************************************/
     virtual std::string GetNewGameViewDiscColumnHeaderText() const = 0;
+
+    /******************************************************************************************//**
+     * @brief Start button text accessor.
+     *
+     * @return Start button text.
+     *
+     ********************************************************************************************/
     virtual std::string GetNewGameViewStartButtonText() const = 0;
 
 };
