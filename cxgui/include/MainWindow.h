@@ -38,7 +38,7 @@
 
 #include "IStatusBar.h"
 #include "IStatusBarPresenter.h"
-#include "NewGameView.h"
+#include "IView.h"
 #include "Window.h"
 
 namespace cxgui
@@ -123,6 +123,7 @@ private:
     void RegisterMenuBar();
 
     void CreateAboutWindow();
+    void ActivateGameView();
 
     Gtk::Application& m_gtkApplication;
 
@@ -146,6 +147,7 @@ private:
     const int m_viewLeft;
     const int m_viewTop;
     std::unique_ptr<IView> m_newGameView;
+    std::unique_ptr<IView> m_gameView;
 
     // Other windows:
     std::unique_ptr<IWindow> m_about;

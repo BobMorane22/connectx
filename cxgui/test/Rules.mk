@@ -45,6 +45,7 @@ d := $(dir)
 TGTS_$(d) := $(d)/cxguitests
 OBJS_$(d) := $(d)/AboutWindowPresenterTestFixture.o \
              $(d)/AboutWindowPresenterTests.o \
+             $(d)/GamePresenterTests.o \
              $(d)/MainWindowPresenterTestFixture.o \
              $(d)/MainWindowControllerTests.o \
              $(d)/MainWindowControllerTestFixture.o \

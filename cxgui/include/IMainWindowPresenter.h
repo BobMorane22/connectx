@@ -27,6 +27,7 @@
 #include <cxmodel/include/IObserver.h>
 #include <cxmodel/include/Subject.h>
 
+#include "IGameViewPresenter.h"
 #include "INewGameViewPresenter.h"
 #include "MenuItem.h"
 
@@ -47,6 +48,7 @@ namespace cxgui
  ************************************************************************************************/
 class IMainWindowPresenter : public cxmodel::IObserver,
                              public cxmodel::Subject,
+                             public IGameViewPresenter,
                              public INewGameViewPresenter
 {
 
@@ -54,15 +56,12 @@ public:
 
 ///@{ @name Main Window
 // -----------------------------------------------------------------------------------------------
-
     virtual std::string GetWindowTitle() const = 0;
     virtual std::string GetMenuLabel(MenuItem p_menuItem) const = 0;
-
 ///@}
 
 ///@{ @name New Game View
 // -----------------------------------------------------------------------------------------------
-
     std::string GetNewGameViewTitle() const override = 0;
 
     std::string GetNewGameViewGameSectionTitle() const override = 0;
@@ -77,6 +76,12 @@ public:
     std::string GetNewGameViewDiscColumnHeaderText() const override = 0;
     std::string GetNewGameViewStartButtonText() const override = 0;
 
+///@}
+
+///@{ @name Game View
+// -----------------------------------------------------------------------------------------------
+    std::string GetGameViewTitle() const override = 0;
+    std::string GetGameViewMessage() const override = 0;
 ///@}
 
 };

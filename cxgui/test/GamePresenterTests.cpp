@@ -16,53 +16,21 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file MainWindowPresenterTestFixture.cpp
- * @date 2019
+ * @file GamePresenterTests.cpp
+ * @date 2020
  *
  *************************************************************************************************/
 
 #include <gtest/gtest.h>
 
-#include <cxgui/include/MainWindowPresenter.h>
-
-#include "ModelMockPresenter.h"
 #include "MainWindowPresenterTestFixture.h"
 
-MainWindowPresenterTestFixture::MainWindowPresenterTestFixture()
+TEST_F(MainWindowPresenterTestFixture, GetTitle_GamePresenter_TitleReturned)
 {
-    m_model = std::make_unique<ModelMockPresenter>();
-    m_presenter = std::make_unique<cxgui::MainWindowPresenter>();
-
-    EXPECT_TRUE(m_presenter != nullptr);
-    EXPECT_TRUE(m_model != nullptr);
-
-    m_model->Attach(m_presenter.get());
+    ASSERT_EQ(GetGameViewPresenter().GetGameViewTitle(), "Game");
 }
 
-cxgui::IMainWindowPresenter& MainWindowPresenterTestFixture::GetPresenter()
+TEST_F(MainWindowPresenterTestFixture, GetMessage_GamePresenter_MessageReturned)
 {
-    EXPECT_TRUE(m_presenter != nullptr);
-
-    return *m_presenter;
-}
-
-cxgui::IGameViewPresenter& MainWindowPresenterTestFixture::GetGameViewPresenter()
-{
-    EXPECT_TRUE(m_presenter != nullptr);
-
-    return *m_presenter;
-}
-
-cxgui::INewGameViewPresenter& MainWindowPresenterTestFixture::GetNewGameViewPresenter()
-{
-    EXPECT_TRUE(m_presenter != nullptr);
-
-    return *m_presenter;
-}
-
-cxmodel::IModel& MainWindowPresenterTestFixture::GetModel()
-{
-    EXPECT_TRUE(m_model != nullptr);
-
-    return *m_model;
+    ASSERT_EQ(GetGameViewPresenter().GetGameViewMessage(), "New game started!");
 }

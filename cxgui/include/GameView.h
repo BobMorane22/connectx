@@ -16,53 +16,60 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file MainWindowPresenterTestFixture.cpp
- * @date 2019
+ * @file GameView.h
+ * @date 2020
  *
  *************************************************************************************************/
 
-#include <gtest/gtest.h>
+#ifndef GAMEVIEW_H_AA8C282C_9CC4_45F4_BE91_C8840160BA1B
+#define GAMEVIEW_H_AA8C282C_9CC4_45F4_BE91_C8840160BA1B
 
-#include <cxgui/include/MainWindowPresenter.h>
+#include <gtkmm/grid.h>
+#include <gtkmm/label.h>
 
-#include "ModelMockPresenter.h"
-#include "MainWindowPresenterTestFixture.h"
+#include "IGameViewPresenter.h"
+#include "IView.h"
 
-MainWindowPresenterTestFixture::MainWindowPresenterTestFixture()
+namespace cxgui
 {
-    m_model = std::make_unique<ModelMockPresenter>();
-    m_presenter = std::make_unique<cxgui::MainWindowPresenter>();
 
-    EXPECT_TRUE(m_presenter != nullptr);
-    EXPECT_TRUE(m_model != nullptr);
-
-    m_model->Attach(m_presenter.get());
-}
-
-cxgui::IMainWindowPresenter& MainWindowPresenterTestFixture::GetPresenter()
+/*********************************************************************************************//**
+ * @brief View for playing the game.
+ *
+ ************************************************************************************************/
+class GameView : public IView
 {
-    EXPECT_TRUE(m_presenter != nullptr);
 
-    return *m_presenter;
-}
+public:
 
-cxgui::IGameViewPresenter& MainWindowPresenterTestFixture::GetGameViewPresenter()
-{
-    EXPECT_TRUE(m_presenter != nullptr);
+    GameView(IGameViewPresenter& p_presenter,
+             Gtk::Grid& p_mainLayout,
+             int p_viewLeft,
+             int p_viewTop);
 
-    return *m_presenter;
-}
+    void Activate() override;
 
-cxgui::INewGameViewPresenter& MainWindowPresenterTestFixture::GetNewGameViewPresenter()
-{
-    EXPECT_TRUE(m_presenter != nullptr);
+private:
 
-    return *m_presenter;
-}
+    void SetLayout();
+    void PopulateWidgets();
 
-cxmodel::IModel& MainWindowPresenterTestFixture::GetModel()
-{
-    EXPECT_TRUE(m_model != nullptr);
+    IGameViewPresenter& m_presenter;
 
-    return *m_model;
-}
+    Gtk::Grid& m_mainLayout;
+
+    const int m_viewLeft;
+    const int m_viewTop;
+
+    Gtk::Grid m_viewLayout;
+
+    // Controls:
+    Gtk::Label m_title;
+
+    Gtk::Label m_message;
+
+};
+
+} // namespace cxgui
+
+#endif // GAMEVIEW_H_AA8C282C_9CC4_45F4_BE91_C8840160BA1B

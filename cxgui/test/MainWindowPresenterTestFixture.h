@@ -37,6 +37,7 @@ public:
     MainWindowPresenterTestFixture();
 
     cxgui::IMainWindowPresenter& GetPresenter();
+    cxgui::IGameViewPresenter& GetGameViewPresenter();
     cxgui::INewGameViewPresenter& GetNewGameViewPresenter();
 
     cxmodel::IModel& GetModel();

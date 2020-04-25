@@ -31,9 +31,11 @@
 
 #include <About.h>
 #include <AboutWindowPresenter.h>
+#include <GameView.h>
 #include <IMainWindowController.h>
 #include <IMainWindowPresenter.h>
 #include <MainWindow.h>
+#include <NewGameView.h>
 #include <StatusBar.h>
 #include <StatusBarPresenter.h>
 
@@ -91,7 +93,7 @@ void cxgui::MainWindow::ConfigureWidgets()
 void cxgui::MainWindow::ConfigureSignalHandlers()
 {
     m_quitMenuItem.signal_activate().connect([this](){m_window.close();});
-    m_aboutMenuItem.signal_activate().connect([this](){CreateAboutWindow();});
+    m_aboutMenuItem.signal_activate().connect([this](){CreateAboutWindow();ActivateGameView();});
 }
 
 int cxgui::MainWindow::Show()
@@ -146,4 +148,15 @@ void cxgui::MainWindow::CreateAboutWindow()
     }
 
     m_about->Show();
+}
+
+void cxgui::MainWindow::ActivateGameView()
+{
+    if(!m_gameView)
+    {
+        m_gameView = std::make_unique<GameView>(m_presenter, m_mainLayout, m_viewLeft, m_viewTop);
+    }
+
+    m_gameView->Activate();
+    m_window.show_all();
 }

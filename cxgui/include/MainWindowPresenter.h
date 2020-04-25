@@ -38,29 +38,31 @@ public:
 
 ///@{ @name Main Window
 // -----------------------------------------------------------------------------------------------
-
     std::string GetWindowTitle() const override;
     std::string GetMenuLabel(MenuItem p_menuItem) const override;
-
 ///@}
 
 ///@{ @name New Game View
 // -----------------------------------------------------------------------------------------------
+    std::string GetNewGameViewTitle() const override;
 
-    virtual std::string GetNewGameViewTitle() const override;
+    std::string GetNewGameViewGameSectionTitle() const override;
+    std::string GetNewGameViewInARowLabelText() const override;
 
-    virtual std::string GetNewGameViewGameSectionTitle() const override;
-    virtual std::string GetNewGameViewInARowLabelText() const override;
+    std::string GetNewGameViewGridSectionTitle() const override;
+    std::string GetNewGameViewWidthLabelText() const override;
+    std::string GetNewGameViewHeightLabelText() const override;
 
-    virtual std::string GetNewGameViewGridSectionTitle() const override;
-    virtual std::string GetNewGameViewWidthLabelText() const override;
-    virtual std::string GetNewGameViewHeightLabelText() const override;
+    std::string GetNewGameViewPlayersSectionTitle() const override;
+    std::string GetNewGameViewNameColumnHeaderText() const override;
+    std::string GetNewGameViewDiscColumnHeaderText() const override;
+    std::string GetNewGameViewStartButtonText() const override;
+///@}
 
-    virtual std::string GetNewGameViewPlayersSectionTitle() const override;
-    virtual std::string GetNewGameViewNameColumnHeaderText() const override;
-    virtual std::string GetNewGameViewDiscColumnHeaderText() const override;
-    virtual std::string GetNewGameViewStartButtonText() const override;
-
+///@{ @name Game View
+// -----------------------------------------------------------------------------------------------
+    std::string GetGameViewTitle() const override;
+    std::string GetGameViewMessage() const override;
 ///@}
 
 private:

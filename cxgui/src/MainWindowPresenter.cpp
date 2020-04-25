@@ -92,3 +92,13 @@ std::string cxgui::MainWindowPresenter::GetNewGameViewStartButtonText() const
 {
     return "Start";
 }
+
+std::string cxgui::MainWindowPresenter::GetGameViewTitle() const
+{
+    return "Game";
+}
+
+std::string cxgui::MainWindowPresenter::GetGameViewMessage() const
+{
+    return "New game started!";
+}

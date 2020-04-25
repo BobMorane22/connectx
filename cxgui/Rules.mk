@@ -52,6 +52,7 @@ include $(dir)/Rules.mk
 #
 OBJS_$(d) := $(d)/src/About.o \
              $(d)/src/AboutWindowPresenter.o \
+             $(d)/src/GameView.o \
              $(d)/src/MainWindow.o \
              $(d)/src/MainWindowController.o \
              $(d)/src/MainWindowPresenter.o \

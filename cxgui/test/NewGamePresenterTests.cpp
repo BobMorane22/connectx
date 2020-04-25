@@ -25,52 +25,52 @@
 
 #include "MainWindowPresenterTestFixture.h"
 
-TEST_F(MainWindowPresenterTestFixture, GetTitle_GetTitle_GetTitleReturned)
+TEST_F(MainWindowPresenterTestFixture, GetTitle_GetTitle_TitleReturned)
 {
     ASSERT_EQ(GetNewGameViewPresenter().GetNewGameViewTitle(), "New Game");
 }
 
-TEST_F(MainWindowPresenterTestFixture, GetGameSectionTitle_GetGameSectionTitle_GetGameSectionTitleReturned)
+TEST_F(MainWindowPresenterTestFixture, GetGameSectionTitle_GetGameSectionTitle_GameSectionTitleReturned)
 {
     ASSERT_EQ(GetNewGameViewPresenter().GetNewGameViewGameSectionTitle(), "Game");
 }
 
-TEST_F(MainWindowPresenterTestFixture, GetNewGameViewInARowLabelText_GetNewGameViewInARowLabelText_GetNewGameViewTitleReturned)
+TEST_F(MainWindowPresenterTestFixture, GetNewGameViewInARowLabelText_GetNewGameViewInARowLabelText_NewGameViewTitleReturned)
 {
     ASSERT_EQ(GetNewGameViewPresenter().GetNewGameViewInARowLabelText(), "In a row:");
 }
 
-TEST_F(MainWindowPresenterTestFixture, GetNGridSectionTitle_GetGridSectionTitle_GetGridSectionTitleReturned)
+TEST_F(MainWindowPresenterTestFixture, GetNGridSectionTitle_GetGridSectionTitle_GridSectionTitleReturned)
 {
     ASSERT_EQ(GetNewGameViewPresenter().GetNewGameViewGridSectionTitle(), "Grid");
 }
 
-TEST_F(MainWindowPresenterTestFixture, GetWidthLabelText_GetWidthLabelText_GetWidthLabelTextReturned)
+TEST_F(MainWindowPresenterTestFixture, GetWidthLabelText_GetWidthLabelText_WidthLabelTextReturned)
 {
     ASSERT_EQ(GetNewGameViewPresenter().GetNewGameViewWidthLabelText(), "Width:");
 }
 
-TEST_F(MainWindowPresenterTestFixture, GetHeightLabelText_GetHeightLabelText_GetHeightLabelTextReturned)
+TEST_F(MainWindowPresenterTestFixture, GetHeightLabelText_GetHeightLabelText_HeightLabelTextReturned)
 {
     ASSERT_EQ(GetNewGameViewPresenter().GetNewGameViewHeightLabelText(), "Height:");
 }
 
-TEST_F(MainWindowPresenterTestFixture, GetPlayersSectionTitle_GetPlayersSectionTitle_GetPlayersSectionTitleReturned)
+TEST_F(MainWindowPresenterTestFixture, GetPlayersSectionTitle_GetPlayersSectionTitle_PlayersSectionTitleReturned)
 {
     ASSERT_EQ(GetNewGameViewPresenter().GetNewGameViewPlayersSectionTitle(), "Players");
 }
 
-TEST_F(MainWindowPresenterTestFixture, GetNameColumnHeaderText_GetNameColumnHeaderText_GetNameColumnHeaderTextReturned)
+TEST_F(MainWindowPresenterTestFixture, GetNameColumnHeaderText_GetNameColumnHeaderText_NameColumnHeaderTextReturned)
 {
     ASSERT_EQ(GetNewGameViewPresenter().GetNewGameViewNameColumnHeaderText(), "Name");
 }
 
-TEST_F(MainWindowPresenterTestFixture, GetDiscColumnHeaderText_GetDiscColumnHeaderText_GetDiscColumnHeaderTextReturned)
+TEST_F(MainWindowPresenterTestFixture, GetDiscColumnHeaderText_GetDiscColumnHeaderText_DiscColumnHeaderTextReturned)
 {
     ASSERT_EQ(GetNewGameViewPresenter().GetNewGameViewDiscColumnHeaderText(), "Disc");
 }
 
-TEST_F(MainWindowPresenterTestFixture, GetStartButtonText_GetStartButtonText_GetStartButtonTextReturned)
+TEST_F(MainWindowPresenterTestFixture, GetStartButtonText_GetStartButtonText_StartButtonTextReturned)
 {
     ASSERT_EQ(GetNewGameViewPresenter().GetNewGameViewStartButtonText(), "Start");
 }
