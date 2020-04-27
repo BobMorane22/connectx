@@ -51,7 +51,7 @@ public:
 ///@{ @name New Game View
 // ------------------------------------------------------------------------------------------------
 
-    void OnStart() override;
+    void OnStart(const cxmodel::GameInformation p_gameInformation) override;
 
 ///@}
 

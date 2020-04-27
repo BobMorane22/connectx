@@ -22,6 +22,7 @@
  *************************************************************************************************/
 
 #include <cxgui/test/ModelMockController.h>
+
 #include "MainWindowControllerTestFixture.h"
 
 TEST_F(MainWindowControllerTestFixture, OnAboutMenuPressed_PressedOnce_SignalCalledOnModel)

@@ -60,13 +60,11 @@ public:
     ~Model() override;
 
     // IModel
-    unsigned int GetCurrentValue() const override;
-
-    void Increment() override;
-    void Reinitialize() override;
-
     std::string GetName() const override;
     std::string GetVersionNumber() const override;
+
+    void CreateNewGame(const GameInformation& p_gameInformation) override;
+    GameInformation GetGameInformation() const override;
 
     void Undo() override;
     void Redo() override;
@@ -83,14 +81,13 @@ private:
 
     void CheckInvariants();
 
+    GameInformation m_gameInformation;
+
     std::unique_ptr<ICommandStack> m_cmdStack;
 
-    static constexpr unsigned int m_INITIAL_VALUE = 0u;
     static constexpr char m_NAME[] = "Connect X";
     static constexpr unsigned int m_MAJOR_VERSION_NB = 0u;
     static constexpr unsigned int m_MINOR_VERSION_NB = 11u;
-
-    unsigned int m_currentValue;
 
     cxlog::ILogger& m_logger;
 };

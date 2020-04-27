@@ -44,14 +44,11 @@ std::string cxgui::MakeStatusBarContextString(cxmodel::NotificationContext p_con
 {
     switch(p_context)
     {
-        case cxmodel::NotificationContext::INCREMENT :
-            return "Increment.";
+        case cxmodel::NotificationContext::CREATE_NEW_GAME :
+            return "New game created.";
 
         case cxmodel::NotificationContext::REDO :
             return "Redo.";
-
-        case cxmodel::NotificationContext::REINITIALIZE :
-            return "Reinitialize.";
 
         case cxmodel::NotificationContext::UNDO :
             return "Undo.";

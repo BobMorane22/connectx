@@ -37,7 +37,7 @@ void cxgui::MainWindowController::OnAboutMenuPressed()
     m_model.Signal();
 }
 
-void cxgui::MainWindowController::OnStart()
+void cxgui::MainWindowController::OnStart(const cxmodel::GameInformation p_gameInformation)
 {
-    std::cout << "Start game!" << std::endl;
+    m_model.CreateNewGame(p_gameInformation);
 }

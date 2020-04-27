@@ -21,9 +21,51 @@
  *
  *************************************************************************************************/
 
+#include <gtkmm/messagedialog.h>
+
 #include <cxinv/include/assertion.h>
+#include <cxmodel/include/GameInformation.h>
 
 #include <NewGameView.h>
+
+namespace
+{
+
+/**********************************************************************************************//**
+ * @brief Display a warning dialog.
+ *
+ * @pre p_message Is not empty.
+ *
+ * @param p_message The warning message.
+ *
+ ************************************************************************************************/
+void DisplayWarningDialog(const std::string& p_message)
+{
+    PRECONDITION(!p_message.empty());
+
+    constexpr bool NO_MARKUP = false;
+
+    Gtk::MessageDialog errorDlg{p_message, NO_MARKUP, Gtk::MessageType::MESSAGE_WARNING, Gtk::ButtonsType::BUTTONS_OK, true};
+
+    errorDlg.run();
+}
+
+void DisplayNumericalValuesExpectedWarningDialog()
+{
+    DisplayWarningDialog("Enter numerical values for in-a-row and grid size values.");
+}
+
+void DisplayNumericalValuesOutOfRangeWarningDialog()
+{
+    DisplayWarningDialog("Numerical value(s) out of range.");
+}
+
+void DisplayEmptyEntriesWarningDialog()
+{
+    DisplayWarningDialog("Player names and disc cannot be empty.");
+}
+
+} // namespace
 
 cxgui::NewGameView::NewGameView(INewGameViewPresenter& p_presenter,
                                 INewGameViewController& p_controller,
@@ -39,7 +81,7 @@ cxgui::NewGameView::NewGameView(INewGameViewPresenter& p_presenter,
     SetLayout();
     PopulateWidgets();
 
-    m_startButton.signal_clicked().connect([this](){m_controller.OnStart();});
+    m_startButton.signal_clicked().connect([this](){OnStart();});
 }
 
 void cxgui::NewGameView::Activate()
@@ -105,4 +147,49 @@ void cxgui::NewGameView::PopulateWidgets()
     m_discRowTitle.set_text(m_presenter.GetNewGameViewDiscColumnHeaderText());
 
     m_startButton.set_label(m_presenter.GetNewGameViewStartButtonText());
+}
+
+void cxgui::NewGameView::OnStart()
+{
+    cxmodel::GameInformation gameInformation;
+
+    try
+    {
+        gameInformation.m_inARowValue = std::stoul(m_inARowEntry.get_text());
+        gameInformation.m_gridWidth = std::stoul(m_gridWidthEntry.get_text());
+        gameInformation.m_gridHeight = std::stoul(m_gridHeightEntry.get_text());
+    }
+    catch(const std::invalid_argument& p_exception)
+    {
+        DisplayNumericalValuesExpectedWarningDialog();
+        return;
+    }
+    catch(const std::out_of_range& p_exception)
+    {
+        DisplayNumericalValuesOutOfRangeWarningDialog();
+        return;
+    }
+
+    const std::string name1 = m_player1NameEntry.get_text();
+    const std::string name2 = m_player2NameEntry.get_text();
+
+    if(name1.empty() || name2.empty())
+    {
+        DisplayEmptyEntriesWarningDialog();
+        return;
+    }
+
+    const std::string disc1 = m_disc1Entry.get_text();
+    const std::string disc2 = m_disc2Entry.get_text();
+
+    if(disc1.empty() || disc2.empty())
+    {
+        DisplayEmptyEntriesWarningDialog();
+        return;
+    }
+
+    gameInformation.AddPlayer({name1, disc1});
+    gameInformation.AddPlayer({name2, disc2});
+
+    m_controller.OnStart(gameInformation);
 }

@@ -42,50 +42,12 @@ cxmodel::Model::Model(std::unique_ptr<ICommandStack>&& p_cmdStack, cxlog::ILogge
         PRECONDITION(m_cmdStack->IsEmpty());
     }
 
-    m_currentValue = m_INITIAL_VALUE;
-
     CheckInvariants();
 }
 
 cxmodel::Model::~Model()
 {
     DetatchAll();
-}
-
-unsigned int cxmodel::Model::GetCurrentValue() const
-{
-    return m_currentValue;
-}
-
-void cxmodel::Model::Increment()
-{
-    const unsigned int old = m_currentValue;
-
-    m_cmdStack->Execute(std::make_unique<CommandIncrementByOne>(m_currentValue));
-
-    Notify(NotificationContext::INCREMENT);
-
-    POSTCONDITION(m_currentValue - old == 1);
-
-    Log(cxlog::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__,
-        "Incremented value.");
-
-    CheckInvariants();
-}
-
-void cxmodel::Model::Reinitialize()
-{
-
-    m_cmdStack->Execute(std::make_unique<CommandReinitialize>(m_INITIAL_VALUE, m_currentValue, m_currentValue));
-
-    Notify(NotificationContext::REINITIALIZE);
-
-    POSTCONDITION(m_currentValue == m_INITIAL_VALUE);
-
-    Log(cxlog::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__,
-        "Reinitialized value.");
-
-    CheckInvariants();
 }
 
 std::string cxmodel::Model::GetName() const
@@ -102,14 +64,46 @@ std::string cxmodel::Model::GetVersionNumber() const
     return stream.str();
 }
 
+void cxmodel::Model::CreateNewGame(const GameInformation& p_gameInformation)
+{
+    m_gameInformation = p_gameInformation;
+
+    Notify(NotificationContext::CREATE_NEW_GAME);
+
+    PRECONDITION(m_gameInformation.m_inARowValue > 1);
+    PRECONDITION(m_gameInformation.m_gridWidth > 0);
+    PRECONDITION(m_gameInformation.m_gridHeight > 0);
+    PRECONDITION(m_gameInformation.GetPlayersInformation().size() > 1);
+
+    for(const auto& playerInfo : m_gameInformation.GetPlayersInformation())
+    {
+        PRECONDITION(!playerInfo.m_name.empty());
+        PRECONDITION(!playerInfo.m_discColor.empty());
+    }
+
+    std::ostringstream stream;
+
+    stream << "New game created:"   << std::endl
+           << "  In-a-row value:  " << m_gameInformation.m_inARowValue << std::endl
+           << "  Grid dimensions: " << "Width = " << m_gameInformation.m_gridWidth << ", "
+                                    << "Height = " << m_gameInformation.m_gridHeight << std::endl
+           << "Number of players: " << m_gameInformation.GetPlayersInformation().size() << std::endl;
+
+    Log(cxlog::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__, stream.str());
+}
+
+cxmodel::GameInformation cxmodel::Model::GetGameInformation() const
+{
+    return m_gameInformation;
+}
+
 void cxmodel::Model::Undo()
 {
     m_cmdStack->Undo();
 
     Notify(NotificationContext::UNDO);
 
-    Log(cxlog::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__,
-        "Last action undoed.");
+    Log(cxlog::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__, "Last action undoed.");
 
     CheckInvariants();
 }
@@ -120,8 +114,7 @@ void cxmodel::Model::Redo()
 
     Notify(NotificationContext::REDO);
 
-    Log(cxlog::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__,
-        "Last action redoed.");
+    Log(cxlog::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__, "Last action redoed.");
 
     CheckInvariants();
 }

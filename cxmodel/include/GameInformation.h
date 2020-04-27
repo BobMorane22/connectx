@@ -16,31 +16,64 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file ModelMock.h
- * @date 2019
+ * @file GameInformation.h
+ * @date 2020
  *
  *************************************************************************************************/
 
-#ifndef MODELMOCK_H_CCCA3271_7466_48B8_B57F_5D37825DFECE
-#define MODELMOCK_H_CCCA3271_7466_48B8_B57F_5D37825DFECE
+#ifndef GAMEINFORMATION_H_BE24FB43_1A63_4A5D_BA34_DA52C92DFB4A
+#define GAMEINFORMATION_H_BE24FB43_1A63_4A5D_BA34_DA52C92DFB4A
 
-#include <cxmodel/include/IModel.h>
+#include <string>
+#include <vector>
 
-class ModelMock : public cxmodel::IModel
+namespace cxmodel
+{
+
+struct PlayerInformation
+{
+
+    PlayerInformation(const std::string& p_name, const std::string& p_discColor)
+    : m_name(p_name)
+    , m_discColor(p_discColor)
+    {
+        // Nothing to do...
+    }
+
+    std::string m_name;
+    std::string m_discColor;
+};
+
+class GameInformation
 {
 
 public:
 
-    void CreateNewGame(const cxmodel::GameInformation& p_gameInformation) override;
-    cxmodel::GameInformation GetGameInformation() const override;
+    using PlayersInformation = std::vector<PlayerInformation>;
 
-    std::string GetName() const override;
-    std::string GetVersionNumber() const override;
+    std::size_t AddPlayer(const PlayerInformation& p_playerInformation)
+    {
+        m_playersInformation.push_back(p_playerInformation);
 
-    void Undo() override;
-    void Redo() override;
+        return m_playersInformation.size();
+    }
 
-    void Signal() override;
+    PlayersInformation GetPlayersInformation() const
+    {
+        return m_playersInformation;
+    }
+
+public:
+
+    size_t m_gridWidth;
+    size_t m_gridHeight;
+    size_t m_inARowValue;
+
+private:
+
+    PlayersInformation m_playersInformation;
 };
 
-#endif // MODELMOCK_H_CCCA3271_7466_48B8_B57F_5D37825DFECE
+} // namespace cxmodel
+
+#endif // GAMEINFORMATION_H_BE24FB43_1A63_4A5D_BA34_DA52C92DFB4A

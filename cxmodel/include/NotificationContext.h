@@ -39,8 +39,7 @@ enum class NotificationContext
     SIGNAL,
 
     // User operations:
-    INCREMENT,
-    REINITIALIZE,
+    CREATE_NEW_GAME,
     REDO,
     UNDO
 };

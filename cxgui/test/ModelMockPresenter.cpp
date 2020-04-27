@@ -50,25 +50,6 @@
 
 #include "ModelMockPresenter.h"
 
-unsigned int ModelMockPresenter::GetCurrentValue() const
-{
-    return m_currentValue;
-}
-
-void ModelMockPresenter::Increment()
-{
-    ++m_currentValue;
-
-    Notify(cxmodel::NotificationContext::INCREMENT);
-}
-
-void ModelMockPresenter::Reinitialize()
-{
-    m_currentValue = 0;
-
-    Notify(cxmodel::NotificationContext::INCREMENT);
-}
-
 std::string ModelMockPresenter::GetName() const
 {
     return "Connect X";
@@ -77,6 +58,17 @@ std::string ModelMockPresenter::GetName() const
 std::string ModelMockPresenter::GetVersionNumber() const
 {
     return "v0.0";
+}
+
+void ModelMockPresenter::CreateNewGame(const cxmodel::GameInformation& /*p_gameInformation*/)
+{
+    // Nothing for now...
+}
+
+cxmodel::GameInformation ModelMockPresenter::GetGameInformation() const
+{
+    // nothing for now...
+    return {};
 }
 
 void ModelMockPresenter::Undo()

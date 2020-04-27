@@ -69,6 +69,8 @@ private:
 
     void Update(cxmodel::NotificationContext p_context, cxmodel::Subject* p_subject) override;
 
+    std::string m_gameViewMessage = "New game started!";
+
 };
 
 } // namespace cxgui

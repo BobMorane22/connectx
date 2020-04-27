@@ -31,10 +31,8 @@ class ModelMockPresenter : public cxmodel::IModel
 
 public:
 
-    unsigned int GetCurrentValue() const override;
-
-    void Increment() override;
-    void Reinitialize() override;
+    void CreateNewGame(const cxmodel::GameInformation& p_gameInformation) override;
+    cxmodel::GameInformation GetGameInformation() const override;
 
     std::string GetName() const override;
     std::string GetVersionNumber() const override;
@@ -43,11 +41,6 @@ public:
     void Redo() override;
 
     void Signal() override;
-
-
-private:
-
-    unsigned int m_currentValue;
 
 };
 

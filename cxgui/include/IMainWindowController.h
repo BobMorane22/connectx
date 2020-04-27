@@ -62,7 +62,15 @@ public:
 ///@{ @name New Game View
 // ------------------------------------------------------------------------------------------------
 
-    void OnStart() override = 0;
+    /******************************************************************************************//**
+     * @brief Reacts to a game start.
+     *
+     * @param p_gameInformation the game information the user input.
+     *
+     * Reacts to a user creating and starting a new game.
+     *
+     ********************************************************************************************/
+    void OnStart(const cxmodel::GameInformation p_gameInformation) override = 0;
 
 ///@}
 

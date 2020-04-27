@@ -36,16 +36,6 @@ public:
     ~ConcreteSubject() override = default;
 };
 
-TEST(StatusBarPresenter, MakeStatusBarContextString_Increment_IncrementStringCreated)
-{
-    ASSERT_EQ(cxgui::MakeStatusBarContextString(cxmodel::NotificationContext::INCREMENT), "Increment.");
-}
-
-TEST(StatusBarPresenter, MakeStatusBarContextString_Reinitialize_ReinitializeStringCreated)
-{
-    ASSERT_EQ(cxgui::MakeStatusBarContextString(cxmodel::NotificationContext::REINITIALIZE), "Reinitialize.");
-}
-
 TEST(StatusBarPresenter, MakeStatusBarContextString_Undo_UndoStringCreated)
 {
     ASSERT_EQ(cxgui::MakeStatusBarContextString(cxmodel::NotificationContext::UNDO), "Undo.");
@@ -66,30 +56,6 @@ TEST(StatusBarPresenter, Constructor_NoAction_NoMessage)
     cxgui::StatusBarPresenter presenter;
 
     ASSERT_TRUE(presenter.GetStatusBarMessage().empty());
-}
-
-TEST(StatusBarPresenter, Update_Increment_IncrementMessageIsOn)
-{
-    cxgui::StatusBarPresenter presenter;
-    ConcreteSubject subject;
-
-    ASSERT_TRUE(presenter.GetStatusBarMessage().empty());
-
-    presenter.Update(cxmodel::NotificationContext::INCREMENT, &subject);
-
-    ASSERT_EQ(presenter.GetStatusBarMessage(), "Increment.");
-}
-
-TEST(StatusBarPresenter, Update_Reinitialize_ReinitializeMessageIsOn)
-{
-    cxgui::StatusBarPresenter presenter;
-    ConcreteSubject subject;
-
-    ASSERT_TRUE(presenter.GetStatusBarMessage().empty());
-
-    presenter.Update(cxmodel::NotificationContext::REINITIALIZE, &subject);
-
-    ASSERT_EQ(presenter.GetStatusBarMessage(), "Reinitialize.");
 }
 
 TEST(StatusBarPresenter, Update_Undo_UndoMessageIsOn)

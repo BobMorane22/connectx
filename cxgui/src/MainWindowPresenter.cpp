@@ -21,6 +21,8 @@
  *
  *************************************************************************************************/
 
+#include <sstream>
+
 #include <cxmodel/include/Model.h>
 
 #include <MainWindowPresenter.h>
@@ -29,6 +31,29 @@ void cxgui::MainWindowPresenter::Update(cxmodel::NotificationContext p_context, 
 {
     if(p_subject)
     {
+        if(p_context == cxmodel::NotificationContext::CREATE_NEW_GAME)
+        {
+            cxmodel::IModel* model = static_cast<cxmodel::IModel*>(p_subject);
+
+            cxmodel::GameInformation gameInformation = model->GetGameInformation();
+
+            std::ostringstream stream;
+
+            stream << "A new game has been created with the following parameters: " << std::endl
+                   << std::endl
+                   << "  In-a-row value : " << gameInformation.m_inARowValue << std::endl
+                   << "  Grid width     : " << gameInformation.m_gridWidth << std::endl
+                   << "  Grid height    : " << gameInformation.m_gridHeight << std::endl
+                   << "  Players        : " << std::endl;
+
+            for(const auto& player : gameInformation.GetPlayersInformation())
+            {
+                stream << player.m_name << ", ";
+            }
+
+            m_gameViewMessage = stream.str();
+        }
+
         Notify(p_context);
     }
 }
@@ -100,5 +125,5 @@ std::string cxgui::MainWindowPresenter::GetGameViewTitle() const
 
 std::string cxgui::MainWindowPresenter::GetGameViewMessage() const
 {
-    return "New game started!";
+    return m_gameViewMessage;
 }

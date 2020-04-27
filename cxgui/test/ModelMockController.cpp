@@ -26,27 +26,10 @@
 #include "ModelMockController.h"
 
 ModelMockController::ModelMockController()
- : m_incremented{false}
- , m_reinitialized{false}
- , m_undoed{false}
+ : m_undoed{false}
  , m_redoed{false}
  , m_signaled{false}
 {
-}
-
-unsigned int ModelMockController::GetCurrentValue() const
-{
-    return 0u; // Not used...
-}
-
-void ModelMockController::Increment()
-{
-    m_incremented = true;
-}
-
-void ModelMockController::Reinitialize()
-{
-    m_reinitialized = true;
 }
 
 std::string ModelMockController::GetName() const
@@ -57,6 +40,16 @@ std::string ModelMockController::GetName() const
 std::string ModelMockController::GetVersionNumber() const
 {
     return "v0.0";
+}
+
+void ModelMockController::CreateNewGame(const cxmodel::GameInformation& /*p_gameInformation*/)
+{
+    // Not used for now.
+}
+
+cxmodel::GameInformation ModelMockController::GetGameInformation() const
+{
+    return {};
 }
 
 void ModelMockController::Undo()
@@ -72,16 +65,6 @@ void ModelMockController::Redo()
 void ModelMockController::Signal()
 {
     m_signaled = true;
-}
-
-bool ModelMockController::GetIncremented() const
-{
-    return m_incremented;
-}
-
-bool ModelMockController::GetReinitialized() const
-{
-    return m_reinitialized;
 }
 
 bool ModelMockController::GetUndoed() const

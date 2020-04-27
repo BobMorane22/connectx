@@ -93,7 +93,7 @@ void cxgui::MainWindow::ConfigureWidgets()
 void cxgui::MainWindow::ConfigureSignalHandlers()
 {
     m_quitMenuItem.signal_activate().connect([this](){m_window.close();});
-    m_aboutMenuItem.signal_activate().connect([this](){CreateAboutWindow();ActivateGameView();});
+    m_aboutMenuItem.signal_activate().connect([this](){CreateAboutWindow();});
 }
 
 int cxgui::MainWindow::Show()
@@ -102,9 +102,16 @@ int cxgui::MainWindow::Show()
     return m_gtkApplication.run(m_window);
 }
 
-void cxgui::MainWindow::Update(cxmodel::NotificationContext, cxmodel::Subject*)
+void cxgui::MainWindow::Update(cxmodel::NotificationContext p_context, cxmodel::Subject* p_subject)
 {
     // Nothing for now...
+    if(p_subject)
+    {
+        if(p_context == cxmodel::NotificationContext::CREATE_NEW_GAME)
+        {
+            ActivateGameView();
+        }
+    }
 }
 
 void cxgui::MainWindow::RegisterMenuBar()

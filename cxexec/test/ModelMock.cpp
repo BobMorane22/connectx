@@ -23,26 +23,6 @@
 
 #include "ModelMock.h"
 
-ModelMock::ModelMock()
- : m_currentValue{m_INITIAL_VALUE}
-{
-}
-
-unsigned int ModelMock::GetCurrentValue() const
-{
-    return m_currentValue;
-}
-
-void ModelMock::Increment()
-{
-    ++m_currentValue;
-}
-
-void ModelMock::Reinitialize()
-{
-    m_currentValue = m_INITIAL_VALUE;
-}
-
 std::string ModelMock::GetName() const
 {
     return "Connect X";
@@ -51,6 +31,17 @@ std::string ModelMock::GetName() const
 std::string ModelMock::GetVersionNumber() const
 {
     return "v0.0";
+}
+
+void ModelMock::CreateNewGame(const cxmodel::GameInformation& /*p_gameInformation*/)
+{
+    // Not used for now.
+}
+
+cxmodel::GameInformation ModelMock::GetGameInformation() const
+{
+    // Not used for now.
+    return {};
 }
 
 void ModelMock::Undo()

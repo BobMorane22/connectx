@@ -34,13 +34,11 @@ public:
     ModelMockController();
 
     // IModel
-    virtual unsigned int GetCurrentValue() const override;
-
-    virtual void Increment() override;
-    virtual void Reinitialize() override;
-
     std::string GetName() const override;
     std::string GetVersionNumber() const override;
+
+    void CreateNewGame(const cxmodel::GameInformation& p_gameInformation) override;
+    cxmodel::GameInformation GetGameInformation() const override;
 
     virtual void Undo() override;
     virtual void Redo() override;
@@ -58,8 +56,6 @@ public:
 
 private:
 
-    bool m_incremented;
-    bool m_reinitialized;
     bool m_undoed;
     bool m_redoed;
     bool m_signaled;

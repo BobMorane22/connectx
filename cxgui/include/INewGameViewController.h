@@ -24,6 +24,8 @@
 #ifndef INEWGAMEVIEWCONTROLLER_H_C4599F8B_25C5_4F7A_9A04_07CE371790CE
 #define INEWGAMEVIEWCONTROLLER_H_C4599F8B_25C5_4F7A_9A04_07CE371790CE
 
+#include <cxmodel/include/GameInformation.h>
+
 namespace cxgui
 {
 
@@ -45,10 +47,12 @@ public:
     /******************************************************************************************//**
      * @brief Start control handler.
      *
+     * @param The game information used to start the game.
+     *
      * Called when the game is started.
      *
      ********************************************************************************************/
-    virtual void OnStart() = 0;
+    virtual void OnStart(const cxmodel::GameInformation p_gameInformation) = 0;
 
 };
 

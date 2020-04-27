@@ -26,6 +26,7 @@
 
 #include <string>
 
+#include "GameInformation.h"
 #include "Subject.h"
 
 namespace cxmodel
@@ -49,36 +50,6 @@ public:
     virtual ~IModel() = default;
 
     /******************************************************************************************//**
-     * @brief Access the current value.
-     *
-     * @return The current value as stored in the model.
-     *
-     ********************************************************************************************/
-    virtual unsigned int GetCurrentValue() const = 0;
-
-    /******************************************************************************************//**
-     * @brief Increments the current value in the model.
-     *
-     * @post The value in the model is incremented by one.
-     *
-     * Increments by one the value stored in the model.
-     *
-     ********************************************************************************************/
-    virtual void Increment() = 0;
-
-    /******************************************************************************************//**
-     * @brief Reinitialize the value stored in the model to its initial value.
-     *
-     * @post The value in the model is back to its initial value.
-     *
-     * At the model creation, an initial value is given to the current value. When this method
-     * is called, the current value is reinitialized to this initial value, as if the model had
-     * just been created.
-     *
-     ********************************************************************************************/
-    virtual void Reinitialize() = 0;
-
-    /******************************************************************************************//**
      * @brief Get the model name.
      *
      ********************************************************************************************/
@@ -89,6 +60,22 @@ public:
      *
      ********************************************************************************************/
     virtual std::string GetVersionNumber() const = 0;
+
+    /******************************************************************************************//**
+     * @brief Creates a new game.
+     *
+     * @param p_gameInformation The necessary information to create a game.
+     *
+     ********************************************************************************************/
+    virtual void CreateNewGame(const GameInformation& p_gameInformation) = 0;
+
+    /******************************************************************************************//**
+     * @brief Get the current game information.
+     *
+     * @return The current game information.
+     *
+     ********************************************************************************************/
+    virtual GameInformation GetGameInformation() const = 0;
 
     /******************************************************************************************//**
      * @brief Undo the last action, if possible.
