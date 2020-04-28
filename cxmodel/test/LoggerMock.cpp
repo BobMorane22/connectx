@@ -35,11 +35,10 @@ void LoggerMock::Log(const cxlog::VerbosityLevel p_verbosityLevel, const std::st
 
 void LoggerMock::SetVerbosityLevel(const cxlog::VerbosityLevel p_verbosityLevel)
 {
-    // Unused for testing...
-    (void)p_verbosityLevel;
+    m_verbosityLevel = p_verbosityLevel;
 }
 
 cxlog::VerbosityLevel LoggerMock::GetVerbosityLevel() const
 {
-    return cxlog::VerbosityLevel::NONE;
+    return m_verbosityLevel;
 }
