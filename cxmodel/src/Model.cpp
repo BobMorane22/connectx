@@ -63,7 +63,7 @@ std::string cxmodel::Model::GetVersionNumber() const
     return stream.str();
 }
 
-void cxmodel::Model::CreateNewGame(const GameInformation& p_gameInformation)
+void cxmodel::Model::CreateNewGame(const NewGameInformation& p_gameInformation)
 {
     PRECONDITION(p_gameInformation.m_inARowValue > 1);
     PRECONDITION(p_gameInformation.m_gridWidth > 0);
@@ -92,7 +92,7 @@ void cxmodel::Model::CreateNewGame(const GameInformation& p_gameInformation)
     Log(cxlog::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__, stream.str());
 }
 
-cxmodel::GameInformation cxmodel::Model::GetGameInformation() const
+cxmodel::NewGameInformation cxmodel::Model::GetGameInformation() const
 {
     return m_gameInformation;
 }

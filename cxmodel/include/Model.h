@@ -63,8 +63,8 @@ public:
     std::string GetName() const override;
     std::string GetVersionNumber() const override;
 
-    void CreateNewGame(const GameInformation& p_gameInformation) override;
-    GameInformation GetGameInformation() const override;
+    void CreateNewGame(const NewGameInformation& p_gameInformation) override;
+    NewGameInformation GetGameInformation() const override;
 
     void Undo() override;
     void Redo() override;
@@ -81,7 +81,7 @@ private:
 
     void CheckInvariants();
 
-    GameInformation m_gameInformation;
+    NewGameInformation m_gameInformation;
 
     std::unique_ptr<ICommandStack> m_cmdStack;
 

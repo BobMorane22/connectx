@@ -35,7 +35,7 @@ void cxgui::MainWindowPresenter::Update(cxmodel::NotificationContext p_context, 
         {
             cxmodel::IModel* model = static_cast<cxmodel::IModel*>(p_subject);
 
-            cxmodel::GameInformation gameInformation = model->GetGameInformation();
+            cxmodel::NewGameInformation gameInformation = model->GetGameInformation();
 
             std::ostringstream stream;
 

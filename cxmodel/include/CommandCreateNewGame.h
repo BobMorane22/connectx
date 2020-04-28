@@ -26,8 +26,8 @@
 
 #include <cxlog/include/ILogger.h>
 
-#include "GameInformation.h"
 #include "ICommand.h"
+#include "NewGameInformation.h"
 #include "Subject.h"
 
 namespace cxmodel
@@ -38,15 +38,15 @@ class CommandCreateNewGame : public ICommand
 
 public:
 
-    CommandCreateNewGame(GameInformation& p_modelGameInformation, GameInformation p_newGameInformation);
+    CommandCreateNewGame(NewGameInformation& p_modelGameInformation, NewGameInformation p_newGameInformation);
 
     virtual void Execute() override;
     virtual void Undo() override;
 
 private:
 
-    GameInformation& m_modelGameInformation;
-    GameInformation m_newGameInformation;
+    NewGameInformation& m_modelGameInformation;
+    NewGameInformation m_newGameInformation;
 
 };
 

@@ -16,13 +16,13 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file GameInformation.h
+ * @file NewGameInformation.h
  * @date 2020
  *
  *************************************************************************************************/
 
-#ifndef GAMEINFORMATION_H_BE24FB43_1A63_4A5D_BA34_DA52C92DFB4A
-#define GAMEINFORMATION_H_BE24FB43_1A63_4A5D_BA34_DA52C92DFB4A
+#ifndef NEWGAMEINFORMATION_H_BE24FB43_1A63_4A5D_BA34_DA52C92DFB4A
+#define NEWGAMEINFORMATION_H_BE24FB43_1A63_4A5D_BA34_DA52C92DFB4A
 
 #include <string>
 #include <vector>
@@ -61,7 +61,7 @@ struct PlayerInformation
  * This contains all the necessary information to create a new Connect X game.
  *
  ************************************************************************************************/
-class GameInformation
+class NewGameInformation
 {
 
 public:
@@ -76,12 +76,7 @@ public:
      * @return The updated number of players registered in the game.
      *
      ********************************************************************************************/
-    std::size_t AddPlayer(const PlayerInformation& p_playerInformation)
-    {
-        m_playersInformation.push_back(p_playerInformation);
-
-        return m_playersInformation.size();
-    }
+    std::size_t AddPlayer(const PlayerInformation& p_playerInformation);
 
     /******************************************************************************************//**
      * @brief Players information accessor.
@@ -89,10 +84,7 @@ public:
      * @return A list of registered players informations.
      *
      ********************************************************************************************/
-    PlayersInformation GetPlayersInformation() const
-    {
-        return m_playersInformation;
-    }
+    PlayersInformation GetPlayersInformation() const;
 
 public:
 
@@ -107,4 +99,4 @@ private:
 
 } // namespace cxmodel
 
-#endif // GAMEINFORMATION_H_BE24FB43_1A63_4A5D_BA34_DA52C92DFB4A
+#endif // NEWGAMEINFORMATION_H_BE24FB43_1A63_4A5D_BA34_DA52C92DFB4A

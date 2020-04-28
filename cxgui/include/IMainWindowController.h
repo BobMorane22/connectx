@@ -70,7 +70,7 @@ public:
      * Reacts to a user creating and starting a new game.
      *
      ********************************************************************************************/
-    void OnStart(const cxmodel::GameInformation p_gameInformation) override = 0;
+    void OnStart(const cxmodel::NewGameInformation p_gameInformation) override = 0;
 
 ///@}
 

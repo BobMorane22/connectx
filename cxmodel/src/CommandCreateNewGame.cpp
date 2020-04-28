@@ -27,7 +27,7 @@
 
 #include <CommandCreateNewGame.h>
 
-cxmodel::CommandCreateNewGame::CommandCreateNewGame(GameInformation& p_modelGameInformation, GameInformation p_newGameInformation)
+cxmodel::CommandCreateNewGame::CommandCreateNewGame(NewGameInformation& p_modelGameInformation, NewGameInformation p_newGameInformation)
  : m_modelGameInformation{p_modelGameInformation}
  , m_newGameInformation{p_newGameInformation}
 {

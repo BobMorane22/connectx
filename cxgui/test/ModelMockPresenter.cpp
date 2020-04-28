@@ -60,12 +60,12 @@ std::string ModelMockPresenter::GetVersionNumber() const
     return "v0.0";
 }
 
-void ModelMockPresenter::CreateNewGame(const cxmodel::GameInformation& /*p_gameInformation*/)
+void ModelMockPresenter::CreateNewGame(const cxmodel::NewGameInformation& /*p_gameInformation*/)
 {
     // Nothing for now...
 }
 
-cxmodel::GameInformation ModelMockPresenter::GetGameInformation() const
+cxmodel::NewGameInformation ModelMockPresenter::GetGameInformation() const
 {
     // nothing for now...
     return {};

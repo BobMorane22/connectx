@@ -24,9 +24,8 @@
 #include <gtkmm/messagedialog.h>
 
 #include <cxinv/include/assertion.h>
-#include <cxmodel/include/GameInformation.h>
-
 #include <NewGameView.h>
+#include "../../cxmodel/include/NewGameInformation.h"
 
 namespace
 {
@@ -151,7 +150,7 @@ void cxgui::NewGameView::PopulateWidgets()
 
 void cxgui::NewGameView::OnStart()
 {
-    cxmodel::GameInformation gameInformation;
+    cxmodel::NewGameInformation gameInformation;
 
     try
     {

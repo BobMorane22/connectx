@@ -31,8 +31,8 @@ class ModelMockPresenter : public cxmodel::IModel
 
 public:
 
-    void CreateNewGame(const cxmodel::GameInformation& p_gameInformation) override;
-    cxmodel::GameInformation GetGameInformation() const override;
+    void CreateNewGame(const cxmodel::NewGameInformation& p_gameInformation) override;
+    cxmodel::NewGameInformation GetGameInformation() const override;
 
     std::string GetName() const override;
     std::string GetVersionNumber() const override;

@@ -42,12 +42,12 @@ std::string ModelMockController::GetVersionNumber() const
     return "v0.0";
 }
 
-void ModelMockController::CreateNewGame(const cxmodel::GameInformation& /*p_gameInformation*/)
+void ModelMockController::CreateNewGame(const cxmodel::NewGameInformation& /*p_gameInformation*/)
 {
     // Not used for now.
 }
 
-cxmodel::GameInformation ModelMockController::GetGameInformation() const
+cxmodel::NewGameInformation ModelMockController::GetGameInformation() const
 {
     return {};
 }

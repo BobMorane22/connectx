@@ -26,7 +26,7 @@
 
 #include <string>
 
-#include "GameInformation.h"
+#include "NewGameInformation.h"
 #include "Subject.h"
 
 namespace cxmodel
@@ -67,15 +67,15 @@ public:
      * @param p_gameInformation The necessary information to create a game.
      *
      ********************************************************************************************/
-    virtual void CreateNewGame(const GameInformation& p_gameInformation) = 0;
+    virtual void CreateNewGame(const NewGameInformation& p_gameInformation) = 0;
 
     /******************************************************************************************//**
-     * @brief Get the current game information.
+     * @brief Get the new game information.
      *
-     * @return The current game information.
+     * @return The new game information.
      *
      ********************************************************************************************/
-    virtual GameInformation GetGameInformation() const = 0;
+    virtual NewGameInformation GetGameInformation() const = 0;
 
     /******************************************************************************************//**
      * @brief Undo the last action, if possible.
