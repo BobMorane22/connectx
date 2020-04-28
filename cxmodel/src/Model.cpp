@@ -25,8 +25,7 @@
 
 #include <cxinv/include/assertion.h>
 
-#include <CommandIncrementByOne.h>
-#include <CommandReinitialize.h>
+#include <CommandCreateNewGame.h>
 #include <CommandStack.h>
 #include <Model.h>
 #include <NotificationContext.h>
@@ -66,20 +65,21 @@ std::string cxmodel::Model::GetVersionNumber() const
 
 void cxmodel::Model::CreateNewGame(const GameInformation& p_gameInformation)
 {
-    m_gameInformation = p_gameInformation;
+    PRECONDITION(p_gameInformation.m_inARowValue > 1);
+    PRECONDITION(p_gameInformation.m_gridWidth > 0);
+    PRECONDITION(p_gameInformation.m_gridHeight > 0);
+    PRECONDITION(p_gameInformation.GetPlayersInformation().size() > 1);
 
-    Notify(NotificationContext::CREATE_NEW_GAME);
-
-    PRECONDITION(m_gameInformation.m_inARowValue > 1);
-    PRECONDITION(m_gameInformation.m_gridWidth > 0);
-    PRECONDITION(m_gameInformation.m_gridHeight > 0);
-    PRECONDITION(m_gameInformation.GetPlayersInformation().size() > 1);
-
-    for(const auto& playerInfo : m_gameInformation.GetPlayersInformation())
+    for(const auto& playerInfo : p_gameInformation.GetPlayersInformation())
     {
         PRECONDITION(!playerInfo.m_name.empty());
         PRECONDITION(!playerInfo.m_discColor.empty());
     }
+
+    std::unique_ptr<ICommand> command = std::make_unique<CommandCreateNewGame>(m_gameInformation, p_gameInformation);
+    m_cmdStack->Execute(std::move(command));
+
+    Notify(NotificationContext::CREATE_NEW_GAME);
 
     std::ostringstream stream;
 

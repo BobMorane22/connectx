@@ -16,28 +16,30 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file CommandReinitialize.cpp
+ * @file CommandCreateNewGame.cpp
  * @date 2020
  *
  *************************************************************************************************/
 
-#include <CommandReinitialize.h>
+#include <sstream>
 
-cxmodel::CommandReinitialize::CommandReinitialize(unsigned int p_reinitValue,
-                                                  unsigned int p_initialValue,
-                                                  unsigned int& p_value)
- : m_reinitValue{p_reinitValue}
- , m_initialValue{p_initialValue}
- , m_value{p_value}
+#include <cxinv/include/assertion.h>
+
+#include <CommandCreateNewGame.h>
+
+cxmodel::CommandCreateNewGame::CommandCreateNewGame(GameInformation& p_modelGameInformation, GameInformation p_newGameInformation)
+ : m_modelGameInformation{p_modelGameInformation}
+ , m_newGameInformation{p_newGameInformation}
 {
+    // Nothing to do...
 }
 
-void cxmodel::CommandReinitialize::Execute()
+void cxmodel::CommandCreateNewGame::Execute()
 {
-    m_value = m_reinitValue;
+    m_modelGameInformation = m_newGameInformation;
 }
 
-void cxmodel::CommandReinitialize::Undo()
+void cxmodel::CommandCreateNewGame::Undo()
 {
-    m_value = m_initialValue;
+    // Nothing to do...
 }

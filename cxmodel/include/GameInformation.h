@@ -30,9 +30,20 @@
 namespace cxmodel
 {
 
+/*********************************************************************************************//**
+ * @brief Information for one player.
+ *
+ ************************************************************************************************/
 struct PlayerInformation
 {
 
+    /******************************************************************************************//**
+     * @brief Constructor.
+
+     * @param p_name      The player's name.
+     * @param p_discColor The player's disc color.
+     *
+     ********************************************************************************************/
     PlayerInformation(const std::string& p_name, const std::string& p_discColor)
     : m_name(p_name)
     , m_discColor(p_discColor)
@@ -44,6 +55,12 @@ struct PlayerInformation
     std::string m_discColor;
 };
 
+/*********************************************************************************************//**
+ * @brief Information describing a new Connect X game.
+ *
+ * This contains all the necessary information to create a new Connect X game.
+ *
+ ************************************************************************************************/
 class GameInformation
 {
 
@@ -51,6 +68,14 @@ public:
 
     using PlayersInformation = std::vector<PlayerInformation>;
 
+    /******************************************************************************************//**
+     * @brief Add a player to the game.
+     *
+     * @param p_playerInformation The new player's information.
+     *
+     * @return The updated number of players registered in the game.
+     *
+     ********************************************************************************************/
     std::size_t AddPlayer(const PlayerInformation& p_playerInformation)
     {
         m_playersInformation.push_back(p_playerInformation);
@@ -58,6 +83,12 @@ public:
         return m_playersInformation.size();
     }
 
+    /******************************************************************************************//**
+     * @brief Players information accessor.
+     *
+     * @return A list of registered players informations.
+     *
+     ********************************************************************************************/
     PlayersInformation GetPlayersInformation() const
     {
         return m_playersInformation;

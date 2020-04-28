@@ -25,63 +25,6 @@
 
 #include <gtest/gtest.h>
 
-#include <CommandIncrementByOne.h>
-#include <CommandReinitialize.h>
+#include <CommandCreateNewGame.h>
 
-TEST(Commands, CommandIncrementByOne_Execute_IncrementedByOne)
-{
-    unsigned int valueToIncrement = 0u;
-    std::unique_ptr<cxmodel::ICommand> cmd = std::make_unique<cxmodel::CommandIncrementByOne>(valueToIncrement);
-    ASSERT_TRUE(cmd);
-
-    ASSERT_EQ(valueToIncrement, 0u);
-
-    cmd->Execute();
-
-    ASSERT_EQ(valueToIncrement, 1u);
-}
-
-TEST(Commands, CommandIncrementByOne_Undo_DecrementedByOne)
-{
-    unsigned int valueToIncrement = 0u;
-    std::unique_ptr<cxmodel::ICommand> cmd = std::make_unique<cxmodel::CommandIncrementByOne>(valueToIncrement);
-    ASSERT_TRUE(cmd);
-
-    cmd->Execute();
-
-    ASSERT_EQ(valueToIncrement, 1u);
-
-    cmd->Undo();
-
-    ASSERT_EQ(valueToIncrement, 0u);
-}
-
-TEST(Commands, CommandReinitialize_Execute_Reinitialized)
-{
-    unsigned int valueToReinitialize = 1u;
-    constexpr unsigned int REINIT_VALUE = 0u;
-    std::unique_ptr<cxmodel::ICommand> cmd = std::make_unique<cxmodel::CommandReinitialize>(REINIT_VALUE, valueToReinitialize, valueToReinitialize);
-    ASSERT_TRUE(cmd);
-
-    ASSERT_EQ(valueToReinitialize, 1u);
-
-    cmd->Execute();
-
-    ASSERT_EQ(valueToReinitialize, 0u);
-}
-
-TEST(Commands, CommandReinitialize_Undo_Unreinitialized)
-{
-    unsigned int valueToReinitialize = 1u;
-    constexpr unsigned int REINIT_VALUE = 0u;
-    std::unique_ptr<cxmodel::ICommand> cmd = std::make_unique<cxmodel::CommandReinitialize>(REINIT_VALUE, valueToReinitialize, valueToReinitialize);
-    ASSERT_TRUE(cmd);
-
-    cmd->Execute();
-
-    ASSERT_EQ(valueToReinitialize, 0u);
-
-    cmd->Undo();
-
-    ASSERT_EQ(valueToReinitialize, 1u);
-}
+// Coming soon..

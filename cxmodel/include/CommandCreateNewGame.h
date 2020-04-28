@@ -16,25 +16,40 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file CommandIncrementByOne.cpp
+ * @file CommandCreateNewGame.h
  * @date 2020
  *
  *************************************************************************************************/
 
-#include <CommandIncrementByOne.h>
+#ifndef COMMANDCREATENEWGAME_H_42E0AF3C_C0D0_44F7_B472_9F2E0E11216D
+#define COMMANDCREATENEWGAME_H_42E0AF3C_C0D0_44F7_B472_9F2E0E11216D
 
-cxmodel::CommandIncrementByOne::CommandIncrementByOne(unsigned int& p_value)
- : m_value{p_value}
- , m_undoValue{p_value}
-{
-}
+#include <cxlog/include/ILogger.h>
 
-void cxmodel::CommandIncrementByOne::Execute()
-{
-    ++m_value;
-}
+#include "GameInformation.h"
+#include "ICommand.h"
+#include "Subject.h"
 
-void cxmodel::CommandIncrementByOne::Undo()
+namespace cxmodel
 {
-    m_value = m_undoValue;
-}
+
+class CommandCreateNewGame : public ICommand
+{
+
+public:
+
+    CommandCreateNewGame(GameInformation& p_modelGameInformation, GameInformation p_newGameInformation);
+
+    virtual void Execute() override;
+    virtual void Undo() override;
+
+private:
+
+    GameInformation& m_modelGameInformation;
+    GameInformation m_newGameInformation;
+
+};
+
+} // namespace cxmodel
+
+#endif // COMMANDCREATENEWGAME_H_42E0AF3C_C0D0_44F7_B472_9F2E0E11216D
