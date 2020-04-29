@@ -29,6 +29,7 @@
 #include <CommandStack.h>
 #include <Model.h>
 
+#include "CommandStackMock.h"
 #include "LoggerMock.h"
 
 TEST(Model, GetName_ValidModel_NameReturned)
@@ -144,6 +145,46 @@ TEST(Model, Signal_ObserverAttached_SignalNotificationReceived)
 
     // From this call, our observer's Update method should be called, and contexts checked:
     model.Signal();
+}
+
+TEST(Model, Undo_RandomCommand_UndoCalledOnCommandStack)
+{
+    std::unique_ptr<CommandStackMock> cmdStack = std::make_unique<CommandStackMock>();
+    ASSERT_TRUE(cmdStack);
+
+    CommandStackMock& cmdStackMock = *cmdStack;
+
+    // We create a model:
+    LoggerMock logger;
+    cxmodel::Model concreteModel{std::move(cmdStack), logger};
+    cxmodel::IModel& model = concreteModel;
+
+    ASSERT_FALSE(cmdStackMock.IsUndoed());
+
+    // We undo the command:
+    model.Undo();
+
+    ASSERT_TRUE(cmdStackMock.IsUndoed());
+}
+
+TEST(Model, Redo_RandomCommand_RedoCalledOnCommandStack)
+{
+    std::unique_ptr<CommandStackMock> cmdStack = std::make_unique<CommandStackMock>();
+    ASSERT_TRUE(cmdStack);
+
+    CommandStackMock& cmdStackMock = *cmdStack;
+
+    // We create a model:
+    LoggerMock logger;
+    cxmodel::Model concreteModel{std::move(cmdStack), logger};
+    cxmodel::IModel& model = concreteModel;
+
+    ASSERT_FALSE(cmdStackMock.IsRedoed());
+
+    // We undo the command:
+    model.Redo();
+
+    ASSERT_TRUE(cmdStackMock.IsRedoed());
 }
 
 TEST(Model, SetVerbosityLevel_FromNoneToDebug_VerbosityLevelSet)

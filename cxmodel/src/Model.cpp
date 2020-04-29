@@ -90,6 +90,8 @@ void cxmodel::Model::CreateNewGame(const NewGameInformation& p_gameInformation)
            << "Number of players: " << m_gameInformation.GetPlayersInformation().size() << std::endl;
 
     Log(cxlog::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__, stream.str());
+
+    CheckInvariants();
 }
 
 cxmodel::NewGameInformation cxmodel::Model::GetGameInformation() const
@@ -122,16 +124,22 @@ void cxmodel::Model::Redo()
 void cxmodel::Model::Signal()
 {
     Notify(NotificationContext::SIGNAL);
+
+    CheckInvariants();
 }
 
 void cxmodel::Model::Log(const cxlog::VerbosityLevel p_verbosityLevel, const std::string& p_fileName, const std::string& p_functionName, const size_t p_lineNumber, const std::string& p_message)
 {
     m_logger.Log(p_verbosityLevel, p_fileName, p_functionName, p_lineNumber, p_message);
+
+    CheckInvariants();
 }
 
 void cxmodel::Model::SetVerbosityLevel(const cxlog::VerbosityLevel p_verbosityLevel)
 {
     m_logger.SetVerbosityLevel(p_verbosityLevel);
+
+    CheckInvariants();
 }
 
 cxlog::VerbosityLevel cxmodel::Model::GetVerbosityLevel() const
