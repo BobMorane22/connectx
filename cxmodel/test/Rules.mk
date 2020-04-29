@@ -44,6 +44,7 @@ d := $(dir)
 #
 TGTS_$(d) := $(d)/cxmodeltests
 OBJS_$(d) := $(d)/CommandAddTwoMock.o \
+             $(d)/CommandCreateNewGameTests.o \
              $(d)/CommandStackMock.o \
              $(d)/CommandStackTestFixture.o \
              $(d)/CommandStackTests.o \
