@@ -27,9 +27,29 @@
 
 TEST_F(MainWindowControllerTestFixture, OnAboutMenuPressed_PressedOnce_SignalCalledOnModel)
 {
-    GetController().OnAboutMenuPressed();
-
     ModelMockController& model = static_cast<ModelMockController&>(GetModel());
 
+    ASSERT_FALSE(model.GetSignaled());
+
+    GetController().OnAboutMenuPressed();
+
     ASSERT_TRUE(model.GetSignaled());
+}
+
+TEST_F(MainWindowControllerTestFixture, OnStart_ValidGame_CreateNewGameCalledOnModel)
+{
+    ModelMockController& model = static_cast<ModelMockController&>(GetModel());
+
+    ASSERT_FALSE(model.GetNewGameCreated());
+
+    cxmodel::NewGameInformation newGameInformation;
+    newGameInformation.m_inARowValue = 4;
+    newGameInformation.m_gridWidth = 7;
+    newGameInformation.m_gridHeight = 6;
+    newGameInformation.AddPlayer({"John Doe", "Red"});
+    newGameInformation.AddPlayer({"Jane Doe", "Blue"});
+
+    GetController().OnStart(newGameInformation);
+
+    ASSERT_TRUE(model.GetNewGameCreated());
 }

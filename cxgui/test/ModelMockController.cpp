@@ -29,6 +29,7 @@ ModelMockController::ModelMockController()
  : m_undoed{false}
  , m_redoed{false}
  , m_signaled{false}
+ , m_newGameCreated{false}
 {
 }
 
@@ -44,7 +45,7 @@ std::string ModelMockController::GetVersionNumber() const
 
 void ModelMockController::CreateNewGame(const cxmodel::NewGameInformation& /*p_gameInformation*/)
 {
-    // Not used for now.
+    m_newGameCreated = true;
 }
 
 cxmodel::NewGameInformation ModelMockController::GetGameInformation() const
@@ -80,4 +81,9 @@ bool ModelMockController::GetRedoed() const
 bool ModelMockController::GetSignaled() const
 {
     return m_signaled;
+}
+
+bool ModelMockController::GetNewGameCreated() const
+{
+    return m_newGameCreated;
 }

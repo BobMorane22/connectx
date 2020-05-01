@@ -52,6 +52,7 @@ public:
     bool GetUndoed() const;
     bool GetRedoed() const;
     bool GetSignaled() const;
+    bool GetNewGameCreated() const;
 
 
 private:
@@ -59,6 +60,7 @@ private:
     bool m_undoed;
     bool m_redoed;
     bool m_signaled;
+    bool m_newGameCreated;
 
 };
 

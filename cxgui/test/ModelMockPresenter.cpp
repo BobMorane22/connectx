@@ -67,8 +67,14 @@ void ModelMockPresenter::CreateNewGame(const cxmodel::NewGameInformation& /*p_ga
 
 cxmodel::NewGameInformation ModelMockPresenter::GetGameInformation() const
 {
-    // nothing for now...
-    return {};
+    cxmodel::NewGameInformation newGameInformation;
+    newGameInformation.m_inARowValue = 4;
+    newGameInformation.m_gridWidth = 7;
+    newGameInformation.m_gridHeight = 6;
+    newGameInformation.AddPlayer({"John Doe", "Red"});
+    newGameInformation.AddPlayer({"Jane Doe", "Blue"});
+
+    return newGameInformation;
 }
 
 void ModelMockPresenter::Undo()

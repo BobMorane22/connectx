@@ -49,3 +49,23 @@ TEST_F(MainWindowPresenterTestFixture, GetMenuLabel_AboutMenu_AboutMenuLabelRetu
 {
     ASSERT_EQ(GetPresenter().GetMenuLabel(cxgui::MenuItem::ABOUT), "About");
 }
+
+TEST_F(MainWindowPresenterTestFixture, Update_CreateNewGame_NewGameInformationupdate)
+{
+    auto& presenter = GetPresenter();
+    auto& model = GetModel();
+    presenter.Update(cxmodel::NotificationContext::CREATE_NEW_GAME, &model);
+
+    const std::string expectedMsg{
+        "A new game has been created with the following parameters: \n"
+        "\n"
+        "  In-a-row value : 4\n"
+        "  Grid width     : 7\n"
+        "  Grid height    : 6\n"
+        "  Players        : \nJohn Doe, Jane Doe, "
+    };
+
+    const std::string resultMsg = presenter.GetGameViewMessage();
+
+    ASSERT_EQ(resultMsg, expectedMsg);
+}
