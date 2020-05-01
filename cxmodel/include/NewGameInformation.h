@@ -56,6 +56,33 @@ struct PlayerInformation
 };
 
 /*********************************************************************************************//**
+ * @brief Equal-to-operator.
+ *
+ * @param p_lhs The first player information to compare with.
+ * @param p_rhs The second player information to compare with.
+ *
+ * @return true if both player informations are the same, false otherwise.
+ *
+ * Two player informations are considered equal if both names and disc colors match.
+ *
+ ***********************************************************************************************/
+bool operator==(const PlayerInformation& p_lhs, const PlayerInformation& p_rhs);
+
+/******************************************************************************************//**
+ * @brief Not-equal-to operator.
+ *
+ * @param p_lhs The first player information to compare with.
+ * @param p_rhs The second player information to compare with.
+ *
+ * @return true if both player informations are different, false otherwise.
+ *
+ * Two player informations are considered different if the names or the disc color
+ * do not match.
+ *
+ ********************************************************************************************/
+bool operator!=(const PlayerInformation& p_lhs, const PlayerInformation& p_rhs);
+
+/*********************************************************************************************//**
  * @brief Information describing a new Connect X game.
  *
  * This contains all the necessary information to create a new Connect X game.
@@ -86,6 +113,14 @@ public:
      ********************************************************************************************/
     PlayersInformation GetPlayersInformation() const;
 
+    /******************************************************************************************//**
+     * @brief Number of player information accessor.
+     *
+     * @return The number of player informations registered.
+     *
+     ********************************************************************************************/
+    size_t GetNbOfPlayers() const;
+
 public:
 
     size_t m_gridWidth;
@@ -96,6 +131,34 @@ private:
 
     PlayersInformation m_playersInformation;
 };
+
+/*********************************************************************************************//**
+ * @brief Equal-to operator.
+ *
+ * @param p_lhs The first game information to compare with.
+ * @param p_rhs The second game information to compare with.
+ *
+ * @return true if both game informations are the same, false otherwise.
+ *
+ * Two game information match if all of their data match and that player informations are
+ * registered in the same order.
+ *
+ ************************************************************************************************/
+bool operator==(const NewGameInformation& p_lhs, const NewGameInformation& p_rhs);
+
+/*********************************************************************************************//**
+ * @brief Not-equal-to operator.
+ *
+ * @param p_lhs The first game information to compare with.
+ * @param p_rhs The second game information to compare with.
+ *
+ * @return true if both game informations are different, false otherwise.
+ *
+ * Two game informations do not match if any of their data does not match or that player
+ * informations are not registered in the same order.
+ *
+ ************************************************************************************************/
+bool operator!=(const NewGameInformation& p_lhs, const NewGameInformation& p_rhs);
 
 } // namespace cxmodel
 

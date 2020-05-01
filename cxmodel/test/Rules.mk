@@ -54,6 +54,7 @@ OBJS_$(d) := $(d)/CommandAddTwoMock.o \
              $(d)/ConcreteSubjectMock.o \
              $(d)/DisableStdStreamsRAII.o \
              $(d)/ModelTests.o \
+             $(d)/NewGameInformationTests.o \
              $(d)/LoggerMock.o \
              $(d)/SubjectTestFixture.o \
              $(d)/SubjectTests.o \

@@ -65,7 +65,7 @@ TEST(Model, CreateNewGame_ValidNewGameInformation_NewGameCreated)
     newGameInfo.m_gridWidth = 7u;
     newGameInfo.m_gridHeight = 6u;
     newGameInfo.AddPlayer({"John Doe", "Red"});
-    const size_t expectedNbPlayers = newGameInfo.AddPlayer({"Jane Doe", "Blue"});
+    newGameInfo.AddPlayer({"Jane Doe", "Blue"});
     const cxmodel::NewGameInformation expected = newGameInfo;
 
     // We create a new game:
@@ -73,20 +73,7 @@ TEST(Model, CreateNewGame_ValidNewGameInformation_NewGameCreated)
     const cxmodel::NewGameInformation result = model.GetGameInformation();
 
     // And check it has indeed been created:
-    ASSERT_EQ(result.m_inARowValue, expected.m_inARowValue);
-    ASSERT_EQ(result.m_gridWidth, expected.m_gridWidth);
-    ASSERT_EQ(result.m_gridHeight, expected.m_gridHeight);
-
-    ASSERT_EQ(result.GetPlayersInformation().size(), expectedNbPlayers);
-
-    const auto playersExpected = expected.GetPlayersInformation();
-    const auto playersResult = result.GetPlayersInformation();
-
-    for(size_t i = 0; i < expectedNbPlayers; ++i)
-    {
-        ASSERT_EQ(playersExpected[i].m_name, playersResult[i].m_name);
-        ASSERT_EQ(playersExpected[i].m_discColor, playersResult[i].m_discColor);
-    }
+    ASSERT_EQ(result, expected);
 }
 
 TEST(Model, CreateNewGame_ValidNewGameInformation_CreateNewNotificationSent)

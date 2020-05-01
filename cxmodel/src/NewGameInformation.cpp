@@ -23,6 +23,11 @@
 
 #include <NewGameInformation.h>
 
+bool cxmodel::operator==(const cxmodel::PlayerInformation& p_lhs, const cxmodel::PlayerInformation& p_rhs)
+{
+    return (p_lhs.m_name == p_rhs.m_name) && (p_lhs.m_discColor == p_rhs.m_discColor);
+}
+
 std::size_t cxmodel::NewGameInformation::AddPlayer(const PlayerInformation& p_playerInformation)
 {
     m_playersInformation.push_back(p_playerInformation);
@@ -33,4 +38,39 @@ std::size_t cxmodel::NewGameInformation::AddPlayer(const PlayerInformation& p_pl
 cxmodel::NewGameInformation::PlayersInformation cxmodel::NewGameInformation::GetPlayersInformation() const
 {
     return m_playersInformation;
+}
+
+size_t cxmodel::NewGameInformation::GetNbOfPlayers() const
+{
+    return m_playersInformation.size();
+}
+
+bool cxmodel::operator==(const cxmodel::NewGameInformation& p_lhs, const cxmodel::NewGameInformation& p_rhs)
+{
+    bool areEqual = (p_lhs.m_gridHeight == p_rhs.m_gridHeight);
+
+    areEqual &= (p_lhs.m_gridWidth == p_rhs.m_gridWidth);
+    areEqual &= (p_lhs.m_gridHeight == p_rhs.m_gridHeight);
+
+    areEqual &= (p_lhs.GetNbOfPlayers() == p_rhs.GetNbOfPlayers());
+
+    if(!areEqual)
+    {
+        return false;
+    }
+
+    const auto lhsPlayers = p_lhs.GetPlayersInformation();
+    const auto rhsPlayers = p_rhs.GetPlayersInformation();
+
+    for(size_t i = 0; i < p_lhs.GetNbOfPlayers(); ++i)
+    {
+        areEqual &= (lhsPlayers[i] == rhsPlayers[i]);
+    }
+
+    return areEqual;
+}
+
+bool cxmodel::operator!=(const cxmodel::NewGameInformation& p_lhs, const cxmodel::NewGameInformation& p_rhs)
+{
+    return !(p_lhs == p_rhs);
 }
