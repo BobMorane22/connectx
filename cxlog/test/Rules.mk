@@ -48,7 +48,11 @@ OBJS_$(d) := $(d)/CSVLoggerChainLoggingTests.o \
              $(d)/CSVLoggerTests.o \
              $(d)/CSVLoggerUtil.o \
              $(d)/CSVMessageFormatterTests.o \
+             $(d)/DisableStdStreamsRAII.o \
+             $(d)/ISO8601TimestampFormatterTests.o \
+             $(d)/StdLogTargetTests.o \
              $(d)/StringStreamLogTargetTests.o \
+             $(d)/VerbosityLevelTests.o \
              cxlog/libcxlog.a
              
 DEPS_$(d) := $(TGTS_$(d):%=%.d)

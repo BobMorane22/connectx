@@ -207,3 +207,17 @@ TEST(CSVIncrementalLogging, CSVStringChainedLogger_TargetDEBUG_VerbosityLevelRes
 
     ASSERT_EQ(result, FatalResult() + ErrorResult() + WarningResult() + InfoResult() + DebugResult());
 }
+
+TEST(CSVIncrementalLogging, CSVStringChainedLogger_TargetDEBUG_HeadersGenerated)
+{
+    std::ostringstream t_stream;
+    auto t_logger{CreateCSVStringStreamChainLogger(t_stream, true)};
+
+    t_logger->SetVerbosityLevel(cxlog::VerbosityLevel::DEBUG);
+
+    LogAtAllLevels(std::move(t_logger));
+
+    const std::string result{t_stream.str()};
+
+    ASSERT_EQ(result, HeaderLine() + FatalResult() + ErrorResult() + WarningResult() + InfoResult() + DebugResult());
+}
