@@ -87,7 +87,7 @@ private:
 
     static constexpr char m_NAME[] = "Connect X";
     static constexpr unsigned int m_MAJOR_VERSION_NB = 0u;
-    static constexpr unsigned int m_MINOR_VERSION_NB = 12u;
+    static constexpr unsigned int m_MINOR_VERSION_NB = 13u;
 
     cxlog::ILogger& m_logger;
 };
