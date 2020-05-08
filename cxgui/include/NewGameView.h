@@ -56,6 +56,7 @@ private:
 
     void SetLayout();
     void PopulateWidgets();
+    void ConfigureWidgets();
     void OnStart();
 
     INewGameViewPresenter& m_presenter;

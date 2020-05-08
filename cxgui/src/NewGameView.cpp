@@ -24,8 +24,8 @@
 #include <gtkmm/messagedialog.h>
 
 #include <cxinv/include/assertion.h>
+#include <cxmodel/include/NewGameInformation.h>
 #include <NewGameView.h>
-#include "../../cxmodel/include/NewGameInformation.h"
 
 namespace
 {
@@ -79,6 +79,7 @@ cxgui::NewGameView::NewGameView(INewGameViewPresenter& p_presenter,
 {
     SetLayout();
     PopulateWidgets();
+    ConfigureWidgets();
 
     m_startButton.signal_clicked().connect([this](){OnStart();});
 }
@@ -146,6 +147,72 @@ void cxgui::NewGameView::PopulateWidgets()
     m_discRowTitle.set_text(m_presenter.GetNewGameViewDiscColumnHeaderText());
 
     m_startButton.set_label(m_presenter.GetNewGameViewStartButtonText());
+}
+
+void cxgui::NewGameView::ConfigureWidgets()
+{
+    constexpr int SIZE_MARGIN = 10;
+
+    // Window margin:
+    m_mainLayout.set_margin_left(SIZE_MARGIN);
+    m_mainLayout.set_margin_right(SIZE_MARGIN);
+    m_mainLayout.set_margin_top(SIZE_MARGIN);
+    m_mainLayout.set_margin_bottom(SIZE_MARGIN);
+
+    // View title:
+    constexpr int TITLE_BOTTOM_MARGIN = 20;
+    m_title.set_use_markup(true);
+    m_title.set_markup("<big><b>" + m_title.get_text() + "</b></big>");
+    m_title.set_margin_bottom(TITLE_BOTTOM_MARGIN);
+
+    // Game section
+    constexpr int SECTION_BOTTOM_MARGIN = 10;
+    m_gameSectionTitle.set_use_markup(true);
+    m_gameSectionTitle.set_markup("<b>" + m_gameSectionTitle.get_text() + "</b>");
+    m_gameSectionTitle.set_halign(Gtk::Align::ALIGN_START);
+    m_title.set_margin_bottom(SECTION_BOTTOM_MARGIN);
+
+    // In-a-row:
+    constexpr char INDENT_MARK[] = "    ";
+    m_inARowLabel.set_halign(Gtk::Align::ALIGN_START);
+    m_inARowLabel.set_text(INDENT_MARK + m_inARowLabel.get_text());
+
+    // Grid section:
+    m_gridSectionTitle.set_use_markup(true);
+    m_gridSectionTitle.set_markup("<b>" + m_gridSectionTitle.get_text() + "</b>");
+    m_gridSectionTitle.set_halign(Gtk::Align::ALIGN_START);
+    m_title.set_margin_bottom(SECTION_BOTTOM_MARGIN);
+
+    // Width/height:
+    constexpr int CONTROL_BOTTOM_MARGIN = 5;
+    m_gridWidthLabel.set_halign(Gtk::Align::ALIGN_START);
+    m_gridWidthLabel.set_text(INDENT_MARK + m_gridWidthLabel.get_text());
+    m_gridWidthLabel.set_margin_bottom(CONTROL_BOTTOM_MARGIN);
+    m_gridWidthEntry.set_margin_bottom(CONTROL_BOTTOM_MARGIN);
+
+    m_gridHeightLabel.set_halign(Gtk::Align::ALIGN_START);
+    m_gridHeightLabel.set_text(INDENT_MARK + m_gridHeightLabel.get_text());
+    m_gridHeightLabel.set_margin_bottom(CONTROL_BOTTOM_MARGIN);
+    m_gridHeightEntry.set_margin_bottom(CONTROL_BOTTOM_MARGIN);
+
+    // Players section:
+    m_playersSectionTitle.set_use_markup(true);
+    m_playersSectionTitle.set_markup("<b>" + m_playersSectionTitle.get_text() + "</b>");
+    m_playersSectionTitle.set_halign(Gtk::Align::ALIGN_START);
+    m_title.set_margin_bottom(SECTION_BOTTOM_MARGIN);
+
+    // Name column
+    m_nameRowTitle.set_margin_bottom(CONTROL_BOTTOM_MARGIN);
+    m_player1NameEntry.set_margin_bottom(CONTROL_BOTTOM_MARGIN);
+    m_player2NameEntry.set_margin_bottom(CONTROL_BOTTOM_MARGIN);
+
+    // Disc column
+    m_discRowTitle.set_margin_bottom(CONTROL_BOTTOM_MARGIN);
+    m_disc1Entry.set_margin_bottom(CONTROL_BOTTOM_MARGIN);
+    m_disc2Entry.set_margin_bottom(CONTROL_BOTTOM_MARGIN);
+
+    // Start button:
+    m_startButton.set_margin_bottom(CONTROL_BOTTOM_MARGIN);
 }
 
 void cxgui::NewGameView::OnStart()
