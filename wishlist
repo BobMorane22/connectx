@@ -6,3 +6,5 @@
 - Migrate the Connect X documentation center to the new project.
 - Have 'make' always builds the neccessary without having to 'make clean' first
   (remove automatic unit testing while building?)
+- Have the cxinv::handleAssert returns a boolean so that calls such as 'if(ASSERT(...))'
+  is supported in the code.
