@@ -21,6 +21,8 @@
  *
  *************************************************************************************************/
 
+#include <gtkmm/window.h>
+
 #include <cxinv/include/assertion.h>
 
 #include "GameView.h"
@@ -53,6 +55,23 @@ void cxgui::GameView::Activate()
 
     // Add new view layout:
     m_mainLayout.attach(m_viewLayout, m_viewLeft, m_viewTop, 2, 1);
+
+    // Resize parent:
+    Gtk::Window* window = dynamic_cast<Gtk::Window*>(m_mainLayout.get_parent());
+
+    if(window)
+    {
+        // Here we use a trick: in order resize the window, we first remove the
+        // main layout and add it back before calling 'show all'. This enables
+        // resizing the window to smaller sizes:
+        window->remove();
+        window->add(m_mainLayout);
+        window->resize(m_mainLayout.get_width(), m_mainLayout.get_height());
+    }
+    else
+    {
+        ASSERT_ERROR_MSG("Parent of the main layout is not a window.");
+    }
 }
 
 void cxgui::GameView::SetLayout()
