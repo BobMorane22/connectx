@@ -27,7 +27,7 @@
 
 #include <HandleAssertTestFixture.h>
 
-TEST_F(HandleAssertTestFixture, HandleAssert_AllValidInputsNoMessageAssertion_ValidMessages)
+TEST_F(HandleAssertTestFixture, /*DISABLED_*/HandleAssert_AllValidInputsNoMessageAssertion_ValidMessages)
 {
     cxinv::HandleAssert(cxinv::AssertLabel::ASSERTION,
                         (3 > 5),
@@ -45,7 +45,7 @@ TEST_F(HandleAssertTestFixture, HandleAssert_AllValidInputsNoMessageAssertion_Va
     ASSERT_TRUE(stdoutContents.empty());
 }
 
-TEST_F(HandleAssertTestFixture, HandleAssert_AllValidInputsNoMessagePrecondition_ValidMessages)
+TEST_F(HandleAssertTestFixture, /*DISABLED_*/HandleAssert_AllValidInputsNoMessagePrecondition_ValidMessages)
 {
     cxinv::HandleAssert(cxinv::AssertLabel::PRECONDITION,
                         (3 > 5),
@@ -63,7 +63,7 @@ TEST_F(HandleAssertTestFixture, HandleAssert_AllValidInputsNoMessagePrecondition
     ASSERT_TRUE(stdoutContents.empty());
 }
 
-TEST_F(HandleAssertTestFixture, HandleAssert_AllValidInputsNoMessagePostcondition_ValidMessages)
+TEST_F(HandleAssertTestFixture, /*DISABLED_*/HandleAssert_AllValidInputsNoMessagePostcondition_ValidMessages)
 {
     cxinv::HandleAssert(cxinv::AssertLabel::POSTCONDITION,
                         (3 > 5),
@@ -81,7 +81,7 @@ TEST_F(HandleAssertTestFixture, HandleAssert_AllValidInputsNoMessagePostconditio
     ASSERT_TRUE(stdoutContents.empty());
 }
 
-TEST_F(HandleAssertTestFixture, HandleAssert_AllValidInputsNoMessageInvariant_ValidMessages)
+TEST_F(HandleAssertTestFixture, /*DISABLED_*/HandleAssert_AllValidInputsNoMessageInvariant_ValidMessages)
 {
     cxinv::HandleAssert(cxinv::AssertLabel::INVARIANT,
                         (3 > 5),
@@ -99,7 +99,7 @@ TEST_F(HandleAssertTestFixture, HandleAssert_AllValidInputsNoMessageInvariant_Va
     ASSERT_TRUE(stdoutContents.empty());
 }
 
-TEST_F(HandleAssertTestFixture, HandleAssert_AllValidInputsWithMessageAssertion_ValidMessages)
+TEST_F(HandleAssertTestFixture, /*DISABLED_*/HandleAssert_AllValidInputsWithMessageAssertion_ValidMessages)
 {
     cxinv::HandleAssert(cxinv::AssertLabel::ASSERTION,
                         (3 > 5),
@@ -118,7 +118,7 @@ TEST_F(HandleAssertTestFixture, HandleAssert_AllValidInputsWithMessageAssertion_
     ASSERT_TRUE(stdoutContents.empty());
 }
 
-TEST_F(HandleAssertTestFixture, HandleAssert_AllValidInputsWithMessagePrecondition_ValidMessages)
+TEST_F(HandleAssertTestFixture, /*DISABLED_*/HandleAssert_AllValidInputsWithMessagePrecondition_ValidMessages)
 {
     cxinv::HandleAssert(cxinv::AssertLabel::PRECONDITION,
                         (3 > 5),
@@ -137,7 +137,7 @@ TEST_F(HandleAssertTestFixture, HandleAssert_AllValidInputsWithMessagePreconditi
     ASSERT_TRUE(stdoutContents.empty());
 }
 
-TEST_F(HandleAssertTestFixture, HandleAssert_AllValidInputsWithMessagePostcondition_ValidMessages)
+TEST_F(HandleAssertTestFixture, /*DISABLED_*/HandleAssert_AllValidInputsWithMessagePostcondition_ValidMessages)
 {
     cxinv::HandleAssert(cxinv::AssertLabel::POSTCONDITION,
                         (3 > 5),
@@ -156,7 +156,7 @@ TEST_F(HandleAssertTestFixture, HandleAssert_AllValidInputsWithMessagePostcondit
     ASSERT_TRUE(stdoutContents.empty());
 }
 
-TEST_F(HandleAssertTestFixture, HandleAssert_AllValidInputsWithMessageInvariant_ValidMessages)
+TEST_F(HandleAssertTestFixture, /*DISABLED_*/HandleAssert_AllValidInputsWithMessageInvariant_ValidMessages)
 {
     cxinv::HandleAssert(cxinv::AssertLabel::INVARIANT,
                         (3 > 5),
@@ -175,7 +175,7 @@ TEST_F(HandleAssertTestFixture, HandleAssert_AllValidInputsWithMessageInvariant_
     ASSERT_TRUE(stdoutContents.empty());
 }
 
-TEST_F(HandleAssertTestFixture, HandleAssert_invalidConditionExpression_ExecutionAborted)
+TEST_F(HandleAssertTestFixture, /*DISABLED_*/HandleAssert_invalidConditionExpression_ExecutionAborted)
 {
     ASSERT_DEATH(cxinv::HandleAssert(cxinv::AssertLabel::INVARIANT,
                                      (3 > 5),
@@ -186,7 +186,7 @@ TEST_F(HandleAssertTestFixture, HandleAssert_invalidConditionExpression_Executio
                                      GetStdErrContents());
 }
 
-TEST_F(HandleAssertTestFixture, HandleAssert_invalidFileName_ExecutionAborted)
+TEST_F(HandleAssertTestFixture, /*DISABLED_*/HandleAssert_invalidFileName_ExecutionAborted)
 {
     ASSERT_DEATH(cxinv::HandleAssert(cxinv::AssertLabel::INVARIANT,
                                      (3 > 5),
@@ -197,7 +197,7 @@ TEST_F(HandleAssertTestFixture, HandleAssert_invalidFileName_ExecutionAborted)
                                      GetStdErrContents());
 }
 
-TEST_F(HandleAssertTestFixture, HandleAssert_invalidFunctionName_ExecutionAborted)
+TEST_F(HandleAssertTestFixture, /*DISABLED_*/HandleAssert_invalidFunctionName_ExecutionAborted)
 {
     ASSERT_DEATH(cxinv::HandleAssert(cxinv::AssertLabel::INVARIANT,
                                      (3 > 5),
