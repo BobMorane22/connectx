@@ -3,10 +3,11 @@
 ~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+
+Wishes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 - Migrate the Connect X documentation center to the new project.
-- Have 'make' always builds the neccessary without having to 'make clean' first
-  (remove automatic unit testing while building?)
-- Have the cxinv::handleAssert returns a boolean so that calls such as 'if(ASSERT(...))'
   is supported in the code.
 - Add the possibility to create a classic Connect 4 in a simplified way (no grid dimensions,
   no adding of players, etc).
@@ -32,3 +33,11 @@
   (spacing between widgets, fonts, etc).
 - Activate the "Start" button (New Game view) only when valid and complete game information
   is detected.
+- Disable unreachable code analysis by LCOV for `cxmodel`, `cxgui, `cxexec` and `connectx`.
+
+Handled wishes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- (TG-87) Have 'make' always builds the necessary without having to 'make clean' first
+          (remove automatic unit testing while building?)
+- (TG-86) Have the cxinv::handleAssert returns a boolean so that calls such as 'if(ASSERT(...))'
