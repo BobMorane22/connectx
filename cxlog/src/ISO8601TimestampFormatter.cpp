@@ -58,11 +58,14 @@ double CountFromPrecision(const system_clock::time_point& p_timePoint,
 
             return nano.count();
         }
+        // Unreachable code: removed from coverage.
+        // LCOV_EXCL_START
         default:
             ASSERT_ERROR_MSG("Unknown precision!");
     }
 
     return 0.0;
+    // LCOV_EXCL_STOP
 }
 
 } // namespace

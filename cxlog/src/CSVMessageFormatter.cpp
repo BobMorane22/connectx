@@ -99,6 +99,7 @@ std::string cxlog::CSVMessageFormatter::FormatMessage(const VerbosityLevel p_ver
         }
     }
 
-    ASSERT_ERROR_MSG("Unknown verbosity level");
-    return {};
+    // Unreachable code: removed from coverage.
+    ASSERT_ERROR_MSG("Unknown verbosity level"); // LCOV_EXCL_LINE
+    return {};                                   // LCOV_EXCL_LINE
 }
