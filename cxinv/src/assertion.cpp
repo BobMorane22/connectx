@@ -44,8 +44,8 @@ const char* GetLabelAsString(cxinv::AssertLabel p_label)
         case cxinv::AssertLabel::PRECONDITION:  return "Precondition";
         case cxinv::AssertLabel::POSTCONDITION: return "Postcondition";
         case cxinv::AssertLabel::INVARIANT:     return "Invariant";
-        default:
-            std::abort(); // Label type unknown...
+        default:                                        // LCOV_EXCL_LINE
+            std::abort(); // Label type unknown...      // LCOV_EXCL_LINE
     }
 }
 
@@ -59,6 +59,9 @@ void cxinv::HandleAssert(const cxinv::AssertLabel  p_label,
                          const long                p_lineNumber,
                          const char*               p_message)
 {
+    // LCOV_EXCL_START
+    // This code is reached through death tests, and hence are ignored by the coverage
+    // tool. Consequently, we exclude it from the analysis.
     if(!p_conditionExpr ||
        !p_fileName      ||
        !p_functionName)
@@ -67,6 +70,7 @@ void cxinv::HandleAssert(const cxinv::AssertLabel  p_label,
 
         std::abort();
     }
+    // LCOV_EXCL_STOP
 
     if(!(p_conditionRes))
     {
