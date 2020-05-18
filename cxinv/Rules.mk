@@ -52,6 +52,8 @@ include $(dir)/Rules.mk
 #
 OBJS_$(d) := $(d)/src/assertion.o
 
+-include $(wildcard $(d)/src/*.d)
+
 DEPS_$(d) := $(OBJS_$(d):%=%.d)
 
 CLEAN := $(CLEAN) $(OBJS_$(d)) $(DEPS_$(d)) \

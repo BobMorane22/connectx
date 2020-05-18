@@ -36,7 +36,6 @@
 #
 SHELL = /bin/sh
 
-
 ### Build flags for all targets
 #
 #  CF_ALL : Global compiler flags
@@ -47,7 +46,8 @@ ifeq ($(NDEBUG), 1)
 # Release configuration:
 CF_ALL          = -std=c++17 \
                    -O3 \
-                  -Wall -Wextra -Wshadow -Wpedantic -pedantic-errors -Werror
+                  -Wall -Wextra -Wshadow -Wpedantic -pedantic-errors -Werror \
+                  -MMD -MP
 LF_ALL          =
 LL_ALL          =
 else
@@ -55,6 +55,7 @@ else
 CF_ALL          = -std=c++17 \
                   -ggdb3 -Og \
                   -Wall -Wextra -Wshadow -Wpedantic -pedantic-errors -Werror \
+                  -MMD -MP \
                   -fprofile-arcs -ftest-coverage
 LF_ALL          = -lgcov --coverage
 LL_ALL          =
