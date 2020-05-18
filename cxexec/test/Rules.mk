@@ -75,7 +75,7 @@ $(OBJS_$(d)): CF_TGT := -I. -I$(d)/../include -I$(d) `pkg-config gtkmm-3.0 --cfl
 $(TGTS_$(d)): LL_TGT := cxgui/libcxgui.a cxmodel/libcxmodel.a cxlog/libcxlog.a cxinv/libcxinv.a `pkg-config gtkmm-3.0 --cflags --libs` -lgtest -lgtest_main -lpthread
 
 $(TGTS_$(d)): $(OBJS_$(d)) $(LL_TGT)
-	@echo ~~~ Generating the cxmain unit tests executable ~~~
+	@echo ~~~ Generating the cxexec unit tests executable ~~~
 	$(LINK)
 	$(SHELL) -c $@
 
