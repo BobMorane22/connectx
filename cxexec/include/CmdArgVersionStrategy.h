@@ -26,7 +26,7 @@
 
 #include <cxmodel/include/IModel.h>
 
-#include <ICmdArgWorkflowStrategy.h>
+#include "ICmdArgWorkflowStrategy.h"
 
 namespace cx
 {

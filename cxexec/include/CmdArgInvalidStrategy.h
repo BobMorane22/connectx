@@ -26,7 +26,7 @@
 
 #include <string>
 
-#include <ICmdArgWorkflowStrategy.h>
+#include "ICmdArgWorkflowStrategy.h"
 
 namespace cx
 {

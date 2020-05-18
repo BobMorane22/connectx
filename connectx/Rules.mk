@@ -45,7 +45,12 @@ d := $(dir)
 # i.e. the ones we want deleted by a "make clean" command.
 #
 TGTS_$(d) := $(d)/connectx
-OBJS_$(d) := $(d)/main.o
+OBJS_$(d) := $(d)/main.o \
+             cxinv/libcxinv.a \
+             cxlog/libcxlog.a \
+             cxmodel/libcxmodel.a \
+             cxgui/libcxgui.a \
+             cxexec/libcxexec.a
 
 DEPS_$(d) := $(TGTS_$(d):%=%.d) $(OBJS_$(d):%=%.d)
 
@@ -67,7 +72,7 @@ $(TGTS_$(d)): LL_TGT := cxexec/libcxexec.a cxgui/libcxgui.a cxmodel/libcxmodel.a
 # not included in the build process (i.e. not listed in the $^ automatic variables contents).
 # In this way, we make it clear that the Connect X executable depends on its unit tests
 # having been built and run sucessfully.
-$(TGTS_$(d)): $(OBJS_$(d)) $(LL_TGT) | cxexec/libcxexec.a
+$(TGTS_$(d)): $(OBJS_$(d)) $(LL_TGT)# | cxexec/libcxexec.a
 	@echo ~~~ Generating the executable ~~~
 	$(LINK)
 

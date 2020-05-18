@@ -24,7 +24,7 @@
 #ifndef CMDARGHELPSTRATEGY_H_3362D6BD_3ADC_4D59_9E62_1B7E12B40C48
 #define CMDARGHELPSTRATEGY_H_3362D6BD_3ADC_4D59_9E62_1B7E12B40C48
 
-#include <ICmdArgWorkflowStrategy.h>
+#include "ICmdArgWorkflowStrategy.h"
 
 namespace cx
 {

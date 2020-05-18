@@ -42,22 +42,14 @@ d := $(dir)
 # To the global variable "CLEAN", we add the files that the rules present here may create,
 # i.e. the ones we want deleted by a "make clean" command.
 #
-TGTS_$(d) := $(d)/cxmaintests
-OBJS_$(d) := $(d)/../src/Application.o \
-             $(d)/../src/CmdArgHelpStrategy.o \
-             $(d)/../src/CmdArgInvalidStrategy.o \
-             $(d)/../src/CmdArgMainStrategy.o \
-             $(d)/../src/CmdArgNoStrategy.o \
-             $(d)/../src/CmdArgVerboseStrategy.o \
-             $(d)/../src/CmdArgVersionStrategy.o \
-             $(d)/../src/CmdArgWorkflowFactory.o \
-             $(d)/../src/GtkmmUIManager.o \
-             $(d)/ApplicationTests.o \
+TGTS_$(d) := $(d)/cxexectests
+OBJS_$(d) := $(d)/ApplicationTests.o \
              $(d)/ApplicationTestFixture.o \
              $(d)/CmdArgStrategyTests.o \
              $(d)/DisableStdStreamsRAII.o \
              $(d)/LoggerMock.o \
-             $(d)/ModelMock.o
+             $(d)/ModelMock.o \
+             cxexec/libcxexec.a
 DEPS_$(d) := $(TGTS_$(d):%=%.d) $(OBJS_$(d):%=%.d)
 
 TGT_BIN := $(TGT_BIN) $(TGTS_$(d))
@@ -72,7 +64,7 @@ CLEAN := $(CLEAN) $(OBJS_$(d)) $(TGTS_$(d)) $(DEPS_$(d))
 # is the project root. That way, all include files can be found.
 #
 $(OBJS_$(d)): CF_TGT := -I. -I$(d)/../include -I$(d) `pkg-config gtkmm-3.0 --cflags --libs`
-$(TGTS_$(d)): LL_TGT := cxgui/libcxgui.a cxmodel/libcxmodel.a cxlog/libcxlog.a cxinv/libcxinv.a `pkg-config gtkmm-3.0 --cflags --libs` -lgtest -lgtest_main -lpthread
+$(TGTS_$(d)): LL_TGT := cxexec/libcxexec.a cxgui/libcxgui.a cxmodel/libcxmodel.a cxlog/libcxlog.a cxinv/libcxinv.a `pkg-config gtkmm-3.0 --cflags --libs` -lgtest -lgtest_main -lpthread
 
 $(TGTS_$(d)): $(OBJS_$(d)) $(LL_TGT)
 	@echo ~~~ Generating the cxexec unit tests executable ~~~

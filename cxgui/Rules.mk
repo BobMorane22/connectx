@@ -59,7 +59,9 @@ OBJS_$(d) := $(d)/src/About.o \
              $(d)/src/MenuItem.o \
              $(d)/src/NewGameView.o \
              $(d)/src/StatusBar.o \
-             $(d)/src/StatusBarPresenter.o
+             $(d)/src/StatusBarPresenter.o \
+             cxinv/libcxinv.a \
+             cxmodel/libcxmodel.a
 
 DEPS_$(d) := $(OBJS_$(d):%=%.d)
 

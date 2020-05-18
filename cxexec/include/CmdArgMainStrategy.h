@@ -24,8 +24,8 @@
 #ifndef CMDARGMAINSTRATEGY_H_687BF302_DBF1_4EB7_B096_8DD7B233614A
 #define CMDARGMAINSTRATEGY_H_687BF302_DBF1_4EB7_B096_8DD7B233614A
 
-#include <GtkmmUIManager.h>
-#include <ICmdArgWorkflowStrategy.h>
+#include "GtkmmUIManager.h"
+#include "ICmdArgWorkflowStrategy.h"
 
 namespace cxmodel
 {

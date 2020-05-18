@@ -54,7 +54,9 @@ OBJS_$(d) := $(d)/src/CommandCreateNewGame.o \
              $(d)/src/Model.o \
              $(d)/src/NewGameInformation.o \
              $(d)/src/Subject.o \
-             $(d)/src/OS.o
+             $(d)/src/OS.o \
+             cxinv/libcxinv.a \
+             cxlog/libcxlog.a
 
 DEPS_$(d) := $(OBJS_$(d):%=%.d)
 

@@ -24,7 +24,7 @@
 #ifndef CMDARGNOSTRATEGY_H_25881F6A_566B_4C12_A32C_70E60C30D4E5
 #define CMDARGNOSTRATEGY_H_25881F6A_566B_4C12_A32C_70E60C30D4E5
 
-#include <ICmdArgWorkflowStrategy.h>
+#include "ICmdArgWorkflowStrategy.h"
 
 namespace cx
 {

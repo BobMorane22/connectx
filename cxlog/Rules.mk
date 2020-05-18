@@ -58,7 +58,8 @@ OBJS_$(d) := $(d)/src/ChainLogger.o \
              $(d)/src/Logger.o \
              $(d)/src/StdLogTarget.o \
              $(d)/src/StringStreamLogTarget.o \
-             $(d)/src/VerbosityLevel.o
+             $(d)/src/VerbosityLevel.o \
+             cxinv/libcxinv.a
 
 DEPS_$(d) := $(OBJS_$(d):%=%.d)
 

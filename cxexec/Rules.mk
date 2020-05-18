@@ -58,7 +58,11 @@ OBJS_$(d) := $(d)/src/Application.o \
              $(d)/src/CmdArgVerboseStrategy.o \
              $(d)/src/CmdArgVersionStrategy.o \
              $(d)/src/CmdArgWorkflowFactory.o \
-             $(d)/src/GtkmmUIManager.o
+             $(d)/src/GtkmmUIManager.o \
+             cxinv/libcxinv.a \
+             cxlog/libcxlog.a \
+             cxmodel/libcxmodel.a \
+             cxgui/libcxgui.a
 
 DEPS_$(d) := $(OBJS_$(d):%=%.d)
 

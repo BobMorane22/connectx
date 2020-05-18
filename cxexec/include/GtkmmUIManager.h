@@ -31,7 +31,8 @@
 #include <cxgui/include/IWindow.h>
 #include <cxgui/include/IMainWindowController.h>
 #include <cxgui/include/IMainWindowPresenter.h>
-#include <IUIManager.h>
+
+#include "IUIManager.h"
 
 namespace cxmodel
 {

@@ -31,14 +31,13 @@
 #include <cxlog/include/CSVMessageFormatter.h>
 #include <cxlog/include/StdLogTarget.h>
 
-#include <ApplicationTestFixture.h>
-
 #include <CmdArgHelpStrategy.h>
 #include <CmdArgInvalidStrategy.h>
 #include <CmdArgNoStrategy.h>
 #include <CmdArgVerboseStrategy.h>
 #include <CmdArgVersionStrategy.h>
 
+#include "ApplicationTestFixture.h"
 
 TEST_F(ApplicationTestFixture, Handle_NoStrategy_NothingPrinted)
 {
