@@ -47,7 +47,12 @@ OBJS_$(d) := $(d)/DisableStdStreamsRAII.o \
              $(d)/HandleAssertTestFixture.o \
              $(d)/handleAssertTests.o \
              cxinv/libcxinv.a
-DEPS_$(d) := $(TGTS_$(d):%=%.d) $(OBJS_$(d):%=%.d)
+
+# We include all the generated rules. These are created by GCC to make sure that
+# changes to header files are recognized by make.
+DEPS_$(d) := $(TGTS_$(d):%=%.d) $(OBJS_$(d):%=%.d) $(wildcard $(d)/*.d)
+
+-include $(DEPS_$(d))
 
 TGT_BIN := $(TGT_BIN) $(TGTS_$(d))
 CLEAN := $(CLEAN) $(OBJS_$(d)) $(TGTS_$(d)) $(DEPS_$(d))
