@@ -117,7 +117,7 @@ cxinv/test/cxinvtests
 cxlog/test/cxlogtests
 cxmodel/test/cxmodeltests
 cxgui/test/cxguitests
-cxexec/test/cxmaintests
+cxexec/test/cxexectests
 
 # Coverage
 coverage/report
