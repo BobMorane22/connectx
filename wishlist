@@ -34,6 +34,7 @@ Wishes
 - Activate the "Start" button (New Game view) only when valid and complete game information
   is detected.
 - Disable unreachable code analysis by LCOV for `cxmodel`, `cxgui, `cxexec` and `connectx`.
+- Have a commit message template to format messages accordingly.
 
 
 Handled wishes
