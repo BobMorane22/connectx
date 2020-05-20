@@ -27,6 +27,27 @@
 
 #include <HandleAssertTestFixture.h>
 
+TEST_F(HandleAssertTestFixture, /*DISABLED_*/HandleAssert_TrueCondition_ReturnsTrue)
+{
+    ASSERT_TRUE(cxinv::HandleAssert(cxinv::AssertLabel::ASSERTION,
+                                    (5 > 3),
+                                    m_CONDITION_EXPRESSION,
+                                    m__FILE_,
+                                    m__FUNCTION_,
+                                    m__LINE_));
+}
+
+
+TEST_F(HandleAssertTestFixture, /*DISABLED_*/HandleAssert_FalseCondition_ReturnsFalse)
+{
+    ASSERT_FALSE(cxinv::HandleAssert(cxinv::AssertLabel::ASSERTION,
+                                    (3 > 5),
+                                     m_CONDITION_EXPRESSION,
+                                     m__FILE_,
+                                     m__FUNCTION_,
+                                     m__LINE_));
+}
+
 TEST_F(HandleAssertTestFixture, /*DISABLED_*/HandleAssert_AllValidInputsNoMessageAssertion_ValidMessages)
 {
     cxinv::HandleAssert(cxinv::AssertLabel::ASSERTION,

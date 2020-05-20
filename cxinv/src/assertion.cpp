@@ -51,7 +51,7 @@ const char* GetLabelAsString(cxinv::AssertLabel p_label)
 
 } // namespace
 
-void cxinv::HandleAssert(const cxinv::AssertLabel  p_label,
+bool cxinv::HandleAssert(const cxinv::AssertLabel  p_label,
                          const bool                p_conditionRes,
                          const char*               p_conditionExpr,
                          const char*               p_fileName,
@@ -96,6 +96,8 @@ void cxinv::HandleAssert(const cxinv::AssertLabel  p_label,
 
         AbortIfNeeded();
     }
+
+    return p_conditionRes;
 }
 
 #endif // NDEBUG

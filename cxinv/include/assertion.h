@@ -59,10 +59,12 @@ enum class AssertLabel
  * @param p_lineNumber    The line number at which the assertion is located.
  * @param p_message       An optional assertion message.
  *
+ * @return The result of evaluating p_conditionRes.
+ *
  * @warning Never use this function by itself! Use assertion macros instead.
  *
  ************************************************************************************************/
-void HandleAssert(const AssertLabel  p_label,
+bool HandleAssert(const AssertLabel  p_label,
                   const bool         p_conditionRes,
                   const char*        p_conditionExpr,
                   const char*        p_fileName,
