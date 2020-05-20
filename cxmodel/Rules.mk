@@ -61,7 +61,7 @@ OBJS_$(d) := $(d)/src/CommandCreateNewGame.o \
 
 # We include all the generated rules. These are created by GCC to make sure that
 # changes to header files are recognized by make.
-DEPS_$(d) := $(OBJS_$(d):%=%.d) $(wildcard $(d)/src/*.d)
+DEPS_$(d) := $(wildcard $(d)/src/*.d)
 
 -include $(DEPS_$(d))
 

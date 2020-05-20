@@ -57,7 +57,7 @@ OBJS_$(d) := $(d)/CSVLoggerChainLoggingTests.o \
              
 # We include all the generated rules. These are created by GCC to make sure that
 # changes to header files are recognized by make.
-DEPS_$(d) := $(OBJS_$(d):%=%.d) $(wildcard $(d)/*.d)
+DEPS_$(d) := $(wildcard $(d)/*.d)
 
 -include $(DEPS_$(d))
 
