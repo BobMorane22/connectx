@@ -36,6 +36,7 @@ sp := $(sp).x
 dirstack_$(sp) := $(d)
 d := $(dir)
 
+
 ### Subdirectories, in build order.
 #
 dir := $(d)/test
@@ -58,7 +59,11 @@ OBJS_$(d) := $(d)/src/CommandCreateNewGame.o \
              cxinv/libcxinv.a \
              cxlog/libcxlog.a
 
-DEPS_$(d) := $(OBJS_$(d):%=%.d)
+# We include all the generated rules. These are created by GCC to make sure that
+# changes to header files are recognized by make.
+DEPS_$(d) := $(OBJS_$(d):%=%.d) $(wildcard $(d)/src/*.d)
+
+-include $(DEPS_$(d))
 
 CLEAN := $(CLEAN) $(OBJS_$(d)) $(DEPS_$(d)) \
          $(d)/lib$(d).a
