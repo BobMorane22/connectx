@@ -68,20 +68,16 @@ cx::CmdArgVerboseStrategy::CmdArgVerboseStrategy(int argc, char *argv[], cxmodel
 
 int cx::CmdArgVerboseStrategy::Handle()
 {
-    if(!m_logger)
+    if(!ASSERT(m_logger))
     {
-        ASSERT_ERROR_MSG("Main logger uninitialized.");
-
         return EXIT_FAILURE;
     }
 
     cxlog::IChainLogging* chainLogger = dynamic_cast<cxlog::IChainLogging*>(m_logger);
 
     // Should never happen if the code compiles (see static_asset above):
-    if(!chainLogger)
+    if(!ASSERT(chainLogger))
     {
-        ASSERT_ERROR_MSG("The main logger does not allow incremental logging");
-
         return EXIT_FAILURE;
     }
 

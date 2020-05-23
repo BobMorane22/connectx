@@ -34,9 +34,7 @@ cxlog::FileLogTarget::FileLogTarget(const std::string& p_logFileName)
 
 void cxlog::FileLogTarget::Log(const std::string& p_message)
 {
-    ASSERT_MSG(FileStream().good(), "File stream is in a bad state.");
-
-    if(FileStream())
+    if(ASSERT(FileStream().good()))
     {
         FileStream() << p_message;
     }

@@ -52,10 +52,8 @@ void cxlog::IncrementalChainedLogger::Log(const VerbosityLevel p_verbosityLevel,
                                           const size_t         p_lineNumber,
                                           const std::string&   p_message)
 {
-    if(!m_msgFormatter)
+    if(!ASSERT(m_msgFormatter != nullptr))
     {
-        ASSERT_ERROR_MSG("No reference to a formatter.");
-
         return;
     }
 
@@ -75,10 +73,8 @@ void cxlog::IncrementalChainedLogger::Log(const VerbosityLevel p_verbosityLevel,
     // Create well formatted message:
     const std::string msg{m_msgFormatter->FormatMessage(p_verbosityLevel, p_fileName, p_functionName, p_lineNumber, p_message)};
 
-    if(!m_logTarget)
+    if(!ASSERT(m_logTarget != nullptr))
     {
-        ASSERT_ERROR_MSG("No reference to a log target.");
-
         // Release formatter, no logging will be done after all:
         m_msgFormatter.reset(nullptr);
 

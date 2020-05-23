@@ -32,14 +32,10 @@ cxlog::StringStreamLogTarget::StringStreamLogTarget(std::ostringstream& p_string
 
 void cxlog::StringStreamLogTarget::Log(const std::string& p_message)
 {
-    if(StringStream())
+    if(ASSERT(StringStream().good()))
     {
         StringStream() << p_message;
 
         return;
     }
-
-    // This part is skipped by coverage. We assume the stream should be available without error.
-    // Unit tests for this would be a waste of time, since they would be system dependent.
-    ASSERT_ERROR_MSG("String stream not valid."); // LCOV_EXCL_LINE
 }

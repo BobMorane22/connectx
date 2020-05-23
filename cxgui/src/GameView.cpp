@@ -59,7 +59,7 @@ void cxgui::GameView::Activate()
     // Resize parent:
     Gtk::Window* window = dynamic_cast<Gtk::Window*>(m_mainLayout.get_parent());
 
-    if(window)
+    if(ASSERT(window))
     {
         // Here we use a trick: in order resize the window, we first remove the
         // main layout and add it back before calling 'show all'. This enables
@@ -67,10 +67,6 @@ void cxgui::GameView::Activate()
         window->remove();
         window->add(m_mainLayout);
         window->resize(m_mainLayout.get_width(), m_mainLayout.get_height());
-    }
-    else
-    {
-        ASSERT_ERROR_MSG("Parent of the main layout is not a window.");
     }
 }
 
