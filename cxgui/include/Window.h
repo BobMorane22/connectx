@@ -27,6 +27,7 @@
 #include <cxinv/include/assertion.h>
 #include <cxmodel/include/OS.h>
 
+#include <glibmm/fileutils.h>
 #include <gtkmm/grid.h>
 
 #include "IWindow.h"
@@ -78,7 +79,17 @@ protected:
      **********************************************************************************************/
     virtual void ConfigureWindowIcon()
     {
-        m_window.set_icon_from_file(cxmodel::GetCurrentExecutablePath(true) + "/icons/cxicon16.png");
+        try
+        {
+            m_window.set_icon_from_file(cxmodel::GetCurrentExecutablePath(true) + "/icons/cxicon16.png");
+        }
+        catch(const Glib::FileError& p_exception)
+        {
+            const std::string errorMsg = p_exception.what();
+            ASSERT_ERROR_MSG(errorMsg.c_str());
+
+            return;
+        }
     }
 
     /*******************************************************************************************//**

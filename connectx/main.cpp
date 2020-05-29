@@ -65,17 +65,32 @@ std::unique_ptr<cxlog::ILogger> CreateFileLogger(cxlog::VerbosityLevel p_verbosi
 
 int main(int argc, char *argv[])
 {
-    std::unique_ptr<cxlog::ILogger> logger = CreateFileLogger(cxlog::VerbosityLevel::DEBUG);
+    int result = EXIT_FAILURE;
 
-    if(!logger)
+    try
     {
-        return EXIT_FAILURE;
+        std::unique_ptr<cxlog::ILogger> logger = CreateFileLogger(cxlog::VerbosityLevel::DEBUG);
+
+        if(!logger)
+        {
+            return EXIT_FAILURE;
+        }
+
+        cxmodel::Model concreteModel{std::make_unique<cxmodel::CommandStack>(CMD_STACK_SIZE), *logger};
+        cxmodel::IModel& model = concreteModel;
+
+        std::unique_ptr<cx::IApplication> app = std::make_unique<cx::Application>(argc, argv, model, *logger);
+
+        result = app->Run();
+    }
+    catch(const std::exception& p_exception)
+    {
+        ASSERT_ERROR_MSG(p_exception.what());
+    }
+    catch(...)
+    {
+        ASSERT_ERROR_MSG("Unhandled exception.");
     }
 
-    cxmodel::Model concreteModel{std::make_unique<cxmodel::CommandStack>(CMD_STACK_SIZE), *logger};
-    cxmodel::IModel& model = concreteModel;
-
-    std::unique_ptr<cx::IApplication> app = std::make_unique<cx::Application>(argc, argv, model, *logger);
-
-    return app->Run();
+    return result;
 }
