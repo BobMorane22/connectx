@@ -55,6 +55,8 @@ struct PlayerInformation
     std::string m_discColor;
 };
 
+using PlayersInformation = std::vector<PlayerInformation>;
+
 /*********************************************************************************************//**
  * @brief Equal-to-operator.
  *
@@ -92,8 +94,6 @@ class NewGameInformation
 {
 
 public:
-
-    using PlayersInformation = std::vector<PlayerInformation>;
 
     /******************************************************************************************//**
      * @brief Add a player to the game.

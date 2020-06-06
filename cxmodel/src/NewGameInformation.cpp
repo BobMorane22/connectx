@@ -42,7 +42,7 @@ std::size_t cxmodel::NewGameInformation::AddPlayer(const PlayerInformation& p_pl
     return m_playersInformation.size();
 }
 
-cxmodel::NewGameInformation::PlayersInformation cxmodel::NewGameInformation::GetPlayersInformation() const
+cxmodel::PlayersInformation cxmodel::NewGameInformation::GetPlayersInformation() const
 {
     return m_playersInformation;
 }

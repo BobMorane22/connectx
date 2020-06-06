@@ -25,6 +25,28 @@
 
 #include <NewGameInformation.h>
 
+namespace
+{
+cxmodel::NewGameInformation MakeNewGameInformation(size_t p_gridHeight,
+                                                   size_t p_gridWidth,
+                                                   size_t p_inARowValue,
+                                                   const cxmodel::PlayersInformation& p_playersInfo)
+{
+    cxmodel::NewGameInformation info;
+    info.m_gridHeight = p_gridHeight;
+    info.m_gridWidth = p_gridWidth;
+    info.m_inARowValue = p_inARowValue;
+
+    for(const auto& playerInfo : p_playersInfo)
+    {
+        info.AddPlayer(playerInfo);
+    }
+
+    return info;
+}
+
+} // namespace
+
 TEST(PlayerInformation, /*DISABLED_*/OperatorEqual_TwoSamePlayerInformations_ReturnsTrue)
 {
     const cxmodel::PlayerInformation info1{"John Doe", "Red"};
@@ -100,23 +122,8 @@ TEST(NewGameInformation, /*DISABLED_*/OperatorEqual_TwoSameInformations_ReturnsT
     const cxmodel::PlayerInformation playerInfo1{"John Doe", "Red"};
     const cxmodel::PlayerInformation playerInfo2{"Jane Doe", "Blue"};
 
-    const size_t gridHeight = 6;
-    const size_t gridWidth = 7;
-    const size_t inARowValue = 4;
-
-    cxmodel::NewGameInformation gameInfo1;
-    gameInfo1.m_gridHeight = gridHeight;
-    gameInfo1.m_gridWidth = gridWidth;
-    gameInfo1.m_inARowValue = inARowValue;
-    gameInfo1.AddPlayer(playerInfo1);
-    gameInfo1.AddPlayer(playerInfo2);
-
-    cxmodel::NewGameInformation gameInfo2;
-    gameInfo2.m_gridHeight = gridHeight;
-    gameInfo2.m_gridWidth = gridWidth;
-    gameInfo2.m_inARowValue = inARowValue;
-    gameInfo2.AddPlayer(playerInfo1);
-    gameInfo2.AddPlayer(playerInfo2);
+    const cxmodel::NewGameInformation gameInfo1 = MakeNewGameInformation(6, 7, 4, {playerInfo1, playerInfo2});
+    const cxmodel::NewGameInformation gameInfo2 = MakeNewGameInformation(6, 7, 4, {playerInfo1, playerInfo2});
 
     ASSERT_TRUE(gameInfo1 == gameInfo2);
 }
@@ -126,25 +133,8 @@ TEST(NewGameInformation, /*DISABLED_*/OperatorEqual_TwoSameInformationsButOrderD
     const cxmodel::PlayerInformation playerInfo1{"John Doe", "Red"};
     const cxmodel::PlayerInformation playerInfo2{"Jane Doe", "Blue"};
 
-    const size_t gridHeight = 6;
-    const size_t gridWidth = 7;
-    const size_t inARowValue = 4;
-
-    cxmodel::NewGameInformation gameInfo1;
-    gameInfo1.m_gridHeight = gridHeight;
-    gameInfo1.m_gridWidth = gridWidth;
-    gameInfo1.m_inARowValue = inARowValue;
-    gameInfo1.AddPlayer(playerInfo1);
-    gameInfo1.AddPlayer(playerInfo2);
-
-    cxmodel::NewGameInformation gameInfo2;
-    gameInfo2.m_gridHeight = gridHeight;
-    gameInfo2.m_gridWidth = gridWidth;
-    gameInfo2.m_inARowValue = inARowValue;
-
-    // Order differs here:
-    gameInfo2.AddPlayer(playerInfo2);
-    gameInfo2.AddPlayer(playerInfo1);
+    const cxmodel::NewGameInformation gameInfo1 = MakeNewGameInformation(6, 7, 4, {playerInfo1, playerInfo2});
+    const cxmodel::NewGameInformation gameInfo2 = MakeNewGameInformation(6, 7, 4, {playerInfo2, playerInfo1});
 
     ASSERT_FALSE(gameInfo1 == gameInfo2);
 }
@@ -154,23 +144,8 @@ TEST(NewGameInformation, /*DISABLED_*/OperatorEqual_DifferentGridHeight_ReturnsF
     const cxmodel::PlayerInformation playerInfo1{"John Doe", "Red"};
     const cxmodel::PlayerInformation playerInfo2{"Jane Doe", "Blue"};
 
-    const size_t gridWidth = 7;
-    const size_t inARowValue = 4;
-
-    cxmodel::NewGameInformation gameInfo1;
-    gameInfo1.m_gridHeight = 6;
-    gameInfo1.m_gridWidth = gridWidth;
-    gameInfo1.m_inARowValue = inARowValue;
-    gameInfo1.AddPlayer(playerInfo1);
-    gameInfo1.AddPlayer(playerInfo2);
-
-    cxmodel::NewGameInformation gameInfo2;
-    gameInfo2.m_gridHeight = 7;
-    gameInfo2.m_gridWidth = gridWidth;
-    gameInfo2.m_inARowValue = inARowValue;
-
-    gameInfo2.AddPlayer(playerInfo1);
-    gameInfo2.AddPlayer(playerInfo2);
+    const cxmodel::NewGameInformation gameInfo1 = MakeNewGameInformation(6, 7, 4, {playerInfo1, playerInfo2});
+    const cxmodel::NewGameInformation gameInfo2 = MakeNewGameInformation(7, 7, 4, {playerInfo1, playerInfo2});
 
     ASSERT_FALSE(gameInfo1 == gameInfo2);
 }
@@ -180,22 +155,8 @@ TEST(NewGameInformation, /*DISABLED_*/OperatorEqual_DifferentGridWidth_ReturnsFa
     const cxmodel::PlayerInformation playerInfo1{"John Doe", "Red"};
     const cxmodel::PlayerInformation playerInfo2{"Jane Doe", "Blue"};
 
-    const size_t gridHeight = 6;
-    const size_t inARowValue = 4;
-
-    cxmodel::NewGameInformation gameInfo1;
-    gameInfo1.m_gridHeight = gridHeight;
-    gameInfo1.m_gridWidth = 7;
-    gameInfo1.m_inARowValue = inARowValue;
-    gameInfo1.AddPlayer(playerInfo1);
-    gameInfo1.AddPlayer(playerInfo2);
-
-    cxmodel::NewGameInformation gameInfo2;
-    gameInfo2.m_gridHeight = gridHeight;
-    gameInfo2.m_gridWidth = 8;
-    gameInfo2.m_inARowValue = inARowValue;
-    gameInfo2.AddPlayer(playerInfo1);
-    gameInfo2.AddPlayer(playerInfo2);
+    const cxmodel::NewGameInformation gameInfo1 = MakeNewGameInformation(6, 7, 4, {playerInfo1, playerInfo2});
+    const cxmodel::NewGameInformation gameInfo2 = MakeNewGameInformation(6, 8, 4, {playerInfo1, playerInfo2});
 
     ASSERT_FALSE(gameInfo1 == gameInfo2);
 }
@@ -205,45 +166,16 @@ TEST(NewGameInformation, /*DISABLED_*/OperatorEqual_DifferentInARowValue_Returns
     const cxmodel::PlayerInformation playerInfo1{"John Doe", "Red"};
     const cxmodel::PlayerInformation playerInfo2{"Jane Doe", "Blue"};
 
-    const size_t gridHeight = 6;
-    const size_t gridWidth = 7;
-
-    cxmodel::NewGameInformation gameInfo1;
-    gameInfo1.m_gridHeight = gridHeight;
-    gameInfo1.m_gridWidth = gridWidth;
-    gameInfo1.m_inARowValue = 4;
-    gameInfo1.AddPlayer(playerInfo1);
-    gameInfo1.AddPlayer(playerInfo2);
-
-    cxmodel::NewGameInformation gameInfo2;
-    gameInfo2.m_gridHeight = gridHeight;
-    gameInfo2.m_gridWidth = gridWidth;
-    gameInfo2.m_inARowValue = 5;
-    gameInfo2.AddPlayer(playerInfo1);
-    gameInfo2.AddPlayer(playerInfo2);
+    const cxmodel::NewGameInformation gameInfo1 = MakeNewGameInformation(6, 7, 4, {playerInfo1, playerInfo2});
+    const cxmodel::NewGameInformation gameInfo2 = MakeNewGameInformation(6, 7, 5, {playerInfo1, playerInfo2});
 
     ASSERT_FALSE(gameInfo1 == gameInfo2);
 }
 
 TEST(NewGameInformation, /*DISABLED_*/OperatorEqual_DifferentPlayersInformations_ReturnsFalse)
 {
-    const size_t gridHeight = 6;
-    const size_t gridWidth = 7;
-    const size_t inARowValue = 4;
-
-    cxmodel::NewGameInformation gameInfo1;
-    gameInfo1.m_gridHeight = gridHeight;
-    gameInfo1.m_gridWidth = gridWidth;
-    gameInfo1.m_inARowValue = inARowValue;
-    gameInfo1.AddPlayer({"Player1", "Red"});
-    gameInfo1.AddPlayer({"Player2", "Blue"});
-
-    cxmodel::NewGameInformation gameInfo2;
-    gameInfo2.m_gridHeight = gridHeight;
-    gameInfo2.m_gridWidth = gridWidth;
-    gameInfo2.m_inARowValue = inARowValue;
-    gameInfo2.AddPlayer({"Player3", "Yellow"});
-    gameInfo2.AddPlayer({"Player4", "Green"});
+    const cxmodel::NewGameInformation gameInfo1 = MakeNewGameInformation(6, 7, 4, {{"Player1", "Red"}, {"Player2", "Blue"}});
+    const cxmodel::NewGameInformation gameInfo2 = MakeNewGameInformation(6, 7, 4, {{"Player3", "Yellow"}, {"Player4", "Green"}});
 
     ASSERT_FALSE(gameInfo1 == gameInfo2);
 }
@@ -253,23 +185,8 @@ TEST(NewGameInformation, /*DISABLED_*/OperatorNotEqual_TwoSameInformations_Retur
     const cxmodel::PlayerInformation playerInfo1{"John Doe", "Red"};
     const cxmodel::PlayerInformation playerInfo2{"Jane Doe", "Blue"};
 
-    const size_t gridHeight = 6;
-    const size_t gridWidth = 7;
-    const size_t inARowValue = 4;
-
-    cxmodel::NewGameInformation gameInfo1;
-    gameInfo1.m_gridHeight = gridHeight;
-    gameInfo1.m_gridWidth = gridWidth;
-    gameInfo1.m_inARowValue = inARowValue;
-    gameInfo1.AddPlayer(playerInfo1);
-    gameInfo1.AddPlayer(playerInfo2);
-
-    cxmodel::NewGameInformation gameInfo2;
-    gameInfo2.m_gridHeight = gridHeight;
-    gameInfo2.m_gridWidth = gridWidth;
-    gameInfo2.m_inARowValue = inARowValue;
-    gameInfo2.AddPlayer(playerInfo1);
-    gameInfo2.AddPlayer(playerInfo2);
+    const cxmodel::NewGameInformation gameInfo1 = MakeNewGameInformation(6, 7, 4, {playerInfo1, playerInfo2});
+    const cxmodel::NewGameInformation gameInfo2 = MakeNewGameInformation(6, 7, 4, {playerInfo1, playerInfo2});
 
     ASSERT_FALSE(gameInfo1 != gameInfo2);
 }
@@ -279,23 +196,8 @@ TEST(NewGameInformation, /*DISABLED_*/OperatorNotEqual_DifferentGridHeight_Retur
     const cxmodel::PlayerInformation playerInfo1{"John Doe", "Red"};
     const cxmodel::PlayerInformation playerInfo2{"Jane Doe", "Blue"};
 
-    const size_t gridWidth = 7;
-    const size_t inARowValue = 4;
-
-    cxmodel::NewGameInformation gameInfo1;
-    gameInfo1.m_gridHeight = 6;
-    gameInfo1.m_gridWidth = gridWidth;
-    gameInfo1.m_inARowValue = inARowValue;
-    gameInfo1.AddPlayer(playerInfo1);
-    gameInfo1.AddPlayer(playerInfo2);
-
-    cxmodel::NewGameInformation gameInfo2;
-    gameInfo2.m_gridHeight = 7;
-    gameInfo2.m_gridWidth = gridWidth;
-    gameInfo2.m_inARowValue = inARowValue;
-
-    gameInfo2.AddPlayer(playerInfo1);
-    gameInfo2.AddPlayer(playerInfo2);
+    const cxmodel::NewGameInformation gameInfo1 = MakeNewGameInformation(6, 7, 4, {playerInfo1, playerInfo2});
+    const cxmodel::NewGameInformation gameInfo2 = MakeNewGameInformation(7, 7, 4, {playerInfo1, playerInfo2});
 
     ASSERT_TRUE(gameInfo1 != gameInfo2);
 }
@@ -305,22 +207,8 @@ TEST(NewGameInformation, /*DISABLED_*/OperatorNotEqual_DifferentGridWidth_Return
     const cxmodel::PlayerInformation playerInfo1{"John Doe", "Red"};
     const cxmodel::PlayerInformation playerInfo2{"Jane Doe", "Blue"};
 
-    const size_t gridHeight = 6;
-    const size_t inARowValue = 4;
-
-    cxmodel::NewGameInformation gameInfo1;
-    gameInfo1.m_gridHeight = gridHeight;
-    gameInfo1.m_gridWidth = 7;
-    gameInfo1.m_inARowValue = inARowValue;
-    gameInfo1.AddPlayer(playerInfo1);
-    gameInfo1.AddPlayer(playerInfo2);
-
-    cxmodel::NewGameInformation gameInfo2;
-    gameInfo2.m_gridHeight = gridHeight;
-    gameInfo2.m_gridWidth = 8;
-    gameInfo2.m_inARowValue = inARowValue;
-    gameInfo2.AddPlayer(playerInfo1);
-    gameInfo2.AddPlayer(playerInfo2);
+    const cxmodel::NewGameInformation gameInfo1 = MakeNewGameInformation(6, 7, 4, {playerInfo1, playerInfo2});
+    const cxmodel::NewGameInformation gameInfo2 = MakeNewGameInformation(6, 8, 4, {playerInfo1, playerInfo2});
 
     ASSERT_TRUE(gameInfo1 != gameInfo2);
 }
@@ -330,45 +218,16 @@ TEST(NewGameInformation, /*DISABLED_*/OperatorNotEqual_DifferentInARowValue_Retu
     const cxmodel::PlayerInformation playerInfo1{"John Doe", "Red"};
     const cxmodel::PlayerInformation playerInfo2{"Jane Doe", "Blue"};
 
-    const size_t gridHeight = 6;
-    const size_t gridWidth = 7;
-
-    cxmodel::NewGameInformation gameInfo1;
-    gameInfo1.m_gridHeight = gridHeight;
-    gameInfo1.m_gridWidth = gridWidth;
-    gameInfo1.m_inARowValue = 4;
-    gameInfo1.AddPlayer(playerInfo1);
-    gameInfo1.AddPlayer(playerInfo2);
-
-    cxmodel::NewGameInformation gameInfo2;
-    gameInfo2.m_gridHeight = gridHeight;
-    gameInfo2.m_gridWidth = gridWidth;
-    gameInfo2.m_inARowValue = 5;
-    gameInfo2.AddPlayer(playerInfo1);
-    gameInfo2.AddPlayer(playerInfo2);
+    const cxmodel::NewGameInformation gameInfo1 = MakeNewGameInformation(6, 7, 4, {playerInfo1, playerInfo2});
+    const cxmodel::NewGameInformation gameInfo2 = MakeNewGameInformation(6, 7, 5, {playerInfo1, playerInfo2});
 
     ASSERT_TRUE(gameInfo1 != gameInfo2);
 }
 
 TEST(NewGameInformation, /*DISABLED_*/OperatorNotEqual_DifferentPlayersInformations_ReturnsTrue)
 {
-    const size_t gridHeight = 6;
-    const size_t gridWidth = 7;
-    const size_t inARowValue = 4;
-
-    cxmodel::NewGameInformation gameInfo1;
-    gameInfo1.m_gridHeight = gridHeight;
-    gameInfo1.m_gridWidth = gridWidth;
-    gameInfo1.m_inARowValue = inARowValue;
-    gameInfo1.AddPlayer({"Player1", "Red"});
-    gameInfo1.AddPlayer({"Player2", "Blue"});
-
-    cxmodel::NewGameInformation gameInfo2;
-    gameInfo2.m_gridHeight = gridHeight;
-    gameInfo2.m_gridWidth = gridWidth;
-    gameInfo2.m_inARowValue = inARowValue;
-    gameInfo2.AddPlayer({"Player3", "Yellow"});
-    gameInfo2.AddPlayer({"Player4", "Green"});
+    const cxmodel::NewGameInformation gameInfo1 = MakeNewGameInformation(6, 7, 4, {{"Player1", "Red"}, {"Player2", "Blue"}});
+    const cxmodel::NewGameInformation gameInfo2 = MakeNewGameInformation(6, 7, 4, {{"Player3", "Yellow"}, {"Player4", "Green"}});
 
     ASSERT_TRUE(gameInfo1 != gameInfo2);
 }
@@ -378,25 +237,8 @@ TEST(NewGameInformation, /*DISABLED_*/OperatorNotEqual_TwoSameInformationsButOrd
     const cxmodel::PlayerInformation playerInfo1{"John Doe", "Red"};
     const cxmodel::PlayerInformation playerInfo2{"Jane Doe", "Blue"};
 
-    const size_t gridHeight = 6;
-    const size_t gridWidth = 7;
-    const size_t inARowValue = 4;
-
-    cxmodel::NewGameInformation gameInfo1;
-    gameInfo1.m_gridHeight = gridHeight;
-    gameInfo1.m_gridWidth = gridWidth;
-    gameInfo1.m_inARowValue = inARowValue;
-    gameInfo1.AddPlayer(playerInfo1);
-    gameInfo1.AddPlayer(playerInfo2);
-
-    cxmodel::NewGameInformation gameInfo2;
-    gameInfo2.m_gridHeight = gridHeight;
-    gameInfo2.m_gridWidth = gridWidth;
-    gameInfo2.m_inARowValue = inARowValue;
-
-    // Order differs here:
-    gameInfo2.AddPlayer(playerInfo2);
-    gameInfo2.AddPlayer(playerInfo1);
+    const cxmodel::NewGameInformation gameInfo1 = MakeNewGameInformation(6, 7, 4, {playerInfo1, playerInfo2});
+    const cxmodel::NewGameInformation gameInfo2 = MakeNewGameInformation(6, 7, 4, {playerInfo2, playerInfo1});
 
     ASSERT_TRUE(gameInfo1 != gameInfo2);
 }
