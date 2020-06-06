@@ -21,11 +21,18 @@
  *
  *************************************************************************************************/
 
+#include <cxinv/include/assertion.h>
+
 #include <NewGameInformation.h>
 
 bool cxmodel::operator==(const cxmodel::PlayerInformation& p_lhs, const cxmodel::PlayerInformation& p_rhs)
 {
     return (p_lhs.m_name == p_rhs.m_name) && (p_lhs.m_discColor == p_rhs.m_discColor);
+}
+
+bool cxmodel::operator!=(const cxmodel::PlayerInformation& p_lhs, const cxmodel::PlayerInformation& p_rhs)
+{
+    return !(p_lhs == p_rhs);
 }
 
 std::size_t cxmodel::NewGameInformation::AddPlayer(const PlayerInformation& p_playerInformation)
@@ -51,6 +58,7 @@ bool cxmodel::operator==(const cxmodel::NewGameInformation& p_lhs, const cxmodel
 
     areEqual &= (p_lhs.m_gridWidth == p_rhs.m_gridWidth);
     areEqual &= (p_lhs.m_gridHeight == p_rhs.m_gridHeight);
+    areEqual &= (p_lhs.m_inARowValue == p_rhs.m_inARowValue);
 
     areEqual &= (p_lhs.GetNbOfPlayers() == p_rhs.GetNbOfPlayers());
 

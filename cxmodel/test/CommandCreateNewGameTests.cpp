@@ -36,30 +36,12 @@ TEST(CommandCreateNewGame, Execute_ValidNewGame_NewGameCreated)
     newGameInformation.AddPlayer({"John Doe", "Red"});
     newGameInformation.AddPlayer({"Jane Doe", "Blue"});
 
-    ASSERT_NE(modelInfo.m_inARowValue, newGameInformation.m_inARowValue);
-    ASSERT_NE(modelInfo.m_gridWidth, newGameInformation.m_gridWidth);
-    ASSERT_NE(modelInfo.m_gridHeight, newGameInformation.m_gridHeight);
-
-    const auto newPlayersBefore = newGameInformation.GetPlayersInformation();
-    const auto modelPlayersBefore = modelInfo.GetPlayersInformation();
-
-    ASSERT_NE(newPlayersBefore.size(), modelPlayersBefore.size());
+    ASSERT_NE(modelInfo, newGameInformation);
 
     cxmodel::CommandCreateNewGame cmd{modelInfo, newGameInformation};
     cmd.Execute();
 
-    ASSERT_EQ(modelInfo.m_inARowValue, newGameInformation.m_inARowValue);
-    ASSERT_EQ(modelInfo.m_gridWidth, newGameInformation.m_gridWidth);
-    ASSERT_EQ(modelInfo.m_gridHeight, newGameInformation.m_gridHeight);
-
-    const auto newPlayersAfter = newGameInformation.GetPlayersInformation();
-    const auto modelPlayersAfter = modelInfo.GetPlayersInformation();
-
-    for(size_t i = 0; i < newPlayersAfter.size(); ++i)
-    {
-        ASSERT_EQ(newPlayersAfter[i].m_name, modelPlayersAfter[i].m_name);
-        ASSERT_EQ(newPlayersAfter[i].m_discColor, modelPlayersAfter[i].m_discColor);
-    }
+    ASSERT_EQ(modelInfo, newGameInformation);
 }
 
 TEST(CommandCreateNewGame, Undo_ValidNewGame_HasNoEffect)
