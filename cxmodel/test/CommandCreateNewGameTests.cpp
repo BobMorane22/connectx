@@ -33,8 +33,8 @@ TEST(CommandCreateNewGame, Execute_ValidNewGame_NewGameCreated)
     newGameInformation.m_inARowValue = 4;
     newGameInformation.m_gridWidth = 7;
     newGameInformation.m_gridHeight = 6;
-    newGameInformation.AddPlayer({"John Doe", "Red"});
-    newGameInformation.AddPlayer({"Jane Doe", "Blue"});
+    newGameInformation.AddPlayer({"John Doe", cxmodel::MakeRed()});
+    newGameInformation.AddPlayer({"Jane Doe", cxmodel::MakeBlue()});
 
     ASSERT_NE(modelInfo, newGameInformation);
 

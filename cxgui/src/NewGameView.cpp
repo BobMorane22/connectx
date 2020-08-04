@@ -61,7 +61,12 @@ void DisplayNumericalValuesOutOfRangeWarningDialog()
 
 void DisplayEmptyEntriesWarningDialog()
 {
-    DisplayWarningDialog("Player names and disc cannot be empty.");
+    DisplayWarningDialog("Player names cannot be empty.");
+}
+
+void DisplaySameColorsWarningDialog()
+{
+    DisplayWarningDialog("Discs must have different colors.");
 }
 
 } // namespace
@@ -125,8 +130,8 @@ void cxgui::NewGameView::SetLayout()
     m_viewLayout.attach(m_player1NameEntry, 0, 8, 1, 1);
     m_viewLayout.attach(m_player2NameEntry, 0, 9, 1, 1);
     m_viewLayout.attach(m_discRowTitle, 1, 7, 1, 1);
-    m_viewLayout.attach(m_disc1Entry, 1, 8, 1, 1);
-    m_viewLayout.attach(m_disc2Entry, 1, 9, 1, 1);
+    m_viewLayout.attach(m_disc1Combo, 1, 8, 1, 1);
+    m_viewLayout.attach(m_disc2Combo, 1, 9, 1, 1);
 
     m_viewLayout.attach(m_startButton, 0, 10, TOTAL_WIDTH, 1);
 }
@@ -151,29 +156,24 @@ void cxgui::NewGameView::PopulateWidgets()
 
 void cxgui::NewGameView::ConfigureWidgets()
 {
-    constexpr int SIZE_MARGIN = 10;
-
     // Window margin:
-    m_mainLayout.set_margin_left(SIZE_MARGIN);
-    m_mainLayout.set_margin_right(SIZE_MARGIN);
-    m_mainLayout.set_margin_top(SIZE_MARGIN);
-    m_mainLayout.set_margin_bottom(SIZE_MARGIN);
+    m_mainLayout.set_margin_left(DIALOG_SIDE_MARGIN);
+    m_mainLayout.set_margin_right(DIALOG_SIDE_MARGIN);
+    m_mainLayout.set_margin_top(DIALOG_SIDE_MARGIN);
+    m_mainLayout.set_margin_bottom(DIALOG_SIDE_MARGIN);
 
     // View title:
-    constexpr int TITLE_BOTTOM_MARGIN = 20;
     m_title.set_use_markup(true);
     m_title.set_markup("<big><b>" + m_title.get_text() + "</b></big>");
     m_title.set_margin_bottom(TITLE_BOTTOM_MARGIN);
 
     // Game section
-    constexpr int SECTION_BOTTOM_MARGIN = 10;
     m_gameSectionTitle.set_use_markup(true);
     m_gameSectionTitle.set_markup("<b>" + m_gameSectionTitle.get_text() + "</b>");
     m_gameSectionTitle.set_halign(Gtk::Align::ALIGN_START);
     m_title.set_margin_bottom(SECTION_BOTTOM_MARGIN);
 
     // In-a-row:
-    constexpr char INDENT_MARK[] = "    ";
     m_inARowLabel.set_halign(Gtk::Align::ALIGN_START);
     m_inARowLabel.set_text(INDENT_MARK + m_inARowLabel.get_text());
 
@@ -184,7 +184,6 @@ void cxgui::NewGameView::ConfigureWidgets()
     m_title.set_margin_bottom(SECTION_BOTTOM_MARGIN);
 
     // Width/height:
-    constexpr int CONTROL_BOTTOM_MARGIN = 5;
     m_gridWidthLabel.set_halign(Gtk::Align::ALIGN_START);
     m_gridWidthLabel.set_text(INDENT_MARK + m_gridWidthLabel.get_text());
     m_gridWidthLabel.set_margin_bottom(CONTROL_BOTTOM_MARGIN);
@@ -208,8 +207,8 @@ void cxgui::NewGameView::ConfigureWidgets()
 
     // Disc column
     m_discRowTitle.set_margin_bottom(CONTROL_BOTTOM_MARGIN);
-    m_disc1Entry.set_margin_bottom(CONTROL_BOTTOM_MARGIN);
-    m_disc2Entry.set_margin_bottom(CONTROL_BOTTOM_MARGIN);
+    m_disc1Combo.set_margin_bottom(CONTROL_BOTTOM_MARGIN);
+    m_disc2Combo.set_margin_bottom(CONTROL_BOTTOM_MARGIN);
 
     // Start button:
     m_startButton.set_margin_bottom(CONTROL_BOTTOM_MARGIN);
@@ -245,17 +244,17 @@ void cxgui::NewGameView::OnStart()
         return;
     }
 
-    const std::string disc1 = m_disc1Entry.get_text();
-    const std::string disc2 = m_disc2Entry.get_text();
+    const auto disc1Color = m_disc1Combo.GetCurrentSelection();
+    const auto disc2Color = m_disc2Combo.GetCurrentSelection();
 
-    if(disc1.empty() || disc2.empty())
+    if(disc1Color == disc2Color)
     {
-        DisplayEmptyEntriesWarningDialog();
+        DisplaySameColorsWarningDialog();
         return;
     }
 
-    gameInformation.AddPlayer({name1, disc1});
-    gameInformation.AddPlayer({name2, disc2});
+    gameInformation.AddPlayer({name1, disc1Color});
+    gameInformation.AddPlayer({name2, disc2Color});
 
     m_controller.OnStart(gameInformation);
 }

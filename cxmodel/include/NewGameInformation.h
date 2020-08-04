@@ -27,6 +27,8 @@
 #include <string>
 #include <vector>
 
+#include "ChipColor.h"
+
 namespace cxmodel
 {
 
@@ -44,7 +46,7 @@ struct PlayerInformation
      * @param p_discColor The player's disc color.
      *
      ********************************************************************************************/
-    PlayerInformation(const std::string& p_name, const std::string& p_discColor)
+    PlayerInformation(const std::string& p_name, const cxmodel::ChipColor& p_discColor)
     : m_name(p_name)
     , m_discColor(p_discColor)
     {
@@ -52,7 +54,7 @@ struct PlayerInformation
     }
 
     std::string m_name;
-    std::string m_discColor;
+    cxmodel::ChipColor m_discColor;
 };
 
 using PlayersInformation = std::vector<PlayerInformation>;

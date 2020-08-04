@@ -27,6 +27,7 @@
 #include <gtkmm/button.h>
 #include <gtkmm/entry.h>
 
+#include "ColorComboBox.h"
 #include "INewGameViewController.h"
 #include "INewGameViewPresenter.h"
 #include "IView.h"
@@ -87,8 +88,8 @@ private:
     Gtk::Entry m_player1NameEntry;
     Gtk::Entry m_player2NameEntry;
     Gtk::Label m_discRowTitle;
-    Gtk::Entry m_disc1Entry;
-    Gtk::Entry m_disc2Entry;
+    ColorComboBox m_disc1Combo;
+    ColorComboBox m_disc2Combo;
 
     Gtk::Button m_startButton;
 };

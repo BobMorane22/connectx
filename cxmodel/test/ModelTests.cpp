@@ -64,8 +64,8 @@ TEST(Model, CreateNewGame_ValidNewGameInformation_NewGameCreated)
     newGameInfo.m_inARowValue = 4u;
     newGameInfo.m_gridWidth = 7u;
     newGameInfo.m_gridHeight = 6u;
-    newGameInfo.AddPlayer({"John Doe", "Red"});
-    newGameInfo.AddPlayer({"Jane Doe", "Blue"});
+    newGameInfo.AddPlayer({"John Doe", cxmodel::MakeRed()});
+    newGameInfo.AddPlayer({"Jane Doe", cxmodel::MakeBlue()});
     const cxmodel::NewGameInformation expected = newGameInfo;
 
     // We create a new game:
@@ -102,8 +102,8 @@ TEST(Model, CreateNewGame_ValidNewGameInformation_CreateNewNotificationSent)
     newGameInfo.m_inARowValue = 4u;
     newGameInfo.m_gridWidth = 7u;
     newGameInfo.m_gridHeight = 6u;
-    newGameInfo.AddPlayer({"John Doe", "Red"});
-    newGameInfo.AddPlayer({"Jane Doe", "Blue"});
+    newGameInfo.AddPlayer({"John Doe", cxmodel::MakeRed()});
+    newGameInfo.AddPlayer({"Jane Doe", cxmodel::MakeBlue()});
 
     // Then we create the new game:
     model.CreateNewGame(newGameInfo);

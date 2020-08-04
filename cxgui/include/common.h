@@ -16,40 +16,42 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file MainWindowControllerTests.cpp
- * @date 2019
+ * @file common.h
+ * @date 2020
  *
  *************************************************************************************************/
 
-#include <cxgui/test/ModelMockController.h>
+#ifndef COMMON_H_E38DC86D_677A_4508_9D75_1B9C3C899679
+#define COMMON_H_E38DC86D_677A_4508_9D75_1B9C3C899679
 
-#include "MainWindowControllerTestFixture.h"
+#include <cxmodel/include/ChipColor.h>
 
-TEST_F(MainWindowControllerTestFixture, OnAboutMenuPressed_PressedOnce_SignalCalledOnModel)
+namespace cxgui
 {
-    ModelMockController& model = static_cast<ModelMockController&>(GetModel());
 
-    ASSERT_FALSE(model.GetSignaled());
+/******************************************************************************************//**
+ * @brief Color depth used in the cxgui library.
+ *
+ ********************************************************************************************/
+using Color = cxmodel::Color<unsigned short int>;
 
-    GetController().OnAboutMenuPressed();
+static_assert(sizeof(cxgui::Color) == sizeof(cxmodel::ChipColor));
 
-    ASSERT_TRUE(model.GetSignaled());
-}
+// Dialog global margin (on each sides):
+constexpr int DIALOG_SIDE_MARGIN = 10;
 
-TEST_F(MainWindowControllerTestFixture, OnStart_ValidGame_CreateNewGameCalledOnModel)
-{
-    ModelMockController& model = static_cast<ModelMockController&>(GetModel());
+// Dialog titles bottom margin space:
+constexpr int TITLE_BOTTOM_MARGIN = 20;
 
-    ASSERT_FALSE(model.GetNewGameCreated());
+// Section titles bottom margin space:
+constexpr int SECTION_BOTTOM_MARGIN = 10;
 
-    cxmodel::NewGameInformation newGameInformation;
-    newGameInformation.m_inARowValue = 4;
-    newGameInformation.m_gridWidth = 7;
-    newGameInformation.m_gridHeight = 6;
-    newGameInformation.AddPlayer({"John Doe", cxmodel::MakeRed()});
-    newGameInformation.AddPlayer({"Jane Doe", cxmodel::MakeBlue()});
+// Controls botton margin space:
+constexpr int CONTROL_BOTTOM_MARGIN = 5;
 
-    GetController().OnStart(newGameInformation);
+// Indentation space in a dialog. For example, add this to control text to indent it once.
+constexpr char INDENT_MARK[] = "    ";
 
-    ASSERT_TRUE(model.GetNewGameCreated());
-}
+} // namespace cxgui
+
+#endif // COMMON_H_E38DC86D_677A_4508_9D75_1B9C3C899679

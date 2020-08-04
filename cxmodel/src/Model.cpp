@@ -73,7 +73,6 @@ void cxmodel::Model::CreateNewGame(const NewGameInformation& p_gameInformation)
     for(const auto& playerInfo : p_gameInformation.GetPlayersInformation())
     {
         PRECONDITION(!playerInfo.m_name.empty());
-        PRECONDITION(!playerInfo.m_discColor.empty());
     }
 
     std::unique_ptr<ICommand> command = std::make_unique<CommandCreateNewGame>(m_gameInformation, p_gameInformation);
