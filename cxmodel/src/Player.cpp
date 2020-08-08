@@ -16,20 +16,42 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file Disc.cpp
+ * @file Player.cpp
  * @date 2020
  *
  *************************************************************************************************/
 
-#include <Disc.h>
+#include <cxinv/include/assertion.h>
 
-cxmodel::Disc::Disc(const ChipColor p_color)
- : m_color{p_color}
+#include <Disc.h>
+#include <Player.h>
+
+cxmodel::Player::Player(const std::string p_name, const cxmodel::ChipColor& p_chipColor)
+ : m_name{p_name}
+ , m_chip{std::make_unique<cxmodel::Disc>(p_chipColor)}
 {
-    // Nothing to do...
+    PRECONDITION(!p_name.empty());
+
+    POSTCONDITION(!m_name.empty());
+    POSTCONDITION(m_chip != nullptr);
 }
 
-cxmodel::ChipColor cxmodel::Disc::GetColor() const
+std::string cxmodel::Player::GetName() const
 {
-    return m_color;
+    return m_name;
+}
+
+const cxmodel::IChip& cxmodel::Player::GetChip() const
+{
+    return *m_chip;
+}
+
+bool cxmodel::operator==(const cxmodel::Player& p_lhs, const cxmodel::Player& p_rhs)
+{
+    return p_lhs.GetChip() == p_rhs.GetChip();
+}
+
+bool cxmodel::operator!=(const cxmodel::Player& p_lhs, const cxmodel::Player& p_rhs)
+{
+    return !(p_lhs == p_rhs);
 }

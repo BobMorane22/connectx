@@ -44,7 +44,7 @@ public:
      * @brief Constructor.
      *
      ********************************************************************************************/
-    Disc(const ChipColor p_color);
+    explicit Disc(const ChipColor p_color);
 
     // IChip:
     ChipColor GetColor() const override;
@@ -53,28 +53,6 @@ private:
 
     ChipColor m_color;
 };
-
-/******************************************************************************************//**
- * @brief Equal-to operator.
- *
- * @param p_lhs The left hand side disc.
- * @param p_rhs The right hand side disc.
- *
- * @return `true` if the disc are considered equal, `false` otherwise.
- *
- ********************************************************************************************/
-bool operator==(const Disc& p_lhs, const Disc& p_rhs);
-
-/******************************************************************************************//**
- * @brief Not-equal-to operator.
- *
- * @param p_lhs The left hand side disc.
- * @param p_rhs The right hand side disc.
- *
- * @return `true` if the disc are considered NOT equal, `false` otherwise.
- *
- ********************************************************************************************/
-bool operator!=(const Disc& p_lhs, const Disc& p_rhs);
 
 } // namespace cxmodel
 

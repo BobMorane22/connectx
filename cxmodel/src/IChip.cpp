@@ -16,20 +16,19 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file Disc.cpp
+ * @file IChip.cpp
  * @date 2020
  *
  *************************************************************************************************/
 
-#include <Disc.h>
+#include <IChip.h>
 
-cxmodel::Disc::Disc(const ChipColor p_color)
- : m_color{p_color}
+bool cxmodel::operator==(const cxmodel::IChip& p_lhs, const cxmodel::IChip& p_rhs)
 {
-    // Nothing to do...
+    return p_lhs.GetColor() == p_rhs.GetColor();
 }
 
-cxmodel::ChipColor cxmodel::Disc::GetColor() const
+bool cxmodel::operator!=(const cxmodel::IChip& p_lhs, const cxmodel::IChip& p_rhs)
 {
-    return m_color;
+    return !(p_lhs == p_rhs);
 }

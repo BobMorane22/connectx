@@ -55,9 +55,10 @@ OBJS_$(d) := $(d)/ColorTests.o \
              $(d)/ConcreteSubjectMock.o \
              $(d)/DisableStdStreamsRAII.o \
              $(d)/DiscTests.o \
+             $(d)/LoggerMock.o \
              $(d)/ModelTests.o \
              $(d)/NewGameInformationTests.o \
-             $(d)/LoggerMock.o \
+             $(d)/PlayerTests.o \
              $(d)/SubjectTestFixture.o \
              $(d)/SubjectTests.o \
              cxmodel/libcxmodel.a
