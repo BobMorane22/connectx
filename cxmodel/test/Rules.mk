@@ -54,6 +54,7 @@ OBJS_$(d) := $(d)/ColorTests.o \
              $(d)/ConcreteObserverMock.o \
              $(d)/ConcreteSubjectMock.o \
              $(d)/DisableStdStreamsRAII.o \
+             $(d)/DiscTests.o \
              $(d)/ModelTests.o \
              $(d)/NewGameInformationTests.o \
              $(d)/LoggerMock.o \
