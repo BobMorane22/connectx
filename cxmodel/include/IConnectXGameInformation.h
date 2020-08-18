@@ -16,27 +16,27 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file IAboutWindowPresenter.h
+ * @file IGameInformation.h
  * @date 2020
  *
  *************************************************************************************************/
 
-#ifndef IABOUTWINDOWPRESENTER_H_D80BCE23_D0F8_42C9_BB00_E4AB9DD557F5
-#define IABOUTWINDOWPRESENTER_H_D80BCE23_D0F8_42C9_BB00_E4AB9DD557F5
+#ifndef IGAMEINFORMATION_H_9970E71B_B32B_4B39_8363_50B66B9CE1C3
+#define IGAMEINFORMATION_H_9970E71B_B32B_4B39_8363_50B66B9CE1C3
 
-#include <string>
+#include "Player.h"
 
-#include <cxmodel/include/IObserver.h>
-#include <cxmodel/include/Subject.h>
-
-namespace cxgui
+namespace cxmodel
 {
 
 /*********************************************************************************************//**
- * @brief Presenter for the About window.
+ * @brief Interface for querying current game information.
+ *
+ * All the information queried is on the current state of the game. On each player turn, it
+ * may be updated.
  *
  ************************************************************************************************/
-class IAboutWindowPresenter
+class IConnectXGameInformation
 {
 
 public:
@@ -45,51 +45,79 @@ public:
      * @brief Destructor.
      *
      ********************************************************************************************/
-    virtual ~IAboutWindowPresenter() = default;
+    virtual ~IConnectXGameInformation() = default;
 
     /******************************************************************************************//**
-     * @brief Gets the window title text.
+     * @brief Gets the current grid's height.
+     *
+     * @return The current grid's height.
      *
      ********************************************************************************************/
-    virtual std::string GetWindowTitle() const = 0;
+    virtual size_t GetCurrentGridHeight() const = 0;
 
     /******************************************************************************************//**
-     * @brief Gets the name of the application.
+     * @brief Gets the current grid's width.
+     *
+     * @return The current grid's width.
      *
      ********************************************************************************************/
-    virtual std::string GetApplicationName() const = 0;
+    virtual size_t GetCurrentGridWidth() const = 0;
 
     /******************************************************************************************//**
-     * @brief Gets the application version number text.
+     * @brief Gets the current in-a-row value.
+     *
+     * @return The current in-a-row value.
      *
      ********************************************************************************************/
-    virtual std::string GetVersionNumber() const = 0;
+    virtual size_t GetCurrentInARowValue() const = 0;
 
     /******************************************************************************************//**
-     * @brief Gets the application description text.
+     * @brief Gets the active players (the one who's turn is the current).
+     *
+     * @return The active player.
      *
      ********************************************************************************************/
-    virtual std::string GetApplicationDescription() const = 0;
+    virtual const Player& GetActivePlayer() const = 0;
 
     /******************************************************************************************//**
-     * @brief Gets the window title text.
+     * @brief Gets the next player (the one who's turn is the next).
+     *
+     * @return The next player.
      *
      ********************************************************************************************/
-    virtual std::string GetLicenseDescription() const = 0;
+    virtual const Player& GetNextPlayer() const = 0;
 
     /******************************************************************************************//**
-     * @brief Gets the copyright notice text.
+     * @brief Indicates if the Connect X game, in its current state, is won by any player.
+     *
+     * @return `true` if the game is won, `false` otherwise.
      *
      ********************************************************************************************/
-    virtual std::string GetCopyrightNotice() const = 0;
+    virtual bool IsWon() const = 0;
 
     /******************************************************************************************//**
-     * @brief Gets the close widget text.
+     * @brief Indicates if the Connect X game, in its current state, is a tie between two players.
+     *
+     * @return `true` if the game is a tie, `false` otherwise.
      *
      ********************************************************************************************/
-    virtual std::string GetCloseText() const = 0;
+    virtual bool IsTie() const = 0;
+
+    /******************************************************************************************//**
+     * @brief Indicates if the Connect X game, in its current state, is going to be a tie between
+     *        two players.
+     *
+     * @return `true` if the game is going to be a tie, `false` otherwise.
+     *
+     * Use this to detect ties before they actually happen. This can save a lot of time for
+     * players that don't have to actually finish the game, even though is can be detected no
+     * on can win.
+     *
+     ********************************************************************************************/
+    virtual bool IsEarlyTie() const = 0;
+
 };
 
-} // namespace cxgui
+} // namespace cxmodel
 
-#endif // IABOUTWINDOWPRESENTER_H_D80BCE23_D0F8_42C9_BB00_E4AB9DD557F5
+#endif // IGAMEINFORMATION_H_9970E71B_B32B_4B39_8363_50B66B9CE1C3

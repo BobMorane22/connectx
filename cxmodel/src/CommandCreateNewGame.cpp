@@ -27,8 +27,15 @@
 
 #include <CommandCreateNewGame.h>
 
-cxmodel::CommandCreateNewGame::CommandCreateNewGame(NewGameInformation& p_modelGameInformation, NewGameInformation p_newGameInformation)
- : m_modelGameInformation{p_modelGameInformation}
+cxmodel::CommandCreateNewGame::CommandCreateNewGame(std::vector<Player>& p_players,
+                                                    size_t& p_gridWidth,
+                                                    size_t& p_gridHeight,
+                                                    size_t& p_inARowValue,
+                                                    NewGameInformation p_newGameInformation)
+ : m_modelPlayers{p_players}
+ , m_modelGridWidth{p_gridWidth}
+ , m_modelGridHeight{p_gridHeight}
+ , m_modelInARowValue{p_inARowValue}
  , m_newGameInformation{p_newGameInformation}
 {
     // Nothing to do...
@@ -36,7 +43,16 @@ cxmodel::CommandCreateNewGame::CommandCreateNewGame(NewGameInformation& p_modelG
 
 void cxmodel::CommandCreateNewGame::Execute()
 {
-    m_modelGameInformation = m_newGameInformation;
+    m_modelPlayers.clear();
+
+    ASSERT(m_newGameInformation.GetNbOfNewPlayers() >= 2);
+
+    const auto& players = m_newGameInformation.GetNewPlayers();
+    std::copy(players.cbegin(), players.cend(), std::back_inserter(m_modelPlayers));
+
+    m_modelGridWidth = m_newGameInformation.m_gridWidth;
+    m_modelGridHeight = m_newGameInformation.m_gridHeight;
+    m_modelInARowValue = m_newGameInformation.m_inARowValue;
 }
 
 void cxmodel::CommandCreateNewGame::Undo()

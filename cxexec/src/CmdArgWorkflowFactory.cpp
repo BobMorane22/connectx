@@ -27,7 +27,6 @@
 
 #include <cxinv/include/assertion.h>
 #include <cxlog/include/ILogger.h>
-#include <cxmodel/include/IModel.h>
 
 #include <CmdArgWorkflowFactory.h>
 
@@ -48,7 +47,12 @@ const std::string VERBOSE_ARG = "--verbose";
 } // namespace cx
 
 
-std::unique_ptr<cx::ICmdArgWorkflowStrategy> cx::CmdArgWorkflowFactory::Create(int argc, char *argv[], cxmodel::IModel& p_model, cxlog::ILogger& p_logger)
+std::unique_ptr<cx::ICmdArgWorkflowStrategy> cx::CmdArgWorkflowFactory::Create(int argc,
+                                                                               char *argv[],
+                                                                               cxmodel::Subject& p_modelAsSubject,
+                                                                               cxmodel::IConnectXGameActions& p_modelAsGameActions,
+                                                                               cxmodel::IVersionning& p_modelAsVersionning,
+                                                                               cxlog::ILogger& p_logger)
 {
     std::unique_ptr<cx::ICmdArgWorkflowStrategy> strategy = std::make_unique<CmdArgNoStrategy>();
 
@@ -58,7 +62,7 @@ std::unique_ptr<cx::ICmdArgWorkflowStrategy> cx::CmdArgWorkflowFactory::Create(i
     }
     else if(argc == 1)
     {
-        strategy = std::make_unique<CmdArgMainStrategy>(argc, argv, p_model);
+        strategy = std::make_unique<CmdArgMainStrategy>(argc, argv, p_modelAsSubject, p_modelAsGameActions);
     }
     else
     {
@@ -103,7 +107,7 @@ std::unique_ptr<cx::ICmdArgWorkflowStrategy> cx::CmdArgWorkflowFactory::Create(i
                 }
                 else if(helpPos > versionPos)
                 {
-                    strategy = std::make_unique<CmdArgVersionStrategy>(p_model);
+                    strategy = std::make_unique<CmdArgVersionStrategy>(p_modelAsVersionning);
                 }
                 else
                 {
@@ -114,7 +118,12 @@ std::unique_ptr<cx::ICmdArgWorkflowStrategy> cx::CmdArgWorkflowFactory::Create(i
             {
                 ASSERT_MSG(verboseIt != arguments.cend(), "There must be at least one argument.");
 
-                strategy = std::make_unique<CmdArgVerboseStrategy>(argc, argv, p_model, &p_logger);
+                strategy = std::make_unique<CmdArgVerboseStrategy>(argc,
+                                                                   argv,
+                                                                   p_modelAsSubject,
+                                                                   p_modelAsGameActions,
+                                                                   p_modelAsVersionning,
+                                                                   &p_logger);
             }
         }
     }

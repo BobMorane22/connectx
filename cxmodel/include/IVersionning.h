@@ -16,46 +16,48 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file CmdArgVersionStrategy.h
- * @date 2019
+ * @file IVersionning.h
+ * @date 2020
  *
  *************************************************************************************************/
 
-#ifndef CMDARGVERSIONSTRATEGY_H_5A1B3137_4CCC_43BC_B86B_5CFD2649C858
-#define CMDARGVERSIONSTRATEGY_H_5A1B3137_4CCC_43BC_B86B_5CFD2649C858
+#ifndef IVERSIONNING_H_776139B1_BE1B_4469_95F0_2DE9A0E4C816
+#define IVERSIONNING_H_776139B1_BE1B_4469_95F0_2DE9A0E4C816
 
-#include <cxmodel/include/IVersionning.h>
+#include <string>
 
-#include "ICmdArgWorkflowStrategy.h"
-
-namespace cx
+namespace cxmodel
 {
 
 /*********************************************************************************************//**
- * @brief Workflow for when the @c --version command line argument is passed.
+ * @brief Interface for versioning an API.
  *
  ************************************************************************************************/
-class CmdArgVersionStrategy : public ICmdArgWorkflowStrategy
+class IVersionning
 {
 
 public:
 
     /******************************************************************************************//**
-     * @brief Constructor.
-     *
-     * @param p_modelAsVersionning The Connect X compatible model (Versionning).
+     * @brief Destructor.
      *
      ********************************************************************************************/
-    CmdArgVersionStrategy(cxmodel::IVersionning& p_modelAsVersionning);
+    virtual ~IVersionning() = default;
 
-    int Handle() override;
+    /******************************************************************************************//**
+     * @brief Get the API name.
+     *
+     ********************************************************************************************/
+    virtual std::string GetName() const = 0;
 
-private:
-
-    cxmodel::IVersionning& m_modelAsVersionning;
+    /******************************************************************************************//**
+     * @brief Get the API version number, formatted as a string.
+     *
+     ********************************************************************************************/
+    virtual std::string GetVersionNumber() const = 0;
 
 };
 
-} // namespace cx
+} // namespace cxmodel
 
-#endif // CMDARGVERSIONSTRATEGY_H_5A1B3137_4CCC_43BC_B86B_5CFD2649C858
+#endif // IVERSIONNING_H_776139B1_BE1B_4469_95F0_2DE9A0E4C816

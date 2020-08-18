@@ -51,8 +51,6 @@ OBJS_$(d) := $(d)/AboutWindowPresenterTestFixture.o \
              $(d)/MainWindowControllerTestFixture.o \
              $(d)/MainWindowPresenterTests.o \
              $(d)/MenuItemTests.o \
-             $(d)/ModelMockController.o \
-             $(d)/ModelMockPresenter.o \
              $(d)/NewGamePresenterTests.o \
              $(d)/StatusBarPresenterTests.o \
              cxgui/libcxgui.a

@@ -28,8 +28,23 @@
 
 #include <gtest/gtest.h>
 
+#include <cxmodel/include/IConnectXGameActions.h>
 #include <cxgui/include/IMainWindowController.h>
-#include <cxmodel/include/IModel.h>
+
+class MainWindowControllerMockModel : public cxmodel::IConnectXGameActions
+{
+
+public:
+
+    // IConnectXGameActions:
+    void CreateNewGame(const cxmodel::NewGameInformation& p_gameInformation) override;
+
+    bool GetNewGameCreated() const;
+
+private:
+
+    bool m_newGameCreated = false;
+};
 
 class MainWindowControllerTestFixture : public testing::Test
 {
@@ -38,14 +53,14 @@ public:
 
     MainWindowControllerTestFixture();
 
-    cxmodel::IModel& GetModel();
+    MainWindowControllerMockModel& GetModel();
     cxgui::IMainWindowController& GetController();
     cxgui::INewGameViewController& GetNewGameViewController();
 
 private:
 
     std::unique_ptr<cxgui::IMainWindowController> m_controller;
-    std::unique_ptr<cxmodel::IModel> m_model;
+    std::unique_ptr<MainWindowControllerMockModel> m_model;
 
 };
 

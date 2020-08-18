@@ -23,18 +23,13 @@
 
 #include <iostream>
 
-#include <cxmodel/include/IModel.h>
+#include <cxmodel/include/IConnectXGameActions.h>
 
 #include <MainWindowController.h>
 
-cxgui::MainWindowController::MainWindowController(cxmodel::IModel& p_model)
+cxgui::MainWindowController::MainWindowController(cxmodel::IConnectXGameActions& p_model)
  : m_model{p_model}
 {
-}
-
-void cxgui::MainWindowController::OnAboutMenuPressed()
-{
-    m_model.Signal();
 }
 
 void cxgui::MainWindowController::OnStart(const cxmodel::NewGameInformation p_gameInformation)

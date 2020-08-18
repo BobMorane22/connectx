@@ -26,9 +26,12 @@
 
 #include <gtest/gtest.h>
 
+#include <cxmodel/include/IConnectXGameActions.h>
+#include <cxmodel/include/IVersionning.h>
+#include <cxmodel/include/Subject.h>
+
 #include "DisableStdStreamsRAII.h"
 #include "LoggerMock.h"
-#include "ModelMock.h"
 
 /*********************************************************************************************//**
  * @brief Test fixture for the class @c cx::Application
@@ -40,8 +43,12 @@ class ApplicationTestFixture : public ::testing::Test
 {
 public:
 
+    ApplicationTestFixture();
+
     cxlog::ILogger& GetLogger();
-    cxmodel::IModel& GetModel();
+    cxmodel::Subject& GetSubjectModel();
+    cxmodel::IConnectXGameActions& GetGameActionsModel();
+    cxmodel::IVersionning& GetVersionningModel();
 
     std::string GetStdOutContents() const;
     std::string GetStdErrContents() const;
@@ -49,8 +56,27 @@ public:
 
 private:
 
+    class ModelApplicationMock : public cxmodel::Subject,
+                                 public cxmodel::IConnectXGameActions,
+                                 public cxmodel::IVersionning
+    {
+
+    public:
+
+        // IConnectXGameActions:
+        void CreateNewGame(const cxmodel::NewGameInformation& p_gameInformation) override
+        {
+            // Not used...
+            (void)p_gameInformation;
+        }
+
+        // IVersionning:
+        std::string GetName() const override {return "Connect X";};
+        std::string GetVersionNumber() const override {return "v0.0";};
+    };
+
     LoggerMock m_logger;
-    ModelMock m_model;
+    std::unique_ptr<ModelApplicationMock> m_model;
     DisableStdStreamsRAII m_disableStreamsRAII;
 };
 

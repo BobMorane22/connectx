@@ -28,6 +28,7 @@
 #include <gtkmm/stock.h>
 
 #include <cxinv/include/assertion.h>
+#include <cxmodel/include/IVersionning.h>
 
 #include <About.h>
 #include <AboutWindowPresenter.h>
@@ -141,8 +142,13 @@ void cxgui::MainWindow::CreateAboutWindow()
 {
     if(!m_about)
     {
-        std::unique_ptr<IAboutWindowPresenter> aboutPresenter = std::make_unique<AboutWindowPresenter>();
-        m_model.Attach(aboutPresenter.get());
+        cxmodel::IVersionning* versionModel = dynamic_cast<cxmodel::IVersionning*>(&m_model);
+        if(!ASSERT(versionModel != nullptr))
+        {
+            return;
+        }
+
+        std::unique_ptr<IAboutWindowPresenter> aboutPresenter = std::make_unique<AboutWindowPresenter>(*versionModel);
 
         {
             auto aboutWindow = std::make_unique<About>(std::move(aboutPresenter));
@@ -150,8 +156,6 @@ void cxgui::MainWindow::CreateAboutWindow()
 
             m_about = std::move(aboutWindow);
         }
-
-        m_controller.OnAboutMenuPressed();
     }
 
     m_about->Show();

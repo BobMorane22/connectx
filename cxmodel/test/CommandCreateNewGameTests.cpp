@@ -25,9 +25,13 @@
 
 #include <CommandCreateNewGame.h>
 
-TEST(CommandCreateNewGame, Execute_ValidNewGame_NewGameCreated)
+TEST(CommandCreateNewGame, /*DISABLED_*/Execute_ValidNewGame_NewGameCreated)
 {
-    cxmodel::NewGameInformation modelInfo;
+    std::vector<cxmodel::Player> modelPlayers;
+    size_t modelGridWidth = 0u;
+    size_t modelGridHeight = 0u;
+    size_t modelInARowValue = 0u;
+
     cxmodel::NewGameInformation newGameInformation;
 
     newGameInformation.m_inARowValue = 4;
@@ -36,15 +40,18 @@ TEST(CommandCreateNewGame, Execute_ValidNewGame_NewGameCreated)
     newGameInformation.AddPlayer({"John Doe", cxmodel::MakeRed()});
     newGameInformation.AddPlayer({"Jane Doe", cxmodel::MakeBlue()});
 
-    ASSERT_NE(modelInfo, newGameInformation);
-
-    cxmodel::CommandCreateNewGame cmd{modelInfo, newGameInformation};
+    cxmodel::CommandCreateNewGame cmd{modelPlayers, modelGridWidth, modelGridHeight, modelInARowValue, newGameInformation};
     cmd.Execute();
 
-    ASSERT_EQ(modelInfo, newGameInformation);
+    ASSERT_EQ(modelPlayers.size(), newGameInformation.GetNbOfNewPlayers());
+    ASSERT_EQ(modelPlayers, newGameInformation.GetNewPlayers());
+
+    ASSERT_EQ(modelGridWidth, newGameInformation.m_gridWidth);
+    ASSERT_EQ(modelGridHeight, newGameInformation.m_gridHeight);
+    ASSERT_EQ(modelInARowValue, newGameInformation.m_inARowValue);
 }
 
-TEST(CommandCreateNewGame, Undo_ValidNewGame_HasNoEffect)
+TEST(CommandCreateNewGame, /*DISABLED_*/Undo_ValidNewGame_HasNoEffect)
 {
     // To be added later...
 }

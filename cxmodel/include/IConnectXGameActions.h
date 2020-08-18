@@ -16,31 +16,46 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file NotificationContext.h
+ * @file IGameActions.h
  * @date 2020
  *
  *************************************************************************************************/
 
-#ifndef NOTIFICATIONCONTEXT_H_3B763656_2127_4F2A_B522_85ECBA656CB8
-#define NOTIFICATIONCONTEXT_H_3B763656_2127_4F2A_B522_85ECBA656CB8
+#ifndef IGAMEACTIONS_H_49B2D12C_4951_4989_AFE9_870A3940ED8F
+#define IGAMEACTIONS_H_49B2D12C_4951_4989_AFE9_870A3940ED8F
+
+#include "NewGameInformation.h"
 
 namespace cxmodel
 {
 
-/**********************************************************************************************//**
- * @brief Connect X model notification context.
+/*********************************************************************************************//**
+ * @brief Interface for Connect X user game actions.
  *
- * Describes all the contexts from which the Connect X model may notify.
+ * This interface is a collection of all actions a user can do.
  *
  ************************************************************************************************/
-enum class NotificationContext
+class IConnectXGameActions
 {
-    // User operations:
-    CREATE_NEW_GAME,
-    REDO,
-    UNDO
+
+public:
+
+    /******************************************************************************************//**
+     * @brief Destructor.
+     *
+     ********************************************************************************************/
+    virtual ~IConnectXGameActions() = default;
+
+    /******************************************************************************************//**
+     * @brief Creates a new game.
+     *
+     * @param p_gameInformation The necessary information to create a game.
+     *
+     ********************************************************************************************/
+    virtual void CreateNewGame(const NewGameInformation& p_gameInformation) = 0;
+
 };
 
 } // namespace cxmodel
 
-#endif // NOTIFICATIONCONTEXT_H_3B763656_2127_4F2A_B522_85ECBA656CB8
+#endif // IGAMEACTIONS_H_49B2D12C_4951_4989_AFE9_870A3940ED8F

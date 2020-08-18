@@ -21,24 +21,11 @@
  *
  *************************************************************************************************/
 
-#include <cxgui/test/ModelMockController.h>
-
 #include "MainWindowControllerTestFixture.h"
-
-TEST_F(MainWindowControllerTestFixture, OnAboutMenuPressed_PressedOnce_SignalCalledOnModel)
-{
-    ModelMockController& model = static_cast<ModelMockController&>(GetModel());
-
-    ASSERT_FALSE(model.GetSignaled());
-
-    GetController().OnAboutMenuPressed();
-
-    ASSERT_TRUE(model.GetSignaled());
-}
 
 TEST_F(MainWindowControllerTestFixture, OnStart_ValidGame_CreateNewGameCalledOnModel)
 {
-    ModelMockController& model = static_cast<ModelMockController&>(GetModel());
+    MainWindowControllerMockModel& model = GetModel();
 
     ASSERT_FALSE(model.GetNewGameCreated());
 

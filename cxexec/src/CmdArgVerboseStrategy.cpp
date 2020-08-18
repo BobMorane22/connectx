@@ -57,10 +57,17 @@ std::unique_ptr<cxlog::ILogger> CreateVerboseLogger(cxlog::VerbosityLevel p_verb
     return std::move(logger);
 }
 
-cx::CmdArgVerboseStrategy::CmdArgVerboseStrategy(int argc, char *argv[], cxmodel::IModel& p_model, cxlog::ILogger* p_logger)
+cx::CmdArgVerboseStrategy::CmdArgVerboseStrategy(int argc,
+                                                 char *argv[],
+                                                 cxmodel::Subject& p_modelAsSubject,
+                                                 cxmodel::IConnectXGameActions& p_modelAsGameActions,
+                                                 cxmodel::IVersionning& p_modelAsVersionning,
+                                                 cxlog::ILogger* p_logger)
  : m_argc{argc}
  , m_argv{argv}
- , m_model{p_model}
+ , m_modelAsSubject{p_modelAsSubject}
+ , m_modelAsGameActions{p_modelAsGameActions}
+ , m_modelAsVersionning{p_modelAsVersionning}
  , m_logger{p_logger}
 {
     PRECONDITION(p_logger != nullptr);
@@ -87,7 +94,7 @@ int cx::CmdArgVerboseStrategy::Handle()
     ASSERT_MSG(chainLogger->HasSucessor(), "Setting a logger successor failed.");
 
     // Now that the verbose logger is set, we go on with the standard execution:
-    cx::CmdArgMainStrategy mainStrategy{m_argc, m_argv, m_model};
+    cx::CmdArgMainStrategy mainStrategy{m_argc, m_argv, m_modelAsSubject, m_modelAsGameActions};
 
     return mainStrategy.Handle();
 }

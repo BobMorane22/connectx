@@ -25,20 +25,29 @@
 
 #include <cxinv/include/assertion.h>
 #include <cxlog/include/IChainLogging.h>
-#include <cxmodel/include/IModel.h>
 
 #include <Application.h>
 #include <CmdArgWorkflowFactory.h>
 #include <CmdArgNoStrategy.h>
 
-cx::Application::Application(int argc, char *argv[], cxmodel::IModel& p_model, cxlog::ILogger& p_logger)
+cx::Application::Application(int argc,
+                             char *argv[],
+                             cxmodel::Subject& p_modelAsSubject,
+                             cxmodel::IConnectXGameActions& p_modelAsGameActions,
+                             cxmodel::IVersionning& p_modelAsVersionning,
+                             cxlog::ILogger& p_logger)
 {
     PRECONDITION(argc >= 1);
     PRECONDITION(argv != nullptr);
 
     CmdArgWorkflowFactory factory;
 
-    m_workflow = factory.Create(argc, argv, p_model, p_logger);
+    m_workflow = factory.Create(argc,
+                                argv,
+                                p_modelAsSubject,
+                                p_modelAsGameActions,
+                                p_modelAsVersionning,
+                                p_logger);
 
     POSTCONDITION(m_workflow != nullptr);
 }

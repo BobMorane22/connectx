@@ -21,21 +21,16 @@
  *
  *************************************************************************************************/
 
-#include <cxmodel/include/Model.h>
+#include <cxmodel/include/IVersionning.h>
+#include <cxmodel/include/Subject.h>
 
 #include <AboutWindowPresenter.h>
 
-void cxgui::AboutWindowPresenter::Update(cxmodel::NotificationContext p_context, Subject* p_subject)
+cxgui::AboutWindowPresenter::AboutWindowPresenter(const cxmodel::IVersionning& p_model)
+ : m_applicationName{p_model.GetName()}
+ , m_versionNumber{p_model.GetVersionNumber()}
 {
-    if(p_subject && p_context == cxmodel::NotificationContext::SIGNAL )
-    {
-        cxmodel::IModel* model = static_cast<cxmodel::Model*>(p_subject);
-
-        m_applicationName = model->GetName();
-        m_versionNumber = model->GetVersionNumber();
-    }
-
-    Notify(p_context);
+    // Nothing to do...
 }
 
 std::string cxgui::AboutWindowPresenter::AboutWindowPresenter::GetWindowTitle() const

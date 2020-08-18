@@ -48,7 +48,6 @@ OBJS_$(d) := $(d)/ApplicationTests.o \
              $(d)/CmdArgStrategyTests.o \
              $(d)/DisableStdStreamsRAII.o \
              $(d)/LoggerMock.o \
-             $(d)/ModelMock.o \
              cxexec/libcxexec.a
 
 # We include all the generated rules. These are created by GCC to make sure that

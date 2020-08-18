@@ -16,100 +16,98 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file IModel.h
- * @date 2019
+ * @file IConnectXLimits.h
+ * @date 2020
  *
  *************************************************************************************************/
 
-#ifndef IMODEL_H_CC50381B_15B7_4586_A5F6_5F244A4289BA
-#define IMODEL_H_CC50381B_15B7_4586_A5F6_5F244A4289BA
-
-#include <string>
-
-#include "NewGameInformation.h"
-#include "Subject.h"
+#ifndef ICONNECTXLIMITS_H_9A371FB1_B191_4967_A1E0_171616A30DDA
+#define ICONNECTXLIMITS_H_9A371FB1_B191_4967_A1E0_171616A30DDA
 
 namespace cxmodel
 {
 
 /*********************************************************************************************//**
- * @brief Interface for a Connect X compatible model.
- *
- * Inherit from this to create a compatible Connect X model class.
+ * @brief Interface to query any Connect X game limit parameter.
  *
  ************************************************************************************************/
-class IModel : public Subject
+class IConnectXLimits
 {
 
 public:
 
     /******************************************************************************************//**
-     * @brief Default destructor.
+     * @brief Destructor.
      *
      ********************************************************************************************/
-    virtual ~IModel() = default;
+    virtual ~IConnectXLimits() = default;
 
     /******************************************************************************************//**
-     * @brief Get the model name.
+     * @brief Gets the minimum Connect X grid height.
+     *
+     * @return The minimum Connect X grid height.
      *
      ********************************************************************************************/
-    virtual std::string GetName() const = 0;
+    virtual size_t GetMinimumGridHeight() const = 0;
 
     /******************************************************************************************//**
-     * @brief Get the model version number, formatted as a string.
+     * @brief Gets the minimum Connect X grid width.
+     *
+     * @return The minimum Connect X grid width.
      *
      ********************************************************************************************/
-    virtual std::string GetVersionNumber() const = 0;
+    virtual size_t GetMinimumGridWidth() const = 0;
 
     /******************************************************************************************//**
-     * @brief Creates a new game.
+     * @brief Gets the minimum Connect X in-a-row value.
      *
-     * @param p_gameInformation The necessary information to create a game.
+     * @return The minimum Connect X grid width.
      *
      ********************************************************************************************/
-    virtual void CreateNewGame(const NewGameInformation& p_gameInformation) = 0;
+    virtual size_t GetMinimumInARowValue() const = 0;
 
     /******************************************************************************************//**
-     * @brief Get the new game information.
+     * @brief Gets the maximum Connect X grid height.
      *
-     * @return The new game information.
+     * @return The maximum Connect X grid height.
      *
      ********************************************************************************************/
-    virtual NewGameInformation GetGameInformation() const = 0;
+    virtual size_t GetMaximumGridHeight() const = 0;
 
     /******************************************************************************************//**
-     * @brief Undo the last action, if possible.
+     * @brief Gets the maximum Connect X grid width.
      *
-     * If some undoeable actions were done, the last one will be undoed.
-     *
-     * @note An action that is undoed must put the model back at the same state is was before
-     *       the action was ever done.
+     * @return The maximum Connect X grid width.
      *
      ********************************************************************************************/
-    virtual void Undo() = 0;
+    virtual size_t GetMaximumGridWidth() const = 0;
 
     /******************************************************************************************//**
-     * @brief Redo the last action, if possible.
+     * @brief Gets the maximum Connect X in-a-row value.
      *
-     * If some redoable actions were undoed, the last one that was undoed will be redoed.
-     * Otherwise, nothing happens.
-     *
-     * @note An action that is redoed must put the model back at the same state it was before
-     *       the action was undoed.
+     * @return The maximum Connect X grid width.
      *
      ********************************************************************************************/
-    virtual void Redo() = 0;
+    virtual size_t GetMaximumInARowValue() const = 0;
 
     /******************************************************************************************//**
-     * @brief Sends an update to every observers with the SIGNAL notification context.
+     * @brief Gets the minimum Connect X number of players.
      *
-     * Use this to update observers that are not triggered from any user action.
+     * @return The minimum Connect X number of players.
      *
      ********************************************************************************************/
-    virtual void Signal() = 0;
+    virtual size_t GetMinimumNumberOfPlayers() const = 0;
+
+    /******************************************************************************************//**
+     * @brief Gets the maximum Connect X number of players.
+     *
+     * @return The maximum Connect X number of players.
+     *
+     ********************************************************************************************/
+    virtual size_t GetMaximumNumberOfPlayers() const = 0;
 
 };
 
 } // namespace cxmodel
 
-#endif // IMODEL_H_CC50381B_15B7_4586_A5F6_5F244A4289BA
+#endif // ICONNECTXLIMITS_H_9A371FB1_B191_4967_A1E0_171616A30DDA

@@ -36,7 +36,8 @@
 
 namespace cxmodel
 {
-    class IModel;
+    class IConnectXGameActions;
+    class Subject;
 }
 
 namespace cx
@@ -45,13 +46,7 @@ namespace cx
 /*********************************************************************************************//**
  * @brief A Gtkmm UI manager.
  *
- * @invariant @c m_controller is not @c nullptr.
- * @invariant @c m_presenter is not @c nullptr.
- * @invariant @c m_mainWindow is not @c nullptr.
- *
- * Manages a Gtkmm implemented UI. For more information, see:
- *
- *                                 https://www.gtkmm.org/en/
+ * Manages a Gtkmm implemented UI. For more information, see: https://www.gtkmm.org/en/
  *
  ************************************************************************************************/
 class GtkmmUIManager : public cx::IUIManager
@@ -65,14 +60,16 @@ public:
      * @pre The argument count is at least 1.
      * @pre The argument list is not @c nullptr.
      *
-     * @post m_mainWindow is not @c nullptr.
-     *
-     * @param argc Command line argument count.
-     * @param argc A C-style array of arguments.
-     * @param p_model The Connect X compatible model.
+     * @param argc                 Command line argument count.
+     * @param argv                 A C-style array of arguments.
+     * @param p_modelAsSubject     The Connect X compatible model (Subject).
+     * @param p_modelAsGameActions The Connect X compatible model (Game actions).
      *
      ********************************************************************************************/
-    GtkmmUIManager(int argc, char *argv[], cxmodel::IModel& p_model);
+    GtkmmUIManager(int argc,
+                   char *argv[],
+                   cxmodel::Subject& p_modelAsSubject,
+                   cxmodel::IConnectXGameActions& p_modelAsGameActions);
 
     int Manage() override;
 

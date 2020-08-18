@@ -23,7 +23,8 @@
 
 #include <sstream>
 
-#include <cxmodel/include/Model.h>
+#include <cxmodel/include/NewGameInformation.h>
+#include <cxmodel/include/IConnectXGameInformation.h>
 
 #include <MainWindowPresenter.h>
 
@@ -33,23 +34,18 @@ void cxgui::MainWindowPresenter::Update(cxmodel::NotificationContext p_context, 
     {
         if(p_context == cxmodel::NotificationContext::CREATE_NEW_GAME)
         {
-            cxmodel::IModel* model = static_cast<cxmodel::IModel*>(p_subject);
-
-            cxmodel::NewGameInformation gameInformation = model->GetGameInformation();
+            cxmodel::IConnectXGameInformation* model = dynamic_cast<cxmodel::IConnectXGameInformation*>(p_subject);
 
             std::ostringstream stream;
 
             stream << "A new game has been created with the following parameters: " << std::endl
                    << std::endl
-                   << "  In-a-row value : " << gameInformation.m_inARowValue << std::endl
-                   << "  Grid width     : " << gameInformation.m_gridWidth << std::endl
-                   << "  Grid height    : " << gameInformation.m_gridHeight << std::endl
-                   << "  Players        : " << std::endl;
-
-            for(const auto& player : gameInformation.GetPlayersInformation())
-            {
-                stream << player.m_name << ", ";
-            }
+                   << "  In-a-row value : " << model->GetCurrentInARowValue() << std::endl
+                   << "  Grid width     : " << model->GetCurrentGridWidth() << std::endl
+                   << "  Grid height    : " << model->GetCurrentGridHeight() << std::endl
+                   << "  Players        : " << std::endl
+                   << "    Active       : " << model->GetActivePlayer().GetName() << std::endl
+                   << "    Next         : " << model->GetNextPlayer().GetName() << std::endl;
 
             m_gameViewMessage = stream.str();
         }

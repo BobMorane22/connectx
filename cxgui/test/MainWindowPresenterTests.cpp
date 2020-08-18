@@ -23,6 +23,8 @@
 
 #include <gtest/gtest.h>
 
+#include <cxmodel/include/NewGameInformation.h>
+
 #include "MainWindowPresenterTestFixture.h"
 
 TEST_F(MainWindowPresenterTestFixture, GetWindowTitle_GetWindowTitle_GetWindowTitleLabelReturned)
@@ -50,11 +52,10 @@ TEST_F(MainWindowPresenterTestFixture, GetMenuLabel_AboutMenu_AboutMenuLabelRetu
     ASSERT_EQ(GetPresenter().GetMenuLabel(cxgui::MenuItem::ABOUT), "About");
 }
 
-TEST_F(MainWindowPresenterTestFixture, Update_CreateNewGame_NewGameInformationupdate)
+TEST_F(MainWindowPresenterTestFixture, Update_CreateNewGame_NewGameInformationUpdated)
 {
-    auto& presenter = GetPresenter();
-    auto& model = GetModel();
-    presenter.Update(cxmodel::NotificationContext::CREATE_NEW_GAME, &model);
+    auto& model = GetActionsModel();
+    model.CreateNewGame(cxmodel::NewGameInformation{});
 
     const std::string expectedMsg{
         "A new game has been created with the following parameters: \n"
@@ -62,9 +63,12 @@ TEST_F(MainWindowPresenterTestFixture, Update_CreateNewGame_NewGameInformationup
         "  In-a-row value : 4\n"
         "  Grid width     : 7\n"
         "  Grid height    : 6\n"
-        "  Players        : \nJohn Doe, Jane Doe, "
+        "  Players        : \n"
+        "    Active       : John Doe\n"
+        "    Next         : Jane Doe\n"
     };
 
+    const auto& presenter = GetPresenter();
     const std::string resultMsg = presenter.GetGameViewMessage();
 
     ASSERT_EQ(resultMsg, expectedMsg);

@@ -29,10 +29,32 @@
 TEST(Player, /*DISABLED_*/Constructor_ValidInformation_ValidPlayerConstructed)
 {
     const cxmodel::Player player{"John Doe", cxmodel::MakeRed()};
-    const cxmodel::Disc disc{cxmodel::MakeRed()};
 
     ASSERT_EQ(player.GetName(), "John Doe");
+
+    const cxmodel::Disc disc{cxmodel::MakeRed()};
     ASSERT_EQ(player.GetChip(), disc);
+}
+
+TEST(Player, /*DISABLED_*/CopyConstructor_ValidSourcePlayer_ValidPlayerConstructed)
+{
+    const cxmodel::Player lhs{"John Doe", cxmodel::MakeRed()};
+    const cxmodel::Player rhs(lhs);
+
+    ASSERT_EQ(lhs, rhs);
+}
+
+TEST(Player, /*DISABLED_*/CopyAssignmentOperator_ValidSourcePlayer_ValidPlayerAssigned)
+{
+    cxmodel::Player lhs{"John Doe", cxmodel::MakeRed()};
+    const cxmodel::Player rhs{"Jane Doe", cxmodel::MakeBlue()};
+
+    lhs = rhs;
+
+    ASSERT_EQ(lhs.GetName(), "Jane Doe");
+
+    const cxmodel::Disc disc{cxmodel::MakeBlue()};
+    ASSERT_EQ(lhs.GetChip(), disc);
 }
 
 TEST(Player, /*DISABLED_*/GetName_ValidName_NameReturned)

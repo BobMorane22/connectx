@@ -28,7 +28,8 @@
 
 #include <gtest/gtest.h>
 
-#include <cxmodel/include/IModel.h>
+#include <cxmodel/include/IVersionning.h>
+#include <cxmodel/include/Subject.h>
 
 #include <IAboutWindowPresenter.h>
 
@@ -40,12 +41,33 @@ public:
     AboutWindowPresenterTestFixture();
 
     cxgui::IAboutWindowPresenter& GetPresenter();
-    cxmodel::IModel& GetModel();
+    cxmodel::IVersionning& GetModel();
 
 private:
 
+    class AboutWindowPresenterModelMock : public cxmodel::Subject,
+                                          public cxmodel::IVersionning
+    {
+
+    public:
+
+        // Subject:
+        ~AboutWindowPresenterModelMock() = default;
+
+        // IVersionning:
+        virtual std::string GetName() const
+        {
+            return "Connect X";
+        }
+
+        virtual std::string GetVersionNumber() const
+        {
+            return "v0.0";
+        }
+    };
+
     std::unique_ptr<cxgui::IAboutWindowPresenter> m_presenter;
-    std::unique_ptr<cxmodel::IModel> m_model;
+    std::unique_ptr<AboutWindowPresenterModelMock> m_model;
 
 };
 

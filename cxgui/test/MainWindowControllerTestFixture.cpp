@@ -21,20 +21,32 @@
  *
  *************************************************************************************************/
 
-#include <cxgui/test/ModelMockController.h>
 #include "MainWindowController.h"
 #include "MainWindowControllerTestFixture.h"
 
+void MainWindowControllerMockModel::CreateNewGame(const cxmodel::NewGameInformation& p_gameInformation)
+{
+    // Not relevent for this test...
+    (void)p_gameInformation;
+
+    m_newGameCreated = true;
+}
+
+bool MainWindowControllerMockModel::GetNewGameCreated() const
+{
+    return m_newGameCreated;
+}
+
 MainWindowControllerTestFixture::MainWindowControllerTestFixture()
 {
-    m_model = std::make_unique<ModelMockController>();
+    m_model = std::make_unique<MainWindowControllerMockModel>();
     m_controller = std::make_unique<cxgui::MainWindowController>(*m_model);
 
     EXPECT_TRUE(m_model != nullptr);
     EXPECT_TRUE(m_controller != nullptr);
 }
 
-cxmodel::IModel& MainWindowControllerTestFixture::GetModel()
+MainWindowControllerMockModel& MainWindowControllerTestFixture::GetModel()
 {
     EXPECT_TRUE(m_model != nullptr);
 

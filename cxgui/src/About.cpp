@@ -28,22 +28,21 @@ cxgui::About::About(std::unique_ptr<IAboutWindowPresenter>&& p_presenter)
  : Window()
  , m_presenter{std::move(p_presenter)}
 {
-    m_presenter->Attach(this);
+    POSTCONDITION(m_presenter != nullptr);
+
+    m_window.set_title(m_presenter->GetWindowTitle());
+
+    m_name.set_label("<b><big>" + m_presenter->GetApplicationName() + "</big></b>");
+    m_version.set_label(m_presenter->GetVersionNumber());
+    m_description.set_label(m_presenter->GetApplicationDescription());
+    m_license.set_label(m_presenter->GetLicenseDescription());
+    m_copyright.set_label(m_presenter->GetCopyrightNotice());
+    m_close.set_label(m_presenter->GetCloseText());
 }
 
-void cxgui::About::Update(cxmodel::NotificationContext /*p_context*/, cxmodel::Subject* p_subject)
+void cxgui::About::Update(cxmodel::NotificationContext /*p_context*/, cxmodel::Subject* /*p_subject*/)
 {
-    if(p_subject)
-    {
-        m_window.set_title(m_presenter->GetWindowTitle());
-
-        m_name.set_label("<b><big>" + m_presenter->GetApplicationName() + "</big></b>");
-        m_version.set_label(m_presenter->GetVersionNumber());
-        m_description.set_label(m_presenter->GetApplicationDescription());
-        m_license.set_label(m_presenter->GetLicenseDescription());
-        m_copyright.set_label(m_presenter->GetCopyrightNotice());
-        m_close.set_label(m_presenter->GetCloseText());
-    }
+    // Nothing to do...
 }
 
 void cxgui::About::ConfigureWindow()

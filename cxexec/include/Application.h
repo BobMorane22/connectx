@@ -36,7 +36,9 @@ namespace cxlog
 
 namespace cxmodel
 {
-    class IModel;
+    class IConnectXGameActions;
+    class IVersionning;
+    class Subject;
 }
 
 namespace cx
@@ -61,13 +63,20 @@ public:
      *
      * @post The command line argument workflow is not @c nullptr.
      *
-     * @param argc Command line argument count.
-     * @param argc A C-style array of arguments.
-     * @param p_model The Connect X compatible model.
-     * @param p_logger A chain logger.
+     * @param argc                 Command line argument count.
+     * @param argv                 A C-style array of arguments.
+     * @param p_modelAsSubject     The Connect X compatible model (Subject).
+     * @param p_modelAsGameActions The Connect X compatible model (Game actions).
+     * @param p_modelAsVersionning The Connect X compatible model (Versionning).
+     * @param p_logger             A chain logger.
      *
      ********************************************************************************************/
-    Application(int argc, char *argv[], cxmodel::IModel& p_model, cxlog::ILogger& p_logger);
+    Application(int argc,
+                char *argv[],
+                cxmodel::Subject& p_modelAsSubject,
+                cxmodel::IConnectXGameActions& p_modelAsGameActions,
+                cxmodel::IVersionning& p_modelAsVersionning,
+                cxlog::ILogger& p_logger);
 
     int Run() override;
 

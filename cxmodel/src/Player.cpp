@@ -36,6 +36,32 @@ cxmodel::Player::Player(const std::string p_name, const cxmodel::ChipColor& p_ch
     POSTCONDITION(m_chip != nullptr);
 }
 
+cxmodel::Player::Player(const Player& p_player)
+: m_name{p_player.GetName()}
+{
+    const cxmodel::IChip& playerChip = p_player.GetChip();
+    m_chip = std::make_unique<cxmodel::Disc>(playerChip.GetColor());
+
+    POSTCONDITION(!m_name.empty());
+    POSTCONDITION(m_chip != nullptr);
+}
+
+cxmodel::Player& cxmodel::Player::operator=(const cxmodel::Player& p_player)
+{
+    if(this != &p_player)
+    {
+        this->m_name = p_player.GetName();
+
+        const cxmodel::IChip& playerChip = p_player.GetChip();
+        this->m_chip = std::make_unique<cxmodel::Disc>(playerChip.GetColor());
+    }
+
+    POSTCONDITION(!this->m_name.empty());
+    POSTCONDITION(this->m_chip != nullptr);
+
+    return *this;
+}
+
 std::string cxmodel::Player::GetName() const
 {
     return m_name;

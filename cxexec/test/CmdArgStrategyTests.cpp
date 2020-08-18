@@ -97,7 +97,7 @@ TEST_F(ApplicationTestFixture, Handle_HelpStrategy_HelpStringIsValid)
 
 TEST_F(ApplicationTestFixture, Handle_VersionStrategy_VersionStringIsValid)
 {
-    const std::unique_ptr<cx::ICmdArgWorkflowStrategy> strategy = std::make_unique<cx::CmdArgVersionStrategy>(GetModel());
+    const std::unique_ptr<cx::ICmdArgWorkflowStrategy> strategy = std::make_unique<cx::CmdArgVersionStrategy>(GetVersionningModel());
 
     ASSERT_TRUE(strategy);
 
@@ -133,7 +133,12 @@ TEST_F(ApplicationTestFixture, Handle_VerboseStrategy_InvalidLoggerError)
     const int argc = 2;
     const char *argv[] = {"connectx", "--verbose"};
 
-    const std::unique_ptr<cx::ICmdArgWorkflowStrategy> strategy = std::make_unique<cx::CmdArgVerboseStrategy>(argc, (char**)argv, GetModel(), nullptr);
+    const std::unique_ptr<cx::ICmdArgWorkflowStrategy> strategy = std::make_unique<cx::CmdArgVerboseStrategy>(argc,
+                                                                                                             (char**)argv,
+                                                                                                             GetSubjectModel(),
+                                                                                                             GetGameActionsModel(),
+                                                                                                             GetVersionningModel(),
+                                                                                                             nullptr);
 
     ASSERT_TRUE(strategy);
 
@@ -152,7 +157,12 @@ TEST_F(ApplicationTestFixture, Handle_VerboseStrategy_LoggerIsNotAChainLoggerErr
 
     ASSERT_TRUE(logger);
 
-    const std::unique_ptr<cx::ICmdArgWorkflowStrategy> strategy = std::make_unique<cx::CmdArgVerboseStrategy>(argc, (char**)argv, GetModel(), logger.get());
+    const std::unique_ptr<cx::ICmdArgWorkflowStrategy> strategy = std::make_unique<cx::CmdArgVerboseStrategy>(argc,
+                                                                                                             (char**)argv,
+                                                                                                             GetSubjectModel(),
+                                                                                                             GetGameActionsModel(),
+                                                                                                             GetVersionningModel(),
+                                                                                                             logger.get());
 
     ASSERT_TRUE(strategy);
     ASSERT_EQ(strategy->Handle(), EXIT_FAILURE);

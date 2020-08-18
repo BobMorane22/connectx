@@ -77,9 +77,16 @@ int main(int argc, char *argv[])
         }
 
         cxmodel::Model concreteModel{std::make_unique<cxmodel::CommandStack>(CMD_STACK_SIZE), *logger};
-        cxmodel::IModel& model = concreteModel;
+        cxmodel::Subject& modelAsSubject = concreteModel;
+        cxmodel::IConnectXGameActions& modelAsGameActions = concreteModel;
+        cxmodel::IVersionning& modelAsVersionning = concreteModel;
 
-        std::unique_ptr<cx::IApplication> app = std::make_unique<cx::Application>(argc, argv, model, *logger);
+        std::unique_ptr<cx::IApplication> app = std::make_unique<cx::Application>(argc,
+                                                                                  argv,
+                                                                                  modelAsSubject,
+                                                                                  modelAsGameActions,
+                                                                                  modelAsVersionning,
+                                                                                  *logger);
 
         result = app->Run();
     }

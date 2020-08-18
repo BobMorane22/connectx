@@ -53,6 +53,22 @@ public:
     Player(const std::string p_name, const ChipColor& p_chipColor);
 
     /******************************************************************************************//**
+     * @brief Copy constructor.
+     *
+     * @param p_player The player to copy.
+     *
+     ********************************************************************************************/
+    Player(const Player& p_player);
+
+    /******************************************************************************************//**
+     * @brief Copy assignment operator.
+     *
+     * @param p_player The player to copy-assign.
+     *
+     ********************************************************************************************/
+    Player& operator=(const Player& p_player);
+
+    /******************************************************************************************//**
      * @brief Player name accessor.
      *
      * @return The player's name.

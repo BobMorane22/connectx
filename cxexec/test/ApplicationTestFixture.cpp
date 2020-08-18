@@ -23,14 +23,35 @@
 
 #include "ApplicationTestFixture.h"
 
+ApplicationTestFixture::ApplicationTestFixture()
+ : m_model{std::make_unique<ModelApplicationMock>()}
+{
+}
+
 cxlog::ILogger& ApplicationTestFixture::GetLogger()
 {
     return m_logger;
 }
 
-cxmodel::IModel& ApplicationTestFixture::GetModel()
+cxmodel::Subject& ApplicationTestFixture::GetSubjectModel()
 {
-    return m_model;
+    EXPECT_TRUE(m_model);
+
+    return *m_model;
+}
+
+cxmodel::IConnectXGameActions& ApplicationTestFixture::GetGameActionsModel()
+{
+    EXPECT_TRUE(m_model);
+
+    return *m_model;
+}
+
+cxmodel::IVersionning& ApplicationTestFixture::GetVersionningModel()
+{
+    EXPECT_TRUE(m_model);
+
+    return *m_model;
 }
 
 std::string ApplicationTestFixture::GetStdOutContents() const

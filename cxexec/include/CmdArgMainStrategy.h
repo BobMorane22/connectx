@@ -29,7 +29,8 @@
 
 namespace cxmodel
 {
-    class IModel;
+    class IConnectXGameActions;
+    class ISubject;
 }
 
 namespace cx
@@ -54,12 +55,16 @@ public:
      *
      * @post m_uiMgr is not @c nullptr
      *
-     * @param argc Command line argument count.
-     * @param argv A C-style array of arguments.
-     * @param p_model The Connect X compatible model.
+     * @param argc                 Command line argument count.
+     * @param argv                 A C-style array of arguments.
+     * @param p_modelAsSubject     The Connect X compatible model (Subject).
+     * @param p_modelAsGameActions The Connect X compatible model (Game actions).
      *
      ********************************************************************************************/
-    CmdArgMainStrategy(int argc, char *argv[], cxmodel::IModel& p_model);
+    CmdArgMainStrategy(int argc,
+                       char *argv[],
+                       cxmodel::Subject& p_modelAsSubject,
+                       cxmodel::IConnectXGameActions& p_modelAsGameActions);
 
     int Handle() override;
 

@@ -23,18 +23,15 @@
 
 #include <cxgui/include/AboutWindowPresenter.h>
 
-#include "ModelMockPresenter.h"
 #include "AboutWindowPresenterTestFixture.h"
 
 AboutWindowPresenterTestFixture::AboutWindowPresenterTestFixture()
 {
-    m_model = std::make_unique<ModelMockPresenter>();
+    m_model = std::make_unique<AboutWindowPresenterModelMock>();
     EXPECT_TRUE(m_model);
 
-    m_presenter = std::make_unique<cxgui::AboutWindowPresenter>();
+    m_presenter = std::make_unique<cxgui::AboutWindowPresenter>(*m_model);
     EXPECT_TRUE(m_presenter);
-
-    m_model->Attach(m_presenter.get());
 }
 
 cxgui::IAboutWindowPresenter& AboutWindowPresenterTestFixture::GetPresenter()
@@ -43,7 +40,7 @@ cxgui::IAboutWindowPresenter& AboutWindowPresenterTestFixture::GetPresenter()
     return *m_presenter;
 }
 
-cxmodel::IModel& AboutWindowPresenterTestFixture::GetModel()
+cxmodel::IVersionning& AboutWindowPresenterTestFixture::GetModel()
 {
     EXPECT_TRUE(m_model);
     return *m_model;

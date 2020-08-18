@@ -28,7 +28,7 @@
 
 namespace cxmodel
 {
-    class IModel;
+    class IConnectXGameActions;
 }
 
 namespace cxgui
@@ -39,14 +39,7 @@ class MainWindowController : public cxgui::IMainWindowController
 
 public:
 
-    MainWindowController(cxmodel::IModel& p_model);
-
-///@{ @name Main Window
-// ------------------------------------------------------------------------------------------------
-
-    void OnAboutMenuPressed() override;
-
-///@}
+    MainWindowController(cxmodel::IConnectXGameActions& p_model);
 
 ///@{ @name New Game View
 // ------------------------------------------------------------------------------------------------
@@ -57,7 +50,7 @@ public:
 
 private:
 
-    cxmodel::IModel& m_model;
+    cxmodel::IConnectXGameActions& m_model;
 };
 
 } // namespace cxgui

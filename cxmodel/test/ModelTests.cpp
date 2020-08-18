@@ -35,8 +35,7 @@
 TEST(Model, GetName_ValidModel_NameReturned)
 {
     LoggerMock logger;
-    cxmodel::Model concreteModel{std::make_unique<cxmodel::CommandStack>(200), logger};
-    cxmodel::IModel& model = concreteModel;
+    cxmodel::Model model{std::make_unique<cxmodel::CommandStack>(200), logger};
 
     ASSERT_EQ(model.GetName(), "Connect X");
 }
@@ -44,8 +43,7 @@ TEST(Model, GetName_ValidModel_NameReturned)
 TEST(Model, GetVersionNumber_ValidModel_ValidVersionNumberReturned)
 {
     LoggerMock logger;
-    cxmodel::Model concreteModel{std::make_unique<cxmodel::CommandStack>(200), logger};
-    cxmodel::IModel& model = concreteModel;
+    cxmodel::Model model{std::make_unique<cxmodel::CommandStack>(200), logger};
 
     std::regex expected{"v(\\d)\\.(\\d)+"};
 
@@ -56,24 +54,31 @@ TEST(Model, CreateNewGame_ValidNewGameInformation_NewGameCreated)
 {
     // We create a model:
     LoggerMock logger;
-    cxmodel::Model concreteModel{std::make_unique<cxmodel::CommandStack>(200), logger};
-    cxmodel::IModel& model = concreteModel;
+    cxmodel::Model model{std::make_unique<cxmodel::CommandStack>(200), logger};
 
     // We create valid new game information:
+    constexpr size_t GRID_WIDTH = 7u;
+    constexpr size_t GRID_HEIGHT = 6u;
+    constexpr size_t IN_A_ROW = 4u;
+    const cxmodel::Player JOHN_DOE{"John Doe", cxmodel::MakeRed()};
+    const cxmodel::Player JANE_DOE{"Jane Doe", cxmodel::MakeBlue()};
+
     cxmodel::NewGameInformation newGameInfo;
-    newGameInfo.m_inARowValue = 4u;
-    newGameInfo.m_gridWidth = 7u;
-    newGameInfo.m_gridHeight = 6u;
-    newGameInfo.AddPlayer({"John Doe", cxmodel::MakeRed()});
-    newGameInfo.AddPlayer({"Jane Doe", cxmodel::MakeBlue()});
-    const cxmodel::NewGameInformation expected = newGameInfo;
+    newGameInfo.m_gridWidth = GRID_WIDTH;
+    newGameInfo.m_gridHeight = GRID_HEIGHT;
+    newGameInfo.m_inARowValue = IN_A_ROW;
+    newGameInfo.AddPlayer(JOHN_DOE);
+    newGameInfo.AddPlayer(JANE_DOE);
 
     // We create a new game:
     model.CreateNewGame(newGameInfo);
-    const cxmodel::NewGameInformation result = model.GetGameInformation();
 
     // And check it has indeed been created:
-    ASSERT_EQ(result, expected);
+    ASSERT_EQ(model.GetActivePlayer(), JOHN_DOE);
+    ASSERT_EQ(model.GetNextPlayer(), JANE_DOE);
+    ASSERT_EQ(model.GetCurrentGridWidth(), 7u);
+    ASSERT_EQ(model.GetCurrentGridHeight(), 6u);
+    ASSERT_EQ(model.GetCurrentInARowValue(), 4u);
 }
 
 TEST(Model, CreateNewGame_ValidNewGameInformation_CreateNewNotificationSent)
@@ -90,8 +95,7 @@ TEST(Model, CreateNewGame_ValidNewGameInformation_CreateNewNotificationSent)
 
     // We create a model:
     LoggerMock logger;
-    cxmodel::Model concreteModel{std::make_unique<cxmodel::CommandStack>(200), logger};
-    cxmodel::IModel& model = concreteModel;
+    cxmodel::Model model{std::make_unique<cxmodel::CommandStack>(200), logger};
 
     // And attach it to our observer:
     SignalObserver observer;
@@ -109,31 +113,6 @@ TEST(Model, CreateNewGame_ValidNewGameInformation_CreateNewNotificationSent)
     model.CreateNewGame(newGameInfo);
 }
 
-TEST(Model, Signal_ObserverAttached_SignalNotificationReceived)
-{
-    // We create an observer specific to the SIGNAL notification context:
-    class SignalObserver : public cxmodel::IObserver
-    {
-        void Update(cxmodel::NotificationContext p_context, cxmodel::Subject* p_subject) override
-        {
-            ASSERT_TRUE(p_subject);
-            ASSERT_TRUE(p_context == cxmodel::NotificationContext::SIGNAL);
-        }
-    };
-
-    // We create a model:
-    LoggerMock logger;
-    cxmodel::Model concreteModel{std::make_unique<cxmodel::CommandStack>(200), logger};
-    cxmodel::IModel& model = concreteModel;
-
-    // And attach it to our observer:
-    SignalObserver observer;
-    model.Attach(&observer);
-
-    // From this call, our observer's Update method should be called, and contexts checked:
-    model.Signal();
-}
-
 TEST(Model, Undo_RandomCommand_UndoCalledOnCommandStack)
 {
     std::unique_ptr<CommandStackMock> cmdStack = std::make_unique<CommandStackMock>();
@@ -143,8 +122,7 @@ TEST(Model, Undo_RandomCommand_UndoCalledOnCommandStack)
 
     // We create a model:
     LoggerMock logger;
-    cxmodel::Model concreteModel{std::move(cmdStack), logger};
-    cxmodel::IModel& model = concreteModel;
+    cxmodel::Model model{std::move(cmdStack), logger};
 
     ASSERT_FALSE(cmdStackMock.IsUndoed());
 
@@ -163,8 +141,7 @@ TEST(Model, Redo_RandomCommand_RedoCalledOnCommandStack)
 
     // We create a model:
     LoggerMock logger;
-    cxmodel::Model concreteModel{std::move(cmdStack), logger};
-    cxmodel::IModel& model = concreteModel;
+    cxmodel::Model model{std::move(cmdStack), logger};
 
     ASSERT_FALSE(cmdStackMock.IsRedoed());
 
@@ -178,8 +155,7 @@ TEST(Model, SetVerbosityLevel_FromNoneToDebug_VerbosityLevelSet)
 {
     // We create a model:
     LoggerMock logger;
-    cxmodel::Model concreteModel{std::make_unique<cxmodel::CommandStack>(200), logger};
-    cxlog::ILogger& model = concreteModel;
+    cxmodel::Model model{std::make_unique<cxmodel::CommandStack>(200), logger};
 
     // Set verbosity level to none:
     model.SetVerbosityLevel(cxlog::VerbosityLevel::NONE);

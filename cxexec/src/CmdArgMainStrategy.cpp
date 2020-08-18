@@ -24,17 +24,21 @@
 #include <cstdlib>
 
 #include <cxinv/include/assertion.h>
-#include <cxmodel/include/IModel.h>
+#include <cxmodel/include/IConnectXGameActions.h>
+#include <cxmodel/include/Subject.h>
 
 #include <CmdArgMainStrategy.h>
 
-cx::CmdArgMainStrategy::CmdArgMainStrategy(int argc, char *argv[], cxmodel::IModel& p_model)
+cx::CmdArgMainStrategy::CmdArgMainStrategy(int argc,
+                                           char *argv[],
+                                           cxmodel::Subject& p_modelAsSubject,
+                                           cxmodel::IConnectXGameActions& p_modelAsGameActions)
 {
     PRECONDITION(argc > 0);
     PRECONDITION(argv != nullptr);
 
     argc = 1;
-    m_uiMgr = std::make_unique<cx::GtkmmUIManager>(argc, argv, p_model);
+    m_uiMgr = std::make_unique<cx::GtkmmUIManager>(argc, argv, p_modelAsSubject, p_modelAsGameActions);
 
     POSTCONDITION(m_uiMgr != nullptr);
 }

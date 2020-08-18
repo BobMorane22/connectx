@@ -25,29 +25,19 @@
 
 #include <NewGameInformation.h>
 
-bool cxmodel::operator==(const cxmodel::PlayerInformation& p_lhs, const cxmodel::PlayerInformation& p_rhs)
+std::size_t cxmodel::NewGameInformation::AddPlayer(const Player& p_newPlayer)
 {
-    return (p_lhs.m_name == p_rhs.m_name) && (p_lhs.m_discColor == p_rhs.m_discColor);
-}
-
-bool cxmodel::operator!=(const cxmodel::PlayerInformation& p_lhs, const cxmodel::PlayerInformation& p_rhs)
-{
-    return !(p_lhs == p_rhs);
-}
-
-std::size_t cxmodel::NewGameInformation::AddPlayer(const PlayerInformation& p_playerInformation)
-{
-    m_playersInformation.push_back(p_playerInformation);
+    m_playersInformation.push_back(p_newPlayer);
 
     return m_playersInformation.size();
 }
 
-cxmodel::PlayersInformation cxmodel::NewGameInformation::GetPlayersInformation() const
+std::vector<cxmodel::Player> cxmodel::NewGameInformation::GetNewPlayers() const
 {
     return m_playersInformation;
 }
 
-size_t cxmodel::NewGameInformation::GetNbOfPlayers() const
+size_t cxmodel::NewGameInformation::GetNbOfNewPlayers() const
 {
     return m_playersInformation.size();
 }
@@ -60,17 +50,17 @@ bool cxmodel::operator==(const cxmodel::NewGameInformation& p_lhs, const cxmodel
     areEqual &= (p_lhs.m_gridHeight == p_rhs.m_gridHeight);
     areEqual &= (p_lhs.m_inARowValue == p_rhs.m_inARowValue);
 
-    areEqual &= (p_lhs.GetNbOfPlayers() == p_rhs.GetNbOfPlayers());
+    areEqual &= (p_lhs.GetNbOfNewPlayers() == p_rhs.GetNbOfNewPlayers());
 
     if(!areEqual)
     {
         return false;
     }
 
-    const auto lhsPlayers = p_lhs.GetPlayersInformation();
-    const auto rhsPlayers = p_rhs.GetPlayersInformation();
+    const auto lhsPlayers = p_lhs.GetNewPlayers();
+    const auto rhsPlayers = p_rhs.GetNewPlayers();
 
-    for(size_t i = 0; i < p_lhs.GetNbOfPlayers(); ++i)
+    for(size_t i = 0; i < p_lhs.GetNbOfNewPlayers(); ++i)
     {
         areEqual &= (lhsPlayers[i] == rhsPlayers[i]);
     }

@@ -26,7 +26,7 @@
 
 namespace cxmodel
 {
-    class IModel;
+    class IVersionning;
 }
 
 #include "IAboutWindowPresenter.h"
@@ -39,9 +39,9 @@ class AboutWindowPresenter : public IAboutWindowPresenter
 
 public:
 
-    ~AboutWindowPresenter() override = default;
+    AboutWindowPresenter(const cxmodel::IVersionning& p_model);
 
-    void Update(cxmodel::NotificationContext p_context, Subject* p_subject) override;
+    ~AboutWindowPresenter() override = default;
 
     std::string GetWindowTitle() const override;
     std::string GetApplicationName() const override;

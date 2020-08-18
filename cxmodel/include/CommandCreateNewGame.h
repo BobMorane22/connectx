@@ -24,10 +24,13 @@
 #ifndef COMMANDCREATENEWGAME_H_42E0AF3C_C0D0_44F7_B472_9F2E0E11216D
 #define COMMANDCREATENEWGAME_H_42E0AF3C_C0D0_44F7_B472_9F2E0E11216D
 
+#include <vector>
+
 #include <cxlog/include/ILogger.h>
 
 #include "ICommand.h"
 #include "NewGameInformation.h"
+#include "Player.h"
 #include "Subject.h"
 
 namespace cxmodel
@@ -38,14 +41,22 @@ class CommandCreateNewGame : public ICommand
 
 public:
 
-    CommandCreateNewGame(NewGameInformation& p_modelGameInformation, NewGameInformation p_newGameInformation);
+    CommandCreateNewGame(std::vector<Player>& p_players,
+                         size_t& p_gridWidth,
+                         size_t& p_gridHeight,
+                         size_t& p_inARowValue,
+                         NewGameInformation p_newGameInformation);
 
     virtual void Execute() override;
     virtual void Undo() override;
 
 private:
 
-    NewGameInformation& m_modelGameInformation;
+    std::vector<Player>& m_modelPlayers;
+    size_t& m_modelGridWidth;
+    size_t& m_modelGridHeight;
+    size_t& m_modelInARowValue;
+
     NewGameInformation m_newGameInformation;
 
 };

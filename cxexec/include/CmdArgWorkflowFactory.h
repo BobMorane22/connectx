@@ -30,7 +30,9 @@
 
 namespace cxmodel
 {
-    class IModel;
+    class IConnectXGameActions;
+    class IVersionning;
+    class Subject;
 }
 
 namespace cxlog
@@ -53,18 +55,25 @@ public:
     /******************************************************************************************//**
      * @brief Create a command line dependent workflow.
      *
-     * @param argc The number of command line arguments (including the executable).
-     * @param argv A C-style array containing the command line argument strings (including the
-     *             executable).
-     * @param p_model The Connect X compatible model.
-     * @param p_logger A chain logger.
+     * @param argc                 The number of command line arguments (including the executable).
+     * @param argv                 A C-style array containing the command line argument strings
+     *                             (including the executable).
+     * @param p_modelAsSubject     The Connect X compatible model (Subject).
+     * @param p_modelAsGameActions The Connect X compatible model (Game actions).
+     * @param p_modelAsVersionning The Connect X compatible model (Versionning).
+     * @param p_logger             A chain logger.
      *
      * @post The returned command line dependent workflow is not @c nullptr.
      *
      * @return The command line dependent workflow.
      *
      ********************************************************************************************/
-    std::unique_ptr<ICmdArgWorkflowStrategy> Create(int argc, char *argv[], cxmodel::IModel& p_model, cxlog::ILogger& p_logger);
+    std::unique_ptr<ICmdArgWorkflowStrategy> Create(int argc,
+                                                    char *argv[],
+                                                    cxmodel::Subject& p_modelAsSubject,
+                                                    cxmodel::IConnectXGameActions& p_modelAsGameActions,
+                                                    cxmodel::IVersionning& p_modelAsVersionning,
+                                                    cxlog::ILogger& p_logger);
 
 };
 

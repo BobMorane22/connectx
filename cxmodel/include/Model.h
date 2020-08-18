@@ -24,12 +24,18 @@
 #ifndef MODEL_H_8CC20E7E_7466_4977_9435_7E09ADBD10FC
 #define MODEL_H_8CC20E7E_7466_4977_9435_7E09ADBD10FC
 
+#include <string>
 #include <memory>
 
 #include <cxlog/include/ILogger.h>
 
 #include "ICommandStack.h"
-#include "IModel.h"
+#include "IConnectXGameActions.h"
+#include "IConnectXGameInformation.h"
+#include "IConnectXLimits.h"
+#include "IUndoRedo.h"
+#include "IVersionning.h"
+#include "Subject.h"
 
 namespace cxmodel
 {
@@ -42,7 +48,14 @@ namespace cxmodel
  * This class holds the Connect X related business rules.
  *
  ************************************************************************************************/
-class Model : public IModel, public cxlog::ILogger
+class Model : public cxlog::ILogger,
+              public Subject,
+              public IVersionning,
+              public IUndoRedo,
+              public IConnectXLimits,
+              public IConnectXGameInformation,
+              public IConnectXGameActions
+
 {
 
 public:
@@ -59,37 +72,72 @@ public:
     Model(std::unique_ptr<ICommandStack>&& p_cmdStack, cxlog::ILogger& p_logger);
     ~Model() override;
 
-    // IModel
-    std::string GetName() const override;
-    std::string GetVersionNumber() const override;
+///@{ @name cxlog::ILogger
 
-    void CreateNewGame(const NewGameInformation& p_gameInformation) override;
-    NewGameInformation GetGameInformation() const override;
-
-    void Undo() override;
-    void Redo() override;
-
-    void Signal() override;
-
-    // ILogger
     void Log(const cxlog::VerbosityLevel p_verbosityLevel, const std::string& p_fileName, const std::string& p_functionName, const size_t p_lineNumber, const std::string& p_message) override;
     void SetVerbosityLevel(const cxlog::VerbosityLevel p_verbosityLevel) override;
     cxlog::VerbosityLevel GetVerbosityLevel() const override;
 
+///@}
+
+///@{ @name IVersioning
+
+    std::string GetName() const override;
+    std::string GetVersionNumber() const override;
+
+///@}
+
+///@{ @name IUndoRedo
+
+    void Undo() override;
+    void Redo() override;
+
+///@}
+
+///@{ @name IConnectXLimits
+
+    size_t GetMinimumGridHeight() const override;
+    size_t GetMinimumGridWidth() const override;
+    size_t GetMinimumInARowValue() const override;
+    size_t GetMaximumGridHeight() const override;
+    size_t GetMaximumGridWidth() const override;
+    size_t GetMaximumInARowValue() const override;
+    size_t GetMinimumNumberOfPlayers() const override;
+    size_t GetMaximumNumberOfPlayers() const override;
+
+///@}
+
+///@{ @name IConnectXGameInformation
+
+    size_t GetCurrentGridHeight() const override;
+    size_t GetCurrentGridWidth() const override;
+    size_t GetCurrentInARowValue() const override;
+    const Player& GetActivePlayer() const override;
+    const Player& GetNextPlayer() const override;
+    bool IsWon() const override;
+    bool IsTie() const override;
+    bool IsEarlyTie() const override;
+
+///@}
+
+///@{ @name IConnectXGameActions
+
+    void CreateNewGame(const NewGameInformation& p_gameInformation) override;
+
+///@}
 
 private:
 
     void CheckInvariants();
 
     NewGameInformation m_gameInformation;
-
     std::unique_ptr<ICommandStack> m_cmdStack;
-
-    static constexpr char m_NAME[] = "Connect X";
-    static constexpr unsigned int m_MAJOR_VERSION_NB = 0u;
-    static constexpr unsigned int m_MINOR_VERSION_NB = 15u;
-
     cxlog::ILogger& m_logger;
+
+    std::vector<Player> m_players;
+    size_t m_gridWidth;
+    size_t m_gridHeight;
+    size_t m_inARowValue;
 };
 
 } // namespace cxmodel

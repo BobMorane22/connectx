@@ -25,12 +25,11 @@
 
 #include <cxgui/include/MainWindowPresenter.h>
 
-#include "ModelMockPresenter.h"
 #include "MainWindowPresenterTestFixture.h"
 
 MainWindowPresenterTestFixture::MainWindowPresenterTestFixture()
 {
-    m_model = std::make_unique<ModelMockPresenter>();
+    m_model = std::make_unique<MainWindowPresenterModelMock>();
     m_presenter = std::make_unique<cxgui::MainWindowPresenter>();
 
     EXPECT_TRUE(m_presenter != nullptr);
@@ -60,7 +59,7 @@ cxgui::INewGameViewPresenter& MainWindowPresenterTestFixture::GetNewGameViewPres
     return *m_presenter;
 }
 
-cxmodel::IModel& MainWindowPresenterTestFixture::GetModel()
+cxmodel::IConnectXGameActions& MainWindowPresenterTestFixture::GetActionsModel()
 {
     EXPECT_TRUE(m_model != nullptr);
 

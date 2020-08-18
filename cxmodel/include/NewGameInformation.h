@@ -27,64 +27,10 @@
 #include <string>
 #include <vector>
 
-#include "ChipColor.h"
+#include "Player.h"
 
 namespace cxmodel
 {
-
-/*********************************************************************************************//**
- * @brief Information for one player.
- *
- ************************************************************************************************/
-struct PlayerInformation
-{
-
-    /******************************************************************************************//**
-     * @brief Constructor.
-
-     * @param p_name      The player's name.
-     * @param p_discColor The player's disc color.
-     *
-     ********************************************************************************************/
-    PlayerInformation(const std::string& p_name, const cxmodel::ChipColor& p_discColor)
-    : m_name(p_name)
-    , m_discColor(p_discColor)
-    {
-        // Nothing to do...
-    }
-
-    std::string m_name;
-    cxmodel::ChipColor m_discColor;
-};
-
-using PlayersInformation = std::vector<PlayerInformation>;
-
-/*********************************************************************************************//**
- * @brief Equal-to-operator.
- *
- * @param p_lhs The first player information to compare with.
- * @param p_rhs The second player information to compare with.
- *
- * @return true if both player informations are the same, false otherwise.
- *
- * Two player informations are considered equal if both names and disc colors match.
- *
- ***********************************************************************************************/
-bool operator==(const PlayerInformation& p_lhs, const PlayerInformation& p_rhs);
-
-/******************************************************************************************//**
- * @brief Not-equal-to operator.
- *
- * @param p_lhs The first player information to compare with.
- * @param p_rhs The second player information to compare with.
- *
- * @return true if both player informations are different, false otherwise.
- *
- * Two player informations are considered different if the names or the disc color
- * do not match.
- *
- ********************************************************************************************/
-bool operator!=(const PlayerInformation& p_lhs, const PlayerInformation& p_rhs);
 
 /*********************************************************************************************//**
  * @brief Information describing a new Connect X game.
@@ -98,30 +44,30 @@ class NewGameInformation
 public:
 
     /******************************************************************************************//**
-     * @brief Add a player to the game.
+     * @brief Add a new player to the game.
      *
-     * @param p_playerInformation The new player's information.
+     * @param p_newPlayer The new player's information.
      *
      * @return The updated number of players registered in the game.
      *
      ********************************************************************************************/
-    std::size_t AddPlayer(const PlayerInformation& p_playerInformation);
+    std::size_t AddPlayer(const Player& p_newPlayer);
 
     /******************************************************************************************//**
-     * @brief Players information accessor.
+     * @brief New players accessor.
      *
      * @return A list of registered players informations.
      *
      ********************************************************************************************/
-    PlayersInformation GetPlayersInformation() const;
+    std::vector<Player> GetNewPlayers() const;
 
     /******************************************************************************************//**
-     * @brief Number of player information accessor.
+     * @brief Number of new players accessor.
      *
-     * @return The number of player informations registered.
+     * @return The number of new players registered.
      *
      ********************************************************************************************/
-    size_t GetNbOfPlayers() const;
+    size_t GetNbOfNewPlayers() const;
 
 public:
 
@@ -131,7 +77,7 @@ public:
 
 private:
 
-    PlayersInformation m_playersInformation;
+    std::vector<Player> m_playersInformation;
 };
 
 /*********************************************************************************************//**

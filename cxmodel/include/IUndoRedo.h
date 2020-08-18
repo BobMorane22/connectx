@@ -16,55 +16,52 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file IMainWindowController.h
- * @date 2019
+ * @file IUndoRedo.h
+ * @date 2020
  *
  *************************************************************************************************/
 
-#ifndef IMAINWINDOWCONTROLLER_H_B4A715D5_611A_42C2_8C60_16C5C14FD28A
-#define IMAINWINDOWCONTROLLER_H_B4A715D5_611A_42C2_8C60_16C5C14FD28A
+#ifndef IUNDOREDO_H_C750BB28_D806_4806_8DEB_B796D85DA799
+#define IUNDOREDO_H_C750BB28_D806_4806_8DEB_B796D85DA799
 
-#include "INewGameViewController.h"
-
-namespace cxgui
+namespace cxmodel
 {
 
-/*********************************************************************************************//**
- * @brief Interface for creating a main window controller.
- *
- * The main window controller is responsible to handle all user events directed on the main
- * window. It is the controller which calls the right operations sequence on the model to
- * reflect what the user is doing on the UI.
- *
- ************************************************************************************************/
-class IMainWindowController : public INewGameViewController
+class IUndoRedo
 {
 
 public:
 
     /******************************************************************************************//**
-     * @brief Default destructor.
+     * @brief Destructor.
      *
      ********************************************************************************************/
-    virtual ~IMainWindowController() = default;
-
-///@{ @name New Game View
-// ------------------------------------------------------------------------------------------------
+    virtual ~IUndoRedo() = default;
 
     /******************************************************************************************//**
-     * @brief Reacts to a game start.
+     * @brief Undo the last action, if possible.
      *
-     * @param p_gameInformation the game information the user input.
+     * If some undoeable actions were done, the last one will be undoed.
      *
-     * Reacts to a user creating and starting a new game.
+     * @note An action that is undoed must put the model back at the same state is was before
+     *       the action was ever done.
      *
      ********************************************************************************************/
-    void OnStart(const cxmodel::NewGameInformation p_gameInformation) override = 0;
+    virtual void Undo() = 0;
 
-///@}
-
+    /******************************************************************************************//**
+     * @brief Redo the last action, if possible.
+     *
+     * If some redoable actions were undoed, the last one that was undoed will be redoed.
+     * Otherwise, nothing happens.
+     *
+     * @note An action that is redoed must put the model back at the same state it was before
+     *       the action was undoed.
+     *
+     ********************************************************************************************/
+    virtual void Redo() = 0;
 };
 
-} // namespace cxgui
+} // namespace cxmodel
 
-#endif // IMAINWINDOWCONTROLLER_H_B4A715D5_611A_42C2_8C60_16C5C14FD28A
+#endif // IUNDOREDO_H_C750BB28_D806_4806_8DEB_B796D85DA799
