@@ -57,6 +57,14 @@ public:
      ********************************************************************************************/
     Color GetCurrentSelection() const;
 
+    /******************************************************************************************//**
+     * @brief Sets the current selected color.
+     *
+     * @param The color to make visible in the combo box.
+     *
+     ********************************************************************************************/
+    void SetCurrentSelection(const cxgui::Color& p_color);
+
 private:
 
     void AddElement(const cxgui::Color& p_color, bool p_setActive);

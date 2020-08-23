@@ -109,6 +109,16 @@ std::string cxgui::MainWindowPresenter::GetNewGameViewDiscColumnHeaderText() con
     return "Disc";
 }
 
+std::string cxgui::MainWindowPresenter::GetNewGameViewRemovePlayerButtonText() const
+{
+    return "Remove player";
+}
+
+std::string cxgui::MainWindowPresenter::GetNewGameViewAddPlayerButtonText() const
+{
+    return "Add player";
+}
+
 std::string cxgui::MainWindowPresenter::GetNewGameViewStartButtonText() const
 {
     return "Start";

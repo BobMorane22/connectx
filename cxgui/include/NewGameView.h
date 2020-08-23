@@ -31,6 +31,7 @@
 #include "INewGameViewController.h"
 #include "INewGameViewPresenter.h"
 #include "IView.h"
+#include "NewPlayerList.h"
 #include "Window.h"
 
 namespace cxgui
@@ -58,7 +59,10 @@ private:
     void SetLayout();
     void PopulateWidgets();
     void ConfigureWidgets();
+
     void OnStart();
+    void OnAddPlayer();
+    void OnRemovePlayer();
 
     INewGameViewPresenter& m_presenter;
     INewGameViewController& m_controller;
@@ -85,12 +89,11 @@ private:
 
     Gtk::Label m_playersSectionTitle;
     Gtk::Label m_nameRowTitle;
-    Gtk::Entry m_player1NameEntry;
-    Gtk::Entry m_player2NameEntry;
     Gtk::Label m_discRowTitle;
-    ColorComboBox m_disc1Combo;
-    ColorComboBox m_disc2Combo;
+    cxgui::NewPlayersList m_playerList;
 
+    Gtk::Button m_removePlayerButton;
+    Gtk::Button m_addPlayerButton;
     Gtk::Button m_startButton;
 };
 

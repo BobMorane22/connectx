@@ -113,6 +113,8 @@ void cxgui::NewGameView::SetLayout()
 {
     constexpr int TOTAL_WIDTH = 2;
 
+    m_viewLayout.set_column_homogeneous(true);
+
     m_viewLayout.attach(m_title, 0, 0, TOTAL_WIDTH, 1);
 
     m_viewLayout.attach(m_gameSectionTitle, 0, 1, TOTAL_WIDTH, 1);
@@ -127,11 +129,11 @@ void cxgui::NewGameView::SetLayout()
 
     m_viewLayout.attach(m_playersSectionTitle, 0, 6, TOTAL_WIDTH, 1);
     m_viewLayout.attach(m_nameRowTitle, 0, 7, 1, 1);
-    m_viewLayout.attach(m_player1NameEntry, 0, 8, 1, 1);
-    m_viewLayout.attach(m_player2NameEntry, 0, 9, 1, 1);
     m_viewLayout.attach(m_discRowTitle, 1, 7, 1, 1);
-    m_viewLayout.attach(m_disc1Combo, 1, 8, 1, 1);
-    m_viewLayout.attach(m_disc2Combo, 1, 9, 1, 1);
+    m_viewLayout.attach(m_playerList, 0, 8, TOTAL_WIDTH, 1);
+
+    m_viewLayout.attach(m_removePlayerButton, 0, 9, 1, 1);
+    m_viewLayout.attach(m_addPlayerButton, 1, 9, 1, 1);
 
     m_viewLayout.attach(m_startButton, 0, 10, TOTAL_WIDTH, 1);
 }
@@ -150,6 +152,9 @@ void cxgui::NewGameView::PopulateWidgets()
     m_playersSectionTitle.set_text(m_presenter.GetNewGameViewPlayersSectionTitle());
     m_nameRowTitle.set_text(m_presenter.GetNewGameViewNameColumnHeaderText());
     m_discRowTitle.set_text(m_presenter.GetNewGameViewDiscColumnHeaderText());
+
+    m_removePlayerButton.set_label(m_presenter.GetNewGameViewRemovePlayerButtonText());
+    m_addPlayerButton.set_label(m_presenter.GetNewGameViewAddPlayerButtonText());
 
     m_startButton.set_label(m_presenter.GetNewGameViewStartButtonText());
 }
@@ -200,15 +205,14 @@ void cxgui::NewGameView::ConfigureWidgets()
     m_playersSectionTitle.set_halign(Gtk::Align::ALIGN_START);
     m_title.set_margin_bottom(SECTION_BOTTOM_MARGIN);
 
-    // Name column
+    // Player list:
     m_nameRowTitle.set_margin_bottom(CONTROL_BOTTOM_MARGIN);
-    m_player1NameEntry.set_margin_bottom(CONTROL_BOTTOM_MARGIN);
-    m_player2NameEntry.set_margin_bottom(CONTROL_BOTTOM_MARGIN);
-
-    // Disc column
     m_discRowTitle.set_margin_bottom(CONTROL_BOTTOM_MARGIN);
-    m_disc1Combo.set_margin_bottom(CONTROL_BOTTOM_MARGIN);
-    m_disc2Combo.set_margin_bottom(CONTROL_BOTTOM_MARGIN);
+    m_playerList.set_margin_bottom(CONTROL_BOTTOM_MARGIN);
+
+    // Add player button:
+    m_removePlayerButton.set_margin_bottom(CONTROL_BOTTOM_MARGIN);
+    m_addPlayerButton.set_margin_bottom(CONTROL_BOTTOM_MARGIN);
 
     // Start button:
     m_startButton.set_margin_bottom(CONTROL_BOTTOM_MARGIN);
@@ -235,8 +239,8 @@ void cxgui::NewGameView::OnStart()
         return;
     }
 
-    const std::string name1 = m_player1NameEntry.get_text();
-    const std::string name2 = m_player2NameEntry.get_text();
+    const std::string name1 = m_playerList.GetPlayerNameAtRow(0);
+    const std::string name2 = m_playerList.GetPlayerNameAtRow(1);
 
     if(name1.empty() || name2.empty())
     {
@@ -244,8 +248,8 @@ void cxgui::NewGameView::OnStart()
         return;
     }
 
-    const auto disc1Color = m_disc1Combo.GetCurrentSelection();
-    const auto disc2Color = m_disc2Combo.GetCurrentSelection();
+    const auto disc1Color = m_playerList.GetRowPlayerDiscColor(0);
+    const auto disc2Color = m_playerList.GetRowPlayerDiscColor(1);
 
     if(disc1Color == disc2Color)
     {
@@ -257,4 +261,14 @@ void cxgui::NewGameView::OnStart()
     gameInformation.AddPlayer({name2, disc2Color});
 
     m_controller.OnStart(gameInformation);
+}
+
+void cxgui::NewGameView::OnAddPlayer()
+{
+
+}
+
+void cxgui::NewGameView::OnRemovePlayer()
+{
+
 }

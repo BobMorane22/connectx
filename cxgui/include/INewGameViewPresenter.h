@@ -117,6 +117,22 @@ public:
     virtual std::string GetNewGameViewDiscColumnHeaderText() const = 0;
 
     /******************************************************************************************//**
+     * @brief Remove player button text accessor.
+     *
+     * @return Remove player button text.
+     *
+     ********************************************************************************************/
+    virtual std::string GetNewGameViewRemovePlayerButtonText() const = 0;
+
+    /******************************************************************************************//**
+     * @brief Add player button text accessor.
+     *
+     * @return Add player button text.
+     *
+     ********************************************************************************************/
+    virtual std::string GetNewGameViewAddPlayerButtonText() const = 0;
+
+    /******************************************************************************************//**
      * @brief Start button text accessor.
      *
      * @return Start button text.

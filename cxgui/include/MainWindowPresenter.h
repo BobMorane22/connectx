@@ -56,6 +56,8 @@ public:
     std::string GetNewGameViewPlayersSectionTitle() const override;
     std::string GetNewGameViewNameColumnHeaderText() const override;
     std::string GetNewGameViewDiscColumnHeaderText() const override;
+    std::string GetNewGameViewRemovePlayerButtonText() const override;
+    std::string GetNewGameViewAddPlayerButtonText() const override;
     std::string GetNewGameViewStartButtonText() const override;
 ///@}
 

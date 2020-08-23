@@ -59,6 +59,7 @@ OBJS_$(d) := $(d)/src/About.o \
              $(d)/src/MainWindowPresenter.o \
              $(d)/src/MenuItem.o \
              $(d)/src/NewGameView.o \
+             $(d)/src/NewPlayerList.o \
              $(d)/src/StatusBar.o \
              $(d)/src/StatusBarPresenter.o \
              cxinv/libcxinv.a \
