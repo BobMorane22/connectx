@@ -34,6 +34,7 @@ cx::Application::Application(int argc,
                              char *argv[],
                              cxmodel::Subject& p_modelAsSubject,
                              cxmodel::IConnectXGameActions& p_modelAsGameActions,
+                             cxmodel::IConnectXLimits& p_modelAsLimits,
                              cxmodel::IVersionning& p_modelAsVersionning,
                              cxlog::ILogger& p_logger)
 {
@@ -46,6 +47,7 @@ cx::Application::Application(int argc,
                                 argv,
                                 p_modelAsSubject,
                                 p_modelAsGameActions,
+                                p_modelAsLimits,
                                 p_modelAsVersionning,
                                 p_logger);
 

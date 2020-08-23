@@ -21,6 +21,8 @@
  *
  *************************************************************************************************/
 
+#include <sstream>
+
 #include <gtkmm/messagedialog.h>
 
 #include <cxinv/include/assertion.h>
@@ -86,6 +88,8 @@ cxgui::NewGameView::NewGameView(INewGameViewPresenter& p_presenter,
     PopulateWidgets();
     ConfigureWidgets();
 
+    m_removePlayerButton.signal_clicked().connect([this](){OnRemovePlayer();});
+    m_addPlayerButton.signal_clicked().connect([this](){OnAddPlayer();});
     m_startButton.signal_clicked().connect([this](){OnStart();});
 }
 
@@ -210,9 +214,11 @@ void cxgui::NewGameView::ConfigureWidgets()
     m_discRowTitle.set_margin_bottom(CONTROL_BOTTOM_MARGIN);
     m_playerList.set_margin_bottom(CONTROL_BOTTOM_MARGIN);
 
-    // Add player button:
+    // Add/Remove player buttons:
     m_removePlayerButton.set_margin_bottom(CONTROL_BOTTOM_MARGIN);
     m_addPlayerButton.set_margin_bottom(CONTROL_BOTTOM_MARGIN);
+    m_removePlayerButton.set_sensitive(m_presenter.CanRemoveAnotherPlayer(m_playerList.GetSize()));
+    m_addPlayerButton.set_sensitive(m_presenter.CanAddAnotherPlayer(m_playerList.GetSize()));
 
     // Start button:
     m_startButton.set_margin_bottom(CONTROL_BOTTOM_MARGIN);
@@ -265,10 +271,55 @@ void cxgui::NewGameView::OnStart()
 
 void cxgui::NewGameView::OnAddPlayer()
 {
+    if(m_presenter.CanAddAnotherPlayer(m_playerList.GetSize()))
+    {
+        const size_t nbNext = m_playerList.GetSize() + 1;
+        std::ostringstream os;
+        os << "-- Player " << nbNext << " --";
 
+        m_playerList.AddRow(os.str(), cxmodel::MakeBlue());
+        m_playerList.show_all();
+    }
+
+    m_removePlayerButton.set_sensitive(m_presenter.CanRemoveAnotherPlayer(m_playerList.GetSize()));
+    m_addPlayerButton.set_sensitive(m_presenter.CanAddAnotherPlayer(m_playerList.GetSize()));
 }
 
 void cxgui::NewGameView::OnRemovePlayer()
 {
+    if(m_presenter.CanRemoveAnotherPlayer(m_playerList.GetSize()))
+    {
+        m_playerList.RemoveRow(m_playerList.GetSize() - 1);
 
+        // At this point, the rwo is removed. If we don't act though, the extra
+        // space left by the removed row will still be displayed on the screen,
+        // leaving the window with ugly extra space. We want the window to resize
+        // to the new list. First, we get a handle to the main window:
+        Gtk::Container* parentAsGtk = m_mainLayout.get_parent();
+        if(!ASSERT(bool(parentAsGtk)))
+        {
+            return;
+        }
+
+        Gtk::Window* mainWindowAsGtk = dynamic_cast<Gtk::Window*>(parentAsGtk);
+        if(!ASSERT(bool(parentAsGtk)))
+        {
+            return;
+        }
+
+        // Then, we get the preferred heights values:
+        int minimumHeight, naturalHeight;
+        mainWindowAsGtk->get_preferred_height(minimumHeight, naturalHeight);
+
+        // Then, we make a size request using the minimum height. Notice the '100'
+        // that is removed. This was added to make sure Gtkmm did not leave any
+        // extra blank space by resizing smaller than the minimum value:
+        mainWindowAsGtk->set_size_request(mainWindowAsGtk->get_width(), minimumHeight - 100);
+
+        // Then resize accordingly:
+        mainWindowAsGtk->resize(mainWindowAsGtk->get_width(), naturalHeight);
+    }
+
+    m_removePlayerButton.set_sensitive(m_presenter.CanRemoveAnotherPlayer(m_playerList.GetSize()));
+    m_addPlayerButton.set_sensitive(m_presenter.CanAddAnotherPlayer(m_playerList.GetSize()));
 }

@@ -28,6 +28,11 @@
 
 #include "IMainWindowPresenter.h"
 
+namespace cxmodel
+{
+    class IConnectXLimits;
+}
+
 namespace cxgui
 {
 
@@ -35,6 +40,8 @@ class MainWindowPresenter : public cxgui::IMainWindowPresenter
 {
 
 public:
+
+    MainWindowPresenter(const cxmodel::IConnectXLimits& p_modealAsLimits);
 
 ///@{ @name Main Window
 // -----------------------------------------------------------------------------------------------
@@ -56,8 +63,13 @@ public:
     std::string GetNewGameViewPlayersSectionTitle() const override;
     std::string GetNewGameViewNameColumnHeaderText() const override;
     std::string GetNewGameViewDiscColumnHeaderText() const override;
+
     std::string GetNewGameViewRemovePlayerButtonText() const override;
+    bool CanRemoveAnotherPlayer(std::size_t p_currentNumberOfPlayers) const override;
+
     std::string GetNewGameViewAddPlayerButtonText() const override;
+    bool CanAddAnotherPlayer(std::size_t p_currentNumberOfPlayers) const override;
+
     std::string GetNewGameViewStartButtonText() const override;
 ///@}
 
@@ -71,8 +83,9 @@ private:
 
     void Update(cxmodel::NotificationContext p_context, cxmodel::Subject* p_subject) override;
 
-    std::string m_gameViewMessage = "New game started!";
+    const cxmodel::IConnectXLimits& m_modelAsLimits;
 
+    std::string m_gameViewMessage = "New game started!";
 };
 
 } // namespace cxgui

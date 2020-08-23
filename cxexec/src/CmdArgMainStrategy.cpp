@@ -32,13 +32,18 @@
 cx::CmdArgMainStrategy::CmdArgMainStrategy(int argc,
                                            char *argv[],
                                            cxmodel::Subject& p_modelAsSubject,
-                                           cxmodel::IConnectXGameActions& p_modelAsGameActions)
+                                           cxmodel::IConnectXGameActions& p_modelAsGameActions,
+                                           cxmodel::IConnectXLimits& p_modelAsLimits)
 {
     PRECONDITION(argc > 0);
     PRECONDITION(argv != nullptr);
 
     argc = 1;
-    m_uiMgr = std::make_unique<cx::GtkmmUIManager>(argc, argv, p_modelAsSubject, p_modelAsGameActions);
+    m_uiMgr = std::make_unique<cx::GtkmmUIManager>(argc,
+                                                   argv,
+                                                   p_modelAsSubject,
+                                                   p_modelAsGameActions,
+                                                   p_modelAsLimits);
 
     POSTCONDITION(m_uiMgr != nullptr);
 }

@@ -29,6 +29,7 @@
 
 #include <cxmodel/include/IConnectXGameActions.h>
 #include <cxmodel/include/IConnectXGameInformation.h>
+#include <cxmodel/include/IConnectXLimits.h>
 #include <cxmodel/include/IVersionning.h>
 #include <cxmodel/include/Subject.h>
 #include <cxgui/include/IMainWindowPresenter.h>
@@ -51,7 +52,8 @@ private:
     class MainWindowPresenterModelMock : public cxmodel::Subject,
                                          public cxmodel::IVersionning,
                                          public cxmodel::IConnectXGameActions,
-                                         public cxmodel::IConnectXGameInformation
+                                         public cxmodel::IConnectXGameInformation,
+                                         public cxmodel::IConnectXLimits
     {
     public:
 
@@ -61,7 +63,7 @@ private:
         std::string GetName() const override {return "Connect X";}
         std::string GetVersionNumber() const override {return "v0.0;";}
 
-        //
+        // IConnectXGameActions:
         void CreateNewGame(const cxmodel::NewGameInformation& p_gameInformation) override
         {
             (void)p_gameInformation;
@@ -71,7 +73,7 @@ private:
             Notify(cxmodel::NotificationContext::CREATE_NEW_GAME);
         }
 
-        // IConnectXGameInformation
+        // IConnectXGameInformation:
         size_t GetCurrentGridHeight() const override {return 6u;}
         size_t GetCurrentGridWidth() const override {return 7u;};
         size_t GetCurrentInARowValue() const override {return 4u;};
@@ -80,6 +82,16 @@ private:
         bool IsWon() const override {throw std::logic_error("Not implemented!");};
         bool IsTie() const override {throw std::logic_error("Not implemented!");};
         bool IsEarlyTie() const override {throw std::logic_error("Not implemented!");};
+
+        // IConnectXLimits:
+        size_t GetMinimumGridHeight() const override {return 7u;};
+        size_t GetMinimumGridWidth() const override {return 6u;};
+        size_t GetMinimumInARowValue() const override {return 3u;};
+        size_t GetMaximumGridHeight() const override {return 64u;};
+        size_t GetMaximumGridWidth() const override {return 7u;};
+        size_t GetMaximumInARowValue() const override {return 8u;};
+        size_t GetMinimumNumberOfPlayers() const override {return 2u;};
+        size_t GetMaximumNumberOfPlayers() const override {return 10u;};
 
     private:
 

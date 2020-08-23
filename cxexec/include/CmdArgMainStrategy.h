@@ -30,6 +30,7 @@
 namespace cxmodel
 {
     class IConnectXGameActions;
+    class IConnectXLimits;
     class ISubject;
 }
 
@@ -59,12 +60,14 @@ public:
      * @param argv                 A C-style array of arguments.
      * @param p_modelAsSubject     The Connect X compatible model (Subject).
      * @param p_modelAsGameActions The Connect X compatible model (Game actions).
+     * @param p_modelAsLimits      The Connect X compatible model (Limits).
      *
      ********************************************************************************************/
     CmdArgMainStrategy(int argc,
                        char *argv[],
                        cxmodel::Subject& p_modelAsSubject,
-                       cxmodel::IConnectXGameActions& p_modelAsGameActions);
+                       cxmodel::IConnectXGameActions& p_modelAsGameActions,
+                       cxmodel::IConnectXLimits& p_modelAsLimits);
 
     int Handle() override;
 

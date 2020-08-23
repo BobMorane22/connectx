@@ -61,12 +61,14 @@ cx::CmdArgVerboseStrategy::CmdArgVerboseStrategy(int argc,
                                                  char *argv[],
                                                  cxmodel::Subject& p_modelAsSubject,
                                                  cxmodel::IConnectXGameActions& p_modelAsGameActions,
+                                                 cxmodel::IConnectXLimits& p_modelAsLimits,
                                                  cxmodel::IVersionning& p_modelAsVersionning,
                                                  cxlog::ILogger* p_logger)
  : m_argc{argc}
  , m_argv{argv}
  , m_modelAsSubject{p_modelAsSubject}
  , m_modelAsGameActions{p_modelAsGameActions}
+ , m_modelAsLimits{p_modelAsLimits}
  , m_modelAsVersionning{p_modelAsVersionning}
  , m_logger{p_logger}
 {
@@ -94,7 +96,11 @@ int cx::CmdArgVerboseStrategy::Handle()
     ASSERT_MSG(chainLogger->HasSucessor(), "Setting a logger successor failed.");
 
     // Now that the verbose logger is set, we go on with the standard execution:
-    cx::CmdArgMainStrategy mainStrategy{m_argc, m_argv, m_modelAsSubject, m_modelAsGameActions};
+    cx::CmdArgMainStrategy mainStrategy{m_argc,
+                                        m_argv,
+                                        m_modelAsSubject,
+                                        m_modelAsGameActions,
+                                        m_modelAsLimits};
 
     return mainStrategy.Handle();
 }

@@ -23,10 +23,18 @@
 
 #include <sstream>
 
+#include <cxinv/include/assertion.h>
 #include <cxmodel/include/NewGameInformation.h>
 #include <cxmodel/include/IConnectXGameInformation.h>
+#include <cxmodel/include/IConnectXLimits.h>
 
 #include <MainWindowPresenter.h>
+
+cxgui::MainWindowPresenter::MainWindowPresenter(const cxmodel::IConnectXLimits& p_modealAsLimits)
+ : m_modelAsLimits{p_modealAsLimits}
+{
+
+}
 
 void cxgui::MainWindowPresenter::Update(cxmodel::NotificationContext p_context, cxmodel::Subject* p_subject)
 {
@@ -114,9 +122,25 @@ std::string cxgui::MainWindowPresenter::GetNewGameViewRemovePlayerButtonText() c
     return "Remove player";
 }
 
+bool cxgui::MainWindowPresenter::CanRemoveAnotherPlayer(std::size_t p_currentNumberOfPlayers) const
+{
+    PRECONDITION(p_currentNumberOfPlayers >= m_modelAsLimits.GetMinimumNumberOfPlayers());
+    PRECONDITION(p_currentNumberOfPlayers < (m_modelAsLimits.GetMaximumNumberOfPlayers() + 1));
+
+    return p_currentNumberOfPlayers > m_modelAsLimits.GetMinimumNumberOfPlayers();
+}
+
 std::string cxgui::MainWindowPresenter::GetNewGameViewAddPlayerButtonText() const
 {
     return "Add player";
+}
+
+bool cxgui::MainWindowPresenter::CanAddAnotherPlayer(std::size_t p_currentNumberOfPlayers) const
+{
+    PRECONDITION(p_currentNumberOfPlayers >= m_modelAsLimits.GetMinimumNumberOfPlayers());
+    PRECONDITION(p_currentNumberOfPlayers < (m_modelAsLimits.GetMaximumNumberOfPlayers() + 1));
+
+    return p_currentNumberOfPlayers < m_modelAsLimits.GetMaximumNumberOfPlayers();
 }
 
 std::string cxgui::MainWindowPresenter::GetNewGameViewStartButtonText() const

@@ -51,6 +51,7 @@ std::unique_ptr<cx::ICmdArgWorkflowStrategy> cx::CmdArgWorkflowFactory::Create(i
                                                                                char *argv[],
                                                                                cxmodel::Subject& p_modelAsSubject,
                                                                                cxmodel::IConnectXGameActions& p_modelAsGameActions,
+                                                                               cxmodel::IConnectXLimits& p_modelAsLimits,
                                                                                cxmodel::IVersionning& p_modelAsVersionning,
                                                                                cxlog::ILogger& p_logger)
 {
@@ -62,7 +63,7 @@ std::unique_ptr<cx::ICmdArgWorkflowStrategy> cx::CmdArgWorkflowFactory::Create(i
     }
     else if(argc == 1)
     {
-        strategy = std::make_unique<CmdArgMainStrategy>(argc, argv, p_modelAsSubject, p_modelAsGameActions);
+        strategy = std::make_unique<CmdArgMainStrategy>(argc, argv, p_modelAsSubject, p_modelAsGameActions, p_modelAsLimits);
     }
     else
     {
@@ -122,6 +123,7 @@ std::unique_ptr<cx::ICmdArgWorkflowStrategy> cx::CmdArgWorkflowFactory::Create(i
                                                                    argv,
                                                                    p_modelAsSubject,
                                                                    p_modelAsGameActions,
+                                                                   p_modelAsLimits,
                                                                    p_modelAsVersionning,
                                                                    &p_logger);
             }

@@ -125,12 +125,28 @@ public:
     virtual std::string GetNewGameViewRemovePlayerButtonText() const = 0;
 
     /******************************************************************************************//**
+     * @brief Indicates if, according to the current number of players, another one can be removed.
+     *
+     * @return `true` if another player can be removed, `false` otherwise.
+     *
+     ********************************************************************************************/
+    virtual bool CanRemoveAnotherPlayer(std::size_t p_currentNumberOfPlayers) const = 0;
+
+    /******************************************************************************************//**
      * @brief Add player button text accessor.
      *
      * @return Add player button text.
      *
      ********************************************************************************************/
     virtual std::string GetNewGameViewAddPlayerButtonText() const = 0;
+
+    /******************************************************************************************//**
+     * @brief Indicates if, according to the current number of players, another one can be added.
+     *
+     * @return `true` if another player can be added, `false` otherwise.
+     *
+     ********************************************************************************************/
+    virtual bool CanAddAnotherPlayer(std::size_t p_currentNumberOfPlayers) const = 0;
 
     /******************************************************************************************//**
      * @brief Start button text accessor.

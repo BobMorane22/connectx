@@ -25,6 +25,7 @@
 #define CMDARGVERBOSESTRATEGY_H_B2A8C38D_7DA1_4B38_9D16_B317EBF164A5
 
 #include <cxmodel/include/IConnectXGameActions.h>
+#include <cxmodel/include/IConnectXLimits.h>
 #include <cxmodel/include/IVersionning.h>
 #include <cxmodel/include/Subject.h>
 
@@ -54,6 +55,7 @@ public:
      * @param argv                 A C-style array of arguments.
      * @param p_modelAsSubject     The Connect X compatible model (Subject).
      * @param p_modelAsGameActions The Connect X compatible model (Game actions).
+     * @param p_modelAsLimits      The Connect X compatible model (Limits).
      * @param p_modelAsVersionning The Connect X compatible model (Versionning).
      * @param p_logger             A chain logger.
      *
@@ -62,6 +64,7 @@ public:
                           char *argv[],
                           cxmodel::Subject& p_modelAsSubject,
                           cxmodel::IConnectXGameActions& p_modelAsGameActions,
+                          cxmodel::IConnectXLimits& p_modelAsLimits,
                           cxmodel::IVersionning& p_modelAsVersionning,
                           cxlog::ILogger* p_logger);
 
@@ -74,6 +77,7 @@ private:
     char **m_argv;
     cxmodel::Subject& m_modelAsSubject;
     cxmodel::IConnectXGameActions& m_modelAsGameActions;
+    cxmodel::IConnectXLimits& m_modelAsLimits;
     cxmodel::IVersionning& m_modelAsVersionning;
     cxlog::ILogger* m_logger;
 

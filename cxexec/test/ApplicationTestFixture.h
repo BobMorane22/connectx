@@ -27,6 +27,7 @@
 #include <gtest/gtest.h>
 
 #include <cxmodel/include/IConnectXGameActions.h>
+#include <cxmodel/include/IConnectXLimits.h>
 #include <cxmodel/include/IVersionning.h>
 #include <cxmodel/include/Subject.h>
 
@@ -48,6 +49,7 @@ public:
     cxlog::ILogger& GetLogger();
     cxmodel::Subject& GetSubjectModel();
     cxmodel::IConnectXGameActions& GetGameActionsModel();
+    cxmodel::IConnectXLimits& GetLimitsModel();
     cxmodel::IVersionning& GetVersionningModel();
 
     std::string GetStdOutContents() const;
@@ -58,6 +60,7 @@ private:
 
     class ModelApplicationMock : public cxmodel::Subject,
                                  public cxmodel::IConnectXGameActions,
+                                 public cxmodel::IConnectXLimits,
                                  public cxmodel::IVersionning
     {
 
@@ -69,6 +72,16 @@ private:
             // Not used...
             (void)p_gameInformation;
         }
+
+        // IConnectXLimits:
+        size_t GetMinimumGridHeight() const override {return 7u;};
+        size_t GetMinimumGridWidth() const override {return 6u;};
+        size_t GetMinimumInARowValue() const override {return 3u;};
+        size_t GetMaximumGridHeight() const override {return 64u;};
+        size_t GetMaximumGridWidth() const override {return 7u;};
+        size_t GetMaximumInARowValue() const override {return 8u;};
+        size_t GetMinimumNumberOfPlayers() const override {return 2u;};
+        size_t GetMaximumNumberOfPlayers() const override {return 10u;};
 
         // IVersionning:
         std::string GetName() const override {return "Connect X";};

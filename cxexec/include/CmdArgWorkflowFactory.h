@@ -31,6 +31,7 @@
 namespace cxmodel
 {
     class IConnectXGameActions;
+    class IConnectXLimits;
     class IVersionning;
     class Subject;
 }
@@ -60,6 +61,7 @@ public:
      *                             (including the executable).
      * @param p_modelAsSubject     The Connect X compatible model (Subject).
      * @param p_modelAsGameActions The Connect X compatible model (Game actions).
+     * @param p_modelAsLimits      The Connect X compatible model (Limits).
      * @param p_modelAsVersionning The Connect X compatible model (Versionning).
      * @param p_logger             A chain logger.
      *
@@ -72,6 +74,7 @@ public:
                                                     char *argv[],
                                                     cxmodel::Subject& p_modelAsSubject,
                                                     cxmodel::IConnectXGameActions& p_modelAsGameActions,
+                                                    cxmodel::IConnectXLimits& p_modelAsLimits,
                                                     cxmodel::IVersionning& p_modelAsVersionning,
                                                     cxlog::ILogger& p_logger);
 

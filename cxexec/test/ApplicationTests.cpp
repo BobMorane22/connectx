@@ -39,6 +39,7 @@ TEST_F(ApplicationTestFixture, Run_BadArgumentCount_ExitFailure)
                                                                               (char**)argv,
                                                                               GetSubjectModel(),
                                                                               GetGameActionsModel(),
+                                                                              GetLimitsModel(),
                                                                               GetVersionningModel(),
                                                                               GetLogger());
 
@@ -54,6 +55,7 @@ TEST_F(ApplicationTestFixture, Run_BadArgument_ExitFailure)
                                                                               (char**)argv,
                                                                               GetSubjectModel(),
                                                                               GetGameActionsModel(),
+                                                                              GetLimitsModel(),
                                                                               GetVersionningModel(),
                                                                               GetLogger());
     EXPECT_EQ(app->Run(), EXIT_FAILURE);
@@ -68,6 +70,7 @@ TEST_F(ApplicationTestFixture, Run_Help_ExitSuccess)
                                                                               (char**)argv,
                                                                               GetSubjectModel(),
                                                                               GetGameActionsModel(),
+                                                                              GetLimitsModel(),
                                                                               GetVersionningModel(),
                                                                               GetLogger());
     EXPECT_EQ(app->Run(), EXIT_SUCCESS);
@@ -82,6 +85,7 @@ TEST_F(ApplicationTestFixture, Run_Version_ExitSuccess)
                                                                               (char**)argv,
                                                                               GetSubjectModel(),
                                                                               GetGameActionsModel(),
+                                                                              GetLimitsModel(),
                                                                               GetVersionningModel(),
                                                                               GetLogger());
     EXPECT_EQ(app->Run(), EXIT_SUCCESS);
@@ -96,6 +100,7 @@ TEST_F(ApplicationTestFixture, Run_HelpAndVersion_ExitSuccess)
                                                                               (char**)argv,
                                                                               GetSubjectModel(),
                                                                               GetGameActionsModel(),
+                                                                              GetLimitsModel(),
                                                                               GetVersionningModel(),
                                                                               GetLogger());
     EXPECT_EQ(app->Run(), EXIT_SUCCESS);
@@ -110,6 +115,7 @@ TEST_F(ApplicationTestFixture, Run_VersionAndHelp_ExitSuccess)
                                                                               (char**)argv,
                                                                               GetSubjectModel(),
                                                                               GetGameActionsModel(),
+                                                                              GetLimitsModel(),
                                                                               GetVersionningModel(),
                                                                               GetLogger());
     EXPECT_EQ(app->Run(), EXIT_SUCCESS);
@@ -124,6 +130,7 @@ TEST_F(ApplicationTestFixture, Run_TwoManyValidArguments_ExitSuccess)
                                                                               (char**)argv,
                                                                               GetSubjectModel(),
                                                                               GetGameActionsModel(),
+                                                                              GetLimitsModel(),
                                                                               GetVersionningModel(),
                                                                               GetLogger());
     EXPECT_EQ(app->Run(), EXIT_SUCCESS);
@@ -138,6 +145,7 @@ TEST_F(ApplicationTestFixture, Run_MixedArguments_ExitFailure)
                                                                               (char**)argv,
                                                                               GetSubjectModel(),
                                                                               GetGameActionsModel(),
+                                                                              GetLimitsModel(),
                                                                               GetVersionningModel(),
                                                                               GetLogger());
     EXPECT_EQ(app->Run(), EXIT_FAILURE);
