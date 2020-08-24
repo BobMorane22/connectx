@@ -21,6 +21,7 @@
  *
  *************************************************************************************************/
 
+#include <algorithm>
 #include <sstream>
 
 #include <gtkmm/messagedialog.h>
@@ -228,6 +229,7 @@ void cxgui::NewGameView::OnStart()
 {
     cxmodel::NewGameInformation gameInformation;
 
+    // Retrieve game parameters:
     try
     {
         gameInformation.m_inARowValue = std::stoul(m_inARowEntry.get_text());
@@ -245,26 +247,51 @@ void cxgui::NewGameView::OnStart()
         return;
     }
 
+    // Retrieve players information:
+
+    // Names:
     const std::string name1 = m_playerList.GetPlayerNameAtRow(0);
     const std::string name2 = m_playerList.GetPlayerNameAtRow(1);
 
-    if(name1.empty() || name2.empty())
+    const std::vector<std::string> playerNames = m_playerList.GetAllPlayerNames();
+    const bool emptyNamesExist = std::any_of(playerNames.cbegin(),
+                                             playerNames.cend(),
+                                             [](const std::string& p_name)
+                                             {
+                                                 return p_name.empty();
+                                             });
+
+    if(emptyNamesExist)
     {
         DisplayEmptyEntriesWarningDialog();
         return;
     }
 
-    const auto disc1Color = m_playerList.GetRowPlayerDiscColor(0);
-    const auto disc2Color = m_playerList.GetRowPlayerDiscColor(1);
+    // Chip colors:
+    const std::vector<cxmodel::ChipColor> chipColors = m_playerList.GetAllColors();
 
-    if(disc1Color == disc2Color)
+    bool duplicateColorsExist = false;
+    for(const auto& color : chipColors)
+    {
+        const size_t count = std::count(chipColors.cbegin(), chipColors.cend(), color);
+
+        if(count > 1)
+        {
+            duplicateColorsExist = true;
+            break;
+        }
+    }
+
+    if(duplicateColorsExist)
     {
         DisplaySameColorsWarningDialog();
         return;
     }
 
-    gameInformation.AddPlayer({name1, disc1Color});
-    gameInformation.AddPlayer({name2, disc2Color});
+    for(size_t index = 0; index < m_playerList.GetSize(); ++index)
+    {
+        gameInformation.AddPlayer({playerNames[index], chipColors[index]});
+    }
 
     m_controller.OnStart(gameInformation);
 }
