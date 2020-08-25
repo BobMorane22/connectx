@@ -53,5 +53,29 @@ TEST(CommandCreateNewGame, /*DISABLED_*/Execute_ValidNewGame_NewGameCreated)
 
 TEST(CommandCreateNewGame, /*DISABLED_*/Undo_ValidNewGame_HasNoEffect)
 {
-    // To be added later...
+    std::vector<cxmodel::Player> modelPlayers;
+    size_t modelGridWidth = 0u;
+    size_t modelGridHeight = 0u;
+    size_t modelInARowValue = 0u;
+
+    cxmodel::NewGameInformation newGameInformation;
+
+    newGameInformation.m_inARowValue = 4;
+    newGameInformation.m_gridWidth = 7;
+    newGameInformation.m_gridHeight = 6;
+    newGameInformation.AddPlayer({"John Doe", cxmodel::MakeRed()});
+    newGameInformation.AddPlayer({"Jane Doe", cxmodel::MakeBlue()});
+
+    cxmodel::CommandCreateNewGame cmd{modelPlayers, modelGridWidth, modelGridHeight, modelInARowValue, newGameInformation};
+    cmd.Execute();
+
+    // For now, undoing should have no effect:
+    cmd.Undo();
+
+    ASSERT_EQ(modelPlayers.size(), newGameInformation.GetNbOfNewPlayers());
+    ASSERT_EQ(modelPlayers, newGameInformation.GetNewPlayers());
+
+    ASSERT_EQ(modelGridWidth, newGameInformation.m_gridWidth);
+    ASSERT_EQ(modelGridHeight, newGameInformation.m_gridHeight);
+    ASSERT_EQ(modelInARowValue, newGameInformation.m_inARowValue);
 }

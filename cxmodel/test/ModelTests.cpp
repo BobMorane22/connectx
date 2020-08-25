@@ -32,7 +32,7 @@
 #include "CommandStackMock.h"
 #include "LoggerMock.h"
 
-TEST(Model, GetName_ValidModel_NameReturned)
+TEST(Model, /*DISABLED_*/GetName_ValidModel_NameReturned)
 {
     LoggerMock logger;
     cxmodel::Model model{std::make_unique<cxmodel::CommandStack>(200), logger};
@@ -40,7 +40,7 @@ TEST(Model, GetName_ValidModel_NameReturned)
     ASSERT_EQ(model.GetName(), "Connect X");
 }
 
-TEST(Model, GetVersionNumber_ValidModel_ValidVersionNumberReturned)
+TEST(Model, /*DISABLED_*/GetVersionNumber_ValidModel_ValidVersionNumberReturned)
 {
     LoggerMock logger;
     cxmodel::Model model{std::make_unique<cxmodel::CommandStack>(200), logger};
@@ -50,7 +50,71 @@ TEST(Model, GetVersionNumber_ValidModel_ValidVersionNumberReturned)
     ASSERT_TRUE(std::regex_match(model.GetVersionNumber(), expected));
 }
 
-TEST(Model, CreateNewGame_ValidNewGameInformation_NewGameCreated)
+TEST(Model, /*DISABLED_*/GetMinimumGridHeight_ValidModel_ValueReturned)
+{
+    LoggerMock logger;
+    cxmodel::Model model{std::make_unique<cxmodel::CommandStack>(200), logger};
+
+    ASSERT_EQ(model.GetMinimumGridHeight(), 6u);
+}
+
+TEST(Model, /*DISABLED_*/GetMinimumGridWidth_ValidModel_ValueReturned)
+{
+    LoggerMock logger;
+    cxmodel::Model model{std::make_unique<cxmodel::CommandStack>(200), logger};
+
+    ASSERT_EQ(model.GetMinimumGridWidth(), 7u);
+}
+
+TEST(Model, /*DISABLED_*/GetMinimumInARowValue_ValidModel_ValueReturned)
+{
+    LoggerMock logger;
+    cxmodel::Model model{std::make_unique<cxmodel::CommandStack>(200), logger};
+
+    ASSERT_EQ(model.GetMinimumInARowValue(), 3u);
+}
+
+TEST(Model, /*DISABLED_*/GetMaximumGridHeight_ValidModel_ValueReturned)
+{
+    LoggerMock logger;
+    cxmodel::Model model{std::make_unique<cxmodel::CommandStack>(200), logger};
+
+    ASSERT_EQ(model.GetMaximumGridHeight(), 64u);
+}
+
+TEST(Model, /*DISABLED_*/GetMaximumGridWidth_ValidModel_ValueReturned)
+{
+    LoggerMock logger;
+    cxmodel::Model model{std::make_unique<cxmodel::CommandStack>(200), logger};
+
+    ASSERT_EQ(model.GetMaximumGridWidth(), 64u);
+}
+
+TEST(Model, /*DISABLED_*/GetMaximumInARowValue_ValidModel_ValueReturned)
+{
+    LoggerMock logger;
+    cxmodel::Model model{std::make_unique<cxmodel::CommandStack>(200), logger};
+
+    ASSERT_EQ(model.GetMaximumInARowValue(), 8u);
+}
+
+TEST(Model, /*DISABLED_*/GetMinimumNumberOfPlayers_ValidModel_ValueReturned)
+{
+    LoggerMock logger;
+    cxmodel::Model model{std::make_unique<cxmodel::CommandStack>(200), logger};
+
+    ASSERT_EQ(model.GetMinimumNumberOfPlayers(), 2u);
+}
+
+TEST(Model, /*DISABLED_*/GetMaximumNumberOfPlayers_ValidModel_ValueReturned)
+{
+    LoggerMock logger;
+    cxmodel::Model model{std::make_unique<cxmodel::CommandStack>(200), logger};
+
+    ASSERT_EQ(model.GetMaximumNumberOfPlayers(), 10u);
+}
+
+TEST(Model, /*DISABLED_*/CreateNewGame_ValidNewGameInformation_NewGameCreated)
 {
     // We create a model:
     LoggerMock logger;
@@ -81,7 +145,7 @@ TEST(Model, CreateNewGame_ValidNewGameInformation_NewGameCreated)
     ASSERT_EQ(model.GetCurrentInARowValue(), 4u);
 }
 
-TEST(Model, CreateNewGame_ValidNewGameInformation_CreateNewNotificationSent)
+TEST(Model, /*DISABLED_*/CreateNewGame_ValidNewGameInformation_CreateNewNotificationSent)
 {
     // We create an observer specific to the CREATE_NEW_GAME notification context:
     class SignalObserver : public cxmodel::IObserver
@@ -113,7 +177,31 @@ TEST(Model, CreateNewGame_ValidNewGameInformation_CreateNewNotificationSent)
     model.CreateNewGame(newGameInfo);
 }
 
-TEST(Model, Undo_RandomCommand_UndoCalledOnCommandStack)
+TEST(Model, /*DISABLED_*/IsWon_ValidModel_ThrowsForNow)
+{
+    LoggerMock logger;
+    cxmodel::Model model{std::make_unique<cxmodel::CommandStack>(200), logger};
+
+    ASSERT_THROW(model.IsWon(), std::logic_error);
+}
+
+TEST(Model, /*DISABLED_*/IsTie_ValidModel_ThrowsForNow)
+{
+    LoggerMock logger;
+    cxmodel::Model model{std::make_unique<cxmodel::CommandStack>(200), logger};
+
+    ASSERT_THROW(model.IsTie(), std::logic_error);
+}
+
+TEST(Model, /*DISABLED_*/IsEarlyTie_ValidModel_ThrowsForNow)
+{
+    LoggerMock logger;
+    cxmodel::Model model{std::make_unique<cxmodel::CommandStack>(200), logger};
+
+    ASSERT_THROW(model.IsEarlyTie(), std::logic_error);
+}
+
+TEST(Model, /*DISABLED_*/Undo_RandomCommand_UndoCalledOnCommandStack)
 {
     std::unique_ptr<CommandStackMock> cmdStack = std::make_unique<CommandStackMock>();
     ASSERT_TRUE(cmdStack);
@@ -132,7 +220,7 @@ TEST(Model, Undo_RandomCommand_UndoCalledOnCommandStack)
     ASSERT_TRUE(cmdStackMock.IsUndoed());
 }
 
-TEST(Model, Redo_RandomCommand_RedoCalledOnCommandStack)
+TEST(Model, /*DISABLED_*/Redo_RandomCommand_RedoCalledOnCommandStack)
 {
     std::unique_ptr<CommandStackMock> cmdStack = std::make_unique<CommandStackMock>();
     ASSERT_TRUE(cmdStack);
@@ -151,7 +239,7 @@ TEST(Model, Redo_RandomCommand_RedoCalledOnCommandStack)
     ASSERT_TRUE(cmdStackMock.IsRedoed());
 }
 
-TEST(Model, SetVerbosityLevel_FromNoneToDebug_VerbosityLevelSet)
+TEST(Model, /*DISABLED_*/SetVerbosityLevel_FromNoneToDebug_VerbosityLevelSet)
 {
     // We create a model:
     LoggerMock logger;

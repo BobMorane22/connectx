@@ -41,7 +41,7 @@ std::string cxgui::MakeLabel(MenuItem p_menuItem)
         case MenuItem::ABOUT:
             return "About";
 
-        default:
-            return "";
+        default:                   // LCOV_EXCL_LINE
+            return "";             // LCOV_EXCL_LINE
     }
 }
