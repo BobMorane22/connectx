@@ -25,39 +25,39 @@
 
 #include "AboutWindowPresenterTestFixture.h"
 
-TEST_F(AboutWindowPresenterTestFixture, GetWindowTitle_ValidPresenter_ValidStringReturned)
+TEST_F(AboutWindowPresenterTestFixture, /*DISABLED_*/GetWindowTitle_ValidPresenter_ValidStringReturned)
 {
     ASSERT_EQ(GetPresenter().GetWindowTitle(), "About");
 }
 
-TEST_F(AboutWindowPresenterTestFixture, GetApplicationName_ValidPresenter_ValidStringReturned)
+TEST_F(AboutWindowPresenterTestFixture, /*DISABLED_*/GetApplicationName_ValidPresenter_ValidStringReturned)
 {
     const auto& model = GetModel();
 
     ASSERT_EQ(GetPresenter().GetApplicationName(), model.GetName());
 }
 
-TEST_F(AboutWindowPresenterTestFixture, GetVersionNumber_ValidPresenter_ValidStringReturned)
+TEST_F(AboutWindowPresenterTestFixture, /*DISABLED_*/GetVersionNumber_ValidPresenter_ValidStringReturned)
 {
     ASSERT_EQ(GetPresenter().GetVersionNumber(), GetModel().GetVersionNumber());
 }
 
-TEST_F(AboutWindowPresenterTestFixture, GetApplicationDescription_ValidPresenter_ValidStringReturned)
+TEST_F(AboutWindowPresenterTestFixture, /*DISABLED_*/GetApplicationDescription_ValidPresenter_ValidStringReturned)
 {
     ASSERT_EQ(GetPresenter().GetApplicationDescription(), "Connect X is a scalable Four-In-A-Row clone");
 }
 
-TEST_F(AboutWindowPresenterTestFixture, GetLicenseDescription_ValidPresenter_ValidStringReturned)
+TEST_F(AboutWindowPresenterTestFixture, /*DISABLED_*/GetLicenseDescription_ValidPresenter_ValidStringReturned)
 {
     ASSERT_EQ(GetPresenter().GetLicenseDescription(), "License: GNU GPL v3");
 }
 
-TEST_F(AboutWindowPresenterTestFixture, GetCopyrightNotice_ValidPresenter_ValidStringReturned)
+TEST_F(AboutWindowPresenterTestFixture, /*DISABLED_*/GetCopyrightNotice_ValidPresenter_ValidStringReturned)
 {
     ASSERT_EQ(GetPresenter().GetCopyrightNotice(), "Copyright © 2020 - Éric Poirier");
 }
 
-TEST_F(AboutWindowPresenterTestFixture, Update_GetCloseText_ValidStringReturned)
+TEST_F(AboutWindowPresenterTestFixture, /*DISABLED_*/Update_GetCloseText_ValidStringReturned)
 {
     ASSERT_EQ(GetPresenter().GetCloseText(), "Close");
 }

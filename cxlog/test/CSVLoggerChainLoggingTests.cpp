@@ -29,7 +29,7 @@
 
 #include "CSVLoggerUtil.h"
 
-TEST(ChainLogging, ChainLogging_TwoSuccessiveLoggers_FirstHasSuccessorSecondDoesNot)
+TEST(ChainLogging, /*DISABLED_*/ChainLogging_TwoSuccessiveLoggers_FirstHasSuccessorSecondDoesNot)
 {
     std::ostringstream t_stream;
     std::ostringstream t_streamSuccessor;
@@ -45,7 +45,7 @@ TEST(ChainLogging, ChainLogging_TwoSuccessiveLoggers_FirstHasSuccessorSecondDoes
 }
 
 
-TEST(ChainLogging, ChainLogging_ValidStringAsInfo_AllLoggersLog)
+TEST(ChainLogging, /*DISABLED_*/ChainLogging_ValidStringAsInfo_AllLoggersLog)
 {
     std::ostringstream t_stream;
     std::ostringstream t_streamSuccessor;
@@ -67,7 +67,7 @@ TEST(ChainLogging, ChainLogging_ValidStringAsInfo_AllLoggersLog)
     ASSERT_EQ(loggedLineSuccessor, InfoResult());
 }
 
-TEST(ChainLogging, ChainLogging_ValidStringAsInfo_AllLoggersLogExceptNone)
+TEST(ChainLogging, /*DISABLED_*/ChainLogging_ValidStringAsInfo_AllLoggersLogExceptNone)
 {
     std::ostringstream t_stream,
                        t_streamFirstSuccessor,

@@ -30,7 +30,7 @@
 #include "SubjectTestFixture.h"
 
 
-TEST_F(SubjectTestFixture, Attach_OneObserver_UpdateWorks)
+TEST_F(SubjectTestFixture, /*DISABLED_*/Attach_OneObserver_UpdateWorks)
 {
     ASSERT_EQ(0, m_observer1.GetData());
 
@@ -40,7 +40,7 @@ TEST_F(SubjectTestFixture, Attach_OneObserver_UpdateWorks)
     ASSERT_EQ(1, m_observer1.GetData());
 }
 
-TEST_F(SubjectTestFixture, Attach_TwoObservers_UpdateWorks)
+TEST_F(SubjectTestFixture, /*DISABLED_*/Attach_TwoObservers_UpdateWorks)
 {
     ASSERT_EQ(0, m_observer1.GetData());
     ASSERT_EQ(0, m_observer2.GetData());
@@ -53,7 +53,7 @@ TEST_F(SubjectTestFixture, Attach_TwoObservers_UpdateWorks)
     ASSERT_EQ(1, m_observer1.GetData());
 }
 
-TEST_F(SubjectTestFixture, Attach_NullObserver_PreconditionFail)
+TEST_F(SubjectTestFixture, /*DISABLED_*/Attach_NullObserver_PreconditionFail)
 {
     ASSERT_TRUE(GetStdErrContents().empty());
 
@@ -62,7 +62,7 @@ TEST_F(SubjectTestFixture, Attach_NullObserver_PreconditionFail)
     ASSERT_TRUE(GetStdErrContents().find("Precondition") != std::string::npos);
 }
 
-TEST_F(SubjectTestFixture, Attach_SameObserverTwice_PreconditionFail)
+TEST_F(SubjectTestFixture, /*DISABLED_*/Attach_SameObserverTwice_PreconditionFail)
 {
     ASSERT_TRUE(GetStdErrContents().empty());
 
@@ -72,7 +72,7 @@ TEST_F(SubjectTestFixture, Attach_SameObserverTwice_PreconditionFail)
     ASSERT_TRUE(GetStdErrContents().find("Precondition") != std::string::npos);
 }
 
-TEST_F(SubjectTestFixture, Detach_AttachedObserver_NoLongerUpdates)
+TEST_F(SubjectTestFixture, /*DISABLED_*/Detach_AttachedObserver_NoLongerUpdates)
 {
     m_subject.Attach(&m_observer1);
     m_subject.Attach(&m_observer2);
@@ -88,7 +88,7 @@ TEST_F(SubjectTestFixture, Detach_AttachedObserver_NoLongerUpdates)
     ASSERT_EQ(2, m_observer2.GetData());
 }
 
-TEST_F(SubjectTestFixture, Detach_NullObserver_PreconditionFail)
+TEST_F(SubjectTestFixture, /*DISABLED_*/Detach_NullObserver_PreconditionFail)
 {
     ASSERT_TRUE(GetStdErrContents().empty());
 
@@ -98,7 +98,7 @@ TEST_F(SubjectTestFixture, Detach_NullObserver_PreconditionFail)
     ASSERT_TRUE(GetStdErrContents().find("Precondition") != std::string::npos);
 }
 
-TEST_F(SubjectTestFixture, Detach_UnknownObserver_PreconditionFail)
+TEST_F(SubjectTestFixture, /*DISABLED_*/Detach_UnknownObserver_PreconditionFail)
 {
     ASSERT_TRUE(GetStdErrContents().empty());
 
@@ -108,7 +108,7 @@ TEST_F(SubjectTestFixture, Detach_UnknownObserver_PreconditionFail)
     ASSERT_TRUE(GetStdErrContents().find("Precondition") != std::string::npos);
 }
 
-TEST_F(SubjectTestFixture, Detach_NoObserverListed_PreconditionFail)
+TEST_F(SubjectTestFixture, /*DISABLED_*/Detach_NoObserverListed_PreconditionFail)
 {
     ASSERT_TRUE(GetStdErrContents().empty());
 
@@ -117,7 +117,7 @@ TEST_F(SubjectTestFixture, Detach_NoObserverListed_PreconditionFail)
     ASSERT_TRUE(GetStdErrContents().find("Precondition") != std::string::npos);
 }
 
-TEST_F(SubjectTestFixture, DetachAll_TwoObservers_NoLongerUpdate)
+TEST_F(SubjectTestFixture, /*DISABLED_*/DetachAll_TwoObservers_NoLongerUpdate)
 {
     ASSERT_EQ(0, m_observer1.GetData());
     ASSERT_EQ(0, m_observer2.GetData());

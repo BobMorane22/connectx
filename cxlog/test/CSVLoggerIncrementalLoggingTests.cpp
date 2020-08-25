@@ -44,7 +44,7 @@ void LogAtAllLevels(std::unique_ptr<cxlog::ILogger> p_logger)
 
 } // unamed namespace
 
-TEST(CSVIncrementalLogging, CSVStringLogger_TargetNONE_VerbosityLevelRespected)
+TEST(CSVIncrementalLogging, /*DISABLED_*/CSVStringLogger_TargetNONE_VerbosityLevelRespected)
 {
     std::ostringstream t_stream;
     auto t_logger{CreateCSVStringStreamLogger(t_stream)};
@@ -56,7 +56,7 @@ TEST(CSVIncrementalLogging, CSVStringLogger_TargetNONE_VerbosityLevelRespected)
     ASSERT_TRUE(t_stream.str().empty());
 }
 
-TEST(CSVIncrementalLogging, CSVStringLogger_TargetFATAL_VerbosityLevelRespected)
+TEST(CSVIncrementalLogging, /*DISABLED_*/CSVStringLogger_TargetFATAL_VerbosityLevelRespected)
 {
     std::ostringstream t_stream;
     auto t_logger{CreateCSVStringStreamLogger(t_stream)};
@@ -70,7 +70,7 @@ TEST(CSVIncrementalLogging, CSVStringLogger_TargetFATAL_VerbosityLevelRespected)
     ASSERT_EQ(result, FatalResult());
 }
 
-TEST(CSVIncrementalLogging, CSVStringLogger_TargetERROR_VerbosityLevelRespected)
+TEST(CSVIncrementalLogging, /*DISABLED_*/CSVStringLogger_TargetERROR_VerbosityLevelRespected)
 {
     std::ostringstream t_stream;
     auto t_logger{CreateCSVStringStreamLogger(t_stream)};
@@ -84,7 +84,7 @@ TEST(CSVIncrementalLogging, CSVStringLogger_TargetERROR_VerbosityLevelRespected)
     ASSERT_EQ(result, FatalResult() + ErrorResult());
 }
 
-TEST(CSVIncrementalLogging, CSVStringLogger_TargetWARNING_VerbosityLevelRespected)
+TEST(CSVIncrementalLogging, /*DISABLED_*/CSVStringLogger_TargetWARNING_VerbosityLevelRespected)
 {
     std::ostringstream t_stream;
     auto t_logger{CreateCSVStringStreamLogger(t_stream)};
@@ -98,7 +98,7 @@ TEST(CSVIncrementalLogging, CSVStringLogger_TargetWARNING_VerbosityLevelRespecte
     ASSERT_EQ(result, FatalResult() + ErrorResult() + WarningResult());
 }
 
-TEST(CSVIncrementalLogging, CSVStringLogger_TargetINFO_VerbosityLevelRespected)
+TEST(CSVIncrementalLogging, /*DISABLED_*/CSVStringLogger_TargetINFO_VerbosityLevelRespected)
 {
     std::ostringstream t_stream;
     auto t_logger{CreateCSVStringStreamLogger(t_stream)};
@@ -112,7 +112,7 @@ TEST(CSVIncrementalLogging, CSVStringLogger_TargetINFO_VerbosityLevelRespected)
     ASSERT_EQ(result, FatalResult() + ErrorResult() + WarningResult() + InfoResult());
 }
 
-TEST(CSVIncrementalLogging, CSVStringLogger_TargetDEBUG_VerbosityLevelRespected)
+TEST(CSVIncrementalLogging, /*DISABLED_*/CSVStringLogger_TargetDEBUG_VerbosityLevelRespected)
 {
     std::ostringstream t_stream;
     auto t_logger{CreateCSVStringStreamLogger(t_stream)};
@@ -126,7 +126,7 @@ TEST(CSVIncrementalLogging, CSVStringLogger_TargetDEBUG_VerbosityLevelRespected)
     ASSERT_EQ(result, FatalResult() + ErrorResult() + WarningResult() + InfoResult() + DebugResult());
 }
 
-TEST(CSVIncrementalLogging, CSVStringChainedLogger_TargetNONE_VerbosityLevelRespected)
+TEST(CSVIncrementalLogging, /*DISABLED_*/CSVStringChainedLogger_TargetNONE_VerbosityLevelRespected)
 {
     std::ostringstream t_stream;
     auto t_logger{CreateCSVStringStreamChainLogger(t_stream)};
@@ -138,7 +138,7 @@ TEST(CSVIncrementalLogging, CSVStringChainedLogger_TargetNONE_VerbosityLevelResp
     ASSERT_TRUE(t_stream.str().empty());
 }
 
-TEST(CSVIncrementalLogging, CSVStringChainedLogger_TargetFATAL_VerbosityLevelRespected)
+TEST(CSVIncrementalLogging, /*DISABLED_*/CSVStringChainedLogger_TargetFATAL_VerbosityLevelRespected)
 {
     std::ostringstream t_stream;
     auto t_logger{CreateCSVStringStreamChainLogger(t_stream)};
@@ -152,7 +152,7 @@ TEST(CSVIncrementalLogging, CSVStringChainedLogger_TargetFATAL_VerbosityLevelRes
     ASSERT_EQ(result, FatalResult());
 }
 
-TEST(CSVIncrementalLogging, CSVStringChainedLogger_TargetERROR_VerbosityLevelRespected)
+TEST(CSVIncrementalLogging, /*DISABLED_*/CSVStringChainedLogger_TargetERROR_VerbosityLevelRespected)
 {
     std::ostringstream t_stream;
     auto t_logger{CreateCSVStringStreamChainLogger(t_stream)};
@@ -166,7 +166,7 @@ TEST(CSVIncrementalLogging, CSVStringChainedLogger_TargetERROR_VerbosityLevelRes
     ASSERT_EQ(result, FatalResult() + ErrorResult());
 }
 
-TEST(CSVIncrementalLogging, CSVStringChainedLogger_TargetWARNING_VerbosityLevelRespected)
+TEST(CSVIncrementalLogging, /*DISABLED_*/CSVStringChainedLogger_TargetWARNING_VerbosityLevelRespected)
 {
     std::ostringstream t_stream;
     auto t_logger{CreateCSVStringStreamChainLogger(t_stream)};
@@ -180,7 +180,7 @@ TEST(CSVIncrementalLogging, CSVStringChainedLogger_TargetWARNING_VerbosityLevelR
     ASSERT_EQ(result, FatalResult() + ErrorResult() + WarningResult());
 }
 
-TEST(CSVIncrementalLogging, CSVStringChainedLogger_TargetINFO_VerbosityLevelRespected)
+TEST(CSVIncrementalLogging, /*DISABLED_*/CSVStringChainedLogger_TargetINFO_VerbosityLevelRespected)
 {
     std::ostringstream t_stream;
     auto t_logger{CreateCSVStringStreamChainLogger(t_stream)};
@@ -194,7 +194,7 @@ TEST(CSVIncrementalLogging, CSVStringChainedLogger_TargetINFO_VerbosityLevelResp
     ASSERT_EQ(result, FatalResult() + ErrorResult() + WarningResult() + InfoResult());
 }
 
-TEST(CSVIncrementalLogging, CSVStringChainedLogger_TargetDEBUG_VerbosityLevelRespected)
+TEST(CSVIncrementalLogging, /*DISABLED_*/CSVStringChainedLogger_TargetDEBUG_VerbosityLevelRespected)
 {
     std::ostringstream t_stream;
     auto t_logger{CreateCSVStringStreamChainLogger(t_stream)};
@@ -208,7 +208,7 @@ TEST(CSVIncrementalLogging, CSVStringChainedLogger_TargetDEBUG_VerbosityLevelRes
     ASSERT_EQ(result, FatalResult() + ErrorResult() + WarningResult() + InfoResult() + DebugResult());
 }
 
-TEST(CSVIncrementalLogging, CSVStringChainedLogger_TargetDEBUG_HeadersGenerated)
+TEST(CSVIncrementalLogging, /*DISABLED_*/CSVStringChainedLogger_TargetDEBUG_HeadersGenerated)
 {
     std::ostringstream t_stream;
     auto t_logger{CreateCSVStringStreamChainLogger(t_stream, true)};

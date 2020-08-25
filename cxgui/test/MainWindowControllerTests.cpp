@@ -23,7 +23,7 @@
 
 #include "MainWindowControllerTestFixture.h"
 
-TEST_F(MainWindowControllerTestFixture, OnStart_ValidGame_CreateNewGameCalledOnModel)
+TEST_F(MainWindowControllerTestFixture, /*DISABLED_*/OnStart_ValidGame_CreateNewGameCalledOnModel)
 {
     MainWindowControllerMockModel& model = GetModel();
 

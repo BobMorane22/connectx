@@ -25,22 +25,22 @@
 
 #include <MenuItem.h>
 
-TEST(MenuItem, MakeLabel_Game_GameLabelReturned)
+TEST(MenuItem, /*DISABLED_*/MakeLabel_Game_GameLabelReturned)
 {
     ASSERT_EQ("Game", cxgui::MakeLabel(cxgui::MenuItem::GAME));
 }
 
-TEST(MenuItem, MakeLabel_Quit_QuitLabelReturned)
+TEST(MenuItem, /*DISABLED_*/MakeLabel_Quit_QuitLabelReturned)
 {
     ASSERT_EQ("Quit", cxgui::MakeLabel(cxgui::MenuItem::QUIT));
 }
 
-TEST(MenuItem, MakeLabel_Help_HelpLabelReturned)
+TEST(MenuItem, /*DISABLED_*/MakeLabel_Help_HelpLabelReturned)
 {
     ASSERT_EQ("Help", cxgui::MakeLabel(cxgui::MenuItem::HELP));
 }
 
-TEST(MenuItem, MakeLabel_About_AboutLabelReturned)
+TEST(MenuItem, /*DISABLED_*/MakeLabel_About_AboutLabelReturned)
 {
     ASSERT_EQ("About", cxgui::MakeLabel(cxgui::MenuItem::ABOUT));
 }

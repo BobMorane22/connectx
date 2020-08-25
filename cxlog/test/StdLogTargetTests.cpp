@@ -27,7 +27,7 @@
 
 #include "DisableStdStreamsRAII.h"
 
-TEST(StdLogTarget, Log_SomeString_StringLoggedToStdout)
+TEST(StdLogTarget, /*DISABLED_*/Log_SomeString_StringLoggedToStdout)
 {
     DisableStdStreamsRAII raii;
 

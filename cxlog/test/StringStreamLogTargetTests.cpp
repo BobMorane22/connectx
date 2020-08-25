@@ -27,7 +27,7 @@
 
 #include "CSVLoggerUtil.h"
 
-TEST(LogTarget, StringStreamTarget_ValidMessageAndValidStream_LineLogged)
+TEST(LogTarget, /*DISABLED_*/StringStreamTarget_ValidMessageAndValidStream_LineLogged)
 {
     std::ostringstream stream;
     std::unique_ptr<cxlog::ILogTarget> target{new cxlog::StringStreamLogTarget{stream}};

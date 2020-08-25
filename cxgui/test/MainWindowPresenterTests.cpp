@@ -27,32 +27,32 @@
 
 #include "MainWindowPresenterTestFixture.h"
 
-TEST_F(MainWindowPresenterTestFixture, GetWindowTitle_GetWindowTitle_GetWindowTitleLabelReturned)
+TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetWindowTitle_GetWindowTitle_GetWindowTitleLabelReturned)
 {
     ASSERT_EQ(GetPresenter().GetWindowTitle(), "Connect X");
 }
 
-TEST_F(MainWindowPresenterTestFixture, GetMenuLabel_GameMenu_GameMenuLabelReturned)
+TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetMenuLabel_GameMenu_GameMenuLabelReturned)
 {
     ASSERT_EQ(GetPresenter().GetMenuLabel(cxgui::MenuItem::GAME), "Game");
 }
 
-TEST_F(MainWindowPresenterTestFixture, GetMenuLabel_QuitMenu_QuitMenuLabelReturned)
+TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetMenuLabel_QuitMenu_QuitMenuLabelReturned)
 {
     ASSERT_EQ(GetPresenter().GetMenuLabel(cxgui::MenuItem::QUIT), "Quit");
 }
 
-TEST_F(MainWindowPresenterTestFixture, GetMenuLabel_HelpMenu_HelpMenuLabelReturned)
+TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetMenuLabel_HelpMenu_HelpMenuLabelReturned)
 {
     ASSERT_EQ(GetPresenter().GetMenuLabel(cxgui::MenuItem::HELP), "Help");
 }
 
-TEST_F(MainWindowPresenterTestFixture, GetMenuLabel_AboutMenu_AboutMenuLabelReturned)
+TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetMenuLabel_AboutMenu_AboutMenuLabelReturned)
 {
     ASSERT_EQ(GetPresenter().GetMenuLabel(cxgui::MenuItem::ABOUT), "About");
 }
 
-TEST_F(MainWindowPresenterTestFixture, Update_CreateNewGame_NewGameInformationUpdated)
+TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/Update_CreateNewGame_NewGameInformationUpdated)
 {
     auto& model = GetActionsModel();
     model.CreateNewGame(cxmodel::NewGameInformation{});

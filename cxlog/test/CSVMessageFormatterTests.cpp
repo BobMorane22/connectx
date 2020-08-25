@@ -28,7 +28,7 @@
 #include "CSVLoggerUtil.h"
 #include "TimestampFormatterMock.h"
 
-TEST(CSVMessageFormatter, FormatHeaders_ValidMessageFormatter_FormatsHeadersAccordingly)
+TEST(CSVMessageFormatter, /*DISABLED_*/FormatHeaders_ValidMessageFormatter_FormatsHeadersAccordingly)
 {
     std::unique_ptr<TimestampFormatterMock> tsmpFormatter= std::make_unique<TimestampFormatterMock>();
     std::unique_ptr<cxlog::IMessageFormatter> formatter = std::make_unique<cxlog::CSVMessageFormatter>(std::move(tsmpFormatter));
@@ -39,7 +39,7 @@ TEST(CSVMessageFormatter, FormatHeaders_ValidMessageFormatter_FormatsHeadersAcco
     ASSERT_EQ(result, expected);
 }
 
-TEST(CSVMessageFormatter, FormatMessage_ValidLineAsFatal_FormatsCSVMessageAccordingly)
+TEST(CSVMessageFormatter, /*DISABLED_*/FormatMessage_ValidLineAsFatal_FormatsCSVMessageAccordingly)
 {
     std::unique_ptr<TimestampFormatterMock> tsmpFormatter= std::make_unique<TimestampFormatterMock>();
     std::unique_ptr<cxlog::IMessageFormatter> formatter = std::make_unique<cxlog::CSVMessageFormatter>(std::move(tsmpFormatter));
@@ -54,7 +54,7 @@ TEST(CSVMessageFormatter, FormatMessage_ValidLineAsFatal_FormatsCSVMessageAccord
     ASSERT_EQ(result, expected);
 }
 
-TEST(CSVMessageFormatter, FormatMessage_ValidLineAsError_FormatsCSVMessageAccordingly)
+TEST(CSVMessageFormatter, /*DISABLED_*/FormatMessage_ValidLineAsError_FormatsCSVMessageAccordingly)
 {
     std::unique_ptr<TimestampFormatterMock> tsmpFormatter= std::make_unique<TimestampFormatterMock>();
     std::unique_ptr<cxlog::IMessageFormatter> formatter = std::make_unique<cxlog::CSVMessageFormatter>(std::move(tsmpFormatter));
@@ -69,7 +69,7 @@ TEST(CSVMessageFormatter, FormatMessage_ValidLineAsError_FormatsCSVMessageAccord
     ASSERT_EQ(result, expected);
 }
 
-TEST(CSVMessageFormatter, FormatMessage_ValidLineAsWarning_FormatsCSVMessageAccordingly)
+TEST(CSVMessageFormatter, /*DISABLED_*/FormatMessage_ValidLineAsWarning_FormatsCSVMessageAccordingly)
 {
     std::unique_ptr<TimestampFormatterMock> tsmpFormatter= std::make_unique<TimestampFormatterMock>();
     std::unique_ptr<cxlog::IMessageFormatter> formatter = std::make_unique<cxlog::CSVMessageFormatter>(std::move(tsmpFormatter));
@@ -84,7 +84,7 @@ TEST(CSVMessageFormatter, FormatMessage_ValidLineAsWarning_FormatsCSVMessageAcco
     ASSERT_EQ(result, expected);
 }
 
-TEST(CSVMessageFormatter, FormatMessage_ValidLineAsInfo_FormatsCSVMessageAccordingly)
+TEST(CSVMessageFormatter, /*DISABLED_*/FormatMessage_ValidLineAsInfo_FormatsCSVMessageAccordingly)
 {
     std::unique_ptr<TimestampFormatterMock> tsmpFormatter= std::make_unique<TimestampFormatterMock>();
     std::unique_ptr<cxlog::IMessageFormatter> formatter = std::make_unique<cxlog::CSVMessageFormatter>(std::move(tsmpFormatter));
@@ -99,7 +99,7 @@ TEST(CSVMessageFormatter, FormatMessage_ValidLineAsInfo_FormatsCSVMessageAccordi
     ASSERT_EQ(result, expected);
 }
 
-TEST(CSVMessageFormatter, FormatMessage_ValidLineAsDebug_FormatsCSVMessageAccordingly)
+TEST(CSVMessageFormatter, /*DISABLED_*/FormatMessage_ValidLineAsDebug_FormatsCSVMessageAccordingly)
 {
     std::unique_ptr<TimestampFormatterMock> tsmpFormatter= std::make_unique<TimestampFormatterMock>();
     std::unique_ptr<cxlog::IMessageFormatter> formatter = std::make_unique<cxlog::CSVMessageFormatter>(std::move(tsmpFormatter));
