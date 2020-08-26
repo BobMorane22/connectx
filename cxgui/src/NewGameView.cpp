@@ -304,7 +304,7 @@ void cxgui::NewGameView::OnAddPlayer()
         std::ostringstream os;
         os << "-- Player " << nbNext << " --";
 
-        m_playerList.AddRow(os.str(), cxmodel::MakeBlue());
+        m_playerList.AddRow(os.str(), cxmodel::MakeRed());
         m_playerList.show_all();
     }
 

@@ -39,7 +39,14 @@ cxgui::ColorComboBox::ColorComboBox()
 
     AddElement(cxgui::Color::MakePredefined(cxgui::Color::Predefined::RED), true);
     AddElement(cxgui::Color::MakePredefined(cxgui::Color::Predefined::GREEN), true);
-    AddElement(cxgui::Color::MakePredefined(cxgui::Color::Predefined::BLUE), true);
+    AddElement(cxgui::Color::MakePredefined(cxgui::Color::Predefined::YELLOW), true);
+    AddElement(cxgui::Color::MakePredefined(cxgui::Color::Predefined::AQUA), true);
+    AddElement(cxgui::Color::MakePredefined(cxgui::Color::Predefined::FUSCHIA), true);
+    AddElement(cxgui::Color::MakePredefined(cxgui::Color::Predefined::GRAY), true);
+    AddElement(cxgui::Color::MakePredefined(cxgui::Color::Predefined::LIME), true);
+    AddElement(cxgui::Color::MakePredefined(cxgui::Color::Predefined::MAROON), true);
+    AddElement(cxgui::Color::MakePredefined(cxgui::Color::Predefined::OLIVE), true);
+    AddElement(cxgui::Color::MakePredefined(cxgui::Color::Predefined::TEAL), true);
 
     set_cell_data_func(m_renderer, sigc::mem_fun(*this, &cxgui::ColorComboBox::OnRenderCell));
     pack_start(m_renderer);
@@ -76,21 +83,30 @@ cxgui::Color cxgui::ColorComboBox::GetCurrentSelection() const
 
 void cxgui::ColorComboBox::SetCurrentSelection(const cxgui::Color& p_color)
 {
-    Gtk::TreeModel::iterator iter = get_active();
-
-    if(ASSERT(iter))
+    if(!PRECONDITION(bool(m_treeModel)))
     {
-        Gtk::TreeModel::Row row = *iter;
+        return;
+    }
 
-        if(ASSERT(row))
+    Gdk::Color newColor;
+    newColor.set_rgb(p_color.R(), p_color.G(), p_color.B());
+
+    Gtk::TreeModel::Children rows = m_treeModel->children();
+
+    const int oldRowNumber = get_active_row_number();
+    int newRowNumber = oldRowNumber;
+
+    for(auto row = rows.begin(); row != rows.end(); ++rows)
+    {
+        if((*row)[m_records.m_color] == newColor)
         {
-            Gdk::Color newColor;
-            newColor.set_rgb(p_color.R(), p_color.G(), p_color.B());
-
-            // Set the data for the selected row, using our knowledge of the tree model:
-            row[m_records.m_color] = newColor;
+            set_active(row);
+            newRowNumber = get_active_row_number();
+            break;
         }
     }
+
+    POSTCONDITION(oldRowNumber != newRowNumber);
 }
 
 void cxgui::ColorComboBox::AddElement(const cxgui::Color& p_color, bool p_setActive)

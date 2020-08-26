@@ -205,8 +205,8 @@ bool cxgui::operator!=(const NewPlayerRow& p_lhs, const NewPlayerRow& p_rhs)
 cxgui::NewPlayersList::NewPlayersList()
 {
     // We use Gtk::manage here to let Gtkmm deal with the children deletions:
-    add(*Gtk::manage(new NewPlayerRow("-- Player 1 --", cxmodel::MakeBlue())));
-    add(*Gtk::manage(new NewPlayerRow("-- Player 2 --", cxmodel::MakeBlue())));
+    add(*Gtk::manage(new NewPlayerRow("-- Player 1 --", cxmodel::MakeRed())));
+    add(*Gtk::manage(new NewPlayerRow("-- Player 2 --", cxmodel::MakeRed())));
 }
 
 cxgui::NewPlayersList::~NewPlayersList() = default;
