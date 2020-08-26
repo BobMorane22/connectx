@@ -33,7 +33,7 @@ namespace cxmodel
  * @brief Interface for versioning an API.
  *
  ************************************************************************************************/
-class IVersionning
+class IVersioning
 {
 
 public:
@@ -42,7 +42,7 @@ public:
      * @brief Destructor.
      *
      ********************************************************************************************/
-    virtual ~IVersionning() = default;
+    virtual ~IVersioning() = default;
 
     /******************************************************************************************//**
      * @brief Get the API name.

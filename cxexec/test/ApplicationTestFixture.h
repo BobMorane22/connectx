@@ -28,8 +28,8 @@
 
 #include <cxmodel/include/IConnectXGameActions.h>
 #include <cxmodel/include/IConnectXLimits.h>
-#include <cxmodel/include/IVersionning.h>
 #include <cxmodel/include/Subject.h>
+#include "../../cxmodel/include/IVersioning.h"
 
 #include "DisableStdStreamsRAII.h"
 #include "LoggerMock.h"
@@ -50,7 +50,7 @@ public:
     cxmodel::Subject& GetSubjectModel();
     cxmodel::IConnectXGameActions& GetGameActionsModel();
     cxmodel::IConnectXLimits& GetLimitsModel();
-    cxmodel::IVersionning& GetVersionningModel();
+    cxmodel::IVersioning& GetVersionningModel();
 
     std::string GetStdOutContents() const;
     std::string GetStdErrContents() const;
@@ -61,7 +61,7 @@ private:
     class ModelApplicationMock : public cxmodel::Subject,
                                  public cxmodel::IConnectXGameActions,
                                  public cxmodel::IConnectXLimits,
-                                 public cxmodel::IVersionning
+                                 public cxmodel::IVersioning
     {
 
     public:

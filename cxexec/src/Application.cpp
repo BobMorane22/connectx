@@ -35,7 +35,7 @@ cx::Application::Application(int argc,
                              cxmodel::Subject& p_modelAsSubject,
                              cxmodel::IConnectXGameActions& p_modelAsGameActions,
                              cxmodel::IConnectXLimits& p_modelAsLimits,
-                             cxmodel::IVersionning& p_modelAsVersionning,
+                             cxmodel::IVersioning& p_modelAsVersionning,
                              cxlog::ILogger& p_logger)
 {
     PRECONDITION(argc >= 1);

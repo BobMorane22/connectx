@@ -32,7 +32,7 @@ namespace cxmodel
 {
     class IConnectXGameActions;
     class IConnectXLimits;
-    class IVersionning;
+    class IVersioning;
     class Subject;
 }
 
@@ -75,7 +75,7 @@ public:
                                                     cxmodel::Subject& p_modelAsSubject,
                                                     cxmodel::IConnectXGameActions& p_modelAsGameActions,
                                                     cxmodel::IConnectXLimits& p_modelAsLimits,
-                                                    cxmodel::IVersionning& p_modelAsVersionning,
+                                                    cxmodel::IVersioning& p_modelAsVersionning,
                                                     cxlog::ILogger& p_logger);
 
 };

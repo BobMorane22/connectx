@@ -34,7 +34,7 @@ const std::string COPYRIGHT_YEAR = "2019";
 
 } // namespace
 
-cx::CmdArgVersionStrategy::CmdArgVersionStrategy(cxmodel::IVersionning& p_modelAsVersionning)
+cx::CmdArgVersionStrategy::CmdArgVersionStrategy(cxmodel::IVersioning& p_modelAsVersionning)
  : m_modelAsVersionning{p_modelAsVersionning}
 {
 }

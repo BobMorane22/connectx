@@ -26,7 +26,7 @@
 
 namespace cxmodel
 {
-    class IVersionning;
+    class IVersioning;
 }
 
 #include "IAboutWindowPresenter.h"
@@ -39,7 +39,7 @@ class AboutWindowPresenter : public IAboutWindowPresenter
 
 public:
 
-    AboutWindowPresenter(const cxmodel::IVersionning& p_model);
+    AboutWindowPresenter(const cxmodel::IVersioning& p_model);
 
     ~AboutWindowPresenter() override = default;
 

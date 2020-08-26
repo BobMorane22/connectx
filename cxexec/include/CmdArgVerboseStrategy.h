@@ -26,8 +26,8 @@
 
 #include <cxmodel/include/IConnectXGameActions.h>
 #include <cxmodel/include/IConnectXLimits.h>
-#include <cxmodel/include/IVersionning.h>
 #include <cxmodel/include/Subject.h>
+#include "../../cxmodel/include/IVersioning.h"
 
 #include "ICmdArgWorkflowStrategy.h"
 
@@ -65,7 +65,7 @@ public:
                           cxmodel::Subject& p_modelAsSubject,
                           cxmodel::IConnectXGameActions& p_modelAsGameActions,
                           cxmodel::IConnectXLimits& p_modelAsLimits,
-                          cxmodel::IVersionning& p_modelAsVersionning,
+                          cxmodel::IVersioning& p_modelAsVersionning,
                           cxlog::ILogger* p_logger);
 
     int Handle() override;
@@ -78,7 +78,7 @@ private:
     cxmodel::Subject& m_modelAsSubject;
     cxmodel::IConnectXGameActions& m_modelAsGameActions;
     cxmodel::IConnectXLimits& m_modelAsLimits;
-    cxmodel::IVersionning& m_modelAsVersionning;
+    cxmodel::IVersioning& m_modelAsVersionning;
     cxlog::ILogger* m_logger;
 
 };

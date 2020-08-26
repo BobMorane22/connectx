@@ -24,8 +24,7 @@
 #ifndef CMDARGVERSIONSTRATEGY_H_5A1B3137_4CCC_43BC_B86B_5CFD2649C858
 #define CMDARGVERSIONSTRATEGY_H_5A1B3137_4CCC_43BC_B86B_5CFD2649C858
 
-#include <cxmodel/include/IVersionning.h>
-
+#include "../../cxmodel/include/IVersioning.h"
 #include "ICmdArgWorkflowStrategy.h"
 
 namespace cx
@@ -46,13 +45,13 @@ public:
      * @param p_modelAsVersionning The Connect X compatible model (Versionning).
      *
      ********************************************************************************************/
-    CmdArgVersionStrategy(cxmodel::IVersionning& p_modelAsVersionning);
+    CmdArgVersionStrategy(cxmodel::IVersioning& p_modelAsVersionning);
 
     int Handle() override;
 
 private:
 
-    cxmodel::IVersionning& m_modelAsVersionning;
+    cxmodel::IVersioning& m_modelAsVersionning;
 
 };
 

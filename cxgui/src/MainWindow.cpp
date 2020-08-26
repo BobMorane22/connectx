@@ -28,10 +28,9 @@
 #include <gtkmm/stock.h>
 
 #include <cxinv/include/assertion.h>
-#include <cxmodel/include/IVersionning.h>
-
 #include <About.h>
 #include <AboutWindowPresenter.h>
+#include <cxmodel/include/IVersioning.h>
 #include <GameView.h>
 #include <IMainWindowController.h>
 #include <IMainWindowPresenter.h>
@@ -142,7 +141,7 @@ void cxgui::MainWindow::CreateAboutWindow()
 {
     if(!m_about)
     {
-        cxmodel::IVersionning* versionModel = dynamic_cast<cxmodel::IVersionning*>(&m_model);
+        cxmodel::IVersioning* versionModel = dynamic_cast<cxmodel::IVersioning*>(&m_model);
         if(!ASSERT(versionModel != nullptr))
         {
             return;

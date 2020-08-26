@@ -34,7 +34,7 @@
 #include "IConnectXGameInformation.h"
 #include "IConnectXLimits.h"
 #include "IUndoRedo.h"
-#include "IVersionning.h"
+#include "IVersioning.h"
 #include "Subject.h"
 
 namespace cxmodel
@@ -50,7 +50,7 @@ namespace cxmodel
  ************************************************************************************************/
 class Model : public cxlog::ILogger,
               public Subject,
-              public IVersionning,
+              public IVersioning,
               public IUndoRedo,
               public IConnectXLimits,
               public IConnectXGameInformation,

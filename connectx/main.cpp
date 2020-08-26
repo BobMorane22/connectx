@@ -80,7 +80,7 @@ int main(int argc, char *argv[])
         cxmodel::Subject& modelAsSubject = concreteModel;
         cxmodel::IConnectXGameActions& modelAsGameActions = concreteModel;
         cxmodel::IConnectXLimits& modelAsLimits = concreteModel;
-        cxmodel::IVersionning& modelAsVersionning = concreteModel;
+        cxmodel::IVersioning& modelAsVersionning = concreteModel;
 
         std::unique_ptr<cx::IApplication> app = std::make_unique<cx::Application>(argc,
                                                                                   argv,

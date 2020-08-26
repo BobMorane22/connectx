@@ -40,7 +40,7 @@ cxgui::IAboutWindowPresenter& AboutWindowPresenterTestFixture::GetPresenter()
     return *m_presenter;
 }
 
-cxmodel::IVersionning& AboutWindowPresenterTestFixture::GetModel()
+cxmodel::IVersioning& AboutWindowPresenterTestFixture::GetModel()
 {
     EXPECT_TRUE(m_model);
     return *m_model;

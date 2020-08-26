@@ -54,7 +54,7 @@ cxmodel::IConnectXLimits& ApplicationTestFixture::GetLimitsModel()
     return *m_model;
 }
 
-cxmodel::IVersionning& ApplicationTestFixture::GetVersionningModel()
+cxmodel::IVersioning& ApplicationTestFixture::GetVersionningModel()
 {
     EXPECT_TRUE(m_model);
 

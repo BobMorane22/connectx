@@ -30,9 +30,9 @@
 #include <cxmodel/include/IConnectXGameActions.h>
 #include <cxmodel/include/IConnectXGameInformation.h>
 #include <cxmodel/include/IConnectXLimits.h>
-#include <cxmodel/include/IVersionning.h>
 #include <cxmodel/include/Subject.h>
 #include <cxgui/include/IMainWindowPresenter.h>
+#include "../../cxmodel/include/IVersioning.h"
 
 class MainWindowPresenterTestFixture : public testing::Test
 {
@@ -50,7 +50,7 @@ public:
 private:
 
     class MainWindowPresenterModelMock : public cxmodel::Subject,
-                                         public cxmodel::IVersionning,
+                                         public cxmodel::IVersioning,
                                          public cxmodel::IConnectXGameActions,
                                          public cxmodel::IConnectXGameInformation,
                                          public cxmodel::IConnectXLimits
