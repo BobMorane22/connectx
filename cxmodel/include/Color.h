@@ -100,7 +100,6 @@ public:
         static_assert(!std::is_same<Channel, bool>::value, "bool is not an accepted unsigned type for color channels.");
     }
 
-
     /******************************************************************************************//**
      * @brief Constructor.
      *
@@ -237,6 +236,62 @@ template<typename Channel>
 constexpr bool operator!=(const Color<Channel>& p_lhs, const Color<Channel>& p_rhs )
 {
     return !(p_lhs == p_rhs);
+}
+
+/*********************************************************************************************//**
+ * @brief Normalize the red channel value between 0.0 and 1.0.
+ *
+ * @param p_color The color with the channel to normalize.
+ *
+ * @return The normalized value for the channel.
+ *
+ ************************************************************************************************/
+template<typename Channel>
+constexpr double NormalizedR(const Color<Channel>& p_color)
+{
+    return static_cast<double>(p_color.R()) / static_cast<double>(std::numeric_limits<Channel>::max());
+}
+
+/**********************************************************************************************//**
+ * @brief Normalize the green channel value between 0.0 and 1.0.
+ *
+ * @param p_color The color with the channel to normalize.
+ *
+ * @return The normalized value for the channel.
+ *
+ ************************************************************************************************/
+template<typename Channel>
+constexpr double NormalizedG(const Color<Channel>& p_color)
+{
+    return static_cast<double>(p_color.G()) / static_cast<double>(std::numeric_limits<Channel>::max());
+}
+
+/**********************************************************************************************//**
+ * @brief Normalize the blue channel value between 0.0 and 1.0.
+ *
+ * @param p_color The color with the channel to normalize.
+ *
+ * @return The normalized value for the channel.
+ *
+ ************************************************************************************************/
+template<typename Channel>
+constexpr double NormalizedB(const Color<Channel>& p_color)
+{
+    return static_cast<double>(p_color.B()) / static_cast<double>(std::numeric_limits<Channel>::max());
+}
+
+/**********************************************************************************************//**
+ * @brief Normalize the alpha channel value between 0.0 and 1.0.
+ *
+ * @param p_color The color with the channel to normalize.
+ *
+ * @return The normalized value for the channel.
+ *
+ ************************************************************************************************/
+template<typename Channel>
+constexpr double NormalizedA(const Color<Channel>& p_color)
+{
+    return static_cast<double>(p_color.A()) / static_cast<double>(std::numeric_limits<Channel>::max());
 }
 
 } // namespace cxmodel

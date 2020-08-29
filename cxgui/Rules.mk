@@ -52,7 +52,9 @@ include $(dir)/Rules.mk
 #
 OBJS_$(d) := $(d)/src/About.o \
              $(d)/src/AboutWindowPresenter.o \
+             $(d)/src/Chip.o \
              $(d)/src/ColorComboBox.o \
+             $(d)/src/DiscChip.o \
              $(d)/src/GameView.o \
              $(d)/src/MainWindow.o \
              $(d)/src/MainWindowController.o \

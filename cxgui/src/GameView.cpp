@@ -25,7 +25,8 @@
 
 #include <cxinv/include/assertion.h>
 
-#include "GameView.h"
+#include <DiscChip.h>
+#include <GameView.h>
 
 cxgui::GameView::GameView(IGameViewPresenter& p_presenter,
                           Gtk::Grid& p_mainLayout,
@@ -35,9 +36,13 @@ cxgui::GameView::GameView(IGameViewPresenter& p_presenter,
 , m_mainLayout{p_mainLayout}
 , m_viewLeft{p_viewLeft}
 , m_viewTop{p_viewTop}
+, m_chip{std::make_unique<cxgui::DiscChip>(cxmodel::MakeRed(), cxmodel::MakeTransparent())}
 {
+    PRECONDITION(m_chip != nullptr);
+
     SetLayout();
     PopulateWidgets();
+    ConfigureWidgets();
 }
 
 void cxgui::GameView::Activate()
@@ -76,10 +81,24 @@ void cxgui::GameView::SetLayout()
 
     m_viewLayout.attach(m_title, 0, 0, TOTAL_WIDTH, 1);
     m_viewLayout.attach(m_message, 0, 1, TOTAL_WIDTH, 1);
+
+    if(ASSERT(m_chip != nullptr))
+    {
+        m_viewLayout.attach(*m_chip, 0, 2, TOTAL_WIDTH, 1);
+    }
 }
 
 void cxgui::GameView::PopulateWidgets()
 {
     m_title.set_text(m_presenter.GetGameViewTitle());
     m_message.set_text(m_presenter.GetGameViewMessage());
+}
+
+void cxgui::GameView::ConfigureWidgets()
+{
+    if(ASSERT(m_chip != nullptr))
+    {
+        m_chip->set_hexpand(true);
+        m_chip->set_vexpand(true);
+    }
 }

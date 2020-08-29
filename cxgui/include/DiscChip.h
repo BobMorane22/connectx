@@ -16,63 +16,44 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file GameView.h
+ * @file DiscChip.h
  * @date 2020
  *
  *************************************************************************************************/
 
-#ifndef GAMEVIEW_H_AA8C282C_9CC4_45F4_BE91_C8840160BA1B
-#define GAMEVIEW_H_AA8C282C_9CC4_45F4_BE91_C8840160BA1B
-
-#include <gtkmm/grid.h>
-#include <gtkmm/label.h>
+#ifndef DISCCHIP_H_E87685D6_F889_4EC1_982F_1496DBD37A28
+#define DISCCHIP_H_E87685D6_F889_4EC1_982F_1496DBD37A28
 
 #include "Chip.h"
-#include "IGameViewPresenter.h"
-#include "IView.h"
 
 namespace cxgui
 {
 
 /*********************************************************************************************//**
- * @brief View for playing the game.
+ * @brief A disc shaped chip.
  *
  ************************************************************************************************/
-class GameView : public IView
+class DiscChip : public cxgui::Chip
 {
 
 public:
 
-    GameView(IGameViewPresenter& p_presenter,
-             Gtk::Grid& p_mainLayout,
-             int p_viewLeft,
-             int p_viewTop);
-
-    void Activate() override;
+    /******************************************************************************************//**
+     * @brief Constructor.
+     *
+     * @param p_fillColor       The color filling the center of the chip (inside its border).
+     * @param p_backgroundColor The color around the chip (outside its border).
+     *
+     ********************************************************************************************/
+    DiscChip(const cxmodel::ChipColor& p_fillColor, const cxmodel::ChipColor& p_backgroundColor);
 
 private:
 
-    void SetLayout();
-    void PopulateWidgets();
-    void ConfigureWidgets();
-
-    IGameViewPresenter& m_presenter;
-
-    Gtk::Grid& m_mainLayout;
-
-    const int m_viewLeft;
-    const int m_viewTop;
-
-    Gtk::Grid m_viewLayout;
-
-    // Controls:
-    Gtk::Label m_title;
-    Gtk::Label m_message;
-
-    std::unique_ptr<cxgui::Chip> m_chip;
+    // Disc shape:
+    virtual void DrawBorder(const Cairo::RefPtr<Cairo::Context>& p_context) const override;
 
 };
 
 } // namespace cxgui
 
-#endif // GAMEVIEW_H_AA8C282C_9CC4_45F4_BE91_C8840160BA1B
+#endif // DISCCHIP_H_E87685D6_F889_4EC1_982F_1496DBD37A28
