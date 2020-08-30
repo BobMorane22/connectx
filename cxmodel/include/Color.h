@@ -184,8 +184,8 @@ constexpr Color<Channel> Color<Channel>::MakePredefined(Color::Predefined p_colo
         case Color::Predefined::BLUE:     return Color(0u,  0u,  MAX);
         case Color::Predefined::FUSCHIA:  return Color(MAX, 0u,  MAX);
         case Color::Predefined::GRAY:     return Color(MID, MID, MID);
-        case Color::Predefined::GREEN:    return Color(0u,  MID, 0u );
-        case Color::Predefined::LIME:     return Color(0u,  MAX, 0u );
+        case Color::Predefined::GREEN:    return Color(0u,  MAX, 0u );
+        case Color::Predefined::LIME:     return Color(0u,  MID, 0u );
         case Color::Predefined::MAROON:   return Color(MID, 0u,  0u );
         case Color::Predefined::NAVY:     return Color(0u,  0u,  MID);
         case Color::Predefined::OLIVE:    return Color(MID, MID, 0u );

@@ -118,8 +118,8 @@ TYPED_TEST(ColorTypedTestFixture, /*DISABLED_*/MakePredefined_AllPredefined_Corr
     ASSERT_EQ(ColorTypedTestFixture<TypeParam>::MakePredefined(Color<TypeParam>::Predefined::BLUE),    Color<TypeParam>(0, 0, MAX, MAX));
     ASSERT_EQ(ColorTypedTestFixture<TypeParam>::MakePredefined(Color<TypeParam>::Predefined::FUSCHIA), Color<TypeParam>(MAX, 0, MAX, MAX));
     ASSERT_EQ(ColorTypedTestFixture<TypeParam>::MakePredefined(Color<TypeParam>::Predefined::GRAY),    Color<TypeParam>(MID, MID, MID, MAX));
-    ASSERT_EQ(ColorTypedTestFixture<TypeParam>::MakePredefined(Color<TypeParam>::Predefined::GREEN),   Color<TypeParam>(0u, MID, 0u, MAX));
-    ASSERT_EQ(ColorTypedTestFixture<TypeParam>::MakePredefined(Color<TypeParam>::Predefined::LIME),    Color<TypeParam>(0, MAX, 0, MAX));
+    ASSERT_EQ(ColorTypedTestFixture<TypeParam>::MakePredefined(Color<TypeParam>::Predefined::GREEN),   Color<TypeParam>(0u, MAX, 0u, MAX));
+    ASSERT_EQ(ColorTypedTestFixture<TypeParam>::MakePredefined(Color<TypeParam>::Predefined::LIME),    Color<TypeParam>(0, MID, 0, MAX));
     ASSERT_EQ(ColorTypedTestFixture<TypeParam>::MakePredefined(Color<TypeParam>::Predefined::MAROON),  Color<TypeParam>(MID, 0u, 0u, MAX));
     ASSERT_EQ(ColorTypedTestFixture<TypeParam>::MakePredefined(Color<TypeParam>::Predefined::NAVY),    Color<TypeParam>(0u, 0u, MID, MAX));
     ASSERT_EQ(ColorTypedTestFixture<TypeParam>::MakePredefined(Color<TypeParam>::Predefined::OLIVE),   Color<TypeParam>(MID, MID, 0u, MAX));
@@ -168,4 +168,137 @@ TYPED_TEST(ColorTypedTestFixture, /*DISABLED_*/NonEqualityOperator_TwoDifferentC
     const Color<TypeParam> rhs = ColorTypedTestFixture<TypeParam>::MakePredefined(Color<TypeParam>::Predefined::WHITE);
 
     ASSERT_TRUE(lhs != rhs);
+}
+
+TYPED_TEST(ColorTypedTestFixture, /*DISABLED_*/NormalizedR_NoRed_ReturnsZero)
+{
+    using namespace cxmodel;
+
+    const Color<TypeParam> noRed = ColorTypedTestFixture<TypeParam>::MakePredefined(Color<TypeParam>::Predefined::BLACK);
+    const double normalizedRed = NormalizedR(noRed);
+
+    ASSERT_EQ(0.0, normalizedRed);
+}
+
+TYPED_TEST(ColorTypedTestFixture, /*DISABLED_*/NormalizedR_FullRed_ReturnsOne)
+{
+    using namespace cxmodel;
+
+    const Color<TypeParam> fullRed = ColorTypedTestFixture<TypeParam>::MakePredefined(Color<TypeParam>::Predefined::RED);
+    const double normalizedRed = NormalizedR(fullRed);
+
+    ASSERT_EQ(1.0, normalizedRed);
+}
+
+TYPED_TEST(ColorTypedTestFixture, /*DISABLED_*/NormalizedR_HalfRed_ReturnsOneHalf)
+{
+    using namespace cxmodel;
+
+    const TypeParam MAX = std::numeric_limits<TypeParam>::max();
+    const TypeParam MID = (MAX >> 1);
+
+    const Color<TypeParam> halfRed = Color<TypeParam>(MID, 0, 0, 0);
+    const double normalizedRed = NormalizedR(halfRed);
+
+    ASSERT_NEAR(0.5, normalizedRed, 1e-2);
+}
+
+TYPED_TEST(ColorTypedTestFixture, /*DISABLED_*/NormalizedG_NoGreen_ReturnsZero)
+{
+    using namespace cxmodel;
+
+    const Color<TypeParam> noGreen = ColorTypedTestFixture<TypeParam>::MakePredefined(Color<TypeParam>::Predefined::BLACK);
+    const double normalizedGreen = NormalizedG(noGreen);
+
+    ASSERT_EQ(0.0, normalizedGreen);
+}
+
+TYPED_TEST(ColorTypedTestFixture, /*DISABLED_*/NormalizedG_FullGreen_ReturnsOne)
+{
+    using namespace cxmodel;
+
+    const Color<TypeParam> fullGreen = ColorTypedTestFixture<TypeParam>::MakePredefined(Color<TypeParam>::Predefined::GREEN);
+    const double normalizedGreen = NormalizedG(fullGreen);
+
+    ASSERT_EQ(1.0, normalizedGreen);
+}
+
+TYPED_TEST(ColorTypedTestFixture, /*DISABLED_*/NormalizedG_HalfGreen_ReturnsOneHalf)
+{
+    using namespace cxmodel;
+
+    const TypeParam MAX = std::numeric_limits<TypeParam>::max();
+    const TypeParam MID = (MAX >> 1);
+
+    const Color<TypeParam> halfGreen = Color<TypeParam>(0, MID, 0, 0);
+    const double normalizedGreen = NormalizedG(halfGreen);
+
+    ASSERT_NEAR(0.5, normalizedGreen, 1e-2);
+}
+
+TYPED_TEST(ColorTypedTestFixture, /*DISABLED_*/NormalizedB_NoBlue_ReturnsZero)
+{
+    using namespace cxmodel;
+
+    const Color<TypeParam> noBlue = ColorTypedTestFixture<TypeParam>::MakePredefined(Color<TypeParam>::Predefined::BLACK);
+    const double normalizedBlue = NormalizedB(noBlue);
+
+    ASSERT_EQ(0.0, normalizedBlue);
+}
+
+TYPED_TEST(ColorTypedTestFixture, /*DISABLED_*/NormalizedB_FullBlue_ReturnsOne)
+{
+    using namespace cxmodel;
+
+    const Color<TypeParam> fullBlue = ColorTypedTestFixture<TypeParam>::MakePredefined(Color<TypeParam>::Predefined::BLUE);
+    const double normalizedBlue = NormalizedB(fullBlue);
+
+    ASSERT_EQ(1.0, normalizedBlue);
+}
+
+TYPED_TEST(ColorTypedTestFixture, /*DISABLED_*/NormalizedB_HalfBlue_ReturnsOneHalf)
+{
+    using namespace cxmodel;
+
+    const TypeParam MAX = std::numeric_limits<TypeParam>::max();
+    const TypeParam MID = (MAX >> 1);
+
+    const Color<TypeParam> halfBlue = Color<TypeParam>(0, 0, MID, 0);
+    const double normalizedBlue = NormalizedB(halfBlue);
+
+    ASSERT_NEAR(0.5, normalizedBlue, 1e-2);
+}
+
+TYPED_TEST(ColorTypedTestFixture, /*DISABLED_*/NormalizedA_NoAlpha_ReturnsZero)
+{
+    using namespace cxmodel;
+
+    const Color<TypeParam> noAlpha = Color<TypeParam>(0, 0, 0, 0);
+    const double normalizedAlpha = NormalizedA(noAlpha);
+
+    ASSERT_EQ(0.0, normalizedAlpha);
+}
+
+TYPED_TEST(ColorTypedTestFixture, /*DISABLED_*/NormalizedA_FullAlpha_ReturnsOne)
+{
+    using namespace cxmodel;
+
+    const TypeParam MAX = std::numeric_limits<TypeParam>::max();
+    const Color<TypeParam> fullAlpha = Color<TypeParam>(0, 0, 0, MAX);
+    const double normalizedAlpha = NormalizedA(fullAlpha);
+
+    ASSERT_EQ(1.0, normalizedAlpha);
+}
+
+TYPED_TEST(ColorTypedTestFixture, /*DISABLED_*/NormalizedA_HalfAlpha_ReturnsOneHalf)
+{
+    using namespace cxmodel;
+
+    const TypeParam MAX = std::numeric_limits<TypeParam>::max();
+    const TypeParam MID = (MAX >> 1);
+
+    const Color<TypeParam> halfAlpha = Color<TypeParam>(0, 0, 0, MID);
+    const double normalizedAlpha = NormalizedA(halfAlpha);
+
+    ASSERT_NEAR(0.5, normalizedAlpha, 1e-2);
 }
