@@ -24,6 +24,7 @@
 #include <gtkmm/window.h>
 
 #include <cxinv/include/assertion.h>
+#include <cxmodel/include/IChip.h>
 
 #include <DiscChip.h>
 #include <GameView.h>
@@ -36,9 +37,11 @@ cxgui::GameView::GameView(IGameViewPresenter& p_presenter,
 , m_mainLayout{p_mainLayout}
 , m_viewLeft{p_viewLeft}
 , m_viewTop{p_viewTop}
-, m_chip{std::make_unique<cxgui::DiscChip>(cxmodel::MakeRed(), cxmodel::MakeTransparent())}
+, m_activePlayerChip{std::make_unique<cxgui::DiscChip>(cxmodel::MakeTransparent(), cxmodel::MakeTransparent())}
+, m_nextPlayerChip{std::make_unique<cxgui::DiscChip>(cxmodel::MakeTransparent(), cxmodel::MakeTransparent())}
 {
-    PRECONDITION(m_chip != nullptr);
+    PRECONDITION(m_activePlayerChip != nullptr);
+    PRECONDITION(m_nextPlayerChip != nullptr);
 
     SetLayout();
     PopulateWidgets();
@@ -82,9 +85,14 @@ void cxgui::GameView::SetLayout()
     m_viewLayout.attach(m_title, 0, 0, TOTAL_WIDTH, 1);
     m_viewLayout.attach(m_message, 0, 1, TOTAL_WIDTH, 1);
 
-    if(ASSERT(m_chip != nullptr))
+    if(ASSERT(m_activePlayerChip != nullptr))
     {
-        m_viewLayout.attach(*m_chip, 0, 2, TOTAL_WIDTH, 1);
+        m_viewLayout.attach(*m_activePlayerChip, 0, 2, TOTAL_WIDTH, 1);
+    }
+
+    if(ASSERT(m_nextPlayerChip != nullptr))
+    {
+        m_viewLayout.attach(*m_nextPlayerChip, 0, 3, TOTAL_WIDTH, 1);
     }
 }
 
@@ -92,13 +100,21 @@ void cxgui::GameView::PopulateWidgets()
 {
     m_title.set_text(m_presenter.GetGameViewTitle());
     m_message.set_text(m_presenter.GetGameViewMessage());
+    m_activePlayerChip->ChangeColor(m_presenter.GetActivePlayerChipColor());
+    m_nextPlayerChip->ChangeColor(m_presenter.GetNextPlayerChipColor());
 }
 
 void cxgui::GameView::ConfigureWidgets()
 {
-    if(ASSERT(m_chip != nullptr))
+    if(ASSERT(m_activePlayerChip != nullptr))
     {
-        m_chip->set_hexpand(true);
-        m_chip->set_vexpand(true);
+        m_activePlayerChip->set_hexpand(true);
+        m_activePlayerChip->set_vexpand(true);
+    }
+
+    if(ASSERT(m_nextPlayerChip != nullptr))
+    {
+        m_nextPlayerChip->set_hexpand(true);
+        m_nextPlayerChip->set_vexpand(true);
     }
 }

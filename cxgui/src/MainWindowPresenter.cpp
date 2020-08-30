@@ -24,16 +24,23 @@
 #include <sstream>
 
 #include <cxinv/include/assertion.h>
+#include <cxmodel/include/Disc.h>
 #include <cxmodel/include/NewGameInformation.h>
 #include <cxmodel/include/IConnectXGameInformation.h>
 #include <cxmodel/include/IConnectXLimits.h>
 
 #include <MainWindowPresenter.h>
 
-cxgui::MainWindowPresenter::MainWindowPresenter(const cxmodel::IConnectXLimits& p_modealAsLimits)
- : m_modelAsLimits{p_modealAsLimits}
+namespace
 {
 
+} // namespace
+
+cxgui::MainWindowPresenter::MainWindowPresenter(const cxmodel::IConnectXLimits& p_modealAsLimits)
+ : m_modelAsLimits{p_modealAsLimits}
+ , m_activePlayerChipColor{cxmodel::MakeTransparent()}
+ , m_nextPlayerChipColor{cxmodel::MakeTransparent()}
+{
 }
 
 void cxgui::MainWindowPresenter::Update(cxmodel::NotificationContext p_context, cxmodel::Subject* p_subject)
@@ -56,6 +63,9 @@ void cxgui::MainWindowPresenter::Update(cxmodel::NotificationContext p_context, 
                    << "    Next         : " << model->GetNextPlayer().GetName() << std::endl;
 
             m_gameViewMessage = stream.str();
+
+            m_activePlayerChipColor = model->GetActivePlayer().GetChip().GetColor();
+            m_nextPlayerChipColor = model->GetNextPlayer().GetChip().GetColor();
         }
 
         Notify(p_context);
@@ -156,4 +166,14 @@ std::string cxgui::MainWindowPresenter::GetGameViewTitle() const
 std::string cxgui::MainWindowPresenter::GetGameViewMessage() const
 {
     return m_gameViewMessage;
+}
+
+cxmodel::ChipColor cxgui::MainWindowPresenter::GetActivePlayerChipColor() const
+{
+    return m_activePlayerChipColor;
+}
+
+cxmodel::ChipColor cxgui::MainWindowPresenter::GetNextPlayerChipColor() const
+{
+    return m_nextPlayerChipColor;
 }

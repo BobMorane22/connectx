@@ -26,6 +26,8 @@
 
 #include <string>
 
+#include <cxmodel/include/ChipColor.h>
+
 namespace cxgui
 {
 
@@ -58,11 +60,27 @@ public:
      * @return The game view message.
      *
      * The game view message is a string message that presents the new game information. It is
-     * a temporary accessor used to make sure the model connection is working before developping
+     * a temporary accessor used to make sure the model connection is working before developing
      * the view further.
      *
      ********************************************************************************************/
     virtual std::string GetGameViewMessage() const = 0;
+
+    /******************************************************************************************//**
+     * @brief Active player's chip color accessor.
+     *
+     * @return The active player's chip color.
+     *
+     ********************************************************************************************/
+    virtual cxmodel::ChipColor GetActivePlayerChipColor() const = 0;
+
+    /******************************************************************************************//**
+     * @brief Next player's chip color accessor.
+     *
+     * @return The next player's chip color.
+     *
+     ********************************************************************************************/
+    virtual cxmodel::ChipColor GetNextPlayerChipColor() const = 0;
 
 };
 

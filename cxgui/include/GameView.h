@@ -69,7 +69,8 @@ private:
     Gtk::Label m_title;
     Gtk::Label m_message;
 
-    std::unique_ptr<cxgui::Chip> m_chip;
+    std::unique_ptr<cxgui::Chip> m_activePlayerChip;
+    std::unique_ptr<cxgui::Chip> m_nextPlayerChip;
 
 };
 

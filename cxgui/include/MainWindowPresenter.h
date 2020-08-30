@@ -77,6 +77,9 @@ public:
 // -----------------------------------------------------------------------------------------------
     std::string GetGameViewTitle() const override;
     std::string GetGameViewMessage() const override;
+
+    cxmodel::ChipColor GetActivePlayerChipColor() const override;
+    cxmodel::ChipColor GetNextPlayerChipColor() const override;
 ///@}
 
 private:
@@ -86,6 +89,9 @@ private:
     const cxmodel::IConnectXLimits& m_modelAsLimits;
 
     std::string m_gameViewMessage = "New game started!";
+
+    cxmodel::ChipColor m_activePlayerChipColor;
+    cxmodel::ChipColor m_nextPlayerChipColor;
 };
 
 } // namespace cxgui
