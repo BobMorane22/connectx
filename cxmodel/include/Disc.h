@@ -24,6 +24,8 @@
 #ifndef DISC_H_E4E3699A_35A5_4050_AAE7_C91C2C38DCEF
 #define DISC_H_E4E3699A_35A5_4050_AAE7_C91C2C38DCEF
 
+#include <memory>
+
 #include "IChip.h"
 
 namespace cxmodel
@@ -48,6 +50,14 @@ public:
 
     // IChip:
     ChipColor GetColor() const override;
+
+    /******************************************************************************************//**
+     * @brief Make a transparent disc.
+     *
+     * @return A transparent disc.
+     *
+     ********************************************************************************************/
+    static std::unique_ptr<IChip> MakeTransparentDisc();
 
 private:
 

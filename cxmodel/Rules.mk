@@ -53,6 +53,7 @@ include $(dir)/Rules.mk
 OBJS_$(d) := $(d)/src/CommandCreateNewGame.o \
              $(d)/src/CommandStack.o \
              $(d)/src/Disc.o \
+             $(d)/src/Board.o \
              $(d)/src/IChip.o \
              $(d)/src/Model.o \
              $(d)/src/NewGameInformation.o \

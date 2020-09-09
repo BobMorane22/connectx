@@ -16,25 +16,55 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file Disc.cpp
+ * @file Board.h
  * @date 2020
  *
  *************************************************************************************************/
 
-#include <Disc.h>
+#ifndef BOARD_H_22FBC1EE_999E_416C_B947_05B6CDF6DBB8
+#define BOARD_H_22FBC1EE_999E_416C_B947_05B6CDF6DBB8
 
-cxmodel::Disc::Disc(const ChipColor p_color)
- : m_color{p_color}
-{
-    // Nothing to do...
-}
+#include <memory>
+#include <vector>
 
-cxmodel::ChipColor cxmodel::Disc::GetColor() const
-{
-    return m_color;
-}
+#include "IBoard.h"
+#include "IConnectXLimits.h"
 
-std::unique_ptr<cxmodel::IChip> cxmodel::Disc::MakeTransparentDisc()
+namespace cxmodel
 {
-    return std::make_unique<cxmodel::Disc>(cxmodel::MakeTransparent());
-}
+
+class Board : public IBoard
+{
+
+public:
+
+    Board(size_t p_nbRows, size_t p_nbColumns, const IConnectXLimits& p_modelAsLimits);
+
+    // cxmodel::IBoard:
+    size_t GetNbRows() const override;
+    size_t GetNbColumns() const override;
+    size_t GetNbPositions() const override;
+    const IChip& GetChip(const Position& p_position) const override;
+    bool DropChip(size_t p_column, const IChip& p_chip, Position& p_droppedPosition) override;
+
+protected:
+
+    bool IsColumnFull(size_t p_column) const;
+
+    void CheckInvariants() const;
+
+private:
+
+    using Grid = std::vector<std::vector<std::unique_ptr<IChip>>>;
+
+    Grid m_grid;
+    const size_t m_nbRows;
+    const size_t m_nbColumns;
+
+    const IConnectXLimits& m_modelAsLimits;
+
+};
+
+} // namespace cxmodel
+
+#endif // BOARD_H_22FBC1EE_999E_416C_B947_05B6CDF6DBB8
