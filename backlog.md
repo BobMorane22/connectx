@@ -29,3 +29,6 @@ to the model. All these services should be interfaced and isolated from the mode
 ## (30-08-2020) Add the possibility to generate coverage for templated headers
 For now, it is impossible to get coverage information for the `cxmodel::Color` class. It
 is easy to forget to add unit tests for this class.
+
+## (09-09-2020) Possibility to create a new game with grid limits not respected
+Create a new game with witdh smaller than 7 and height smaller than 6 works.
