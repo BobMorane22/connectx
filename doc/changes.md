@@ -2,6 +2,8 @@
 
 Here is a list of all changes, per release:
 
+* October 11, 2020 - [v0.17](./v0-17/user/user.md)
+* September 27, 2020 - [v0.16](./v0-16/user/user.md)
 * September 13, 2020 - [v0.15](./v0-15/user/user.md)
 * May 31, 2020 - [v0.14](./v0-14/user/user.md)
 * May 15, 2020 - [v0.13](./v0-13/user/user.md)
