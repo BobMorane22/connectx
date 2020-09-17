@@ -21,6 +21,8 @@
  *
  *************************************************************************************************/
 
+#include <iostream>
+
 #include <gtkmm/window.h>
 
 #include <cxinv/include/assertion.h>
@@ -39,6 +41,7 @@ cxgui::GameView::GameView(IGameViewPresenter& p_presenter,
 , m_viewTop{p_viewTop}
 , m_activePlayerChip{std::make_unique<cxgui::DiscChip>(cxmodel::MakeTransparent(), cxmodel::MakeTransparent())}
 , m_nextPlayerChip{std::make_unique<cxgui::DiscChip>(cxmodel::MakeTransparent(), cxmodel::MakeTransparent())}
+, m_board{std::make_unique<cxgui::Board>(6, 7)}
 {
     PRECONDITION(m_activePlayerChip != nullptr);
     PRECONDITION(m_nextPlayerChip != nullptr);
@@ -46,10 +49,23 @@ cxgui::GameView::GameView(IGameViewPresenter& p_presenter,
     SetLayout();
     PopulateWidgets();
     ConfigureWidgets();
+
+    // Get a reference to the parent window:
+    m_parent = dynamic_cast<Gtk::Window*>(m_mainLayout.get_parent());
+
+    POSTCONDITION(m_parent != nullptr);
 }
 
 void cxgui::GameView::Activate()
 {
+    // Override default signal handler to catch keyboard events:
+    if(ASSERT(m_parent))
+    {
+        // Remove when uninit!
+        m_parent->add_events(Gdk::KEY_PRESS_MASK);
+        m_parent->signal_key_press_event().connect([this](GdkEventKey* p_event){return OnKeyPressed(p_event);}, false);
+    }
+
     auto* currentViewLayout = m_mainLayout.get_child_at(m_viewLeft, m_viewTop);
 
     if(!currentViewLayout)
@@ -65,16 +81,14 @@ void cxgui::GameView::Activate()
     m_mainLayout.attach(m_viewLayout, m_viewLeft, m_viewTop, 2, 1);
 
     // Resize parent:
-    Gtk::Window* window = dynamic_cast<Gtk::Window*>(m_mainLayout.get_parent());
-
-    if(ASSERT(window))
+    if(ASSERT(m_parent))
     {
         // Here we use a trick: in order resize the window, we first remove the
         // main layout and add it back before calling 'show all'. This enables
         // resizing the window to smaller sizes:
-        window->remove();
-        window->add(m_mainLayout);
-        window->resize(m_mainLayout.get_width(), m_mainLayout.get_height());
+        m_parent->remove();
+        m_parent->add(m_mainLayout);
+        m_parent->resize(m_mainLayout.get_width(), m_mainLayout.get_height());
     }
 }
 
@@ -93,6 +107,11 @@ void cxgui::GameView::SetLayout()
     if(ASSERT(m_nextPlayerChip != nullptr))
     {
         m_viewLayout.attach(*m_nextPlayerChip, 0, 3, TOTAL_WIDTH, 1);
+    }
+
+    if(ASSERT(m_board != nullptr))
+    {
+        m_viewLayout.attach(*m_board, 0, 4, TOTAL_WIDTH, 1);
     }
 }
 
@@ -117,4 +136,21 @@ void cxgui::GameView::ConfigureWidgets()
         m_nextPlayerChip->set_hexpand(true);
         m_nextPlayerChip->set_vexpand(true);
     }
+}
+
+bool cxgui::GameView::OnKeyPressed(GdkEventKey* p_event)
+{
+    if(!p_event)
+    {
+        return true; // Do not propagate...
+    }
+
+    const auto strategy = m_keyEventStrategyFactory.Create(p_event->keyval);
+
+    if(!strategy || !m_board)
+    {
+        return false;
+    }
+
+    return strategy->Handle(*m_board);
 }

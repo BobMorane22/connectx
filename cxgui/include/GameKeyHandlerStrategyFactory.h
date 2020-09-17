@@ -1,3 +1,5 @@
+#pragma once
+
 /**************************************************************************************************
  *  This file is part of Connect X.
  *
@@ -16,75 +18,44 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file GameView.h
+ * @file GameKeyHandlerStrategyFactory.h
  * @date 2020
  *
  *************************************************************************************************/
 
-#ifndef GAMEVIEW_H_AA8C282C_9CC4_45F4_BE91_C8840160BA1B
-#define GAMEVIEW_H_AA8C282C_9CC4_45F4_BE91_C8840160BA1B
+#include <memory>
 
-#include <gtkmm/grid.h>
-#include <gtkmm/label.h>
-
-#include "Board.h"
-#include "Chip.h"
-#include "GameKeyHandlerStrategyFactory.h"
-#include "IGameViewPresenter.h"
-#include "IView.h"
+#include "IGameKeyHandlerStrategy.h"
 
 namespace cxgui
 {
 
+// See: gdkkeysyms.h
+using GdkKey = unsigned int;
+
 /*********************************************************************************************//**
- * @brief View for playing the game.
+ * @brief Factory for key handling strategies.
+ *
+ * Creates the right strategy for the given keyboard key (GdkKey).
  *
  ************************************************************************************************/
-class GameView : public IView
+class GameKeyHandlerStrategyFactory final
 {
 
 public:
 
-    GameView(IGameViewPresenter& p_presenter,
-             Gtk::Grid& p_mainLayout,
-             int p_viewLeft,
-             int p_viewTop);
+    /******************************************************************************************//**
+     * @brief Creates a key handling strategy from a keyboard key identifier.
+     *
+     * @post The returned value is never nullptr.
+     *
+     * @param p_key An identifier for the key to create the strategy for.
+     *
+     * @return The strategy, or a noop strategy if no corresponding strategy was found.
+     *
+     ********************************************************************************************/
+    std::unique_ptr<cxgui::IGameKeyHandlerStrategy> Create(const GdkKey& p_key);
 
-    void Activate() override;
-
-private:
-
-    void SetLayout();
-    void PopulateWidgets();
-    void ConfigureWidgets();
-
-    bool OnKeyPressed(GdkEventKey* p_event);
-
-    IGameViewPresenter& m_presenter;
-
-    Gtk::Grid& m_mainLayout;
-
-    const int m_viewLeft;
-    const int m_viewTop;
-
-    Gtk::Grid m_viewLayout;
-
-    // Parent window:
-    Gtk::Window* m_parent;
-
-    // Controls:
-    Gtk::Label m_title;
-    Gtk::Label m_message;
-
-    std::unique_ptr<cxgui::Chip> m_activePlayerChip;
-    std::unique_ptr<cxgui::Chip> m_nextPlayerChip;
-
-    std::unique_ptr<cxgui::Board> m_board;
-
-    // Keys:
-    cxgui::GameKeyHandlerStrategyFactory m_keyEventStrategyFactory;
 };
 
 } // namespace cxgui
-
-#endif // GAMEVIEW_H_AA8C282C_9CC4_45F4_BE91_C8840160BA1B

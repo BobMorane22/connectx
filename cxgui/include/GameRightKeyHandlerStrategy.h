@@ -1,3 +1,5 @@
+#pragma once
+
 /**************************************************************************************************
  *  This file is part of Connect X.
  *
@@ -16,75 +18,29 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file GameView.h
+ * @file GameRightKeyHandlerStrategy.h
  * @date 2020
  *
  *************************************************************************************************/
 
-#ifndef GAMEVIEW_H_AA8C282C_9CC4_45F4_BE91_C8840160BA1B
-#define GAMEVIEW_H_AA8C282C_9CC4_45F4_BE91_C8840160BA1B
-
-#include <gtkmm/grid.h>
-#include <gtkmm/label.h>
-
-#include "Board.h"
-#include "Chip.h"
-#include "GameKeyHandlerStrategyFactory.h"
-#include "IGameViewPresenter.h"
-#include "IView.h"
+#include "IGameKeyHandlerStrategy.h"
 
 namespace cxgui
 {
 
 /*********************************************************************************************//**
- * @brief View for playing the game.
+ * @brief Right key handling strategy.
  *
  ************************************************************************************************/
-class GameView : public IView
+class GameRightKeyHandlerStrategy : public cxgui::IGameKeyHandlerStrategy
 {
-
-public:
-
-    GameView(IGameViewPresenter& p_presenter,
-             Gtk::Grid& p_mainLayout,
-             int p_viewLeft,
-             int p_viewTop);
-
-    void Activate() override;
-
-private:
-
-    void SetLayout();
-    void PopulateWidgets();
-    void ConfigureWidgets();
-
-    bool OnKeyPressed(GdkEventKey* p_event);
-
-    IGameViewPresenter& m_presenter;
-
-    Gtk::Grid& m_mainLayout;
-
-    const int m_viewLeft;
-    const int m_viewTop;
-
-    Gtk::Grid m_viewLayout;
-
-    // Parent window:
-    Gtk::Window* m_parent;
-
-    // Controls:
-    Gtk::Label m_title;
-    Gtk::Label m_message;
-
-    std::unique_ptr<cxgui::Chip> m_activePlayerChip;
-    std::unique_ptr<cxgui::Chip> m_nextPlayerChip;
-
-    std::unique_ptr<cxgui::Board> m_board;
-
-    // Keys:
-    cxgui::GameKeyHandlerStrategyFactory m_keyEventStrategyFactory;
+    /******************************************************************************************//**
+     * @brief Handler for a right key press.
+     *
+     * @param p_gameBoard The board to act on.
+     *
+     ********************************************************************************************/
+    bool Handle(Board& p_gameBoard) override;
 };
 
 } // namespace cxgui
-
-#endif // GAMEVIEW_H_AA8C282C_9CC4_45F4_BE91_C8840160BA1B
