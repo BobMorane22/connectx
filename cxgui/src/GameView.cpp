@@ -28,6 +28,7 @@
 #include <cxinv/include/assertion.h>
 #include <cxmodel/include/IChip.h>
 
+#include <common.h>
 #include <DiscChip.h>
 #include <GameView.h>
 
@@ -96,46 +97,84 @@ void cxgui::GameView::SetLayout()
 {
     constexpr int TOTAL_WIDTH = 2;
 
+    // Main view layout:
     m_viewLayout.attach(m_title, 0, 0, TOTAL_WIDTH, 1);
-    m_viewLayout.attach(m_message, 0, 1, TOTAL_WIDTH, 1);
-
-    if(ASSERT(m_activePlayerChip != nullptr))
-    {
-        m_viewLayout.attach(*m_activePlayerChip, 0, 2, TOTAL_WIDTH, 1);
-    }
-
-    if(ASSERT(m_nextPlayerChip != nullptr))
-    {
-        m_viewLayout.attach(*m_nextPlayerChip, 0, 3, TOTAL_WIDTH, 1);
-    }
+    m_viewLayout.attach(m_playersInfoLayout, 0, 1, TOTAL_WIDTH, 1);
 
     if(ASSERT(m_board != nullptr))
     {
         m_viewLayout.attach(*m_board, 0, 4, TOTAL_WIDTH, 1);
+    }
+
+    // Players info layout:
+    m_playersInfoLayout.attach(m_activePlayerLabel, 0, 0, 1, 1);
+    m_playersInfoLayout.attach(m_activePlayerName, 1, 0, 1, 1);
+    if(ASSERT(m_activePlayerChip != nullptr))
+    {
+        m_playersInfoLayout.attach(*m_activePlayerChip, 2, 0, 1, 1);
+    }
+
+    m_playersInfoLayout.attach(m_nextPlayerLabel, 0, 1, 1, 1);
+    m_playersInfoLayout.attach(m_nextPlayerName, 1, 1, 1, 1);
+    if(ASSERT(m_nextPlayerChip != nullptr))
+    {
+        m_playersInfoLayout.attach(*m_nextPlayerChip, 2, 1, 1, 1);
     }
 }
 
 void cxgui::GameView::PopulateWidgets()
 {
     m_title.set_text(m_presenter.GetGameViewTitle());
-    m_message.set_text(m_presenter.GetGameViewMessage());
+
+    m_activePlayerLabel.set_text("  Active player: "/*m_presenter.GetActivePlayerLabelText()*/);
+    m_activePlayerName.set_text("Bob Morane"/*m_presenter.GetActivePlayerName()*/);
     m_activePlayerChip->ChangeColor(m_presenter.GetActivePlayerChipColor());
+
+    m_nextPlayerLabel.set_text("  Next player: "/*m_presenter.GetNextPlayerLabelText()*/);
+    m_nextPlayerName.set_text("Jesus"/*m_presenter.GetNextPlayerName()*/);
     m_nextPlayerChip->ChangeColor(m_presenter.GetNextPlayerChipColor());
 }
 
 void cxgui::GameView::ConfigureWidgets()
 {
+    // Window margin:
+    m_mainLayout.set_margin_left(DIALOG_SIDE_MARGIN);
+    m_mainLayout.set_margin_right(DIALOG_SIDE_MARGIN);
+    m_mainLayout.set_margin_top(DIALOG_SIDE_MARGIN);
+    m_mainLayout.set_margin_bottom(DIALOG_SIDE_MARGIN);
+
+    // View title:
+    m_title.set_use_markup(true);
+    m_title.set_markup("<big><b>" + m_title.get_text() + "</b></big>");
+    m_title.set_margin_bottom(TITLE_BOTTOM_MARGIN);
+
+    // Players section:
+    m_activePlayerLabel.set_halign(Gtk::Align::ALIGN_START);
+    m_activePlayerLabel.set_hexpand(true);
+    m_activePlayerLabel.set_markup("<b>" + m_activePlayerLabel.get_text() + "</b>");
+    m_activePlayerName.set_halign(Gtk::Align::ALIGN_START);
+    m_activePlayerName.set_hexpand(true);
     if(ASSERT(m_activePlayerChip != nullptr))
     {
         m_activePlayerChip->set_hexpand(true);
-        m_activePlayerChip->set_vexpand(true);
+        m_activePlayerChip->set_vexpand(false);
+        m_activePlayerChip->set_halign(Gtk::Align::ALIGN_START);
     }
 
+    m_nextPlayerLabel.set_halign(Gtk::Align::ALIGN_START);
+    m_nextPlayerLabel.set_hexpand(true);
+    m_nextPlayerLabel.set_use_markup(true);
+    m_nextPlayerLabel.set_markup("<b>" + m_nextPlayerLabel.get_text() + "</b>");
+    m_nextPlayerName.set_halign(Gtk::Align::ALIGN_START);
+    m_nextPlayerName.set_hexpand(true);
     if(ASSERT(m_nextPlayerChip != nullptr))
     {
         m_nextPlayerChip->set_hexpand(true);
-        m_nextPlayerChip->set_vexpand(true);
+        m_nextPlayerChip->set_vexpand(false);
+        m_nextPlayerChip->set_halign(Gtk::Align::ALIGN_START);
     }
+
+    m_playersInfoLayout.set_margin_bottom(SECTION_BOTTOM_MARGIN);
 }
 
 bool cxgui::GameView::OnKeyPressed(GdkEventKey* p_event)

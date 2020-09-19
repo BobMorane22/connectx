@@ -74,9 +74,15 @@ private:
 
     // Controls:
     Gtk::Label m_title;
-    Gtk::Label m_message;
 
+    Gtk::Grid m_playersInfoLayout;
+
+    Gtk::Label m_activePlayerLabel;
+    Gtk::Label m_activePlayerName;
     std::unique_ptr<cxgui::Chip> m_activePlayerChip;
+
+    Gtk::Label m_nextPlayerLabel;
+    Gtk::Label m_nextPlayerName;
     std::unique_ptr<cxgui::Chip> m_nextPlayerChip;
 
     std::unique_ptr<cxgui::Board> m_board;
