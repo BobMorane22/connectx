@@ -32,7 +32,8 @@ cx::GtkmmUIManager::GtkmmUIManager(int argc,
                                    char *argv[],
                                    cxmodel::Subject& p_modelAsSubject,
                                    cxmodel::IConnectXGameActions& p_modelAsGameActions,
-                                   cxmodel::IConnectXLimits& p_modelAsLiimits)
+                                   cxmodel::IConnectXGameInformation& p_modelAsGameInformation,
+                                   cxmodel::IConnectXLimits& p_modelAsLimits)
 {
     PRECONDITION(argc > 0);
     PRECONDITION(argv != nullptr);
@@ -43,7 +44,7 @@ cx::GtkmmUIManager::GtkmmUIManager(int argc,
     // instantiated...
 
     m_controller = std::make_unique<cxgui::MainWindowController>(p_modelAsGameActions);
-    m_presenter = std::make_unique<cxgui::MainWindowPresenter>(p_modelAsLiimits);
+    m_presenter = std::make_unique<cxgui::MainWindowPresenter>(p_modelAsLimits, p_modelAsGameInformation);
 
     // Note: we must use the 'get' method with the 'operator*' because Gtk::RefPtr does not
     // support, like most smart pointers, accessing the underlying instance through 'operator*':

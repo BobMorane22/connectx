@@ -31,6 +31,7 @@
 namespace cxmodel
 {
     class IConnectXGameActions;
+    class IConnectXGameInformation;
     class IConnectXLimits;
     class IVersioning;
     class Subject;
@@ -56,14 +57,15 @@ public:
     /******************************************************************************************//**
      * @brief Create a command line dependent workflow.
      *
-     * @param argc                 The number of command line arguments (including the executable).
-     * @param argv                 A C-style array containing the command line argument strings
-     *                             (including the executable).
-     * @param p_modelAsSubject     The Connect X compatible model (Subject).
-     * @param p_modelAsGameActions The Connect X compatible model (Game actions).
-     * @param p_modelAsLimits      The Connect X compatible model (Limits).
-     * @param p_modelAsVersionning The Connect X compatible model (Versionning).
-     * @param p_logger             A chain logger.
+     * @param argc                     The number of command line arguments (including the executable).
+     * @param argv                     A C-style array containing the command line argument strings
+     *                                 (including the executable).
+     * @param p_modelAsSubject         The Connect X compatible model (Subject).
+     * @param p_modelAsGameActions     The Connect X compatible model (Game actions).
+     * @param p_modelAsGameInformation The Connect X compatible model (Game information).
+     * @param p_modelAsLimits          The Connect X compatible model (Limits).
+     * @param p_modelAsVersionning     The Connect X compatible model (Versionning).
+     * @param p_logger                 A chain logger.
      *
      * @post The returned command line dependent workflow is not @c nullptr.
      *
@@ -74,6 +76,7 @@ public:
                                                     char *argv[],
                                                     cxmodel::Subject& p_modelAsSubject,
                                                     cxmodel::IConnectXGameActions& p_modelAsGameActions,
+                                                    cxmodel::IConnectXGameInformation& p_modelAsGameInformation,
                                                     cxmodel::IConnectXLimits& p_modelAsLimits,
                                                     cxmodel::IVersioning& p_modelAsVersionning,
                                                     cxlog::ILogger& p_logger);

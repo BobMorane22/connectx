@@ -33,6 +33,7 @@ cx::CmdArgMainStrategy::CmdArgMainStrategy(int argc,
                                            char *argv[],
                                            cxmodel::Subject& p_modelAsSubject,
                                            cxmodel::IConnectXGameActions& p_modelAsGameActions,
+                                           cxmodel::IConnectXGameInformation& p_modelAsGameInformation,
                                            cxmodel::IConnectXLimits& p_modelAsLimits)
 {
     PRECONDITION(argc > 0);
@@ -43,6 +44,7 @@ cx::CmdArgMainStrategy::CmdArgMainStrategy(int argc,
                                                    argv,
                                                    p_modelAsSubject,
                                                    p_modelAsGameActions,
+                                                   p_modelAsGameInformation,
                                                    p_modelAsLimits);
 
     POSTCONDITION(m_uiMgr != nullptr);

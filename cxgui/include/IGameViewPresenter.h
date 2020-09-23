@@ -82,6 +82,38 @@ public:
      ********************************************************************************************/
     virtual cxmodel::ChipColor GetNextPlayerChipColor() const = 0;
 
+    /******************************************************************************************//**
+     * @brief Active player label text accessor.
+     *
+     * @return The active player's text label.
+     *
+     ********************************************************************************************/
+    virtual std::string GetActivePlayerLabelText() const = 0;
+
+    /******************************************************************************************//**
+     * @brief Next player label text accessor.
+     *
+     * @return The next player's text label.
+     *
+     ********************************************************************************************/
+    virtual std::string GetNextPlayerLabelText() const = 0;
+
+    /******************************************************************************************//**
+     * @brief Active player name accessor.
+     *
+     * @return The active player's name.
+     *
+     ********************************************************************************************/
+    virtual std::string GetActivePlayerName() const = 0;
+
+    /******************************************************************************************//**
+     * @brief Next player name accessor.
+     *
+     * @return The next player's name.
+     *
+     ********************************************************************************************/
+    virtual std::string GetNextPlayerName() const = 0;
+
 };
 
 } // namespace cxgui

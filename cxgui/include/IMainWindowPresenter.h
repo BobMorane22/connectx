@@ -99,6 +99,15 @@ public:
 // -----------------------------------------------------------------------------------------------
     std::string GetGameViewTitle() const override = 0;
     std::string GetGameViewMessage() const override = 0;
+
+    cxmodel::ChipColor GetActivePlayerChipColor() const override = 0;
+    cxmodel::ChipColor GetNextPlayerChipColor() const override = 0;
+
+    std::string GetActivePlayerLabelText() const override = 0;
+    std::string GetNextPlayerLabelText() const override = 0;
+
+    std::string GetActivePlayerName() const override = 0;
+    std::string GetNextPlayerName() const override = 0;
 ///@}
 
 };

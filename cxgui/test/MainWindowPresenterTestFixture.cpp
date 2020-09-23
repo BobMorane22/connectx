@@ -32,7 +32,7 @@ MainWindowPresenterTestFixture::MainWindowPresenterTestFixture()
     m_model = std::make_unique<MainWindowPresenterModelMock>();
     EXPECT_TRUE(m_model != nullptr);
 
-    m_presenter = std::make_unique<cxgui::MainWindowPresenter>(*m_model);
+    m_presenter = std::make_unique<cxgui::MainWindowPresenter>(*m_model, *m_model);
     EXPECT_TRUE(m_presenter != nullptr);
 
     m_model->Attach(m_presenter.get());

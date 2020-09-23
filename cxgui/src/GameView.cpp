@@ -126,12 +126,12 @@ void cxgui::GameView::PopulateWidgets()
 {
     m_title.set_text(m_presenter.GetGameViewTitle());
 
-    m_activePlayerLabel.set_text("  Active player: "/*m_presenter.GetActivePlayerLabelText()*/);
-    m_activePlayerName.set_text("Bob Morane"/*m_presenter.GetActivePlayerName()*/);
+    m_activePlayerLabel.set_text(m_presenter.GetActivePlayerLabelText());
+    m_activePlayerName.set_text(m_presenter.GetActivePlayerName());
     m_activePlayerChip->ChangeColor(m_presenter.GetActivePlayerChipColor());
 
-    m_nextPlayerLabel.set_text("  Next player: "/*m_presenter.GetNextPlayerLabelText()*/);
-    m_nextPlayerName.set_text("Jesus"/*m_presenter.GetNextPlayerName()*/);
+    m_nextPlayerLabel.set_text(m_presenter.GetNextPlayerLabelText());
+    m_nextPlayerName.set_text(m_presenter.GetNextPlayerName());
     m_nextPlayerChip->ChangeColor(m_presenter.GetNextPlayerChipColor());
 }
 

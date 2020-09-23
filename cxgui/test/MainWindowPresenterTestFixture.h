@@ -30,9 +30,9 @@
 #include <cxmodel/include/IConnectXGameActions.h>
 #include <cxmodel/include/IConnectXGameInformation.h>
 #include <cxmodel/include/IConnectXLimits.h>
+#include <cxmodel/include/IVersioning.h>
 #include <cxmodel/include/Subject.h>
 #include <cxgui/include/IMainWindowPresenter.h>
-#include "../../cxmodel/include/IVersioning.h"
 
 class MainWindowPresenterTestFixture : public testing::Test
 {
@@ -69,7 +69,7 @@ private:
             (void)p_gameInformation;
 
             // Here we only notify and let the presenter feed from the hardcoded
-            // model mock value. The values it themselves are not important.
+            // model mock values. The values in themselves are not important.
             Notify(cxmodel::NotificationContext::CREATE_NEW_GAME);
         }
 

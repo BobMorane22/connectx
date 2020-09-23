@@ -26,10 +26,13 @@
 
 #include <string>
 
+#include <cxmodel/include/Player.h>
+
 #include "IMainWindowPresenter.h"
 
 namespace cxmodel
 {
+    class IConnectXGameInformation;
     class IConnectXLimits;
 }
 
@@ -41,7 +44,8 @@ class MainWindowPresenter : public cxgui::IMainWindowPresenter
 
 public:
 
-    MainWindowPresenter(const cxmodel::IConnectXLimits& p_modealAsLimits);
+    MainWindowPresenter(const cxmodel::IConnectXLimits& p_modealAsLimits,
+                        const cxmodel::IConnectXGameInformation& p_modelAsGameInformation);
 
 ///@{ @name Main Window
 // -----------------------------------------------------------------------------------------------
@@ -80,6 +84,12 @@ public:
 
     cxmodel::ChipColor GetActivePlayerChipColor() const override;
     cxmodel::ChipColor GetNextPlayerChipColor() const override;
+
+    std::string GetActivePlayerLabelText() const override;
+    std::string GetNextPlayerLabelText() const override;
+
+    std::string GetActivePlayerName() const override;
+    std::string GetNextPlayerName() const override;
 ///@}
 
 private:
@@ -87,11 +97,12 @@ private:
     void Update(cxmodel::NotificationContext p_context, cxmodel::Subject* p_subject) override;
 
     const cxmodel::IConnectXLimits& m_modelAsLimits;
+    const cxmodel::IConnectXGameInformation& m_modelAsGameInformation;
 
     std::string m_gameViewMessage = "New game started!";
 
-    cxmodel::ChipColor m_activePlayerChipColor;
-    cxmodel::ChipColor m_nextPlayerChipColor;
+    cxmodel::Player m_activePlayer;
+    cxmodel::Player m_nextPlayer;
 };
 
 } // namespace cxgui

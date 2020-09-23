@@ -57,19 +57,11 @@ TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/Update_CreateNewGame_NewGame
     auto& model = GetActionsModel();
     model.CreateNewGame(cxmodel::NewGameInformation{});
 
-    const std::string expectedMsg{
-        "A new game has been created with the following parameters: \n"
-        "\n"
-        "  In-a-row value : 4\n"
-        "  Grid width     : 7\n"
-        "  Grid height    : 6\n"
-        "  Players        : \n"
-        "    Active       : John Doe\n"
-        "    Next         : Jane Doe\n"
-    };
-
     const auto& presenter = GetPresenter();
-    const std::string resultMsg = presenter.GetGameViewMessage();
 
-    ASSERT_EQ(resultMsg, expectedMsg);
+    ASSERT_EQ(presenter.GetActivePlayerChipColor(), cxmodel::MakeRed());
+    ASSERT_EQ(presenter.GetActivePlayerName(), "John Doe");
+
+    ASSERT_EQ(presenter.GetNextPlayerChipColor(), cxmodel::MakeBlue());
+    ASSERT_EQ(presenter.GetNextPlayerName() , "Jane Doe");
 }

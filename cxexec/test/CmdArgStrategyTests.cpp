@@ -137,6 +137,7 @@ TEST_F(ApplicationTestFixture, Handle_VerboseStrategy_InvalidLoggerError)
                                                                                                              (char**)argv,
                                                                                                              GetSubjectModel(),
                                                                                                              GetGameActionsModel(),
+                                                                                                             GetGameInformationModel(),
                                                                                                              GetLimitsModel(),
                                                                                                              GetVersionningModel(),
                                                                                                              nullptr);
@@ -162,6 +163,7 @@ TEST_F(ApplicationTestFixture, Handle_VerboseStrategy_LoggerIsNotAChainLoggerErr
                                                                                                              (char**)argv,
                                                                                                              GetSubjectModel(),
                                                                                                              GetGameActionsModel(),
+                                                                                                             GetGameInformationModel(),
                                                                                                              GetLimitsModel(),
                                                                                                              GetVersionningModel(),
                                                                                                              logger.get());

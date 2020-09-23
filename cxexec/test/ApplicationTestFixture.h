@@ -27,9 +27,10 @@
 #include <gtest/gtest.h>
 
 #include <cxmodel/include/IConnectXGameActions.h>
+#include <cxmodel/include/IConnectXGameInformation.h>
 #include <cxmodel/include/IConnectXLimits.h>
+#include <cxmodel/include/IVersioning.h>
 #include <cxmodel/include/Subject.h>
-#include "../../cxmodel/include/IVersioning.h"
 
 #include "DisableStdStreamsRAII.h"
 #include "LoggerMock.h"
@@ -49,6 +50,7 @@ public:
     cxlog::ILogger& GetLogger();
     cxmodel::Subject& GetSubjectModel();
     cxmodel::IConnectXGameActions& GetGameActionsModel();
+    cxmodel::IConnectXGameInformation& GetGameInformationModel();
     cxmodel::IConnectXLimits& GetLimitsModel();
     cxmodel::IVersioning& GetVersionningModel();
 
@@ -60,6 +62,7 @@ private:
 
     class ModelApplicationMock : public cxmodel::Subject,
                                  public cxmodel::IConnectXGameActions,
+                                 public cxmodel::IConnectXGameInformation,
                                  public cxmodel::IConnectXLimits,
                                  public cxmodel::IVersioning
     {
@@ -72,6 +75,16 @@ private:
             // Not used...
             (void)p_gameInformation;
         }
+
+        // IConnectXGameInformation:
+        size_t GetCurrentGridHeight() const override {return 6u;}
+        size_t GetCurrentGridWidth() const override {return 7u;};
+        size_t GetCurrentInARowValue() const override {return 4u;};
+        const cxmodel::Player& GetActivePlayer() const override {return m_ACTIVE_PLAYER;};
+        const cxmodel::Player& GetNextPlayer() const override {return m_NEXT_PLAYER;};
+        bool IsWon() const override {throw std::logic_error("Not implemented!");};
+        bool IsTie() const override {throw std::logic_error("Not implemented!");};
+        bool IsEarlyTie() const override {throw std::logic_error("Not implemented!");};
 
         // IConnectXLimits:
         size_t GetMinimumGridHeight() const override {return 7u;};
@@ -86,6 +99,11 @@ private:
         // IVersionning:
         std::string GetName() const override {return "Connect X";};
         std::string GetVersionNumber() const override {return "v0.0";};
+
+    private:
+
+        const cxmodel::Player m_ACTIVE_PLAYER{"John Doe", cxmodel::MakeRed()};
+        const cxmodel::Player m_NEXT_PLAYER{"Jane Doe", cxmodel::MakeBlue()};
     };
 
     LoggerMock m_logger;

@@ -39,6 +39,7 @@ TEST_F(ApplicationTestFixture, /*DISABLED_*/Run_BadArgumentCount_ExitFailure)
                                                                               (char**)argv,
                                                                               GetSubjectModel(),
                                                                               GetGameActionsModel(),
+                                                                              GetGameInformationModel(),
                                                                               GetLimitsModel(),
                                                                               GetVersionningModel(),
                                                                               GetLogger());
@@ -55,6 +56,7 @@ TEST_F(ApplicationTestFixture, /*DISABLED_*/Run_BadArgument_ExitFailure)
                                                                               (char**)argv,
                                                                               GetSubjectModel(),
                                                                               GetGameActionsModel(),
+                                                                              GetGameInformationModel(),
                                                                               GetLimitsModel(),
                                                                               GetVersionningModel(),
                                                                               GetLogger());
@@ -70,6 +72,7 @@ TEST_F(ApplicationTestFixture, /*DISABLED_*/Run_Help_ExitSuccess)
                                                                               (char**)argv,
                                                                               GetSubjectModel(),
                                                                               GetGameActionsModel(),
+                                                                              GetGameInformationModel(),
                                                                               GetLimitsModel(),
                                                                               GetVersionningModel(),
                                                                               GetLogger());
@@ -85,6 +88,7 @@ TEST_F(ApplicationTestFixture, /*DISABLED_*/Run_Version_ExitSuccess)
                                                                               (char**)argv,
                                                                               GetSubjectModel(),
                                                                               GetGameActionsModel(),
+                                                                              GetGameInformationModel(),
                                                                               GetLimitsModel(),
                                                                               GetVersionningModel(),
                                                                               GetLogger());
@@ -100,6 +104,7 @@ TEST_F(ApplicationTestFixture, /*DISABLED_*/Run_HelpAndVersion_ExitSuccess)
                                                                               (char**)argv,
                                                                               GetSubjectModel(),
                                                                               GetGameActionsModel(),
+                                                                              GetGameInformationModel(),
                                                                               GetLimitsModel(),
                                                                               GetVersionningModel(),
                                                                               GetLogger());
@@ -115,6 +120,7 @@ TEST_F(ApplicationTestFixture, /*DISABLED_*/Run_VersionAndHelp_ExitSuccess)
                                                                               (char**)argv,
                                                                               GetSubjectModel(),
                                                                               GetGameActionsModel(),
+                                                                              GetGameInformationModel(),
                                                                               GetLimitsModel(),
                                                                               GetVersionningModel(),
                                                                               GetLogger());
@@ -130,6 +136,7 @@ TEST_F(ApplicationTestFixture, /*DISABLED_*/Run_TwoManyValidArguments_ExitSucces
                                                                               (char**)argv,
                                                                               GetSubjectModel(),
                                                                               GetGameActionsModel(),
+                                                                              GetGameInformationModel(),
                                                                               GetLimitsModel(),
                                                                               GetVersionningModel(),
                                                                               GetLogger());
@@ -145,6 +152,7 @@ TEST_F(ApplicationTestFixture, /*DISABLED_*/Run_MixedArguments_ExitFailure)
                                                                               (char**)argv,
                                                                               GetSubjectModel(),
                                                                               GetGameActionsModel(),
+                                                                              GetGameInformationModel(),
                                                                               GetLimitsModel(),
                                                                               GetVersionningModel(),
                                                                               GetLogger());

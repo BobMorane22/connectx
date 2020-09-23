@@ -21,8 +21,6 @@
  *
  *************************************************************************************************/
 
-#include <sstream>
-
 #include <cxinv/include/assertion.h>
 #include <cxmodel/include/Disc.h>
 #include <cxmodel/include/NewGameInformation.h>
@@ -34,12 +32,16 @@
 namespace
 {
 
+const cxmodel::Player NO_PLAYER = {"--", cxmodel::MakeTransparent()};
+
 } // namespace
 
-cxgui::MainWindowPresenter::MainWindowPresenter(const cxmodel::IConnectXLimits& p_modealAsLimits)
+cxgui::MainWindowPresenter::MainWindowPresenter(const cxmodel::IConnectXLimits& p_modealAsLimits,
+                                                const cxmodel::IConnectXGameInformation& p_modelAsGameInformation)
  : m_modelAsLimits{p_modealAsLimits}
- , m_activePlayerChipColor{cxmodel::MakeTransparent()}
- , m_nextPlayerChipColor{cxmodel::MakeTransparent()}
+ , m_modelAsGameInformation{p_modelAsGameInformation}
+ , m_activePlayer{NO_PLAYER}
+ , m_nextPlayer{NO_PLAYER}
 {
 }
 
@@ -49,23 +51,8 @@ void cxgui::MainWindowPresenter::Update(cxmodel::NotificationContext p_context, 
     {
         if(p_context == cxmodel::NotificationContext::CREATE_NEW_GAME)
         {
-            cxmodel::IConnectXGameInformation* model = dynamic_cast<cxmodel::IConnectXGameInformation*>(p_subject);
-
-            std::ostringstream stream;
-
-            stream << "A new game has been created with the following parameters: " << std::endl
-                   << std::endl
-                   << "  In-a-row value : " << model->GetCurrentInARowValue() << std::endl
-                   << "  Grid width     : " << model->GetCurrentGridWidth() << std::endl
-                   << "  Grid height    : " << model->GetCurrentGridHeight() << std::endl
-                   << "  Players        : " << std::endl
-                   << "    Active       : " << model->GetActivePlayer().GetName() << std::endl
-                   << "    Next         : " << model->GetNextPlayer().GetName() << std::endl;
-
-            m_gameViewMessage = stream.str();
-
-            m_activePlayerChipColor = model->GetActivePlayer().GetChip().GetColor();
-            m_nextPlayerChipColor = model->GetNextPlayer().GetChip().GetColor();
+            m_activePlayer = m_modelAsGameInformation.GetActivePlayer();
+            m_nextPlayer = m_modelAsGameInformation.GetNextPlayer();
         }
 
         Notify(p_context);
@@ -170,10 +157,34 @@ std::string cxgui::MainWindowPresenter::GetGameViewMessage() const
 
 cxmodel::ChipColor cxgui::MainWindowPresenter::GetActivePlayerChipColor() const
 {
-    return m_activePlayerChipColor;
+    const cxmodel::IChip& activePlayerChip = m_activePlayer.GetChip();
+
+    return activePlayerChip.GetColor();
 }
 
 cxmodel::ChipColor cxgui::MainWindowPresenter::GetNextPlayerChipColor() const
 {
-    return m_nextPlayerChipColor;
+    const cxmodel::IChip& nextPlayerChip = m_nextPlayer.GetChip();
+
+    return nextPlayerChip.GetColor();
+}
+
+std::string cxgui::MainWindowPresenter::GetActivePlayerLabelText() const
+{
+    return "  Active player: ";
+}
+
+std::string cxgui::MainWindowPresenter::GetNextPlayerLabelText() const
+{
+    return "  Next player: ";
+}
+
+std::string cxgui::MainWindowPresenter::GetActivePlayerName() const
+{
+    return m_activePlayer.GetName();
+}
+
+std::string cxgui::MainWindowPresenter::GetNextPlayerName() const
+{
+    return m_nextPlayer.GetName();
 }

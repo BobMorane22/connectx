@@ -51,6 +51,7 @@ std::unique_ptr<cx::ICmdArgWorkflowStrategy> cx::CmdArgWorkflowFactory::Create(i
                                                                                char *argv[],
                                                                                cxmodel::Subject& p_modelAsSubject,
                                                                                cxmodel::IConnectXGameActions& p_modelAsGameActions,
+                                                                               cxmodel::IConnectXGameInformation& p_modelAsGameInformation,
                                                                                cxmodel::IConnectXLimits& p_modelAsLimits,
                                                                                cxmodel::IVersioning& p_modelAsVersionning,
                                                                                cxlog::ILogger& p_logger)
@@ -63,7 +64,12 @@ std::unique_ptr<cx::ICmdArgWorkflowStrategy> cx::CmdArgWorkflowFactory::Create(i
     }
     else if(argc == 1)
     {
-        strategy = std::make_unique<CmdArgMainStrategy>(argc, argv, p_modelAsSubject, p_modelAsGameActions, p_modelAsLimits);
+        strategy = std::make_unique<CmdArgMainStrategy>(argc,
+                                                        argv,
+                                                        p_modelAsSubject,
+                                                        p_modelAsGameActions,
+                                                        p_modelAsGameInformation,
+                                                        p_modelAsLimits);
     }
     else
     {
@@ -123,6 +129,7 @@ std::unique_ptr<cx::ICmdArgWorkflowStrategy> cx::CmdArgWorkflowFactory::Create(i
                                                                    argv,
                                                                    p_modelAsSubject,
                                                                    p_modelAsGameActions,
+                                                                   p_modelAsGameInformation,
                                                                    p_modelAsLimits,
                                                                    p_modelAsVersionning,
                                                                    &p_logger);

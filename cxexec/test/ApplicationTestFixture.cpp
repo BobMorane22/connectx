@@ -47,6 +47,13 @@ cxmodel::IConnectXGameActions& ApplicationTestFixture::GetGameActionsModel()
     return *m_model;
 }
 
+cxmodel::IConnectXGameInformation& ApplicationTestFixture::GetGameInformationModel()
+{
+    EXPECT_TRUE(m_model);
+
+    return *m_model;
+}
+
 cxmodel::IConnectXLimits& ApplicationTestFixture::GetLimitsModel()
 {
     EXPECT_TRUE(m_model);
