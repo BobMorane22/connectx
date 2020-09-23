@@ -52,7 +52,9 @@ public:
                 int p_viewLeft,
                 int p_viewTop);
 
+    // IView:
     void Activate() override;
+    void DeActivate() override;
 
 private:
 

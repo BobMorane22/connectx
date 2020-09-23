@@ -109,6 +109,7 @@ void cxgui::MainWindow::Update(cxmodel::NotificationContext p_context, cxmodel::
     {
         if(p_context == cxmodel::NotificationContext::CREATE_NEW_GAME)
         {
+            DeactivateNewGameView();
             ActivateGameView();
         }
     }
@@ -158,6 +159,16 @@ void cxgui::MainWindow::CreateAboutWindow()
     }
 
     m_about->Show();
+}
+
+void cxgui::MainWindow::DeactivateNewGameView()
+{
+    if(!ASSERT(m_newGameView != nullptr))
+    {
+        return;
+    }
+
+    m_newGameView->DeActivate();
 }
 
 void cxgui::MainWindow::ActivateGameView()

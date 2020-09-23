@@ -123,6 +123,8 @@ private:
     void RegisterMenuBar();
 
     void CreateAboutWindow();
+
+    void DeactivateNewGameView();
     void ActivateGameView();
 
     Gtk::Application& m_gtkApplication;

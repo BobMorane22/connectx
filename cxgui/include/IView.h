@@ -57,6 +57,16 @@ public:
      ********************************************************************************************/
     virtual void Activate() = 0;
 
+    /******************************************************************************************//**
+     * @brief Deactivate the view.
+     *
+     * Deactivating a view means cleaning up all resources and preparing for a clean exit. After
+     * this call, the window should have no leftovers from the view and should be ready to
+     * switch to another view without conflict.
+     *
+     ********************************************************************************************/
+    virtual void DeActivate() = 0;
+
 };
 
 } // namespace cxgui

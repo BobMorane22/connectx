@@ -50,7 +50,9 @@ public:
              int p_viewLeft,
              int p_viewTop);
 
+    // IView:
     void Activate() override;
+    void DeActivate() override;
 
 private:
 
@@ -89,6 +91,9 @@ private:
 
     // Keys:
     cxgui::GameKeyHandlerStrategyFactory m_keyEventStrategyFactory;
+
+    // Signals:
+    sigc::connection m_keysPressedConnection;
 };
 
 } // namespace cxgui

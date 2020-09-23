@@ -114,6 +114,11 @@ void cxgui::NewGameView::Activate()
     m_mainLayout.attach(m_viewLayout, m_viewLeft, m_viewTop, 2, 1);
 }
 
+void cxgui::NewGameView::DeActivate()
+{
+    // Nothing to do...
+}
+
 void cxgui::NewGameView::SetLayout()
 {
     constexpr int TOTAL_WIDTH = 2;

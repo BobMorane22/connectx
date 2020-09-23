@@ -62,9 +62,8 @@ void cxgui::GameView::Activate()
     // Override default signal handler to catch keyboard events:
     if(ASSERT(m_parent))
     {
-        // Remove when uninit!
         m_parent->add_events(Gdk::KEY_PRESS_MASK);
-        m_parent->signal_key_press_event().connect([this](GdkEventKey* p_event){return OnKeyPressed(p_event);}, false);
+        m_keysPressedConnection = m_parent->signal_key_press_event().connect([this](GdkEventKey* p_event){return OnKeyPressed(p_event);}, false);
     }
 
     auto* currentViewLayout = m_mainLayout.get_child_at(m_viewLeft, m_viewTop);
@@ -90,6 +89,18 @@ void cxgui::GameView::Activate()
         m_parent->remove();
         m_parent->add(m_mainLayout);
         m_parent->resize(m_mainLayout.get_width(), m_mainLayout.get_height());
+    }
+}
+
+void cxgui::GameView::DeActivate()
+{
+    if(ASSERT(m_parent))
+    {
+        // Unset key press events:
+        m_parent->add_events(m_parent->get_events() & ~Gdk::KEY_PRESS_MASK);
+
+        // Disconnect signal handler:
+        m_keysPressedConnection.disconnect();
     }
 }
 
