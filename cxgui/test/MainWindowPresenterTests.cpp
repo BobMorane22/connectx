@@ -65,3 +65,4 @@ TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/Update_CreateNewGame_NewGame
     ASSERT_EQ(presenter.GetNextPlayerChipColor(), cxmodel::MakeBlue());
     ASSERT_EQ(presenter.GetNextPlayerName() , "Jane Doe");
 }
+

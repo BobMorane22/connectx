@@ -46,6 +46,7 @@ public:
     cxgui::INewGameViewPresenter& GetNewGameViewPresenter();
 
     cxmodel::IConnectXGameActions& GetActionsModel();
+    cxmodel::IConnectXLimits& GetLimitsModel();
 
 private:
 

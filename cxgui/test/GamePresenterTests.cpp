@@ -34,3 +34,44 @@ TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetMessage_GamePresenter_Mes
 {
     ASSERT_EQ(GetGameViewPresenter().GetGameViewMessage(), "New game started!");
 }
+
+TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetActivePlayerChipColor_GamePresenterNoUpdate_NoColorReturned)
+{
+    ASSERT_EQ(GetGameViewPresenter().GetActivePlayerChipColor(), cxmodel::MakeTransparent());
+}
+
+TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetNextPlayerChipColor_GamePresenterNoUpdate_NoColorReturned)
+{
+    ASSERT_EQ(GetGameViewPresenter().GetNextPlayerChipColor(), cxmodel::MakeTransparent());
+}
+
+TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetActivePlayerLabelText_GamePresenter_LabelTextReturned)
+{
+    ASSERT_EQ(GetGameViewPresenter().GetActivePlayerLabelText(), "  Active player: ");
+}
+
+TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetNextPlayerLabelText_GamePresenter_LabelTextReturned)
+{
+    ASSERT_EQ(GetGameViewPresenter().GetNextPlayerLabelText(), "  Next player: ");
+}
+
+TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetActivePlayerName_GamePresenterNoUpdate_NoNameReturned)
+{
+    ASSERT_EQ(GetGameViewPresenter().GetActivePlayerName(), "--");
+}
+
+TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetNextPlayerName_GamePresenterNoUpdate_NoNameReturned)
+{
+    ASSERT_EQ(GetGameViewPresenter().GetNextPlayerName(), "--");
+}
+
+TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetBoardWidth_GamePresenterNoUpdate_MinimumReturned)
+{
+    ASSERT_EQ(GetGameViewPresenter().GetBoardWidth(), GetLimitsModel().GetMinimumGridWidth());
+}
+
+TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetBoardHeight_GamePresenterNoUpdate_MinimumReturned)
+{
+    ASSERT_EQ(GetGameViewPresenter().GetBoardHeight(), GetLimitsModel().GetMinimumGridHeight());
+
+}
