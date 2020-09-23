@@ -90,6 +90,9 @@ public:
 
     std::string GetActivePlayerName() const override;
     std::string GetNextPlayerName() const override;
+
+    size_t GetBoardWidth() const override;
+    size_t GetBoardHeight() const override;
 ///@}
 
 private:
@@ -100,6 +103,9 @@ private:
     const cxmodel::IConnectXGameInformation& m_modelAsGameInformation;
 
     std::string m_gameViewMessage = "New game started!";
+
+    size_t m_currentBoardWidth;
+    size_t m_currentBoardHeight;
 
     cxmodel::Player m_activePlayer;
     cxmodel::Player m_nextPlayer;

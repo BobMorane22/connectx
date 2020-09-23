@@ -40,6 +40,8 @@ cxgui::MainWindowPresenter::MainWindowPresenter(const cxmodel::IConnectXLimits& 
                                                 const cxmodel::IConnectXGameInformation& p_modelAsGameInformation)
  : m_modelAsLimits{p_modealAsLimits}
  , m_modelAsGameInformation{p_modelAsGameInformation}
+ , m_currentBoardWidth{p_modealAsLimits.GetMinimumGridWidth()}
+ , m_currentBoardHeight{p_modealAsLimits.GetMinimumGridHeight()}
  , m_activePlayer{NO_PLAYER}
  , m_nextPlayer{NO_PLAYER}
 {
@@ -51,6 +53,9 @@ void cxgui::MainWindowPresenter::Update(cxmodel::NotificationContext p_context, 
     {
         if(p_context == cxmodel::NotificationContext::CREATE_NEW_GAME)
         {
+            m_currentBoardWidth = m_modelAsGameInformation.GetCurrentGridWidth();
+            m_currentBoardHeight = m_modelAsGameInformation.GetCurrentGridHeight();
+
             m_activePlayer = m_modelAsGameInformation.GetActivePlayer();
             m_nextPlayer = m_modelAsGameInformation.GetNextPlayer();
         }
@@ -187,4 +192,14 @@ std::string cxgui::MainWindowPresenter::GetActivePlayerName() const
 std::string cxgui::MainWindowPresenter::GetNextPlayerName() const
 {
     return m_nextPlayer.GetName();
+}
+
+size_t cxgui::MainWindowPresenter::GetBoardWidth() const
+{
+    return m_currentBoardWidth;
+}
+
+size_t cxgui::MainWindowPresenter::GetBoardHeight() const
+{
+    return m_currentBoardHeight;
 }

@@ -27,19 +27,19 @@
 
 #include <Board.h>
 #include <DiscChip.h>
+#include <IGameViewPresenter.h>
 
 constexpr bool FULLY_HANDLED = true;
 constexpr bool PROPAGATE = false;
 
-cxgui::Board::Board(size_t p_height, size_t p_width)
-: m_nextDiscPosition{0u}
-, m_height{p_height}
-, m_width{p_width}
+cxgui::Board::Board(const IGameViewPresenter& p_presenter)
+: m_presenter{p_presenter}
+, m_nextDiscPosition{0u}
 {
     set_orientation(Gtk::Orientation::ORIENTATION_VERTICAL);
 
-    InitializeNextDiscArea(p_width);
-    InitializeBoard(p_height, p_width);
+    InitializeNextDiscArea(m_presenter.GetBoardWidth());
+    InitializeBoard(m_presenter.GetBoardHeight(), m_presenter.GetBoardWidth());
 
     pack1(m_nextDiscAreaLayout, true, false);
     pack2(m_boardLayout, true, false);
@@ -64,7 +64,7 @@ void cxgui::Board::Move(Side p_side)
 {
     ChangeCurrentDisc(cxmodel::MakeTransparent());
     UpdateNextDiscPosition(p_side);
-    ChangeCurrentDisc(cxmodel::MakeRed());
+    ChangeCurrentDisc(m_presenter.GetActivePlayerChipColor());
 }
 
 void cxgui::Board::ChangeCurrentDisc(const cxmodel::ChipColor& p_newColor)
@@ -96,12 +96,12 @@ void cxgui::Board::UpdateNextDiscPosition(Side p_side)
         }
         else
         {
-            m_nextDiscPosition = m_width - 1;
+            m_nextDiscPosition = m_presenter.GetBoardWidth() - 1;
         }
     }
     else
     {
-        if(m_nextDiscPosition < m_width - 1)
+        if(m_nextDiscPosition < m_presenter.GetBoardWidth() - 1)
         {
             ++m_nextDiscPosition;
         }
@@ -117,7 +117,7 @@ void cxgui::Board::InitializeNextDiscArea(size_t p_width)
     m_nextDiscAreaLayout.set_row_homogeneous(true);
     m_nextDiscAreaLayout.set_column_homogeneous(true);
 
-    Chip* activePlayerChip = Gtk::manage(new DiscChip{cxmodel::MakeRed(), cxmodel::MakeTransparent()});
+    Chip* activePlayerChip = Gtk::manage(new DiscChip{m_presenter.GetActivePlayerChipColor(), cxmodel::MakeTransparent()});
 
     activePlayerChip->set_vexpand(true);
     activePlayerChip->set_hexpand(true);

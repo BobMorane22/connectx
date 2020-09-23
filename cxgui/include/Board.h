@@ -31,6 +31,11 @@
 
 namespace cxgui
 {
+    class IGameViewPresenter;
+}
+
+namespace cxgui
+{
 
 /*********************************************************************************************//**
  * @brief A graphical Connect X game board.
@@ -44,11 +49,10 @@ public:
     /******************************************************************************************//**
      * @brief Constructor.
      *
-     * @param p_height The height of the board.
-     * @param p_width  The width of the board.
+     * @param p_presenter The Game View presenter.
      *
      ********************************************************************************************/
-    Board(size_t p_height, size_t p_width);
+    Board(const IGameViewPresenter& p_presenter);
 
     /******************************************************************************************//**
      * @brief Drops the chip in the current column.
@@ -83,13 +87,12 @@ private:
     void InitializeNextDiscArea(size_t p_width);
     void InitializeBoard(size_t p_height, size_t p_width);
 
+    const IGameViewPresenter& m_presenter;
+
     Gtk::Grid m_nextDiscAreaLayout;
     Gtk::Grid m_boardLayout;
 
     std::size_t m_nextDiscPosition;
-
-    const std::size_t m_height;
-    const std::size_t m_width;
 
 };
 

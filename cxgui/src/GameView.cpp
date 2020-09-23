@@ -42,7 +42,7 @@ cxgui::GameView::GameView(IGameViewPresenter& p_presenter,
 , m_viewTop{p_viewTop}
 , m_activePlayerChip{std::make_unique<cxgui::DiscChip>(cxmodel::MakeTransparent(), cxmodel::MakeTransparent())}
 , m_nextPlayerChip{std::make_unique<cxgui::DiscChip>(cxmodel::MakeTransparent(), cxmodel::MakeTransparent())}
-, m_board{std::make_unique<cxgui::Board>(6, 7)}
+, m_board{std::make_unique<cxgui::Board>(m_presenter)}
 {
     PRECONDITION(m_activePlayerChip != nullptr);
     PRECONDITION(m_nextPlayerChip != nullptr);
