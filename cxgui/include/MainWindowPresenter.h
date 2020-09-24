@@ -51,6 +51,7 @@ public:
 // -----------------------------------------------------------------------------------------------
     std::string GetWindowTitle() const override;
     std::string GetMenuLabel(MenuItem p_menuItem) const override;
+
 ///@}
 
 ///@{ @name New Game View
@@ -82,6 +83,7 @@ public:
     size_t GetNewGameViewMaxBoardWidthValue() const override;
     size_t GetNewGameViewMinBoardHeightValue() const override;
     size_t GetNewGameViewMaxBoardHeightValue() const override;
+
 ///@}
 
 ///@{ @name Game View
@@ -89,17 +91,18 @@ public:
     std::string GetGameViewTitle() const override;
     std::string GetGameViewMessage() const override;
 
-    cxmodel::ChipColor GetActivePlayerChipColor() const override;
-    cxmodel::ChipColor GetNextPlayerChipColor() const override;
+    cxmodel::ChipColor GetGameViewActivePlayerChipColor() const override;
+    cxmodel::ChipColor GetGameViewNextPlayerChipColor() const override;
 
-    std::string GetActivePlayerLabelText() const override;
-    std::string GetNextPlayerLabelText() const override;
+    std::string GetGameViewActivePlayerLabelText() const override;
+    std::string GetGameViewNextPlayerLabelText() const override;
 
-    std::string GetActivePlayerName() const override;
-    std::string GetNextPlayerName() const override;
+    std::string GetGameViewActivePlayerName() const override;
+    std::string GetGameViewNextPlayerName() const override;
 
-    size_t GetBoardWidth() const override;
-    size_t GetBoardHeight() const override;
+    size_t GetGameViewBoardWidth() const override;
+    size_t GetGameViewBoardHeight() const override;
+
 ///@}
 
 private:

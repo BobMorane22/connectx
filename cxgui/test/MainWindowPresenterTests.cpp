@@ -59,10 +59,10 @@ TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/Update_CreateNewGame_NewGame
 
     const auto& presenter = GetPresenter();
 
-    ASSERT_EQ(presenter.GetActivePlayerChipColor(), cxmodel::MakeRed());
-    ASSERT_EQ(presenter.GetActivePlayerName(), "John Doe");
+    ASSERT_EQ(presenter.GetGameViewActivePlayerChipColor(), cxmodel::MakeRed());
+    ASSERT_EQ(presenter.GetGameViewActivePlayerName(), "John Doe");
 
-    ASSERT_EQ(presenter.GetNextPlayerChipColor(), cxmodel::MakeBlue());
-    ASSERT_EQ(presenter.GetNextPlayerName() , "Jane Doe");
+    ASSERT_EQ(presenter.GetGameViewNextPlayerChipColor(), cxmodel::MakeBlue());
+    ASSERT_EQ(presenter.GetGameViewNextPlayerName() , "Jane Doe");
 }
 

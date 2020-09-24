@@ -72,7 +72,7 @@ public:
      * @return The active player's chip color.
      *
      ********************************************************************************************/
-    virtual cxmodel::ChipColor GetActivePlayerChipColor() const = 0;
+    virtual cxmodel::ChipColor GetGameViewActivePlayerChipColor() const = 0;
 
     /******************************************************************************************//**
      * @brief Next player's chip color accessor.
@@ -80,7 +80,7 @@ public:
      * @return The next player's chip color.
      *
      ********************************************************************************************/
-    virtual cxmodel::ChipColor GetNextPlayerChipColor() const = 0;
+    virtual cxmodel::ChipColor GetGameViewNextPlayerChipColor() const = 0;
 
     /******************************************************************************************//**
      * @brief Active player label text accessor.
@@ -88,7 +88,7 @@ public:
      * @return The active player's text label.
      *
      ********************************************************************************************/
-    virtual std::string GetActivePlayerLabelText() const = 0;
+    virtual std::string GetGameViewActivePlayerLabelText() const = 0;
 
     /******************************************************************************************//**
      * @brief Next player label text accessor.
@@ -96,7 +96,7 @@ public:
      * @return The next player's text label.
      *
      ********************************************************************************************/
-    virtual std::string GetNextPlayerLabelText() const = 0;
+    virtual std::string GetGameViewNextPlayerLabelText() const = 0;
 
     /******************************************************************************************//**
      * @brief Active player name accessor.
@@ -104,7 +104,7 @@ public:
      * @return The active player's name.
      *
      ********************************************************************************************/
-    virtual std::string GetActivePlayerName() const = 0;
+    virtual std::string GetGameViewActivePlayerName() const = 0;
 
     /******************************************************************************************//**
      * @brief Next player name accessor.
@@ -112,7 +112,7 @@ public:
      * @return The next player's name.
      *
      ********************************************************************************************/
-    virtual std::string GetNextPlayerName() const = 0;
+    virtual std::string GetGameViewNextPlayerName() const = 0;
 
     /******************************************************************************************//**
      * @brief Board width accessor.
@@ -120,7 +120,7 @@ public:
      * @return The board width.
      *
      ********************************************************************************************/
-    virtual size_t GetBoardWidth() const = 0;
+    virtual size_t GetGameViewBoardWidth() const = 0;
 
     /******************************************************************************************//**
      * @brief Board height accessor.
@@ -128,7 +128,7 @@ public:
      * @return The board height.
      *
      ********************************************************************************************/
-    virtual size_t GetBoardHeight() const = 0;
+    virtual size_t GetGameViewBoardHeight() const = 0;
 
 };
 

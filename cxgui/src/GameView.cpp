@@ -137,13 +137,13 @@ void cxgui::GameView::PopulateWidgets()
 {
     m_title.set_text(m_presenter.GetGameViewTitle());
 
-    m_activePlayerLabel.set_text(m_presenter.GetActivePlayerLabelText());
-    m_activePlayerName.set_text(m_presenter.GetActivePlayerName());
-    m_activePlayerChip->ChangeColor(m_presenter.GetActivePlayerChipColor());
+    m_activePlayerLabel.set_text(m_presenter.GetGameViewActivePlayerLabelText());
+    m_activePlayerName.set_text(m_presenter.GetGameViewActivePlayerName());
+    m_activePlayerChip->ChangeColor(m_presenter.GetGameViewActivePlayerChipColor());
 
-    m_nextPlayerLabel.set_text(m_presenter.GetNextPlayerLabelText());
-    m_nextPlayerName.set_text(m_presenter.GetNextPlayerName());
-    m_nextPlayerChip->ChangeColor(m_presenter.GetNextPlayerChipColor());
+    m_nextPlayerLabel.set_text(m_presenter.GetGameViewNextPlayerLabelText());
+    m_nextPlayerName.set_text(m_presenter.GetGameViewNextPlayerName());
+    m_nextPlayerChip->ChangeColor(m_presenter.GetGameViewNextPlayerChipColor());
 }
 
 void cxgui::GameView::ConfigureWidgets()

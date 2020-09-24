@@ -38,8 +38,8 @@ cxgui::Board::Board(const IGameViewPresenter& p_presenter)
 {
     set_orientation(Gtk::Orientation::ORIENTATION_VERTICAL);
 
-    InitializeNextDiscArea(m_presenter.GetBoardWidth());
-    InitializeBoard(m_presenter.GetBoardHeight(), m_presenter.GetBoardWidth());
+    InitializeNextDiscArea(m_presenter.GetGameViewBoardWidth());
+    InitializeBoard(m_presenter.GetGameViewBoardHeight(), m_presenter.GetGameViewBoardWidth());
 
     pack1(m_nextDiscAreaLayout, true, false);
     pack2(m_boardLayout, true, false);
@@ -64,7 +64,7 @@ void cxgui::Board::Move(Side p_side)
 {
     ChangeCurrentDisc(cxmodel::MakeTransparent());
     UpdateNextDiscPosition(p_side);
-    ChangeCurrentDisc(m_presenter.GetActivePlayerChipColor());
+    ChangeCurrentDisc(m_presenter.GetGameViewActivePlayerChipColor());
 }
 
 void cxgui::Board::ChangeCurrentDisc(const cxmodel::ChipColor& p_newColor)
@@ -96,12 +96,12 @@ void cxgui::Board::UpdateNextDiscPosition(Side p_side)
         }
         else
         {
-            m_nextDiscPosition = m_presenter.GetBoardWidth() - 1;
+            m_nextDiscPosition = m_presenter.GetGameViewBoardWidth() - 1;
         }
     }
     else
     {
-        if(m_nextDiscPosition < m_presenter.GetBoardWidth() - 1)
+        if(m_nextDiscPosition < m_presenter.GetGameViewBoardWidth() - 1)
         {
             ++m_nextDiscPosition;
         }
@@ -117,7 +117,7 @@ void cxgui::Board::InitializeNextDiscArea(size_t p_width)
     m_nextDiscAreaLayout.set_row_homogeneous(true);
     m_nextDiscAreaLayout.set_column_homogeneous(true);
 
-    Chip* activePlayerChip = Gtk::manage(new DiscChip{m_presenter.GetActivePlayerChipColor(), cxmodel::MakeTransparent()});
+    Chip* activePlayerChip = Gtk::manage(new DiscChip{m_presenter.GetGameViewActivePlayerChipColor(), cxmodel::MakeTransparent()});
 
     activePlayerChip->set_vexpand(true);
     activePlayerChip->set_hexpand(true);

@@ -74,6 +74,13 @@ std::string cxgui::MainWindowPresenter::GetMenuLabel(MenuItem p_menuItem) const
     return MakeLabel(p_menuItem);
 }
 
+
+/**************************************************************************************************
+ *
+ *                                            New Game View
+ *
+ *************************************************************************************************/
+
 std::string cxgui::MainWindowPresenter::GetNewGameViewTitle() const
 {
     return "New Game";
@@ -180,6 +187,13 @@ size_t cxgui::MainWindowPresenter::GetNewGameViewMaxBoardHeightValue() const
     return m_modelAsLimits.GetMaximumGridHeight();
 }
 
+
+/**************************************************************************************************
+ *
+ *                                              Game View
+ *
+ *************************************************************************************************/
+
 std::string cxgui::MainWindowPresenter::GetGameViewTitle() const
 {
     return "Game";
@@ -190,46 +204,46 @@ std::string cxgui::MainWindowPresenter::GetGameViewMessage() const
     return m_gameViewMessage;
 }
 
-cxmodel::ChipColor cxgui::MainWindowPresenter::GetActivePlayerChipColor() const
+cxmodel::ChipColor cxgui::MainWindowPresenter::GetGameViewActivePlayerChipColor() const
 {
     const cxmodel::IChip& activePlayerChip = m_activePlayer.GetChip();
 
     return activePlayerChip.GetColor();
 }
 
-cxmodel::ChipColor cxgui::MainWindowPresenter::GetNextPlayerChipColor() const
+cxmodel::ChipColor cxgui::MainWindowPresenter::GetGameViewNextPlayerChipColor() const
 {
     const cxmodel::IChip& nextPlayerChip = m_nextPlayer.GetChip();
 
     return nextPlayerChip.GetColor();
 }
 
-std::string cxgui::MainWindowPresenter::GetActivePlayerLabelText() const
+std::string cxgui::MainWindowPresenter::GetGameViewActivePlayerLabelText() const
 {
     return "  Active player: ";
 }
 
-std::string cxgui::MainWindowPresenter::GetNextPlayerLabelText() const
+std::string cxgui::MainWindowPresenter::GetGameViewNextPlayerLabelText() const
 {
     return "  Next player: ";
 }
 
-std::string cxgui::MainWindowPresenter::GetActivePlayerName() const
+std::string cxgui::MainWindowPresenter::GetGameViewActivePlayerName() const
 {
     return m_activePlayer.GetName();
 }
 
-std::string cxgui::MainWindowPresenter::GetNextPlayerName() const
+std::string cxgui::MainWindowPresenter::GetGameViewNextPlayerName() const
 {
     return m_nextPlayer.GetName();
 }
 
-size_t cxgui::MainWindowPresenter::GetBoardWidth() const
+size_t cxgui::MainWindowPresenter::GetGameViewBoardWidth() const
 {
     return m_currentBoardWidth;
 }
 
-size_t cxgui::MainWindowPresenter::GetBoardHeight() const
+size_t cxgui::MainWindowPresenter::GetGameViewBoardHeight() const
 {
     return m_currentBoardHeight;
 }

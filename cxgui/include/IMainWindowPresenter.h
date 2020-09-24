@@ -107,14 +107,18 @@ public:
     std::string GetGameViewTitle() const override = 0;
     std::string GetGameViewMessage() const override = 0;
 
-    cxmodel::ChipColor GetActivePlayerChipColor() const override = 0;
-    cxmodel::ChipColor GetNextPlayerChipColor() const override = 0;
+    cxmodel::ChipColor GetGameViewActivePlayerChipColor() const override = 0;
+    cxmodel::ChipColor GetGameViewNextPlayerChipColor() const override = 0;
 
-    std::string GetActivePlayerLabelText() const override = 0;
-    std::string GetNextPlayerLabelText() const override = 0;
+    std::string GetGameViewActivePlayerLabelText() const override = 0;
+    std::string GetGameViewNextPlayerLabelText() const override = 0;
 
-    std::string GetActivePlayerName() const override = 0;
-    std::string GetNextPlayerName() const override = 0;
+    std::string GetGameViewActivePlayerName() const override = 0;
+    std::string GetGameViewNextPlayerName() const override = 0;
+
+    size_t GetGameViewBoardWidth() const override = 0;
+    size_t GetGameViewBoardHeight() const override = 0;
+
 ///@}
 
 };
