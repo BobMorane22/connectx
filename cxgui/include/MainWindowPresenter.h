@@ -60,7 +60,7 @@ public:
     std::string GetNewGameViewGameSectionTitle() const override;
     std::string GetNewGameViewInARowLabelText() const override;
 
-    std::string GetNewGameViewGridSectionTitle() const override;
+    std::string GetNewGameViewBoardSectionTitle() const override;
     std::string GetNewGameViewWidthLabelText() const override;
     std::string GetNewGameViewHeightLabelText() const override;
 
@@ -75,6 +75,13 @@ public:
     bool CanAddAnotherPlayer(std::size_t p_currentNumberOfPlayers) const override;
 
     std::string GetNewGameViewStartButtonText() const override;
+
+    size_t GetNewGameViewMinInARowValue() const override;
+    size_t GetNewGameViewMaxInARowValue() const override;
+    size_t GetNewGameViewMinBoardWidthValue() const override;
+    size_t GetNewGameViewMaxBoardWidthValue() const override;
+    size_t GetNewGameViewMinBoardHeightValue() const override;
+    size_t GetNewGameViewMaxBoardHeightValue() const override;
 ///@}
 
 ///@{ @name Game View

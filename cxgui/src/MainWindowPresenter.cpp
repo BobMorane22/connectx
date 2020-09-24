@@ -89,9 +89,9 @@ std::string cxgui::MainWindowPresenter::GetNewGameViewInARowLabelText() const
     return "In a row:";
 }
 
-std::string cxgui::MainWindowPresenter::GetNewGameViewGridSectionTitle() const
+std::string cxgui::MainWindowPresenter::GetNewGameViewBoardSectionTitle() const
 {
-    return "Grid";
+    return "Board";
 }
 
 std::string cxgui::MainWindowPresenter::GetNewGameViewWidthLabelText() const
@@ -148,6 +148,36 @@ bool cxgui::MainWindowPresenter::CanAddAnotherPlayer(std::size_t p_currentNumber
 std::string cxgui::MainWindowPresenter::GetNewGameViewStartButtonText() const
 {
     return "Start";
+}
+
+size_t cxgui::MainWindowPresenter::GetNewGameViewMinInARowValue() const
+{
+    return m_modelAsLimits.GetMinimumInARowValue();
+}
+
+size_t cxgui::MainWindowPresenter::GetNewGameViewMaxInARowValue() const
+{
+    return m_modelAsLimits.GetMaximumInARowValue();
+}
+
+size_t cxgui::MainWindowPresenter::GetNewGameViewMinBoardWidthValue() const
+{
+    return m_modelAsLimits.GetMinimumGridWidth();
+}
+
+size_t cxgui::MainWindowPresenter::GetNewGameViewMaxBoardWidthValue() const
+{
+    return m_modelAsLimits.GetMaximumGridWidth();
+}
+
+size_t cxgui::MainWindowPresenter::GetNewGameViewMinBoardHeightValue() const
+{
+    return m_modelAsLimits.GetMinimumGridHeight();
+}
+
+size_t cxgui::MainWindowPresenter::GetNewGameViewMaxBoardHeightValue() const
+{
+    return m_modelAsLimits.GetMaximumGridHeight();
 }
 
 std::string cxgui::MainWindowPresenter::GetGameViewTitle() const

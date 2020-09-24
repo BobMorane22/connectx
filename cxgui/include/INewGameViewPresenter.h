@@ -69,12 +69,12 @@ public:
     virtual std::string GetNewGameViewInARowLabelText() const = 0;
 
     /******************************************************************************************//**
-     * @brief Grid section title accessor.
+     * @brief Board section title accessor.
      *
-     * @return The gird section title.
+     * @return The board section title.
      *
      ********************************************************************************************/
-    virtual std::string GetNewGameViewGridSectionTitle() const = 0;
+    virtual std::string GetNewGameViewBoardSectionTitle() const = 0;
 
     /******************************************************************************************//**
      * @brief Width label accessor.
@@ -156,6 +156,53 @@ public:
      ********************************************************************************************/
     virtual std::string GetNewGameViewStartButtonText() const = 0;
 
+    /******************************************************************************************//**
+     * @brief Minimum in-a-row value accessor.
+     *
+     * @return The minimum in-a-row value.
+     *
+     ********************************************************************************************/
+    virtual size_t GetNewGameViewMinInARowValue() const = 0;
+
+    /******************************************************************************************//**
+     * @brief Maximum in-a-row value accessor.
+     *
+     * @return The maximum in-a-row value.
+     *
+     ********************************************************************************************/
+    virtual size_t GetNewGameViewMaxInARowValue() const = 0;
+
+    /******************************************************************************************//**
+     * @brief Minimum board width value accessor.
+     *
+     * @return The minimum board width value.
+     *
+     ********************************************************************************************/
+    virtual size_t GetNewGameViewMinBoardWidthValue() const = 0;
+
+    /******************************************************************************************//**
+     * @brief Maximum board width value accessor.
+     *
+     * @return The maximum board width value.
+     *
+     ********************************************************************************************/
+    virtual size_t GetNewGameViewMaxBoardWidthValue() const = 0;
+
+    /******************************************************************************************//**
+     * @brief Minimum board height value accessor.
+     *
+     * @return The minimum board height value.
+     *
+     ********************************************************************************************/
+    virtual size_t GetNewGameViewMinBoardHeightValue() const = 0;
+
+    /******************************************************************************************//**
+     * @brief Maximum board height value accessor.
+     *
+     * @return The maximum board height value.
+     *
+     ********************************************************************************************/
+    virtual size_t GetNewGameViewMaxBoardHeightValue() const = 0;
 };
 
 }

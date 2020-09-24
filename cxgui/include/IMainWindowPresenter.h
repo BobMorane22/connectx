@@ -84,7 +84,7 @@ public:
     std::string GetNewGameViewGameSectionTitle() const override = 0;
     std::string GetNewGameViewInARowLabelText() const override = 0;
 
-    std::string GetNewGameViewGridSectionTitle() const override = 0;
+    std::string GetNewGameViewBoardSectionTitle() const override = 0;
     std::string GetNewGameViewWidthLabelText() const override = 0;
     std::string GetNewGameViewHeightLabelText() const override = 0;
 
@@ -92,6 +92,13 @@ public:
     std::string GetNewGameViewNameColumnHeaderText() const override = 0;
     std::string GetNewGameViewDiscColumnHeaderText() const override = 0;
     std::string GetNewGameViewStartButtonText() const override = 0;
+
+    size_t GetNewGameViewMinInARowValue() const override = 0;
+    size_t GetNewGameViewMaxInARowValue() const override = 0;
+    size_t GetNewGameViewMinBoardWidthValue() const override = 0;
+    size_t GetNewGameViewMaxBoardWidthValue() const override = 0;
+    size_t GetNewGameViewMinBoardHeightValue() const override = 0;
+    size_t GetNewGameViewMaxBoardHeightValue() const override = 0;
 
 ///@}
 

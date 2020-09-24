@@ -62,6 +62,30 @@ void DisplayNumericalValuesOutOfRangeWarningDialog()
     DisplayWarningDialog("Numerical value(s) out of range.");
 }
 
+void DisplayValueOutOfLimitsWarningDialog(const std::string& p_valueName, size_t p_lower, size_t p_upper)
+{
+    std::ostringstream oss;
+
+    oss << "The " << p_valueName << " value should be between " << p_lower << " and " << p_upper << " inclusively.";
+
+    DisplayWarningDialog(oss.str());
+}
+
+void DisplayInARowValueOutOfLimitsWarningDialog(size_t p_lower, size_t p_upper)
+{
+    DisplayValueOutOfLimitsWarningDialog("in a row", p_lower, p_upper);
+}
+
+void DisplayBoardWidthValueOutOfLimitsWarningDialog(size_t p_lower, size_t p_upper)
+{
+    DisplayValueOutOfLimitsWarningDialog("board width", p_lower, p_upper);
+}
+
+void DisplayBoardHeightValueOutOfLimitsWarningDialog(size_t p_lower, size_t p_upper)
+{
+    DisplayValueOutOfLimitsWarningDialog("board height", p_lower, p_upper);
+}
+
 void DisplayEmptyEntriesWarningDialog()
 {
     DisplayWarningDialog("Player names cannot be empty.");
@@ -155,7 +179,7 @@ void cxgui::NewGameView::PopulateWidgets()
     m_gameSectionTitle.set_text(m_presenter.GetNewGameViewGameSectionTitle());
     m_inARowLabel.set_text(m_presenter.GetNewGameViewInARowLabelText());
 
-    m_gridSectionTitle.set_text(m_presenter.GetNewGameViewGridSectionTitle());
+    m_gridSectionTitle.set_text(m_presenter.GetNewGameViewBoardSectionTitle());
     m_gridWidthLabel.set_text(m_presenter.GetNewGameViewWidthLabelText());
     m_gridHeightLabel.set_text(m_presenter.GetNewGameViewHeightLabelText());
 
@@ -249,6 +273,30 @@ void cxgui::NewGameView::OnStart()
     catch(const std::out_of_range& p_exception)
     {
         DisplayNumericalValuesOutOfRangeWarningDialog();
+        return;
+    }
+
+    if(gameInformation.m_inARowValue < m_presenter.GetNewGameViewMinInARowValue() ||
+       gameInformation.m_inARowValue > m_presenter.GetNewGameViewMaxInARowValue())
+    {
+        DisplayInARowValueOutOfLimitsWarningDialog(m_presenter.GetNewGameViewMinInARowValue(),
+                                                   m_presenter.GetNewGameViewMaxInARowValue());
+        return;
+    }
+
+    if(gameInformation.m_gridWidth < m_presenter.GetNewGameViewMinBoardWidthValue() ||
+       gameInformation.m_gridWidth > m_presenter.GetNewGameViewMaxBoardWidthValue())
+    {
+        DisplayBoardWidthValueOutOfLimitsWarningDialog(m_presenter.GetNewGameViewMinBoardWidthValue(),
+                                                       m_presenter.GetNewGameViewMaxBoardWidthValue());
+        return;
+    }
+
+    if(gameInformation.m_gridHeight < m_presenter.GetNewGameViewMinBoardHeightValue() ||
+       gameInformation.m_gridHeight > m_presenter.GetNewGameViewMaxBoardHeightValue())
+    {
+        DisplayBoardHeightValueOutOfLimitsWarningDialog(m_presenter.GetNewGameViewMinBoardHeightValue(),
+                                                        m_presenter.GetNewGameViewMaxBoardHeightValue());
         return;
     }
 
