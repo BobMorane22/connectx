@@ -16,25 +16,28 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file Disc.cpp
+ * @file IGameResolutionStrategy.h
  * @date 2020
  *
  *************************************************************************************************/
 
-#include <Disc.h>
+#ifndef IGAMERESOLUTIONSTRATEGY_H_E0ECD7E2_8D97_422F_9387_79D4DB55D3DC
+#define IGAMERESOLUTIONSTRATEGY_H_E0ECD7E2_8D97_422F_9387_79D4DB55D3DC
 
-cxmodel::Disc::Disc(const ChipColor p_color)
- : m_color{p_color}
+namespace cxmodel
 {
-    // Nothing to do...
-}
 
-cxmodel::ChipColor cxmodel::Disc::GetColor() const
+class IGameResolutionStrategy
 {
-    return m_color;
-}
 
-cxmodel::Disc cxmodel::Disc::MakeTransparentDisc()
-{
-    return cxmodel::Disc(cxmodel::MakeTransparent());
-}
+public:
+
+    virtual ~IGameResolutionStrategy() = default;
+
+    virtual bool Handle() const = 0;
+
+};
+
+} // namespace cxmodel
+
+#endif // IGAMERESOLUTIONSTRATEGY_H_E0ECD7E2_8D97_422F_9387_79D4DB55D3DC

@@ -26,6 +26,16 @@
 #include <Board.h>
 #include <Disc.h>
 
+namespace
+{
+
+std::unique_ptr<cxmodel::IChip> NoChip()
+{
+    return std::make_unique<cxmodel::Disc>(cxmodel::Disc::MakeTransparentDisc());
+}
+
+} // namespace
+
 cxmodel::Board::Board(size_t p_nbRows,
                       size_t p_nbColumns,
                       const cxmodel::IConnectXLimits& p_modelAsLimits)
@@ -46,7 +56,7 @@ cxmodel::Board::Board(size_t p_nbRows,
 
         for(size_t column = 0; column < m_nbColumns; ++column)
         {
-            m_grid[row].push_back(cxmodel::Disc::MakeTransparentDisc());
+            m_grid[row].push_back(NoChip());
         }
     }
 
@@ -85,7 +95,7 @@ bool cxmodel::Board::DropChip(size_t p_column, const cxmodel::IChip& p_disc, Pos
     for(auto row = m_grid.begin(); row != m_grid.end(); ++row)
     {
         const cxmodel::IChip& chip = GetChip({rowSubscript, p_column});
-        if(chip == *cxmodel::Disc::MakeTransparentDisc())
+        if(chip == *NoChip())
         {
             m_grid[rowSubscript][p_column] = std::move(std::make_unique<cxmodel::Disc>(p_disc.GetColor()));
             break;
@@ -116,7 +126,7 @@ bool cxmodel::Board::IsColumnFull(size_t p_column) const
     for(auto row = m_grid.rbegin(); row != m_grid.rend(); ++row)
     {
         const cxmodel::IChip& chip = GetChip({rowSubscript, p_column});
-        if(chip == *cxmodel::Disc::MakeTransparentDisc())
+        if(chip == *NoChip())
         {
             isPlayable = true;
             break;

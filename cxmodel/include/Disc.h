@@ -45,6 +45,8 @@ public:
     /******************************************************************************************//**
      * @brief Constructor.
      *
+     * @param p_color The disc's color.
+     *
      ********************************************************************************************/
     explicit Disc(const ChipColor p_color);
 
@@ -52,12 +54,12 @@ public:
     ChipColor GetColor() const override;
 
     /******************************************************************************************//**
-     * @brief Make a transparent disc.
+     * @brief Makes a transparent disc.
      *
      * @return A transparent disc.
      *
      ********************************************************************************************/
-    static std::unique_ptr<IChip> MakeTransparentDisc();
+    static Disc MakeTransparentDisc();
 
 private:
 

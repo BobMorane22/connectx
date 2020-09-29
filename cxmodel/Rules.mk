@@ -57,9 +57,10 @@ OBJS_$(d) := $(d)/src/CommandCreateNewGame.o \
              $(d)/src/IChip.o \
              $(d)/src/Model.o \
              $(d)/src/NewGameInformation.o \
+                          $(d)/src/OS.o \
              $(d)/src/Player.o \
              $(d)/src/Subject.o \
-             $(d)/src/OS.o \
+             $(d)/src/WinGameResolutionStragegy.o \
              cxinv/libcxinv.a \
              cxlog/libcxlog.a
 
