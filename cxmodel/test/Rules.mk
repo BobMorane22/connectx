@@ -62,6 +62,7 @@ OBJS_$(d) := $(d)/BoardTests.o \
              $(d)/PlayerTests.o \
              $(d)/SubjectTestFixture.o \
              $(d)/SubjectTests.o \
+             $(d)/WinGameResolutionStrategyTests.o \
              cxmodel/libcxmodel.a
 
 # We include all the generated rules. These are created by GCC to make sure that

@@ -141,8 +141,8 @@ bool cxmodel::Board::IsColumnFull(size_t p_column) const
 void cxmodel::Board::CheckInvariants() const
 {
     INVARIANT(m_nbRows >= m_modelAsLimits.GetMinimumGridHeight());
-    INVARIANT(m_nbRows < m_modelAsLimits.GetMaximumGridHeight() + 1);
+    INVARIANT(m_nbRows <= m_modelAsLimits.GetMaximumGridHeight());
 
     INVARIANT(m_nbColumns >= m_modelAsLimits.GetMinimumGridWidth());
-    INVARIANT(m_nbColumns < m_modelAsLimits.GetMaximumGridWidth() + 1);
+    INVARIANT(m_nbColumns <= m_modelAsLimits.GetMaximumGridWidth());
 }

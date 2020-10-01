@@ -42,7 +42,6 @@ cxmodel::WinGameResolutionStrategy::WinGameResolutionStrategy(const cxmodel::IBo
  , m_inARowValue{p_inARowValue}
  , m_players{p_players}
  , m_takenPositions{p_takenPositions}
- , m_noChip{std::make_unique<cxmodel::Disc>(cxmodel::Disc::MakeTransparentDisc())}
 {
 
 }
@@ -92,7 +91,7 @@ size_t cxmodel::WinGameResolutionStrategy::LeftValidationLimit(GridValidationTyp
     }
     else if(p_validationType == GridValidationType::DiagonalUpward)
     {
-        size_t upperSubscript{lastPlayedRow - (m_inARowValue - 1)};
+        size_t upperSubscript = lastPlayedRow - (m_inARowValue - 1u);
         upperSubscript = std::max<size_t>(0u, upperSubscript);
 
         if(lastPlayedColumn - leftSubscript > lastPlayedRow - upperSubscript)
@@ -117,7 +116,7 @@ size_t cxmodel::WinGameResolutionStrategy::RightValidationLimit(GridValidationTy
 
     if(p_validationType == GridValidationType::DiagonalDownward)
     {
-        size_t upperSubscript = (lastPlayedRow) - (m_inARowValue - 1u);
+        size_t upperSubscript = lastPlayedRow - (m_inARowValue - 1u);
         upperSubscript = std::max<size_t>(0u, upperSubscript);
 
         if(rightSubscript - lastPlayedColumn > lastPlayedRow - upperSubscript)
@@ -143,8 +142,8 @@ size_t cxmodel::WinGameResolutionStrategy::UpperValidationLimit(GridValidationTy
 {
     const IBoard::Position lastMovePosition = PositionOfLastSuccessFullMove();
 
-    const size_t lastPlayedRow{lastMovePosition.m_row};
-    const size_t lastPlayedColumn{lastMovePosition.m_column};
+    const size_t lastPlayedRow = lastMovePosition.m_row;
+    const size_t lastPlayedColumn = lastMovePosition.m_column;
 
     size_t upperSubscript = lastPlayedRow + (m_inARowValue - 1u);
     upperSubscript = std::min(m_board.GetNbRows() - 1u, upperSubscript);
@@ -213,14 +212,14 @@ size_t cxmodel::WinGameResolutionStrategy::NbOfValidations(size_t p_minValidatio
 
     if(p_maxValidationLimit > p_minValidationLimit)
     {
-        nbCombinationsToCheck = p_maxValidationLimit - p_minValidationLimit + 1;
+        nbCombinationsToCheck = p_maxValidationLimit - p_minValidationLimit + 1u;
     }
     else
     {
-        nbCombinationsToCheck = p_minValidationLimit - p_maxValidationLimit + 1;
+        nbCombinationsToCheck = p_minValidationLimit - p_maxValidationLimit + 1u;
     }
 
-    nbCombinationsToCheck = nbCombinationsToCheck - (m_inARowValue - 1);
+    nbCombinationsToCheck = nbCombinationsToCheck - (m_inARowValue - 1u);
 
     return nbCombinationsToCheck;
 }
@@ -231,8 +230,8 @@ size_t cxmodel::WinGameResolutionStrategy::HorizontalNbOfAdjacentDiscs() const
     const size_t rightLimit = RightValidationLimit();
     const size_t nbValidations = NbOfValidations(leftLimit, rightLimit);
 
-    size_t pairIdenticalDiscs{0};
-    size_t nbIdenticalDiscs{0};
+    size_t pairIdenticalDiscs = 0u;
+    size_t nbIdenticalDiscs = 0u;
 
     const IBoard::Position lastMovePosition = PositionOfLastSuccessFullMove();
 
@@ -240,24 +239,24 @@ size_t cxmodel::WinGameResolutionStrategy::HorizontalNbOfAdjacentDiscs() const
 
     for(size_t i = leftLimit; i < leftLimit + nbValidations; ++i)
     {
-        for(size_t j = 0u; j < m_inARowValue - 1; ++j)
+        for(size_t j = 0u; j < m_inARowValue - 1u; ++j)
         {
             if(m_board.GetChip({rowLastPlacedDisc, i + j}) != NO_CHIP &&
-               m_board.GetChip({rowLastPlacedDisc, i + j}) == m_board.GetChip({rowLastPlacedDisc, i + j + 1}))
+               m_board.GetChip({rowLastPlacedDisc, i + j}) == m_board.GetChip({rowLastPlacedDisc, i + j + 1u}))
             {
                 pairIdenticalDiscs++;
             }
         }
 
-        if(pairIdenticalDiscs == m_inARowValue - 1)
+        if(pairIdenticalDiscs == m_inARowValue - 1u)
         {
-            nbIdenticalDiscs = pairIdenticalDiscs + 1;
+            nbIdenticalDiscs = pairIdenticalDiscs + 1u;
 
             break;
         }
         else
         {
-            pairIdenticalDiscs = 0;
+            pairIdenticalDiscs = 0u;
         }
     }
 
@@ -279,24 +278,24 @@ size_t cxmodel::WinGameResolutionStrategy::VerticalNbOfAdjacentDiscs() const
 
     for(size_t i = lowerLimit; i < lowerLimit + nbValidations; ++i)
     {
-        for(size_t j = 0u; j < m_inARowValue - 1; ++j)
+        for(size_t j = 0u; j < m_inARowValue - 1u; ++j)
         {
             if(m_board.GetChip({i + j, columnLastPlacedDisc}) != NO_CHIP &&
-               m_board.GetChip({i + j, columnLastPlacedDisc}) == m_board.GetChip({i + j + 1, columnLastPlacedDisc}))
+               m_board.GetChip({i + j, columnLastPlacedDisc}) == m_board.GetChip({i + j + 1u, columnLastPlacedDisc}))
             {
                 pairIdenticalDiscs++;
             }
         }
 
-        if(pairIdenticalDiscs == m_inARowValue - 1)
+        if(pairIdenticalDiscs == m_inARowValue - 1u)
         {
-            nbIdenticalDiscs = pairIdenticalDiscs + 1;
+            nbIdenticalDiscs = pairIdenticalDiscs + 1u;
 
             break;
         }
         else
         {
-            pairIdenticalDiscs = 0;
+            pairIdenticalDiscs = 0u;
         }
     }
 
@@ -318,10 +317,10 @@ size_t cxmodel::WinGameResolutionStrategy::UpwardNbOfAdjacentDiscs() const
     {
         size_t k = lowerLimit + counter;
 
-        for(size_t j = 0u; j < m_inARowValue - 1; ++j)
+        for(size_t j = 0u; j < m_inARowValue - 1u; ++j)
         {
             if(m_board.GetChip({k, i + j}) != NO_CHIP &&
-               m_board.GetChip({k, i + j}) == m_board.GetChip({k + 1, i + j + 1}))
+               m_board.GetChip({k, i + j}) == m_board.GetChip({k + 1u, i + j + 1u}))
             {
                 pairIdenticalDiscs++;
             }
@@ -329,9 +328,9 @@ size_t cxmodel::WinGameResolutionStrategy::UpwardNbOfAdjacentDiscs() const
             ++k;
         }
 
-        if(pairIdenticalDiscs == m_inARowValue - 1)
+        if(pairIdenticalDiscs == m_inARowValue - 1u)
         {
-            nbIdenticalDiscs = pairIdenticalDiscs + 1;
+            nbIdenticalDiscs = pairIdenticalDiscs + 1u;
 
             break;
         }
@@ -358,10 +357,10 @@ size_t cxmodel::WinGameResolutionStrategy::DownwardNbOfAdjacentDiscs() const
     {
         size_t k = upperLimit - counter;
 
-        for(size_t j = 0u; j < m_inARowValue - 1; ++j)
+        for(size_t j = 0u; j < m_inARowValue - 1u; ++j)
         {
             if(m_board.GetChip({k, i + j}) != NO_CHIP &&
-               m_board.GetChip({k, i + j}) == m_board.GetChip({k - 1, i + j + 1}))
+               m_board.GetChip({k, i + j}) == m_board.GetChip({k - 1u, i + j + 1u}))
             {
                 ++pairIdenticalDiscs;
             }
@@ -369,14 +368,14 @@ size_t cxmodel::WinGameResolutionStrategy::DownwardNbOfAdjacentDiscs() const
             --k;
         }
 
-        if(pairIdenticalDiscs == m_inARowValue - 1)
+        if(pairIdenticalDiscs == m_inARowValue - 1u)
         {
-            nbIdenticalDiscs = pairIdenticalDiscs + 1;
+            nbIdenticalDiscs = pairIdenticalDiscs + 1u;
 
             break;
         }
 
-        pairIdenticalDiscs = 0;
+        pairIdenticalDiscs = 0u;
         ++counter;
     }
 

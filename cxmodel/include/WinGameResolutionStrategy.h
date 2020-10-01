@@ -51,7 +51,6 @@ private:
     const size_t m_inARowValue;
     const std::vector<Player>& m_players;
     const std::vector<IBoard::Position>& m_takenPositions;
-    const std::unique_ptr<IChip> m_noChip;
 
     enum class GridValidationType
     {
