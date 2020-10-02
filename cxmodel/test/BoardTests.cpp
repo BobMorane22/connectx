@@ -99,7 +99,7 @@ TEST_F(BoardTestFixture, /*DISABLED_*/DropChip_ValidDiscAsParameter_DiscInserted
 
     cxmodel::IBoard::Position dummy;
     const cxmodel::Disc RED_CHIP{cxmodel::MakeRed()};
-    board->DropChip(0u, RED_CHIP, dummy);
+    ASSERT_TRUE(board->DropChip(0u, RED_CHIP, dummy));
 
     ASSERT_EQ(board->GetChip({0u, 0u}), RED_CHIP);
 }
@@ -116,8 +116,8 @@ TEST_F(BoardTestFixture, /*DISABLED_*/DropChip_ValidDiscAsParameter_DiscInserted
     ASSERT_EQ(board->GetChip({1, 0}), NO_CHIP);
 
     cxmodel::IBoard::Position dummy;
-    board->DropChip(0, RED_CHIP, dummy);
-    board->DropChip(0, BLUE_CHIP, dummy);
+    ASSERT_TRUE(board->DropChip(0, RED_CHIP, dummy));
+    ASSERT_TRUE(board->DropChip(0, BLUE_CHIP, dummy));
 
     ASSERT_EQ(board->GetChip({0, 0}), RED_CHIP);
     ASSERT_EQ(board->GetChip({1, 0}), BLUE_CHIP);
@@ -136,9 +136,9 @@ TEST_F(BoardTestFixture, /*DISABLED_*/DropChip_ValidDiscAsParameter_DiscInserted
     ASSERT_EQ(board->GetChip({2, 0}), NO_CHIP);
 
     cxmodel::IBoard::Position dummy;
-    board->DropChip(0, RED_CHIP, dummy);
-    board->DropChip(0, BLUE_CHIP, dummy);
-    board->DropChip(0, RED_CHIP, dummy);
+    ASSERT_TRUE(board->DropChip(0, RED_CHIP, dummy));
+    ASSERT_TRUE(board->DropChip(0, BLUE_CHIP, dummy));
+    ASSERT_TRUE(board->DropChip(0, RED_CHIP, dummy));
 
     ASSERT_EQ(board->GetChip({0, 0}), RED_CHIP);
     ASSERT_EQ(board->GetChip({1, 0}), BLUE_CHIP);
@@ -159,10 +159,10 @@ TEST_F(BoardTestFixture, /*DISABLED_*/DropChip_ValidDiscAsParameter_DiscInserted
     ASSERT_EQ(board->GetChip({3, 0}), NO_CHIP);
 
     cxmodel::IBoard::Position dummy;
-    board->DropChip(0, RED_CHIP, dummy);
-    board->DropChip(0, BLUE_CHIP, dummy);
-    board->DropChip(0, RED_CHIP, dummy);
-    board->DropChip(0, BLUE_CHIP, dummy);
+    ASSERT_TRUE(board->DropChip(0, RED_CHIP, dummy));
+    ASSERT_TRUE(board->DropChip(0, BLUE_CHIP, dummy));
+    ASSERT_TRUE(board->DropChip(0, RED_CHIP, dummy));
+    ASSERT_TRUE(board->DropChip(0, BLUE_CHIP, dummy));
 
     ASSERT_EQ(board->GetChip({0, 0}), RED_CHIP);
     ASSERT_EQ(board->GetChip({1, 0}), BLUE_CHIP);
@@ -185,11 +185,11 @@ TEST_F(BoardTestFixture, /*DISABLED_*/DropChip_ValidDiscAsParameter_DiscInserted
     ASSERT_EQ(board->GetChip({4, 0}), NO_CHIP);
 
     cxmodel::IBoard::Position dummy;
-    board->DropChip(0, RED_CHIP, dummy);
-    board->DropChip(0, BLUE_CHIP, dummy);
-    board->DropChip(0, RED_CHIP, dummy);
-    board->DropChip(0, BLUE_CHIP, dummy);
-    board->DropChip(0, RED_CHIP, dummy);
+    ASSERT_TRUE(board->DropChip(0, RED_CHIP, dummy));
+    ASSERT_TRUE(board->DropChip(0, BLUE_CHIP, dummy));
+    ASSERT_TRUE(board->DropChip(0, RED_CHIP, dummy));
+    ASSERT_TRUE(board->DropChip(0, BLUE_CHIP, dummy));
+    ASSERT_TRUE(board->DropChip(0, RED_CHIP, dummy));
 
     ASSERT_EQ(board->GetChip({0, 0}), RED_CHIP);
     ASSERT_EQ(board->GetChip({1, 0}), BLUE_CHIP);
@@ -214,12 +214,12 @@ TEST_F(BoardTestFixture, /*DISABLED_*/DropChip_ValidDiscAsParameter_DiscInserted
     ASSERT_EQ(board->GetChip({5, 0}), NO_CHIP);
 
     cxmodel::IBoard::Position dummy;
-    board->DropChip(0, RED_CHIP, dummy);
-    board->DropChip(0, BLUE_CHIP, dummy);
-    board->DropChip(0, RED_CHIP, dummy);
-    board->DropChip(0, BLUE_CHIP, dummy);
-    board->DropChip(0, RED_CHIP, dummy);
-    board->DropChip(0, BLUE_CHIP, dummy);
+    ASSERT_TRUE(board->DropChip(0, RED_CHIP, dummy));
+    ASSERT_TRUE(board->DropChip(0, BLUE_CHIP, dummy));
+    ASSERT_TRUE(board->DropChip(0, RED_CHIP, dummy));
+    ASSERT_TRUE(board->DropChip(0, BLUE_CHIP, dummy));
+    ASSERT_TRUE(board->DropChip(0, RED_CHIP, dummy));
+    ASSERT_TRUE(board->DropChip(0, BLUE_CHIP, dummy));
 
     ASSERT_EQ(board->GetChip({0, 0}), RED_CHIP);
     ASSERT_EQ(board->GetChip({1, 0}), BLUE_CHIP);
@@ -245,15 +245,15 @@ TEST_F(BoardTestFixture, /*DISABLED_*/DropChip_ValidDiscAsParameter_DiscInserted
     ASSERT_EQ(board->GetChip({5, 0}), NO_CHIP);
 
     cxmodel::IBoard::Position dummy;
-    board->DropChip(0, RED_CHIP, dummy);
-    board->DropChip(0, BLUE_CHIP, dummy);
-    board->DropChip(0, RED_CHIP, dummy);
-    board->DropChip(0, BLUE_CHIP, dummy);
-    board->DropChip(0, RED_CHIP, dummy);
-    board->DropChip(0, BLUE_CHIP, dummy);
+    ASSERT_TRUE(board->DropChip(0, RED_CHIP, dummy));
+    ASSERT_TRUE(board->DropChip(0, BLUE_CHIP, dummy));
+    ASSERT_TRUE(board->DropChip(0, RED_CHIP, dummy));
+    ASSERT_TRUE(board->DropChip(0, BLUE_CHIP, dummy));
+    ASSERT_TRUE(board->DropChip(0, RED_CHIP, dummy));
+    ASSERT_TRUE(board->DropChip(0, BLUE_CHIP, dummy));
 
     // Add an extra disc:
-    board->DropChip(0, RED_CHIP, dummy);
+    ASSERT_FALSE(board->DropChip(0, RED_CHIP, dummy));
 
     ASSERT_EQ(board->GetChip({0, 0}), RED_CHIP);
     ASSERT_EQ(board->GetChip({1, 0}), BLUE_CHIP);
@@ -277,12 +277,12 @@ TEST_F(BoardTestFixture, /*DISABLED_*/DropChip_ValidDiscAsParameter_ReturnedPosi
     ASSERT_EQ(board->GetChip({3, 0}), NO_CHIP);
 
     cxmodel::IBoard::Position dummy;
-    board->DropChip(4, RED_CHIP, dummy);
-    board->DropChip(4, BLUE_CHIP, dummy);
-    board->DropChip(4, RED_CHIP, dummy);
+    ASSERT_TRUE(board->DropChip(4, RED_CHIP, dummy));
+    ASSERT_TRUE(board->DropChip(4, BLUE_CHIP, dummy));
+    ASSERT_TRUE(board->DropChip(4, RED_CHIP, dummy));
 
     cxmodel::IBoard::Position position;
-    board->DropChip(4, BLUE_CHIP, position);
+    ASSERT_TRUE(board->DropChip(4, BLUE_CHIP, position));
 
     constexpr cxmodel::IBoard::Position expected{3, 4};
     ASSERT_EQ(expected.m_row, position.m_row);

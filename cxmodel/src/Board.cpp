@@ -90,6 +90,11 @@ bool cxmodel::Board::DropChip(size_t p_column, const cxmodel::IChip& p_disc, Pos
 {
     PRECONDITION(p_column < m_nbColumns);
 
+    if(IsColumnFull(p_column))
+    {
+        return false;
+    }
+
     size_t rowSubscript = 0;
 
     for(auto row = m_grid.begin(); row != m_grid.end(); ++row)
@@ -107,11 +112,6 @@ bool cxmodel::Board::DropChip(size_t p_column, const cxmodel::IChip& p_disc, Pos
     CheckInvariants();
 
     p_droppedPosition = {rowSubscript, p_column};
-
-    if(IsColumnFull(p_column))
-    {
-        return false;
-    }
 
     return true;
 }
