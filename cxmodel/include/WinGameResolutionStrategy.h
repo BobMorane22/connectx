@@ -48,7 +48,7 @@ public:
 private:
 
     const cxmodel::IBoard& m_board;
-    const size_t m_inARowValue;
+    int m_inARowValue;
     const std::vector<Player>& m_players;
     const std::vector<IBoard::Position>& m_takenPositions;
 
@@ -64,17 +64,17 @@ private:
 
     IBoard::Position PositionOfLastSuccessFullMove() const;
 
-    size_t LeftValidationLimit(GridValidationType p_validationType = GridValidationType::Straight) const;
-    size_t RightValidationLimit(GridValidationType p_validationType = GridValidationType::Straight) const;
-    size_t UpperValidationLimit(GridValidationType p_validationType = GridValidationType::Straight) const;
-    size_t LowerValidationLimit(GridValidationType p_validationType = GridValidationType::Straight) const;
+    int LeftValidationLimit(GridValidationType p_validationType = GridValidationType::Straight) const;
+    int RightValidationLimit(GridValidationType p_validationType = GridValidationType::Straight) const;
+    int UpperValidationLimit(GridValidationType p_validationType = GridValidationType::Straight) const;
+    int LowerValidationLimit(GridValidationType p_validationType = GridValidationType::Straight) const;
 
-    size_t NbOfValidations(size_t p_minValidationLimit, size_t p_maxValidationLimit) const;
+    int NbOfValidations(int p_minValidationLimit, int p_maxValidationLimit) const;
 
-    size_t HorizontalNbOfAdjacentDiscs() const;
-    size_t VerticalNbOfAdjacentDiscs() const;
-    size_t UpwardNbOfAdjacentDiscs() const;
-    size_t DownwardNbOfAdjacentDiscs() const;
+    int HorizontalNbOfAdjacentDiscs() const;
+    int VerticalNbOfAdjacentDiscs() const;
+    int UpwardNbOfAdjacentDiscs() const;
+    int DownwardNbOfAdjacentDiscs() const;
 
     bool CheckHorizontalWinner() const;
     bool CheckVerticalWinner() const;

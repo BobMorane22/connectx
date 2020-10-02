@@ -312,7 +312,7 @@ TEST_F(WinGameResolutionStrategyTestFixture, /*DISABLED_*/Handle_6By10GameBoardH
     ASSERT_FALSE(strategy.Handle());
 }
 
-TEST_F(WinGameResolutionStrategyTestFixture, DISABLED_Handle_ClassicGameBoardHorizontalWinTopLeftCorner_ReturnsTrue)
+TEST_F(WinGameResolutionStrategyTestFixture, /*DISABLED_*/Handle_ClassicGameBoardHorizontalWinTopLeftCorner_ReturnsTrue)
 {
     cxmodel::Board board = MakeClassicBoard();
     const size_t inARowValue = 4u;
@@ -331,7 +331,7 @@ TEST_F(WinGameResolutionStrategyTestFixture, DISABLED_Handle_ClassicGameBoardHor
     DropChip(1u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle());
     DropChip(2u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle());
     DropChip(3u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle());
-    DropChip(0u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle()); // Segfault
+    DropChip(0u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle());
     DropChip(1u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle());
     DropChip(2u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle());
     DropChip(3u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle());
@@ -355,7 +355,7 @@ TEST_F(WinGameResolutionStrategyTestFixture, DISABLED_Handle_ClassicGameBoardHor
     ASSERT_TRUE(strategy.Handle());
 }
 
-TEST_F(WinGameResolutionStrategyTestFixture, DISABLED_Handle_ClassicGameBoardHorizontalNoWinTopLeftCorner_ReturnsFalse)
+TEST_F(WinGameResolutionStrategyTestFixture, /*DISABLED_*/Handle_ClassicGameBoardHorizontalNoWinTopLeftCorner_ReturnsFalse)
 {
     cxmodel::Board board = MakeClassicBoard();
     const size_t inARowValue = 4u;
@@ -373,7 +373,7 @@ TEST_F(WinGameResolutionStrategyTestFixture, DISABLED_Handle_ClassicGameBoardHor
     DropChip(0u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle());
     DropChip(1u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle());
     DropChip(2u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle());
-    DropChip(3u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle()); // Segfaults
+    DropChip(3u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle());
     DropChip(0u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle());
     DropChip(1u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle());
     DropChip(2u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle());
@@ -396,7 +396,7 @@ TEST_F(WinGameResolutionStrategyTestFixture, DISABLED_Handle_ClassicGameBoardHor
     ASSERT_FALSE(strategy.Handle());
 }
 
-TEST_F(WinGameResolutionStrategyTestFixture, DISABLED_Handle_6By10GameBoardHorizontalWinTopLeftCorner_ReturnsTrue)
+TEST_F(WinGameResolutionStrategyTestFixture, /*DISABLED_*/Handle_6By10GameBoardHorizontalWinTopLeftCorner_ReturnsTrue)
 {
     cxmodel::Board board = Make6By10Board();
     const size_t inARowValue = 5u;
@@ -421,7 +421,7 @@ TEST_F(WinGameResolutionStrategyTestFixture, DISABLED_Handle_6By10GameBoardHoriz
     DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle());
     DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle());
     DropChip(2u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle());
-    DropChip(3u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle()); // Segfaults
+    DropChip(3u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle());
     DropChip(4u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle());
     DropChip(0u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle());
     DropChip(1u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle());
@@ -450,7 +450,7 @@ TEST_F(WinGameResolutionStrategyTestFixture, DISABLED_Handle_6By10GameBoardHoriz
     ASSERT_TRUE(strategy.Handle());
 }
 
-TEST_F(WinGameResolutionStrategyTestFixture, DISABLED_Handle_6By10GameBoardHorizontalNoWinTopLeftCorner_ReturnsFalse)
+TEST_F(WinGameResolutionStrategyTestFixture, /*DISABLED_*/Handle_6By10GameBoardHorizontalNoWinTopLeftCorner_ReturnsFalse)
 {
     cxmodel::Board board = Make6By10Board();
     const size_t inARowValue = 5u;
@@ -501,7 +501,7 @@ TEST_F(WinGameResolutionStrategyTestFixture, DISABLED_Handle_6By10GameBoardHoriz
     ASSERT_FALSE(strategy.Handle());
 }
 
-TEST_F(WinGameResolutionStrategyTestFixture, DISABLED_Handle_ClassicGameBoardHorizontalWinTopRightCorner_ReturnsTrue)
+TEST_F(WinGameResolutionStrategyTestFixture, /*DISABLED_*/Handle_ClassicGameBoardHorizontalWinTopRightCorner_ReturnsTrue)
 {
     cxmodel::Board board = MakeClassicBoard();
     const size_t inARowValue = 4u;
@@ -560,7 +560,7 @@ TEST_F(WinGameResolutionStrategyTestFixture, /*DISABLED_*/Handle_ClassicGameBoar
     DropChip(3u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle());
     DropChip(2u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle());
     DropChip(6u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle());
-    DropChip(5u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle()); // Segfaults
+    DropChip(5u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle());
     DropChip(4u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle());
     DropChip(3u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle());
     DropChip(6u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle());
