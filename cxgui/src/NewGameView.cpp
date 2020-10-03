@@ -41,59 +41,59 @@ namespace
  * @param p_message The warning message.
  *
  ************************************************************************************************/
-void DisplayWarningDialog(const std::string& p_message)
+void DisplayWarningDialog(Gtk::Window& parent, const std::string& p_message)
 {
     PRECONDITION(!p_message.empty());
 
     constexpr bool NO_MARKUP = false;
 
-    Gtk::MessageDialog errorDlg{p_message, NO_MARKUP, Gtk::MessageType::MESSAGE_WARNING, Gtk::ButtonsType::BUTTONS_OK, true};
+    Gtk::MessageDialog errorDlg{parent, p_message, NO_MARKUP, Gtk::MessageType::MESSAGE_WARNING, Gtk::ButtonsType::BUTTONS_OK, true};
 
     errorDlg.run();
 }
 
-void DisplayNumericalValuesExpectedWarningDialog()
+void DisplayNumericalValuesExpectedWarningDialog(Gtk::Window& parent)
 {
-    DisplayWarningDialog("Enter numerical values for in-a-row and grid size values.");
+    DisplayWarningDialog(parent, "Enter numerical values for in-a-row and grid size values.");
 }
 
-void DisplayNumericalValuesOutOfRangeWarningDialog()
+void DisplayNumericalValuesOutOfRangeWarningDialog(Gtk::Window& parent)
 {
-    DisplayWarningDialog("Numerical value(s) out of range.");
+    DisplayWarningDialog(parent, "Numerical value(s) out of range.");
 }
 
-void DisplayValueOutOfLimitsWarningDialog(const std::string& p_valueName, size_t p_lower, size_t p_upper)
+void DisplayValueOutOfLimitsWarningDialog(Gtk::Window& parent, const std::string& p_valueName, size_t p_lower, size_t p_upper)
 {
     std::ostringstream oss;
 
     oss << "The " << p_valueName << " value should be between " << p_lower << " and " << p_upper << " inclusively.";
 
-    DisplayWarningDialog(oss.str());
+    DisplayWarningDialog(parent, oss.str());
 }
 
-void DisplayInARowValueOutOfLimitsWarningDialog(size_t p_lower, size_t p_upper)
+void DisplayInARowValueOutOfLimitsWarningDialog(Gtk::Window& parent, size_t p_lower, size_t p_upper)
 {
-    DisplayValueOutOfLimitsWarningDialog("in a row", p_lower, p_upper);
+    DisplayValueOutOfLimitsWarningDialog(parent, "in a row", p_lower, p_upper);
 }
 
-void DisplayBoardWidthValueOutOfLimitsWarningDialog(size_t p_lower, size_t p_upper)
+void DisplayBoardWidthValueOutOfLimitsWarningDialog(Gtk::Window& parent, size_t p_lower, size_t p_upper)
 {
-    DisplayValueOutOfLimitsWarningDialog("board width", p_lower, p_upper);
+    DisplayValueOutOfLimitsWarningDialog(parent, "board width", p_lower, p_upper);
 }
 
-void DisplayBoardHeightValueOutOfLimitsWarningDialog(size_t p_lower, size_t p_upper)
+void DisplayBoardHeightValueOutOfLimitsWarningDialog(Gtk::Window& parent, size_t p_lower, size_t p_upper)
 {
-    DisplayValueOutOfLimitsWarningDialog("board height", p_lower, p_upper);
+    DisplayValueOutOfLimitsWarningDialog(parent, "board height", p_lower, p_upper);
 }
 
-void DisplayEmptyEntriesWarningDialog()
+void DisplayEmptyEntriesWarningDialog(Gtk::Window& parent)
 {
-    DisplayWarningDialog("Player names cannot be empty.");
+    DisplayWarningDialog(parent, "Player names cannot be empty.");
 }
 
-void DisplaySameColorsWarningDialog()
+void DisplaySameColorsWarningDialog(Gtk::Window& parent)
 {
-    DisplayWarningDialog("Discs must have different colors.");
+    DisplayWarningDialog(parent, "Discs must have different colors.");
 }
 
 } // namespace
@@ -256,6 +256,20 @@ void cxgui::NewGameView::ConfigureWidgets()
 
 void cxgui::NewGameView::OnStart()
 {
+    // First, we get an handle to the main window in case a warning dialog needs to be
+    // displayed:
+    Gtk::Container* mainWindow = m_mainLayout.get_parent();
+    if(!ASSERT(mainWindow != nullptr))
+    {
+        return;
+    }
+
+    Gtk::Window* parent = dynamic_cast<Gtk::Window*>(mainWindow);
+    if(!ASSERT(parent != nullptr))
+    {
+        return;
+    }
+
     cxmodel::NewGameInformation gameInformation;
 
     // Retrieve game parameters:
@@ -267,19 +281,20 @@ void cxgui::NewGameView::OnStart()
     }
     catch(const std::invalid_argument& p_exception)
     {
-        DisplayNumericalValuesExpectedWarningDialog();
+        DisplayNumericalValuesExpectedWarningDialog(*parent);
         return;
     }
     catch(const std::out_of_range& p_exception)
     {
-        DisplayNumericalValuesOutOfRangeWarningDialog();
+        DisplayNumericalValuesOutOfRangeWarningDialog(*parent);
         return;
     }
 
     if(gameInformation.m_inARowValue < m_presenter.GetNewGameViewMinInARowValue() ||
        gameInformation.m_inARowValue > m_presenter.GetNewGameViewMaxInARowValue())
     {
-        DisplayInARowValueOutOfLimitsWarningDialog(m_presenter.GetNewGameViewMinInARowValue(),
+        DisplayInARowValueOutOfLimitsWarningDialog(*parent,
+                                                   m_presenter.GetNewGameViewMinInARowValue(),
                                                    m_presenter.GetNewGameViewMaxInARowValue());
         return;
     }
@@ -287,7 +302,8 @@ void cxgui::NewGameView::OnStart()
     if(gameInformation.m_gridWidth < m_presenter.GetNewGameViewMinBoardWidthValue() ||
        gameInformation.m_gridWidth > m_presenter.GetNewGameViewMaxBoardWidthValue())
     {
-        DisplayBoardWidthValueOutOfLimitsWarningDialog(m_presenter.GetNewGameViewMinBoardWidthValue(),
+        DisplayBoardWidthValueOutOfLimitsWarningDialog(*parent,
+                                                       m_presenter.GetNewGameViewMinBoardWidthValue(),
                                                        m_presenter.GetNewGameViewMaxBoardWidthValue());
         return;
     }
@@ -295,7 +311,8 @@ void cxgui::NewGameView::OnStart()
     if(gameInformation.m_gridHeight < m_presenter.GetNewGameViewMinBoardHeightValue() ||
        gameInformation.m_gridHeight > m_presenter.GetNewGameViewMaxBoardHeightValue())
     {
-        DisplayBoardHeightValueOutOfLimitsWarningDialog(m_presenter.GetNewGameViewMinBoardHeightValue(),
+        DisplayBoardHeightValueOutOfLimitsWarningDialog(*parent,
+                                                        m_presenter.GetNewGameViewMinBoardHeightValue(),
                                                         m_presenter.GetNewGameViewMaxBoardHeightValue());
         return;
     }
@@ -316,7 +333,7 @@ void cxgui::NewGameView::OnStart()
 
     if(emptyNamesExist)
     {
-        DisplayEmptyEntriesWarningDialog();
+        DisplayEmptyEntriesWarningDialog(*parent);
         return;
     }
 
@@ -337,7 +354,7 @@ void cxgui::NewGameView::OnStart()
 
     if(duplicateColorsExist)
     {
-        DisplaySameColorsWarningDialog();
+        DisplaySameColorsWarningDialog(*parent);
         return;
     }
 
