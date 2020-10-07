@@ -54,6 +54,15 @@ public:
      ********************************************************************************************/
     virtual void CreateNewGame(const NewGameInformation& p_gameInformation) = 0;
 
+    /******************************************************************************************//**
+     * @brief Drops a chip in the game board.
+     *
+     * @param p_chip   The chip to drop.
+     * @param p_column The column in which to drop the chip.
+     *
+     ********************************************************************************************/
+    virtual void DropChip(const cxmodel::IChip& p_chip, size_t p_column) = 0;
+
 };
 
 } // namespace cxmodel

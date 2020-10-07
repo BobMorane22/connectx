@@ -28,6 +28,7 @@
 
 #include <CommandCreateNewGame.h>
 #include <CommandStack.h>
+#include <Disc.h>
 #include <Model.h>
 #include <NotificationContext.h>
 
@@ -50,16 +51,15 @@ static constexpr size_t IN_A_ROW_MAX = 8u;
 static constexpr size_t NUMBER_OF_PLAYERS_MIN = 2u;
 static constexpr size_t NUMBER_OF_PLAYERS_MAX = 10u;
 
-static const cxmodel::Player ACTIVE_PLAYER = {"Woops (active)!", {0, 0, 0, 0}};
-static const cxmodel::Player NEXT_PLAYER ={"Woops! (next)", {0, 0, 0, 0}};
+static const cxmodel::Player ACTIVE_PLAYER{"Woops (active)!", {0, 0, 0, 0}};
+static const cxmodel::Player NEXT_PLAYER {"Woops! (next)", {0, 0, 0, 0}};
+static const cxmodel::Disc NO_DISC{cxmodel::MakeTransparent()};
 
 } // namespace
 
 cxmodel::Model::Model(std::unique_ptr<ICommandStack>&& p_cmdStack, cxlog::ILogger& p_logger)
  : m_cmdStack{std::move(p_cmdStack)}
  , m_logger{p_logger}
- , m_gridWidth{7u}
- , m_gridHeight{6u}
  , m_inARowValue{4u}
 {
     PRECONDITION(m_cmdStack != nullptr);
@@ -143,32 +143,80 @@ void cxmodel::Model::CreateNewGame(const NewGameInformation& p_gameInformation)
         PRECONDITION(!newPlayer.GetName().empty());
     }
 
-    std::unique_ptr<ICommand> command = std::make_unique<CommandCreateNewGame>(m_players, m_gridWidth, m_gridHeight, m_inARowValue, p_gameInformation);
+    std::unique_ptr<ICommand> command = std::make_unique<CommandCreateNewGame>(*this, m_board, m_players, m_inARowValue, p_gameInformation);
     m_cmdStack->Execute(std::move(command));
+
+    if(!ASSERT(m_board != nullptr))
+    {
+        return;
+    }
 
     Notify(NotificationContext::CREATE_NEW_GAME);
 
     std::ostringstream stream;
 
-    stream << "New game created:"   << std::endl
-           << "  In-a-row value:  " << m_inARowValue << std::endl
-           << "  Grid dimensions: " << "Width = " << m_gridWidth << ", "
-                                    << "Height = " << m_gridHeight << std::endl
-           << "Number of players: " << m_players.size() << std::endl;
+    stream << "New game created: " <<
+              "In-a-row value=" << m_inARowValue <<
+              ", Grid dimensions=(W" << m_board->GetNbColumns() << ", H" << m_board->GetNbRows() << ")"
+              ", Number of players=" << m_players.size();
 
     Log(cxlog::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__, stream.str());
 
     CheckInvariants();
 }
 
+void cxmodel::Model::DropChip(const cxmodel::IChip& p_chip, size_t p_column)
+{
+    if(!PRECONDITION(m_board != nullptr))
+    {
+        return;
+    }
+
+    if(!PRECONDITION(p_column < m_board->GetNbColumns()))
+    {
+        return;
+    }
+
+    const Player& activePlayer = GetActivePlayer();
+    if(!PRECONDITION(activePlayer.GetChip() == p_chip))
+    {
+        return;
+    }
+
+    IBoard::Position droppedPosition;
+    if(m_board->DropChip(p_column, p_chip, droppedPosition))
+    {
+        Notify(NotificationContext::CHIP_DROPPED);
+
+        std::ostringstream stream;
+        stream << activePlayer.GetName() << "'s chip dropped at (" << droppedPosition.m_row << ", " << droppedPosition.m_column << ")";
+        Log(cxlog::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__, stream.str());
+    }
+    {
+        Log(cxlog::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__, "Chip drop failed for " + activePlayer.GetName());
+    }
+
+    CheckInvariants();
+}
+
 size_t cxmodel::Model::GetCurrentGridHeight() const
 {
-    return m_gridHeight;
+    if(!ASSERT(m_board != nullptr))
+    {
+        return 0u;
+    }
+
+    return m_board->GetNbRows();
 }
 
 size_t cxmodel::Model::GetCurrentGridWidth() const
 {
-    return m_gridWidth;
+    if(!ASSERT(m_board != nullptr))
+    {
+        return 0u;
+    }
+
+    return m_board->GetNbColumns();
 }
 
 size_t cxmodel::Model::GetCurrentInARowValue() const
@@ -196,17 +244,27 @@ const cxmodel::Player& cxmodel::Model::GetNextPlayer() const
     return m_players[1];
 }
 
+const cxmodel::IChip& cxmodel::Model::GetChip(size_t p_row, size_t p_column) const
+{
+    if(p_row >= GetCurrentGridHeight() || p_column >= GetCurrentGridWidth())
+    {
+        return NO_DISC;
+    }
+
+    if(!ASSERT(m_board != nullptr))
+    {
+        return NO_DISC;
+    }
+
+    return m_board->GetChip({p_row, p_column});
+}
+
 bool cxmodel::Model::IsWon() const
 {
     throw std::logic_error{"Not yet implemented."};
 }
 
 bool cxmodel::Model::IsTie() const
-{
-    throw std::logic_error{"Not yet implemented."};
-}
-
-bool cxmodel::Model::IsEarlyTie() const
 {
     throw std::logic_error{"Not yet implemented."};
 }

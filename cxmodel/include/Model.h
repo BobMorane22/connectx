@@ -29,6 +29,7 @@
 
 #include <cxlog/include/ILogger.h>
 
+#include "IBoard.h"
 #include "ICommandStack.h"
 #include "IConnectXGameActions.h"
 #include "IConnectXGameInformation.h"
@@ -55,7 +56,6 @@ class Model : public cxlog::ILogger,
               public IConnectXLimits,
               public IConnectXGameInformation,
               public IConnectXGameActions
-
 {
 
 public:
@@ -114,15 +114,16 @@ public:
     size_t GetCurrentInARowValue() const override;
     const Player& GetActivePlayer() const override;
     const Player& GetNextPlayer() const override;
+    const IChip& GetChip(size_t p_row, size_t p_column) const override;
     bool IsWon() const override;
     bool IsTie() const override;
-    bool IsEarlyTie() const override;
 
 ///@}
 
 ///@{ @name IConnectXGameActions
 
     void CreateNewGame(const NewGameInformation& p_gameInformation) override;
+    void DropChip(const cxmodel::IChip& p_chip, size_t p_column) override;
 
 ///@}
 
@@ -130,13 +131,11 @@ private:
 
     void CheckInvariants();
 
-    NewGameInformation m_gameInformation;
     std::unique_ptr<ICommandStack> m_cmdStack;
     cxlog::ILogger& m_logger;
 
+    std::unique_ptr<cxmodel::IBoard> m_board;
     std::vector<Player> m_players;
-    size_t m_gridWidth;
-    size_t m_gridHeight;
     size_t m_inARowValue;
 };
 

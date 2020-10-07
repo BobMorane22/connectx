@@ -21,21 +21,23 @@
  *
  *************************************************************************************************/
 
+#include <memory>
 #include <sstream>
 
 #include <cxinv/include/assertion.h>
 
+#include <Board.h>
 #include <CommandCreateNewGame.h>
 
-cxmodel::CommandCreateNewGame::CommandCreateNewGame(std::vector<Player>& p_players,
-                                                    size_t& p_gridWidth,
-                                                    size_t& p_gridHeight,
+cxmodel::CommandCreateNewGame::CommandCreateNewGame(const IConnectXLimits& p_modelAsLimits,
+                                                    std::unique_ptr<IBoard>& p_board,
+                                                    std::vector<Player>& p_players,
                                                     size_t& p_inARowValue,
                                                     NewGameInformation p_newGameInformation)
- : m_modelPlayers{p_players}
- , m_modelGridWidth{p_gridWidth}
- , m_modelGridHeight{p_gridHeight}
- , m_modelInARowValue{p_inARowValue}
+ : m_modelAsLimits{p_modelAsLimits}
+ , m_board{p_board}
+ , m_modelPlayers{p_players}
+ , m_inARowValue{p_inARowValue}
  , m_newGameInformation{p_newGameInformation}
 {
     // Nothing to do...
@@ -43,16 +45,17 @@ cxmodel::CommandCreateNewGame::CommandCreateNewGame(std::vector<Player>& p_playe
 
 void cxmodel::CommandCreateNewGame::Execute()
 {
+    // Players:
     m_modelPlayers.clear();
-
     ASSERT(m_newGameInformation.GetNbOfNewPlayers() >= 2);
-
     const auto& players = m_newGameInformation.GetNewPlayers();
     std::copy(players.cbegin(), players.cend(), std::back_inserter(m_modelPlayers));
 
-    m_modelGridWidth = m_newGameInformation.m_gridWidth;
-    m_modelGridHeight = m_newGameInformation.m_gridHeight;
-    m_modelInARowValue = m_newGameInformation.m_inARowValue;
+    // Board:
+    m_board = std::make_unique<cxmodel::Board>(m_newGameInformation.m_gridHeight, m_newGameInformation.m_gridWidth, m_modelAsLimits);
+
+    // In-a-row value:
+    m_inARowValue = m_newGameInformation.m_inARowValue;
 }
 
 void cxmodel::CommandCreateNewGame::Undo()

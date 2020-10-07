@@ -37,6 +37,7 @@ enum class NotificationContext
 {
     // User operations:
     CREATE_NEW_GAME,
+    CHIP_DROPPED,
     REDO,
     UNDO
 };

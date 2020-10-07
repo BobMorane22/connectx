@@ -28,10 +28,16 @@
 
 #include <cxlog/include/ILogger.h>
 
+#include "IBoard.h"
 #include "ICommand.h"
 #include "NewGameInformation.h"
 #include "Player.h"
 #include "Subject.h"
+
+namespace cxmodel
+{
+    class IConnectXLimits;
+}
 
 namespace cxmodel
 {
@@ -41,9 +47,19 @@ class CommandCreateNewGame : public ICommand
 
 public:
 
-    CommandCreateNewGame(std::vector<Player>& p_players,
-                         size_t& p_gridWidth,
-                         size_t& p_gridHeight,
+    /******************************************************************************************//**
+     * @brief Constructor.
+     *
+     * @param p_modelAsLimits       A Connect X compliant model (limits).
+     * @param p_board               The model's game board.
+     * @param p_players             The model's list of players.
+     * @param p_inARowValue         The model's in-a-row value.
+     * @param p_newGameInformation  The new game information from which to initialize a game.
+     *
+     ********************************************************************************************/
+    CommandCreateNewGame(const IConnectXLimits& p_modelAsLimits,
+                         std::unique_ptr<IBoard>& p_board,
+                         std::vector<Player>& p_players,
                          size_t& p_inARowValue,
                          NewGameInformation p_newGameInformation);
 
@@ -52,10 +68,11 @@ public:
 
 private:
 
+    const IConnectXLimits& m_modelAsLimits;
+
+    std::unique_ptr<IBoard>& m_board;
     std::vector<Player>& m_modelPlayers;
-    size_t& m_modelGridWidth;
-    size_t& m_modelGridHeight;
-    size_t& m_modelInARowValue;
+    size_t& m_inARowValue;
 
     NewGameInformation m_newGameInformation;
 

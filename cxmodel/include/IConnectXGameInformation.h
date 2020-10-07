@@ -88,6 +88,18 @@ public:
     virtual const Player& GetNextPlayer() const = 0;
 
     /******************************************************************************************//**
+     * @brief Gets the chip at some specific location on the board. If the location does not
+     *        exist on the board, a transparent chip is returned.
+     *
+     * @param p_row    The chip's row location on the board.
+     * @param p_column The chip's column location on the board.
+     *
+     * @return The chip.
+     *
+     ********************************************************************************************/
+    virtual const IChip& GetChip(size_t p_row, size_t p_column) const = 0;
+
+    /******************************************************************************************//**
      * @brief Indicates if the Connect X game, in its current state, is won by any player.
      *
      * @return `true` if the game is won, `false` otherwise.
@@ -102,19 +114,6 @@ public:
      *
      ********************************************************************************************/
     virtual bool IsTie() const = 0;
-
-    /******************************************************************************************//**
-     * @brief Indicates if the Connect X game, in its current state, is going to be a tie between
-     *        two players.
-     *
-     * @return `true` if the game is going to be a tie, `false` otherwise.
-     *
-     * Use this to detect ties before they actually happen. This can save a lot of time for
-     * players that don't have to actually finish the game, even though is can be detected no
-     * on can win.
-     *
-     ********************************************************************************************/
-    virtual bool IsEarlyTie() const = 0;
 
 };
 
