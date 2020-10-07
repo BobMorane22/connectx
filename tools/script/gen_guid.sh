@@ -12,7 +12,7 @@
 #
 # Note that the GUID portion changes every time you invoke this script.
 #
-# @file     gen_guid.sh
+# @file gen_guid.sh
 # @date 2017
 #
 #---------------------------------------------------------------------------------------------------
