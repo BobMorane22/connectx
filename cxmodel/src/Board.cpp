@@ -56,7 +56,7 @@ cxmodel::Board::Board(size_t p_nbRows,
 
         for(size_t column = 0; column < m_nbColumns; ++column)
         {
-            m_grid[row].push_back(NoChip());
+            m_grid[row].push_back(std::move(NoChip()));
         }
     }
 

@@ -60,6 +60,8 @@ static const cxmodel::Disc NO_DISC{cxmodel::MakeTransparent()};
 cxmodel::Model::Model(std::unique_ptr<ICommandStack>&& p_cmdStack, cxlog::ILogger& p_logger)
  : m_cmdStack{std::move(p_cmdStack)}
  , m_logger{p_logger}
+ , m_activePlayerIndex{0u}
+ , m_nextPlayerIndex{1u}
  , m_inARowValue{4u}
 {
     PRECONDITION(m_cmdStack != nullptr);
@@ -180,12 +182,59 @@ void cxmodel::Model::DropChip(const cxmodel::IChip& p_chip, size_t p_column)
     const Player& activePlayer = GetActivePlayer();
     if(!PRECONDITION(activePlayer.GetChip() == p_chip))
     {
+        const IChip& activePlayerChip = activePlayer.GetChip();
+        std::ostringstream logStream;
+        logStream << "Active player's color: (" << activePlayerChip.GetColor().R() << ", "
+                                                << activePlayerChip.GetColor().G() << ", "
+                                                << activePlayerChip.GetColor().B() << ")";
+        Log(cxlog::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__, logStream.str());
+
+        logStream.str("");
+        logStream << "Dropped disc color: (" << p_chip.GetColor().R() << ", "
+                                             << p_chip.GetColor().G() << ", "
+                                             << p_chip.GetColor().B() << ")";
+        Log(cxlog::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__, logStream.str());
+
         return;
     }
 
     IBoard::Position droppedPosition;
     if(m_board->DropChip(p_column, p_chip, droppedPosition))
     {
+        // Update player information:
+        if(m_activePlayerIndex == m_players.size() - 1)
+        {
+            m_activePlayerIndex = 0u;
+        }
+        else
+        {
+            ++m_activePlayerIndex;
+        }
+
+        if(m_nextPlayerIndex == m_players.size() - 1)
+        {
+            m_nextPlayerIndex = 0u;
+        }
+        else
+        {
+            ++m_nextPlayerIndex;
+        }
+
+        if(!ASSERT(m_activePlayerIndex < m_players.size()))
+        {
+            return;
+        }
+
+        if(!ASSERT(m_nextPlayerIndex < m_players.size()))
+        {
+            return;
+        }
+
+        if(!ASSERT(m_activePlayerIndex != m_nextPlayerIndex))
+        {
+            return;
+        }
+
         Notify(NotificationContext::CHIP_DROPPED);
 
         std::ostringstream stream;
@@ -231,7 +280,7 @@ const cxmodel::Player& cxmodel::Model::GetActivePlayer() const
         return ACTIVE_PLAYER;
     }
 
-    return m_players[0];
+    return m_players[m_activePlayerIndex];
 }
 
 const cxmodel::Player& cxmodel::Model::GetNextPlayer() const
@@ -241,7 +290,7 @@ const cxmodel::Player& cxmodel::Model::GetNextPlayer() const
         return NEXT_PLAYER;
     }
 
-    return m_players[1];
+    return m_players[m_nextPlayerIndex];
 }
 
 const cxmodel::IChip& cxmodel::Model::GetChip(size_t p_row, size_t p_column) const

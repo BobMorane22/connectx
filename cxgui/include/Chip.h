@@ -61,6 +61,14 @@ public:
      ********************************************************************************************/
     void ChangeColor(const cxmodel::ChipColor& p_newFillColor);
 
+    /******************************************************************************************//**
+     * @brief Chip color accessor.
+     *
+     * @return The chip's color.
+     *
+     ********************************************************************************************/
+    cxmodel::ChipColor GetColor() const;
+
 private:
 
     // Specify shape by overloading this:

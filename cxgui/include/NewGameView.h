@@ -55,6 +55,7 @@ public:
     // IView:
     void Activate() override;
     void DeActivate() override;
+    void Update(cxmodel::NotificationContext p_context) override;
 
 private:
 

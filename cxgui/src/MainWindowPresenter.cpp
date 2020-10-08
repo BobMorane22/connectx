@@ -58,6 +58,28 @@ void cxgui::MainWindowPresenter::Update(cxmodel::NotificationContext p_context, 
 
             m_activePlayer = m_modelAsGameInformation.GetActivePlayer();
             m_nextPlayer = m_modelAsGameInformation.GetNextPlayer();
+
+            // Reserve the board color memory:
+            for(size_t row = 0u; row < m_currentBoardHeight; ++row)
+            {
+                m_chipColors.push_back(std::vector<cxmodel::ChipColor>(m_currentBoardWidth, cxmodel::MakeTransparent()));
+            }
+        }
+        else if(p_context == cxmodel::NotificationContext::CHIP_DROPPED)
+        {
+            // Update players information:
+            m_activePlayer = m_modelAsGameInformation.GetActivePlayer();
+            m_nextPlayer = m_modelAsGameInformation.GetNextPlayer();
+
+            // Update board information:
+            for(size_t row = 0u; row < m_currentBoardHeight; ++row)
+            {
+                for(size_t column = 0u; column < m_currentBoardWidth; ++column)
+                {
+                    const cxmodel::IChip& chip = m_modelAsGameInformation.GetChip(row, column);
+                    m_chipColors[m_currentBoardHeight - row - 1][column] = chip.GetColor();
+                }
+            }
         }
 
         Notify(p_context);
@@ -246,4 +268,9 @@ size_t cxgui::MainWindowPresenter::GetGameViewBoardWidth() const
 size_t cxgui::MainWindowPresenter::GetGameViewBoardHeight() const
 {
     return m_currentBoardHeight;
+}
+
+const cxgui::IGameViewPresenter::ChipColors& cxgui::MainWindowPresenter::GetGameViewChipColors() const
+{
+    return m_chipColors;
 }

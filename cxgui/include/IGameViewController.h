@@ -16,56 +16,66 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file IMainWindowController.h
- * @date 2019
+ * @file IGameViewController.h
+ * @date 2020
  *
  *************************************************************************************************/
 
-#ifndef IMAINWINDOWCONTROLLER_H_B4A715D5_611A_42C2_8C60_16C5C14FD28A
-#define IMAINWINDOWCONTROLLER_H_B4A715D5_611A_42C2_8C60_16C5C14FD28A
+#ifndef IGAMEVIEWCONTROLLER_H_3C41DCA5_1218_4228_A8C9_545FC5071BD3
+#define IGAMEVIEWCONTROLLER_H_3C41DCA5_1218_4228_A8C9_545FC5071BD3
 
-#include "IGameViewController.h"
-#include "INewGameViewController.h"
+#include <cxmodel/include/ChipColor.h>
 
 namespace cxgui
 {
 
 /*********************************************************************************************//**
- * @brief Interface for creating a main window controller.
+ * @brief DESCRIPTION
  *
- * The main window controller is responsible to handle all user events directed on the main
- * window. It is the controller which calls the right operations sequence on the model to
- * reflect what the user is doing on the UI.
+ * @invariant
+ * @invariant
+ *
+ * DESCRIPTION
  *
  ************************************************************************************************/
-class IMainWindowController : public IGameViewController,
-                              public INewGameViewController
+class IGameViewController
 {
 
 public:
 
     /******************************************************************************************//**
-     * @brief Default destructor.
+     * @brief DESCRIPTION
+     *
+     * @pre
+     * @post
+     *
+     * @param
+     * @param
+     *
+     * @return
+     *
+     * DESCRIPTION
      *
      ********************************************************************************************/
-    virtual ~IMainWindowController() = default;
+    virtual ~IGameViewController() = default;
 
-///@{ @name New Game View
-// ------------------------------------------------------------------------------------------------
-
-    void OnStart(const cxmodel::NewGameInformation p_gameInformation) override = 0;
-
-///@}
-
-///@{ @name Game View
-// ------------------------------------------------------------------------------------------------
-
-    void OnDown(const cxmodel::ChipColor& p_chipColor, size_t p_column) override = 0;
-
-///@}
-
+    /******************************************************************************************//**
+     * @brief DESCRIPTION
+     *
+     * @pre
+     * @post
+     *
+     * @param
+     * @param
+     *
+     * @return
+     *
+     * DESCRIPTION
+     *
+     ********************************************************************************************/
+    virtual void OnDown(const cxmodel::ChipColor& p_chipColor, size_t p_column) = 0;
 };
 
 } // namespace cxgui
 
-#endif // IMAINWINDOWCONTROLLER_H_B4A715D5_611A_42C2_8C60_16C5C14FD28A
+#endif // IGAMEVIEWCONTROLLER_H_3C41DCA5_1218_4228_A8C9_545FC5071BD3

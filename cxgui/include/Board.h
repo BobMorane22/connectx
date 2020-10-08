@@ -28,9 +28,12 @@
 #include <gtkmm/paned.h>
 
 #include <cxmodel/include/ChipColor.h>
+#include <cxmodel/include/IChip.h>
 
 namespace cxgui
 {
+    class Chip;
+    class IGameViewController;
     class IGameViewPresenter;
 }
 
@@ -49,10 +52,11 @@ public:
     /******************************************************************************************//**
      * @brief Constructor.
      *
-     * @param p_presenter The Game View presenter.
+     * @param p_presenter  The Game View presenter.
+     * @param p_controller The Game View controller.
      *
      ********************************************************************************************/
-    Board(const IGameViewPresenter& p_presenter);
+    Board(const IGameViewPresenter& p_presenter, IGameViewController& p_controller);
 
     /******************************************************************************************//**
      * @brief Drops the chip in the current column.
@@ -72,6 +76,12 @@ public:
      ********************************************************************************************/
     void MoveRight();
 
+    /******************************************************************************************//**
+     * @brief Updates the board.
+     *
+     ********************************************************************************************/
+    void Update();
+
 private:
 
     enum class Side
@@ -79,6 +89,8 @@ private:
         Left,
         Right
     };
+
+    Chip* GetChip(Gtk::Grid& p_discArea, int p_left, int p_top);
 
     void Move(Side p_side);
     void ChangeCurrentDisc(const cxmodel::ChipColor& p_newColor);
@@ -88,12 +100,12 @@ private:
     void InitializeBoard(size_t p_height, size_t p_width);
 
     const IGameViewPresenter& m_presenter;
+    IGameViewController& m_controller;
 
     Gtk::Grid m_nextDiscAreaLayout;
     Gtk::Grid m_boardLayout;
 
-    std::size_t m_nextDiscPosition;
-
+    std::size_t m_currentDiscPosition;
 };
 
 } // namespace cxgui

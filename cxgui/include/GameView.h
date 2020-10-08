@@ -30,6 +30,7 @@
 #include "Board.h"
 #include "Chip.h"
 #include "GameKeyHandlerStrategyFactory.h"
+#include "IGameViewController.h"
 #include "IGameViewPresenter.h"
 #include "IView.h"
 
@@ -46,6 +47,7 @@ class GameView : public IView
 public:
 
     GameView(IGameViewPresenter& p_presenter,
+             IGameViewController& p_controller,
              Gtk::Grid& p_mainLayout,
              int p_viewLeft,
              int p_viewTop);
@@ -53,6 +55,7 @@ public:
     // IView:
     void Activate() override;
     void DeActivate() override;
+    void Update(cxmodel::NotificationContext p_context) override;
 
 private:
 
@@ -63,6 +66,7 @@ private:
     bool OnKeyPressed(GdkEventKey* p_event);
 
     IGameViewPresenter& m_presenter;
+    IGameViewController& m_controller;
 
     Gtk::Grid& m_mainLayout;
 

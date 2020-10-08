@@ -136,6 +136,8 @@ private:
 
     std::unique_ptr<cxmodel::IBoard> m_board;
     std::vector<Player> m_players;
+    std::size_t m_activePlayerIndex;
+    std::size_t m_nextPlayerIndex;
     size_t m_inARowValue;
 };
 

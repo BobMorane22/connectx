@@ -22,17 +22,33 @@
  *************************************************************************************************/
 
 #include <iostream>
+#include <memory>
 
+#include <cxinv/include/assertion.h>
+#include <cxmodel/include/Disc.h>
 #include <cxmodel/include/IConnectXGameActions.h>
 
 #include <MainWindowController.h>
 
 cxgui::MainWindowController::MainWindowController(cxmodel::IConnectXGameActions& p_model)
  : m_model{p_model}
+ , m_currentChip{std::make_unique<cxmodel::Disc>(cxmodel::Disc::MakeTransparentDisc())}
 {
 }
 
 void cxgui::MainWindowController::OnStart(const cxmodel::NewGameInformation p_gameInformation)
 {
     m_model.CreateNewGame(p_gameInformation);
+}
+
+void cxgui::MainWindowController::OnDown(const cxmodel::ChipColor& p_chipColor, size_t p_column)
+{
+    m_currentChip = std::make_unique<cxmodel::Disc>(p_chipColor);
+
+    if(!ASSERT(m_currentChip->GetColor() != cxmodel::MakeTransparent()))
+    {
+        return;
+    }
+
+    m_model.DropChip(*m_currentChip, p_column);
 }

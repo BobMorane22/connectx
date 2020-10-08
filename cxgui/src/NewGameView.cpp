@@ -143,6 +143,11 @@ void cxgui::NewGameView::DeActivate()
     // Nothing to do...
 }
 
+void cxgui::NewGameView::Update(cxmodel::NotificationContext /*p_context*/)
+{
+    // Noting to do...
+}
+
 void cxgui::NewGameView::SetLayout()
 {
     constexpr int TOTAL_WIDTH = 2;

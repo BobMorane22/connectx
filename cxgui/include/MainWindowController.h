@@ -48,9 +48,18 @@ public:
 
 ///@}
 
+///@{ @name Game View
+// ------------------------------------------------------------------------------------------------
+
+    void OnDown(const cxmodel::ChipColor& p_chipColor, size_t p_column) override;
+
+///@}
+
 private:
 
     cxmodel::IConnectXGameActions& m_model;
+
+    std::unique_ptr<cxmodel::IChip> m_currentChip;
 };
 
 } // namespace cxgui

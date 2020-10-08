@@ -40,6 +40,10 @@ class IGameViewPresenter
 
 public:
 
+    using ChipColors = std::vector<std::vector<cxmodel::ChipColor>>;
+
+public:
+
     /******************************************************************************************//**
      * @brief Destructor.
      *
@@ -129,6 +133,14 @@ public:
      *
      ********************************************************************************************/
     virtual size_t GetGameViewBoardHeight() const = 0;
+
+    /******************************************************************************************//**
+     * @brief Chip colors accessor.
+     *
+     * @return The chip colors.
+     *
+     ********************************************************************************************/
+    virtual const ChipColors& GetGameViewChipColors() const = 0;
 
 };
 

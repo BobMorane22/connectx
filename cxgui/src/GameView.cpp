@@ -27,22 +27,25 @@
 
 #include <cxinv/include/assertion.h>
 #include <cxmodel/include/IChip.h>
+#include <cxmodel/include/NotificationContext.h>
 
 #include <common.h>
 #include <DiscChip.h>
 #include <GameView.h>
 
 cxgui::GameView::GameView(IGameViewPresenter& p_presenter,
+                          IGameViewController& p_controller,
                           Gtk::Grid& p_mainLayout,
                           int p_viewLeft,
                           int p_viewTop)
 : m_presenter{p_presenter}
+, m_controller{p_controller}
 , m_mainLayout{p_mainLayout}
 , m_viewLeft{p_viewLeft}
 , m_viewTop{p_viewTop}
 , m_activePlayerChip{std::make_unique<cxgui::DiscChip>(cxmodel::MakeTransparent(), cxmodel::MakeTransparent())}
 , m_nextPlayerChip{std::make_unique<cxgui::DiscChip>(cxmodel::MakeTransparent(), cxmodel::MakeTransparent())}
-, m_board{std::make_unique<cxgui::Board>(m_presenter)}
+, m_board{std::make_unique<cxgui::Board>(m_presenter, m_controller)}
 {
     PRECONDITION(m_activePlayerChip != nullptr);
     PRECONDITION(m_nextPlayerChip != nullptr);
@@ -101,6 +104,24 @@ void cxgui::GameView::DeActivate()
 
         // Disconnect signal handler:
         m_keysPressedConnection.disconnect();
+    }
+}
+
+void cxgui::GameView::Update(cxmodel::NotificationContext p_context)
+{
+    if(p_context == cxmodel::NotificationContext::CHIP_DROPPED)
+    {
+        // Active and next players should be updated as well:
+        m_activePlayerChip->ChangeColor(m_presenter.GetGameViewActivePlayerChipColor());
+        m_activePlayerName.set_text(m_presenter.GetGameViewActivePlayerName());
+
+        m_nextPlayerChip->ChangeColor(m_presenter.GetGameViewNextPlayerChipColor());
+        m_nextPlayerName.set_text(m_presenter.GetGameViewNextPlayerName());
+
+        if(ASSERT(m_board != nullptr))
+        {
+            m_board->Update();
+        }
     }
 }
 

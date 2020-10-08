@@ -28,9 +28,10 @@
 #include <gtkmm/stock.h>
 
 #include <cxinv/include/assertion.h>
+#include <cxmodel/include/IVersioning.h>
+
 #include <About.h>
 #include <AboutWindowPresenter.h>
-#include <cxmodel/include/IVersioning.h>
 #include <GameView.h>
 #include <IMainWindowController.h>
 #include <IMainWindowPresenter.h>
@@ -104,13 +105,29 @@ int cxgui::MainWindow::Show()
 
 void cxgui::MainWindow::Update(cxmodel::NotificationContext p_context, cxmodel::Subject* p_subject)
 {
-    // Nothing for now...
     if(p_subject)
     {
-        if(p_context == cxmodel::NotificationContext::CREATE_NEW_GAME)
+        switch(p_context)
         {
-            DeactivateNewGameView();
-            ActivateGameView();
+            case cxmodel::NotificationContext::CHIP_DROPPED:
+            {
+                if(ASSERT(m_gameView != nullptr))
+                {
+                    m_gameView->Update(p_context);
+                }
+
+                break;
+            }
+            case cxmodel::NotificationContext::CREATE_NEW_GAME:
+            {
+                DeactivateNewGameView();
+                ActivateGameView();
+                break;
+            }
+            case cxmodel::NotificationContext::UNDO:
+            case cxmodel::NotificationContext::REDO:
+            default:
+                ASSERT_ERROR_MSG("Unsupported notification context.");
         }
     }
 }
@@ -175,7 +192,7 @@ void cxgui::MainWindow::ActivateGameView()
 {
     if(!m_gameView)
     {
-        m_gameView = std::make_unique<GameView>(m_presenter, m_mainLayout, m_viewLeft, m_viewTop);
+        m_gameView = std::make_unique<GameView>(m_presenter, m_controller, m_mainLayout, m_viewLeft, m_viewTop);
     }
 
     m_gameView->Activate();

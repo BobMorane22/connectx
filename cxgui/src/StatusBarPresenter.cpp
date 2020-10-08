@@ -47,6 +47,9 @@ std::string cxgui::MakeStatusBarContextString(cxmodel::NotificationContext p_con
         case cxmodel::NotificationContext::CREATE_NEW_GAME :
             return "New game created.";
 
+        case cxmodel::NotificationContext::CHIP_DROPPED:
+            return "Chip dropped.";
+
         case cxmodel::NotificationContext::REDO :
             return "Redo.";
 

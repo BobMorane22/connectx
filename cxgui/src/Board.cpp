@@ -24,17 +24,20 @@
 #include <iostream>
 
 #include <cxinv/include/assertion.h>
+#include <cxmodel/include/Disc.h>
 
 #include <Board.h>
 #include <DiscChip.h>
+#include <IGameViewController.h>
 #include <IGameViewPresenter.h>
 
 constexpr bool FULLY_HANDLED = true;
 constexpr bool PROPAGATE = false;
 
-cxgui::Board::Board(const IGameViewPresenter& p_presenter)
+cxgui::Board::Board(const IGameViewPresenter& p_presenter, IGameViewController& p_controller)
 : m_presenter{p_presenter}
-, m_nextDiscPosition{0u}
+, m_controller{p_controller}
+, m_currentDiscPosition{0u}
 {
     set_orientation(Gtk::Orientation::ORIENTATION_VERTICAL);
 
@@ -47,7 +50,14 @@ cxgui::Board::Board(const IGameViewPresenter& p_presenter)
 
 void cxgui::Board::DropChip()
 {
-    std::cout << "Drop!" << std::endl;
+    Chip* chip = GetChip(m_nextDiscAreaLayout, m_currentDiscPosition, 0);
+
+    if(!ASSERT(chip != nullptr))
+    {
+        return;
+    }
+
+    m_controller.OnDown(chip->GetColor(), m_currentDiscPosition);
 }
 
 void cxgui::Board::MoveLeft()
@@ -60,6 +70,65 @@ void cxgui::Board::MoveRight()
     Move(Side::Right);
 }
 
+void cxgui::Board::Update()
+{
+    Chip* currentChip = GetChip(m_nextDiscAreaLayout, m_currentDiscPosition, 0);
+
+    if(!ASSERT(currentChip != nullptr))
+    {
+        return;
+    }
+
+    currentChip->ChangeColor(cxmodel::MakeTransparent());
+
+    m_currentDiscPosition = 0u;
+    Chip* startChip = GetChip(m_nextDiscAreaLayout, m_currentDiscPosition, 0);
+
+    if(!ASSERT(startChip != nullptr))
+    {
+        return;
+    }
+
+    startChip->ChangeColor(m_presenter.GetGameViewActivePlayerChipColor());
+
+    // Refresh board area:
+    const cxgui::IGameViewPresenter::ChipColors& chipColors = m_presenter.GetGameViewChipColors();
+
+    for(size_t row = 0u; row < m_presenter.GetGameViewBoardHeight(); ++row)
+    {
+        for(size_t column = 0u; column < m_presenter.GetGameViewBoardWidth(); ++column)
+        {
+            Chip* chip = GetChip(m_boardLayout, column, row);
+
+            if(!ASSERT(chip != nullptr))
+            {
+                return;
+            }
+
+            chip->ChangeColor(chipColors[row][column]);
+        }
+    }
+}
+
+cxgui::Chip* cxgui::Board::GetChip(Gtk::Grid& p_discArea, int p_left, int p_top)
+{
+    Widget* child = p_discArea.get_child_at(p_left, p_top);
+
+    if(!ASSERT(child != nullptr))
+    {
+        return nullptr;
+    }
+
+    Chip* chip = dynamic_cast<Chip*>(child);
+
+    if(!ASSERT(chip != nullptr))
+    {
+        return nullptr;
+    }
+
+    return chip;
+}
+
 void cxgui::Board::Move(Side p_side)
 {
     ChangeCurrentDisc(cxmodel::MakeTransparent());
@@ -69,14 +138,7 @@ void cxgui::Board::Move(Side p_side)
 
 void cxgui::Board::ChangeCurrentDisc(const cxmodel::ChipColor& p_newColor)
 {
-    Widget* child = m_nextDiscAreaLayout.get_child_at(m_nextDiscPosition, 0);
-
-    if(!ASSERT(child != nullptr))
-    {
-        return;
-    }
-
-    Chip* chip = dynamic_cast<Chip*>(child);
+    Chip* chip = GetChip(m_nextDiscAreaLayout, m_currentDiscPosition, 0);
 
     if(!ASSERT(chip != nullptr))
     {
@@ -90,24 +152,24 @@ void cxgui::Board::UpdateNextDiscPosition(Side p_side)
 {
     if(p_side == Side::Left)
     {
-        if(m_nextDiscPosition > 0)
+        if(m_currentDiscPosition > 0)
         {
-            --m_nextDiscPosition;
+            --m_currentDiscPosition;
         }
         else
         {
-            m_nextDiscPosition = m_presenter.GetGameViewBoardWidth() - 1;
+            m_currentDiscPosition = m_presenter.GetGameViewBoardWidth() - 1;
         }
     }
     else
     {
-        if(m_nextDiscPosition < m_presenter.GetGameViewBoardWidth() - 1)
+        if(m_currentDiscPosition < m_presenter.GetGameViewBoardWidth() - 1)
         {
-            ++m_nextDiscPosition;
+            ++m_currentDiscPosition;
         }
         else
         {
-            m_nextDiscPosition = 0u;
+            m_currentDiscPosition = 0u;
         }
     }
 }

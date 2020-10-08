@@ -24,6 +24,11 @@
 #ifndef IVIEW_H_DADC38E4_6E1F_4DED_A6F9_5D66F1558C89
 #define IVIEW_H_DADC38E4_6E1F_4DED_A6F9_5D66F1558C89
 
+namespace cxmodel
+{
+    enum class NotificationContext;
+}
+
 namespace cxgui
 {
 
@@ -66,6 +71,16 @@ public:
      *
      ********************************************************************************************/
     virtual void DeActivate() = 0;
+
+    /******************************************************************************************//**
+     * @brief Update the view.
+     *
+     * Update the view according to some context.
+     *
+     * @param p_context The context.
+     *
+     ********************************************************************************************/
+    virtual void Update(cxmodel::NotificationContext p_context) = 0;
 
 };
 

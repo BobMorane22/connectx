@@ -103,6 +103,8 @@ public:
     size_t GetGameViewBoardWidth() const override;
     size_t GetGameViewBoardHeight() const override;
 
+    const ChipColors& GetGameViewChipColors() const override;
+
 ///@}
 
 private:
@@ -119,6 +121,8 @@ private:
 
     cxmodel::Player m_activePlayer;
     cxmodel::Player m_nextPlayer;
+
+    std::vector<std::vector<cxmodel::ChipColor>> m_chipColors;
 };
 
 } // namespace cxgui
