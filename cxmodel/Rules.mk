@@ -51,13 +51,14 @@ include $(dir)/Rules.mk
 # i.e. the ones we want deleted by a "make clean" command.
 #
 OBJS_$(d) := $(d)/src/CommandCreateNewGame.o \
+             $(d)/src/CommandDropChip.o \
              $(d)/src/CommandStack.o \
              $(d)/src/Disc.o \
              $(d)/src/Board.o \
              $(d)/src/IChip.o \
              $(d)/src/Model.o \
              $(d)/src/NewGameInformation.o \
-                          $(d)/src/OS.o \
+             $(d)/src/OS.o \
              $(d)/src/Player.o \
              $(d)/src/Subject.o \
              $(d)/src/WinGameResolutionStragegy.o \

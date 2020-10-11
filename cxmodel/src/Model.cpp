@@ -27,6 +27,7 @@
 #include <cxinv/include/assertion.h>
 
 #include <CommandCreateNewGame.h>
+#include <CommandDropChip.h>
 #include <CommandStack.h>
 #include <Disc.h>
 #include <Model.h>
@@ -174,75 +175,22 @@ void cxmodel::Model::DropChip(const cxmodel::IChip& p_chip, size_t p_column)
         return;
     }
 
-    if(!PRECONDITION(p_column < m_board->GetNbColumns()))
+    // Here, we take a copy of the active player's index. If it is updated after the drop,
+    // it means the drop worked and we can notify:
+    const size_t activePlayerIndexBefore = m_activePlayerIndex;
+
+    std::unique_ptr<ICommand> command = std::make_unique<CommandDropChip>(*this,
+                                                                          *m_board,
+                                                                          m_players,
+                                                                          m_activePlayerIndex,
+                                                                          m_nextPlayerIndex,
+                                                                          p_chip,
+                                                                          p_column);
+    m_cmdStack->Execute(std::move(command));
+
+    if(activePlayerIndexBefore != m_activePlayerIndex)
     {
-        return;
-    }
-
-    const Player& activePlayer = GetActivePlayer();
-    if(!PRECONDITION(activePlayer.GetChip() == p_chip))
-    {
-        const IChip& activePlayerChip = activePlayer.GetChip();
-        std::ostringstream logStream;
-        logStream << "Active player's color: (" << activePlayerChip.GetColor().R() << ", "
-                                                << activePlayerChip.GetColor().G() << ", "
-                                                << activePlayerChip.GetColor().B() << ")";
-        Log(cxlog::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__, logStream.str());
-
-        logStream.str("");
-        logStream << "Dropped disc color: (" << p_chip.GetColor().R() << ", "
-                                             << p_chip.GetColor().G() << ", "
-                                             << p_chip.GetColor().B() << ")";
-        Log(cxlog::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__, logStream.str());
-
-        return;
-    }
-
-    IBoard::Position droppedPosition;
-    if(m_board->DropChip(p_column, p_chip, droppedPosition))
-    {
-        // Update player information:
-        if(m_activePlayerIndex == m_players.size() - 1)
-        {
-            m_activePlayerIndex = 0u;
-        }
-        else
-        {
-            ++m_activePlayerIndex;
-        }
-
-        if(m_nextPlayerIndex == m_players.size() - 1)
-        {
-            m_nextPlayerIndex = 0u;
-        }
-        else
-        {
-            ++m_nextPlayerIndex;
-        }
-
-        if(!ASSERT(m_activePlayerIndex < m_players.size()))
-        {
-            return;
-        }
-
-        if(!ASSERT(m_nextPlayerIndex < m_players.size()))
-        {
-            return;
-        }
-
-        if(!ASSERT(m_activePlayerIndex != m_nextPlayerIndex))
-        {
-            return;
-        }
-
         Notify(NotificationContext::CHIP_DROPPED);
-
-        std::ostringstream stream;
-        stream << activePlayer.GetName() << "'s chip dropped at (" << droppedPosition.m_row << ", " << droppedPosition.m_column << ")";
-        Log(cxlog::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__, stream.str());
-    }
-    {
-        Log(cxlog::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__, "Chip drop failed for " + activePlayer.GetName());
     }
 
     CheckInvariants();
