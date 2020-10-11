@@ -45,12 +45,9 @@ namespace cxmodel
 {
 
 /*********************************************************************************************//**
- * @brief DESCRIPTION
+ * @brief Command to drop a chip in the game board.
  *
- * @invariant
- * @invariant
- *
- * DESCRIPTION
+ * This commands drops a chip into the game board.
  *
  ************************************************************************************************/
 class CommandDropChip : public cxmodel::ICommand
@@ -58,6 +55,20 @@ class CommandDropChip : public cxmodel::ICommand
 
 public:
 
+    /******************************************************************************************//**
+     * @brief Constructor.
+     *
+     * @pre The column passed as argument is within the board limits.
+     *
+     * @param p_logger            A logger.
+     * @param p_board             The game board.
+     * @param p_players           The list of players.
+     * @param p_activePlayerIndex The active player index in the list.
+     * @param p_nextPlayerIndex   The next player index in the list.
+     * @param p_droppedChip       The chip being dropped.
+     * @param p_column            The column into which to drop the chip.
+     *
+     ********************************************************************************************/
     CommandDropChip(cxlog::ILogger& p_logger,
                     cxmodel::IBoard& p_board,
                     std::vector<Player>& p_players,
