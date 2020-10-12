@@ -47,6 +47,7 @@ OBJS_$(d) := $(d)/BoardTests.o \
              $(d)/ColorTests.o \
              $(d)/CommandAddTwoMock.o \
              $(d)/CommandCreateNewGameTests.o \
+             $(d)/CommandDropChipTests.o \
              $(d)/CommandStackMock.o \
              $(d)/CommandStackTestFixture.o \
              $(d)/CommandStackTests.o \
