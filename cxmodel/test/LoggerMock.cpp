@@ -23,12 +23,16 @@
 
 #include "LoggerMock.h"
 
-void LoggerMock::Log(const cxlog::VerbosityLevel p_verbosityLevel, const std::string& p_fileName, const std::string& p_functionName, const size_t p_lineNumber, const std::string& p_message)
+void LoggerMock::Log(const cxlog::VerbosityLevel p_verbosityLevel,
+                     const std::string& p_fileName,
+                     const std::string& p_functionName,
+                     const size_t p_lineNumber,
+                     const std::string& p_message)
 {
     // Unused for testing...
     (void)p_verbosityLevel;
     (void)p_fileName;
-    (void) p_functionName;
+    (void)p_functionName;
     (void)p_lineNumber;
     (void)p_message;
 }
