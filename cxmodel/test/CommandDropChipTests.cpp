@@ -75,7 +75,7 @@ private:
 
 };
 
-TEST_F(CommandDropChipTestFixture, Execute_EmptyRowAndTwoPlayers_AllDataUpdated)
+TEST_F(CommandDropChipTestFixture, /*DISABLED_*/Execute_EmptyRowAndTwoPlayers_AllDataUpdated)
 {
     // Data setup:
     cxmodel::Board board{7u, 6u, ModelAsLimitsGet()};
@@ -110,7 +110,7 @@ TEST_F(CommandDropChipTestFixture, Execute_EmptyRowAndTwoPlayers_AllDataUpdated)
     ASSERT_TRUE(nextPlayerIndex == 0u);
 }
 
-TEST_F(CommandDropChipTestFixture, Execute_EmptyRowAndThreePlayers_AllDataUpdated)
+TEST_F(CommandDropChipTestFixture, /*DISABLED_*/Execute_EmptyRowAndThreePlayers_AllDataUpdated)
 {
     // Data setup:
     cxmodel::Board board{7u, 6u, ModelAsLimitsGet()};
@@ -146,7 +146,7 @@ TEST_F(CommandDropChipTestFixture, Execute_EmptyRowAndThreePlayers_AllDataUpdate
     ASSERT_TRUE(nextPlayerIndex == 2u);
 }
 
-TEST_F(CommandDropChipTestFixture, Execute_RowNotFull_AllDataUpdated)
+TEST_F(CommandDropChipTestFixture, /*DISABLED_*/Execute_RowNotFull_AllDataUpdated)
 {
     // Data setup:
     cxmodel::Board board{7u, 6u, ModelAsLimitsGet()};
@@ -186,7 +186,7 @@ TEST_F(CommandDropChipTestFixture, Execute_RowNotFull_AllDataUpdated)
     ASSERT_TRUE(nextPlayerIndex == 1u);
 }
 
-TEST_F(CommandDropChipTestFixture, Execute_RowFull_NoDataUpdated)
+TEST_F(CommandDropChipTestFixture, /*DISABLED_*/Execute_RowFull_NoDataUpdated)
 {
     // Data setup:
     cxmodel::Board board{7u, 6u, ModelAsLimitsGet()};
@@ -231,7 +231,7 @@ TEST_F(CommandDropChipTestFixture, Execute_RowFull_NoDataUpdated)
     ASSERT_TRUE(nextPlayerIndex == 1u);
 }
 
-TEST_F(CommandDropChipTestFixture, Undo_Whatever_Asserts)
+TEST_F(CommandDropChipTestFixture, /*DISABLED_*/Undo_Whatever_Asserts)
 {
     // Data setup:
     cxmodel::Board board{7u, 6u, ModelAsLimitsGet()};
