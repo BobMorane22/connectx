@@ -193,14 +193,6 @@ TEST(Model, /*DISABLED_*/IsTie_ValidModel_ThrowsForNow)
     ASSERT_THROW(model.IsTie(), std::logic_error);
 }
 
-TEST(Model, /*DISABLED_*/IsEarlyTie_ValidModel_ThrowsForNow)
-{
-    LoggerMock logger;
-    cxmodel::Model model{std::make_unique<cxmodel::CommandStack>(200), logger};
-
-    ASSERT_THROW(model.IsEarlyTie(), std::logic_error);
-}
-
 TEST(Model, /*DISABLED_*/Undo_RandomCommand_UndoCalledOnCommandStack)
 {
     std::unique_ptr<CommandStackMock> cmdStack = std::make_unique<CommandStackMock>();

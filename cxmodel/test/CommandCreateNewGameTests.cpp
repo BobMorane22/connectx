@@ -23,13 +23,41 @@
 
 #include <gtest/gtest.h>
 
+#include <Board.h>
 #include <CommandCreateNewGame.h>
 
-TEST(CommandCreateNewGame, /*DISABLED_*/Execute_ValidNewGame_NewGameCreated)
+class CommandCreateNewGameTestFixture : public ::testing::Test
+{
+
+public:
+
+    cxmodel::IConnectXLimits& ModelAsLimitsGet()
+    {
+        return m_model;
+    }
+
+private:
+
+    class ModelMock final : public cxmodel::IConnectXLimits
+    {
+        size_t GetMinimumGridHeight() const override {return 6u;};
+        size_t GetMinimumGridWidth() const override {return 7u;};
+        size_t GetMinimumInARowValue() const override {return 4u;};
+        size_t GetMaximumGridHeight() const override {return 64u;};
+        size_t GetMaximumGridWidth() const override {return 64u;};
+        size_t GetMaximumInARowValue() const override {return 10u;};
+        size_t GetMinimumNumberOfPlayers() const override {return 3u;};
+        size_t GetMaximumNumberOfPlayers() const override {return 10u;};
+    };
+
+    ModelMock m_model;
+
+};
+
+TEST_F(CommandCreateNewGameTestFixture, /*DISABLED_*/Execute_ValidNewGame_NewGameCreated)
 {
     std::vector<cxmodel::Player> modelPlayers;
-    size_t modelGridWidth = 0u;
-    size_t modelGridHeight = 0u;
+    std::unique_ptr<cxmodel::IBoard> board;
     size_t modelInARowValue = 0u;
 
     cxmodel::NewGameInformation newGameInformation;
@@ -37,25 +65,26 @@ TEST(CommandCreateNewGame, /*DISABLED_*/Execute_ValidNewGame_NewGameCreated)
     newGameInformation.m_inARowValue = 4;
     newGameInformation.m_gridWidth = 7;
     newGameInformation.m_gridHeight = 6;
+
     newGameInformation.AddPlayer({"John Doe", cxmodel::MakeRed()});
     newGameInformation.AddPlayer({"Jane Doe", cxmodel::MakeBlue()});
 
-    cxmodel::CommandCreateNewGame cmd{modelPlayers, modelGridWidth, modelGridHeight, modelInARowValue, newGameInformation};
+    cxmodel::CommandCreateNewGame cmd{ModelAsLimitsGet(), board, modelPlayers, modelInARowValue, newGameInformation};
     cmd.Execute();
 
     ASSERT_EQ(modelPlayers.size(), newGameInformation.GetNbOfNewPlayers());
     ASSERT_EQ(modelPlayers, newGameInformation.GetNewPlayers());
 
-    ASSERT_EQ(modelGridWidth, newGameInformation.m_gridWidth);
-    ASSERT_EQ(modelGridHeight, newGameInformation.m_gridHeight);
+    ASSERT_TRUE(board != nullptr);
+    ASSERT_EQ(board->GetNbColumns(), newGameInformation.m_gridWidth);
+    ASSERT_EQ(board->GetNbRows(), newGameInformation.m_gridHeight);
     ASSERT_EQ(modelInARowValue, newGameInformation.m_inARowValue);
 }
 
-TEST(CommandCreateNewGame, /*DISABLED_*/Undo_ValidNewGame_HasNoEffect)
+TEST_F(CommandCreateNewGameTestFixture, /*DISABLED_*/Undo_ValidNewGame_HasNoEffect)
 {
     std::vector<cxmodel::Player> modelPlayers;
-    size_t modelGridWidth = 0u;
-    size_t modelGridHeight = 0u;
+    std::unique_ptr<cxmodel::IBoard> board;
     size_t modelInARowValue = 0u;
 
     cxmodel::NewGameInformation newGameInformation;
@@ -66,7 +95,7 @@ TEST(CommandCreateNewGame, /*DISABLED_*/Undo_ValidNewGame_HasNoEffect)
     newGameInformation.AddPlayer({"John Doe", cxmodel::MakeRed()});
     newGameInformation.AddPlayer({"Jane Doe", cxmodel::MakeBlue()});
 
-    cxmodel::CommandCreateNewGame cmd{modelPlayers, modelGridWidth, modelGridHeight, modelInARowValue, newGameInformation};
+    cxmodel::CommandCreateNewGame cmd{ModelAsLimitsGet(), board, modelPlayers, modelInARowValue, newGameInformation};
     cmd.Execute();
 
     // For now, undoing should have no effect:
@@ -75,7 +104,8 @@ TEST(CommandCreateNewGame, /*DISABLED_*/Undo_ValidNewGame_HasNoEffect)
     ASSERT_EQ(modelPlayers.size(), newGameInformation.GetNbOfNewPlayers());
     ASSERT_EQ(modelPlayers, newGameInformation.GetNewPlayers());
 
-    ASSERT_EQ(modelGridWidth, newGameInformation.m_gridWidth);
-    ASSERT_EQ(modelGridHeight, newGameInformation.m_gridHeight);
+    ASSERT_TRUE(board != nullptr);
+    ASSERT_EQ(board->GetNbColumns(), newGameInformation.m_gridWidth);
+    ASSERT_EQ(board->GetNbRows(), newGameInformation.m_gridHeight);
     ASSERT_EQ(modelInARowValue, newGameInformation.m_inARowValue);
 }

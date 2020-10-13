@@ -78,7 +78,7 @@ private:
 TEST_F(CommandDropChipTestFixture, /*DISABLED_*/Execute_EmptyRowAndTwoPlayers_AllDataUpdated)
 {
     // Data setup:
-    cxmodel::Board board{7u, 6u, ModelAsLimitsGet()};
+    cxmodel::Board board{6u, 7u, ModelAsLimitsGet()};
     ASSERT_TRUE(board.GetChip({0u, 0u}) == NO_CHIP);
 
     std::vector<cxmodel::Player> players{
@@ -113,7 +113,7 @@ TEST_F(CommandDropChipTestFixture, /*DISABLED_*/Execute_EmptyRowAndTwoPlayers_Al
 TEST_F(CommandDropChipTestFixture, /*DISABLED_*/Execute_EmptyRowAndThreePlayers_AllDataUpdated)
 {
     // Data setup:
-    cxmodel::Board board{7u, 6u, ModelAsLimitsGet()};
+    cxmodel::Board board{6u, 7u, ModelAsLimitsGet()};
     ASSERT_TRUE(board.GetChip({0u, 0u}) == NO_CHIP);
 
     std::vector<cxmodel::Player> players{
@@ -149,7 +149,7 @@ TEST_F(CommandDropChipTestFixture, /*DISABLED_*/Execute_EmptyRowAndThreePlayers_
 TEST_F(CommandDropChipTestFixture, /*DISABLED_*/Execute_RowNotFull_AllDataUpdated)
 {
     // Data setup:
-    cxmodel::Board board{7u, 6u, ModelAsLimitsGet()};
+    cxmodel::Board board{6u, 7u, ModelAsLimitsGet()};
     cxmodel::Disc firstDisc{cxmodel::MakeRed()};
     cxmodel::IBoard::Position dummy;
     ASSERT_TRUE(board.DropChip(5u, firstDisc, dummy));
@@ -189,7 +189,7 @@ TEST_F(CommandDropChipTestFixture, /*DISABLED_*/Execute_RowNotFull_AllDataUpdate
 TEST_F(CommandDropChipTestFixture, /*DISABLED_*/Execute_RowFull_NoDataUpdated)
 {
     // Data setup:
-    cxmodel::Board board{7u, 6u, ModelAsLimitsGet()};
+    cxmodel::Board board{6u, 7u, ModelAsLimitsGet()};
     cxmodel::Disc firstDisc{cxmodel::MakeRed()};
     cxmodel::Disc secondDisc{cxmodel::MakeBlue()};
 
@@ -234,7 +234,7 @@ TEST_F(CommandDropChipTestFixture, /*DISABLED_*/Execute_RowFull_NoDataUpdated)
 TEST_F(CommandDropChipTestFixture, /*DISABLED_*/Undo_Whatever_Asserts)
 {
     // Data setup:
-    cxmodel::Board board{7u, 6u, ModelAsLimitsGet()};
+    cxmodel::Board board{6u, 7u, ModelAsLimitsGet()};
     ASSERT_TRUE(board.GetChip({0u, 0u}) == NO_CHIP);
 
     std::vector<cxmodel::Player> players{

@@ -80,15 +80,25 @@ size_t cxmodel::Board::GetNbPositions() const
 
 const cxmodel::IChip& cxmodel::Board::GetChip(const Position& p_position) const
 {
-    PRECONDITION(p_position.m_row    < m_nbRows);
-    PRECONDITION(p_position.m_column < m_nbColumns);
+    if(!PRECONDITION(p_position.m_row    < m_nbRows))
+    {
+        return *m_grid[0][0];
+    }
+
+    if(!PRECONDITION(p_position.m_column < m_nbColumns))
+    {
+        return *m_grid[0][0];
+    }
 
     return *m_grid[p_position.m_row][p_position.m_column];
 }
 
 bool cxmodel::Board::DropChip(size_t p_column, const cxmodel::IChip& p_disc, Position& p_droppedPosition)
 {
-    PRECONDITION(p_column < m_nbColumns);
+    if(!PRECONDITION(p_column < m_nbColumns))
+    {
+        return false;
+    }
 
     if(IsColumnFull(p_column))
     {
