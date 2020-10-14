@@ -77,3 +77,21 @@ std::string ApplicationTestFixture::GetStdErrContents() const
 {
     return m_disableStreamsRAII.GetStdErrContents();
 }
+
+void ApplicationTestFixture::ModelApplicationMock::CreateNewGame(const cxmodel::NewGameInformation& /*p_gameInformation*/)
+{
+    // Not used...
+}
+
+void ApplicationTestFixture::ModelApplicationMock::DropChip(const cxmodel::IChip& /*p_chip*/, size_t /*p_column*/)
+{
+    // Not used...
+}
+
+const cxmodel::IChip& ApplicationTestFixture::ModelApplicationMock::GetChip(size_t p_row, size_t p_column) const
+{
+    EXPECT_TRUE(p_row < GetCurrentGridHeight());
+    EXPECT_TRUE(p_column < GetCurrentGridWidth());
+
+    return m_ACTIVE_PLAYER.GetChip();
+}
