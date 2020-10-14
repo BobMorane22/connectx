@@ -89,7 +89,10 @@ void MainWindowPresenterTestFixture::MainWindowPresenterModelMock::DropChip(cons
     Notify(cxmodel::NotificationContext::CHIP_DROPPED);
 }
 
-const cxmodel::IChip& MainWindowPresenterTestFixture::MainWindowPresenterModelMock::GetChip(size_t /*p_row*/, size_t /*p_column*/) const
+const cxmodel::IChip& MainWindowPresenterTestFixture::MainWindowPresenterModelMock::GetChip(size_t p_row, size_t p_column) const
 {
+    EXPECT_TRUE(p_row < GetCurrentGridHeight());
+    EXPECT_TRUE(p_column < GetCurrentGridWidth());
+
     return m_ACTIVE_PLAYER.GetChip();
 }

@@ -69,5 +69,5 @@ void MainWindowControllerTestFixture::MainWindowControllerMockModel::CreateNewGa
 
 void MainWindowControllerTestFixture::MainWindowControllerMockModel::DropChip(const cxmodel::IChip& /*p_chip*/, size_t /*p_column*/)
 {
-
+    // Nothing to do...
 }

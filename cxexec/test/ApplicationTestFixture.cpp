@@ -83,8 +83,10 @@ void ApplicationTestFixture::ModelApplicationMock::CreateNewGame(const cxmodel::
     // Not used...
 }
 
-void ApplicationTestFixture::ModelApplicationMock::DropChip(const cxmodel::IChip& /*p_chip*/, size_t /*p_column*/)
+void ApplicationTestFixture::ModelApplicationMock::DropChip(const cxmodel::IChip& /*p_chip*/, size_t p_column)
 {
+    ASSERT_TRUE(p_column < GetCurrentGridWidth());
+
     // Not used...
 }
 
