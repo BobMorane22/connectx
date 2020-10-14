@@ -25,9 +25,7 @@
 
 TEST_F(MainWindowControllerTestFixture, /*DISABLED_*/OnStart_ValidGame_CreateNewGameCalledOnModel)
 {
-    MainWindowControllerMockModel& model = GetModel();
-
-    ASSERT_FALSE(model.GetNewGameCreated());
+    ASSERT_FALSE(GetNewGameCreated());
 
     cxmodel::NewGameInformation newGameInformation;
     newGameInformation.m_inARowValue = 4;
@@ -38,5 +36,5 @@ TEST_F(MainWindowControllerTestFixture, /*DISABLED_*/OnStart_ValidGame_CreateNew
 
     GetController().OnStart(newGameInformation);
 
-    ASSERT_TRUE(model.GetNewGameCreated());
+    ASSERT_TRUE(GetNewGameCreated());
 }

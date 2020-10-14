@@ -24,29 +24,21 @@
 #include "MainWindowController.h"
 #include "MainWindowControllerTestFixture.h"
 
-void MainWindowControllerMockModel::CreateNewGame(const cxmodel::NewGameInformation& p_gameInformation)
-{
-    // Not relevent for this test...
-    (void)p_gameInformation;
-
-    m_newGameCreated = true;
-}
-
-bool MainWindowControllerMockModel::GetNewGameCreated() const
-{
-    return m_newGameCreated;
-}
-
 MainWindowControllerTestFixture::MainWindowControllerTestFixture()
 {
-    m_model = std::make_unique<MainWindowControllerMockModel>();
+    m_model = std::make_unique<MainWindowControllerMockModel>(*this);
     m_controller = std::make_unique<cxgui::MainWindowController>(*m_model);
 
     EXPECT_TRUE(m_model != nullptr);
     EXPECT_TRUE(m_controller != nullptr);
 }
 
-MainWindowControllerMockModel& MainWindowControllerTestFixture::GetModel()
+bool MainWindowControllerTestFixture::GetNewGameCreated() const
+{
+    return m_newGameCreated;
+}
+
+cxmodel::IConnectXGameActions& MainWindowControllerTestFixture::GetModel()
 {
     EXPECT_TRUE(m_model != nullptr);
 
@@ -65,4 +57,17 @@ cxgui::INewGameViewController& MainWindowControllerTestFixture::GetNewGameViewCo
     EXPECT_TRUE(m_controller != nullptr);
 
     return *m_controller;
+}
+
+void MainWindowControllerTestFixture::MainWindowControllerMockModel::CreateNewGame(const cxmodel::NewGameInformation& p_gameInformation)
+{
+    // Not relevent for this test...
+    (void)p_gameInformation;
+
+    m_outer.m_newGameCreated = true;
+}
+
+void MainWindowControllerTestFixture::MainWindowControllerMockModel::DropChip(const cxmodel::IChip& /*p_chip*/, size_t /*p_column*/)
+{
+
 }

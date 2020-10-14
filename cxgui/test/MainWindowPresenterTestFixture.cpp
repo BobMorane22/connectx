@@ -72,3 +72,24 @@ cxmodel::IConnectXLimits& MainWindowPresenterTestFixture::GetLimitsModel()
 
     return *m_model;
 }
+
+void MainWindowPresenterTestFixture::MainWindowPresenterModelMock::CreateNewGame(const cxmodel::NewGameInformation& p_gameInformation)
+{
+    (void)p_gameInformation;
+
+    // Here we only notify and let the presenter feed from the hardcoded
+    // model mock values. The values in themselves are not important.
+    Notify(cxmodel::NotificationContext::CREATE_NEW_GAME);
+}
+
+void MainWindowPresenterTestFixture::MainWindowPresenterModelMock::DropChip(const cxmodel::IChip& /*p_chip*/, size_t p_column)
+{
+    ASSERT_TRUE(p_column < GetCurrentGridWidth());
+
+    Notify(cxmodel::NotificationContext::CHIP_DROPPED);
+}
+
+const cxmodel::IChip& MainWindowPresenterTestFixture::MainWindowPresenterModelMock::GetChip(size_t /*p_row*/, size_t /*p_column*/) const
+{
+    return m_ACTIVE_PLAYER.GetChip();
+}

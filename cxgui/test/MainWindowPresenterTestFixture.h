@@ -65,14 +65,8 @@ private:
         std::string GetVersionNumber() const override {return "v0.0;";}
 
         // IConnectXGameActions:
-        void CreateNewGame(const cxmodel::NewGameInformation& p_gameInformation) override
-        {
-            (void)p_gameInformation;
-
-            // Here we only notify and let the presenter feed from the hardcoded
-            // model mock values. The values in themselves are not important.
-            Notify(cxmodel::NotificationContext::CREATE_NEW_GAME);
-        }
+        void CreateNewGame(const cxmodel::NewGameInformation& p_gameInformation) override;
+        void DropChip(const cxmodel::IChip& p_chip, size_t p_column) override;
 
         // IConnectXGameInformation:
         size_t GetCurrentGridHeight() const override {return 6u;}
@@ -80,9 +74,9 @@ private:
         size_t GetCurrentInARowValue() const override {return 4u;};
         const cxmodel::Player& GetActivePlayer() const override {return m_ACTIVE_PLAYER;};
         const cxmodel::Player& GetNextPlayer() const override {return m_NEXT_PLAYER;};
+        const cxmodel::IChip& GetChip(size_t p_row, size_t p_column) const override;
         bool IsWon() const override {throw std::logic_error("Not implemented!");};
         bool IsTie() const override {throw std::logic_error("Not implemented!");};
-        bool IsEarlyTie() const override {throw std::logic_error("Not implemented!");};
 
         // IConnectXLimits:
         size_t GetMinimumGridHeight() const override {return 7u;};

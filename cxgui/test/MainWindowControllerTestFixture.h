@@ -31,21 +31,6 @@
 #include <cxmodel/include/IConnectXGameActions.h>
 #include <cxgui/include/IMainWindowController.h>
 
-class MainWindowControllerMockModel : public cxmodel::IConnectXGameActions
-{
-
-public:
-
-    // IConnectXGameActions:
-    void CreateNewGame(const cxmodel::NewGameInformation& p_gameInformation) override;
-
-    bool GetNewGameCreated() const;
-
-private:
-
-    bool m_newGameCreated = false;
-};
-
 class MainWindowControllerTestFixture : public testing::Test
 {
 
@@ -53,11 +38,35 @@ public:
 
     MainWindowControllerTestFixture();
 
-    MainWindowControllerMockModel& GetModel();
+    bool GetNewGameCreated() const;
+
+    cxmodel::IConnectXGameActions& GetModel();
     cxgui::IMainWindowController& GetController();
     cxgui::INewGameViewController& GetNewGameViewController();
 
 private:
+
+    class MainWindowControllerMockModel : public cxmodel::IConnectXGameActions
+    {
+
+    public:
+
+        MainWindowControllerMockModel(MainWindowControllerTestFixture& p_outer)
+        : m_outer{p_outer}
+        {
+        }
+
+        // IConnectXGameActions:
+        void CreateNewGame(const cxmodel::NewGameInformation& p_gameInformation) override;
+        void DropChip(const cxmodel::IChip& p_chip, size_t p_column) override;
+
+    private:
+
+        MainWindowControllerTestFixture& m_outer;
+
+    };
+
+    bool m_newGameCreated = false;
 
     std::unique_ptr<cxgui::IMainWindowController> m_controller;
     std::unique_ptr<MainWindowControllerMockModel> m_model;
