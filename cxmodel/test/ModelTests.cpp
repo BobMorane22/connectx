@@ -25,8 +25,9 @@
 
 #include <gtest/gtest.h>
 
-#include <IObserver.h>
 #include <CommandStack.h>
+#include <Disc.h>
+#include <IObserver.h>
 #include <Model.h>
 
 #include "CommandStackMock.h"
@@ -145,7 +146,7 @@ TEST(Model, /*DISABLED_*/CreateNewGame_ValidNewGameInformation_NewGameCreated)
     ASSERT_EQ(model.GetCurrentInARowValue(), 4u);
 }
 
-TEST(Model, /*DISABLED_*/CreateNewGame_ValidNewGameInformation_CreateNewNotificationSent)
+TEST(Model, /*DISABLED_*/CreateNewGame_ValidNewGameInformation_CreateNewGameNotificationSent)
 {
     // We create an observer specific to the CREATE_NEW_GAME notification context:
     class SignalObserver : public cxmodel::IObserver
@@ -175,6 +176,173 @@ TEST(Model, /*DISABLED_*/CreateNewGame_ValidNewGameInformation_CreateNewNotifica
 
     // Then we create the new game:
     model.CreateNewGame(newGameInfo);
+}
+
+TEST(Model, /*DISABLED_*/DropChip_ValidModelChipAndColumn_ChipDroppedNotificationSent)
+{
+    // We create an observer specific to the CHIP_DROPPED notification context:
+    class SignalObserver : public cxmodel::IObserver
+    {
+        void Update(cxmodel::NotificationContext p_context, cxmodel::Subject* p_subject) override
+        {
+            ASSERT_TRUE(p_subject);
+            ASSERT_TRUE(p_context == cxmodel::NotificationContext::CHIP_DROPPED);
+        }
+    };
+
+    // We create a model:
+    LoggerMock logger;
+    cxmodel::Model model{std::make_unique<cxmodel::CommandStack>(200), logger};
+
+    // We create valid new game information:
+    cxmodel::NewGameInformation newGameInfo;
+    newGameInfo.m_inARowValue = 4u;
+    newGameInfo.m_gridWidth = 7u;
+    newGameInfo.m_gridHeight = 6u;
+    newGameInfo.AddPlayer({"John Doe", cxmodel::MakeRed()});
+    newGameInfo.AddPlayer({"Jane Doe", cxmodel::MakeBlue()});
+
+    // Then we create the new game:
+    model.CreateNewGame(newGameInfo);
+
+    // We then attach the model to our observer:
+    SignalObserver observer;
+    model.Attach(&observer);
+
+    // We drop a chip. It should trigger a notification since the board is empty:
+    const cxmodel::Disc RED_CHIP{cxmodel::MakeRed()};
+    model.DropChip(RED_CHIP, 0u);
+}
+
+TEST(Model, /*DISABLED_*/DropChip_ValidModelChipAndColumn_GameDataUpdated)
+{
+    // We create a model:
+    LoggerMock logger;
+    cxmodel::Model model{std::make_unique<cxmodel::CommandStack>(200), logger};
+
+    // We create valid new game information:
+    cxmodel::NewGameInformation newGameInfo;
+    newGameInfo.m_inARowValue = 4u;
+    newGameInfo.m_gridWidth = 7u;
+    newGameInfo.m_gridHeight = 6u;
+    newGameInfo.AddPlayer({"John Doe", cxmodel::MakeRed()});
+    newGameInfo.AddPlayer({"Jane Doe", cxmodel::MakeBlue()});
+
+    // Then we create the new game:
+    model.CreateNewGame(newGameInfo);
+
+    // We drop a chip:
+    ASSERT_EQ(model.GetActivePlayer(), cxmodel::Player("John Doe", cxmodel::MakeRed()));
+    ASSERT_EQ(model.GetNextPlayer(), cxmodel::Player("Jane Doe", cxmodel::MakeBlue()));
+
+    const cxmodel::Disc RED_CHIP{cxmodel::MakeRed()};
+    model.DropChip(RED_CHIP, 0u);
+
+    ASSERT_EQ(model.GetActivePlayer(), cxmodel::Player("Jane Doe", cxmodel::MakeBlue()));
+    ASSERT_EQ(model.GetNextPlayer(), cxmodel::Player("John Doe", cxmodel::MakeRed()));
+}
+
+TEST(Model, /*DISABLED_*/DropChip_ValidModelTwoSameChipsDropped_GameDataNotUpdated)
+{
+    // We create a model:
+    LoggerMock logger;
+    cxmodel::Model model{std::make_unique<cxmodel::CommandStack>(200), logger};
+
+    // We create valid new game information:
+    cxmodel::NewGameInformation newGameInfo;
+    newGameInfo.m_inARowValue = 4u;
+    newGameInfo.m_gridWidth = 7u;
+    newGameInfo.m_gridHeight = 6u;
+    newGameInfo.AddPlayer({"John Doe", cxmodel::MakeRed()});
+    newGameInfo.AddPlayer({"Jane Doe", cxmodel::MakeBlue()});
+
+    // Then we create the new game:
+    model.CreateNewGame(newGameInfo);
+
+    // We drop a chip:
+    ASSERT_EQ(model.GetActivePlayer(), cxmodel::Player("John Doe", cxmodel::MakeRed()));
+    ASSERT_EQ(model.GetNextPlayer(), cxmodel::Player("Jane Doe", cxmodel::MakeBlue()));
+
+    const cxmodel::Disc RED_CHIP{cxmodel::MakeRed()};
+    model.DropChip(RED_CHIP, 0u);
+    model.DropChip(RED_CHIP, 0u);
+
+    ASSERT_EQ(model.GetActivePlayer(), cxmodel::Player("Jane Doe", cxmodel::MakeBlue()));
+    ASSERT_EQ(model.GetNextPlayer(), cxmodel::Player("John Doe", cxmodel::MakeRed()));
+}
+
+TEST(Model, /*DISABLED_*/GetChip_ValidModel_ChipReturned)
+{
+    // We create a model:
+    LoggerMock logger;
+    cxmodel::Model model{std::make_unique<cxmodel::CommandStack>(200), logger};
+
+    // We create valid new game information:
+    cxmodel::NewGameInformation newGameInfo;
+    newGameInfo.m_inARowValue = 4u;
+    newGameInfo.m_gridWidth = 7u;
+    newGameInfo.m_gridHeight = 6u;
+    newGameInfo.AddPlayer({"John Doe", cxmodel::MakeRed()});
+    newGameInfo.AddPlayer({"Jane Doe", cxmodel::MakeBlue()});
+
+    // Then we create the new game:
+    model.CreateNewGame(newGameInfo);
+
+    // For now, no chip has been dropped, all returned chips should be transparent:
+    const cxmodel::IChip& chipBefore = model.GetChip(0u, 0u);
+    ASSERT_EQ(chipBefore, cxmodel::Disc(cxmodel::MakeTransparent()));
+
+    // We drop a chip:
+    const cxmodel::Disc RED_CHIP{cxmodel::MakeRed()};
+    model.DropChip(RED_CHIP, 0u);
+
+    // We now have a red chip at (0,0):
+    const cxmodel::IChip& chipAfter = model.GetChip(0u, 0u);
+    ASSERT_EQ(chipAfter, cxmodel::Disc(cxmodel::MakeRed()));
+}
+
+TEST(Model, /*DISABLED_*/GetChip_InvalidRow_ReturnsNoDisc)
+{
+    // We create a model:
+    LoggerMock logger;
+    cxmodel::Model model{std::make_unique<cxmodel::CommandStack>(200), logger};
+
+    // We create valid new game information:
+    cxmodel::NewGameInformation newGameInfo;
+    newGameInfo.m_inARowValue = 4u;
+    newGameInfo.m_gridWidth = 7u;
+    newGameInfo.m_gridHeight = 6u;
+    newGameInfo.AddPlayer({"John Doe", cxmodel::MakeRed()});
+    newGameInfo.AddPlayer({"Jane Doe", cxmodel::MakeBlue()});
+
+    // Then we create the new game:
+    model.CreateNewGame(newGameInfo);
+
+    // For now, no chip has been dropped, all returned chips should be transparent:
+    const cxmodel::IChip& chipBefore = model.GetChip(model.GetCurrentGridHeight(), 0u);
+    ASSERT_EQ(chipBefore, cxmodel::Disc(cxmodel::MakeTransparent()));
+}
+
+TEST(Model, /*DISABLED_*/GetChip_InvalidColumn_ReturnsNoDisc)
+{
+    // We create a model:
+    LoggerMock logger;
+    cxmodel::Model model{std::make_unique<cxmodel::CommandStack>(200), logger};
+
+    // We create valid new game information:
+    cxmodel::NewGameInformation newGameInfo;
+    newGameInfo.m_inARowValue = 4u;
+    newGameInfo.m_gridWidth = 7u;
+    newGameInfo.m_gridHeight = 6u;
+    newGameInfo.AddPlayer({"John Doe", cxmodel::MakeRed()});
+    newGameInfo.AddPlayer({"Jane Doe", cxmodel::MakeBlue()});
+
+    // Then we create the new game:
+    model.CreateNewGame(newGameInfo);
+
+    // For now, no chip has been dropped, all returned chips should be transparent:
+    const cxmodel::IChip& chipBefore = model.GetChip(0u, model.GetCurrentGridWidth());
+    ASSERT_EQ(chipBefore, cxmodel::Disc(cxmodel::MakeTransparent()));
 }
 
 TEST(Model, /*DISABLED_*/IsWon_ValidModel_ThrowsForNow)

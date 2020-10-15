@@ -231,6 +231,56 @@ TEST_F(CommandDropChipTestFixture, /*DISABLED_*/Execute_RowFull_NoDataUpdated)
     ASSERT_TRUE(nextPlayerIndex == 1u);
 }
 
+TEST_F(CommandDropChipTestFixture, /*DISABLED_*/Execute_WrongDiscAsInput_DoesNotDropAndAsserts)
+{
+    // Data setup:
+        cxmodel::Board board{6u, 7u, ModelAsLimitsGet()};
+        cxmodel::Disc firstDisc{cxmodel::MakeRed()};
+        cxmodel::Disc secondDisc{cxmodel::MakeBlue()};
+
+        cxmodel::IBoard::Position dummy;
+        ASSERT_TRUE(board.DropChip(6u, firstDisc, dummy));
+        ASSERT_TRUE(board.DropChip(6u, secondDisc, dummy));
+        ASSERT_TRUE(board.DropChip(6u, firstDisc, dummy));
+        ASSERT_TRUE(board.DropChip(6u, secondDisc, dummy));
+        ASSERT_TRUE(board.DropChip(6u, firstDisc, dummy));
+        ASSERT_TRUE(board.DropChip(6u, secondDisc, dummy));
+        ASSERT_TRUE(board.GetChip({5u, 6u}) == secondDisc);
+
+        std::vector<cxmodel::Player> players{
+            {"John Doe", cxmodel::MakeRed()},
+            {"Jane Doe", cxmodel::MakeBlue()}
+        };
+
+        size_t activePlayerIndex = 0u;
+        size_t nextPlayerIndex = 1u;
+
+        cxmodel::Disc droppedDisc{cxmodel::MakeBlue()};
+
+        // The command is created and executed:
+        std::unique_ptr<cxmodel::ICommand> cmd = std::make_unique<cxmodel::CommandDropChip>(GetLogger(),
+                                                                                            board,
+                                                                                            players,
+                                                                                            activePlayerIndex,
+                                                                                            nextPlayerIndex,
+                                                                                            droppedDisc,
+                                                                                            6u);
+
+        cmd->Execute();
+
+        // Data is now checked, no update should have occured:
+        ASSERT_TRUE(board.GetChip({5u, 6u}) == cxmodel::Disc(cxmodel::MakeBlue()));
+        ASSERT_TRUE(activePlayerIndex == 0u);
+        ASSERT_TRUE(nextPlayerIndex == 1u);
+
+        // It should also have asserted:
+        const std::string assertionMessage = GetStdErrContents();
+        ASSERT_FALSE(assertionMessage.empty());
+
+        const std::string assertToken = "Precondition";
+        ASSERT_TRUE(GetStdErrContents().find(assertToken) != std::string::npos);
+}
+
 TEST_F(CommandDropChipTestFixture, /*DISABLED_*/Undo_Whatever_Asserts)
 {
     // Data setup:

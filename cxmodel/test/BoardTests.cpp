@@ -23,12 +23,38 @@
 
 #include <gtest/gtest.h>
 
+#include "DisableStdStreamsRAII.h"
+
 #include <Board.h>
 #include <Disc.h>
 #include <IConnectXLimits.h>
 
 class BoardTestFixture: public::testing::Test
 {
+
+public:
+
+    std::string GetStdErrContents() const
+    {
+        return m_streamDisablerRAII.GetStdErrContents();
+    }
+
+    size_t GetMinimumGridHeight() const {return m_model.GetMinimumGridHeight();};
+    size_t GetMinimumGridWidth() const {return m_model.GetMinimumGridWidth();};
+    size_t GetMinimumInARowValue() const {return m_model.GetMinimumInARowValue();};
+    size_t GetMaximumGridHeight() const {return m_model.GetMaximumGridHeight();};
+    size_t GetMaximumGridWidth() const {return m_model.GetMaximumGridWidth();};
+    size_t GetMaximumInARowValue() const {return m_model.GetMaximumInARowValue();};
+    size_t GetMinimumNumberOfPlayers() const {return m_model.GetMinimumNumberOfPlayers();};
+    size_t GetMaximumNumberOfPlayers() const {return m_model.GetMaximumNumberOfPlayers();};
+
+    std::unique_ptr<cxmodel::IBoard> GetClassicBoard() const
+    {
+        std::unique_ptr<cxmodel::IBoard> board = std::make_unique<cxmodel::Board>(6u, 7u, m_model);
+        EXPECT_TRUE(board);
+
+        return std::move(board);
+    }
 
 private:
 
@@ -48,25 +74,7 @@ private:
     };
 
     ModelMock m_model;
-
-public:
-
-    size_t GetMinimumGridHeight() const {return m_model.GetMinimumGridHeight();};
-    size_t GetMinimumGridWidth() const {return m_model.GetMinimumGridWidth();};
-    size_t GetMinimumInARowValue() const {return m_model.GetMinimumInARowValue();};
-    size_t GetMaximumGridHeight() const {return m_model.GetMaximumGridHeight();};
-    size_t GetMaximumGridWidth() const {return m_model.GetMaximumGridWidth();};
-    size_t GetMaximumInARowValue() const {return m_model.GetMaximumInARowValue();};
-    size_t GetMinimumNumberOfPlayers() const {return m_model.GetMinimumNumberOfPlayers();};
-    size_t GetMaximumNumberOfPlayers() const {return m_model.GetMaximumNumberOfPlayers();};
-
-    std::unique_ptr<cxmodel::IBoard> GetClassicBoard() const
-    {
-        std::unique_ptr<cxmodel::IBoard> board = std::make_unique<cxmodel::Board>(6u, 7u, m_model);
-        EXPECT_TRUE(board);
-
-        return std::move(board);
-    }
+    DisableStdStreamsRAII m_streamDisablerRAII;
 };
 
 TEST_F(BoardTestFixture, /*DISABLED_*/GetNbRows_ValidGameBoard_ReturnsNbRows)
@@ -302,4 +310,29 @@ TEST_F(BoardTestFixture, /*DISABLED_*/GetChip_ExistingPositionAsParameter_Return
     board->DropChip(2, BLUE_CHIP, dummy);
 
     ASSERT_EQ(BLUE_CHIP, board->GetChip(position));
+}
+
+TEST_F(BoardTestFixture, /*DISABLED_*/GetChip_InputPositionOutOfLimits_ReturnsFirstDiscAndAsserts)
+{
+    const auto board = GetClassicBoard();
+
+    const cxmodel::Disc RED_CHIP{cxmodel::MakeRed()};
+
+    cxmodel::IBoard::Position dummy;
+    ASSERT_TRUE(board->DropChip(0, RED_CHIP, dummy));
+    ASSERT_EQ(board->GetChip({0, 0}), RED_CHIP);
+
+    // Wrong height position:
+    ASSERT_EQ(board->GetChip({board->GetNbRows(), 0}), RED_CHIP);
+
+    const std::string assertionMessageRows = GetStdErrContents();
+    ASSERT_FALSE(assertionMessageRows.empty());
+    const std::string assertToken = "Precondition";
+    ASSERT_TRUE(assertionMessageRows.find(assertToken) != std::string::npos);
+
+    // Wrong column position:
+    ASSERT_EQ(board->GetChip({0, board->GetNbColumns()}), RED_CHIP);
+    const std::string assertionMessageColumns = GetStdErrContents();
+    ASSERT_FALSE(assertionMessageColumns.empty());
+    ASSERT_TRUE(assertionMessageColumns.find(assertToken) != std::string::npos);
 }
