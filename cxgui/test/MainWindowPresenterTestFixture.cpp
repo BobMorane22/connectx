@@ -66,6 +66,13 @@ cxmodel::IConnectXGameActions& MainWindowPresenterTestFixture::GetActionsModel()
     return *m_model;
 }
 
+cxmodel::IConnectXGameInformation& MainWindowPresenterTestFixture::GetGameInformationModel()
+{
+    EXPECT_TRUE(m_model != nullptr);
+
+    return *m_model;
+}
+
 cxmodel::IConnectXLimits& MainWindowPresenterTestFixture::GetLimitsModel()
 {
     EXPECT_TRUE(m_model != nullptr);

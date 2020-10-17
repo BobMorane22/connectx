@@ -38,6 +38,11 @@ bool MainWindowControllerTestFixture::GetNewGameCreated() const
     return m_newGameCreated;
 }
 
+bool MainWindowControllerTestFixture::GetChipDropped() const
+{
+    return m_chipDropped;
+}
+
 cxmodel::IConnectXGameActions& MainWindowControllerTestFixture::GetModel()
 {
     EXPECT_TRUE(m_model != nullptr);
@@ -59,15 +64,12 @@ cxgui::INewGameViewController& MainWindowControllerTestFixture::GetNewGameViewCo
     return *m_controller;
 }
 
-void MainWindowControllerTestFixture::MainWindowControllerMockModel::CreateNewGame(const cxmodel::NewGameInformation& p_gameInformation)
+void MainWindowControllerTestFixture::MainWindowControllerMockModel::CreateNewGame(const cxmodel::NewGameInformation& /*p_gameInformation*/)
 {
-    // Not relevent for this test...
-    (void)p_gameInformation;
-
     m_outer.m_newGameCreated = true;
 }
 
 void MainWindowControllerTestFixture::MainWindowControllerMockModel::DropChip(const cxmodel::IChip& /*p_chip*/, size_t /*p_column*/)
 {
-    // Nothing to do...
+    m_outer.m_chipDropped = true;
 }

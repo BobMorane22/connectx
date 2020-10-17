@@ -21,6 +21,8 @@
  *
  *************************************************************************************************/
 
+#include <algorithm>
+
 #include <gtest/gtest.h>
 
 #include <cxmodel/include/NewGameInformation.h>
@@ -54,11 +56,20 @@ TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetMenuLabel_AboutMenu_About
 
 TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/Update_CreateNewGame_NewGameInformationUpdated)
 {
-    auto& model = GetActionsModel();
-    model.CreateNewGame(cxmodel::NewGameInformation{});
-
     const auto& presenter = GetPresenter();
 
+    // Unitial presenter state:
+    ASSERT_EQ(presenter.GetGameViewActivePlayerChipColor(), cxmodel::MakeTransparent());
+    ASSERT_EQ(presenter.GetGameViewActivePlayerName(), "--");
+
+    ASSERT_EQ(presenter.GetGameViewNextPlayerChipColor(), cxmodel::MakeTransparent());
+    ASSERT_EQ(presenter.GetGameViewNextPlayerName() , "--");
+
+    // We create a new game:
+    auto& actionModel = GetActionsModel();
+    actionModel.CreateNewGame(cxmodel::NewGameInformation{});
+
+    // Updated presenter state:
     ASSERT_EQ(presenter.GetGameViewActivePlayerChipColor(), cxmodel::MakeRed());
     ASSERT_EQ(presenter.GetGameViewActivePlayerName(), "John Doe");
 
@@ -66,3 +77,41 @@ TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/Update_CreateNewGame_NewGame
     ASSERT_EQ(presenter.GetGameViewNextPlayerName() , "Jane Doe");
 }
 
+TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/Update_ChipDropped_BoardInformationUpdated)
+{
+    // We create a new game to update the active player chip:
+    auto& actionModel = GetActionsModel();
+    actionModel.CreateNewGame(cxmodel::NewGameInformation{});
+
+    const auto& presenter = GetPresenter();
+    auto boardColors = presenter.GetGameViewChipColors();
+
+    // Initial state:
+    for(const auto& row : boardColors)
+    {
+        ASSERT_TRUE(std::all_of(row.cbegin(),
+                                row.cend(),
+                                [](const cxmodel::ChipColor& p_color)
+                                {
+                                    return p_color == cxmodel::MakeTransparent();
+                                }));
+    }
+
+    // We drop a chip:
+    auto& infoModel = GetGameInformationModel();
+    actionModel.DropChip(infoModel.GetActivePlayer().GetChip(), 0u);
+
+    // Updated state:
+    boardColors = presenter.GetGameViewChipColors();
+
+    for(const auto& row : boardColors)
+    {
+        ASSERT_TRUE(std::all_of(row.cbegin(),
+                                row.cend(),
+                                [&infoModel](const cxmodel::ChipColor& p_color)
+                                {
+                                    const cxmodel::IChip& activePlayerChip = infoModel.GetActivePlayer().GetChip();
+                                    return p_color == activePlayerChip.GetColor();
+                                }));
+    }
+}

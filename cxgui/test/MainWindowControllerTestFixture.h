@@ -31,6 +31,8 @@
 #include <cxmodel/include/IConnectXGameActions.h>
 #include <cxgui/include/IMainWindowController.h>
 
+#include "DisableStdStreamsRAII.h"
+
 class MainWindowControllerTestFixture : public testing::Test
 {
 
@@ -39,6 +41,7 @@ public:
     MainWindowControllerTestFixture();
 
     bool GetNewGameCreated() const;
+    bool GetChipDropped() const;
 
     cxmodel::IConnectXGameActions& GetModel();
     cxgui::IMainWindowController& GetController();
@@ -67,9 +70,12 @@ private:
     };
 
     bool m_newGameCreated = false;
+    bool m_chipDropped = false;
 
     std::unique_ptr<cxgui::IMainWindowController> m_controller;
     std::unique_ptr<MainWindowControllerMockModel> m_model;
+
+    DisableStdStreamsRAII m_streamDisablerRAII;
 
 };
 

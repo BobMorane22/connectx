@@ -51,6 +51,11 @@ TEST(StatusBarPresenter, MakeStatusBarContextString_CreateNewGame_NewGameCreated
     ASSERT_EQ(cxgui::MakeStatusBarContextString(cxmodel::NotificationContext::CREATE_NEW_GAME), "New game created.");
 }
 
+TEST(StatusBarPresenter, MakeStatusBarContextString_DropDisc_DiscDroppedStringCreated)
+{
+    ASSERT_EQ(cxgui::MakeStatusBarContextString(cxmodel::NotificationContext::CHIP_DROPPED), "Chip dropped.");
+}
+
 TEST(StatusBarPresenter, Constructor_NoAction_NoMessage)
 {
     cxgui::StatusBarPresenter presenter;

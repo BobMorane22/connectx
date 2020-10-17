@@ -16,43 +16,56 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file MainWindowControllerTests.cpp
+ * @file DisableStdStreamsRAII.cpp
  * @date 2019
  *
  *************************************************************************************************/
 
-#include "MainWindowControllerTestFixture.h"
+#include "DisableStdStreamsRAII.h"
 
-TEST_F(MainWindowControllerTestFixture, /*DISABLED_*/OnStart_ValidGame_CreateNewGameCalledOnModel)
+#include <iostream>
+
+
+DisableStdStreamsRAII::DisableStdStreamsRAII()
+ : m_stdOutBufferContents{std::cout.rdbuf()}
+ , m_stdErrBufferContents{std::cerr.rdbuf()}
 {
-    ASSERT_FALSE(GetNewGameCreated());
-
-    cxmodel::NewGameInformation newGameInformation;
-    newGameInformation.m_inARowValue = 4;
-    newGameInformation.m_gridWidth = 7;
-    newGameInformation.m_gridHeight = 6;
-    newGameInformation.AddPlayer({"John Doe", cxmodel::MakeRed()});
-    newGameInformation.AddPlayer({"Jane Doe", cxmodel::MakeBlue()});
-
-    GetController().OnStart(newGameInformation);
-
-    ASSERT_TRUE(GetNewGameCreated());
+    DisableStdOut();
+    DisableStdErr();
 }
 
-TEST_F(MainWindowControllerTestFixture, /*DISABLED_*/OnDown_ValidChip_ChipDroppedCalledOnModel)
+DisableStdStreamsRAII::~DisableStdStreamsRAII()
 {
-    ASSERT_FALSE(GetChipDropped());
-
-    GetController().OnDown(cxmodel::MakeBlue(), 0u);
-
-    ASSERT_TRUE(GetChipDropped());
+    EnableStdOut();
+    EnableStdErr();
 }
 
-TEST_F(MainWindowControllerTestFixture, /*DISABLED_*/OnDown_InvalidChip_ChipDroppedNotCalledOnModel)
+void DisableStdStreamsRAII::DisableStdOut()
 {
-    ASSERT_FALSE(GetChipDropped());
+    std::cout.rdbuf(m_stdOutBuffer.rdbuf());
+}
 
-    GetController().OnDown(cxmodel::MakeTransparent(), 0u);
+void DisableStdStreamsRAII::EnableStdOut()
+{
+    std::cout.rdbuf(m_stdOutBufferContents);
+}
 
-    ASSERT_FALSE(GetChipDropped());
+void DisableStdStreamsRAII::DisableStdErr()
+{
+    std::cerr.rdbuf(m_stdErrBuffer.rdbuf());
+}
+
+void DisableStdStreamsRAII::EnableStdErr()
+{
+    std::cerr.rdbuf(m_stdErrBufferContents);
+}
+
+std::string DisableStdStreamsRAII::GetStdOutContents() const
+{
+    return m_stdOutBuffer.str();
+}
+
+std::string DisableStdStreamsRAII::GetStdErrContents() const
+{
+    return m_stdErrBuffer.str();
 }
