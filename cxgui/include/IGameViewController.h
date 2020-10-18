@@ -30,12 +30,7 @@ namespace cxgui
 {
 
 /*********************************************************************************************//**
- * @brief DESCRIPTION
- *
- * @invariant
- * @invariant
- *
- * DESCRIPTION
+ * @brief Interface for the game view controller.
  *
  ************************************************************************************************/
 class IGameViewController
@@ -44,33 +39,18 @@ class IGameViewController
 public:
 
     /******************************************************************************************//**
-     * @brief DESCRIPTION
-     *
-     * @pre
-     * @post
-     *
-     * @param
-     * @param
-     *
-     * @return
-     *
-     * DESCRIPTION
+     * @brief Destructor.
      *
      ********************************************************************************************/
     virtual ~IGameViewController() = default;
 
     /******************************************************************************************//**
-     * @brief DESCRIPTION
+     * @brief Handler for a disc drop.
      *
-     * @pre
-     * @post
+     * @pre The chip color passed as argument is not transparent.
      *
-     * @param
-     * @param
-     *
-     * @return
-     *
-     * DESCRIPTION
+     * @param p_chipColor Then color of the dropped chip.
+     * @param p_column    The column in which to drop the chip.
      *
      ********************************************************************************************/
     virtual void OnDown(const cxmodel::ChipColor& p_chipColor, size_t p_column) = 0;
