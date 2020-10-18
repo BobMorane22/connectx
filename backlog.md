@@ -80,3 +80,22 @@ Which is a problem because if the information is changed at one location, it is 
 everywhere else and bugs may creep in. All these informations should be located in the model
 itself and included in a `constant.h` file. All external modules should get these values
 directly through the model.
+
+
+## (15-10-2020) Remove duplication in `ModelTests.cpp`
+
+New functionnality in the model require a model with a game on. Because of this, most unit
+test start with some game creation code. This clutters the file and make tests hard to
+follow (it is hard so see _what_ exactly is tested in all this code).
+
+Model tests would therefore require a test fixture that would hide all of this logic.
+
+
+## (17-10-2020)
+
+The notion of 'no disc' is often associated with transparency, or the fact that the disc's color
+is not visible (therefore it is absent). With this definition however, there are many ways to be
+absent since absence if defined only the the a in rgba. So (0, 0, 0, 0) would mean the same as
+(255, 255, 255, 0). To the user, both definitions yields the same visual result. It would then
+be necessary to assert this in the code. It would therefore seem necessary to enlarge the
+transparency definition in the code to hold for any (r,g,b,0) value.
