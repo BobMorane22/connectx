@@ -37,13 +37,18 @@ void cxgui::Chip::ChangeColor(const cxmodel::ChipColor& p_newFillColor)
     if(m_fillColor != p_newFillColor)
     {
         m_fillColor = p_newFillColor;
-        queue_draw();
+        Redraw();
     }
 }
 
 cxmodel::ChipColor cxgui::Chip::GetColor() const
 {
     return m_fillColor;
+}
+
+void cxgui::Chip::Redraw()
+{
+    queue_draw();
 }
 
 bool cxgui::Chip::on_draw(const Cairo::RefPtr<Cairo::Context>& p_context)

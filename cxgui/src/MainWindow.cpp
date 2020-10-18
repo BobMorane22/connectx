@@ -105,23 +105,18 @@ int cxgui::MainWindow::Show()
 
 void cxgui::MainWindow::Update(cxmodel::NotificationContext p_context, cxmodel::Subject* p_subject)
 {
-    if(p_subject)
+    if(PRECONDITION(p_subject))
     {
         switch(p_context)
         {
             case cxmodel::NotificationContext::CHIP_DROPPED:
             {
-                if(ASSERT(m_gameView != nullptr))
-                {
-                    m_gameView->Update(p_context);
-                }
-
+                UpdateChipDropped(p_context);
                 break;
             }
             case cxmodel::NotificationContext::CREATE_NEW_GAME:
             {
-                DeactivateNewGameView();
-                ActivateGameView();
+                UpdateCreateNewGame();
                 break;
             }
             case cxmodel::NotificationContext::UNDO:
@@ -129,6 +124,20 @@ void cxgui::MainWindow::Update(cxmodel::NotificationContext p_context, cxmodel::
             default:
                 ASSERT_ERROR_MSG("Unsupported notification context.");
         }
+    }
+}
+
+void cxgui::MainWindow::UpdateCreateNewGame()
+{
+    DeactivateNewGameView();
+    ActivateGameView();
+}
+
+void cxgui::MainWindow::UpdateChipDropped(cxmodel::NotificationContext p_context)
+{
+    if(ASSERT(m_gameView != nullptr))
+    {
+        m_gameView->Update(p_context);
     }
 }
 

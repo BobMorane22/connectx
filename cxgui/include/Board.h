@@ -98,6 +98,8 @@ private:
 
     void InitializeNextDiscArea(size_t p_width);
     void InitializeBoard(size_t p_height, size_t p_width);
+    void MoveCurrentDiscAtFirstRow();
+    void RefreshBoardArea();
 
     const IGameViewPresenter& m_presenter;
     IGameViewController& m_controller;

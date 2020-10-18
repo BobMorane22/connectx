@@ -111,17 +111,7 @@ void cxgui::GameView::Update(cxmodel::NotificationContext p_context)
 {
     if(p_context == cxmodel::NotificationContext::CHIP_DROPPED)
     {
-        // Active and next players should be updated as well:
-        m_activePlayerChip->ChangeColor(m_presenter.GetGameViewActivePlayerChipColor());
-        m_activePlayerName.set_text(m_presenter.GetGameViewActivePlayerName());
-
-        m_nextPlayerChip->ChangeColor(m_presenter.GetGameViewNextPlayerChipColor());
-        m_nextPlayerName.set_text(m_presenter.GetGameViewNextPlayerName());
-
-        if(ASSERT(m_board != nullptr))
-        {
-            m_board->Update();
-        }
+        UpdateChipDropped();
     }
 }
 
@@ -224,4 +214,19 @@ bool cxgui::GameView::OnKeyPressed(GdkEventKey* p_event)
     }
 
     return strategy->Handle(*m_board);
+}
+
+void cxgui::GameView::UpdateChipDropped()
+{
+    // Active and next players should be updated as well:
+    m_activePlayerChip->ChangeColor(m_presenter.GetGameViewActivePlayerChipColor());
+    m_activePlayerName.set_text(m_presenter.GetGameViewActivePlayerName());
+
+    m_nextPlayerChip->ChangeColor(m_presenter.GetGameViewNextPlayerChipColor());
+    m_nextPlayerName.set_text(m_presenter.GetGameViewNextPlayerName());
+
+    if(ASSERT(m_board != nullptr))
+    {
+        m_board->Update();
+    }
 }

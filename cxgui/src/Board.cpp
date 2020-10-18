@@ -72,42 +72,8 @@ void cxgui::Board::MoveRight()
 
 void cxgui::Board::Update()
 {
-    Chip* currentChip = GetChip(m_nextDiscAreaLayout, m_currentDiscPosition, 0);
-
-    if(!ASSERT(currentChip != nullptr))
-    {
-        return;
-    }
-
-    currentChip->ChangeColor(cxmodel::MakeTransparent());
-
-    m_currentDiscPosition = 0u;
-    Chip* startChip = GetChip(m_nextDiscAreaLayout, m_currentDiscPosition, 0);
-
-    if(!ASSERT(startChip != nullptr))
-    {
-        return;
-    }
-
-    startChip->ChangeColor(m_presenter.GetGameViewActivePlayerChipColor());
-
-    // Refresh board area:
-    const cxgui::IGameViewPresenter::ChipColors& chipColors = m_presenter.GetGameViewChipColors();
-
-    for(size_t row = 0u; row < m_presenter.GetGameViewBoardHeight(); ++row)
-    {
-        for(size_t column = 0u; column < m_presenter.GetGameViewBoardWidth(); ++column)
-        {
-            Chip* chip = GetChip(m_boardLayout, column, row);
-
-            if(!ASSERT(chip != nullptr))
-            {
-                return;
-            }
-
-            chip->ChangeColor(chipColors[row][column]);
-        }
-    }
+    MoveCurrentDiscAtFirstRow();
+    RefreshBoardArea();
 }
 
 cxgui::Chip* cxgui::Board::GetChip(Gtk::Grid& p_discArea, int p_left, int p_top)
@@ -210,6 +176,48 @@ void cxgui::Board::InitializeBoard(size_t p_height, size_t p_width)
             noChip->set_hexpand(true);
 
             m_boardLayout.attach(*noChip, j, i, 1, 1);
+        }
+    }
+}
+
+void cxgui::Board::MoveCurrentDiscAtFirstRow()
+{
+    Chip* currentChip = GetChip(m_nextDiscAreaLayout, m_currentDiscPosition, 0);
+
+    if(!ASSERT(currentChip != nullptr))
+    {
+        return;
+    }
+
+    currentChip->ChangeColor(cxmodel::MakeTransparent());
+
+    m_currentDiscPosition = 0u;
+    Chip* startChip = GetChip(m_nextDiscAreaLayout, m_currentDiscPosition, 0);
+
+    if(!ASSERT(startChip != nullptr))
+    {
+        return;
+    }
+
+    startChip->ChangeColor(m_presenter.GetGameViewActivePlayerChipColor());
+}
+
+void cxgui::Board::RefreshBoardArea()
+{
+    const cxgui::IGameViewPresenter::ChipColors& chipColors = m_presenter.GetGameViewChipColors();
+
+    for(size_t row = 0u; row < m_presenter.GetGameViewBoardHeight(); ++row)
+    {
+        for(size_t column = 0u; column < m_presenter.GetGameViewBoardWidth(); ++column)
+        {
+            Chip* chip = GetChip(m_boardLayout, column, row);
+
+            if(!ASSERT(chip != nullptr))
+            {
+                return;
+            }
+
+            chip->ChangeColor(chipColors[row][column]);
         }
     }
 }

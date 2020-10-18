@@ -61,8 +61,7 @@ static const cxmodel::Disc NO_DISC{cxmodel::MakeTransparent()};
 cxmodel::Model::Model(std::unique_ptr<ICommandStack>&& p_cmdStack, cxlog::ILogger& p_logger)
  : m_cmdStack{std::move(p_cmdStack)}
  , m_logger{p_logger}
- , m_activePlayerIndex{0u}
- , m_nextPlayerIndex{1u}
+ , m_playersInfo{{}, 0u, 1u}
  , m_inARowValue{4u}
 {
     PRECONDITION(m_cmdStack != nullptr);
@@ -146,7 +145,7 @@ void cxmodel::Model::CreateNewGame(const NewGameInformation& p_gameInformation)
         PRECONDITION(!newPlayer.GetName().empty());
     }
 
-    std::unique_ptr<ICommand> command = std::make_unique<CommandCreateNewGame>(*this, m_board, m_players, m_inARowValue, p_gameInformation);
+    std::unique_ptr<ICommand> command = std::make_unique<CommandCreateNewGame>(*this, m_board, m_playersInfo.m_players, m_inARowValue, p_gameInformation);
     m_cmdStack->Execute(std::move(command));
 
     if(!ASSERT(m_board != nullptr))
@@ -161,7 +160,7 @@ void cxmodel::Model::CreateNewGame(const NewGameInformation& p_gameInformation)
     stream << "New game created: " <<
               "In-a-row value=" << m_inARowValue <<
               ", Grid dimensions=(W" << m_board->GetNbColumns() << ", H" << m_board->GetNbRows() << ")"
-              ", Number of players=" << m_players.size();
+              ", Number of players=" << m_playersInfo.m_players.size();
 
     Log(cxlog::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__, stream.str());
 
@@ -177,18 +176,16 @@ void cxmodel::Model::DropChip(const cxmodel::IChip& p_chip, size_t p_column)
 
     // Here, we take a copy of the active player's index. If it is updated after the drop,
     // it means the drop worked and we can notify:
-    const size_t activePlayerIndexBefore = m_activePlayerIndex;
+    const size_t activePlayerIndexBefore = m_playersInfo.m_activePlayerIndex;
 
     std::unique_ptr<ICommand> command = std::make_unique<CommandDropChip>(*this,
                                                                           *m_board,
-                                                                          m_players,
-                                                                          m_activePlayerIndex,
-                                                                          m_nextPlayerIndex,
+                                                                          m_playersInfo,
                                                                           p_chip,
                                                                           p_column);
     m_cmdStack->Execute(std::move(command));
 
-    if(activePlayerIndexBefore != m_activePlayerIndex)
+    if(activePlayerIndexBefore != m_playersInfo.m_activePlayerIndex)
     {
         Notify(NotificationContext::CHIP_DROPPED);
     }
@@ -223,22 +220,22 @@ size_t cxmodel::Model::GetCurrentInARowValue() const
 
 const cxmodel::Player& cxmodel::Model::GetActivePlayer() const
 {
-    if(!ASSERT(m_players.size() >= 2))
+    if(!ASSERT(m_playersInfo.m_players.size() >= 2))
     {
         return ACTIVE_PLAYER;
     }
 
-    return m_players[m_activePlayerIndex];
+    return m_playersInfo.m_players[m_playersInfo.m_activePlayerIndex];
 }
 
 const cxmodel::Player& cxmodel::Model::GetNextPlayer() const
 {
-    if(!ASSERT(m_players.size() >= 2))
+    if(!ASSERT(m_playersInfo.m_players.size() >= 2))
     {
         return NEXT_PLAYER;
     }
 
-    return m_players[m_nextPlayerIndex];
+    return m_playersInfo.m_players[m_playersInfo.m_nextPlayerIndex];
 }
 
 const cxmodel::IChip& cxmodel::Model::GetChip(size_t p_row, size_t p_column) const

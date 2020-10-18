@@ -111,6 +111,9 @@ private:
 
     void Update(cxmodel::NotificationContext p_context, cxmodel::Subject* p_subject) override;
 
+    void UpdateCreateNewGame();
+    void UpdateChipDropped();
+
     const cxmodel::IConnectXLimits& m_modelAsLimits;
     const cxmodel::IConnectXGameInformation& m_modelAsGameInformation;
 

@@ -71,6 +71,8 @@ public:
 
 private:
 
+    void Redraw();
+
     // Specify shape by overloading this:
     virtual void DrawBorder(const Cairo::RefPtr<Cairo::Context>& p_context) const = 0;
 

@@ -112,6 +112,9 @@ private:
 
     void Update(cxmodel::NotificationContext p_context, cxmodel::Subject* p_subject) override;
 
+    void UpdateCreateNewGame();
+    void UpdateChipDropped(cxmodel::NotificationContext p_context);
+
     void ConfigureWindow() override;
     void RegisterLayouts() override;
     void RegisterWidgets() override;

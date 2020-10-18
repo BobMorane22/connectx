@@ -78,16 +78,12 @@ void UpdatePlayerIndex(size_t& p_playerIndex, size_t p_nbOfPlayers)
 
 cxmodel::CommandDropChip::CommandDropChip(cxlog::ILogger& p_logger,
                                           cxmodel::IBoard& p_board,
-                                          std::vector<Player>& p_players,
-                                          size_t& p_activePlayerIndex,
-                                          size_t& p_nextPlayerIndex,
+                                          cxmodel::PlayerInformation& p_playerInfo,
                                           const cxmodel::IChip& p_droppedChip,
                                           const size_t p_column)
  : m_logger{p_logger}
  , m_board{p_board}
- , m_players{p_players}
- , m_activePlayerIndex{p_activePlayerIndex}
- , m_nextPlayerIndex{p_nextPlayerIndex}
+ , m_playerInfo{p_playerInfo}
  , m_droppedChip{p_droppedChip}
  , m_column{p_column}
 {
@@ -98,7 +94,7 @@ void cxmodel::CommandDropChip::Execute()
 {
     IF_PRECONDITION_NOT_MET_DO(m_column < m_board.GetNbColumns(), return;);
 
-    const Player& activePlayer = m_players[m_activePlayerIndex];
+    const Player& activePlayer = m_playerInfo.m_players[m_playerInfo.m_activePlayerIndex];
     if(!PRECONDITION(activePlayer.GetChip() == m_droppedChip))
     {
         const IChip& activePlayerChip = activePlayer.GetChip();
@@ -121,12 +117,12 @@ void cxmodel::CommandDropChip::Execute()
     if(m_board.DropChip(m_column, m_droppedChip, droppedPosition))
     {
         // Update player information:
-        UpdatePlayerIndex(m_activePlayerIndex, m_players.size());
-        UpdatePlayerIndex(m_nextPlayerIndex, m_players.size());
+        UpdatePlayerIndex(m_playerInfo.m_activePlayerIndex, m_playerInfo.m_players.size());
+        UpdatePlayerIndex(m_playerInfo.m_nextPlayerIndex, m_playerInfo.m_players.size());
 
-        IF_CONDITION_NOT_MET_DO(m_activePlayerIndex < m_players.size(), return;);
-        IF_CONDITION_NOT_MET_DO(m_nextPlayerIndex < m_players.size(), return;);
-        IF_CONDITION_NOT_MET_DO(m_activePlayerIndex != m_nextPlayerIndex, return;);
+        IF_CONDITION_NOT_MET_DO(m_playerInfo.m_activePlayerIndex < m_playerInfo.m_players.size(), return;);
+        IF_CONDITION_NOT_MET_DO(m_playerInfo.m_nextPlayerIndex < m_playerInfo.m_players.size(), return;);
+        IF_CONDITION_NOT_MET_DO(m_playerInfo.m_activePlayerIndex != m_playerInfo.m_nextPlayerIndex, return;);
 
         std::ostringstream stream;
         stream << activePlayer.GetName() << "'s chip dropped at (" << droppedPosition.m_row << ", " << droppedPosition.m_column << ")";

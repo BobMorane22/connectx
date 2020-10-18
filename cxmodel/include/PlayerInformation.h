@@ -16,78 +16,56 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file CommandDropChip.h
+ * @file PlayerInformation.h
  * @date 2020
  *
  *************************************************************************************************/
 
-#ifndef COMMANDDROPCHIP_H_412DF355_E70F_413B_B531_63838B549644
-#define COMMANDDROPCHIP_H_412DF355_E70F_413B_B531_63838B549644
+#ifndef PLAYERINFORMATION_H_B54E9667_5C5B_45B9_BF0A_CA42FAA168FB
+#define PLAYERINFORMATION_H_B54E9667_5C5B_45B9_BF0A_CA42FAA168FB
 
 #include <vector>
 
-#include "ICommand.h"
-#include "PlayerInformation.h"
+#include <cxinv/include/assertion.h>
 
-namespace cxlog
-{
-    class ILogger;
-}
+#include "Player.h"
 
 namespace cxmodel
 {
-    class IBoard;
-    class IChip;
-    class Subject;
-}
 
-namespace cxmodel
-{
+using PlayersList = std::vector<Player>;
 
 /*********************************************************************************************//**
- * @brief Command to drop a chip in the game board.
- *
- * This commands drops a chip into the game board.
+ * @brief Data structure to hold all player related information.
  *
  ************************************************************************************************/
-class CommandDropChip : public cxmodel::ICommand
+struct PlayerInformation final
 {
-
-public:
-
     /******************************************************************************************//**
      * @brief Constructor.
      *
-     * @pre The column passed as argument is within the board limits.
+     * @pre The active player index is different than the next player index.
      *
-     * @param p_logger            A logger.
-     * @param p_board             The game board.
-     * @param p_playerInfo        Information relative to the players.
-     * @param p_droppedChip       The chip being dropped.
-     * @param p_column            The column into which to drop the chip.
+     * @param p_players           The player list.
+     * @param p_activePlayerIndex The active player's index in the list.
+     * @param p_nextPlayerIndex   The next player's index in the list.
      *
      ********************************************************************************************/
-    CommandDropChip(cxlog::ILogger& p_logger,
-                    cxmodel::IBoard& p_board,
-                    cxmodel::PlayerInformation& p_playerInfo,
-                    const cxmodel::IChip& p_droppedChip,
-                    const size_t p_column);
+    PlayerInformation(const PlayersList& p_players,
+                      size_t p_activePlayerIndex,
+                      size_t p_nextPlayerIndex)
+    : m_players{p_players}
+    , m_activePlayerIndex{p_activePlayerIndex}
+    , m_nextPlayerIndex{p_nextPlayerIndex}
+    {
+        PRECONDITION(p_activePlayerIndex != p_nextPlayerIndex);
+    }
 
-    // ICommand:
-    void Execute() override;
-    void Undo() override;
-
-private:
-
-    cxlog::ILogger& m_logger;
-
-    cxmodel::IBoard& m_board;
-    cxmodel::PlayerInformation& m_playerInfo;
-    const cxmodel::IChip& m_droppedChip;
-    const size_t m_column;
-
+    PlayersList m_players;
+    size_t m_activePlayerIndex;
+    size_t m_nextPlayerIndex;
 };
 
-} // namespace cxmodel
+}
 
-#endif // COMMANDDROPCHIP_H_412DF355_E70F_413B_B531_63838B549644
+#endif // PLAYERINFORMATION_H_B54E9667_5C5B_45B9_BF0A_CA42FAA168FB

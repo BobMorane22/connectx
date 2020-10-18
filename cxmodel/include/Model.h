@@ -36,6 +36,7 @@
 #include "IConnectXLimits.h"
 #include "IUndoRedo.h"
 #include "IVersioning.h"
+#include "PlayerInformation.h"
 #include "Subject.h"
 
 namespace cxmodel
@@ -135,9 +136,7 @@ private:
     cxlog::ILogger& m_logger;
 
     std::unique_ptr<cxmodel::IBoard> m_board;
-    std::vector<Player> m_players;
-    std::size_t m_activePlayerIndex;
-    std::size_t m_nextPlayerIndex;
+    PlayerInformation m_playersInfo;
     size_t m_inARowValue;
 };
 
