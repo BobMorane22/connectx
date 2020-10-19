@@ -39,7 +39,7 @@ namespace
 static constexpr char NAME[] = "Connect X";
 
 static constexpr unsigned int MAJOR_VERSION_NB = 0u;
-static constexpr unsigned int MINOR_VERSION_NB = 20u;
+static constexpr unsigned int MINOR_VERSION_NB = 21u;
 
 static constexpr size_t GRID_MIN_HEIGHT = 6u;
 static constexpr size_t GRID_MAX_HEIGHT = 64u;
