@@ -25,6 +25,7 @@
 #define DISCCHIP_H_E87685D6_F889_4EC1_982F_1496DBD37A28
 
 #include "Chip.h"
+#include "common.h"
 
 namespace cxgui
 {
@@ -41,11 +42,12 @@ public:
     /******************************************************************************************//**
      * @brief Constructor.
      *
-     * @param p_fillColor       The color filling the center of the chip (inside its border).
-     * @param p_backgroundColor The color around the chip (outside its border).
+     * @param p_fillColor       The color filling the center of the disc (inside its border).
+     * @param p_backgroundColor The color around the disc (outside its border).
+     * @param p_dimension       The disc dimension (both width and height, in pixels).
      *
      ********************************************************************************************/
-    DiscChip(const cxmodel::ChipColor& p_fillColor, const cxmodel::ChipColor& p_backgroundColor);
+    DiscChip(const cxmodel::ChipColor& p_fillColor, const cxmodel::ChipColor& p_backgroundColor, int p_dimension);
 
 private:
 

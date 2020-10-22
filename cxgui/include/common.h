@@ -52,6 +52,9 @@ constexpr int CONTROL_BOTTOM_MARGIN = 5;
 // Indentation space in a dialog. For example, add this to control text to indent it once.
 constexpr char INDENT_MARK[] = "    ";
 
+// Default chip size, in pixels:
+constexpr int DEFAULT_CHIP_SIZE = 40;
+
 } // namespace cxgui
 
 #endif // COMMON_H_E38DC86D_677A_4508_9D75_1B9C3C899679

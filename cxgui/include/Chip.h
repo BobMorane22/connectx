@@ -49,9 +49,14 @@ public:
      *
      * @param p_fillColor       The color filling the center of the chip (inside its border).
      * @param p_backgroundColor The color around the chip (outside its border).
+     * @param p_width           The chip width (in pixels).
+     * @param p_height          The chip height (in pixels).
      *
      ********************************************************************************************/
-    Chip(const cxmodel::ChipColor& p_fillColor, const cxmodel::ChipColor& p_backgroundColor);
+    Chip(const cxmodel::ChipColor& p_fillColor,
+         const cxmodel::ChipColor& p_backgroundColor,
+         int p_width,
+         int p_height);
 
     /******************************************************************************************//**
      * @brief Changes the chip's fill color.

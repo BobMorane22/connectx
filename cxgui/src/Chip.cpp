@@ -25,11 +25,14 @@
 
 #include <Chip.h>
 
-cxgui::Chip::Chip(const cxmodel::ChipColor& p_fillColor, const cxmodel::ChipColor& p_backgroundColor)
+cxgui::Chip::Chip(const cxmodel::ChipColor& p_fillColor,
+                  const cxmodel::ChipColor& p_backgroundColor,
+                  int p_width,
+                  int p_height)
 : m_fillColor{p_fillColor}
 , m_backgroundColor{p_backgroundColor}
 {
-    set_size_request(40, 40);
+    set_size_request(p_width, p_height);
 }
 
 void cxgui::Chip::ChangeColor(const cxmodel::ChipColor& p_newFillColor)

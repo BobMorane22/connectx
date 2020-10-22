@@ -21,7 +21,9 @@
  *
  *************************************************************************************************/
 
-#include <iostream>
+#include <algorithm>
+
+#include <gdkmm/display.h>
 
 #include <cxinv/include/assertion.h>
 #include <cxmodel/include/Disc.h>
@@ -33,6 +35,53 @@
 
 constexpr bool FULLY_HANDLED = true;
 constexpr bool PROPAGATE = false;
+
+namespace
+{
+
+// Computes the best chip dimension so that the game view, when the board is present with all
+// chips drawn, is entirely viewable on the user's screen.
+int ComputeMinimumChipSize(const cxgui::Board& p_board, size_t p_nbRows, size_t p_nbColumns)
+{
+    // Get screen containing the widget:
+    const Glib::RefPtr<const Gdk::Screen> screen = p_board.get_screen();
+    if(!ASSERT(bool(screen)))
+    {
+        return -1;
+    }
+
+    // Get the screen dimensions:
+    const int fullScreenHeight = screen->get_height();
+    const int fullScreenWidth = screen->get_width();
+
+    // Get minimum screen dimension:
+    const int minFullScreenDimension = std::min(fullScreenHeight, fullScreenWidth);
+
+    // First, we check if the chips can use their default size:
+    int nbRows = static_cast<int>(p_nbRows);
+    int nbColumns = static_cast<int>(p_nbColumns);
+
+    if(nbRows * cxgui::DEFAULT_CHIP_SIZE < (2 * fullScreenHeight) / 3)
+    {
+        if(nbColumns * cxgui::DEFAULT_CHIP_SIZE < (2 * fullScreenWidth) / 3)
+        {
+            return cxgui::DEFAULT_CHIP_SIZE;
+        }
+    }
+
+    // The the biggest board dimension:
+    const int maxBoardDimension = std::max(nbRows, nbColumns);
+
+    // From this, the max chip dimension (dimension at which together, chips from the board would fill the
+    // entire screen in its smallest dimension) is computed:
+    const int maxChipDimension = (minFullScreenDimension / maxBoardDimension);
+
+    // We take two thirds from this value for the board (leaving the remaining to the rest of the
+    // game view):
+    return (maxChipDimension * 2) / 3;
+}
+
+} // namespace
 
 cxgui::Board::Board(const IGameViewPresenter& p_presenter, IGameViewController& p_controller)
 : m_presenter{p_presenter}
@@ -142,10 +191,12 @@ void cxgui::Board::UpdateNextDiscPosition(Side p_side)
 
 void cxgui::Board::InitializeNextDiscArea(size_t p_width)
 {
+    const int chipDimension = ComputeMinimumChipSize(*this, m_presenter.GetGameViewBoardHeight(), m_presenter.GetGameViewBoardWidth());
+
     m_nextDiscAreaLayout.set_row_homogeneous(true);
     m_nextDiscAreaLayout.set_column_homogeneous(true);
 
-    Chip* activePlayerChip = Gtk::manage(new DiscChip{m_presenter.GetGameViewActivePlayerChipColor(), cxmodel::MakeTransparent()});
+    Chip* activePlayerChip = Gtk::manage(new DiscChip{m_presenter.GetGameViewActivePlayerChipColor(), cxmodel::MakeTransparent(), chipDimension});
 
     activePlayerChip->set_vexpand(true);
     activePlayerChip->set_hexpand(true);
@@ -154,7 +205,7 @@ void cxgui::Board::InitializeNextDiscArea(size_t p_width)
 
     for(size_t i = 1; i < p_width; ++i)
     {
-        Chip* noChip = Gtk::manage(new DiscChip{cxmodel::MakeTransparent(), cxmodel::MakeTransparent()});
+        Chip* noChip = Gtk::manage(new DiscChip{cxmodel::MakeTransparent(), cxmodel::MakeTransparent(), chipDimension});
         noChip->set_vexpand(true);
         noChip->set_hexpand(true);
 
@@ -164,6 +215,8 @@ void cxgui::Board::InitializeNextDiscArea(size_t p_width)
 
 void cxgui::Board::InitializeBoard(size_t p_height, size_t p_width)
 {
+    const int chipDimension = ComputeMinimumChipSize(*this, m_presenter.GetGameViewBoardHeight(), m_presenter.GetGameViewBoardWidth());
+
     m_boardLayout.set_row_homogeneous(true);
     m_boardLayout.set_column_homogeneous(true);
 
@@ -171,7 +224,7 @@ void cxgui::Board::InitializeBoard(size_t p_height, size_t p_width)
     {
         for(size_t j = 0; j < p_width; ++j)
         {
-            Chip* noChip = Gtk::manage(new DiscChip{cxmodel::MakeTransparent(), cxmodel::MakeBlue()});
+            Chip* noChip = Gtk::manage(new DiscChip{cxmodel::MakeTransparent(), cxmodel::MakeBlue(), chipDimension});
             noChip->set_vexpand(true);
             noChip->set_hexpand(true);
 
