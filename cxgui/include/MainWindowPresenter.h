@@ -89,7 +89,6 @@ public:
 ///@{ @name Game View
 // -----------------------------------------------------------------------------------------------
     std::string GetGameViewTitle() const override;
-    std::string GetGameViewMessage() const override;
 
     cxmodel::ChipColor GetGameViewActivePlayerChipColor() const override;
     cxmodel::ChipColor GetGameViewNextPlayerChipColor() const override;
@@ -105,6 +104,17 @@ public:
 
     const ChipColors& GetGameViewChipColors() const override;
 
+    std::string GetNumericalValuesExpectedMessage() const override;
+    std::string GetNumericalValuesOutOfRangeMessage() const override;
+    std::string GetInARowInvalidInputMessage() const override;
+    std::string GetBoardDimensionsInvalidInputMessage() const override;
+    std::string GetPlayersInformationInvalidInputMessage() const override;
+
+    bool IsInARowValueValid(size_t p_inARowValue) const override;
+    bool AreBoardDimensionsValid(size_t p_boardHeight, size_t p_boardWidth) override;
+    bool ArePlayersInformationValid(const std::vector<std::string>& p_playerNames,
+                                    const std::vector<cxmodel::ChipColor>& p_chipColors) override;
+
 ///@}
 
 private:
@@ -117,8 +127,6 @@ private:
     const cxmodel::IConnectXLimits& m_modelAsLimits;
     const cxmodel::IConnectXGameInformation& m_modelAsGameInformation;
 
-    std::string m_gameViewMessage = "New game started!";
-
     size_t m_currentBoardWidth;
     size_t m_currentBoardHeight;
 
@@ -126,6 +134,11 @@ private:
     cxmodel::Player m_nextPlayer;
 
     std::vector<std::vector<cxmodel::ChipColor>> m_chipColors;
+
+    // Messages:
+    std::string m_invalidBoardDimensionsMessage;
+    std::string m_invalidPlayerInformationMessage;
+
 };
 
 } // namespace cxgui

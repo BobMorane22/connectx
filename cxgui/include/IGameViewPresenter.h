@@ -59,18 +59,6 @@ public:
     virtual std::string GetGameViewTitle() const = 0;
 
     /******************************************************************************************//**
-     * @brief Game view message accessor.
-     *
-     * @return The game view message.
-     *
-     * The game view message is a string message that presents the new game information. It is
-     * a temporary accessor used to make sure the model connection is working before developing
-     * the view further.
-     *
-     ********************************************************************************************/
-    virtual std::string GetGameViewMessage() const = 0;
-
-    /******************************************************************************************//**
      * @brief Active player's chip color accessor.
      *
      * @return The active player's chip color.

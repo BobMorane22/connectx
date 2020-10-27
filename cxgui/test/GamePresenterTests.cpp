@@ -30,11 +30,6 @@ TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetTitle_GamePresenter_Title
     ASSERT_EQ(GetGameViewPresenter().GetGameViewTitle(), "Game");
 }
 
-TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetMessage_GamePresenter_MessageReturned)
-{
-    ASSERT_EQ(GetGameViewPresenter().GetGameViewMessage(), "New game started!");
-}
-
 TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetActivePlayerChipColor_GamePresenterNoUpdate_NoColorReturned)
 {
     ASSERT_EQ(GetGameViewPresenter().GetGameViewActivePlayerChipColor(), cxmodel::MakeTransparent());

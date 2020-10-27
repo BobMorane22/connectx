@@ -148,3 +148,280 @@ TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetMaxBoardHeightValue_NewGa
 {
     ASSERT_EQ(GetNewGameViewPresenter().GetNewGameViewMaxBoardHeightValue(), GetLimitsModel().GetMaximumGridHeight());
 }
+
+TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetNumericalValuesExpectedMessage_NewGamePresenter_MessageReturned)
+{
+    ASSERT_EQ(GetNewGameViewPresenter().GetNumericalValuesExpectedMessage(), "Enter numerical values for in-a-row and board size values.");
+}
+
+TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetNumericalValuesOutOfRangeMessage_NewGamePresenter_MessageReturned)
+{
+    ASSERT_EQ(GetNewGameViewPresenter().GetNumericalValuesOutOfRangeMessage(), "Numerical values out of range for in-a-row or board size values.");
+}
+
+TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetInARowInvalidInputMessage_NewGamePresenter_MessageReturned)
+{
+    auto& presenter = GetNewGameViewPresenter();
+
+    std::ostringstream oss;
+    oss << "The in-a-row value should be between "
+        << presenter.GetNewGameViewMinInARowValue()
+        << " and "
+        << presenter.GetNewGameViewMaxInARowValue()
+        << " inclusively.";
+
+    ASSERT_EQ(presenter.GetInARowInvalidInputMessage(), oss.str());
+}
+
+TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetBoardDimensionsInvalidInputMessage_InvalidHeight_InvalidHeightMessageReturned)
+{
+    auto& presenter = GetNewGameViewPresenter();
+
+    std::ostringstream oss;
+    oss << "The board height value should be between "
+        << presenter.GetNewGameViewMinBoardHeightValue()
+        << " and "
+        << presenter.GetNewGameViewMaxBoardHeightValue()
+        << " inclusively.";
+
+    presenter.AreBoardDimensionsValid(presenter.GetNewGameViewMaxBoardHeightValue() + 1u, presenter.GetNewGameViewMaxBoardWidthValue() + 1);
+    ASSERT_EQ(presenter.GetBoardDimensionsInvalidInputMessage(), oss.str());
+}
+
+TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetBoardDimensionsInvalidInputMessage_InvalidWidth_InvalidWidthMessageReturned)
+{
+    auto& presenter = GetNewGameViewPresenter();
+
+    std::ostringstream oss;
+    oss << "The board width value should be between "
+        << presenter.GetNewGameViewMinBoardWidthValue()
+        << " and "
+        << presenter.GetNewGameViewMaxBoardWidthValue()
+        << " inclusively.";
+
+    presenter.AreBoardDimensionsValid(presenter.GetNewGameViewMaxBoardHeightValue(), presenter.GetNewGameViewMaxBoardWidthValue() + 1);
+    ASSERT_EQ(presenter.GetBoardDimensionsInvalidInputMessage(), oss.str());
+}
+
+TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetPlayersInformationInvalidInputMessage_AllInputValidAndDifferent_EmptyMessageReturned)
+{
+    const std::vector<std::string> playerNames
+    {
+        "John Doe",
+        "Jane Doe",
+        "Igor Lopez"
+    };
+
+    const std::vector<cxmodel::ChipColor> chipColors
+    {
+        cxmodel::MakeRed(),
+        cxmodel::MakeBlue(),
+        cxmodel::MakeYellow()
+    };
+
+    auto& presenter = GetNewGameViewPresenter();
+    presenter.ArePlayersInformationValid(playerNames, chipColors);
+
+    ASSERT_EQ(presenter.GetPlayersInformationInvalidInputMessage(), "");
+}
+
+TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetPlayersInformationInvalidInputMessage_TwoIdenticalNamesButDifferentColors_EmptyMessageReturned)
+{
+    const std::vector<std::string> playerNames
+    {
+        "John Doe",
+        "John Doe",
+        "Igor Lopez"
+    };
+
+    const std::vector<cxmodel::ChipColor> chipColors
+    {
+        cxmodel::MakeRed(),
+        cxmodel::MakeBlue(),
+        cxmodel::MakeYellow()
+    };
+
+    auto& presenter = GetNewGameViewPresenter();
+    presenter.ArePlayersInformationValid(playerNames, chipColors);
+
+    ASSERT_EQ(presenter.GetPlayersInformationInvalidInputMessage(), "");
+}
+
+TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetPlayersInformationInvalidInputMessage_AnEmptyName_InvalidPlayerMessageReturned)
+{
+    const std::vector<std::string> playerNames
+    {
+        "John Doe",
+        std::string(),
+        "Igor Lopez"
+    };
+
+    const std::vector<cxmodel::ChipColor> chipColors
+    {
+        cxmodel::MakeRed(),
+        cxmodel::MakeBlue(),
+        cxmodel::MakeYellow()
+    };
+
+    auto& presenter = GetNewGameViewPresenter();
+    presenter.ArePlayersInformationValid(playerNames, chipColors);
+
+    ASSERT_EQ(presenter.GetPlayersInformationInvalidInputMessage(), "Player names cannot be empty.");
+}
+
+TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetPlayersInformationInvalidInputMessage_TwoIdenticalChipColors_InvalidChipColorsMessageReturned)
+{
+    const std::vector<std::string> playerNames
+    {
+        "John Doe",
+        "Jane Doe",
+        "Igor Lopez"
+    };
+
+    const std::vector<cxmodel::ChipColor> chipColors
+    {
+        cxmodel::MakeRed(),
+        cxmodel::MakeRed(),
+        cxmodel::MakeYellow()
+    };
+
+    auto& presenter = GetNewGameViewPresenter();
+    presenter.ArePlayersInformationValid(playerNames, chipColors);
+
+    ASSERT_EQ(presenter.GetPlayersInformationInvalidInputMessage(), "Discs must have different colors.");
+}
+
+TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/IsInARowValueValid_InValidRange_ReturnsTrue)
+{
+    ASSERT_TRUE(GetNewGameViewPresenter().IsInARowValueValid(GetNewGameViewPresenter().GetNewGameViewMinInARowValue()));
+    ASSERT_TRUE(GetNewGameViewPresenter().IsInARowValueValid(GetNewGameViewPresenter().GetNewGameViewMaxInARowValue()));
+}
+
+TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/IsInARowValueValid_BelowRange_ReturnsFalse)
+{
+    ASSERT_FALSE(GetNewGameViewPresenter().IsInARowValueValid(GetNewGameViewPresenter().GetNewGameViewMinInARowValue() - 1u));
+}
+
+TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/IsInARowValueValid_OverRange_ReturnsFalse)
+{
+    ASSERT_FALSE(GetNewGameViewPresenter().IsInARowValueValid(GetNewGameViewPresenter().GetNewGameViewMaxInARowValue() + 1u));
+}
+
+TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/AreBoardDimensionsValid_BothHeightAndWidthInRange_ReturnsTrue)
+{
+    auto& presenter = GetNewGameViewPresenter();
+
+    ASSERT_TRUE(presenter.AreBoardDimensionsValid(presenter.GetNewGameViewMinBoardHeightValue(),
+                                                  presenter.GetNewGameViewMinBoardWidthValue()));
+
+    ASSERT_TRUE(presenter.AreBoardDimensionsValid(presenter.GetNewGameViewMaxBoardHeightValue(),
+                                                  presenter.GetNewGameViewMaxBoardWidthValue()));
+}
+
+TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/AreBoardDimensionsValid_HeightBelowRange_ReturnsFalse)
+{
+    auto& presenter = GetNewGameViewPresenter();
+
+    ASSERT_FALSE(presenter.AreBoardDimensionsValid(presenter.GetNewGameViewMinBoardHeightValue() - 1u,
+                                                   presenter.GetNewGameViewMaxBoardWidthValue()));
+}
+
+TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/AreBoardDimensionsValid_HeightOverRange_ReturnsFalse)
+{
+    auto& presenter = GetNewGameViewPresenter();
+
+    ASSERT_FALSE(presenter.AreBoardDimensionsValid(presenter.GetNewGameViewMaxBoardHeightValue() + 1u,
+                                                   presenter.GetNewGameViewMaxBoardWidthValue()));
+}
+
+TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/AreBoardDimensionsValid_WidthBelowRange_ReturnsFalse)
+{
+    auto& presenter = GetNewGameViewPresenter();
+
+    ASSERT_FALSE(presenter.AreBoardDimensionsValid(presenter.GetNewGameViewMinBoardWidthValue(),
+                                                   presenter.GetNewGameViewMaxBoardWidthValue() - 1u));
+}
+
+TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/AreBoardDimensionsValid_WidthOverRange_ReturnsFalse)
+{
+    auto& presenter = GetNewGameViewPresenter();
+
+    ASSERT_FALSE(presenter.AreBoardDimensionsValid(presenter.GetNewGameViewMaxBoardWidthValue(),
+                                                   presenter.GetNewGameViewMaxBoardWidthValue() + 1u));
+}
+
+TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/ArePlayersInformationValid_NonEmptyPlayerNamesAndAllDifferentChipColors_ReturnsTrue)
+{
+    const std::vector<std::string> playerNames
+    {
+        "John Doe",
+        "Jane Doe",
+        "Igor Lopez"
+    };
+
+    const std::vector<cxmodel::ChipColor> chipColors
+    {
+        cxmodel::MakeRed(),
+        cxmodel::MakeBlue(),
+        cxmodel::MakeYellow()
+    };
+
+    ASSERT_TRUE(GetNewGameViewPresenter().ArePlayersInformationValid(playerNames, chipColors));
+}
+
+TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/ArePlayersInformationValid_AllSamePlayerNamesAndAllDifferentChipColors_ReturnsTrue)
+{
+    const std::vector<std::string> playerNames
+    {
+        "John Doe",
+        "John Doe",
+        "John Doe"
+    };
+
+    const std::vector<cxmodel::ChipColor> chipColors
+    {
+        cxmodel::MakeRed(),
+        cxmodel::MakeBlue(),
+        cxmodel::MakeYellow()
+    };
+
+    ASSERT_TRUE(GetNewGameViewPresenter().ArePlayersInformationValid(playerNames, chipColors));
+}
+
+TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/ArePlayersInformationValid_AnEmptyPlayerNameAndAllDifferentChipColors_ReturnsFalse)
+{
+    const std::vector<std::string> playerNames
+    {
+        "John Doe",
+        "",
+        "Igor Lopez"
+    };
+
+    const std::vector<cxmodel::ChipColor> chipColors
+    {
+        cxmodel::MakeRed(),
+        cxmodel::MakeBlue(),
+        cxmodel::MakeYellow()
+    };
+
+    ASSERT_FALSE(GetNewGameViewPresenter().ArePlayersInformationValid(playerNames, chipColors));
+}
+
+TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/ArePlayersInformationValid_NonEmptyPlayerNamesAndTwoSameChipColors_ReturnsFalse)
+{
+    const std::vector<std::string> playerNames
+    {
+        "John Doe",
+        "Jane Doe",
+        "Igor Lopez"
+    };
+
+    const std::vector<cxmodel::ChipColor> chipColors
+    {
+        cxmodel::MakeRed(),
+        cxmodel::MakeRed(),
+        cxmodel::MakeYellow()
+    };
+
+    ASSERT_FALSE(GetNewGameViewPresenter().ArePlayersInformationValid(playerNames, chipColors));
+}

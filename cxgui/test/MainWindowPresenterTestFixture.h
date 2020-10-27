@@ -34,6 +34,8 @@
 #include <cxmodel/include/Subject.h>
 #include <cxgui/include/IMainWindowPresenter.h>
 
+#include "DisableStdStreamsRAII.h"
+
 class MainWindowPresenterTestFixture : public testing::Test
 {
 
@@ -90,6 +92,8 @@ private:
         size_t GetMaximumNumberOfPlayers() const override {return 10u;};
 
     private:
+
+        DisableStdStreamsRAII m_streamDisabler;
 
         const cxmodel::Player m_ACTIVE_PLAYER{"John Doe", cxmodel::MakeRed()};
         const cxmodel::Player m_NEXT_PLAYER{"Jane Doe", cxmodel::MakeBlue()};

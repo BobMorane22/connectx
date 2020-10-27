@@ -33,14 +33,6 @@
 namespace
 {
 
-/**********************************************************************************************//**
- * @brief Display a warning dialog.
- *
- * @pre p_message Is not empty.
- *
- * @param p_message The warning message.
- *
- ************************************************************************************************/
 void DisplayWarningDialog(Gtk::Window& parent, const std::string& p_message)
 {
     PRECONDITION(!p_message.empty());
@@ -50,50 +42,6 @@ void DisplayWarningDialog(Gtk::Window& parent, const std::string& p_message)
     Gtk::MessageDialog errorDlg{parent, p_message, NO_MARKUP, Gtk::MessageType::MESSAGE_WARNING, Gtk::ButtonsType::BUTTONS_OK, true};
 
     errorDlg.run();
-}
-
-void DisplayNumericalValuesExpectedWarningDialog(Gtk::Window& parent)
-{
-    DisplayWarningDialog(parent, "Enter numerical values for in-a-row and grid size values.");
-}
-
-void DisplayNumericalValuesOutOfRangeWarningDialog(Gtk::Window& parent)
-{
-    DisplayWarningDialog(parent, "Numerical value(s) out of range.");
-}
-
-void DisplayValueOutOfLimitsWarningDialog(Gtk::Window& parent, const std::string& p_valueName, size_t p_lower, size_t p_upper)
-{
-    std::ostringstream oss;
-
-    oss << "The " << p_valueName << " value should be between " << p_lower << " and " << p_upper << " inclusively.";
-
-    DisplayWarningDialog(parent, oss.str());
-}
-
-void DisplayInARowValueOutOfLimitsWarningDialog(Gtk::Window& parent, size_t p_lower, size_t p_upper)
-{
-    DisplayValueOutOfLimitsWarningDialog(parent, "in a row", p_lower, p_upper);
-}
-
-void DisplayBoardWidthValueOutOfLimitsWarningDialog(Gtk::Window& parent, size_t p_lower, size_t p_upper)
-{
-    DisplayValueOutOfLimitsWarningDialog(parent, "board width", p_lower, p_upper);
-}
-
-void DisplayBoardHeightValueOutOfLimitsWarningDialog(Gtk::Window& parent, size_t p_lower, size_t p_upper)
-{
-    DisplayValueOutOfLimitsWarningDialog(parent, "board height", p_lower, p_upper);
-}
-
-void DisplayEmptyEntriesWarningDialog(Gtk::Window& parent)
-{
-    DisplayWarningDialog(parent, "Player names cannot be empty.");
-}
-
-void DisplaySameColorsWarningDialog(Gtk::Window& parent)
-{
-    DisplayWarningDialog(parent, "Discs must have different colors.");
 }
 
 } // namespace
@@ -275,94 +223,55 @@ void cxgui::NewGameView::OnStart()
         return;
     }
 
-    cxmodel::NewGameInformation gameInformation;
-
     // Retrieve game parameters:
+    size_t inARowValue, boardWidth, boardHeight;
     try
     {
-        gameInformation.m_inARowValue = std::stoul(m_inARowEntry.get_text());
-        gameInformation.m_gridWidth = std::stoul(m_gridWidthEntry.get_text());
-        gameInformation.m_gridHeight = std::stoul(m_gridHeightEntry.get_text());
+        inARowValue = std::stoul(m_inARowEntry.get_text());
+        boardWidth = std::stoul(m_gridWidthEntry.get_text());
+        boardHeight = std::stoul(m_gridHeightEntry.get_text());
     }
     catch(const std::invalid_argument& p_exception)
     {
-        DisplayNumericalValuesExpectedWarningDialog(*parent);
+        DisplayWarningDialog(*parent, m_presenter.GetNumericalValuesExpectedMessage());
+
         return;
     }
     catch(const std::out_of_range& p_exception)
     {
-        DisplayNumericalValuesOutOfRangeWarningDialog(*parent);
+        DisplayWarningDialog(*parent, m_presenter.GetNumericalValuesOutOfRangeMessage());
+
         return;
     }
-
-    if(gameInformation.m_inARowValue < m_presenter.GetNewGameViewMinInARowValue() ||
-       gameInformation.m_inARowValue > m_presenter.GetNewGameViewMaxInARowValue())
-    {
-        DisplayInARowValueOutOfLimitsWarningDialog(*parent,
-                                                   m_presenter.GetNewGameViewMinInARowValue(),
-                                                   m_presenter.GetNewGameViewMaxInARowValue());
-        return;
-    }
-
-    if(gameInformation.m_gridWidth < m_presenter.GetNewGameViewMinBoardWidthValue() ||
-       gameInformation.m_gridWidth > m_presenter.GetNewGameViewMaxBoardWidthValue())
-    {
-        DisplayBoardWidthValueOutOfLimitsWarningDialog(*parent,
-                                                       m_presenter.GetNewGameViewMinBoardWidthValue(),
-                                                       m_presenter.GetNewGameViewMaxBoardWidthValue());
-        return;
-    }
-
-    if(gameInformation.m_gridHeight < m_presenter.GetNewGameViewMinBoardHeightValue() ||
-       gameInformation.m_gridHeight > m_presenter.GetNewGameViewMaxBoardHeightValue())
-    {
-        DisplayBoardHeightValueOutOfLimitsWarningDialog(*parent,
-                                                        m_presenter.GetNewGameViewMinBoardHeightValue(),
-                                                        m_presenter.GetNewGameViewMaxBoardHeightValue());
-        return;
-    }
-
-    // Retrieve players information:
-
-    // Names:
-    const std::string name1 = m_playerList.GetPlayerNameAtRow(0);
-    const std::string name2 = m_playerList.GetPlayerNameAtRow(1);
 
     const std::vector<std::string> playerNames = m_playerList.GetAllPlayerNames();
-    const bool emptyNamesExist = std::any_of(playerNames.cbegin(),
-                                             playerNames.cend(),
-                                             [](const std::string& p_name)
-                                             {
-                                                 return p_name.empty();
-                                             });
-
-    if(emptyNamesExist)
-    {
-        DisplayEmptyEntriesWarningDialog(*parent);
-        return;
-    }
-
-    // Chip colors:
     const std::vector<cxmodel::ChipColor> chipColors = m_playerList.GetAllColors();
 
-    bool duplicateColorsExist = false;
-    for(const auto& color : chipColors)
+    // Validate the input:
+    if(!m_presenter.IsInARowValueValid(inARowValue))
     {
-        const size_t count = std::count(chipColors.cbegin(), chipColors.cend(), color);
-
-        if(count > 1)
-        {
-            duplicateColorsExist = true;
-            break;
-        }
-    }
-
-    if(duplicateColorsExist)
-    {
-        DisplaySameColorsWarningDialog(*parent);
+        DisplayWarningDialog(*parent, m_presenter.GetInARowInvalidInputMessage());
         return;
     }
 
+    if(!m_presenter.AreBoardDimensionsValid(boardHeight, boardWidth))
+    {
+        DisplayWarningDialog(*parent, m_presenter.GetBoardDimensionsInvalidInputMessage());
+        return;
+    }
+
+    if(!m_presenter.ArePlayersInformationValid(playerNames, chipColors))
+    {
+        DisplayWarningDialog(*parent, m_presenter.GetPlayersInformationInvalidInputMessage());
+        return;
+    }
+
+    // Start game:
+    cxmodel::NewGameInformation gameInformation;
+
+    gameInformation.m_inARowValue = inARowValue;
+    gameInformation.m_gridHeight = boardHeight;
+    gameInformation.m_gridWidth = boardWidth;
     for(size_t index = 0; index < m_playerList.GetSize(); ++index)
     {
         gameInformation.AddPlayer({playerNames[index], chipColors[index]});

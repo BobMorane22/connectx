@@ -21,6 +21,9 @@
  *
  *************************************************************************************************/
 
+#include <algorithm>
+#include <sstream>
+
 #include <cxinv/include/assertion.h>
 #include <cxmodel/include/Disc.h>
 #include <cxmodel/include/NewGameInformation.h>
@@ -33,6 +36,30 @@ namespace
 {
 
 const cxmodel::Player NO_PLAYER = {"--", cxmodel::MakeTransparent()};
+
+std::string MakeValueOutOfLimitsWarningDialog(const std::string& p_valueName, size_t p_lower, size_t p_upper)
+{
+    std::ostringstream oss;
+
+    oss << "The " << p_valueName << " value should be between " << p_lower << " and " << p_upper << " inclusively.";
+
+    return oss.str();
+}
+
+std::string MakeInARowValueOutOfLimitsWarningDialog(size_t p_lower, size_t p_upper)
+{
+    return MakeValueOutOfLimitsWarningDialog("in-a-row", p_lower, p_upper);
+}
+
+std::string MakeBoardWidthValueOutOfLimitsWarningDialog(size_t p_lower, size_t p_upper)
+{
+    return MakeValueOutOfLimitsWarningDialog("board width", p_lower, p_upper);
+}
+
+std::string MakeBoardHeightValueOutOfLimitsWarningDialog(size_t p_lower, size_t p_upper)
+{
+    return MakeValueOutOfLimitsWarningDialog("board height", p_lower, p_upper);
+}
 
 } // namespace
 
@@ -187,6 +214,105 @@ size_t cxgui::MainWindowPresenter::GetNewGameViewMaxBoardHeightValue() const
     return m_modelAsLimits.GetMaximumGridHeight();
 }
 
+std::string cxgui::MainWindowPresenter::GetNumericalValuesExpectedMessage() const
+{
+    return "Enter numerical values for in-a-row and board size values.";
+}
+
+std::string cxgui::MainWindowPresenter::GetNumericalValuesOutOfRangeMessage() const
+{
+    return "Numerical values out of range for in-a-row or board size values.";
+}
+
+std::string cxgui::MainWindowPresenter::GetInARowInvalidInputMessage() const
+{
+    return MakeInARowValueOutOfLimitsWarningDialog(GetNewGameViewMinInARowValue(), GetNewGameViewMaxInARowValue());
+}
+
+std::string cxgui::MainWindowPresenter::GetBoardDimensionsInvalidInputMessage() const
+{
+    PRECONDITION(!m_invalidBoardDimensionsMessage.empty());
+
+    return m_invalidBoardDimensionsMessage;
+}
+
+std::string cxgui::MainWindowPresenter::GetPlayersInformationInvalidInputMessage() const
+{
+    PRECONDITION(!m_invalidPlayerInformationMessage.empty());
+
+    return m_invalidPlayerInformationMessage;
+}
+
+bool cxgui::MainWindowPresenter::IsInARowValueValid(size_t p_inARowValue) const
+{
+    if(p_inARowValue < GetNewGameViewMinInARowValue() || p_inARowValue > GetNewGameViewMaxInARowValue())
+    {
+        return false;
+    }
+
+    return true;
+}
+
+bool cxgui::MainWindowPresenter::AreBoardDimensionsValid(size_t p_boardHeight, size_t p_boardWidth)
+{
+    if(p_boardHeight < GetNewGameViewMinBoardHeightValue() ||
+       p_boardHeight > GetNewGameViewMaxBoardHeightValue())
+    {
+        m_invalidBoardDimensionsMessage = MakeBoardHeightValueOutOfLimitsWarningDialog(GetNewGameViewMinBoardHeightValue(),
+                                                                                       GetNewGameViewMaxBoardHeightValue());
+        return false;
+    }
+
+    if(p_boardWidth < GetNewGameViewMinBoardWidthValue() ||
+       p_boardWidth > GetNewGameViewMaxBoardWidthValue())
+    {
+        m_invalidBoardDimensionsMessage = MakeBoardWidthValueOutOfLimitsWarningDialog(GetNewGameViewMinBoardWidthValue(),
+                                                                                      GetNewGameViewMaxBoardWidthValue());
+        return false;
+    }
+
+    return true;
+}
+
+bool cxgui::MainWindowPresenter::ArePlayersInformationValid(const std::vector<std::string>& p_playerNames,
+                                                            const std::vector<cxmodel::ChipColor>& p_chipColors)
+{
+    // Player names (should not be empty):
+    const bool emptyNamesExist = std::any_of(p_playerNames.cbegin(),
+                                             p_playerNames.cend(),
+                                             [](const std::string& p_name)
+                                             {
+                                                 return p_name.empty();
+                                             });
+
+   if(emptyNamesExist)
+   {
+       m_invalidPlayerInformationMessage = "Player names cannot be empty.";
+       return false;
+   }
+
+   // Chip colors (should not have duplicates):
+   bool duplicateColorsExist = false;
+   for(const auto& color : p_chipColors)
+   {
+       const size_t count = std::count(p_chipColors.cbegin(), p_chipColors.cend(), color);
+
+       if(count > 1)
+       {
+           duplicateColorsExist = true;
+           break;
+       }
+   }
+
+   if(duplicateColorsExist)
+   {
+       m_invalidPlayerInformationMessage = "Discs must have different colors.";
+       return false;
+   }
+
+   return true;
+}
+
 
 /**************************************************************************************************
  *
@@ -197,11 +323,6 @@ size_t cxgui::MainWindowPresenter::GetNewGameViewMaxBoardHeightValue() const
 std::string cxgui::MainWindowPresenter::GetGameViewTitle() const
 {
     return "Game";
-}
-
-std::string cxgui::MainWindowPresenter::GetGameViewMessage() const
-{
-    return m_gameViewMessage;
 }
 
 cxmodel::ChipColor cxgui::MainWindowPresenter::GetGameViewActivePlayerChipColor() const
@@ -257,10 +378,10 @@ void cxgui::MainWindowPresenter::UpdateCreateNewGame()
 {
     m_currentBoardWidth = m_modelAsGameInformation.GetCurrentGridWidth();
     m_currentBoardHeight = m_modelAsGameInformation.GetCurrentGridHeight();
-    
+
     m_activePlayer = m_modelAsGameInformation.GetActivePlayer();
     m_nextPlayer = m_modelAsGameInformation.GetNextPlayer();
-    
+
     // Reserve the board color memory:
     for(size_t row = 0u; row < m_currentBoardHeight; ++row)
     {
@@ -273,7 +394,7 @@ void cxgui::MainWindowPresenter::UpdateChipDropped()
     // Update players information:
     m_activePlayer = m_modelAsGameInformation.GetActivePlayer();
     m_nextPlayer = m_modelAsGameInformation.GetNextPlayer();
-    
+
     // Update board information:
     for(size_t row = 0u; row < m_currentBoardHeight; ++row)
     {
