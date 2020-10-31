@@ -46,6 +46,7 @@ TGTS_$(d) := $(d)/cxguitests
 OBJS_$(d) := $(d)/AboutWindowPresenterTestFixture.o \
              $(d)/AboutWindowPresenterTests.o \
              $(d)/DisableStdStreamsRAII.o \
+             $(d)/extractRawUserInputTests.o \
              $(d)/GamePresenterTests.o \
              $(d)/MainWindowPresenterTestFixture.o \
              $(d)/MainWindowControllerTests.o \

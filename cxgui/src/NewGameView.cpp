@@ -28,6 +28,8 @@
 
 #include <cxinv/include/assertion.h>
 #include <cxmodel/include/NewGameInformation.h>
+
+#include <extractRawUserInput.h>
 #include <NewGameView.h>
 
 namespace
@@ -224,23 +226,27 @@ void cxgui::NewGameView::OnStart()
     }
 
     // Retrieve game parameters:
-    size_t inARowValue, boardWidth, boardHeight;
-    try
+    size_t inARowValue;
+    auto extractionStatus = extractRawUserInput(m_inARowEntry.get_text(), inARowValue);
+    if(!extractionStatus.IsSuccess())
     {
-        inARowValue = std::stoul(m_inARowEntry.get_text());
-        boardWidth = std::stoul(m_gridWidthEntry.get_text());
-        boardHeight = std::stoul(m_gridHeightEntry.get_text());
-    }
-    catch(const std::invalid_argument& p_exception)
-    {
-        DisplayWarningDialog(*parent, m_presenter.GetNumericalValuesExpectedMessage());
-
+        DisplayWarningDialog(*parent, extractionStatus.GetMessage());
         return;
     }
-    catch(const std::out_of_range& p_exception)
-    {
-        DisplayWarningDialog(*parent, m_presenter.GetNumericalValuesOutOfRangeMessage());
 
+    size_t boardWidth;
+    extractionStatus = extractRawUserInput(m_gridWidthEntry.get_text(), boardWidth);
+    if(!extractionStatus.IsSuccess())
+    {
+        DisplayWarningDialog(*parent, extractionStatus.GetMessage());
+        return;
+    }
+
+    size_t boardHeight;
+    extractionStatus = extractRawUserInput(m_gridHeightEntry.get_text(), boardHeight);
+    if(!extractionStatus.IsSuccess())
+    {
+        DisplayWarningDialog(*parent, extractionStatus.GetMessage());
         return;
     }
 
@@ -248,21 +254,24 @@ void cxgui::NewGameView::OnStart()
     const std::vector<cxmodel::ChipColor> chipColors = m_playerList.GetAllColors();
 
     // Validate the input:
-    if(!m_presenter.IsInARowValueValid(inARowValue))
+    const auto inARowInputStatus = m_presenter.IsInARowValueValid(inARowValue);
+    if(!inARowInputStatus.IsSuccess())
     {
-        DisplayWarningDialog(*parent, m_presenter.GetInARowInvalidInputMessage());
+        DisplayWarningDialog(*parent, inARowInputStatus.GetMessage());
         return;
     }
 
-    if(!m_presenter.AreBoardDimensionsValid(boardHeight, boardWidth))
+    const auto boardDimensionInputStatus = m_presenter.AreBoardDimensionsValid(boardHeight, boardWidth);
+    if(!boardDimensionInputStatus.IsSuccess())
     {
-        DisplayWarningDialog(*parent, m_presenter.GetBoardDimensionsInvalidInputMessage());
+        DisplayWarningDialog(*parent, boardDimensionInputStatus.GetMessage());
         return;
     }
 
-    if(!m_presenter.ArePlayersInformationValid(playerNames, chipColors))
+    const auto playerInfoInputStatus = m_presenter.ArePlayersInformationValid(playerNames, chipColors);
+    if(!playerInfoInputStatus.IsSuccess())
     {
-        DisplayWarningDialog(*parent, m_presenter.GetPlayersInformationInvalidInputMessage());
+        DisplayWarningDialog(*parent, playerInfoInputStatus.GetMessage());
         return;
     }
 

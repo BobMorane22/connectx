@@ -60,6 +60,7 @@ OBJS_$(d) := $(d)/src/CommandCreateNewGame.o \
              $(d)/src/NewGameInformation.o \
              $(d)/src/OS.o \
              $(d)/src/Player.o \
+             $(d)/src/Status.o \
              $(d)/src/Subject.o \
              $(d)/src/WinGameResolutionStragegy.o \
              cxinv/libcxinv.a \

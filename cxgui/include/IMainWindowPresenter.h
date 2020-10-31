@@ -100,6 +100,11 @@ public:
     size_t GetNewGameViewMinBoardHeightValue() const override = 0;
     size_t GetNewGameViewMaxBoardHeightValue() const override = 0;
 
+    cxmodel::Status IsInARowValueValid(size_t p_inARowValue) const override = 0;
+    cxmodel::Status AreBoardDimensionsValid(size_t p_boardHeight, size_t p_boardWidth) override = 0;
+    cxmodel::Status ArePlayersInformationValid(const std::vector<std::string>& p_playerNames,
+                                               const std::vector<cxmodel::ChipColor>& p_chipColors) override = 0;
+
 ///@}
 
 ///@{ @name Game View
@@ -119,17 +124,6 @@ public:
     size_t GetGameViewBoardHeight() const override = 0;
 
     const ChipColors& GetGameViewChipColors() const override = 0;
-
-    std::string GetNumericalValuesExpectedMessage() const override = 0;
-    std::string GetNumericalValuesOutOfRangeMessage() const override = 0;
-    std::string GetInARowInvalidInputMessage() const override = 0;
-    std::string GetBoardDimensionsInvalidInputMessage() const override = 0;
-    std::string GetPlayersInformationInvalidInputMessage() const override = 0;
-
-    bool IsInARowValueValid(size_t p_inARowValue) const override = 0;
-    bool AreBoardDimensionsValid(size_t p_boardHeight, size_t p_boardWidth) override = 0;
-    bool ArePlayersInformationValid(const std::vector<std::string>& p_playerNames,
-                                    const std::vector<cxmodel::ChipColor>& p_chipColors) override = 0;
 
 ///@}
 

@@ -61,6 +61,7 @@ OBJS_$(d) := $(d)/BoardTests.o \
              $(d)/ModelTests.o \
              $(d)/NewGameInformationTests.o \
              $(d)/PlayerTests.o \
+             $(d)/StatusTests.o \
              $(d)/SubjectTestFixture.o \
              $(d)/SubjectTests.o \
              $(d)/WinGameResolutionStrategyTests.o \

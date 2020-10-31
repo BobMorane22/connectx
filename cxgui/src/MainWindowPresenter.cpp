@@ -214,68 +214,41 @@ size_t cxgui::MainWindowPresenter::GetNewGameViewMaxBoardHeightValue() const
     return m_modelAsLimits.GetMaximumGridHeight();
 }
 
-std::string cxgui::MainWindowPresenter::GetNumericalValuesExpectedMessage() const
-{
-    return "Enter numerical values for in-a-row and board size values.";
-}
-
-std::string cxgui::MainWindowPresenter::GetNumericalValuesOutOfRangeMessage() const
-{
-    return "Numerical values out of range for in-a-row or board size values.";
-}
-
-std::string cxgui::MainWindowPresenter::GetInARowInvalidInputMessage() const
-{
-    return MakeInARowValueOutOfLimitsWarningDialog(GetNewGameViewMinInARowValue(), GetNewGameViewMaxInARowValue());
-}
-
-std::string cxgui::MainWindowPresenter::GetBoardDimensionsInvalidInputMessage() const
-{
-    PRECONDITION(!m_invalidBoardDimensionsMessage.empty());
-
-    return m_invalidBoardDimensionsMessage;
-}
-
-std::string cxgui::MainWindowPresenter::GetPlayersInformationInvalidInputMessage() const
-{
-    PRECONDITION(!m_invalidPlayerInformationMessage.empty());
-
-    return m_invalidPlayerInformationMessage;
-}
-
-bool cxgui::MainWindowPresenter::IsInARowValueValid(size_t p_inARowValue) const
+cxmodel::Status cxgui::MainWindowPresenter::IsInARowValueValid(size_t p_inARowValue) const
 {
     if(p_inARowValue < GetNewGameViewMinInARowValue() || p_inARowValue > GetNewGameViewMaxInARowValue())
     {
-        return false;
+        const std::string errorMessage = MakeInARowValueOutOfLimitsWarningDialog(GetNewGameViewMinInARowValue(),
+                                                                                 GetNewGameViewMaxInARowValue());
+        return cxmodel::MakeError(errorMessage);
     }
 
-    return true;
+    return cxmodel::MakeSuccess();
 }
 
-bool cxgui::MainWindowPresenter::AreBoardDimensionsValid(size_t p_boardHeight, size_t p_boardWidth)
+cxmodel::Status cxgui::MainWindowPresenter::AreBoardDimensionsValid(size_t p_boardHeight, size_t p_boardWidth)
 {
     if(p_boardHeight < GetNewGameViewMinBoardHeightValue() ||
        p_boardHeight > GetNewGameViewMaxBoardHeightValue())
     {
-        m_invalidBoardDimensionsMessage = MakeBoardHeightValueOutOfLimitsWarningDialog(GetNewGameViewMinBoardHeightValue(),
-                                                                                       GetNewGameViewMaxBoardHeightValue());
-        return false;
+        const std::string errorMessage = MakeBoardHeightValueOutOfLimitsWarningDialog(GetNewGameViewMinBoardHeightValue(),
+                                                                                      GetNewGameViewMaxBoardHeightValue());
+        return cxmodel::MakeError(errorMessage);
     }
 
     if(p_boardWidth < GetNewGameViewMinBoardWidthValue() ||
        p_boardWidth > GetNewGameViewMaxBoardWidthValue())
     {
-        m_invalidBoardDimensionsMessage = MakeBoardWidthValueOutOfLimitsWarningDialog(GetNewGameViewMinBoardWidthValue(),
-                                                                                      GetNewGameViewMaxBoardWidthValue());
-        return false;
+        const std::string errorMessage = MakeBoardWidthValueOutOfLimitsWarningDialog(GetNewGameViewMinBoardWidthValue(),
+                                                                                     GetNewGameViewMaxBoardWidthValue());
+        return cxmodel::MakeError(errorMessage);
     }
 
-    return true;
+    return cxmodel::MakeSuccess();
 }
 
-bool cxgui::MainWindowPresenter::ArePlayersInformationValid(const std::vector<std::string>& p_playerNames,
-                                                            const std::vector<cxmodel::ChipColor>& p_chipColors)
+cxmodel::Status cxgui::MainWindowPresenter::ArePlayersInformationValid(const std::vector<std::string>& p_playerNames,
+                                                                       const std::vector<cxmodel::ChipColor>& p_chipColors)
 {
     // Player names (should not be empty):
     const bool emptyNamesExist = std::any_of(p_playerNames.cbegin(),
@@ -287,8 +260,7 @@ bool cxgui::MainWindowPresenter::ArePlayersInformationValid(const std::vector<st
 
    if(emptyNamesExist)
    {
-       m_invalidPlayerInformationMessage = "Player names cannot be empty.";
-       return false;
+       return cxmodel::MakeError("Player names cannot be empty.");
    }
 
    // Chip colors (should not have duplicates):
@@ -306,11 +278,10 @@ bool cxgui::MainWindowPresenter::ArePlayersInformationValid(const std::vector<st
 
    if(duplicateColorsExist)
    {
-       m_invalidPlayerInformationMessage = "Discs must have different colors.";
-       return false;
+       return cxmodel::MakeError("Discs must have different colors.");
    }
 
-   return true;
+   return cxmodel::MakeSuccess();
 }
 
 

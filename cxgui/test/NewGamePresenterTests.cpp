@@ -149,16 +149,6 @@ TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetMaxBoardHeightValue_NewGa
     ASSERT_EQ(GetNewGameViewPresenter().GetNewGameViewMaxBoardHeightValue(), GetLimitsModel().GetMaximumGridHeight());
 }
 
-TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetNumericalValuesExpectedMessage_NewGamePresenter_MessageReturned)
-{
-    ASSERT_EQ(GetNewGameViewPresenter().GetNumericalValuesExpectedMessage(), "Enter numerical values for in-a-row and board size values.");
-}
-
-TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetNumericalValuesOutOfRangeMessage_NewGamePresenter_MessageReturned)
-{
-    ASSERT_EQ(GetNewGameViewPresenter().GetNumericalValuesOutOfRangeMessage(), "Numerical values out of range for in-a-row or board size values.");
-}
-
 TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetInARowInvalidInputMessage_NewGamePresenter_MessageReturned)
 {
     auto& presenter = GetNewGameViewPresenter();
@@ -170,7 +160,9 @@ TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetInARowInvalidInputMessage
         << presenter.GetNewGameViewMaxInARowValue()
         << " inclusively.";
 
-    ASSERT_EQ(presenter.GetInARowInvalidInputMessage(), oss.str());
+    const auto status = GetNewGameViewPresenter().IsInARowValueValid(GetNewGameViewPresenter().GetNewGameViewMinInARowValue() - 1u);
+
+    ASSERT_EQ(status.GetMessage(), oss.str());
 }
 
 TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetBoardDimensionsInvalidInputMessage_InvalidHeight_InvalidHeightMessageReturned)
@@ -184,8 +176,10 @@ TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetBoardDimensionsInvalidInp
         << presenter.GetNewGameViewMaxBoardHeightValue()
         << " inclusively.";
 
-    presenter.AreBoardDimensionsValid(presenter.GetNewGameViewMaxBoardHeightValue() + 1u, presenter.GetNewGameViewMaxBoardWidthValue() + 1);
-    ASSERT_EQ(presenter.GetBoardDimensionsInvalidInputMessage(), oss.str());
+    const auto status = presenter.AreBoardDimensionsValid(presenter.GetNewGameViewMaxBoardHeightValue() + 1u,
+                                                          presenter.GetNewGameViewMaxBoardWidthValue() + 1);
+
+    ASSERT_EQ(status.GetMessage(), oss.str());
 }
 
 TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetBoardDimensionsInvalidInputMessage_InvalidWidth_InvalidWidthMessageReturned)
@@ -199,52 +193,10 @@ TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetBoardDimensionsInvalidInp
         << presenter.GetNewGameViewMaxBoardWidthValue()
         << " inclusively.";
 
-    presenter.AreBoardDimensionsValid(presenter.GetNewGameViewMaxBoardHeightValue(), presenter.GetNewGameViewMaxBoardWidthValue() + 1);
-    ASSERT_EQ(presenter.GetBoardDimensionsInvalidInputMessage(), oss.str());
-}
+    const auto status = presenter.AreBoardDimensionsValid(presenter.GetNewGameViewMaxBoardHeightValue(),
+                                                          presenter.GetNewGameViewMaxBoardWidthValue() + 1);
 
-TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetPlayersInformationInvalidInputMessage_AllInputValidAndDifferent_EmptyMessageReturned)
-{
-    const std::vector<std::string> playerNames
-    {
-        "John Doe",
-        "Jane Doe",
-        "Igor Lopez"
-    };
-
-    const std::vector<cxmodel::ChipColor> chipColors
-    {
-        cxmodel::MakeRed(),
-        cxmodel::MakeBlue(),
-        cxmodel::MakeYellow()
-    };
-
-    auto& presenter = GetNewGameViewPresenter();
-    presenter.ArePlayersInformationValid(playerNames, chipColors);
-
-    ASSERT_EQ(presenter.GetPlayersInformationInvalidInputMessage(), "");
-}
-
-TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetPlayersInformationInvalidInputMessage_TwoIdenticalNamesButDifferentColors_EmptyMessageReturned)
-{
-    const std::vector<std::string> playerNames
-    {
-        "John Doe",
-        "John Doe",
-        "Igor Lopez"
-    };
-
-    const std::vector<cxmodel::ChipColor> chipColors
-    {
-        cxmodel::MakeRed(),
-        cxmodel::MakeBlue(),
-        cxmodel::MakeYellow()
-    };
-
-    auto& presenter = GetNewGameViewPresenter();
-    presenter.ArePlayersInformationValid(playerNames, chipColors);
-
-    ASSERT_EQ(presenter.GetPlayersInformationInvalidInputMessage(), "");
+    ASSERT_EQ(status.GetMessage(), oss.str());
 }
 
 TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetPlayersInformationInvalidInputMessage_AnEmptyName_InvalidPlayerMessageReturned)
@@ -264,9 +216,9 @@ TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetPlayersInformationInvalid
     };
 
     auto& presenter = GetNewGameViewPresenter();
-    presenter.ArePlayersInformationValid(playerNames, chipColors);
+    const auto status = presenter.ArePlayersInformationValid(playerNames, chipColors);
 
-    ASSERT_EQ(presenter.GetPlayersInformationInvalidInputMessage(), "Player names cannot be empty.");
+    ASSERT_EQ(status.GetMessage(), "Player names cannot be empty.");
 }
 
 TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetPlayersInformationInvalidInputMessage_TwoIdenticalChipColors_InvalidChipColorsMessageReturned)
@@ -286,71 +238,82 @@ TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetPlayersInformationInvalid
     };
 
     auto& presenter = GetNewGameViewPresenter();
-    presenter.ArePlayersInformationValid(playerNames, chipColors);
+    const auto status = presenter.ArePlayersInformationValid(playerNames, chipColors);
 
-    ASSERT_EQ(presenter.GetPlayersInformationInvalidInputMessage(), "Discs must have different colors.");
+    ASSERT_EQ(status.GetMessage(), "Discs must have different colors.");
 }
 
-TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/IsInARowValueValid_InValidRange_ReturnsTrue)
+TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/IsInARowValueValid_InValidRange_ReturnsSuccess)
 {
-    ASSERT_TRUE(GetNewGameViewPresenter().IsInARowValueValid(GetNewGameViewPresenter().GetNewGameViewMinInARowValue()));
-    ASSERT_TRUE(GetNewGameViewPresenter().IsInARowValueValid(GetNewGameViewPresenter().GetNewGameViewMaxInARowValue()));
+    const auto statusMin = GetNewGameViewPresenter().IsInARowValueValid(GetNewGameViewPresenter().GetNewGameViewMinInARowValue());
+    ASSERT_TRUE(statusMin.IsSuccess());
+
+    const auto statusMax = GetNewGameViewPresenter().IsInARowValueValid(GetNewGameViewPresenter().GetNewGameViewMaxInARowValue());
+    ASSERT_TRUE(statusMax.IsSuccess());
 }
 
-TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/IsInARowValueValid_BelowRange_ReturnsFalse)
+TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/IsInARowValueValid_BelowRange_ReturnsError)
 {
-    ASSERT_FALSE(GetNewGameViewPresenter().IsInARowValueValid(GetNewGameViewPresenter().GetNewGameViewMinInARowValue() - 1u));
+    const auto status = GetNewGameViewPresenter().IsInARowValueValid(GetNewGameViewPresenter().GetNewGameViewMinInARowValue() - 1u);
+    ASSERT_FALSE(status.IsSuccess());
 }
 
-TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/IsInARowValueValid_OverRange_ReturnsFalse)
+TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/IsInARowValueValid_OverRange_ReturnsError)
 {
-    ASSERT_FALSE(GetNewGameViewPresenter().IsInARowValueValid(GetNewGameViewPresenter().GetNewGameViewMaxInARowValue() + 1u));
+    const auto status = GetNewGameViewPresenter().IsInARowValueValid(GetNewGameViewPresenter().GetNewGameViewMaxInARowValue() + 1u);
+    ASSERT_FALSE(status.IsSuccess());
 }
 
-TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/AreBoardDimensionsValid_BothHeightAndWidthInRange_ReturnsTrue)
-{
-    auto& presenter = GetNewGameViewPresenter();
-
-    ASSERT_TRUE(presenter.AreBoardDimensionsValid(presenter.GetNewGameViewMinBoardHeightValue(),
-                                                  presenter.GetNewGameViewMinBoardWidthValue()));
-
-    ASSERT_TRUE(presenter.AreBoardDimensionsValid(presenter.GetNewGameViewMaxBoardHeightValue(),
-                                                  presenter.GetNewGameViewMaxBoardWidthValue()));
-}
-
-TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/AreBoardDimensionsValid_HeightBelowRange_ReturnsFalse)
+TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/AreBoardDimensionsValid_BothHeightAndWidthInRange_ReturnsSuccess)
 {
     auto& presenter = GetNewGameViewPresenter();
 
-    ASSERT_FALSE(presenter.AreBoardDimensionsValid(presenter.GetNewGameViewMinBoardHeightValue() - 1u,
-                                                   presenter.GetNewGameViewMaxBoardWidthValue()));
+    const auto statusMin = presenter.AreBoardDimensionsValid(presenter.GetNewGameViewMinBoardHeightValue(),
+                                                             presenter.GetNewGameViewMinBoardWidthValue());
+    ASSERT_TRUE(statusMin.IsSuccess());
+
+    const auto statusMax = presenter.AreBoardDimensionsValid(presenter.GetNewGameViewMaxBoardHeightValue(),
+                                                             presenter.GetNewGameViewMaxBoardWidthValue());
+    ASSERT_TRUE(statusMax.IsSuccess());
 }
 
-TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/AreBoardDimensionsValid_HeightOverRange_ReturnsFalse)
+TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/AreBoardDimensionsValid_HeightBelowRange_ReturnsError)
 {
     auto& presenter = GetNewGameViewPresenter();
+    const auto status = presenter.AreBoardDimensionsValid(presenter.GetNewGameViewMinBoardHeightValue() - 1u,
+                                                          presenter.GetNewGameViewMaxBoardWidthValue());
 
-    ASSERT_FALSE(presenter.AreBoardDimensionsValid(presenter.GetNewGameViewMaxBoardHeightValue() + 1u,
-                                                   presenter.GetNewGameViewMaxBoardWidthValue()));
+    ASSERT_FALSE(status.IsSuccess());
 }
 
-TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/AreBoardDimensionsValid_WidthBelowRange_ReturnsFalse)
+TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/AreBoardDimensionsValid_HeightOverRange_ReturnsError)
 {
     auto& presenter = GetNewGameViewPresenter();
+    const auto status = presenter.AreBoardDimensionsValid(presenter.GetNewGameViewMaxBoardHeightValue() + 1u,
+                                                          presenter.GetNewGameViewMaxBoardWidthValue());
 
-    ASSERT_FALSE(presenter.AreBoardDimensionsValid(presenter.GetNewGameViewMinBoardWidthValue(),
-                                                   presenter.GetNewGameViewMaxBoardWidthValue() - 1u));
+    ASSERT_FALSE(status.IsSuccess());
 }
 
-TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/AreBoardDimensionsValid_WidthOverRange_ReturnsFalse)
+TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/AreBoardDimensionsValid_WidthBelowRange_ReturnsError)
 {
     auto& presenter = GetNewGameViewPresenter();
+    const auto status = presenter.AreBoardDimensionsValid(presenter.GetNewGameViewMinBoardWidthValue(),
+                                                          presenter.GetNewGameViewMaxBoardWidthValue() - 1u);
 
-    ASSERT_FALSE(presenter.AreBoardDimensionsValid(presenter.GetNewGameViewMaxBoardWidthValue(),
-                                                   presenter.GetNewGameViewMaxBoardWidthValue() + 1u));
+    ASSERT_FALSE(status.IsSuccess());
 }
 
-TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/ArePlayersInformationValid_NonEmptyPlayerNamesAndAllDifferentChipColors_ReturnsTrue)
+TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/AreBoardDimensionsValid_WidthOverRange_ReturnsError)
+{
+    auto& presenter = GetNewGameViewPresenter();
+    const auto status = presenter.AreBoardDimensionsValid(presenter.GetNewGameViewMaxBoardWidthValue(),
+                                                          presenter.GetNewGameViewMaxBoardWidthValue() + 1u);
+
+    ASSERT_FALSE(status.IsSuccess());
+}
+
+TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/ArePlayersInformationValid_NonEmptyPlayerNamesAndAllDifferentChipColors_ReturnsSuccess)
 {
     const std::vector<std::string> playerNames
     {
@@ -366,10 +329,11 @@ TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/ArePlayersInformationValid_N
         cxmodel::MakeYellow()
     };
 
-    ASSERT_TRUE(GetNewGameViewPresenter().ArePlayersInformationValid(playerNames, chipColors));
+    const auto status = GetNewGameViewPresenter().ArePlayersInformationValid(playerNames, chipColors);
+    ASSERT_TRUE(status.IsSuccess());
 }
 
-TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/ArePlayersInformationValid_AllSamePlayerNamesAndAllDifferentChipColors_ReturnsTrue)
+TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/ArePlayersInformationValid_AllSamePlayerNamesAndAllDifferentChipColors_ReturnsSuccess)
 {
     const std::vector<std::string> playerNames
     {
@@ -385,10 +349,11 @@ TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/ArePlayersInformationValid_A
         cxmodel::MakeYellow()
     };
 
-    ASSERT_TRUE(GetNewGameViewPresenter().ArePlayersInformationValid(playerNames, chipColors));
+    const auto status = GetNewGameViewPresenter().ArePlayersInformationValid(playerNames, chipColors);
+    ASSERT_TRUE(status.IsSuccess());
 }
 
-TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/ArePlayersInformationValid_AnEmptyPlayerNameAndAllDifferentChipColors_ReturnsFalse)
+TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/ArePlayersInformationValid_AnEmptyPlayerNameAndAllDifferentChipColors_ReturnsError)
 {
     const std::vector<std::string> playerNames
     {
@@ -404,10 +369,11 @@ TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/ArePlayersInformationValid_A
         cxmodel::MakeYellow()
     };
 
-    ASSERT_FALSE(GetNewGameViewPresenter().ArePlayersInformationValid(playerNames, chipColors));
+    const auto status = GetNewGameViewPresenter().ArePlayersInformationValid(playerNames, chipColors);
+    ASSERT_FALSE(status.IsSuccess());
 }
 
-TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/ArePlayersInformationValid_NonEmptyPlayerNamesAndTwoSameChipColors_ReturnsFalse)
+TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/ArePlayersInformationValid_NonEmptyPlayerNamesAndTwoSameChipColors_ReturnsError)
 {
     const std::vector<std::string> playerNames
     {
@@ -423,5 +389,6 @@ TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/ArePlayersInformationValid_N
         cxmodel::MakeYellow()
     };
 
-    ASSERT_FALSE(GetNewGameViewPresenter().ArePlayersInformationValid(playerNames, chipColors));
+    const auto status = GetNewGameViewPresenter().ArePlayersInformationValid(playerNames, chipColors);
+    ASSERT_FALSE(status.IsSuccess());
 }

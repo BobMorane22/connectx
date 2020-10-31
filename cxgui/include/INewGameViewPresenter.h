@@ -26,6 +26,8 @@
 
 #include <string>
 
+#include <cxmodel/include/Status.h>
+
 namespace cxgui
 {
 
@@ -205,59 +207,14 @@ public:
     virtual size_t GetNewGameViewMaxBoardHeightValue() const = 0;
 
     /******************************************************************************************//**
-     * @brief Get a message explaining that numerical values were expected for in-a-row
-     *        or board dimension values.
-     *
-     * @return The message.
-     *
-     ********************************************************************************************/
-    virtual std::string GetNumericalValuesExpectedMessage() const = 0;
-
-    /******************************************************************************************//**
-     * @brief Get a message explaining that numerical values are out of range (i.e they fall out
-     *        of the range of the converted-to type) for in-a-row or board dimension values.
-     *
-     * @return The message.
-     *
-     ********************************************************************************************/
-    virtual std::string GetNumericalValuesOutOfRangeMessage() const = 0;
-
-    /******************************************************************************************//**
-     * @brief Gets a message explaining that the input for the in-a-row value is not valid. For
-     *        the input to be valid, it must fall between the model limits.
-     *
-     * @return The message.
-     *
-     ********************************************************************************************/
-    virtual std::string GetInARowInvalidInputMessage() const = 0;
-
-    /******************************************************************************************//**
-     * @brief Gets a message explaining that the input for the board dimension values is not
-     *        valid.
-     *
-     * @return The message.
-     *
-     ********************************************************************************************/
-    virtual std::string GetBoardDimensionsInvalidInputMessage() const = 0;
-
-    /******************************************************************************************//**
-     * @brief Gets a message explaining that the player information supplied by the is not
-     *        valid.
-     *
-     * @return The message.
-     *
-     ********************************************************************************************/
-    virtual std::string GetPlayersInformationInvalidInputMessage() const = 0;
-
-    /******************************************************************************************//**
      * @brief Checks if the in-a-row value is valid.
      *
      * @param p_inARowValue The in-a-row value to check.
      *
-     * @return `true` if the value is valid, `false` otherwise.
+     * @return `Success` if the value is valid, `Error` otherwise.
      *
      ********************************************************************************************/
-    virtual bool IsInARowValueValid(size_t p_inARowValue) const = 0;
+    virtual cxmodel::Status IsInARowValueValid(size_t p_inARowValue) const = 0;
 
     /******************************************************************************************//**
      * @brief Checks if the board dimensions passed as arguments are valid.
@@ -265,15 +222,10 @@ public:
      * @param p_boardHeight The board height value to check.
      * @param p_boardWidth  The board width value to check.
      *
-     * @note Upon returning `false`, a message can be retrieved by calling the
-     *       GetBoardDimensionsInvalidInputMessage function immediately after.
-     *       If both values are invalid, the message will only contain the first
-     *       value to have failed the check.
-     *
-     * @return `true` if both height and width are valid, `false` otherwise.
+     * @return `Success` if both height and width are valid, `Error` otherwise.
      *
      ********************************************************************************************/
-    virtual bool AreBoardDimensionsValid(size_t p_boardHeight, size_t p_boardWidth) = 0;
+    virtual cxmodel::Status AreBoardDimensionsValid(size_t p_boardHeight, size_t p_boardWidth) = 0;
 
     /******************************************************************************************//**
      * @brief Checks if the player information passed as arguments are valid.
@@ -281,16 +233,11 @@ public:
      * @param p_playerNames A list of player names.
      * @param p_chipColors  A list of chip colors.
      *
-     * @note Upon returning `false`, a message can be retrieved by calling the
-     *       GetPlayersInformationInvalidInputMessage function immediately after. If
-     *       both values are invalid, the message will only contain the first value
-     *       to have failed the check.
-     *
-     * @return `true` if both player names and chip colors are valid, `false` otherwise.
+     * @return `Success` if both player names and chip colors are valid, `Error` otherwise.
      *
      ********************************************************************************************/
-    virtual bool ArePlayersInformationValid(const std::vector<std::string>& p_playerNames,
-                                            const std::vector<cxmodel::ChipColor>& p_chipColors) = 0;
+    virtual cxmodel::Status ArePlayersInformationValid(const std::vector<std::string>& p_playerNames,
+                                                       const std::vector<cxmodel::ChipColor>& p_chipColors) = 0;
 
 };
 
