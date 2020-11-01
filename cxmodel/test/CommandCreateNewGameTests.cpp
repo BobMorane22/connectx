@@ -75,7 +75,7 @@ TEST_F(CommandCreateNewGameTestFixture, /*DISABLED_*/Execute_ValidNewGame_NewGam
     ASSERT_EQ(modelPlayers.size(), newGameInformation.GetNbOfNewPlayers());
     ASSERT_EQ(modelPlayers, newGameInformation.GetNewPlayers());
 
-    ASSERT_TRUE(board != nullptr);
+    ASSERT_TRUE(board);
     ASSERT_EQ(board->GetNbColumns(), newGameInformation.m_gridWidth);
     ASSERT_EQ(board->GetNbRows(), newGameInformation.m_gridHeight);
     ASSERT_EQ(modelInARowValue, newGameInformation.m_inARowValue);
@@ -104,7 +104,7 @@ TEST_F(CommandCreateNewGameTestFixture, /*DISABLED_*/Undo_ValidNewGame_HasNoEffe
     ASSERT_EQ(modelPlayers.size(), newGameInformation.GetNbOfNewPlayers());
     ASSERT_EQ(modelPlayers, newGameInformation.GetNewPlayers());
 
-    ASSERT_TRUE(board != nullptr);
+    ASSERT_TRUE(board);
     ASSERT_EQ(board->GetNbColumns(), newGameInformation.m_gridWidth);
     ASSERT_EQ(board->GetNbRows(), newGameInformation.m_gridHeight);
     ASSERT_EQ(modelInARowValue, newGameInformation.m_inARowValue);

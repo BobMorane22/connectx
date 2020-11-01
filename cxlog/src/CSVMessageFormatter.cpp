@@ -51,7 +51,7 @@ std::string MakeCSV(const std::string& p_timestamp,
 cxlog::CSVMessageFormatter::CSVMessageFormatter(std::unique_ptr<cxlog::ITimestampFormatter>&& p_timeFormatter)
  : m_timeFormatter{std::move(p_timeFormatter)}
 {
-    PRECONDITION(m_timeFormatter != nullptr);
+    PRECONDITION(m_timeFormatter);
 }
 
 std::string cxlog::CSVMessageFormatter::FormatHeaders() const

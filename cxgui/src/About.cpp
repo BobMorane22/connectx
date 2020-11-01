@@ -28,7 +28,7 @@ cxgui::About::About(std::unique_ptr<IAboutWindowPresenter>&& p_presenter)
  : Window()
  , m_presenter{std::move(p_presenter)}
 {
-    POSTCONDITION(m_presenter != nullptr);
+    POSTCONDITION(m_presenter);
 
     m_window.set_title(m_presenter->GetWindowTitle());
 

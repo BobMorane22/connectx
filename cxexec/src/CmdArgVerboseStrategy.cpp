@@ -52,7 +52,7 @@ std::unique_ptr<cxlog::ILogger> CreateVerboseLogger(cxlog::VerbosityLevel p_verb
 
     logger->SetVerbosityLevel(p_verbosity);
 
-    POSTCONDITION(logger != nullptr);
+    POSTCONDITION(logger);
 
     return std::move(logger);
 }
@@ -74,7 +74,7 @@ cx::CmdArgVerboseStrategy::CmdArgVerboseStrategy(int argc,
  , m_modelAsVersionning{p_modelAsVersionning}
  , m_logger{p_logger}
 {
-    PRECONDITION(p_logger != nullptr);
+    PRECONDITION(p_logger);
 }
 
 int cx::CmdArgVerboseStrategy::Handle()

@@ -47,8 +47,8 @@ cxgui::GameView::GameView(IGameViewPresenter& p_presenter,
 , m_nextPlayerChip{std::make_unique<cxgui::DiscChip>(cxmodel::MakeTransparent(), cxmodel::MakeTransparent(), cxgui::DEFAULT_CHIP_SIZE / 4)}
 , m_board{std::make_unique<cxgui::Board>(m_presenter, m_controller)}
 {
-    PRECONDITION(m_activePlayerChip != nullptr);
-    PRECONDITION(m_nextPlayerChip != nullptr);
+    PRECONDITION(m_activePlayerChip);
+    PRECONDITION(m_nextPlayerChip);
 
     SetLayout();
     PopulateWidgets();
@@ -57,7 +57,7 @@ cxgui::GameView::GameView(IGameViewPresenter& p_presenter,
     // Get a reference to the parent window:
     m_parent = dynamic_cast<Gtk::Window*>(m_mainLayout.get_parent());
 
-    POSTCONDITION(m_parent != nullptr);
+    POSTCONDITION(m_parent);
 }
 
 void cxgui::GameView::Activate()
@@ -123,7 +123,7 @@ void cxgui::GameView::SetLayout()
     m_viewLayout.attach(m_title, 0, 0, TOTAL_WIDTH, 1);
     m_viewLayout.attach(m_playersInfoLayout, 0, 1, TOTAL_WIDTH, 1);
 
-    if(ASSERT(m_board != nullptr))
+    if(ASSERT(m_board))
     {
         m_viewLayout.attach(*m_board, 0, 4, TOTAL_WIDTH, 1);
     }
@@ -131,14 +131,14 @@ void cxgui::GameView::SetLayout()
     // Players info layout:
     m_playersInfoLayout.attach(m_activePlayerLabel, 0, 0, 1, 1);
     m_playersInfoLayout.attach(m_activePlayerName, 1, 0, 1, 1);
-    if(ASSERT(m_activePlayerChip != nullptr))
+    if(ASSERT(m_activePlayerChip))
     {
         m_playersInfoLayout.attach(*m_activePlayerChip, 2, 0, 1, 1);
     }
 
     m_playersInfoLayout.attach(m_nextPlayerLabel, 0, 1, 1, 1);
     m_playersInfoLayout.attach(m_nextPlayerName, 1, 1, 1, 1);
-    if(ASSERT(m_nextPlayerChip != nullptr))
+    if(ASSERT(m_nextPlayerChip))
     {
         m_playersInfoLayout.attach(*m_nextPlayerChip, 2, 1, 1, 1);
     }
@@ -176,7 +176,7 @@ void cxgui::GameView::ConfigureWidgets()
     m_activePlayerLabel.set_markup("<b>" + m_activePlayerLabel.get_text() + "</b>");
     m_activePlayerName.set_halign(Gtk::Align::ALIGN_START);
     m_activePlayerName.set_hexpand(true);
-    if(ASSERT(m_activePlayerChip != nullptr))
+    if(ASSERT(m_activePlayerChip))
     {
         m_activePlayerChip->set_hexpand(true);
         m_activePlayerChip->set_vexpand(false);
@@ -189,7 +189,7 @@ void cxgui::GameView::ConfigureWidgets()
     m_nextPlayerLabel.set_markup("<b>" + m_nextPlayerLabel.get_text() + "</b>");
     m_nextPlayerName.set_halign(Gtk::Align::ALIGN_START);
     m_nextPlayerName.set_hexpand(true);
-    if(ASSERT(m_nextPlayerChip != nullptr))
+    if(ASSERT(m_nextPlayerChip))
     {
         m_nextPlayerChip->set_hexpand(true);
         m_nextPlayerChip->set_vexpand(false);
@@ -225,7 +225,7 @@ void cxgui::GameView::UpdateChipDropped()
     m_nextPlayerChip->ChangeColor(m_presenter.GetGameViewNextPlayerChipColor());
     m_nextPlayerName.set_text(m_presenter.GetGameViewNextPlayerName());
 
-    if(ASSERT(m_board != nullptr))
+    if(ASSERT(m_board))
     {
         m_board->Update();
     }

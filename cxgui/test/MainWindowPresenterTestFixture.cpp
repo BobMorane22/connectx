@@ -30,52 +30,52 @@
 MainWindowPresenterTestFixture::MainWindowPresenterTestFixture()
 {
     m_model = std::make_unique<MainWindowPresenterModelMock>();
-    EXPECT_TRUE(m_model != nullptr);
+    EXPECT_TRUE(m_model);
 
     m_presenter = std::make_unique<cxgui::MainWindowPresenter>(*m_model, *m_model);
-    EXPECT_TRUE(m_presenter != nullptr);
+    EXPECT_TRUE(m_presenter);
 
     m_model->Attach(m_presenter.get());
 }
 
 cxgui::IMainWindowPresenter& MainWindowPresenterTestFixture::GetPresenter()
 {
-    EXPECT_TRUE(m_presenter != nullptr);
+    EXPECT_TRUE(m_presenter);
 
     return *m_presenter;
 }
 
 cxgui::IGameViewPresenter& MainWindowPresenterTestFixture::GetGameViewPresenter()
 {
-    EXPECT_TRUE(m_presenter != nullptr);
+    EXPECT_TRUE(m_presenter);
 
     return *m_presenter;
 }
 
 cxgui::INewGameViewPresenter& MainWindowPresenterTestFixture::GetNewGameViewPresenter()
 {
-    EXPECT_TRUE(m_presenter != nullptr);
+    EXPECT_TRUE(m_presenter);
 
     return *m_presenter;
 }
 
 cxmodel::IConnectXGameActions& MainWindowPresenterTestFixture::GetActionsModel()
 {
-    EXPECT_TRUE(m_model != nullptr);
+    EXPECT_TRUE(m_model);
 
     return *m_model;
 }
 
 cxmodel::IConnectXGameInformation& MainWindowPresenterTestFixture::GetGameInformationModel()
 {
-    EXPECT_TRUE(m_model != nullptr);
+    EXPECT_TRUE(m_model);
 
     return *m_model;
 }
 
 cxmodel::IConnectXLimits& MainWindowPresenterTestFixture::GetLimitsModel()
 {
-    EXPECT_TRUE(m_model != nullptr);
+    EXPECT_TRUE(m_model);
 
     return *m_model;
 }

@@ -40,7 +40,7 @@ cxmodel::Subject::~Subject()
 
 void cxmodel::Subject::Attach(cxmodel::IObserver* const p_newObserver)
 {
-    PRECONDITION(p_newObserver != nullptr);
+    PRECONDITION(p_newObserver);
 
     const std::size_t oldSize = m_observers.size();
 
@@ -70,14 +70,14 @@ void cxmodel::Subject::Attach(cxmodel::IObserver* const p_newObserver)
 
 void cxmodel::Subject::Detatch(cxmodel::IObserver* const p_oldObserver)
 {
-    PRECONDITION(p_oldObserver != nullptr);
+    PRECONDITION(p_oldObserver);
 
     const std::size_t oldSize = m_observers.size();
     PRECONDITION(oldSize > 0);
 
     std::size_t newSize = m_observers.size();
 
-    if(p_oldObserver != nullptr)
+    if(p_oldObserver)
     {
         const auto position = std::find(m_observers.cbegin(),
                                         m_observers.cend(),
@@ -116,7 +116,7 @@ void cxmodel::Subject::Notify(NotificationContext p_context)
 {
     for(const auto observer : m_observers)
     {
-        if(observer != nullptr)
+        if(observer)
         {
             observer->Update(p_context, this);
         }

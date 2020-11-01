@@ -36,7 +36,7 @@ cx::GtkmmUIManager::GtkmmUIManager(int argc,
                                    cxmodel::IConnectXLimits& p_modelAsLimits)
 {
     PRECONDITION(argc > 0);
-    PRECONDITION(argv != nullptr);
+    PRECONDITION(argv);
 
     InitializeGtkmm(argc, argv);
 
@@ -58,7 +58,7 @@ cx::GtkmmUIManager::GtkmmUIManager(int argc,
     p_modelAsSubject.Attach(m_presenter.get());
     m_presenter->Attach(m_mainWindow.get());
 
-    POSTCONDITION(m_mainWindow != nullptr);
+    POSTCONDITION(m_mainWindow);
 
     CheckInvariants();
 }
@@ -84,7 +84,7 @@ void cx::GtkmmUIManager::InitializeGtkmm(int argc, char *argv[])
 
 void cx::GtkmmUIManager::CheckInvariants()
 {
-    INVARIANT(m_controller != nullptr);
-    INVARIANT(m_presenter != nullptr);
-    INVARIANT(m_mainWindow != nullptr);
+    INVARIANT(m_controller);
+    INVARIANT(m_presenter);
+    INVARIANT(m_mainWindow);
 }

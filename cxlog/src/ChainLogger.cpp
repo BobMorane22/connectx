@@ -30,7 +30,7 @@ void cxlog::ChainLogger::SetSucessor(std::unique_ptr<ILogger>&& p_sucessor)
 
 bool cxlog::ChainLogger::HasSucessor() const
 {
-    if(m_successor != nullptr)
+    if(m_successor)
     {
         return true;
     }

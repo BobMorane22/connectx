@@ -137,7 +137,7 @@ std::unique_ptr<cx::ICmdArgWorkflowStrategy> cx::CmdArgWorkflowFactory::Create(i
         }
     }
 
-    POSTCONDITION(strategy != nullptr);
+    POSTCONDITION(strategy);
 
     return strategy;
 }

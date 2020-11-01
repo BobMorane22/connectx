@@ -135,7 +135,7 @@ void cxgui::MainWindow::UpdateCreateNewGame()
 
 void cxgui::MainWindow::UpdateChipDropped(cxmodel::NotificationContext p_context)
 {
-    if(ASSERT(m_gameView != nullptr))
+    if(ASSERT(m_gameView))
     {
         m_gameView->Update(p_context);
     }
@@ -160,8 +160,8 @@ void cxgui::MainWindow::RegisterStatusBar()
 
     m_statusbar = std::move(concreteStatusBar);
 
-    POSTCONDITION(m_statusbarPresenter != nullptr);
-    POSTCONDITION(m_statusbar != nullptr);
+    POSTCONDITION(m_statusbarPresenter);
+    POSTCONDITION(m_statusbar);
 }
 
 void cxgui::MainWindow::CreateAboutWindow()
@@ -169,7 +169,7 @@ void cxgui::MainWindow::CreateAboutWindow()
     if(!m_about)
     {
         cxmodel::IVersioning* versionModel = dynamic_cast<cxmodel::IVersioning*>(&m_model);
-        if(!ASSERT(versionModel != nullptr))
+        if(!ASSERT(versionModel))
         {
             return;
         }
@@ -189,7 +189,7 @@ void cxgui::MainWindow::CreateAboutWindow()
 
 void cxgui::MainWindow::DeactivateNewGameView()
 {
-    if(!ASSERT(m_newGameView != nullptr))
+    if(!ASSERT(m_newGameView))
     {
         return;
     }

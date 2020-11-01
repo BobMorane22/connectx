@@ -64,9 +64,9 @@ cxmodel::Model::Model(std::unique_ptr<ICommandStack>&& p_cmdStack, cxlog::ILogge
  , m_playersInfo{{}, 0u, 1u}
  , m_inARowValue{4u}
 {
-    PRECONDITION(m_cmdStack != nullptr);
+    PRECONDITION(m_cmdStack);
 
-    if(m_cmdStack != nullptr)
+    if(m_cmdStack)
     {
         PRECONDITION(m_cmdStack->IsEmpty());
     }
@@ -148,7 +148,7 @@ void cxmodel::Model::CreateNewGame(const NewGameInformation& p_gameInformation)
     std::unique_ptr<ICommand> command = std::make_unique<CommandCreateNewGame>(*this, m_board, m_playersInfo.m_players, m_inARowValue, p_gameInformation);
     m_cmdStack->Execute(std::move(command));
 
-    if(!ASSERT(m_board != nullptr))
+    if(!ASSERT(m_board))
     {
         return;
     }
@@ -169,7 +169,7 @@ void cxmodel::Model::CreateNewGame(const NewGameInformation& p_gameInformation)
 
 void cxmodel::Model::DropChip(const cxmodel::IChip& p_chip, size_t p_column)
 {
-    if(!PRECONDITION(m_board != nullptr))
+    if(!PRECONDITION(m_board))
     {
         return;
     }
@@ -195,7 +195,7 @@ void cxmodel::Model::DropChip(const cxmodel::IChip& p_chip, size_t p_column)
 
 size_t cxmodel::Model::GetCurrentGridHeight() const
 {
-    if(!ASSERT(m_board != nullptr))
+    if(!ASSERT(m_board))
     {
         return 0u;
     }
@@ -205,7 +205,7 @@ size_t cxmodel::Model::GetCurrentGridHeight() const
 
 size_t cxmodel::Model::GetCurrentGridWidth() const
 {
-    if(!ASSERT(m_board != nullptr))
+    if(!ASSERT(m_board))
     {
         return 0u;
     }
@@ -245,7 +245,7 @@ const cxmodel::IChip& cxmodel::Model::GetChip(size_t p_row, size_t p_column) con
         return NO_DISC;
     }
 
-    if(!ASSERT(m_board != nullptr))
+    if(!ASSERT(m_board))
     {
         return NO_DISC;
     }
@@ -306,5 +306,5 @@ cxlog::VerbosityLevel cxmodel::Model::GetVerbosityLevel() const
 
 void cxmodel::Model::CheckInvariants()
 {
-    INVARIANT(m_cmdStack != nullptr);
+    INVARIANT(m_cmdStack);
 }

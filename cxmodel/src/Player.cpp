@@ -33,7 +33,7 @@ cxmodel::Player::Player(const std::string p_name, const cxmodel::ChipColor& p_ch
     PRECONDITION(!p_name.empty());
 
     POSTCONDITION(!m_name.empty());
-    POSTCONDITION(m_chip != nullptr);
+    POSTCONDITION(m_chip);
 }
 
 cxmodel::Player::Player(const Player& p_player)
@@ -43,7 +43,7 @@ cxmodel::Player::Player(const Player& p_player)
     m_chip = std::make_unique<cxmodel::Disc>(playerChip.GetColor());
 
     POSTCONDITION(!m_name.empty());
-    POSTCONDITION(m_chip != nullptr);
+    POSTCONDITION(m_chip);
 }
 
 cxmodel::Player& cxmodel::Player::operator=(const cxmodel::Player& p_player)
@@ -57,7 +57,7 @@ cxmodel::Player& cxmodel::Player::operator=(const cxmodel::Player& p_player)
     }
 
     POSTCONDITION(!this->m_name.empty());
-    POSTCONDITION(this->m_chip != nullptr);
+    POSTCONDITION(this->m_chip);
 
     return *this;
 }

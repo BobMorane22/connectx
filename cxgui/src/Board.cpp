@@ -101,7 +101,7 @@ void cxgui::Board::DropChip()
 {
     Chip* chip = GetChip(m_nextDiscAreaLayout, m_currentDiscPosition, 0);
 
-    if(!ASSERT(chip != nullptr))
+    if(!ASSERT(chip))
     {
         return;
     }
@@ -129,14 +129,14 @@ cxgui::Chip* cxgui::Board::GetChip(Gtk::Grid& p_discArea, int p_left, int p_top)
 {
     Widget* child = p_discArea.get_child_at(p_left, p_top);
 
-    if(!ASSERT(child != nullptr))
+    if(!ASSERT(child))
     {
         return nullptr;
     }
 
     Chip* chip = dynamic_cast<Chip*>(child);
 
-    if(!ASSERT(chip != nullptr))
+    if(!ASSERT(chip))
     {
         return nullptr;
     }
@@ -155,7 +155,7 @@ void cxgui::Board::ChangeCurrentDisc(const cxmodel::ChipColor& p_newColor)
 {
     Chip* chip = GetChip(m_nextDiscAreaLayout, m_currentDiscPosition, 0);
 
-    if(!ASSERT(chip != nullptr))
+    if(!ASSERT(chip))
     {
         return;
     }
@@ -237,7 +237,7 @@ void cxgui::Board::MoveCurrentDiscAtFirstRow()
 {
     Chip* currentChip = GetChip(m_nextDiscAreaLayout, m_currentDiscPosition, 0);
 
-    if(!ASSERT(currentChip != nullptr))
+    if(!ASSERT(currentChip))
     {
         return;
     }
@@ -247,7 +247,7 @@ void cxgui::Board::MoveCurrentDiscAtFirstRow()
     m_currentDiscPosition = 0u;
     Chip* startChip = GetChip(m_nextDiscAreaLayout, m_currentDiscPosition, 0);
 
-    if(!ASSERT(startChip != nullptr))
+    if(!ASSERT(startChip))
     {
         return;
     }
@@ -265,7 +265,7 @@ void cxgui::Board::RefreshBoardArea()
         {
             Chip* chip = GetChip(m_boardLayout, column, row);
 
-            if(!ASSERT(chip != nullptr))
+            if(!ASSERT(chip))
             {
                 return;
             }

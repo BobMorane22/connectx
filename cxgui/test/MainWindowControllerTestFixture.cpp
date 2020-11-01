@@ -29,8 +29,8 @@ MainWindowControllerTestFixture::MainWindowControllerTestFixture()
     m_model = std::make_unique<MainWindowControllerMockModel>(*this);
     m_controller = std::make_unique<cxgui::MainWindowController>(*m_model);
 
-    EXPECT_TRUE(m_model != nullptr);
-    EXPECT_TRUE(m_controller != nullptr);
+    EXPECT_TRUE(m_model);
+    EXPECT_TRUE(m_controller);
 }
 
 bool MainWindowControllerTestFixture::GetNewGameCreated() const

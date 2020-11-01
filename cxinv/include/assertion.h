@@ -24,6 +24,8 @@
 #ifndef ASSERTION_H_0470D299_880C_415F_BEE0_57ED14327B58
 #define ASSERTION_H_0470D299_880C_415F_BEE0_57ED14327B58
 
+#include <memory>
+
 #ifndef NDEBUG
 namespace cxinv
 {
@@ -72,6 +74,88 @@ bool HandleAssert(const AssertLabel  p_label,
                   const long         p_lineNumber,
                   const char*        p_message = nullptr);
 
+/*********************************************************************************************//**
+ * @brief Handles assertions of unique pointers.
+ *
+ * Handles assertions of various types by formatting a proper error message and aborting, if
+ * needed. Never call this function directly, but always through the appropriate assertion
+ * macros.
+ *
+ * @tparam T The underlying pointer type.
+ *
+ * @param p_label         The assertion label. This defines what kind of assertion is
+ *                        treated.
+ * @param p_ptrRes        The unique pointer that is asserted (i.e. checked for null).
+ * @param p_conditionExpr The logical expression (as a readable C++ string) that is asserted.
+ * @param p_fileName      The file name into which the assertion is located.
+ * @param p_functionName  The function name into which the assertion is located.
+ * @param p_lineNumber    The line number at which the assertion is located.
+ * @param p_message       An optional assertion message.
+ *
+ * @return The result of evaluating p_conditionRes.
+ *
+ * @warning Never use this function by itself! Use assertion macros instead.
+ *
+ ************************************************************************************************/
+template<typename T>
+bool HandleAssert(const AssertLabel  p_label,
+                  const std::unique_ptr<T>& p_ptrRes,
+                  const char*              p_conditionExpr,
+                  const char*              p_fileName,
+                  const char*              p_functionName,
+                  const long               p_lineNumber,
+                  const char*              p_message = nullptr)
+{
+    return HandleAssert(p_label,
+                        p_ptrRes != nullptr,
+                        p_conditionExpr,
+                        p_fileName,
+                        p_functionName,
+                        p_lineNumber,
+                        p_message);
+}
+
+/*********************************************************************************************//**
+ * @brief Handles assertions of various types.
+ *
+ * Handles assertions of various types by formatting a proper error message and aborting, if
+ * needed. Never call this function directly, but always through the appropriate assertion
+ * macros.
+ *
+ * @tparam T The underlying pointer type.
+ *
+ * @param p_label         The assertion label. This defines what kind of assertion is
+ *                        treated.
+ * @param p_ptrRes        The shared pointer that is asserted (i.e. checked for null).
+ * @param p_conditionExpr The logical expression (as a readable C++ string) that is asserted.
+ * @param p_fileName      The file name into which the assertion is located.
+ * @param p_functionName  The function name into which the assertion is located.
+ * @param p_lineNumber    The line number at which the assertion is located.
+ * @param p_message       An optional assertion message.
+ *
+ * @return The result of evaluating p_conditionRes.
+ *
+ * @warning Never use this function by itself! Use assertion macros instead.
+ *
+ ************************************************************************************************/
+template<typename T>
+bool HandleAssert(const AssertLabel  p_label,
+                  const std::shared_ptr<T>& p_ptrRes,
+                  const char*              p_conditionExpr,
+                  const char*              p_fileName,
+                  const char*              p_functionName,
+                  const long               p_lineNumber,
+                  const char*              p_message = nullptr)
+{
+    return HandleAssert(p_label,
+                        p_ptrRes != nullptr,
+                        p_conditionExpr,
+                        p_fileName,
+                        p_functionName,
+                        p_lineNumber,
+                        p_message);
+}
+
 } // namespace cxinv
 
 #endif // NDEBUG
@@ -88,7 +172,7 @@ bool HandleAssert(const AssertLabel  p_label,
  *
  *************************************************************************************************/
 #define ASSERT(p_condition) cxinv::HandleAssert(cxinv::AssertLabel::ASSERTION, \
-                                                ( p_condition ),               \
+                                                (p_condition),                 \
                                                 #p_condition,                  \
                                                 __FILE__,                      \
                                                 __FUNCTION__,                  \

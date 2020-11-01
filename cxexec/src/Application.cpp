@@ -40,7 +40,7 @@ cx::Application::Application(int argc,
                              cxlog::ILogger& p_logger)
 {
     PRECONDITION(argc >= 1);
-    PRECONDITION(argv != nullptr);
+    PRECONDITION(argv);
 
     CmdArgWorkflowFactory factory;
 
@@ -53,7 +53,7 @@ cx::Application::Application(int argc,
                                 p_modelAsVersionning,
                                 p_logger);
 
-    POSTCONDITION(m_workflow != nullptr);
+    POSTCONDITION(m_workflow);
 }
 
 int cx::Application::Run()
@@ -65,7 +65,7 @@ int cx::Application::Run()
 
     const auto workflow = std::make_unique<cx::CmdArgNoStrategy>();
 
-    INVARIANT(m_workflow != nullptr);
+    INVARIANT(m_workflow);
 
     return workflow->Handle();
 }

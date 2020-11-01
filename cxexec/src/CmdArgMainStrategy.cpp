@@ -37,7 +37,7 @@ cx::CmdArgMainStrategy::CmdArgMainStrategy(int argc,
                                            cxmodel::IConnectXLimits& p_modelAsLimits)
 {
     PRECONDITION(argc > 0);
-    PRECONDITION(argv != nullptr);
+    PRECONDITION(argv);
 
     argc = 1;
     m_uiMgr = std::make_unique<cx::GtkmmUIManager>(argc,
@@ -47,12 +47,12 @@ cx::CmdArgMainStrategy::CmdArgMainStrategy(int argc,
                                                    p_modelAsGameInformation,
                                                    p_modelAsLimits);
 
-    POSTCONDITION(m_uiMgr != nullptr);
+    POSTCONDITION(m_uiMgr);
 }
 
 int cx::CmdArgMainStrategy::Handle()
 {
-    INVARIANT(m_uiMgr != nullptr);
+    INVARIANT(m_uiMgr);
 
     if(m_uiMgr)
     {

@@ -214,13 +214,13 @@ void cxgui::NewGameView::OnStart()
     // First, we get an handle to the main window in case a warning dialog needs to be
     // displayed:
     Gtk::Container* mainWindow = m_mainLayout.get_parent();
-    if(!ASSERT(mainWindow != nullptr))
+    if(!ASSERT(mainWindow))
     {
         return;
     }
 
     Gtk::Window* parent = dynamic_cast<Gtk::Window*>(mainWindow);
-    if(!ASSERT(parent != nullptr))
+    if(!ASSERT(parent))
     {
         return;
     }

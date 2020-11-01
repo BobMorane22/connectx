@@ -228,3 +228,35 @@ TEST_F(HandleAssertTestFixture, /*DISABLED_*/HandleAssert_invalidFunctionName_Ex
                                      m__LINE_),
                                      GetStdErrContents());
 }
+
+TEST(HandleAssertTest, /*DISABLED_*/HandleAssert_UniquePtrAssertCheckForNullptr_NotExplcitCheckNeeded)
+{
+    struct A {};
+
+    std::unique_ptr<A> uPtr = std::make_unique<A>();
+
+    if(ASSERT(uPtr))
+    {
+        ASSERT_TRUE(true);
+    }
+    else
+    {
+        ASSERT_TRUE(false);
+    }
+}
+
+TEST(HandleAssertTest, /*DISABLED_*/HandleAssert_SharedPtrAssertCheckForNullptr_NotExplcitCheckNeeded)
+{
+    struct A {};
+
+    std::shared_ptr<A> sPtr = std::make_shared<A>();
+
+    if(ASSERT(sPtr))
+    {
+        ASSERT_TRUE(true);
+    }
+    else
+    {
+        ASSERT_TRUE(false);
+    }
+}

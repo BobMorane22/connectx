@@ -51,14 +51,14 @@ std::unique_ptr<cxlog::ILogger> CreateFileLogger(cxlog::VerbosityLevel p_verbosi
     std::unique_ptr<cxlog::IMessageFormatter> formatter = std::make_unique<cxlog::CSVMessageFormatter>(std::move(timestampFormatter));
     std::unique_ptr<cxlog::ILogger> logger = std::make_unique<cxlog::IncrementalChainedLogger>(std::move(formatter), std::move(logTarget), true);
 
-    if(!ASSERT(logger != nullptr))
+    if(!ASSERT(logger))
     {
         return nullptr;
     }
 
     logger->SetVerbosityLevel(p_verbosity);
 
-    POSTCONDITION(logger != nullptr);
+    POSTCONDITION(logger);
 
     return logger;
 }

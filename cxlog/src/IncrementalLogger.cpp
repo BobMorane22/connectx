@@ -33,8 +33,8 @@ cxlog::IncrementalLogger::IncrementalLogger(std::unique_ptr<IMessageFormatter>&&
 {
     // We take member variables as preconditions because parameters
     // have been moved away:
-    PRECONDITION(m_msgFormatter != nullptr);
-    PRECONDITION(m_logTarget != nullptr);
+    PRECONDITION(m_msgFormatter);
+    PRECONDITION(m_logTarget);
 
     if(m_msgFormatter && m_logTarget && p_addHeader)
     {
@@ -42,8 +42,8 @@ cxlog::IncrementalLogger::IncrementalLogger(std::unique_ptr<IMessageFormatter>&&
         m_logTarget->Log(m_msgFormatter->FormatHeaders());
     }
 
-    INVARIANT(m_msgFormatter != nullptr);
-    INVARIANT(m_logTarget != nullptr);
+    INVARIANT(m_msgFormatter);
+    INVARIANT(m_logTarget);
 }
 
 void cxlog::IncrementalLogger::Log(const VerbosityLevel p_verbosityLevel,
@@ -52,7 +52,7 @@ void cxlog::IncrementalLogger::Log(const VerbosityLevel p_verbosityLevel,
                                    const size_t         p_lineNumber,
                                    const std::string&   p_message)
 {
-    if(!ASSERT(m_msgFormatter != nullptr))
+    if(!ASSERT(m_msgFormatter))
     {
         return;
     }
@@ -67,7 +67,7 @@ void cxlog::IncrementalLogger::Log(const VerbosityLevel p_verbosityLevel,
     // Create well formatted message:
     const std::string msg{m_msgFormatter->FormatMessage(p_verbosityLevel, p_fileName, p_functionName, p_lineNumber, p_message)};
 
-    if(!ASSERT(m_logTarget != nullptr))
+    if(!ASSERT(m_logTarget))
     {
         // Release formatter, no logging will be done after all:
         m_msgFormatter.reset(nullptr);
@@ -78,6 +78,6 @@ void cxlog::IncrementalLogger::Log(const VerbosityLevel p_verbosityLevel,
     // Log it to the target:
     m_logTarget->Log(msg);
 
-    INVARIANT(m_msgFormatter != nullptr);
-    INVARIANT(m_logTarget != nullptr);
+    INVARIANT(m_msgFormatter);
+    INVARIANT(m_logTarget);
 }
