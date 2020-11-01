@@ -2,6 +2,7 @@
 
 Here is a list of all changes, per release:
 
+* December 6, 2020 - [v0.21](./v0-21/user/user.md)
 * November 22, 2020 - [v0.20](./v0-20/user/user.md)
 * November 8, 2020 - [v0.19](./v0-19/user/user.md)
 * October 25, 2020 - [v0.18](./v0-18/user/user.md)
