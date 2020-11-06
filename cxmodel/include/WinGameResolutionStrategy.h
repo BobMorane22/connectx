@@ -33,11 +33,30 @@
 namespace cxmodel
 {
 
+/*********************************************************************************************//**
+ * @brief Win game resolution strategy.
+ *
+ * Decides if a game is won by a player.
+ *
+ ************************************************************************************************/
 class WinGameResolutionStrategy : public IGameResolutionStrategy
 {
 
 public:
 
+    /******************************************************************************************//**
+     * @brief Constructor.
+     *
+     * @pre The in-a-row value is bigger than 2 and fits into a signed integer.
+     * @pre The number of players is at least 2.
+     * @pre The number of taken positions is smaller or equal to the number of positions on the board.
+     *
+     * @param p_board          The game board.
+     * @param p_inARowValue    The in-a-row value.
+     * @param p_players        The list of players.
+     * @param p_takenPositions A list of all taken (i.e. non free) positions on the board.
+     *
+     ********************************************************************************************/
     WinGameResolutionStrategy(const cxmodel::IBoard& p_board,
                               const size_t p_inARowValue,
                               const std::vector<Player>& p_players,

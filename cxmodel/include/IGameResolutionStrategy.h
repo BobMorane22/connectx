@@ -27,6 +27,12 @@
 namespace cxmodel
 {
 
+/*********************************************************************************************//**
+ * @brief Interface for game resolution strategies.
+ *
+ * A game resolution is a way by which a game can be resolved (a win, a tie, etc).
+ *
+ ************************************************************************************************/
 class IGameResolutionStrategy
 {
 
@@ -34,6 +40,12 @@ public:
 
     virtual ~IGameResolutionStrategy() = default;
 
+    /******************************************************************************************//**
+     * @brief Handles the game resolution.
+     *
+     * @return `true` if the game is resolved, `false` if it goes on.
+     *
+     ********************************************************************************************/
     virtual bool Handle() const = 0;
 
 };
