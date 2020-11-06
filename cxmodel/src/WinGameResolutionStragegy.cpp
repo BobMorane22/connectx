@@ -52,6 +52,9 @@ cxmodel::WinGameResolutionStrategy::WinGameResolutionStrategy(const cxmodel::IBo
     {
         m_inARowValue = p_inARowValue;
     }
+
+    PRECONDITION(m_players.size() >= 2);
+    PRECONDITION(p_takenPositions.size() < m_board.GetNbPositions());
 }
 
 bool cxmodel::WinGameResolutionStrategy::Handle() const
