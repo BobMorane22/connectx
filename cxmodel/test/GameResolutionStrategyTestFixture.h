@@ -46,6 +46,7 @@ public:
     cxmodel::Board MakeClassicBoard() const;
     cxmodel::Board Make9By9Board() const;
     cxmodel::Board Make6By10Board() const;
+    cxmodel::Board Make8By9Board() const;
 
 private:
 
@@ -56,7 +57,7 @@ private:
         size_t GetMinimumInARowValue() const override {return 3u;};
         size_t GetMaximumGridHeight() const override {return 9u;};
         size_t GetMaximumGridWidth() const override {return 10u;};
-        size_t GetMaximumInARowValue() const override {return 5u;};
+        size_t GetMaximumInARowValue() const override {return 7u;};
         size_t GetMinimumNumberOfPlayers() const override {return 2u;};
         size_t GetMaximumNumberOfPlayers() const override {return 3u;};
     };

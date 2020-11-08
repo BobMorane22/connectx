@@ -75,3 +75,8 @@ cxmodel::Board GameResolutionStrategyTestFixture::Make6By10Board() const
 {
     return cxmodel::Board(6u, 10u, m_model);
 }
+
+cxmodel::Board GameResolutionStrategyTestFixture::Make8By9Board() const
+{
+    return cxmodel::Board(8u, 9u, m_model);
+}

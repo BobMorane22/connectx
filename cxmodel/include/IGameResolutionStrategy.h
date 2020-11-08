@@ -26,6 +26,11 @@
 
 namespace cxmodel
 {
+    class Player;
+}
+
+namespace cxmodel
+{
 
 /*********************************************************************************************//**
  * @brief Interface for game resolution strategies.
@@ -43,10 +48,12 @@ public:
     /******************************************************************************************//**
      * @brief Handles the game resolution.
      *
+     * @param p_activePlayer The active player.
+     *
      * @return `true` if the game is resolved, `false` if it goes on.
      *
      ********************************************************************************************/
-    virtual bool Handle() const = 0;
+    virtual bool Handle(const cxmodel::Player& p_activePlayer) const = 0;
 
 };
 

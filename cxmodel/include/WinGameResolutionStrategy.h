@@ -62,7 +62,7 @@ public:
                               const std::vector<Player>& p_players,
                               const std::vector<IBoard::Position>& p_takenPositions);
 
-    bool Handle() const override;
+    bool Handle(const Player& p_activePlayer) const override;
 
 private:
 

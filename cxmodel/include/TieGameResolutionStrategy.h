@@ -51,12 +51,11 @@ public:
      *
      * @pre The in-a-row value is bigger than 2 and fits into a signed integer.
      * @pre The number of players is at least 2.
-     * @pre The active player's index is included in the player list.
-     * @pre The number of completed moves is smaller or equal to the number of positions on the board.
      *
      * @param p_board              The game board.
      * @param p_inARowValue        The in-a-row value.
      * @param p_players            A list of players.
+     * @param p_takenPositions     A list of all taken positions on the board.
      * @param p_activePlayerIndex  The index, in the list, of the active player.
      * @param p_nbOfCompletedMoves The number of completed moves so far.
      *
@@ -64,10 +63,9 @@ public:
     TieGameResolutionStrategy(const IBoard& p_board,
                               size_t p_inARowValue,
                               const std::vector<Player>& p_players,
-                              size_t p_activePlayerIndex,
-                              size_t p_nbOfCompletedMoves);
+                              const std::vector<IBoard::Position>& p_takenPositions);
 
-    bool Handle() const override;
+    bool Handle(const Player& p_activePlayer) const override;
 
 private:
 
@@ -88,11 +86,9 @@ private:
     const IBoard& m_board;
     const int m_inARowValue;
     const std::vector<Player>& m_players;
-    const size_t m_activePlayerIndex;
-    const int m_nbOfCompletedMoves;
+    const std::vector<IBoard::Position>& m_takenPositions;
     const int m_nbRows;
     const int m_nbColumns;
-    const int m_nbPositions;
 
 };
 

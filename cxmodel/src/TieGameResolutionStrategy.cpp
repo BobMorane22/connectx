@@ -38,32 +38,27 @@ const cxmodel::Disc NO_CHIP = cxmodel::Disc::MakeTransparentDisc();
 cxmodel::TieGameResolutionStrategy::TieGameResolutionStrategy(const IBoard& p_board,
                                                               size_t p_inARowValue,
                                                               const std::vector<Player>& p_players,
-                                                              size_t p_activePlayerIndex,
-                                                              size_t p_nbOfCompletedMoves)
+                                                              const std::vector<IBoard::Position>& p_takenPositions)
 : m_board{p_board}
 , m_inARowValue(p_inARowValue)
 , m_players{p_players}
-, m_activePlayerIndex(p_activePlayerIndex)
-, m_nbOfCompletedMoves(p_nbOfCompletedMoves)
+, m_takenPositions{p_takenPositions}
 , m_nbRows(m_board.GetNbRows())
 , m_nbColumns(m_board.GetNbColumns())
-, m_nbPositions(m_board.GetNbPositions())
 {
     PRECONDITION(p_inARowValue >= 2u);
     PRECONDITION(p_inARowValue <= std::numeric_limits<int>::max());
     PRECONDITION(m_players.size() >= 2);
-    PRECONDITION(p_activePlayerIndex < m_players.size());
-    PRECONDITION(p_nbOfCompletedMoves < m_board.GetNbPositions());
 }
 
-bool cxmodel::TieGameResolutionStrategy::Handle() const
+bool cxmodel::TieGameResolutionStrategy::Handle(const Player& p_activePlayer) const
 {
     return IsDraw();
 }
 
 bool cxmodel::TieGameResolutionStrategy::IsDraw() const
 {
-    if(m_nbOfCompletedMoves == m_nbPositions)
+    if(m_takenPositions == m_board.GetNbPositions(:w))
     {
         // This is not an early draw:
         return true;
@@ -112,7 +107,7 @@ int cxmodel::TieGameResolutionStrategy::GetNbOfRemainingMoves(const Player& p_pl
         // Check all candidate postition for an extra turn and see if the player is there:
         for(int offset = 0; offset < remainingMovesRest; ++offset)
         {
-            const int firstTurnWithMoreMoves = m_nbOfCompletedMoves;
+            const int firstTurnWithMoreMoves = m_takenPositions.size();
             const int nextTurnWithMoreMoves = (firstTurnWithMoreMoves + offset) % static_cast<int>(m_players.size());
 
             const auto candidatePosition = m_players.begin() + nextTurnWithMoreMoves;
@@ -138,7 +133,7 @@ int cxmodel::TieGameResolutionStrategy::GetNbOfRemainingMoves(const Player& p_pl
 
 int cxmodel::TieGameResolutionStrategy::GetNbOfRemainingMoves(const Player& p_player) const
 {
-    return GetNbOfRemainingMoves(p_player, m_nbOfCompletedMoves);
+    return GetNbOfRemainingMoves(p_player, m_takenPositions.size());
 }
 
 int cxmodel::TieGameResolutionStrategy::GetMaxVerticalPositionForPlayerInColumn(const Player& p_player, const int p_column) const
@@ -166,13 +161,13 @@ int cxmodel::TieGameResolutionStrategy::GetNbOfMovesSinceLastPlay(const Player& 
 {
     int positionCurrent = 0;
 
-    if(m_nbOfCompletedMoves == 0)
+    if(m_takenPositions.size() == 0u)
     {
         positionCurrent = static_cast<int>(m_players.size()) - 1;
     }
     else
     {
-        positionCurrent = m_nbOfCompletedMoves - 1;
+        positionCurrent = m_takenPositions.size() - 1;
     }
 
     const int positionInspected = GetPlayerTurn(p_player);
@@ -219,9 +214,9 @@ int cxmodel::TieGameResolutionStrategy::GetPlayerTurn(const Player& p_player) co
 {
     int playerTurn = 0;
 
-    if(p_player == m_players[m_activePlayerIndex])
+    if(p_player == m_activePlayer)
     {
-        playerTurn = m_nbOfCompletedMoves;
+        playerTurn = m_takenPositions.size();
     }
     else
     {
@@ -305,7 +300,7 @@ bool cxmodel::TieGameResolutionStrategy::CanPlayerWinVertical(const Player& p_pl
     {
         if(playerTurn != inspectedPlayerTurn)
         {
-            const int nbOfTurnsRemainingFromLastMove = m_nbOfCompletedMoves - GetNbOfMovesSinceLastPlay(m_players[playerTurn]);
+            const int nbOfTurnsRemainingFromLastMove = m_takenPositions.size() - GetNbOfMovesSinceLastPlay(m_players[playerTurn]);
             GetNbOfRemainingMovesOtherPlayers += GetNbOfRemainingMoves(m_players[playerTurn], nbOfTurnsRemainingFromLastMove);
         }
     }
@@ -336,7 +331,7 @@ bool cxmodel::TieGameResolutionStrategy::CanPlayerWinVertical(const Player& p_pl
                 // enough free positions and remaining moves for the current player.
                 if(isPlayFree)
                 {
-                    const int  nbOfRemainingMovesTotal = m_nbPositions - m_nbOfCompletedMoves;
+                    const int  nbOfRemainingMovesTotal = m_board.GetNbPositions() - m_takenPositions.size();
                     const bool isPlayerInColumn = IsPlayerPresentInColumn(p_player, columnIndex);
                     const int  maxVerticalPositionForPlayer = isPlayerInColumn ? GetMaxVerticalPositionForPlayerInColumn(p_player, columnIndex): -1;
                     const int  GetNbOfRemainingMovesInOtherColumns = nbOfRemainingMovesTotal - (m_nbRows - (maxVerticalPositionForPlayer + 1));
