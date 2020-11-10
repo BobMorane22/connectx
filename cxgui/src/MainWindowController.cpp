@@ -43,10 +43,7 @@ void cxgui::MainWindowController::OnStart(const cxmodel::NewGameInformation p_ga
 
 void cxgui::MainWindowController::OnDown(const cxmodel::ChipColor& p_chipColor, size_t p_column)
 {
-    if(!PRECONDITION(p_chipColor != cxmodel::MakeTransparent()))
-    {
-        return;
-    }
+    IF_PRECONDITION_NOT_MET_DO(p_chipColor != cxmodel::MakeTransparent(), return;);
 
     m_currentChip = std::make_unique<cxmodel::Disc>(p_chipColor);
     m_model.DropChip(*m_currentChip, p_column);

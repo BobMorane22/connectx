@@ -79,18 +79,12 @@ cx::CmdArgVerboseStrategy::CmdArgVerboseStrategy(int argc,
 
 int cx::CmdArgVerboseStrategy::Handle()
 {
-    if(!ASSERT(m_logger))
-    {
-        return EXIT_FAILURE;
-    }
+    IF_CONDITION_NOT_MET_DO(m_logger, return EXIT_FAILURE;);
 
     cxlog::IChainLogging* chainLogger = dynamic_cast<cxlog::IChainLogging*>(m_logger);
 
     // Should never happen if the code compiles (see static_asset above):
-    if(!ASSERT(chainLogger))
-    {
-        return EXIT_FAILURE;
-    }
+    IF_CONDITION_NOT_MET_DO(chainLogger, return EXIT_FAILURE;);
 
     const cxlog::VerbosityLevel verbosityLevel = m_logger->GetVerbosityLevel();
     chainLogger->SetSucessor(CreateVerboseLogger(verbosityLevel));

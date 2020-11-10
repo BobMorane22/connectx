@@ -169,10 +169,7 @@ void cxgui::MainWindow::CreateAboutWindow()
     if(!m_about)
     {
         cxmodel::IVersioning* versionModel = dynamic_cast<cxmodel::IVersioning*>(&m_model);
-        if(!ASSERT(versionModel))
-        {
-            return;
-        }
+        IF_CONDITION_NOT_MET_DO(versionModel, return;);
 
         std::unique_ptr<IAboutWindowPresenter> aboutPresenter = std::make_unique<AboutWindowPresenter>(*versionModel);
 
@@ -189,10 +186,7 @@ void cxgui::MainWindow::CreateAboutWindow()
 
 void cxgui::MainWindow::DeactivateNewGameView()
 {
-    if(!ASSERT(m_newGameView))
-    {
-        return;
-    }
+    IF_CONDITION_NOT_MET_DO(m_newGameView, return;);
 
     m_newGameView->DeActivate();
 }

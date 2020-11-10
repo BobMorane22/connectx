@@ -214,16 +214,10 @@ void cxgui::NewGameView::OnStart()
     // First, we get an handle to the main window in case a warning dialog needs to be
     // displayed:
     Gtk::Container* mainWindow = m_mainLayout.get_parent();
-    if(!ASSERT(mainWindow))
-    {
-        return;
-    }
+    IF_CONDITION_NOT_MET_DO(mainWindow, return;);
 
     Gtk::Window* parent = dynamic_cast<Gtk::Window*>(mainWindow);
-    if(!ASSERT(parent))
-    {
-        return;
-    }
+    IF_CONDITION_NOT_MET_DO(parent, return;);
 
     // Retrieve game parameters:
     size_t inARowValue;
@@ -316,16 +310,10 @@ void cxgui::NewGameView::OnRemovePlayer()
         // leaving the window with ugly extra space. We want the window to resize
         // to the new list. First, we get a handle to the main window:
         Gtk::Container* parentAsGtk = m_mainLayout.get_parent();
-        if(!ASSERT(bool(parentAsGtk)))
-        {
-            return;
-        }
+        IF_CONDITION_NOT_MET_DO(parentAsGtk != nullptr, return;);
 
         Gtk::Window* mainWindowAsGtk = dynamic_cast<Gtk::Window*>(parentAsGtk);
-        if(!ASSERT(bool(parentAsGtk)))
-        {
-            return;
-        }
+        IF_CONDITION_NOT_MET_DO(mainWindowAsGtk!= nullptr, return;);
 
         // Then, we get the preferred heights values:
         int minimumHeight, naturalHeight;

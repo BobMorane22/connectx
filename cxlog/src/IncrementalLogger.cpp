@@ -52,10 +52,7 @@ void cxlog::IncrementalLogger::Log(const VerbosityLevel p_verbosityLevel,
                                    const size_t         p_lineNumber,
                                    const std::string&   p_message)
 {
-    if(!ASSERT(m_msgFormatter))
-    {
-        return;
-    }
+    IF_CONDITION_NOT_MET_DO(m_msgFormatter, return;);
 
     if(p_verbosityLevel > GetVerbosityLevel() ||
         p_verbosityLevel == VerbosityLevel::NONE ||

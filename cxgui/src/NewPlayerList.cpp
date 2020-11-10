@@ -221,11 +221,7 @@ cxmodel::ChipColor cxgui::NewPlayersList::GetRowPlayerDiscColor(const std::size_
     PRECONDITION(p_index < GetSize());
 
     const cxgui::NewPlayerRow* specificRow{GetRow(p_index)};
-
-    if(!ASSERT(specificRow))
-    {
-        return cxmodel::MakeTransparent();
-    }
+    IF_CONDITION_NOT_MET_DO(specificRow, return cxmodel::MakeTransparent(););
 
     return specificRow->GetPlayerDiscColor();
 }
@@ -235,11 +231,7 @@ std::string cxgui::NewPlayersList::GetPlayerNameAtRow(const std::size_t p_index)
     PRECONDITION(p_index < GetSize());
 
     const cxgui::NewPlayerRow* specificRow{GetRow(p_index)};
-
-    if(!ASSERT(specificRow))
-    {
-        return {};
-    }
+    IF_CONDITION_NOT_MET_DO(specificRow, return {};);
 
     return specificRow->GetPlayerName();
 }
@@ -279,10 +271,7 @@ bool cxgui::NewPlayersList::AddRow(const std::string& p_playerNewName, const cxm
     const std::size_t sizeAfter{GetSize()};
 
     // We check if the new row has indeed been added:
-    if(!ASSERT(sizeAfter == sizeBefore + 1))
-    {
-        return false;
-    }
+    IF_CONDITION_NOT_MET_DO(sizeAfter == sizeBefore + 1, return false;);
 
     return true;
 }
@@ -292,11 +281,7 @@ bool cxgui::NewPlayersList::RemoveRow(const std::size_t p_index)
     PRECONDITION(p_index < GetSize());
 
     cxgui::NewPlayerRow* specificRow{GetRow(p_index)};
-
-    if(!ASSERT(specificRow))
-    {
-        return false;
-    }
+    IF_CONDITION_NOT_MET_DO(specificRow, return false;);
 
     return RemoveManaged(specificRow);
 }
@@ -310,13 +295,9 @@ bool cxgui::NewPlayersList::RemoveRow(const std::string& p_playerName, const cxm
 
     std::vector<cxgui::NewPlayerRow*> allRows = GetRows();
 
-    for(auto row : allRows)
+    for(auto* row : allRows)
     {
-        if(!ASSERT(row))
-        {
-            return false;
-        }
-
+        IF_CONDITION_NOT_MET_DO(row, return false;);
         if(*row == rowToRemoveData)
         {
             // This is the address of the row we want to remove:
@@ -341,10 +322,7 @@ bool cxgui::NewPlayersList::UpdateRow(const std::size_t p_index,
 
     // All is fine, we can proceed with the update:
     cxgui::NewPlayerRow* rowToUpdate{GetRow(p_index)};
-    if(!ASSERT(rowToUpdate))
-    {
-        return false;
-    }
+    IF_CONDITION_NOT_MET_DO(rowToUpdate, return false;);
 
     rowToUpdate->Update(p_playerNewName, p_playerNewDiscColor);
 
@@ -357,11 +335,7 @@ void cxgui::NewPlayersList::Clear()
 
     for(auto* row : allRows)
     {
-        if(!ASSERT(row))
-        {
-            continue;
-        }
-
+        IF_CONDITION_NOT_MET_DO(row, continue;);
         ASSERT(RemoveManaged(row));
     }
 
@@ -469,10 +443,7 @@ bool cxgui::NewPlayersList::RemoveManaged(cxgui::NewPlayerRow* p_row)
 
     const std::size_t nbRowsAfter{GetRows().size()};
 
-    if(!ASSERT(nbRowsBefore == nbRowsAfter + 1))
-    {
-        return false;
-    }
+    IF_CONDITION_NOT_MET_DO(nbRowsBefore == nbRowsAfter + 1, return false;);
 
     return true;
 }

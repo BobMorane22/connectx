@@ -300,4 +300,31 @@ bool HandleAssert(const AssertLabel  p_label,
 #define INVARIANT(p_invariant) ((void)0)
 #endif // NDEBUG
 
+#define IF_CONDITION_NOT_MET_DO_IMPL(p_assertType, p_condition, p_action) \
+    if(!p_assertType(p_condition))                                        \
+    {                                                                     \
+        p_action                                                          \
+    }                                                                     \
+    (void)0                                                               \
+
+/**********************************************************************************************//**
+ * @brief Performs an action is some precondition is not met.
+ *
+ * @param p_precondition A boolean expression representing the precondition.
+ * @param p_action       The action to perform is the precondition is not met.
+ *
+ *************************************************************************************************/
+#define IF_PRECONDITION_NOT_MET_DO(p_precondition, p_action)             \
+    IF_CONDITION_NOT_MET_DO_IMPL(PRECONDITION, p_precondition, p_action) \
+
+/**********************************************************************************************//**
+ * @brief Performs an action is some condition is not met.
+ *
+ * @param p_condition A boolean expression representing the condition.
+ * @param p_action    The action to perform is the precondition is not met.
+ *
+ *************************************************************************************************/
+#define IF_CONDITION_NOT_MET_DO(p_condition, p_action)          \
+    IF_CONDITION_NOT_MET_DO_IMPL(ASSERT, p_condition, p_action) \
+
 #endif // ASSERTION_H_0470D299_880C_415F_BEE0_57ED14327B58

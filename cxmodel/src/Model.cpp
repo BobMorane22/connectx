@@ -148,10 +148,7 @@ void cxmodel::Model::CreateNewGame(const NewGameInformation& p_gameInformation)
     std::unique_ptr<ICommand> command = std::make_unique<CommandCreateNewGame>(*this, m_board, m_playersInfo.m_players, m_inARowValue, p_gameInformation);
     m_cmdStack->Execute(std::move(command));
 
-    if(!ASSERT(m_board))
-    {
-        return;
-    }
+    IF_CONDITION_NOT_MET_DO(m_board, return;);
 
     Notify(NotificationContext::CREATE_NEW_GAME);
 
@@ -169,10 +166,7 @@ void cxmodel::Model::CreateNewGame(const NewGameInformation& p_gameInformation)
 
 void cxmodel::Model::DropChip(const cxmodel::IChip& p_chip, size_t p_column)
 {
-    if(!PRECONDITION(m_board))
-    {
-        return;
-    }
+    IF_PRECONDITION_NOT_MET_DO(m_board, return;);
 
     // Here, we take a copy of the active player's index. If it is updated after the drop,
     // it means the drop worked and we can notify:
@@ -195,20 +189,14 @@ void cxmodel::Model::DropChip(const cxmodel::IChip& p_chip, size_t p_column)
 
 size_t cxmodel::Model::GetCurrentGridHeight() const
 {
-    if(!ASSERT(m_board))
-    {
-        return 0u;
-    }
+    IF_CONDITION_NOT_MET_DO(m_board, return 0u;);
 
     return m_board->GetNbRows();
 }
 
 size_t cxmodel::Model::GetCurrentGridWidth() const
 {
-    if(!ASSERT(m_board))
-    {
-        return 0u;
-    }
+    IF_CONDITION_NOT_MET_DO(m_board, return 0u;);
 
     return m_board->GetNbColumns();
 }
@@ -220,20 +208,14 @@ size_t cxmodel::Model::GetCurrentInARowValue() const
 
 const cxmodel::Player& cxmodel::Model::GetActivePlayer() const
 {
-    if(!ASSERT(m_playersInfo.m_players.size() >= 2))
-    {
-        return ACTIVE_PLAYER;
-    }
+    IF_CONDITION_NOT_MET_DO(m_playersInfo.m_players.size() >= 2, return ACTIVE_PLAYER;);
 
     return m_playersInfo.m_players[m_playersInfo.m_activePlayerIndex];
 }
 
 const cxmodel::Player& cxmodel::Model::GetNextPlayer() const
 {
-    if(!ASSERT(m_playersInfo.m_players.size() >= 2))
-    {
-        return NEXT_PLAYER;
-    }
+    IF_CONDITION_NOT_MET_DO(m_playersInfo.m_players.size() >= 2, return NEXT_PLAYER;);
 
     return m_playersInfo.m_players[m_playersInfo.m_nextPlayerIndex];
 }
@@ -245,10 +227,7 @@ const cxmodel::IChip& cxmodel::Model::GetChip(size_t p_row, size_t p_column) con
         return NO_DISC;
     }
 
-    if(!ASSERT(m_board))
-    {
-        return NO_DISC;
-    }
+    IF_CONDITION_NOT_MET_DO(m_board, return NO_DISC;);
 
     return m_board->GetChip({p_row, p_column});
 }

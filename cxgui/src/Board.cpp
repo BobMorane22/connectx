@@ -45,10 +45,7 @@ int ComputeMinimumChipSize(const cxgui::Board& p_board, size_t p_nbRows, size_t 
 {
     // Get screen containing the widget:
     const Glib::RefPtr<const Gdk::Screen> screen = p_board.get_screen();
-    if(!ASSERT(bool(screen)))
-    {
-        return -1;
-    }
+    IF_CONDITION_NOT_MET_DO(bool(screen), return -1;);
 
     // Get the screen dimensions:
     const int fullScreenHeight = screen->get_height();
@@ -100,11 +97,7 @@ cxgui::Board::Board(const IGameViewPresenter& p_presenter, IGameViewController& 
 void cxgui::Board::DropChip()
 {
     Chip* chip = GetChip(m_nextDiscAreaLayout, m_currentDiscPosition, 0);
-
-    if(!ASSERT(chip))
-    {
-        return;
-    }
+    IF_CONDITION_NOT_MET_DO(chip, return;);
 
     m_controller.OnDown(chip->GetColor(), m_currentDiscPosition);
 }
@@ -128,18 +121,10 @@ void cxgui::Board::Update()
 cxgui::Chip* cxgui::Board::GetChip(Gtk::Grid& p_discArea, int p_left, int p_top)
 {
     Widget* child = p_discArea.get_child_at(p_left, p_top);
-
-    if(!ASSERT(child))
-    {
-        return nullptr;
-    }
+    IF_CONDITION_NOT_MET_DO(child, return nullptr;);
 
     Chip* chip = dynamic_cast<Chip*>(child);
-
-    if(!ASSERT(chip))
-    {
-        return nullptr;
-    }
+    IF_CONDITION_NOT_MET_DO(child, return nullptr;);
 
     return chip;
 }
@@ -154,11 +139,7 @@ void cxgui::Board::Move(Side p_side)
 void cxgui::Board::ChangeCurrentDisc(const cxmodel::ChipColor& p_newColor)
 {
     Chip* chip = GetChip(m_nextDiscAreaLayout, m_currentDiscPosition, 0);
-
-    if(!ASSERT(chip))
-    {
-        return;
-    }
+    IF_CONDITION_NOT_MET_DO(chip, return;);
 
     chip->ChangeColor(p_newColor);
 }
@@ -236,21 +217,13 @@ void cxgui::Board::InitializeBoard(size_t p_height, size_t p_width)
 void cxgui::Board::MoveCurrentDiscAtFirstRow()
 {
     Chip* currentChip = GetChip(m_nextDiscAreaLayout, m_currentDiscPosition, 0);
-
-    if(!ASSERT(currentChip))
-    {
-        return;
-    }
+    IF_CONDITION_NOT_MET_DO(currentChip, return;);
 
     currentChip->ChangeColor(cxmodel::MakeTransparent());
 
     m_currentDiscPosition = 0u;
     Chip* startChip = GetChip(m_nextDiscAreaLayout, m_currentDiscPosition, 0);
-
-    if(!ASSERT(startChip))
-    {
-        return;
-    }
+    IF_CONDITION_NOT_MET_DO(startChip, return;);
 
     startChip->ChangeColor(m_presenter.GetGameViewActivePlayerChipColor());
 }
@@ -264,11 +237,7 @@ void cxgui::Board::RefreshBoardArea()
         for(size_t column = 0u; column < m_presenter.GetGameViewBoardWidth(); ++column)
         {
             Chip* chip = GetChip(m_boardLayout, column, row);
-
-            if(!ASSERT(chip))
-            {
-                return;
-            }
+            IF_CONDITION_NOT_MET_DO(chip, return;);
 
             chip->ChangeColor(chipColors[row][column]);
         }
