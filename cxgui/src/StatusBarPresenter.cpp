@@ -44,17 +44,20 @@ std::string cxgui::MakeStatusBarContextString(cxmodel::NotificationContext p_con
 {
     switch(p_context)
     {
-        case cxmodel::NotificationContext::CREATE_NEW_GAME :
+        case cxmodel::NotificationContext::CREATE_NEW_GAME:
             return "New game created.";
 
         case cxmodel::NotificationContext::CHIP_DROPPED:
             return "Chip dropped.";
 
-        case cxmodel::NotificationContext::REDO :
+        case cxmodel::NotificationContext::REDO:
             return "Redo.";
 
-        case cxmodel::NotificationContext::UNDO :
+        case cxmodel::NotificationContext::UNDO:
             return "Undo.";
+
+        case cxmodel::NotificationContext::GAME_WON:
+            return "Game won!";
 
         default:                                                     // LCOV_EXCL_LINE
             ASSERT_ERROR_MSG("Unknown notification context.");       // LCOV_EXCL_LINE

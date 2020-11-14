@@ -16,35 +16,20 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file NotificationContext.h
+ * @file IBoard.cpp
  * @date 2020
  *
  *************************************************************************************************/
 
-#ifndef NOTIFICATIONCONTEXT_H_3B763656_2127_4F2A_B522_85ECBA656CB8
-#define NOTIFICATIONCONTEXT_H_3B763656_2127_4F2A_B522_85ECBA656CB8
+#include <IBoard.h>
 
-namespace cxmodel
+
+bool cxmodel::operator==(const cxmodel::IBoard::Position& p_lhs, const cxmodel::IBoard::Position& p_rhs)
 {
+    return (p_lhs.m_row == p_rhs.m_row) && (p_lhs.m_column == p_rhs.m_column);
+}
 
-/**********************************************************************************************//**
- * @brief Connect X model notification context.
- *
- * Describes all the contexts from which the Connect X model may notify.
- *
- ************************************************************************************************/
-enum class NotificationContext
+bool cxmodel::operator!=(const cxmodel::IBoard::Position& p_lhs, const cxmodel::IBoard::Position& p_rhs)
 {
-    // User operations:
-    CREATE_NEW_GAME,
-    CHIP_DROPPED,
-    REDO,
-    UNDO,
-
-    // Game states:
-    GAME_WON
-};
-
-} // namespace cxmodel
-
-#endif // NOTIFICATIONCONTEXT_H_3B763656_2127_4F2A_B522_85ECBA656CB8
+    return !(p_lhs == p_rhs);
+}

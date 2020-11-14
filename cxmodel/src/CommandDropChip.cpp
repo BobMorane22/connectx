@@ -21,6 +21,7 @@
  *
  *************************************************************************************************/
 
+#include <algorithm>
 #include <sstream>
 
 #include <cxinv/include/assertion.h>
@@ -28,7 +29,6 @@
 
 #include <IChip.h>
 #include <CommandDropChip.h>
-#include <IBoard.h>
 #include <Subject.h>
 
 namespace
@@ -53,12 +53,14 @@ cxmodel::CommandDropChip::CommandDropChip(cxlog::ILogger& p_logger,
                                           cxmodel::IBoard& p_board,
                                           cxmodel::PlayerInformation& p_playerInfo,
                                           const cxmodel::IChip& p_droppedChip,
-                                          const size_t p_column)
+                                          const size_t p_column,
+                                          std::vector<IBoard::Position>& p_takenPositions)
  : m_logger{p_logger}
  , m_board{p_board}
  , m_playerInfo{p_playerInfo}
  , m_droppedChip{p_droppedChip}
  , m_column{p_column}
+ , m_takenPositions{p_takenPositions}
 {
 
 }
@@ -97,10 +99,17 @@ void cxmodel::CommandDropChip::Execute()
         IF_CONDITION_NOT_MET_DO(m_playerInfo.m_nextPlayerIndex < m_playerInfo.m_players.size(), return;);
         IF_CONDITION_NOT_MET_DO(m_playerInfo.m_activePlayerIndex != m_playerInfo.m_nextPlayerIndex, return;);
 
+        // Update taken positions:
+        const bool isPositionFree = std::find(m_takenPositions.cbegin(), m_takenPositions.cend(), droppedPosition) == m_takenPositions.cend();
+        IF_CONDITION_NOT_MET_DO(isPositionFree, return;);
+
+        m_takenPositions.push_back(droppedPosition);
+
         std::ostringstream stream;
         stream << activePlayer.GetName() << "'s chip dropped at (" << droppedPosition.m_row << ", " << droppedPosition.m_column << ")";
         m_logger.Log(cxlog::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__, stream.str());
     }
+    else
     {
         m_logger.Log(cxlog::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__, "Chip drop failed for " + activePlayer.GetName());
     }

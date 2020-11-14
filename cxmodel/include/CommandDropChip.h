@@ -26,6 +26,7 @@
 
 #include <vector>
 
+#include "IBoard.h"
 #include "ICommand.h"
 #include "PlayerInformation.h"
 
@@ -36,7 +37,6 @@ namespace cxlog
 
 namespace cxmodel
 {
-    class IBoard;
     class IChip;
     class Subject;
 }
@@ -65,13 +65,15 @@ public:
      * @param p_playerInfo        Information relative to the players.
      * @param p_droppedChip       The chip being dropped.
      * @param p_column            The column into which to drop the chip.
+     * @param p_takenPositions    A collection of non-free positions.
      *
      ********************************************************************************************/
     CommandDropChip(cxlog::ILogger& p_logger,
-                    cxmodel::IBoard& p_board,
-                    cxmodel::PlayerInformation& p_playerInfo,
+                    IBoard& p_board,
+                    PlayerInformation& p_playerInfo,
                     const cxmodel::IChip& p_droppedChip,
-                    const size_t p_column);
+                    const size_t p_column,
+                    std::vector<IBoard::Position>& p_takenPositions);
 
     // ICommand:
     void Execute() override;
@@ -85,6 +87,7 @@ private:
     cxmodel::PlayerInformation& m_playerInfo;
     const cxmodel::IChip& m_droppedChip;
     const size_t m_column;
+    std::vector<IBoard::Position>& m_takenPositions;
 
 };
 

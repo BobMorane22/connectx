@@ -32,6 +32,7 @@
 #include <Disc.h>
 #include <Model.h>
 #include <NotificationContext.h>
+#include <WinGameResolutionStrategy.h>
 
 namespace
 {
@@ -150,6 +151,13 @@ void cxmodel::Model::CreateNewGame(const NewGameInformation& p_gameInformation)
 
     IF_CONDITION_NOT_MET_DO(m_board, return;);
 
+    m_winResolutionStrategy = std::make_unique<WinGameResolutionStrategy>(*m_board,
+                                                                          m_inARowValue,
+                                                                          m_playersInfo.m_players,
+                                                                          m_takenPositions);
+
+    IF_CONDITION_NOT_MET_DO(m_winResolutionStrategy, return;);
+
     Notify(NotificationContext::CREATE_NEW_GAME);
 
     std::ostringstream stream;
@@ -176,12 +184,20 @@ void cxmodel::Model::DropChip(const cxmodel::IChip& p_chip, size_t p_column)
                                                                           *m_board,
                                                                           m_playersInfo,
                                                                           p_chip,
-                                                                          p_column);
+                                                                          p_column,
+                                                                          m_takenPositions);
     m_cmdStack->Execute(std::move(command));
 
     if(activePlayerIndexBefore != m_playersInfo.m_activePlayerIndex)
     {
         Notify(NotificationContext::CHIP_DROPPED);
+    }
+
+    if(IsWon())
+    {
+        Notify(NotificationContext::GAME_WON);
+
+        Log(cxlog::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__, "Game won by : " + GetActivePlayer().GetName());
     }
 
     CheckInvariants();
@@ -234,7 +250,9 @@ const cxmodel::IChip& cxmodel::Model::GetChip(size_t p_row, size_t p_column) con
 
 bool cxmodel::Model::IsWon() const
 {
-    throw std::logic_error{"Not yet implemented."};
+    IF_CONDITION_NOT_MET_DO(m_winResolutionStrategy, return false;);
+
+    return m_winResolutionStrategy->Handle();
 }
 
 bool cxmodel::Model::IsTie() const

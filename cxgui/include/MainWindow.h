@@ -126,6 +126,7 @@ private:
     void RegisterMenuBar();
 
     void CreateAboutWindow();
+    void CreateGameResolutionWindow();
 
     void DeactivateNewGameView();
     void ActivateGameView();
@@ -156,6 +157,7 @@ private:
 
     // Other windows:
     std::unique_ptr<IWindow> m_about;
+    std::unique_ptr<IWindow> m_gameResolution;
 };
 
 } // namespace cxgui

@@ -107,6 +107,9 @@ local.properties
 
 # End of https://www.gitignore.io/api/c++,eclipse
 
+### Vim/Ctags ###
+tags
+
 ### Connect X ###
 
 # Main executable

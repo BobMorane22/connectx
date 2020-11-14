@@ -28,10 +28,13 @@
 #include <gtkmm/stock.h>
 
 #include <cxinv/include/assertion.h>
+#include <cxmodel/include/IConnectXGameInformation.h>
 #include <cxmodel/include/IVersioning.h>
 
 #include <About.h>
 #include <AboutWindowPresenter.h>
+#include <GameResolutionDialog.h>
+#include <GameResolutionDialogPresenter.h>
 #include <GameView.h>
 #include <IMainWindowController.h>
 #include <IMainWindowPresenter.h>
@@ -121,6 +124,11 @@ void cxgui::MainWindow::Update(cxmodel::NotificationContext p_context, cxmodel::
             }
             case cxmodel::NotificationContext::UNDO:
             case cxmodel::NotificationContext::REDO:
+            case cxmodel::NotificationContext::GAME_WON:
+            {
+                CreateGameResolutionWindow();
+                break;
+            }
             default:
                 ASSERT_ERROR_MSG("Unsupported notification context.");
         }
@@ -172,6 +180,7 @@ void cxgui::MainWindow::CreateAboutWindow()
         IF_CONDITION_NOT_MET_DO(versionModel, return;);
 
         std::unique_ptr<IAboutWindowPresenter> aboutPresenter = std::make_unique<AboutWindowPresenter>(*versionModel);
+        IF_CONDITION_NOT_MET_DO(aboutPresenter, return;);
 
         {
             auto aboutWindow = std::make_unique<About>(std::move(aboutPresenter));
@@ -182,6 +191,27 @@ void cxgui::MainWindow::CreateAboutWindow()
     }
 
     m_about->Show();
+}
+
+void cxgui::MainWindow::CreateGameResolutionWindow()
+{
+    if(!m_gameResolution)
+    {
+        cxmodel::IConnectXGameInformation* gameInformationModel = dynamic_cast<cxmodel::IConnectXGameInformation*>(&m_model);
+        IF_CONDITION_NOT_MET_DO(gameInformationModel, return;);
+
+        std::unique_ptr<IGameResolutionDialogPresenter> gameResolutionPresenter = std::make_unique<GameResolutionDialogPresenter>(*gameInformationModel);
+        IF_CONDITION_NOT_MET_DO(gameResolutionPresenter, return;);
+
+        {
+            auto gameResolutionWindow = std::make_unique<GameResolutionDialog>(std::move(gameResolutionPresenter));
+            gameResolutionWindow->Init();
+
+            m_gameResolution = std::move(gameResolutionWindow);
+        }
+    }
+
+    m_gameResolution->Show();
 }
 
 void cxgui::MainWindow::DeactivateNewGameView()

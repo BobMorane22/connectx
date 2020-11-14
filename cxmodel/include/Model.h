@@ -34,6 +34,7 @@
 #include "IConnectXGameActions.h"
 #include "IConnectXGameInformation.h"
 #include "IConnectXLimits.h"
+#include "IGameResolutionStrategy.h"
 #include "IUndoRedo.h"
 #include "IVersioning.h"
 #include "PlayerInformation.h"
@@ -138,6 +139,9 @@ private:
     std::unique_ptr<cxmodel::IBoard> m_board;
     PlayerInformation m_playersInfo;
     size_t m_inARowValue;
+    std::vector<IBoard::Position> m_takenPositions;
+
+    std::unique_ptr<IGameResolutionStrategy> m_winResolutionStrategy;
 };
 
 } // namespace cxmodel

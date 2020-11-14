@@ -16,35 +16,51 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file NotificationContext.h
+ * @file GameResolutionDialog.cpp
  * @date 2020
  *
  *************************************************************************************************/
 
-#ifndef NOTIFICATIONCONTEXT_H_3B763656_2127_4F2A_B522_85ECBA656CB8
-#define NOTIFICATIONCONTEXT_H_3B763656_2127_4F2A_B522_85ECBA656CB8
+#include <GameResolutionDialog.h>
+#include <IGameResolutionDialogPresenter.h>
 
-namespace cxmodel
+cxgui::GameResolutionDialog::GameResolutionDialog(std::unique_ptr<IGameResolutionDialogPresenter> p_presenter)
+: m_presenter{std::move(p_presenter)}
 {
+    POSTCONDITION(m_presenter);
+}
 
-/**********************************************************************************************//**
- * @brief Connect X model notification context.
- *
- * Describes all the contexts from which the Connect X model may notify.
- *
- ************************************************************************************************/
-enum class NotificationContext
+void cxgui::GameResolutionDialog::Update(cxmodel::NotificationContext /*p_context*/, cxmodel::Subject* /*p_subject*/)
 {
-    // User operations:
-    CREATE_NEW_GAME,
-    CHIP_DROPPED,
-    REDO,
-    UNDO,
+    // Nothing to do...
+}
 
-    // Game states:
-    GAME_WON
-};
+void cxgui::GameResolutionDialog::ConfigureWindow()
+{
+    m_window.set_modal(true);
+}
 
-} // namespace cxmodel
+void cxgui::GameResolutionDialog::RegisterLayouts()
+{
+    // Nothing to do...
+}
 
-#endif // NOTIFICATIONCONTEXT_H_3B763656_2127_4F2A_B522_85ECBA656CB8
+void cxgui::GameResolutionDialog::RegisterWidgets()
+{
+    m_mainLayout.attach(m_message, 0, 0, 1, 1);
+}
+
+void cxgui::GameResolutionDialog::ConfigureLayouts()
+{
+    // Nothing to do...
+}
+
+void cxgui::GameResolutionDialog::ConfigureWidgets()
+{
+    m_message.set_text(m_presenter->GetResolutionMessage());
+}
+
+void cxgui::GameResolutionDialog::ConfigureSignalHandlers()
+{
+    // Nothing to do...
+}

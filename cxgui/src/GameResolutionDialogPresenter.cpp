@@ -16,35 +16,28 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file NotificationContext.h
+ * @file GameResolutionDialogPresenter.cpp
  * @date 2020
  *
  *************************************************************************************************/
 
-#ifndef NOTIFICATIONCONTEXT_H_3B763656_2127_4F2A_B522_85ECBA656CB8
-#define NOTIFICATIONCONTEXT_H_3B763656_2127_4F2A_B522_85ECBA656CB8
+#include <cxinv/include/assertion.h>
+#include <cxmodel/include/IConnectXGameInformation.h>
 
-namespace cxmodel
+#include <GameResolutionDialogPresenter.h>
+
+cxgui::GameResolutionDialogPresenter::GameResolutionDialogPresenter(const cxmodel::IConnectXGameInformation& p_modelAsInformation)
+: m_modelAsInformation{p_modelAsInformation}
 {
 
-/**********************************************************************************************//**
- * @brief Connect X model notification context.
- *
- * Describes all the contexts from which the Connect X model may notify.
- *
- ************************************************************************************************/
-enum class NotificationContext
+}
+
+std::string cxgui::GameResolutionDialogPresenter::GetResolutionMessage() const
 {
-    // User operations:
-    CREATE_NEW_GAME,
-    CHIP_DROPPED,
-    REDO,
-    UNDO,
+    if(ASSERT(m_modelAsInformation.IsWon()))
+    {
+        return "Congratulations to " + m_modelAsInformation.GetActivePlayer().GetName() + " for winning the game!";
+    }
 
-    // Game states:
-    GAME_WON
-};
-
-} // namespace cxmodel
-
-#endif // NOTIFICATIONCONTEXT_H_3B763656_2127_4F2A_B522_85ECBA656CB8
+    return "";
+}

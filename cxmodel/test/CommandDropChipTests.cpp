@@ -94,12 +94,16 @@ TEST_F(CommandDropChipTestFixture, /*DISABLED_*/Execute_EmptyRowAndTwoPlayers_Al
 
     ASSERT_TRUE(droppedDisc == playerInfo.m_players[playerInfo.m_activePlayerIndex].GetChip());
 
+    std::vector<cxmodel::IBoard::Position> takenPositions;
+    ASSERT_TRUE(takenPositions.empty());
+
     // The command is created and executed:
     std::unique_ptr<cxmodel::ICommand> cmd = std::make_unique<cxmodel::CommandDropChip>(GetLogger(),
                                                                                         board,
                                                                                         playerInfo,
                                                                                         droppedDisc,
-                                                                                        0u);
+                                                                                        0u,
+                                                                                        takenPositions);
 
     cmd->Execute();
 
@@ -107,6 +111,8 @@ TEST_F(CommandDropChipTestFixture, /*DISABLED_*/Execute_EmptyRowAndTwoPlayers_Al
     ASSERT_TRUE(board.GetChip({0u, 0u}) == cxmodel::Disc(cxmodel::MakeRed()));
     ASSERT_TRUE(playerInfo.m_activePlayerIndex == 1u);
     ASSERT_TRUE(playerInfo.m_nextPlayerIndex == 0u);
+    ASSERT_TRUE(takenPositions.size() == 1);
+    ASSERT_TRUE(takenPositions[0] == cxmodel::IBoard::Position(0u, 0u));
 }
 
 TEST_F(CommandDropChipTestFixture, /*DISABLED_*/Execute_EmptyRowAndThreePlayers_AllDataUpdated)
@@ -129,12 +135,16 @@ TEST_F(CommandDropChipTestFixture, /*DISABLED_*/Execute_EmptyRowAndThreePlayers_
 
     ASSERT_TRUE(droppedDisc == playerInfo.m_players[playerInfo.m_activePlayerIndex].GetChip());
 
+    std::vector<cxmodel::IBoard::Position> takenPositions;
+    ASSERT_TRUE(takenPositions.empty());
+
     // The command is created and executed:
     std::unique_ptr<cxmodel::ICommand> cmd = std::make_unique<cxmodel::CommandDropChip>(GetLogger(),
                                                                                         board,
                                                                                         playerInfo,
                                                                                         droppedDisc,
-                                                                                        0u);
+                                                                                        0u,
+                                                                                        takenPositions);
 
     cmd->Execute();
 
@@ -142,6 +152,8 @@ TEST_F(CommandDropChipTestFixture, /*DISABLED_*/Execute_EmptyRowAndThreePlayers_
     ASSERT_TRUE(board.GetChip({0u, 0u}) == cxmodel::Disc(cxmodel::MakeRed()));
     ASSERT_TRUE(playerInfo.m_activePlayerIndex == 1u);
     ASSERT_TRUE(playerInfo.m_nextPlayerIndex == 2u);
+    ASSERT_TRUE(takenPositions.size() == 1);
+    ASSERT_TRUE(takenPositions[0] == cxmodel::IBoard::Position(0u, 0u));
 }
 
 TEST_F(CommandDropChipTestFixture, /*DISABLED_*/Execute_RowNotFull_AllDataUpdated)
@@ -168,12 +180,16 @@ TEST_F(CommandDropChipTestFixture, /*DISABLED_*/Execute_RowNotFull_AllDataUpdate
 
     ASSERT_TRUE(droppedDisc == playerInfo.m_players[playerInfo.m_activePlayerIndex].GetChip());
 
+    std::vector<cxmodel::IBoard::Position> takenPositions;
+    ASSERT_TRUE(takenPositions.empty());
+
     // The command is created and executed:
     std::unique_ptr<cxmodel::ICommand> cmd = std::make_unique<cxmodel::CommandDropChip>(GetLogger(),
                                                                                         board,
                                                                                         playerInfo,
                                                                                         droppedDisc,
-                                                                                        5u);
+                                                                                        5u,
+                                                                                        takenPositions);
 
     cmd->Execute();
 
@@ -181,6 +197,8 @@ TEST_F(CommandDropChipTestFixture, /*DISABLED_*/Execute_RowNotFull_AllDataUpdate
     ASSERT_TRUE(board.GetChip({1u, 5u}) == cxmodel::Disc(cxmodel::MakeBlue()));
     ASSERT_TRUE(playerInfo.m_activePlayerIndex == 0u);
     ASSERT_TRUE(playerInfo.m_nextPlayerIndex == 1u);
+    ASSERT_TRUE(takenPositions.size() == 1);
+    ASSERT_TRUE(takenPositions[0] == cxmodel::IBoard::Position(1u, 5u));
 }
 
 TEST_F(CommandDropChipTestFixture, /*DISABLED_*/Execute_RowFull_NoDataUpdated)
@@ -212,12 +230,16 @@ TEST_F(CommandDropChipTestFixture, /*DISABLED_*/Execute_RowFull_NoDataUpdated)
 
     ASSERT_TRUE(droppedDisc == playerInfo.m_players[playerInfo.m_activePlayerIndex].GetChip());
 
+    std::vector<cxmodel::IBoard::Position> takenPositions;
+    ASSERT_TRUE(takenPositions.empty());
+
     // The command is created and executed:
     std::unique_ptr<cxmodel::ICommand> cmd = std::make_unique<cxmodel::CommandDropChip>(GetLogger(),
                                                                                         board,
                                                                                         playerInfo,
                                                                                         droppedDisc,
-                                                                                        6u);
+                                                                                        6u,
+                                                                                        takenPositions);
 
     cmd->Execute();
 
@@ -225,55 +247,61 @@ TEST_F(CommandDropChipTestFixture, /*DISABLED_*/Execute_RowFull_NoDataUpdated)
     ASSERT_TRUE(board.GetChip({5u, 6u}) == cxmodel::Disc(cxmodel::MakeBlue()));
     ASSERT_TRUE(playerInfo.m_activePlayerIndex == 0u);
     ASSERT_TRUE(playerInfo.m_nextPlayerIndex == 1u);
+    ASSERT_TRUE(takenPositions.empty());
 }
 
 TEST_F(CommandDropChipTestFixture, /*DISABLED_*/Execute_WrongDiscAsInput_DoesNotDropAndAsserts)
 {
     // Data setup:
-        cxmodel::Board board{6u, 7u, ModelAsLimitsGet()};
-        cxmodel::Disc firstDisc{cxmodel::MakeRed()};
-        cxmodel::Disc secondDisc{cxmodel::MakeBlue()};
+    cxmodel::Board board{6u, 7u, ModelAsLimitsGet()};
+    cxmodel::Disc firstDisc{cxmodel::MakeRed()};
+    cxmodel::Disc secondDisc{cxmodel::MakeBlue()};
 
-        cxmodel::IBoard::Position dummy;
-        ASSERT_TRUE(board.DropChip(6u, firstDisc, dummy));
-        ASSERT_TRUE(board.DropChip(6u, secondDisc, dummy));
-        ASSERT_TRUE(board.DropChip(6u, firstDisc, dummy));
-        ASSERT_TRUE(board.DropChip(6u, secondDisc, dummy));
-        ASSERT_TRUE(board.DropChip(6u, firstDisc, dummy));
-        ASSERT_TRUE(board.DropChip(6u, secondDisc, dummy));
-        ASSERT_TRUE(board.GetChip({5u, 6u}) == secondDisc);
+    cxmodel::IBoard::Position dummy;
+    ASSERT_TRUE(board.DropChip(6u, firstDisc, dummy));
+    ASSERT_TRUE(board.DropChip(6u, secondDisc, dummy));
+    ASSERT_TRUE(board.DropChip(6u, firstDisc, dummy));
+    ASSERT_TRUE(board.DropChip(6u, secondDisc, dummy));
+    ASSERT_TRUE(board.DropChip(6u, firstDisc, dummy));
+    ASSERT_TRUE(board.DropChip(6u, secondDisc, dummy));
+    ASSERT_TRUE(board.GetChip({5u, 6u}) == secondDisc);
 
-        cxmodel::PlayerInformation playerInfo{
-            {
-                {"John Doe", cxmodel::MakeRed()},
-                {"Jane Doe", cxmodel::MakeBlue()}
-            },
-            0u,
-            1u
-        };
+    cxmodel::PlayerInformation playerInfo{
+        {
+            {"John Doe", cxmodel::MakeRed()},
+            {"Jane Doe", cxmodel::MakeBlue()}
+        },
+        0u,
+        1u
+    };
 
-        cxmodel::Disc droppedDisc{cxmodel::MakeBlue()};
+    cxmodel::Disc droppedDisc{cxmodel::MakeBlue()};
 
-        // The command is created and executed:
-        std::unique_ptr<cxmodel::ICommand> cmd = std::make_unique<cxmodel::CommandDropChip>(GetLogger(),
-                                                                                            board,
-                                                                                            playerInfo,
-                                                                                            droppedDisc,
-                                                                                            6u);
+    std::vector<cxmodel::IBoard::Position> takenPositions;
+    ASSERT_TRUE(takenPositions.empty());
 
-        cmd->Execute();
+    // The command is created and executed:
+    std::unique_ptr<cxmodel::ICommand> cmd = std::make_unique<cxmodel::CommandDropChip>(GetLogger(),
+                                                                                        board,
+                                                                                        playerInfo,
+                                                                                        droppedDisc,
+                                                                                        6u,
+                                                                                        takenPositions);
 
-        // Data is now checked, no update should have occured:
-        ASSERT_TRUE(board.GetChip({5u, 6u}) == cxmodel::Disc(cxmodel::MakeBlue()));
-        ASSERT_TRUE(playerInfo.m_activePlayerIndex == 0u);
-        ASSERT_TRUE(playerInfo.m_nextPlayerIndex == 1u);
+    cmd->Execute();
 
-        // It should also have asserted:
-        const std::string assertionMessage = GetStdErrContents();
-        ASSERT_FALSE(assertionMessage.empty());
+    // Data is now checked, no update should have occured:
+    ASSERT_TRUE(board.GetChip({5u, 6u}) == cxmodel::Disc(cxmodel::MakeBlue()));
+    ASSERT_TRUE(playerInfo.m_activePlayerIndex == 0u);
+    ASSERT_TRUE(playerInfo.m_nextPlayerIndex == 1u);
+    ASSERT_TRUE(takenPositions.empty());
 
-        const std::string assertToken = "Precondition";
-        ASSERT_TRUE(GetStdErrContents().find(assertToken) != std::string::npos);
+    // It should also have asserted:
+    const std::string assertionMessage = GetStdErrContents();
+    ASSERT_FALSE(assertionMessage.empty());
+
+    const std::string assertToken = "Precondition";
+    ASSERT_TRUE(GetStdErrContents().find(assertToken) != std::string::npos);
 }
 
 TEST_F(CommandDropChipTestFixture, /*DISABLED_*/Undo_Whatever_Asserts)
@@ -295,12 +323,16 @@ TEST_F(CommandDropChipTestFixture, /*DISABLED_*/Undo_Whatever_Asserts)
 
     ASSERT_TRUE(droppedDisc == playerInfo.m_players[playerInfo.m_activePlayerIndex].GetChip());
 
+    std::vector<cxmodel::IBoard::Position> takenPositions;
+    ASSERT_TRUE(takenPositions.empty());
+
     // The command is created and executed:
     std::unique_ptr<cxmodel::ICommand> cmd = std::make_unique<cxmodel::CommandDropChip>(GetLogger(),
                                                                                         board,
                                                                                         playerInfo,
                                                                                         droppedDisc,
-                                                                                        0u);
+                                                                                        0u,
+                                                                                        takenPositions);
 
     ASSERT_TRUE(GetStdErrContents().empty());
 

@@ -16,35 +16,43 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file NotificationContext.h
+ * @file IBoardTests.cpp
  * @date 2020
  *
  *************************************************************************************************/
 
-#ifndef NOTIFICATIONCONTEXT_H_3B763656_2127_4F2A_B522_85ECBA656CB8
-#define NOTIFICATIONCONTEXT_H_3B763656_2127_4F2A_B522_85ECBA656CB8
+#include <gtest/gtest.h> 
 
-namespace cxmodel
+#include <IBoard.h>
+
+TEST(Position, OperatorEqual_TwoSamePositions_ReturnsTrue)
 {
+    const cxmodel::IBoard::Position lhs{1u, 2u};
+    const cxmodel::IBoard::Position rhs = lhs;
 
-/**********************************************************************************************//**
- * @brief Connect X model notification context.
- *
- * Describes all the contexts from which the Connect X model may notify.
- *
- ************************************************************************************************/
-enum class NotificationContext
+    ASSERT_TRUE(lhs == rhs);
+}
+
+TEST(Position, OperatorEqual_TwoDifferentPositions_ReturnsTrue)
 {
-    // User operations:
-    CREATE_NEW_GAME,
-    CHIP_DROPPED,
-    REDO,
-    UNDO,
+    const cxmodel::IBoard::Position lhs{1u, 2u};
+    const cxmodel::IBoard::Position rhs{2u, 1u};
 
-    // Game states:
-    GAME_WON
-};
+    ASSERT_FALSE(lhs == rhs);
+}
 
-} // namespace cxmodel
+TEST(Position, OperatorNotEqual_TwoSamePositions_ReturnsFalse)
+{
+    const cxmodel::IBoard::Position lhs{1u, 2u};
+    const cxmodel::IBoard::Position rhs = lhs;
 
-#endif // NOTIFICATIONCONTEXT_H_3B763656_2127_4F2A_B522_85ECBA656CB8
+    ASSERT_FALSE(lhs != rhs);
+}
+
+TEST(Position, OperatorNotEqual_TwoDifferentPositions_ReturnsTrue)
+{
+    const cxmodel::IBoard::Position lhs{1u, 2u};
+    const cxmodel::IBoard::Position rhs{2u, 1u};
+
+    ASSERT_TRUE(lhs != rhs);
+}

@@ -345,12 +345,13 @@ TEST(Model, /*DISABLED_*/GetChip_InvalidColumn_ReturnsNoDisc)
     ASSERT_EQ(chipBefore, cxmodel::Disc(cxmodel::MakeTransparent()));
 }
 
-TEST(Model, /*DISABLED_*/IsWon_ValidModel_ThrowsForNow)
+TEST(Model, /*DISABLED_*/IsWon_ValidModel_DoesNotThrow)
 {
     LoggerMock logger;
     cxmodel::Model model{std::make_unique<cxmodel::CommandStack>(200), logger};
 
-    ASSERT_THROW(model.IsWon(), std::logic_error);
+    ASSERT_NO_THROW(model.IsWon());
+    ASSERT_FALSE(model.IsWon());
 }
 
 TEST(Model, /*DISABLED_*/IsTie_ValidModel_ThrowsForNow)

@@ -16,35 +16,46 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file NotificationContext.h
+ * @file GameResolutionDialogPresenter.h
  * @date 2020
  *
  *************************************************************************************************/
 
-#ifndef NOTIFICATIONCONTEXT_H_3B763656_2127_4F2A_B522_85ECBA656CB8
-#define NOTIFICATIONCONTEXT_H_3B763656_2127_4F2A_B522_85ECBA656CB8
+#ifndef GAMERESOLUTIONDIALOGPRESENTER_H_FEF07B2E_B0F6_4FAC_88B7_FE78EC4007CE
+#define GAMERESOLUTIONDIALOGPRESENTER_H_FEF07B2E_B0F6_4FAC_88B7_FE78EC4007CE
 
-namespace cxmodel
+#include "IGameResolutionDialogPresenter.h"
+
+namespace cxgui
 {
 
-/**********************************************************************************************//**
- * @brief Connect X model notification context.
- *
- * Describes all the contexts from which the Connect X model may notify.
+/*********************************************************************************************//**
+ * @brief Presenter for the game resolution window.
  *
  ************************************************************************************************/
-enum class NotificationContext
+class GameResolutionDialogPresenter : public IGameResolutionDialogPresenter
 {
-    // User operations:
-    CREATE_NEW_GAME,
-    CHIP_DROPPED,
-    REDO,
-    UNDO,
 
-    // Game states:
-    GAME_WON
+public:
+
+    /******************************************************************************************//**
+     * @brief Constructor.
+     *
+     * @param p_modelAsInformation The model (Game informations).
+     *
+     ********************************************************************************************/
+    GameResolutionDialogPresenter(const cxmodel::IConnectXGameInformation& p_modelAsInformation);
+
+    // IGameResolutionDialogPresenter:
+    std::string GetResolutionMessage() const override;
+
+private:
+
+    const cxmodel::IConnectXGameInformation& m_modelAsInformation;
+
+    std::string m_resolutionMessage;
 };
 
-} // namespace cxmodel
+} // namespace cxgui
 
-#endif // NOTIFICATIONCONTEXT_H_3B763656_2127_4F2A_B522_85ECBA656CB8
+#endif // GAMERESOLUTIONDIALOGPRESENTER_H_FEF07B2E_B0F6_4FAC_88B7_FE78EC4007CE

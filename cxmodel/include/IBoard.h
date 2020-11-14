@@ -148,6 +148,30 @@ public:
 
 };
 
+/******************************************************************************************//**
+ * @brief Equal-to operator.
+ *
+ * @param p_lhs The left hand position.
+ * @param p_rhs The right hand position.
+ *
+ * @return `true` if both positions represent the same position on the board, `false`
+ *         otherwise.
+ *
+ ********************************************************************************************/
+bool operator==(const IBoard::Position& p_lhs, const IBoard::Position& p_rhs);
+
+/******************************************************************************************//**
+ * @brief Not-equal-to operator.
+ *
+ * @param p_lhs The left hand position.
+ * @param p_rhs The right hand position.
+ *
+ * @return `true` if the positions do not represent the same position on the board, `false`
+ *         otherwise.
+ *
+ ********************************************************************************************/
+bool operator!=(const IBoard::Position& p_lhs, const IBoard::Position& p_rhs);
+
 } // namespace cxmodel
 
 #endif // IBOARD_H_0D53584F_433F_4007_86CD_A0CF3135BAF3

@@ -48,6 +48,7 @@ OBJS_$(d) := $(d)/AboutWindowPresenterTestFixture.o \
              $(d)/DisableStdStreamsRAII.o \
              $(d)/extractRawUserInputTests.o \
              $(d)/GamePresenterTests.o \
+             $(d)/GameResolutionDialogPresenterTests.o \
              $(d)/MainWindowPresenterTestFixture.o \
              $(d)/MainWindowControllerTests.o \
              $(d)/MainWindowControllerTestFixture.o \
