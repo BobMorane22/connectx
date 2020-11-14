@@ -179,6 +179,7 @@ void cxmodel::Model::DropChip(const cxmodel::IChip& p_chip, size_t p_column)
     // Here, we take a copy of the active player's index. If it is updated after the drop,
     // it means the drop worked and we can notify:
     const size_t activePlayerIndexBefore = m_playersInfo.m_activePlayerIndex;
+    const size_t nextPlayerIndexBefore = m_playersInfo.m_nextPlayerIndex;
 
     std::unique_ptr<ICommand> command = std::make_unique<CommandDropChip>(*this,
                                                                           *m_board,
@@ -188,16 +189,22 @@ void cxmodel::Model::DropChip(const cxmodel::IChip& p_chip, size_t p_column)
                                                                           m_takenPositions);
     m_cmdStack->Execute(std::move(command));
 
-    if(activePlayerIndexBefore != m_playersInfo.m_activePlayerIndex)
-    {
-        Notify(NotificationContext::CHIP_DROPPED);
-    }
-
     if(IsWon())
     {
+        // In the case of a win, we must revert the next player -> active player update, since
+        // the next player will never be able to play:
+        m_playersInfo.m_activePlayerIndex = activePlayerIndexBefore;
+        m_playersInfo.m_nextPlayerIndex = nextPlayerIndexBefore;
+
+        Notify(NotificationContext::CHIP_DROPPED);
         Notify(NotificationContext::GAME_WON);
 
         Log(cxlog::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__, "Game won by : " + GetActivePlayer().GetName());
+    }
+
+    if(activePlayerIndexBefore != m_playersInfo.m_activePlayerIndex)
+    {
+        Notify(NotificationContext::CHIP_DROPPED);
     }
 
     CheckInvariants();
