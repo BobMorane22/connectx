@@ -103,3 +103,8 @@ const cxmodel::IChip& MainWindowPresenterTestFixture::MainWindowPresenterModelMo
 
     return m_ACTIVE_PLAYER.GetChip();
 }
+
+void MainWindowPresenterTestFixture::MainWindowPresenterModelMock::EndCurrentGame()
+{
+    // Noting to do...
+}

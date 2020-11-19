@@ -16,39 +16,24 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file GameResolutionDialog.h
+ * @file WinGameResolutionDialogPresenter.h
  * @date 2020
  *
  *************************************************************************************************/
 
-#ifndef GAMERESOLUTIONDIALOG_H_E524D346_789D_4165_ABD3_4B876F7FBBD7
-#define GAMERESOLUTIONDIALOG_H_E524D346_789D_4165_ABD3_4B876F7FBBD7
+#ifndef WINGAMERESOLUTIONDIALOGPRESENTER_H_FEF07B2E_B0F6_4FAC_88B7_FE78EC4007CE
+#define WINGAMERESOLUTIONDIALOGPRESENTER_H_FEF07B2E_B0F6_4FAC_88B7_FE78EC4007CE
 
-#include <gtkmm/button.h>
-#include <gtkmm/label.h>
-#include <gtkmm/window.h>
-
-#include "Window.h"
-
-namespace cxgui
-{
-    class IGameResolutionDialogController;
-    class IGameResolutionDialogPresenter;
-}
+#include "IGameResolutionDialogPresenter.h"
 
 namespace cxgui
 {
 
 /*********************************************************************************************//**
- * @brief Window shown when a game is resolved (win, tie, etc).
- *
- * When a game is resolved (won, tied, etc), this window is popped for the user to read some
- * resolution message a pick a next action.
- *
- * @note This window is modal.
+ * @brief Presenter for the win game resolution window.
  *
  ************************************************************************************************/
-class GameResolutionDialog : public Window<Gtk::Window>
+class WinGameResolutionDialogPresenter : public IGameResolutionDialogPresenter
 {
 
 public:
@@ -56,34 +41,23 @@ public:
     /******************************************************************************************//**
      * @brief Constructor.
      *
-     * @pre The presenter is valid.
-     *
-     * @param p_presenter The window presenter.
+     * @param p_modelAsInformation The model (Game informations).
      *
      ********************************************************************************************/
-    GameResolutionDialog(std::unique_ptr<IGameResolutionDialogPresenter> p_presenter,
-                         std::unique_ptr<IGameResolutionDialogController> p_controller);
+    WinGameResolutionDialogPresenter(const cxmodel::IConnectXGameInformation& p_modelAsInformation);
+
+    // IGameResolutionDialogPresenter:
+    std::string GetTitle() const override;
+    std::string GetResolutionMessage() const override;
+    std::string GetStartNewGameButtonText() const override;
 
 private:
 
-    void Update(cxmodel::NotificationContext p_context, cxmodel::Subject* p_subject) override;
+    const cxmodel::IConnectXGameInformation& m_modelAsInformation;
 
-    void ConfigureWindow() override;
-    void RegisterLayouts() override;
-    void RegisterWidgets() override;
-    void ConfigureLayouts() override;
-    void ConfigureWidgets() override;
-    void ConfigureSignalHandlers() override;
-
-    const std::unique_ptr<IGameResolutionDialogPresenter> m_presenter;
-    const std::unique_ptr<IGameResolutionDialogController> m_controller;
-
-    Gtk::Label m_title;
-    Gtk::Label m_message;
-    Gtk::Button m_startNewGame;
-
+    std::string m_resolutionMessage;
 };
 
 } // namespace cxgui
 
-#endif // GAMERESOLUTIONDIALOG_H_E524D346_789D_4165_ABD3_4B876F7FBBD7
+#endif // WINGAMERESOLUTIONDIALOGPRESENTER_H_FEF07B2E_B0F6_4FAC_88B7_FE78EC4007CE

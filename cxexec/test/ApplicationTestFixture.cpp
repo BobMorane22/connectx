@@ -97,3 +97,8 @@ const cxmodel::IChip& ApplicationTestFixture::ModelApplicationMock::GetChip(size
 
     return m_ACTIVE_PLAYER.GetChip();
 }
+
+void ApplicationTestFixture::ModelApplicationMock::EndCurrentGame()
+{
+    // Noting to do...
+}

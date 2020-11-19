@@ -59,6 +59,9 @@ std::string cxgui::MakeStatusBarContextString(cxmodel::NotificationContext p_con
         case cxmodel::NotificationContext::GAME_WON:
             return "Game won!";
 
+        case cxmodel::NotificationContext::GAME_ENDED:
+            return "";
+
         default:                                                     // LCOV_EXCL_LINE
             ASSERT_ERROR_MSG("Unknown notification context.");       // LCOV_EXCL_LINE
             return {};                                               // LCOV_EXCL_LINE

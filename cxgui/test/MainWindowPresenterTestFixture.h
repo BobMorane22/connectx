@@ -70,6 +70,7 @@ private:
         // IConnectXGameActions:
         void CreateNewGame(const cxmodel::NewGameInformation& p_gameInformation) override;
         void DropChip(const cxmodel::IChip& p_chip, size_t p_column) override;
+        void EndCurrentGame() override;
 
         // IConnectXGameInformation:
         size_t GetCurrentGridHeight() const override {return 6u;}

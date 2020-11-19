@@ -16,36 +16,48 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file NotificationContext.h
+ * @file WinGameResolutionDialogController.h
  * @date 2020
  *
  *************************************************************************************************/
 
-#ifndef NOTIFICATIONCONTEXT_H_3B763656_2127_4F2A_B522_85ECBA656CB8
-#define NOTIFICATIONCONTEXT_H_3B763656_2127_4F2A_B522_85ECBA656CB8
+#ifndef WINGAMERESOLUTIONDIALOGCONTROLLER_H_021D83A0_55DA_4155_B5F6_3AA46D5A6BF8
+#define WINGAMERESOLUTIONDIALOGCONTROLLER_H_021D83A0_55DA_4155_B5F6_3AA46D5A6BF8
+
+#include "IGameResolutionDialogController.h"
 
 namespace cxmodel
 {
+    class IConnectXGameActions;
+}
 
-/**********************************************************************************************//**
- * @brief Connect X model notification context.
+namespace cxgui
+{
+
+/*********************************************************************************************//**
+ * @brief DESCRIPTION
  *
- * Describes all the contexts from which the Connect X model may notify.
+ * @invariant
+ * @invariant
+ *
+ * DESCRIPTION
  *
  ************************************************************************************************/
-enum class NotificationContext
+class WinGameResolutionDialogController : public IGameResolutionDialogController
 {
-    // User operations:
-    CREATE_NEW_GAME,
-    CHIP_DROPPED,
-    REDO,
-    UNDO,
 
-    // Game states:
-    GAME_WON,
-    GAME_ENDED
+public:
+
+    WinGameResolutionDialogController(cxmodel::IConnectXGameActions& p_modelAsActions);
+
+    void OnNewGameRequested();
+
+private:
+
+    cxmodel::IConnectXGameActions& m_modelAsActions;
+
 };
 
-} // namespace cxmodel
+} // namespace cxgui
 
-#endif // NOTIFICATIONCONTEXT_H_3B763656_2127_4F2A_B522_85ECBA656CB8
+#endif // WINGAMERESOLUTIONDIALOGCONTROLLER_H_021D83A0_55DA_4155_B5F6_3AA46D5A6BF8

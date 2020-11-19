@@ -73,3 +73,8 @@ void MainWindowControllerTestFixture::MainWindowControllerMockModel::DropChip(co
 {
     m_outer.m_chipDropped = true;
 }
+
+void MainWindowControllerTestFixture::MainWindowControllerMockModel::EndCurrentGame()
+{
+    // Noting to do...
+}

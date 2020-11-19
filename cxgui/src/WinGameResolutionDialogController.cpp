@@ -16,28 +16,21 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file GameResolutionDialogPresenter.cpp
+ * @file WinGameResolutionDialogController.cpp
  * @date 2020
  *
  *************************************************************************************************/
 
-#include <cxinv/include/assertion.h>
-#include <cxmodel/include/IConnectXGameInformation.h>
+#include <cxmodel/include/IConnectXGameActions.h>
 
-#include <GameResolutionDialogPresenter.h>
+#include <WinGameResolutionDialogController.h>
 
-cxgui::GameResolutionDialogPresenter::GameResolutionDialogPresenter(const cxmodel::IConnectXGameInformation& p_modelAsInformation)
-: m_modelAsInformation{p_modelAsInformation}
+cxgui::WinGameResolutionDialogController::WinGameResolutionDialogController(cxmodel::IConnectXGameActions& p_modelAsActions)
+: m_modelAsActions{p_modelAsActions}
 {
-
 }
 
-std::string cxgui::GameResolutionDialogPresenter::GetResolutionMessage() const
+void cxgui::WinGameResolutionDialogController::OnNewGameRequested()
 {
-    if(ASSERT(m_modelAsInformation.IsWon()))
-    {
-        return "Congratulations to " + m_modelAsInformation.GetActivePlayer().GetName() + " for winning the game!";
-    }
-
-    return "";
+    m_modelAsActions.EndCurrentGame();
 }

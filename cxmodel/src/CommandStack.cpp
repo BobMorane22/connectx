@@ -94,6 +94,8 @@ void cxmodel::CommandStack::Execute(std::unique_ptr<cxmodel::ICommand>&& p_newCo
 void cxmodel::CommandStack::Clear()
 {
     m_commands.clear();
+    m_currentPosition = 0;
+    m_allCmdUndoed = false;
 
     POSTCONDITION(m_commands.size() == 0);
 

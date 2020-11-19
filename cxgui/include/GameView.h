@@ -66,6 +66,7 @@ private:
     bool OnKeyPressed(GdkEventKey* p_event);
 
     void UpdateChipDropped();
+    void UpdateGameResolved();
 
     IGameViewPresenter& m_presenter;
     IGameViewController& m_controller;

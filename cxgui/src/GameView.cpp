@@ -113,6 +113,10 @@ void cxgui::GameView::Update(cxmodel::NotificationContext p_context)
     {
         UpdateChipDropped();
     }
+    else if(p_context == cxmodel::NotificationContext::GAME_WON)
+    {
+        UpdateGameResolved();
+    }
 }
 
 void cxgui::GameView::SetLayout()
@@ -227,6 +231,11 @@ void cxgui::GameView::UpdateChipDropped()
 
     if(ASSERT(m_board))
     {
-        m_board->Update();
+        m_board->Update(Board::Context::CHIP_DROPPED);
     }
+}
+
+void cxgui::GameView::UpdateGameResolved()
+{
+    m_board->Update(Board::Context::GAME_WON);
 }

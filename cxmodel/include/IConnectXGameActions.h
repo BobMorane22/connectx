@@ -63,6 +63,16 @@ public:
      ********************************************************************************************/
     virtual void DropChip(const cxmodel::IChip& p_chip, size_t p_column) = 0;
 
+    /******************************************************************************************//**
+     * @brief Ends the current game.
+     *
+     * When a game is ended, all of its context (i.e. players, board status, etc) is cleared as
+     * if no game had ever been created. Use, for example, when a game is completed (won or tied)
+     * and that you want to make a new game available.
+     *
+     ********************************************************************************************/
+    virtual void EndCurrentGame() = 0;
+
 };
 
 } // namespace cxmodel

@@ -114,6 +114,8 @@ private:
 
     void UpdateCreateNewGame();
     void UpdateChipDropped(cxmodel::NotificationContext p_context);
+    void UpdateGameWon(cxmodel::NotificationContext p_context);
+    void UpdateGameEnded();
 
     void ConfigureWindow() override;
     void RegisterLayouts() override;
@@ -128,8 +130,11 @@ private:
     void CreateAboutWindow();
     void CreateGameResolutionWindow();
 
+    void ActivateNewGameView();
     void DeactivateNewGameView();
+
     void ActivateGameView();
+    void DeactivateGameView();
 
     Gtk::Application& m_gtkApplication;
 

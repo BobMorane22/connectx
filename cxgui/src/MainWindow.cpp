@@ -28,13 +28,13 @@
 #include <gtkmm/stock.h>
 
 #include <cxinv/include/assertion.h>
+#include <cxmodel/include/IConnectXGameActions.h>
 #include <cxmodel/include/IConnectXGameInformation.h>
 #include <cxmodel/include/IVersioning.h>
 
 #include <About.h>
 #include <AboutWindowPresenter.h>
 #include <GameResolutionDialog.h>
-#include <GameResolutionDialogPresenter.h>
 #include <GameView.h>
 #include <IMainWindowController.h>
 #include <IMainWindowPresenter.h>
@@ -42,6 +42,8 @@
 #include <NewGameView.h>
 #include <StatusBar.h>
 #include <StatusBarPresenter.h>
+#include <WinGameResolutionDialogController.h>
+#include <WinGameResolutionDialogPresenter.h>
 
 cxgui::MainWindow::MainWindow(Gtk::Application& p_gtkApplication,
                               cxmodel::Subject& p_model,
@@ -126,7 +128,12 @@ void cxgui::MainWindow::Update(cxmodel::NotificationContext p_context, cxmodel::
             case cxmodel::NotificationContext::REDO:
             case cxmodel::NotificationContext::GAME_WON:
             {
-                CreateGameResolutionWindow();
+                UpdateGameWon(p_context);
+                break;
+            }
+            case cxmodel::NotificationContext::GAME_ENDED:
+            {
+                UpdateGameEnded();
                 break;
             }
             default:
@@ -147,6 +154,18 @@ void cxgui::MainWindow::UpdateChipDropped(cxmodel::NotificationContext p_context
     {
         m_gameView->Update(p_context);
     }
+}
+
+void cxgui::MainWindow::UpdateGameWon(cxmodel::NotificationContext p_context)
+{
+    m_gameView->Update(p_context);
+    CreateGameResolutionWindow();
+}
+
+void cxgui::MainWindow::UpdateGameEnded()
+{
+    DeactivateGameView();
+    ActivateNewGameView();
 }
 
 void cxgui::MainWindow::RegisterMenuBar()
@@ -200,11 +219,17 @@ void cxgui::MainWindow::CreateGameResolutionWindow()
         cxmodel::IConnectXGameInformation* gameInformationModel = dynamic_cast<cxmodel::IConnectXGameInformation*>(&m_model);
         IF_CONDITION_NOT_MET_DO(gameInformationModel, return;);
 
-        std::unique_ptr<IGameResolutionDialogPresenter> gameResolutionPresenter = std::make_unique<GameResolutionDialogPresenter>(*gameInformationModel);
+        std::unique_ptr<IGameResolutionDialogPresenter> gameResolutionPresenter = std::make_unique<WinGameResolutionDialogPresenter>(*gameInformationModel);
         IF_CONDITION_NOT_MET_DO(gameResolutionPresenter, return;);
 
+        cxmodel::IConnectXGameActions* gameActionsModel = dynamic_cast<cxmodel::IConnectXGameActions*>(&m_model);
+        IF_CONDITION_NOT_MET_DO(gameActionsModel, return;);
+
+        std::unique_ptr<IGameResolutionDialogController> gameResolutionController = std::make_unique<WinGameResolutionDialogController>(*gameActionsModel);
+        IF_CONDITION_NOT_MET_DO(gameResolutionController, return;);
+
         {
-            auto gameResolutionWindow = std::make_unique<GameResolutionDialog>(std::move(gameResolutionPresenter));
+            auto gameResolutionWindow = std::make_unique<GameResolutionDialog>(std::move(gameResolutionPresenter), std::move(gameResolutionController));
             gameResolutionWindow->Init();
 
             m_gameResolution = std::move(gameResolutionWindow);
@@ -214,11 +239,24 @@ void cxgui::MainWindow::CreateGameResolutionWindow()
     m_gameResolution->Show();
 }
 
+void cxgui::MainWindow::ActivateNewGameView()
+{
+    if(!m_newGameView)
+    {
+        m_newGameView = std::make_unique<NewGameView>(m_presenter, m_controller, m_mainLayout, m_viewLeft, m_viewTop);
+    }
+
+    m_newGameView->Activate();
+    m_window.show_all();
+}
+
 void cxgui::MainWindow::DeactivateNewGameView()
 {
     IF_CONDITION_NOT_MET_DO(m_newGameView, return;);
 
     m_newGameView->DeActivate();
+
+    m_gameResolution.reset();
 }
 
 void cxgui::MainWindow::ActivateGameView()
@@ -230,4 +268,12 @@ void cxgui::MainWindow::ActivateGameView()
 
     m_gameView->Activate();
     m_window.show_all();
+}
+
+void cxgui::MainWindow::DeactivateGameView()
+{
+    IF_CONDITION_NOT_MET_DO(m_gameView, return;);
+
+    m_gameView->DeActivate();
+    m_gameView.reset();
 }

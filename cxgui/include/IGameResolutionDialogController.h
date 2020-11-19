@@ -16,46 +16,65 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file GameResolutionDialogPresenter.h
+ * @file IGameResolutionDialogController.h
  * @date 2020
  *
  *************************************************************************************************/
 
-#ifndef GAMERESOLUTIONDIALOGPRESENTER_H_FEF07B2E_B0F6_4FAC_88B7_FE78EC4007CE
-#define GAMERESOLUTIONDIALOGPRESENTER_H_FEF07B2E_B0F6_4FAC_88B7_FE78EC4007CE
-
-#include "IGameResolutionDialogPresenter.h"
+#ifndef IGAMERESOLUTIONDIALOGCONTROLLER_H_95FD78FD_1348_4332_962B_3433710806E5
+#define IGAMERESOLUTIONDIALOGCONTROLLER_H_95FD78FD_1348_4332_962B_3433710806E5
 
 namespace cxgui
 {
 
 /*********************************************************************************************//**
- * @brief Presenter for the game resolution window.
+ * @brief DESCRIPTION
+ *
+ * @invariant
+ * @invariant
+ *
+ * DESCRIPTION
  *
  ************************************************************************************************/
-class GameResolutionDialogPresenter : public IGameResolutionDialogPresenter
+class IGameResolutionDialogController
 {
 
 public:
 
     /******************************************************************************************//**
-     * @brief Constructor.
+     * @brief DESCRIPTION
      *
-     * @param p_modelAsInformation The model (Game informations).
+     * @pre
+     * @post
+     *
+     * @param
+     * @param
+     *
+     * @return
+     *
+     * DESCRIPTION
      *
      ********************************************************************************************/
-    GameResolutionDialogPresenter(const cxmodel::IConnectXGameInformation& p_modelAsInformation);
+    virtual ~IGameResolutionDialogController() = default;
 
-    // IGameResolutionDialogPresenter:
-    std::string GetResolutionMessage() const override;
+    /******************************************************************************************//**
+     * @brief DESCRIPTION
+     *
+     * @pre
+     * @post
+     *
+     * @param
+     * @param
+     *
+     * @return
+     *
+     * DESCRIPTION
+     *
+     ********************************************************************************************/
+    virtual void OnNewGameRequested() = 0;
 
-private:
-
-    const cxmodel::IConnectXGameInformation& m_modelAsInformation;
-
-    std::string m_resolutionMessage;
 };
 
 } // namespace cxgui
 
-#endif // GAMERESOLUTIONDIALOGPRESENTER_H_FEF07B2E_B0F6_4FAC_88B7_FE78EC4007CE
+#endif // IGAMERESOLUTIONDIALOGCONTROLLER_H_95FD78FD_1348_4332_962B_3433710806E5

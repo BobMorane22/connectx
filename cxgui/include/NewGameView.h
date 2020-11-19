@@ -98,6 +98,7 @@ private:
     Gtk::Button m_removePlayerButton;
     Gtk::Button m_addPlayerButton;
     Gtk::Button m_startButton;
+
 };
 
 } // namespace cxgui

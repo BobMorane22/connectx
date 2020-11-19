@@ -112,9 +112,22 @@ void cxgui::Board::MoveRight()
     Move(Side::Right);
 }
 
-void cxgui::Board::Update()
+void cxgui::Board::Update(Context p_context)
 {
-    MoveCurrentDiscAtFirstRow();
+    switch(p_context)
+    {
+        case Context::CHIP_DROPPED:
+        {
+            MoveCurrentDiscAtFirstRow();
+            break;
+        }
+        case Context::GAME_WON:
+        {
+            ClearNextDiscArea();
+            break;
+        }
+    }
+
     RefreshBoardArea();
 }
 
@@ -241,5 +254,16 @@ void cxgui::Board::RefreshBoardArea()
 
             chip->ChangeColor(chipColors[row][column]);
         }
+    }
+}
+
+void cxgui::Board::ClearNextDiscArea()
+{
+    for(size_t column = 0u; column < m_presenter.GetGameViewBoardWidth(); ++column)
+    {
+        Chip* chip = GetChip(m_nextDiscAreaLayout, column, 0u);
+        IF_CONDITION_NOT_MET_DO(chip, return;);
+
+        chip->ChangeColor(cxmodel::MakeTransparent());
     }
 }

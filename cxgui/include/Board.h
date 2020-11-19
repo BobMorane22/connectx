@@ -49,6 +49,12 @@ class Board : public Gtk::Paned
 
 public:
 
+    enum class Context
+    {
+        CHIP_DROPPED,
+        GAME_WON
+    };
+
     /******************************************************************************************//**
      * @brief Constructor.
      *
@@ -79,8 +85,10 @@ public:
     /******************************************************************************************//**
      * @brief Updates the board.
      *
+     * @param p_context The update's context.
+     *
      ********************************************************************************************/
-    void Update();
+    void Update(Context p_context);
 
 private:
 
@@ -98,8 +106,10 @@ private:
 
     void InitializeNextDiscArea(size_t p_width);
     void InitializeBoard(size_t p_height, size_t p_width);
+
     void MoveCurrentDiscAtFirstRow();
     void RefreshBoardArea();
+    void ClearNextDiscArea();
 
     const IGameViewPresenter& m_presenter;
     IGameViewController& m_controller;

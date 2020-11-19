@@ -61,7 +61,6 @@ OBJS_$(d) := $(d)/src/About.o \
              $(d)/src/GameKeyHandlerStrategyFactory.o \
              $(d)/src/GameLeftKeyHandlerStrategy.o \
              $(d)/src/GameResolutionDialog.o \
-             $(d)/src/GameResolutionDialogPresenter.o \
              $(d)/src/GameRightKeyHandlerStrategy.o \
              $(d)/src/GameView.o \
              $(d)/src/MainWindow.o \
@@ -72,6 +71,8 @@ OBJS_$(d) := $(d)/src/About.o \
              $(d)/src/NewPlayerList.o \
              $(d)/src/StatusBar.o \
              $(d)/src/StatusBarPresenter.o \
+             $(d)/src/WinGameResolutionDialogController.o \
+             $(d)/src/WinGameResolutionDialogPresenter.o \
              cxinv/libcxinv.a \
              cxmodel/libcxmodel.a
 

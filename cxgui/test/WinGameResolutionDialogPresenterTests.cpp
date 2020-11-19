@@ -26,8 +26,7 @@
 #include <cxmodel/include/Disc.h>
 #include <cxmodel/include/IConnectXGameInformation.h>
 #include <cxmodel/include/Player.h>
-
-#include <GameResolutionDialogPresenter.h>
+#include "../include/WinGameResolutionDialogPresenter.h"
 
 #include "DisableStdStreamsRAII.h"
 
@@ -71,19 +70,19 @@ private:
 
 } // namespace
 
-TEST(GameResolutionDialogPresenter, GetResolutionMessage_GameWon_GameWonResolutionMessageReturned)
+TEST(WinGameResolutionDialogPresenter, GetResolutionMessage_GameWon_GameWonResolutionMessageReturned)
 {
     ModelMock model;
 
     model.SetIsWon(true);
     model.SetActivePlayer({"John Doe", cxmodel::MakeRed()});
 
-    cxgui::GameResolutionDialogPresenter presenter{model};
+    cxgui::WinGameResolutionDialogPresenter presenter{model};
 
-    ASSERT_EQ("Congratulations to John Doe for winning the game!", presenter.GetResolutionMessage());
+    ASSERT_EQ("Congratulations to John Doe!", presenter.GetResolutionMessage());
 }
 
-TEST(GameResolutionDialogPresenter, GetResolutionMessage_GameNotWon_NoMessageReturnedAndAssertion)
+TEST(WinGameResolutionDialogPresenter, GetResolutionMessage_GameNotWon_NoMessageReturnedAndAssertion)
 {
     DisableStdStreamsRAII m_streamDisabler;
 
@@ -92,7 +91,7 @@ TEST(GameResolutionDialogPresenter, GetResolutionMessage_GameNotWon_NoMessageRet
     model.SetIsWon(false);
     model.SetActivePlayer({"John Doe", cxmodel::MakeRed()});
 
-    cxgui::GameResolutionDialogPresenter presenter{model};
+    cxgui::WinGameResolutionDialogPresenter presenter{model};
 
     ASSERT_EQ("", m_streamDisabler.GetStdErrContents());
     ASSERT_EQ("", presenter.GetResolutionMessage());

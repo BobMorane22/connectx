@@ -45,12 +45,28 @@ public:
     virtual ~IGameResolutionDialogPresenter() = default;
 
     /******************************************************************************************//**
+     * @brief Gets the window title.
+     *
+     * @return The window title.
+     *
+     ********************************************************************************************/
+    virtual std::string GetTitle() const = 0;
+
+    /******************************************************************************************//**
      * @brief Retrieves the game resolution message.
      *
      * @return The game resolution message (or an empty string if the game has not been resolved).
      *
      ********************************************************************************************/
     virtual std::string GetResolutionMessage() const = 0;
+
+    /******************************************************************************************//**
+     * @brief Gets the text the for the button to start a new game.
+     *
+     * @return The button text.
+     *
+     ********************************************************************************************/
+    virtual std::string GetStartNewGameButtonText() const = 0;
 };
 
 } // namespace cxgui

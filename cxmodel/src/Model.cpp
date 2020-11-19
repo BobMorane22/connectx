@@ -191,15 +191,20 @@ void cxmodel::Model::DropChip(const cxmodel::IChip& p_chip, size_t p_column)
 
     if(IsWon())
     {
+        Notify(NotificationContext::CHIP_DROPPED);
+
         // In the case of a win, we must revert the next player -> active player update, since
         // the next player will never be able to play:
         m_playersInfo.m_activePlayerIndex = activePlayerIndexBefore;
         m_playersInfo.m_nextPlayerIndex = nextPlayerIndexBefore;
 
-        Notify(NotificationContext::CHIP_DROPPED);
         Notify(NotificationContext::GAME_WON);
 
         Log(cxlog::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__, "Game won by : " + GetActivePlayer().GetName());
+
+        CheckInvariants();
+
+        return;
     }
 
     if(activePlayerIndexBefore != m_playersInfo.m_activePlayerIndex)
@@ -208,6 +213,29 @@ void cxmodel::Model::DropChip(const cxmodel::IChip& p_chip, size_t p_column)
     }
 
     CheckInvariants();
+}
+
+void cxmodel::Model::EndCurrentGame()
+{
+    // Clear the command stack:
+    IF_CONDITION_NOT_MET_DO(m_cmdStack, return;);
+    m_cmdStack->Clear();
+
+    // Clean the game board:
+    m_board.reset();
+
+    // Clear all player information:
+    m_playersInfo = {{}, 0u, 1u};
+
+    // Reset the in-a-row value to its default:
+    m_inARowValue = 4u;
+
+    // Reset the position record:
+    m_takenPositions.clear();
+
+    Notify(NotificationContext::GAME_ENDED);
+
+    Log(cxlog::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__, "Game ended.");
 }
 
 size_t cxmodel::Model::GetCurrentGridHeight() const

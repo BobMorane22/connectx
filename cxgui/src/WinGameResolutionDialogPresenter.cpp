@@ -16,36 +16,38 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file NotificationContext.h
+ * @file WinGameResolutionDialogPresenter.cpp
  * @date 2020
  *
  *************************************************************************************************/
 
-#ifndef NOTIFICATIONCONTEXT_H_3B763656_2127_4F2A_B522_85ECBA656CB8
-#define NOTIFICATIONCONTEXT_H_3B763656_2127_4F2A_B522_85ECBA656CB8
+#include <cxinv/include/assertion.h>
+#include <cxmodel/include/IConnectXGameInformation.h>
 
-namespace cxmodel
+#include <WinGameResolutionDialogPresenter.h>
+
+cxgui::WinGameResolutionDialogPresenter::WinGameResolutionDialogPresenter(const cxmodel::IConnectXGameInformation& p_modelAsInformation)
+: m_modelAsInformation{p_modelAsInformation}
 {
 
-/**********************************************************************************************//**
- * @brief Connect X model notification context.
- *
- * Describes all the contexts from which the Connect X model may notify.
- *
- ************************************************************************************************/
-enum class NotificationContext
+}
+
+std::string cxgui::WinGameResolutionDialogPresenter::GetTitle() const
 {
-    // User operations:
-    CREATE_NEW_GAME,
-    CHIP_DROPPED,
-    REDO,
-    UNDO,
+    return "Game won!";
+}
 
-    // Game states:
-    GAME_WON,
-    GAME_ENDED
-};
+std::string cxgui::WinGameResolutionDialogPresenter::GetResolutionMessage() const
+{
+    if(ASSERT(m_modelAsInformation.IsWon()))
+    {
+        return "Congratulations to " + m_modelAsInformation.GetActivePlayer().GetName() + "!";
+    }
 
-} // namespace cxmodel
+    return "";
+}
 
-#endif // NOTIFICATIONCONTEXT_H_3B763656_2127_4F2A_B522_85ECBA656CB8
+std::string cxgui::WinGameResolutionDialogPresenter::GetStartNewGameButtonText() const
+{
+    return "Start new game";
+}
