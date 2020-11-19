@@ -42,6 +42,9 @@ void cxgui::GameResolutionDialog::Update(cxmodel::NotificationContext /*p_contex
 
 void cxgui::GameResolutionDialog::ConfigureWindow()
 {
+    // We do now want the user to simply close the window by pressing the
+    // 'X' button.
+    m_window.set_deletable(false);
     m_window.set_modal(true);
 }
 
