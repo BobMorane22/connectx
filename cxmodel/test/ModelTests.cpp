@@ -271,6 +271,286 @@ TEST(Model, /*DISABLED_*/DropChip_ValidModelTwoSameChipsDropped_GameDataNotUpdat
     ASSERT_EQ(model.GetNextPlayer(), cxmodel::Player("John Doe", cxmodel::MakeRed()));
 }
 
+TEST(Model, /*DISABLED_*/DropChip_ValidModelGameIsWon_NotificationsHappen)
+{
+    // We create an observer specific to the CHIP_DROPPED notification context:
+    class DropChipObserver : public cxmodel::IObserver
+    {
+
+    private:
+
+        bool m_wasNotified = false;
+
+        void Update(cxmodel::NotificationContext p_context, cxmodel::Subject* p_subject) override
+        {
+            ASSERT_TRUE(p_subject);
+
+            if(p_context == cxmodel::NotificationContext::CHIP_DROPPED)
+            {
+                m_wasNotified = true;
+            }
+        }
+
+    public:
+
+        bool WasNotified() const {return m_wasNotified;}
+
+    };
+
+    // We create an observer specific to the GAME_WON notification context:
+    class GameWonObserver : public cxmodel::IObserver
+    {
+
+    private:
+
+        bool m_wasNotified = false;
+
+        void Update(cxmodel::NotificationContext p_context, cxmodel::Subject* p_subject) override
+        {
+            ASSERT_TRUE(p_subject);
+
+            if(p_context == cxmodel::NotificationContext::GAME_WON)
+            {
+                m_wasNotified = true;
+            }
+        }
+
+    public:
+
+        bool WasNotified() const {return m_wasNotified;}
+
+    };
+
+    // We create a model:
+    LoggerMock logger;
+    cxmodel::Model model{std::make_unique<cxmodel::CommandStack>(200), logger};
+
+    // We attach our observers to it:
+    DropChipObserver dropChipObserver;
+    GameWonObserver gameWonObserver;
+
+    ASSERT_FALSE(dropChipObserver.WasNotified());
+    ASSERT_FALSE(gameWonObserver.WasNotified());
+
+    model.Attach(&dropChipObserver);
+    model.Attach(&gameWonObserver);
+
+    // We create valid new game information:
+    cxmodel::NewGameInformation newGameInfo;
+    newGameInfo.m_inARowValue = 4u;
+    newGameInfo.m_gridWidth = 7u;
+    newGameInfo.m_gridHeight = 6u;
+    newGameInfo.AddPlayer({"John Doe", cxmodel::MakeRed()});
+    newGameInfo.AddPlayer({"Jane Doe", cxmodel::MakeBlue()});
+
+    // Then we create the new game:
+    model.CreateNewGame(newGameInfo);
+
+    // We drop chips:
+    const cxmodel::Disc RED_CHIP{cxmodel::MakeRed()};
+    const cxmodel::Disc BLUE_CHIP{cxmodel::MakeBlue()};
+
+    ASSERT_EQ(model.GetActivePlayer(), cxmodel::Player("John Doe", cxmodel::MakeRed()));
+    ASSERT_EQ(model.GetNextPlayer(), cxmodel::Player("Jane Doe", cxmodel::MakeBlue()));
+
+    model.DropChip(RED_CHIP, 0u);
+    model.DropChip(BLUE_CHIP, 1u);
+    model.DropChip(RED_CHIP, 0u);
+    model.DropChip(BLUE_CHIP, 1u);
+    model.DropChip(RED_CHIP, 0u);
+    model.DropChip(BLUE_CHIP, 1u);
+
+    // And the first player wins:
+    model.DropChip(RED_CHIP, 0u);
+
+    // Finally, we check our observers:
+    ASSERT_TRUE(dropChipObserver.WasNotified());
+    ASSERT_TRUE(gameWonObserver.WasNotified());
+}
+
+TEST(Model, /*DISABLED_*/DropChip_ValidModelGameIsWon_WinnerIsFirstPlayer)
+{
+    // We create a model:
+    LoggerMock logger;
+    cxmodel::Model model{std::make_unique<cxmodel::CommandStack>(200), logger};
+
+    // We create valid new game information:
+    const cxmodel::ChipColor FIRST_PLAYER_COLOR{cxmodel::MakeRed()};
+    const cxmodel::Player FIRST_PLAYER{"John Doe", FIRST_PLAYER_COLOR};
+
+    const cxmodel::ChipColor SECOND_PLAYER_COLOR{cxmodel::MakeBlue()};
+    const cxmodel::Player SECOND_PLAYER{"Jane Doe", SECOND_PLAYER_COLOR};
+
+    const cxmodel::ChipColor THRIRD_PLAYER_COLOR{cxmodel::MakeYellow()};
+    const cxmodel::Player THIRD_PLAYER{"Bob Morane", THRIRD_PLAYER_COLOR};
+
+    cxmodel::NewGameInformation newGameInfo;
+    newGameInfo.m_inARowValue = 4u;
+    newGameInfo.m_gridWidth = 7u;
+    newGameInfo.m_gridHeight = 6u;
+    newGameInfo.AddPlayer(FIRST_PLAYER);
+    newGameInfo.AddPlayer(SECOND_PLAYER);
+    newGameInfo.AddPlayer(THIRD_PLAYER);
+
+    // Then we create the new game:
+    model.CreateNewGame(newGameInfo);
+
+    // We drop chips:
+    const cxmodel::Disc FIRST_PLAYER_CHIP{FIRST_PLAYER_COLOR};
+    const cxmodel::Disc SECOND_PLAYER_CHIP{SECOND_PLAYER_COLOR};
+    const cxmodel::Disc THIRD_PLAYER_CHIP{THRIRD_PLAYER_COLOR};
+
+    ASSERT_EQ(model.GetActivePlayer(), FIRST_PLAYER);
+    ASSERT_EQ(model.GetNextPlayer(), SECOND_PLAYER);
+
+    model.DropChip(FIRST_PLAYER_CHIP, 0u);
+    model.DropChip(SECOND_PLAYER_CHIP, 1u);
+    model.DropChip(THIRD_PLAYER_CHIP, 2u);
+
+    model.DropChip(FIRST_PLAYER_CHIP, 0u);
+    model.DropChip(SECOND_PLAYER_CHIP, 1u);
+    model.DropChip(THIRD_PLAYER_CHIP, 2u);
+
+    model.DropChip(FIRST_PLAYER_CHIP, 0u);
+    model.DropChip(SECOND_PLAYER_CHIP, 1u);
+    model.DropChip(THIRD_PLAYER_CHIP, 2u);
+
+    // And the first player wins:
+    model.DropChip(FIRST_PLAYER_CHIP, 0u);
+
+    ASSERT_EQ(FIRST_PLAYER, model.GetActivePlayer());
+}
+
+TEST(Model, /*DISABLED_*/DropChip_ValidModelGameIsWon_WinnerIsMiddlePlayer)
+{
+    // We create a model:
+    LoggerMock logger;
+    cxmodel::Model model{std::make_unique<cxmodel::CommandStack>(200), logger};
+
+    // We create valid new game information:
+    const cxmodel::ChipColor FIRST_PLAYER_COLOR{cxmodel::MakeRed()};
+    const cxmodel::Player FIRST_PLAYER{"John Doe", FIRST_PLAYER_COLOR};
+
+    const cxmodel::ChipColor SECOND_PLAYER_COLOR{cxmodel::MakeBlue()};
+    const cxmodel::Player SECOND_PLAYER{"Jane Doe", SECOND_PLAYER_COLOR};
+
+    const cxmodel::ChipColor THRIRD_PLAYER_COLOR{cxmodel::MakeYellow()};
+    const cxmodel::Player THIRD_PLAYER{"Bob Morane", THRIRD_PLAYER_COLOR};
+
+    cxmodel::NewGameInformation newGameInfo;
+    newGameInfo.m_inARowValue = 4u;
+    newGameInfo.m_gridWidth = 7u;
+    newGameInfo.m_gridHeight = 6u;
+    newGameInfo.AddPlayer(FIRST_PLAYER);
+    newGameInfo.AddPlayer(SECOND_PLAYER);
+    newGameInfo.AddPlayer(THIRD_PLAYER);
+
+    // Then we create the new game:
+    model.CreateNewGame(newGameInfo);
+
+    // We drop chips:
+    const cxmodel::Disc FIRST_PLAYER_CHIP{FIRST_PLAYER_COLOR};
+    const cxmodel::Disc SECOND_PLAYER_CHIP{SECOND_PLAYER_COLOR};
+    const cxmodel::Disc THIRD_PLAYER_CHIP{THRIRD_PLAYER_COLOR};
+
+    ASSERT_EQ(model.GetActivePlayer(), FIRST_PLAYER);
+    ASSERT_EQ(model.GetNextPlayer(), SECOND_PLAYER);
+
+    model.DropChip(FIRST_PLAYER_CHIP, 0u);
+    model.DropChip(SECOND_PLAYER_CHIP, 1u);
+    model.DropChip(THIRD_PLAYER_CHIP, 2u);
+
+    model.DropChip(FIRST_PLAYER_CHIP, 0u);
+    model.DropChip(SECOND_PLAYER_CHIP, 1u);
+    model.DropChip(THIRD_PLAYER_CHIP, 2u);
+
+    model.DropChip(FIRST_PLAYER_CHIP, 0u);
+    model.DropChip(SECOND_PLAYER_CHIP, 1u);
+    model.DropChip(THIRD_PLAYER_CHIP, 2u);
+
+    model.DropChip(FIRST_PLAYER_CHIP, 4u);
+
+    // And the second player wins:
+    model.DropChip(SECOND_PLAYER_CHIP, 1u);
+
+    ASSERT_EQ(SECOND_PLAYER, model.GetActivePlayer());
+}
+
+TEST(Model, /*DISABLED_*/DropChip_ValidModelGameIsWon_WinnerIsLastPlayer)
+{
+    // We create a model:
+    LoggerMock logger;
+    cxmodel::Model model{std::make_unique<cxmodel::CommandStack>(200), logger};
+
+    // We create valid new game information:
+    const cxmodel::ChipColor FIRST_PLAYER_COLOR{cxmodel::MakeRed()};
+    const cxmodel::Player FIRST_PLAYER{"John Doe", FIRST_PLAYER_COLOR};
+
+    const cxmodel::ChipColor SECOND_PLAYER_COLOR{cxmodel::MakeBlue()};
+    const cxmodel::Player SECOND_PLAYER{"Jane Doe", SECOND_PLAYER_COLOR};
+
+    const cxmodel::ChipColor THRIRD_PLAYER_COLOR{cxmodel::MakeYellow()};
+    const cxmodel::Player THIRD_PLAYER{"Bob Morane", THRIRD_PLAYER_COLOR};
+
+    cxmodel::NewGameInformation newGameInfo;
+    newGameInfo.m_inARowValue = 4u;
+    newGameInfo.m_gridWidth = 7u;
+    newGameInfo.m_gridHeight = 6u;
+    newGameInfo.AddPlayer(FIRST_PLAYER);
+    newGameInfo.AddPlayer(SECOND_PLAYER);
+    newGameInfo.AddPlayer(THIRD_PLAYER);
+
+    // Then we create the new game:
+    model.CreateNewGame(newGameInfo);
+
+    // We drop chips:
+    const cxmodel::Disc FIRST_PLAYER_CHIP{FIRST_PLAYER_COLOR};
+    const cxmodel::Disc SECOND_PLAYER_CHIP{SECOND_PLAYER_COLOR};
+    const cxmodel::Disc THIRD_PLAYER_CHIP{THRIRD_PLAYER_COLOR};
+
+    ASSERT_EQ(model.GetActivePlayer(), FIRST_PLAYER);
+    ASSERT_EQ(model.GetNextPlayer(), SECOND_PLAYER);
+
+    model.DropChip(FIRST_PLAYER_CHIP, 0u);
+    model.DropChip(SECOND_PLAYER_CHIP, 1u);
+    model.DropChip(THIRD_PLAYER_CHIP, 2u);
+
+    model.DropChip(FIRST_PLAYER_CHIP, 0u);
+    model.DropChip(SECOND_PLAYER_CHIP, 1u);
+    model.DropChip(THIRD_PLAYER_CHIP, 2u);
+
+    model.DropChip(FIRST_PLAYER_CHIP, 0u);
+    model.DropChip(SECOND_PLAYER_CHIP, 1u);
+    model.DropChip(THIRD_PLAYER_CHIP, 2u);
+
+    model.DropChip(FIRST_PLAYER_CHIP, 4u);
+    model.DropChip(SECOND_PLAYER_CHIP, 4u);
+
+    // And the third player wins:
+    model.DropChip(THIRD_PLAYER_CHIP, 2u);
+
+    ASSERT_EQ(THIRD_PLAYER, model.GetActivePlayer());
+}
+
+TEST(Model, /*DISABLED_*/EndCurrentGame_ValidModel_NotificationsSent)
+{
+    // We create an observer specific to the END_GAME notification context:
+    class EndGameObserver : public cxmodel::IObserver
+    {
+        void Update(cxmodel::NotificationContext p_context, cxmodel::Subject* p_subject) override
+        {
+            ASSERT_TRUE(p_subject);
+            ASSERT_TRUE(p_context == cxmodel::NotificationContext::GAME_ENDED);
+        }
+    };
+    
+    // We create a model:
+    LoggerMock logger;
+    cxmodel::Model model{std::make_unique<cxmodel::CommandStack>(200), logger};
+
+    model.EndCurrentGame();
+}
+
 TEST(Model, /*DISABLED_*/GetChip_ValidModel_ChipReturned)
 {
     // We create a model:
