@@ -69,19 +69,19 @@ public:
 
 private:
 
-    bool IsDraw() const;
+    bool IsDraw(const Player& p_activePlayer) const;
 
-    bool CanPlayerWinHorizontal(const cxmodel::Player& p_player) const;
-    bool CanPlayerWinVertical(const cxmodel::Player& p_player) const;
-    bool CanPlayerWinDiagonalUpward(const cxmodel::Player& p_player) const;
-    bool CanPlayerWinDiagonalDownward(const cxmodel::Player& p_player) const;
+    bool CanPlayerWinHorizontal(const Player& p_player) const;
+    bool CanPlayerWinVertical(const Player& p_player, const Player& p_activePlayer) const;
+    bool CanPlayerWinDiagonalUpward(const Player& p_player) const;
+    bool CanPlayerWinDiagonalDownward(const Player& p_player) const;
 
     int GetNbOfRemainingMoves(const Player& p_player, const int p_nbOfCompletedMoves) const;
     int GetNbOfRemainingMoves(const Player& p_player) const;
     int GetMaxVerticalPositionForPlayerInColumn(const Player& p_player, const int p_column) const;
-    int GetNbOfMovesSinceLastPlay(const Player& p_player) const;
+    int GetNbOfMovesSinceLastPlay(const Player& p_player, const Player& p_activePlayer) const;
     bool IsPlayerPresentInColumn(const Player& p_player, int p_column) const;
-    int GetPlayerTurn(const Player& p_player) const;
+    int GetPlayerTurn(const Player& p_player, const Player& p_activePlayer) const;
 
     const IBoard& m_board;
     const int m_inARowValue;

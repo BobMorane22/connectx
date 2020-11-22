@@ -25,6 +25,7 @@
 
 #include <cxinv/include/assertion.h>
 #include <cxmodel/include/Disc.h>
+#include <cxmodel/include/Player.h>
 
 #include <TieGameResolutionStrategy.h>
 
@@ -53,12 +54,17 @@ cxmodel::TieGameResolutionStrategy::TieGameResolutionStrategy(const IBoard& p_bo
 
 bool cxmodel::TieGameResolutionStrategy::Handle(const Player& p_activePlayer) const
 {
-    return IsDraw();
+    if(!PRECONDITION(std::find(m_players.cbegin(), m_players.cend(), p_activePlayer) != m_players.cend()))
+    {
+        return false;
+    }
+
+    return IsDraw(p_activePlayer);
 }
 
-bool cxmodel::TieGameResolutionStrategy::IsDraw() const
+bool cxmodel::TieGameResolutionStrategy::IsDraw(const Player& p_activePlayer) const
 {
-    if(m_takenPositions == m_board.GetNbPositions(:w))
+    if(m_takenPositions.size() == m_board.GetNbPositions())
     {
         // This is not an early draw:
         return true;
@@ -73,7 +79,7 @@ bool cxmodel::TieGameResolutionStrategy::IsDraw() const
 
         if(!validPlaysAreStillAvailable)
         {
-            validPlaysAreStillAvailable |= CanPlayerWinVertical(player);
+            validPlaysAreStillAvailable |= CanPlayerWinVertical(player, p_activePlayer);
         }
 
         if(!validPlaysAreStillAvailable)
@@ -157,7 +163,7 @@ int cxmodel::TieGameResolutionStrategy::GetMaxVerticalPositionForPlayerInColumn(
     return maxPosition;
 }
 
-int cxmodel::TieGameResolutionStrategy::GetNbOfMovesSinceLastPlay(const Player& p_player) const
+int cxmodel::TieGameResolutionStrategy::GetNbOfMovesSinceLastPlay(const Player& p_player, const Player& p_activePlayer) const
 {
     int positionCurrent = 0;
 
@@ -170,7 +176,7 @@ int cxmodel::TieGameResolutionStrategy::GetNbOfMovesSinceLastPlay(const Player& 
         positionCurrent = m_takenPositions.size() - 1;
     }
 
-    const int positionInspected = GetPlayerTurn(p_player);
+    const int positionInspected = GetPlayerTurn(p_player, p_activePlayer);
 
     // Find the distance between the two Players:
     int nbOfMoves = 0;
@@ -210,11 +216,11 @@ bool cxmodel::TieGameResolutionStrategy::IsPlayerPresentInColumn(const Player& p
     return isPlayerPresent;
 }
 
-int cxmodel::TieGameResolutionStrategy::GetPlayerTurn(const Player& p_player) const
+int cxmodel::TieGameResolutionStrategy::GetPlayerTurn(const Player& p_player, const Player& p_activePlayer) const
 {
     int playerTurn = 0;
 
-    if(p_player == m_activePlayer)
+    if(p_player == p_activePlayer)
     {
         playerTurn = m_takenPositions.size();
     }
@@ -286,7 +292,7 @@ bool cxmodel::TieGameResolutionStrategy::CanPlayerWinHorizontal(const Player& p_
     return canPlayerWin;
 }
 
-bool cxmodel::TieGameResolutionStrategy::CanPlayerWinVertical(const Player& p_player) const
+bool cxmodel::TieGameResolutionStrategy::CanPlayerWinVertical(const Player& p_player, const Player& p_activePlayer) const
 {
     bool canPlayerWin = false;
 
@@ -294,13 +300,13 @@ bool cxmodel::TieGameResolutionStrategy::CanPlayerWinVertical(const Player& p_pl
     int GetNbOfRemainingMovesOtherPlayers = 0;
 
     // Find the inspected Player's turn:
-    int inspectedPlayerTurn = GetPlayerTurn(p_player);
+    int inspectedPlayerTurn = GetPlayerTurn(p_player, p_activePlayer);
 
     for(int playerTurn = 0; playerTurn < static_cast<int>(m_players.size()); ++playerTurn)
     {
         if(playerTurn != inspectedPlayerTurn)
         {
-            const int nbOfTurnsRemainingFromLastMove = m_takenPositions.size() - GetNbOfMovesSinceLastPlay(m_players[playerTurn]);
+            const int nbOfTurnsRemainingFromLastMove = m_takenPositions.size() - GetNbOfMovesSinceLastPlay(m_players[playerTurn], p_activePlayer);
             GetNbOfRemainingMovesOtherPlayers += GetNbOfRemainingMoves(m_players[playerTurn], nbOfTurnsRemainingFromLastMove);
         }
     }
