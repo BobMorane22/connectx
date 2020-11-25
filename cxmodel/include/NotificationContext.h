@@ -43,7 +43,8 @@ enum class NotificationContext
 
     // Game states:
     GAME_WON,
-    GAME_ENDED
+    GAME_ENDED,
+    GAME_REINITIALIZED
 };
 
 } // namespace cxmodel

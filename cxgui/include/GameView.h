@@ -67,6 +67,7 @@ private:
 
     void UpdateChipDropped();
     void UpdateGameResolved();
+    void UpdateGameReinitialized();
 
     IGameViewPresenter& m_presenter;
     IGameViewController& m_controller;

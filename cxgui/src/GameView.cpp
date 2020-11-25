@@ -109,13 +109,25 @@ void cxgui::GameView::DeActivate()
 
 void cxgui::GameView::Update(cxmodel::NotificationContext p_context)
 {
-    if(p_context == cxmodel::NotificationContext::CHIP_DROPPED)
+    switch(p_context)
     {
-        UpdateChipDropped();
-    }
-    else if(p_context == cxmodel::NotificationContext::GAME_WON)
-    {
-        UpdateGameResolved();
+        case cxmodel::NotificationContext::CHIP_DROPPED:
+        {
+            UpdateChipDropped();
+            break;
+        }
+        case cxmodel::NotificationContext::GAME_WON:
+        {
+            UpdateGameResolved();
+            break;
+        }
+        case cxmodel::NotificationContext::GAME_REINITIALIZED:
+        {
+            UpdateGameReinitialized();
+            break;
+        }
+        default:
+            break;
     }
 }
 
@@ -238,4 +250,9 @@ void cxgui::GameView::UpdateChipDropped()
 void cxgui::GameView::UpdateGameResolved()
 {
     m_board->Update(Board::Context::GAME_WON);
+}
+
+void cxgui::GameView::UpdateGameReinitialized()
+{
+    m_board->Update(Board::Context::GAME_REINITIALIZED);
 }

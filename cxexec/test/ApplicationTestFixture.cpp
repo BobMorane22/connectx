@@ -100,5 +100,10 @@ const cxmodel::IChip& ApplicationTestFixture::ModelApplicationMock::GetChip(size
 
 void ApplicationTestFixture::ModelApplicationMock::EndCurrentGame()
 {
-    // Noting to do...
+    // Nothing to do...
+}
+
+void ApplicationTestFixture::ModelApplicationMock::ReinitializeCurrentGame()
+{
+    // Nothing to do...
 }

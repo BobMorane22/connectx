@@ -108,3 +108,9 @@ void MainWindowPresenterTestFixture::MainWindowPresenterModelMock::EndCurrentGam
 {
     // Noting to do...
 }
+
+void MainWindowPresenterTestFixture::MainWindowPresenterModelMock::ReinitializeCurrentGame()
+{
+    // Nothing to do...
+}
+

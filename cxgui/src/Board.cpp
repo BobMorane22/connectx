@@ -119,16 +119,22 @@ void cxgui::Board::Update(Context p_context)
         case Context::CHIP_DROPPED:
         {
             MoveCurrentDiscAtFirstRow();
+            RefreshBoardArea();
             break;
         }
         case Context::GAME_WON:
         {
             ClearNextDiscArea();
+            RefreshBoardArea();
+            break;
+        }
+        case Context::GAME_REINITIALIZED:
+        {
+            MoveCurrentDiscAtFirstRow();
+            ClearBoardArea();
             break;
         }
     }
-
-    RefreshBoardArea();
 }
 
 cxgui::Chip* cxgui::Board::GetChip(Gtk::Grid& p_discArea, int p_left, int p_top)
@@ -265,5 +271,19 @@ void cxgui::Board::ClearNextDiscArea()
         IF_CONDITION_NOT_MET_DO(chip, return;);
 
         chip->ChangeColor(cxmodel::MakeTransparent());
+    }
+}
+
+void cxgui::Board::ClearBoardArea()
+{
+    for(size_t row = 0u; row < m_presenter.GetGameViewBoardHeight(); ++row)
+    {
+        for(size_t column = 0u; column < m_presenter.GetGameViewBoardWidth(); ++column)
+        {
+            Chip* chip = GetChip(m_boardLayout, column, row);
+            IF_CONDITION_NOT_MET_DO(chip, return;);
+
+            chip->ChangeColor(cxmodel::MakeTransparent());
+        }
     }
 }

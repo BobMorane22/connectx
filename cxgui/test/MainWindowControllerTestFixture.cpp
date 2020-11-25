@@ -78,3 +78,8 @@ void MainWindowControllerTestFixture::MainWindowControllerMockModel::EndCurrentG
 {
     // Noting to do...
 }
+
+void MainWindowControllerTestFixture::MainWindowControllerMockModel::ReinitializeCurrentGame()
+{
+    // Noting to do...
+}

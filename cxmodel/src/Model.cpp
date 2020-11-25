@@ -26,6 +26,7 @@
 
 #include <cxinv/include/assertion.h>
 
+#include <Board.h>
 #include <CommandCreateNewGame.h>
 #include <CommandDropChip.h>
 #include <CommandStack.h>
@@ -222,6 +223,7 @@ void cxmodel::Model::EndCurrentGame()
     m_cmdStack->Clear();
 
     // Clean the game board:
+    IF_CONDITION_NOT_MET_DO(m_board, return;);
     m_board.reset();
 
     // Clear all player information:
@@ -236,6 +238,30 @@ void cxmodel::Model::EndCurrentGame()
     Notify(NotificationContext::GAME_ENDED);
 
     Log(cxlog::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__, "Game ended.");
+}
+
+void cxmodel::Model::ReinitializeCurrentGame()
+{
+    // Clear the command stack:
+    IF_CONDITION_NOT_MET_DO(m_cmdStack, return;);
+    m_cmdStack->Clear();
+
+    // Clean the game board:
+    IF_CONDITION_NOT_MET_DO(m_board, return;);
+
+    const size_t boardHeight = m_board->GetNbColumns();
+    const size_t boardWidth = m_board->GetNbColumns();
+
+    m_board.reset();
+    m_board = std::make_unique<Board>(boardHeight, boardWidth, *this);
+    IF_CONDITION_NOT_MET_DO(m_board, return;);
+
+    // Reset the position record:
+    m_takenPositions.clear();
+
+    Notify(NotificationContext::GAME_REINITIALIZED);
+
+    Log(cxlog::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__, "Game reinitialized.");
 }
 
 size_t cxmodel::Model::GetCurrentGridHeight() const

@@ -54,6 +54,12 @@ public:
      *
      ********************************************************************************************/
     virtual void OnDown(const cxmodel::ChipColor& p_chipColor, size_t p_column) = 0;
+
+    /******************************************************************************************//**
+     * @brief Handler for a current game reinitialization.
+     *
+     ********************************************************************************************/
+    virtual void OnReinitializeCurrentGame() = 0;
 };
 
 } // namespace cxgui

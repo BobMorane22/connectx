@@ -73,6 +73,15 @@ public:
      ********************************************************************************************/
     virtual void EndCurrentGame() = 0;
 
+    /******************************************************************************************//**
+     * @brief Reinitializes the current game.
+     *
+     * When a game is reinitialized, its initial context is brought back as the actual context,
+     * as if the game had just been started.
+     *
+     ********************************************************************************************/
+    virtual void ReinitializeCurrentGame() = 0;
+
 };
 
 } // namespace cxmodel

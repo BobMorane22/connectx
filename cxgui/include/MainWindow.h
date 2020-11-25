@@ -116,6 +116,7 @@ private:
     void UpdateChipDropped(cxmodel::NotificationContext p_context);
     void UpdateGameWon(cxmodel::NotificationContext p_context);
     void UpdateGameEnded();
+    void UpdateGameReinitialized(cxmodel::NotificationContext p_context);
 
     void ConfigureWindow() override;
     void RegisterLayouts() override;
@@ -127,7 +128,9 @@ private:
     void RegisterStatusBar();
     void RegisterMenuBar();
 
-    void CreateAboutWindow();
+    void OnCreateAboutWindow();
+    void OnReinitializeCurrentGame();
+
     void CreateGameResolutionWindow();
 
     void ActivateNewGameView();
@@ -150,6 +153,7 @@ private:
     Gtk::MenuItem m_gameMenuItem;
     Gtk::Menu m_gameMenu;
     Gtk::ImageMenuItem m_quitMenuItem{Gtk::Stock::QUIT};
+    Gtk::MenuItem m_reinitializeMenuItem{"Reinitialize"};
     Gtk::MenuItem m_helpMenuItem;
     Gtk::Menu m_helpMenu;
     Gtk::ImageMenuItem m_aboutMenuItem{Gtk::Stock::ABOUT};

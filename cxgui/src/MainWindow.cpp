@@ -99,7 +99,8 @@ void cxgui::MainWindow::ConfigureWidgets()
 void cxgui::MainWindow::ConfigureSignalHandlers()
 {
     m_quitMenuItem.signal_activate().connect([this](){m_window.close();});
-    m_aboutMenuItem.signal_activate().connect([this](){CreateAboutWindow();});
+    m_reinitializeMenuItem.signal_activate().connect([this](){OnReinitializeCurrentGame();});
+    m_aboutMenuItem.signal_activate().connect([this](){OnCreateAboutWindow();});
 }
 
 int cxgui::MainWindow::Show()
@@ -136,6 +137,11 @@ void cxgui::MainWindow::Update(cxmodel::NotificationContext p_context, cxmodel::
                 UpdateGameEnded();
                 break;
             }
+            case cxmodel::NotificationContext::GAME_REINITIALIZED:
+            {
+                UpdateGameReinitialized(p_context);
+                break;
+            }
             default:
                 ASSERT_ERROR_MSG("Unsupported notification context.");
         }
@@ -168,12 +174,18 @@ void cxgui::MainWindow::UpdateGameEnded()
     ActivateNewGameView();
 }
 
+void cxgui::MainWindow::UpdateGameReinitialized(cxmodel::NotificationContext p_context)
+{
+   m_gameView->Update(p_context); 
+}
+
 void cxgui::MainWindow::RegisterMenuBar()
 {
     m_menubar.append(m_gameMenuItem);
     m_menubar.append(m_helpMenuItem);
     m_gameMenuItem.set_submenu(m_gameMenu);
     m_gameMenu.append(m_quitMenuItem);
+    m_gameMenu.append(m_reinitializeMenuItem);
     m_helpMenuItem.set_submenu(m_helpMenu);
     m_helpMenu.append(m_aboutMenuItem);
 }
@@ -191,7 +203,7 @@ void cxgui::MainWindow::RegisterStatusBar()
     POSTCONDITION(m_statusbar);
 }
 
-void cxgui::MainWindow::CreateAboutWindow()
+void cxgui::MainWindow::OnCreateAboutWindow()
 {
     if(!m_about)
     {
@@ -210,6 +222,11 @@ void cxgui::MainWindow::CreateAboutWindow()
     }
 
     m_about->Show();
+}
+
+void cxgui::MainWindow::OnReinitializeCurrentGame()
+{
+   m_controller.OnReinitializeCurrentGame();
 }
 
 void cxgui::MainWindow::CreateGameResolutionWindow()

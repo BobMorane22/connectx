@@ -48,3 +48,8 @@ void cxgui::MainWindowController::OnDown(const cxmodel::ChipColor& p_chipColor, 
     m_currentChip = std::make_unique<cxmodel::Disc>(p_chipColor);
     m_model.DropChip(*m_currentChip, p_column);
 }
+
+void cxgui::MainWindowController::OnReinitializeCurrentGame()
+{
+    m_model.ReinitializeCurrentGame();
+}
