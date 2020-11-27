@@ -49,6 +49,11 @@ void cxgui::MainWindowController::OnDown(const cxmodel::ChipColor& p_chipColor, 
     m_model.DropChip(*m_currentChip, p_column);
 }
 
+void cxgui::MainWindowController::OnNewGame()
+{
+    m_model.EndCurrentGame(); 
+}
+
 void cxgui::MainWindowController::OnReinitializeCurrentGame()
 {
     m_model.ReinitializeCurrentGame();

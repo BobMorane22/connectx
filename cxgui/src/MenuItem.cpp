@@ -32,6 +32,12 @@ std::string cxgui::MakeLabel(MenuItem p_menuItem)
         case MenuItem::GAME:
             return "Game";
 
+        case MenuItem::NEW_GAME:
+            return "New";
+
+        case MenuItem::REINITIALIZE_GAME:
+            return "Reinitialize";
+
         case MenuItem::QUIT:
             return "Quit";
 

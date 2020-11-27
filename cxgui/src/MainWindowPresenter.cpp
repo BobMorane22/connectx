@@ -67,6 +67,7 @@ cxgui::MainWindowPresenter::MainWindowPresenter(const cxmodel::IConnectXLimits& 
                                                 const cxmodel::IConnectXGameInformation& p_modelAsGameInformation)
  : m_modelAsLimits{p_modealAsLimits}
  , m_modelAsGameInformation{p_modelAsGameInformation}
+ , m_canRequestNewGame{false}
  , m_canCurrentGameBeReinitialized{false}
  , m_currentBoardWidth{p_modealAsLimits.GetMinimumGridWidth()}
  , m_currentBoardHeight{p_modealAsLimits.GetMinimumGridHeight()}
@@ -79,17 +80,20 @@ void cxgui::MainWindowPresenter::Update(cxmodel::NotificationContext p_context, 
 {
     if(PRECONDITION(p_subject))
     {
+        m_canRequestNewGame = false;
         m_canCurrentGameBeReinitialized = false;
 
         switch(p_context)
         {
             case cxmodel::NotificationContext::CREATE_NEW_GAME:
             {
+                m_canRequestNewGame = true;
                 UpdateCreateNewGame();
                 break;
             }
             case cxmodel::NotificationContext::CHIP_DROPPED:
             {
+                m_canRequestNewGame = true;
                 m_canCurrentGameBeReinitialized = true;
                 UpdateChipDropped();
                 break;
@@ -115,6 +119,11 @@ std::string cxgui::MainWindowPresenter::GetWindowTitle() const
 std::string cxgui::MainWindowPresenter::GetMenuLabel(MenuItem p_menuItem) const
 {
     return MakeLabel(p_menuItem);
+}
+
+bool cxgui::MainWindowPresenter::IsNewGamePossible() const
+{
+    return m_canRequestNewGame;
 }
 
 bool cxgui::MainWindowPresenter::IsCurrentGameReinitializationPossible() const

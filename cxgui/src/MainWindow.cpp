@@ -89,6 +89,8 @@ void cxgui::MainWindow::ConfigureLayouts()
 void cxgui::MainWindow::ConfigureWidgets()
 {
     m_gameMenuItem.set_label(m_presenter.GetMenuLabel(MenuItem::GAME));
+    m_newGameMenuItem.set_label(m_presenter.GetMenuLabel(MenuItem::NEW_GAME));
+    m_reinitializeMenuItem.set_label(m_presenter.GetMenuLabel(MenuItem::REINITIALIZE_GAME));
     m_helpMenuItem.set_label(m_presenter.GetMenuLabel(MenuItem::HELP));
     m_aboutMenuItem.set_label(m_presenter.GetMenuLabel(MenuItem::ABOUT));
 
@@ -99,6 +101,7 @@ void cxgui::MainWindow::ConfigureWidgets()
 void cxgui::MainWindow::ConfigureSignalHandlers()
 {
     m_quitMenuItem.signal_activate().connect([this](){m_window.close();});
+    m_newGameMenuItem.signal_activate().connect([this](){OnNewGame();});
     m_reinitializeMenuItem.signal_activate().connect([this](){OnReinitializeCurrentGame();});
     m_aboutMenuItem.signal_activate().connect([this](){OnCreateAboutWindow();});
 }
@@ -183,6 +186,7 @@ void cxgui::MainWindow::UpdateGameReinitialized(cxmodel::NotificationContext p_c
 
 void cxgui::MainWindow::UpdateMenuItems()
 {
+    m_newGameMenuItem.set_sensitive(m_presenter.IsNewGamePossible());
     m_reinitializeMenuItem.set_sensitive(m_presenter.IsCurrentGameReinitializationPossible());
 }
 
@@ -192,10 +196,12 @@ void cxgui::MainWindow::RegisterMenuBar()
     m_menubar.append(m_helpMenuItem);
     m_gameMenuItem.set_submenu(m_gameMenu);
     m_gameMenu.append(m_quitMenuItem);
+    m_gameMenu.append(m_newGameMenuItem);
     m_gameMenu.append(m_reinitializeMenuItem);
     m_helpMenuItem.set_submenu(m_helpMenu);
     m_helpMenu.append(m_aboutMenuItem);
 
+    m_newGameMenuItem.set_sensitive(m_presenter.IsNewGamePossible());
     m_reinitializeMenuItem.set_sensitive(m_presenter.IsCurrentGameReinitializationPossible());
 }
 
@@ -231,6 +237,11 @@ void cxgui::MainWindow::OnCreateAboutWindow()
     }
 
     m_about->Show();
+}
+
+void cxgui::MainWindow::OnNewGame()
+{
+    m_controller.OnNewGame();
 }
 
 void cxgui::MainWindow::OnReinitializeCurrentGame()
