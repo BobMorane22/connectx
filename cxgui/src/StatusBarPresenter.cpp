@@ -10,8 +10,6 @@
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
  *  along with Connect X. If not, see <https://www.gnu.org/licenses/>.
  *
  *************************************************************************************************/
@@ -61,6 +59,9 @@ std::string cxgui::MakeStatusBarContextString(cxmodel::NotificationContext p_con
 
         case cxmodel::NotificationContext::GAME_ENDED:
             return "";
+
+        case cxmodel::NotificationContext::GAME_REINITIALIZED:
+            return "Game reinitialized.";
 
         default:                                                     // LCOV_EXCL_LINE
             ASSERT_ERROR_MSG("Unknown notification context.");       // LCOV_EXCL_LINE

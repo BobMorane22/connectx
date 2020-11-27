@@ -51,6 +51,7 @@ public:
 // -----------------------------------------------------------------------------------------------
     std::string GetWindowTitle() const override;
     std::string GetMenuLabel(MenuItem p_menuItem) const override;
+    bool IsCurrentGameReinitializationPossible() const override;
 
 ///@}
 
@@ -117,9 +118,12 @@ private:
 
     void UpdateCreateNewGame();
     void UpdateChipDropped();
+    void UpdateGameReinitialized();
 
     const cxmodel::IConnectXLimits& m_modelAsLimits;
     const cxmodel::IConnectXGameInformation& m_modelAsGameInformation;
+    
+    bool m_canCurrentGameBeReinitialized;
 
     size_t m_currentBoardWidth;
     size_t m_currentBoardHeight;

@@ -249,15 +249,27 @@ void cxmodel::Model::ReinitializeCurrentGame()
     // Clean the game board:
     IF_CONDITION_NOT_MET_DO(m_board, return;);
 
-    const size_t boardHeight = m_board->GetNbColumns();
+    const size_t boardHeight = m_board->GetNbRows();
     const size_t boardWidth = m_board->GetNbColumns();
 
-    m_board.reset();
     m_board = std::make_unique<Board>(boardHeight, boardWidth, *this);
     IF_CONDITION_NOT_MET_DO(m_board, return;);
 
     // Reset the position record:
     m_takenPositions.clear();
+
+    // Replace players:
+    m_playersInfo.m_activePlayerIndex = 0u;
+    m_playersInfo.m_nextPlayerIndex = 1u;
+
+    // The resolution strategy has to be recreated, as the old reference to the board
+    // was destroyed upon assignement:
+    m_winResolutionStrategy = std::make_unique<WinGameResolutionStrategy>(*m_board,
+                                                                          m_inARowValue,
+                                                                          m_playersInfo.m_players,
+                                                                          m_takenPositions);
+
+    IF_CONDITION_NOT_MET_DO(m_winResolutionStrategy, return;);
 
     Notify(NotificationContext::GAME_REINITIALIZED);
 

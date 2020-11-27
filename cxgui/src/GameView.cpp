@@ -254,5 +254,12 @@ void cxgui::GameView::UpdateGameResolved()
 
 void cxgui::GameView::UpdateGameReinitialized()
 {
+    // Active and next players should be updated as well:
+    m_activePlayerChip->ChangeColor(m_presenter.GetGameViewActivePlayerChipColor());
+    m_activePlayerName.set_text(m_presenter.GetGameViewActivePlayerName());
+
+    m_nextPlayerChip->ChangeColor(m_presenter.GetGameViewNextPlayerChipColor());
+    m_nextPlayerName.set_text(m_presenter.GetGameViewNextPlayerName());
+
     m_board->Update(Board::Context::GAME_REINITIALIZED);
 }

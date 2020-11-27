@@ -67,6 +67,7 @@ cxgui::MainWindowPresenter::MainWindowPresenter(const cxmodel::IConnectXLimits& 
                                                 const cxmodel::IConnectXGameInformation& p_modelAsGameInformation)
  : m_modelAsLimits{p_modealAsLimits}
  , m_modelAsGameInformation{p_modelAsGameInformation}
+ , m_canCurrentGameBeReinitialized{false}
  , m_currentBoardWidth{p_modealAsLimits.GetMinimumGridWidth()}
  , m_currentBoardHeight{p_modealAsLimits.GetMinimumGridHeight()}
  , m_activePlayer{NO_PLAYER}
@@ -78,13 +79,28 @@ void cxgui::MainWindowPresenter::Update(cxmodel::NotificationContext p_context, 
 {
     if(PRECONDITION(p_subject))
     {
-        if(p_context == cxmodel::NotificationContext::CREATE_NEW_GAME)
+        m_canCurrentGameBeReinitialized = false;
+
+        switch(p_context)
         {
-            UpdateCreateNewGame();
-        }
-        else if(p_context == cxmodel::NotificationContext::CHIP_DROPPED)
-        {
-            UpdateChipDropped();
+            case cxmodel::NotificationContext::CREATE_NEW_GAME:
+            {
+                UpdateCreateNewGame();
+                break;
+            }
+            case cxmodel::NotificationContext::CHIP_DROPPED:
+            {
+                m_canCurrentGameBeReinitialized = true;
+                UpdateChipDropped();
+                break;
+            }
+            case cxmodel::NotificationContext::GAME_REINITIALIZED:
+            {
+                UpdateGameReinitialized();
+                break;
+            }
+            default:
+                break;
         }
 
         Notify(p_context);
@@ -101,6 +117,10 @@ std::string cxgui::MainWindowPresenter::GetMenuLabel(MenuItem p_menuItem) const
     return MakeLabel(p_menuItem);
 }
 
+bool cxgui::MainWindowPresenter::IsCurrentGameReinitializationPossible() const
+{
+    return m_canCurrentGameBeReinitialized;
+}
 
 /**************************************************************************************************
  *
@@ -375,4 +395,9 @@ void cxgui::MainWindowPresenter::UpdateChipDropped()
             m_chipColors[m_currentBoardHeight - row - 1][column] = chip.GetColor();
         }
     }
+}
+
+void cxgui::MainWindowPresenter::UpdateGameReinitialized()
+{
+    UpdateChipDropped();
 }

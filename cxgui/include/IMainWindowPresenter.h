@@ -75,6 +75,15 @@ public:
      ********************************************************************************************/
     virtual std::string GetMenuLabel(MenuItem p_menuItem) const = 0;
 
+    /******************************************************************************************//**
+     * @brief Indicates if the current game (if any) can be reinitialized.
+     *
+     * @return `true` if the current game can be reinitialized, `false` otherwise. If there is
+     *         no current game, `false` is returned.
+     *
+     ********************************************************************************************/
+    virtual bool IsCurrentGameReinitializationPossible() const = 0;
+
 ///@}
 
 ///@{ @name New Game View

@@ -146,6 +146,8 @@ void cxgui::MainWindow::Update(cxmodel::NotificationContext p_context, cxmodel::
                 ASSERT_ERROR_MSG("Unsupported notification context.");
         }
     }
+
+    UpdateMenuItems();
 }
 
 void cxgui::MainWindow::UpdateCreateNewGame()
@@ -176,7 +178,12 @@ void cxgui::MainWindow::UpdateGameEnded()
 
 void cxgui::MainWindow::UpdateGameReinitialized(cxmodel::NotificationContext p_context)
 {
-   m_gameView->Update(p_context); 
+    m_gameView->Update(p_context); 
+}
+
+void cxgui::MainWindow::UpdateMenuItems()
+{
+    m_reinitializeMenuItem.set_sensitive(m_presenter.IsCurrentGameReinitializationPossible());
 }
 
 void cxgui::MainWindow::RegisterMenuBar()
@@ -188,6 +195,8 @@ void cxgui::MainWindow::RegisterMenuBar()
     m_gameMenu.append(m_reinitializeMenuItem);
     m_helpMenuItem.set_submenu(m_helpMenu);
     m_helpMenu.append(m_aboutMenuItem);
+
+    m_reinitializeMenuItem.set_sensitive(m_presenter.IsCurrentGameReinitializationPossible());
 }
 
 void cxgui::MainWindow::RegisterStatusBar()

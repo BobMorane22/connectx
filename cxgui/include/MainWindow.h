@@ -117,6 +117,7 @@ private:
     void UpdateGameWon(cxmodel::NotificationContext p_context);
     void UpdateGameEnded();
     void UpdateGameReinitialized(cxmodel::NotificationContext p_context);
+    void UpdateMenuItems();
 
     void ConfigureWindow() override;
     void RegisterLayouts() override;
