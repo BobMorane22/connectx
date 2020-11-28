@@ -38,6 +38,12 @@ MainWindowPresenterTestFixture::MainWindowPresenterTestFixture()
     m_model->Attach(m_presenter.get());
 }
 
+void MainWindowPresenterTestFixture::SendNotification(cxmodel::NotificationContext p_context)
+{
+    EXPECT_TRUE(m_model);
+    m_model->SendNotification(p_context);
+}
+
 cxgui::IMainWindowPresenter& MainWindowPresenterTestFixture::GetPresenter()
 {
     EXPECT_TRUE(m_presenter);
@@ -80,6 +86,11 @@ cxmodel::IConnectXLimits& MainWindowPresenterTestFixture::GetLimitsModel()
     return *m_model;
 }
 
+void MainWindowPresenterTestFixture::MainWindowPresenterModelMock::SendNotification(cxmodel::NotificationContext p_context)
+{
+    Notify(p_context);
+}
+
 void MainWindowPresenterTestFixture::MainWindowPresenterModelMock::CreateNewGame(const cxmodel::NewGameInformation& p_gameInformation)
 {
     (void)p_gameInformation;
@@ -106,11 +117,13 @@ const cxmodel::IChip& MainWindowPresenterTestFixture::MainWindowPresenterModelMo
 
 void MainWindowPresenterTestFixture::MainWindowPresenterModelMock::EndCurrentGame()
 {
-    // Noting to do...
+    Notify(cxmodel::NotificationContext::GAME_ENDED);
 }
 
 void MainWindowPresenterTestFixture::MainWindowPresenterModelMock::ReinitializeCurrentGame()
 {
-    // Nothing to do...
+    // Here we only notify and let the presenter feed from the hardcoded
+    // model mock values. The values in themselves are not important.
+    Notify(cxmodel::NotificationContext::GAME_REINITIALIZED);
 }
 

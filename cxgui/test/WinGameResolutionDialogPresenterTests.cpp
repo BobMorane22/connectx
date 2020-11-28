@@ -26,7 +26,7 @@
 #include <cxmodel/include/Disc.h>
 #include <cxmodel/include/IConnectXGameInformation.h>
 #include <cxmodel/include/Player.h>
-#include "../include/WinGameResolutionDialogPresenter.h"
+#include <WinGameResolutionDialogPresenter.h>
 
 #include "DisableStdStreamsRAII.h"
 
@@ -70,6 +70,14 @@ private:
 
 } // namespace
 
+TEST(WinGameResolutionDialogPresenter, GetTitle_ValidModel_TitleReturned)
+{
+    ModelMock model;
+    cxgui::WinGameResolutionDialogPresenter presenter{model};
+
+    ASSERT_EQ("Game won!", presenter.GetTitle());
+}
+
 TEST(WinGameResolutionDialogPresenter, GetResolutionMessage_GameWon_GameWonResolutionMessageReturned)
 {
     ModelMock model;
@@ -98,4 +106,12 @@ TEST(WinGameResolutionDialogPresenter, GetResolutionMessage_GameNotWon_NoMessage
 
     const std::string stdErrContents = m_streamDisabler.GetStdErrContents();
     ASSERT_TRUE(stdErrContents.find("Assertion") != std::string::npos);
+}
+
+TEST(WinGameResolutionDialogPresenter, GetStartNewGameButtonText_ValidModel_StartNewGameButtonTextReturned)
+{
+    ModelMock model;
+    cxgui::WinGameResolutionDialogPresenter presenter{model};
+
+    ASSERT_EQ("Start new game", presenter.GetStartNewGameButtonText());
 }

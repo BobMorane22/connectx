@@ -43,6 +43,8 @@ public:
 
     MainWindowPresenterTestFixture();
 
+    void SendNotification(cxmodel::NotificationContext p_context);
+
     cxgui::IMainWindowPresenter& GetPresenter();
     cxgui::IGameViewPresenter& GetGameViewPresenter();
     cxgui::INewGameViewPresenter& GetNewGameViewPresenter();
@@ -62,6 +64,8 @@ private:
     public:
 
         ~MainWindowPresenterModelMock() override = default;
+
+        void SendNotification(cxmodel::NotificationContext p_context);
 
         // IVersionning:
         std::string GetName() const override {return "Connect X";}

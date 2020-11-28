@@ -16,50 +16,39 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file MainWindowControllerTestFixture.h
- * @date 2019
+ * @file WinGameResolutionDialogControllerTestFixture.h
+ * @date 2020
  *
  *************************************************************************************************/
 
-#ifndef MAINWINDOWCONTROLLERTESTFIXTURE_H_797225B7_98E8_412C_BF3D_6976E0C5B6AD
-#define MAINWINDOWCONTROLLERTESTFIXTURE_H_797225B7_98E8_412C_BF3D_6976E0C5B6AD
-
-#include <memory>
+#ifndef WINGAMERESOLUTIONDIALOGCONTROLLERTESTFIXTURE_H_27CF95E0_02C0_4019_A321_26C5670AB81F
+#define WINGAMERESOLUTIONDIALOGCONTROLLERTESTFIXTURE_H_27CF95E0_02C0_4019_A321_26C5670AB81F
 
 #include <gtest/gtest.h>
 
 #include <cxmodel/include/IConnectXGameActions.h>
-#include <cxgui/include/IMainWindowController.h>
 
-#include "DisableStdStreamsRAII.h"
+#include <IGameResolutionDialogController.h>
 
-class MainWindowControllerTestFixture : public testing::Test
+class WinGameResolutionDialogControllerTestFixture : public testing::Test
 {
 
 public:
 
-    MainWindowControllerTestFixture();
+    WinGameResolutionDialogControllerTestFixture();
 
-    bool GetNewGameCreated() const;
-    bool GetChipDropped() const;
-    bool GetCurrentGameEnded() const;
-    bool GetCurrentGameReinitialized() const;
+    bool GetNewGameRequested() const;
 
-    cxmodel::IConnectXGameActions& GetModel();
-    cxgui::IMainWindowController& GetController();
-    cxgui::INewGameViewController& GetNewGameViewController();
+    cxgui::IGameResolutionDialogController& GetController();
 
 private:
 
-    class MainWindowControllerMockModel : public cxmodel::IConnectXGameActions
+    class GameResolutionDialogControllerMockModel : public cxmodel::IConnectXGameActions
     {
 
     public:
 
-        MainWindowControllerMockModel(MainWindowControllerTestFixture& p_outer)
-        : m_outer{p_outer}
-        {
-        }
+        GameResolutionDialogControllerMockModel(WinGameResolutionDialogControllerTestFixture& p_outer);
 
         // IConnectXGameActions:
         void CreateNewGame(const cxmodel::NewGameInformation& p_gameInformation) override;
@@ -69,20 +58,15 @@ private:
 
     private:
 
-        MainWindowControllerTestFixture& m_outer;
+        WinGameResolutionDialogControllerTestFixture& m_outer;
 
     };
 
-    bool m_newGameCreated = false;
-    bool m_chipDropped = false;
-    bool m_currentGameEnded = false;
-    bool m_currentGameReinitialized = false;
+    bool m_newGameRequested = false;
 
-    std::unique_ptr<cxgui::IMainWindowController> m_controller;
-    std::unique_ptr<MainWindowControllerMockModel> m_model;
-
-    DisableStdStreamsRAII m_streamDisablerRAII;
+    std::unique_ptr<GameResolutionDialogControllerMockModel> m_model;
+    std::unique_ptr<cxgui::IGameResolutionDialogController> m_controller;
 
 };
 
-#endif // MAINWINDOWCONTROLLERTESTFIXTURE_H_797225B7_98E8_412C_BF3D_6976E0C5B6AD
+#endif // WINGAMERESOLUTIONDIALOGCONTROLLERTESTFIXTURE_H_27CF95E0_02C0_4019_A321_26C5670AB81F

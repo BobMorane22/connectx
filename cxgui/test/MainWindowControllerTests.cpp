@@ -48,11 +48,20 @@ TEST_F(MainWindowControllerTestFixture, /*DISABLED_*/OnDown_ValidChip_ChipDroppe
     ASSERT_TRUE(GetChipDropped());
 }
 
-TEST_F(MainWindowControllerTestFixture, /*DISABLED_*/OnDown_InvalidChip_ChipDroppedNotCalledOnModel)
+TEST_F(MainWindowControllerTestFixture, /*DISABLED_*/OnNewGame_ValidGame_EndCurrentGameCalledOnModel)
 {
-    ASSERT_FALSE(GetChipDropped());
+    ASSERT_FALSE(GetCurrentGameEnded());
 
-    GetController().OnDown(cxmodel::MakeTransparent(), 0u);
+    GetController().OnNewGame();
 
-    ASSERT_FALSE(GetChipDropped());
+    ASSERT_TRUE(GetCurrentGameEnded());
+}
+
+TEST_F(MainWindowControllerTestFixture, /*DISABLED_*/OnDown_ValidGame_ReinitializeCurrentGameCalledOnModel)
+{
+    ASSERT_FALSE(GetCurrentGameReinitialized());
+
+    GetController().OnReinitializeCurrentGame();
+
+    ASSERT_TRUE(GetCurrentGameReinitialized());
 }

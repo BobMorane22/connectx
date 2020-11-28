@@ -27,9 +27,9 @@
 MainWindowControllerTestFixture::MainWindowControllerTestFixture()
 {
     m_model = std::make_unique<MainWindowControllerMockModel>(*this);
-    m_controller = std::make_unique<cxgui::MainWindowController>(*m_model);
-
     EXPECT_TRUE(m_model);
+
+    m_controller = std::make_unique<cxgui::MainWindowController>(*m_model);
     EXPECT_TRUE(m_controller);
 }
 
@@ -41,6 +41,16 @@ bool MainWindowControllerTestFixture::GetNewGameCreated() const
 bool MainWindowControllerTestFixture::GetChipDropped() const
 {
     return m_chipDropped;
+}
+
+bool MainWindowControllerTestFixture::GetCurrentGameEnded() const
+{
+    return m_currentGameEnded;
+}
+
+bool MainWindowControllerTestFixture::GetCurrentGameReinitialized() const
+{
+    return m_currentGameReinitialized;
 }
 
 cxmodel::IConnectXGameActions& MainWindowControllerTestFixture::GetModel()
@@ -76,10 +86,10 @@ void MainWindowControllerTestFixture::MainWindowControllerMockModel::DropChip(co
 
 void MainWindowControllerTestFixture::MainWindowControllerMockModel::EndCurrentGame()
 {
-    // Noting to do...
+    m_outer.m_currentGameEnded = true;
 }
 
 void MainWindowControllerTestFixture::MainWindowControllerMockModel::ReinitializeCurrentGame()
 {
-    // Noting to do...
+    m_outer.m_currentGameReinitialized = true;
 }

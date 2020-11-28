@@ -16,41 +16,20 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file MenuItemTests.cpp
+ * @file WinGameResolutionDialogControllerTests.cpp
  * @date 2020
  *
  *************************************************************************************************/
 
 #include <gtest/gtest.h>
 
-#include <MenuItem.h>
+#include "WinGameResolutionDialogControllerTestFixture.h"
 
-TEST(MenuItem, /*DISABLED_*/MakeLabel_Game_GameLabelReturned)
+TEST_F(WinGameResolutionDialogControllerTestFixture, OnNewGameRequested_ValidModel_EndCurrentGameCalledOnModel)
 {
-    ASSERT_EQ("Game", cxgui::MakeLabel(cxgui::MenuItem::GAME));
-}
+    ASSERT_FALSE(GetNewGameRequested());
 
-TEST(MenuItem, /*DISABLED_*/MakeLabel_Quit_QuitLabelReturned)
-{
-    ASSERT_EQ("Quit", cxgui::MakeLabel(cxgui::MenuItem::QUIT));
-}
+    GetController().OnNewGameRequested();
 
-TEST(MenuItem, /*DISABLED_*/MakeLabel_NewGame_NewGameLabelReturned)
-{
-    ASSERT_EQ("New", cxgui::MakeLabel(cxgui::MenuItem::NEW_GAME));
-}
-
-TEST(MenuItem, /*DISABLED_*/MakeLabel_Reinitialize_ReinitializeLabelReturned)
-{
-    ASSERT_EQ("Reinitialize", cxgui::MakeLabel(cxgui::MenuItem::REINITIALIZE_GAME));
-}
-
-TEST(MenuItem, /*DISABLED_*/MakeLabel_Help_HelpLabelReturned)
-{
-    ASSERT_EQ("Help", cxgui::MakeLabel(cxgui::MenuItem::HELP));
-}
-
-TEST(MenuItem, /*DISABLED_*/MakeLabel_About_AboutLabelReturned)
-{
-    ASSERT_EQ("About", cxgui::MakeLabel(cxgui::MenuItem::ABOUT));
+    ASSERT_TRUE(GetNewGameRequested());
 }

@@ -61,6 +61,16 @@ TEST(StatusBarPresenter, MakeStatusBarContextString_GameWon_GameWonStringCreated
     ASSERT_EQ(cxgui::MakeStatusBarContextString(cxmodel::NotificationContext::GAME_WON), "Game won!");
 }
 
+TEST(StatusBarPresenter, MakeStatusBarContextString_GameEnded_NoMessage)
+{
+    ASSERT_EQ(cxgui::MakeStatusBarContextString(cxmodel::NotificationContext::GAME_ENDED), "");
+}
+
+TEST(StatusBarPresenter, MakeStatusBarContextString_GameReinitialized_GameReinitializedStringCreated)
+{
+    ASSERT_EQ(cxgui::MakeStatusBarContextString(cxmodel::NotificationContext::GAME_REINITIALIZED), "Game reinitialized.");
+}
+
 TEST(StatusBarPresenter, Constructor_NoAction_NoMessage)
 {
     cxgui::StatusBarPresenter presenter;

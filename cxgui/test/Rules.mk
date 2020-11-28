@@ -56,6 +56,8 @@ OBJS_$(d) := $(d)/AboutWindowPresenterTestFixture.o \
              $(d)/MenuItemTests.o \
              $(d)/NewGamePresenterTests.o \
              $(d)/StatusBarPresenterTests.o \
+             $(d)/WinGameResolutionDialogControllerTests.o \
+             $(d)/WinGameResolutionDialogControllerTestFixture.o \
              cxgui/libcxgui.a
 
 # We include all the generated rules. These are created by GCC to make sure that

@@ -115,3 +115,115 @@ TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/Update_ChipDropped_BoardInfo
                                 }));
     }
 }
+
+TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/Update_GameReinitialized_BoardInformationUpdated)
+{
+    // We create a new game to update the active player chip:
+    auto& actionModel = GetActionsModel();
+    actionModel.CreateNewGame(cxmodel::NewGameInformation{});
+
+    // Initial state:
+    const auto& presenter = GetPresenter();
+    auto boardColors = presenter.GetGameViewChipColors();
+
+    for(const auto& row : boardColors)
+    {
+        ASSERT_TRUE(std::all_of(row.cbegin(),
+                                row.cend(),
+                                [](const cxmodel::ChipColor& p_color)
+                                {
+                                    return p_color == cxmodel::MakeTransparent();
+                                }));
+    }
+
+
+    // We reinitialize the game:
+    actionModel.ReinitializeCurrentGame();
+
+    // Updated state:
+    auto& infoModel = GetGameInformationModel();
+    boardColors = presenter.GetGameViewChipColors();
+    for(const auto& row : boardColors)
+    {
+        ASSERT_TRUE(std::all_of(row.cbegin(),
+                                row.cend(),
+                                [&infoModel](const cxmodel::ChipColor& p_color)
+                                {
+                                    const cxmodel::IChip& activePlayerChip = infoModel.GetActivePlayer().GetChip();
+                                    return p_color == activePlayerChip.GetColor();
+                                }));
+    }
+}
+
+TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/IsNewGamePossible_NoNotification_FalseReturned)
+{
+    const auto& presenter = GetPresenter();
+
+    ASSERT_FALSE(presenter.IsNewGamePossible());
+}
+
+TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/IsNewGamePossible_CreateNewGameNotification_TrueReturned)
+{
+    SendNotification(cxmodel::NotificationContext::CREATE_NEW_GAME);
+
+    const auto& presenter = GetPresenter();
+    ASSERT_TRUE(presenter.IsNewGamePossible());
+}
+
+TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/IsNewGamePossible_ChipDroppedNotification_TrueReturned)
+{
+    auto& actionModel = GetActionsModel();
+    actionModel.CreateNewGame(cxmodel::NewGameInformation{});
+
+    SendNotification(cxmodel::NotificationContext::CHIP_DROPPED);
+    
+    const auto& presenter = GetPresenter();
+    ASSERT_TRUE(presenter.IsNewGamePossible());
+}
+
+TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/IsNewGamePossible_AllOtherNotifications_FalseReturned)
+{
+    auto& actionModel = GetActionsModel();
+    actionModel.CreateNewGame(cxmodel::NewGameInformation{});
+
+    const auto& presenter = GetPresenter();
+
+    SendNotification(cxmodel::NotificationContext::GAME_ENDED);
+    ASSERT_FALSE(presenter.IsNewGamePossible());
+
+    SendNotification(cxmodel::NotificationContext::GAME_REINITIALIZED);
+    ASSERT_FALSE(presenter.IsNewGamePossible());
+}
+
+TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/IsCurrentGameReinitializationPossible_NoNotification_FalseReturned)
+{
+    const auto& presenter = GetPresenter();
+
+    ASSERT_FALSE(presenter.IsCurrentGameReinitializationPossible());
+}
+
+TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/IsCurrentGameReinitializationPossible_ChipDroppedNotification_TrueReturned)
+{
+    auto& actionModel = GetActionsModel();
+    actionModel.CreateNewGame(cxmodel::NewGameInformation{});
+
+    SendNotification(cxmodel::NotificationContext::CHIP_DROPPED);
+    
+    const auto& presenter = GetPresenter();
+    ASSERT_TRUE(presenter.IsCurrentGameReinitializationPossible());
+}
+
+TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/IsCurrentGameReinitializationPossible_AllOtherNotifications_FalseReturned)
+{
+    auto& actionModel = GetActionsModel();
+    actionModel.CreateNewGame(cxmodel::NewGameInformation{});
+
+    const auto& presenter = GetPresenter();
+    ASSERT_FALSE(presenter.IsCurrentGameReinitializationPossible());
+
+    SendNotification(cxmodel::NotificationContext::GAME_ENDED);
+    ASSERT_FALSE(presenter.IsCurrentGameReinitializationPossible());
+
+    SendNotification(cxmodel::NotificationContext::GAME_REINITIALIZED);
+    ASSERT_FALSE(presenter.IsCurrentGameReinitializationPossible());
+}
