@@ -31,7 +31,9 @@
 #include <Model.h>
 
 #include "CommandStackMock.h"
+#include "DisableStdStreamsRAII.h"
 #include "LoggerMock.h"
+#include "ModelTestHelpers.h"
 
 TEST(Model, /*DISABLED_*/GetName_ValidModel_NameReturned)
 {
@@ -148,23 +150,13 @@ TEST(Model, /*DISABLED_*/CreateNewGame_ValidNewGameInformation_NewGameCreated)
 
 TEST(Model, /*DISABLED_*/CreateNewGame_ValidNewGameInformation_CreateNewGameNotificationSent)
 {
-    // We create an observer specific to the CREATE_NEW_GAME notification context:
-    class SignalObserver : public cxmodel::IObserver
-    {
-        void Update(cxmodel::NotificationContext p_context, cxmodel::Subject* p_subject) override
-        {
-            ASSERT_TRUE(p_subject);
-            ASSERT_TRUE(p_context == cxmodel::NotificationContext::CREATE_NEW_GAME);
-        }
-    };
-
     // We create a model:
     LoggerMock logger;
     cxmodel::Model model{std::make_unique<cxmodel::CommandStack>(200), logger};
 
     // And attach it to our observer:
-    SignalObserver observer;
-    model.Attach(&observer);
+    ModelNotificationCatcher createNewGameObserver{cxmodel::NotificationContext::CREATE_NEW_GAME};
+    model.Attach(&createNewGameObserver);
 
     // We create valid new game information:
     cxmodel::NewGameInformation newGameInfo;
@@ -175,21 +167,13 @@ TEST(Model, /*DISABLED_*/CreateNewGame_ValidNewGameInformation_CreateNewGameNoti
     newGameInfo.AddPlayer({"Jane Doe", cxmodel::MakeBlue()});
 
     // Then we create the new game:
+    ASSERT_FALSE(createNewGameObserver.WasNotified());
     model.CreateNewGame(newGameInfo);
+    ASSERT_TRUE(createNewGameObserver.WasNotified());
 }
 
 TEST(Model, /*DISABLED_*/DropChip_ValidModelChipAndColumn_ChipDroppedNotificationSent)
 {
-    // We create an observer specific to the CHIP_DROPPED notification context:
-    class SignalObserver : public cxmodel::IObserver
-    {
-        void Update(cxmodel::NotificationContext p_context, cxmodel::Subject* p_subject) override
-        {
-            ASSERT_TRUE(p_subject);
-            ASSERT_TRUE(p_context == cxmodel::NotificationContext::CHIP_DROPPED);
-        }
-    };
-
     // We create a model:
     LoggerMock logger;
     cxmodel::Model model{std::make_unique<cxmodel::CommandStack>(200), logger};
@@ -206,12 +190,15 @@ TEST(Model, /*DISABLED_*/DropChip_ValidModelChipAndColumn_ChipDroppedNotificatio
     model.CreateNewGame(newGameInfo);
 
     // We then attach the model to our observer:
-    SignalObserver observer;
-    model.Attach(&observer);
+    ModelNotificationCatcher chipDropObserver{cxmodel::NotificationContext::CHIP_DROPPED};
+    model.Attach(&chipDropObserver);
 
     // We drop a chip. It should trigger a notification since the board is empty:
     const cxmodel::Disc RED_CHIP{cxmodel::MakeRed()};
+
+    ASSERT_FALSE(chipDropObserver.WasNotified());
     model.DropChip(RED_CHIP, 0u);
+    ASSERT_TRUE(chipDropObserver.WasNotified());
 }
 
 TEST(Model, /*DISABLED_*/DropChip_ValidModelChipAndColumn_GameDataUpdated)
@@ -244,6 +231,8 @@ TEST(Model, /*DISABLED_*/DropChip_ValidModelChipAndColumn_GameDataUpdated)
 
 TEST(Model, /*DISABLED_*/DropChip_ValidModelTwoSameChipsDropped_GameDataNotUpdated)
 {
+    DisableStdStreamsRAII streamDisabler;
+
     // We create a model:
     LoggerMock logger;
     cxmodel::Model model{std::make_unique<cxmodel::CommandStack>(200), logger};
@@ -265,6 +254,8 @@ TEST(Model, /*DISABLED_*/DropChip_ValidModelTwoSameChipsDropped_GameDataNotUpdat
 
     const cxmodel::Disc RED_CHIP{cxmodel::MakeRed()};
     model.DropChip(RED_CHIP, 0u);
+
+    // This will assert:
     model.DropChip(RED_CHIP, 0u);
 
     ASSERT_EQ(model.GetActivePlayer(), cxmodel::Player("Jane Doe", cxmodel::MakeBlue()));
@@ -273,66 +264,11 @@ TEST(Model, /*DISABLED_*/DropChip_ValidModelTwoSameChipsDropped_GameDataNotUpdat
 
 TEST(Model, /*DISABLED_*/DropChip_ValidModelGameIsWon_NotificationsHappen)
 {
-    // We create an observer specific to the CHIP_DROPPED notification context:
-    class DropChipObserver : public cxmodel::IObserver
-    {
-
-    private:
-
-        bool m_wasNotified = false;
-
-        void Update(cxmodel::NotificationContext p_context, cxmodel::Subject* p_subject) override
-        {
-            ASSERT_TRUE(p_subject);
-
-            if(p_context == cxmodel::NotificationContext::CHIP_DROPPED)
-            {
-                m_wasNotified = true;
-            }
-        }
-
-    public:
-
-        bool WasNotified() const {return m_wasNotified;}
-
-    };
-
-    // We create an observer specific to the GAME_WON notification context:
-    class GameWonObserver : public cxmodel::IObserver
-    {
-
-    private:
-
-        bool m_wasNotified = false;
-
-        void Update(cxmodel::NotificationContext p_context, cxmodel::Subject* p_subject) override
-        {
-            ASSERT_TRUE(p_subject);
-
-            if(p_context == cxmodel::NotificationContext::GAME_WON)
-            {
-                m_wasNotified = true;
-            }
-        }
-
-    public:
-
-        bool WasNotified() const {return m_wasNotified;}
-
-    };
-
     // We create a model:
     LoggerMock logger;
     cxmodel::Model model{std::make_unique<cxmodel::CommandStack>(200), logger};
 
-    // We attach our observers to it:
-    DropChipObserver dropChipObserver;
-    GameWonObserver gameWonObserver;
-
-    ASSERT_FALSE(dropChipObserver.WasNotified());
-    ASSERT_FALSE(gameWonObserver.WasNotified());
-
-    model.Attach(&dropChipObserver);
+    ModelNotificationCatcher gameWonObserver{cxmodel::NotificationContext::GAME_WON};
     model.Attach(&gameWonObserver);
 
     // We create valid new game information:
@@ -361,10 +297,8 @@ TEST(Model, /*DISABLED_*/DropChip_ValidModelGameIsWon_NotificationsHappen)
     model.DropChip(BLUE_CHIP, 1u);
 
     // And the first player wins:
+    ASSERT_FALSE(gameWonObserver.WasNotified());
     model.DropChip(RED_CHIP, 0u);
-
-    // Finally, we check our observers:
-    ASSERT_TRUE(dropChipObserver.WasNotified());
     ASSERT_TRUE(gameWonObserver.WasNotified());
 }
 
@@ -534,21 +468,114 @@ TEST(Model, /*DISABLED_*/DropChip_ValidModelGameIsWon_WinnerIsLastPlayer)
 
 TEST(Model, /*DISABLED_*/EndCurrentGame_ValidModel_NotificationsSent)
 {
-    // We create an observer specific to the END_GAME notification context:
-    class EndGameObserver : public cxmodel::IObserver
-    {
-        void Update(cxmodel::NotificationContext p_context, cxmodel::Subject* p_subject) override
-        {
-            ASSERT_TRUE(p_subject);
-            ASSERT_TRUE(p_context == cxmodel::NotificationContext::GAME_ENDED);
-        }
-    };
+    ModelNotificationCatcher gameEndedObserver{cxmodel::NotificationContext::GAME_ENDED};
     
     // We create a model:
     LoggerMock logger;
     cxmodel::Model model{std::make_unique<cxmodel::CommandStack>(200), logger};
 
+    // We create valid game information:
+    cxmodel::NewGameInformation newGameInfo;
+    newGameInfo.m_inARowValue = 4u;
+    newGameInfo.m_gridWidth = 7u;
+    newGameInfo.m_gridHeight = 6u;
+    newGameInfo.AddPlayer({"John Doe", cxmodel::MakeRed()});
+    newGameInfo.AddPlayer({"Jane Doe", cxmodel::MakeBlue()});
+
+    // Then we create the new game:
+    model.CreateNewGame(newGameInfo);
+
+    // We attach our observer:
+    model.Attach(&gameEndedObserver);
+
+    ASSERT_FALSE(gameEndedObserver.WasNotified());
     model.EndCurrentGame();
+    ASSERT_TRUE(gameEndedObserver.WasNotified());
+}
+
+TEST(Model, /*DISABLED_*/EndCurrentGame_ValidModel_CommandStackEmptied)
+{
+    // We create a model:
+    LoggerMock logger;
+
+    auto cmdStack = std::make_unique<cxmodel::CommandStack>(200);
+    auto* commands = cmdStack.get();
+    cxmodel::Model model{std::move(cmdStack), logger};
+
+    // We create valid game information:
+    cxmodel::NewGameInformation newGameInfo;
+    newGameInfo.m_inARowValue = 4u;
+    newGameInfo.m_gridWidth = 7u;
+    newGameInfo.m_gridHeight = 6u;
+    newGameInfo.AddPlayer({"John Doe", cxmodel::MakeRed()});
+    newGameInfo.AddPlayer({"Jane Doe", cxmodel::MakeBlue()});
+
+    // Then we create the new game:
+    model.CreateNewGame(newGameInfo);
+    ASSERT_FALSE(commands->IsEmpty());
+
+    // And end it:
+    model.EndCurrentGame();
+
+    ASSERT_TRUE(commands->IsEmpty());
+}
+
+TEST(Model, /*DISABLED_*/EndCurrentGame_ValidModel_PlayersInfoReset)
+{
+    DisableStdStreamsRAII m_noStream;
+
+    // We create a model:
+    LoggerMock logger;
+    cxmodel::Model model{std::make_unique<cxmodel::CommandStack>(200), logger};
+
+    // We create valid game information:
+    const cxmodel::Player ACTIVE{"John Doe", cxmodel::MakeRed()};
+    const cxmodel::Player NEXT{"Jane Doe", cxmodel::MakeBlue()};
+
+    cxmodel::NewGameInformation newGameInfo;
+    newGameInfo.m_inARowValue = 4u;
+    newGameInfo.m_gridWidth = 7u;
+    newGameInfo.m_gridHeight = 6u;
+    newGameInfo.AddPlayer(ACTIVE);
+    newGameInfo.AddPlayer(NEXT);
+
+    // Then we create the new game:
+    model.CreateNewGame(newGameInfo);
+    ASSERT_EQ(ACTIVE, model.GetActivePlayer());
+    ASSERT_EQ(NEXT, model.GetNextPlayer());
+
+    // And end it:
+    model.EndCurrentGame();
+
+    const cxmodel::Player NO_ACTIVE_PLAYER{"Woops (active)!", {0, 0, 0, 0}};
+    const cxmodel::Player NO_NEXT_PLAYER{"Woops! (next)", {0, 0, 0, 0}};
+
+    // Will assert here...
+    ASSERT_EQ(NO_ACTIVE_PLAYER, model.GetActivePlayer());
+    ASSERT_EQ(NO_NEXT_PLAYER, model.GetNextPlayer());
+}
+
+TEST(Model, /*DISABLED_*/EndCurrentGame_ValidModel_InARowValueReset)
+{
+    // We create a model:
+    LoggerMock logger;
+    cxmodel::Model model{std::make_unique<cxmodel::CommandStack>(200), logger};
+
+    // We create valid game information:
+    cxmodel::NewGameInformation newGameInfo;
+    newGameInfo.m_inARowValue = 5u;
+    newGameInfo.m_gridWidth = 7u;
+    newGameInfo.m_gridHeight = 6u;
+    newGameInfo.AddPlayer({"John Doe", cxmodel::MakeRed()});
+    newGameInfo.AddPlayer({"Jane Doe", cxmodel::MakeBlue()});
+
+    // Then we create the new game:
+    model.CreateNewGame(newGameInfo);
+    ASSERT_EQ(5u, model.GetCurrentInARowValue());
+
+    // And end it:
+    model.EndCurrentGame();
+    ASSERT_EQ(4u, model.GetCurrentInARowValue());
 }
 
 TEST(Model, /*DISABLED_*/GetChip_ValidModel_ChipReturned)
@@ -627,9 +654,12 @@ TEST(Model, /*DISABLED_*/GetChip_InvalidColumn_ReturnsNoDisc)
 
 TEST(Model, /*DISABLED_*/IsWon_ValidModel_DoesNotThrow)
 {
+    DisableStdStreamsRAII streamDisabler;
+
     LoggerMock logger;
     cxmodel::Model model{std::make_unique<cxmodel::CommandStack>(200), logger};
 
+    // This will assert:
     ASSERT_NO_THROW(model.IsWon());
     ASSERT_FALSE(model.IsWon());
 }
