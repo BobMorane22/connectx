@@ -33,91 +33,65 @@
 #include "CommandStackMock.h"
 #include "DisableStdStreamsRAII.h"
 #include "LoggerMock.h"
+#include "ModelTestFixture.h"
 #include "ModelTestHelpers.h"
 
-TEST(Model, /*DISABLED_*/GetName_ValidModel_NameReturned)
+TEST_F(ModelTestFixture, /*DISABLED_*/GetName_ValidModel_NameReturned)
 {
-    LoggerMock logger;
-    cxmodel::Model model{std::make_unique<cxmodel::CommandStack>(200), logger};
-
-    ASSERT_EQ(model.GetName(), "Connect X");
+    ASSERT_EQ(GetModel().GetName(), "Connect X");
 }
 
-TEST(Model, /*DISABLED_*/GetVersionNumber_ValidModel_ValidVersionNumberReturned)
+TEST_F(ModelTestFixture, /*DISABLED_*/GetVersionNumber_ValidModel_ValidVersionNumberReturned)
 {
-    LoggerMock logger;
-    cxmodel::Model model{std::make_unique<cxmodel::CommandStack>(200), logger};
-
     std::regex expected{"v(\\d)\\.(\\d)+"};
 
-    ASSERT_TRUE(std::regex_match(model.GetVersionNumber(), expected));
+    ASSERT_TRUE(std::regex_match(GetModel().GetVersionNumber(), expected));
 }
 
-TEST(Model, /*DISABLED_*/GetMinimumGridHeight_ValidModel_ValueReturned)
+TEST_F(ModelTestFixture, /*DISABLED_*/GetMinimumGridHeight_ValidModel_ValueReturned)
+{
+    ASSERT_EQ(GetModel().GetMinimumGridHeight(), 6u);
+}
+
+TEST_F(ModelTestFixture, /*DISABLED_*/GetMinimumGridWidth_ValidModel_ValueReturned)
 {
     LoggerMock logger;
     cxmodel::Model model{std::make_unique<cxmodel::CommandStack>(200), logger};
 
-    ASSERT_EQ(model.GetMinimumGridHeight(), 6u);
+    ASSERT_EQ(GetModel().GetMinimumGridWidth(), 7u);
 }
 
-TEST(Model, /*DISABLED_*/GetMinimumGridWidth_ValidModel_ValueReturned)
+TEST_F(ModelTestFixture, /*DISABLED_*/GetMinimumInARowValue_ValidModel_ValueReturned)
 {
-    LoggerMock logger;
-    cxmodel::Model model{std::make_unique<cxmodel::CommandStack>(200), logger};
-
-    ASSERT_EQ(model.GetMinimumGridWidth(), 7u);
+    ASSERT_EQ(GetModel().GetMinimumInARowValue(), 3u);
 }
 
-TEST(Model, /*DISABLED_*/GetMinimumInARowValue_ValidModel_ValueReturned)
+TEST_F(ModelTestFixture, /*DISABLED_*/GetMaximumGridHeight_ValidModel_ValueReturned)
 {
-    LoggerMock logger;
-    cxmodel::Model model{std::make_unique<cxmodel::CommandStack>(200), logger};
-
-    ASSERT_EQ(model.GetMinimumInARowValue(), 3u);
+    ASSERT_EQ(GetModel().GetMaximumGridHeight(), 64u);
 }
 
-TEST(Model, /*DISABLED_*/GetMaximumGridHeight_ValidModel_ValueReturned)
+TEST_F(ModelTestFixture, /*DISABLED_*/GetMaximumGridWidth_ValidModel_ValueReturned)
 {
-    LoggerMock logger;
-    cxmodel::Model model{std::make_unique<cxmodel::CommandStack>(200), logger};
-
-    ASSERT_EQ(model.GetMaximumGridHeight(), 64u);
+    ASSERT_EQ(GetModel().GetMaximumGridWidth(), 64u);
 }
 
-TEST(Model, /*DISABLED_*/GetMaximumGridWidth_ValidModel_ValueReturned)
+TEST_F(ModelTestFixture, /*DISABLED_*/GetMaximumInARowValue_ValidModel_ValueReturned)
 {
-    LoggerMock logger;
-    cxmodel::Model model{std::make_unique<cxmodel::CommandStack>(200), logger};
-
-    ASSERT_EQ(model.GetMaximumGridWidth(), 64u);
+    ASSERT_EQ(GetModel().GetMaximumInARowValue(), 8u);
 }
 
-TEST(Model, /*DISABLED_*/GetMaximumInARowValue_ValidModel_ValueReturned)
+TEST_F(ModelTestFixture, /*DISABLED_*/GetMinimumNumberOfPlayers_ValidModel_ValueReturned)
 {
-    LoggerMock logger;
-    cxmodel::Model model{std::make_unique<cxmodel::CommandStack>(200), logger};
-
-    ASSERT_EQ(model.GetMaximumInARowValue(), 8u);
+    ASSERT_EQ(GetModel().GetMinimumNumberOfPlayers(), 2u);
 }
 
-TEST(Model, /*DISABLED_*/GetMinimumNumberOfPlayers_ValidModel_ValueReturned)
+TEST_F(ModelTestFixture, /*DISABLED_*/GetMaximumNumberOfPlayers_ValidModel_ValueReturned)
 {
-    LoggerMock logger;
-    cxmodel::Model model{std::make_unique<cxmodel::CommandStack>(200), logger};
-
-    ASSERT_EQ(model.GetMinimumNumberOfPlayers(), 2u);
+    ASSERT_EQ(GetModel().GetMaximumNumberOfPlayers(), 10u);
 }
 
-TEST(Model, /*DISABLED_*/GetMaximumNumberOfPlayers_ValidModel_ValueReturned)
-{
-    LoggerMock logger;
-    cxmodel::Model model{std::make_unique<cxmodel::CommandStack>(200), logger};
-
-    ASSERT_EQ(model.GetMaximumNumberOfPlayers(), 10u);
-}
-
-TEST(Model, /*DISABLED_*/CreateNewGame_ValidNewGameInformation_NewGameCreated)
+TEST_F(ModelTestFixture, /*DISABLED_*/CreateNewGame_ValidNewGameInformation_NewGameCreated)
 {
     // We create a model:
     LoggerMock logger;
@@ -148,7 +122,7 @@ TEST(Model, /*DISABLED_*/CreateNewGame_ValidNewGameInformation_NewGameCreated)
     ASSERT_EQ(model.GetCurrentInARowValue(), 4u);
 }
 
-TEST(Model, /*DISABLED_*/CreateNewGame_ValidNewGameInformation_CreateNewGameNotificationSent)
+TEST_F(ModelTestFixture, /*DISABLED_*/CreateNewGame_ValidNewGameInformation_CreateNewGameNotificationSent)
 {
     // We create a model:
     LoggerMock logger;
@@ -156,7 +130,7 @@ TEST(Model, /*DISABLED_*/CreateNewGame_ValidNewGameInformation_CreateNewGameNoti
 
     // And attach it to our observer:
     ModelNotificationCatcher createNewGameObserver{cxmodel::NotificationContext::CREATE_NEW_GAME};
-    model.Attach(&createNewGameObserver);
+    GetModel().Attach(&createNewGameObserver);
 
     // We create valid new game information:
     cxmodel::NewGameInformation newGameInfo;
@@ -168,146 +142,90 @@ TEST(Model, /*DISABLED_*/CreateNewGame_ValidNewGameInformation_CreateNewGameNoti
 
     // Then we create the new game:
     ASSERT_FALSE(createNewGameObserver.WasNotified());
-    model.CreateNewGame(newGameInfo);
+    GetModel().CreateNewGame(newGameInfo);
     ASSERT_TRUE(createNewGameObserver.WasNotified());
 }
 
-TEST(Model, /*DISABLED_*/DropChip_ValidModelChipAndColumn_ChipDroppedNotificationSent)
+TEST_F(ModelTestFixture, /*DISABLED_*/DropChip_ValidModelChipAndColumn_ChipDroppedNotificationSent)
 {
-    // We create a model:
-    LoggerMock logger;
-    cxmodel::Model model{std::make_unique<cxmodel::CommandStack>(200), logger};
-
-    // We create valid new game information:
-    cxmodel::NewGameInformation newGameInfo;
-    newGameInfo.m_inARowValue = 4u;
-    newGameInfo.m_gridWidth = 7u;
-    newGameInfo.m_gridHeight = 6u;
-    newGameInfo.AddPlayer({"John Doe", cxmodel::MakeRed()});
-    newGameInfo.AddPlayer({"Jane Doe", cxmodel::MakeBlue()});
-
-    // Then we create the new game:
-    model.CreateNewGame(newGameInfo);
+    CreateNewGame(6u, 7u, ModelTestFixture::NbPlayers::TWO, ModelTestFixture::InARowValue::FOUR);
 
     // We then attach the model to our observer:
     ModelNotificationCatcher chipDropObserver{cxmodel::NotificationContext::CHIP_DROPPED};
-    model.Attach(&chipDropObserver);
+    GetModel().Attach(&chipDropObserver);
 
     // We drop a chip. It should trigger a notification since the board is empty:
     const cxmodel::Disc RED_CHIP{cxmodel::MakeRed()};
 
     ASSERT_FALSE(chipDropObserver.WasNotified());
-    model.DropChip(RED_CHIP, 0u);
+    GetModel().DropChip(RED_CHIP, 0u);
     ASSERT_TRUE(chipDropObserver.WasNotified());
 }
 
-TEST(Model, /*DISABLED_*/DropChip_ValidModelChipAndColumn_GameDataUpdated)
+TEST_F(ModelTestFixture, /*DISABLED_*/DropChip_ValidModelChipAndColumn_GameDataUpdated)
 {
-    // We create a model:
-    LoggerMock logger;
-    cxmodel::Model model{std::make_unique<cxmodel::CommandStack>(200), logger};
-
-    // We create valid new game information:
-    cxmodel::NewGameInformation newGameInfo;
-    newGameInfo.m_inARowValue = 4u;
-    newGameInfo.m_gridWidth = 7u;
-    newGameInfo.m_gridHeight = 6u;
-    newGameInfo.AddPlayer({"John Doe", cxmodel::MakeRed()});
-    newGameInfo.AddPlayer({"Jane Doe", cxmodel::MakeBlue()});
-
-    // Then we create the new game:
-    model.CreateNewGame(newGameInfo);
+    CreateNewGame(6u, 7u, NbPlayers::TWO, InARowValue::FOUR);
 
     // We drop a chip:
-    ASSERT_EQ(model.GetActivePlayer(), cxmodel::Player("John Doe", cxmodel::MakeRed()));
-    ASSERT_EQ(model.GetNextPlayer(), cxmodel::Player("Jane Doe", cxmodel::MakeBlue()));
+    ASSERT_EQ(GetModel().GetActivePlayer(), cxmodel::Player("John Doe", cxmodel::MakeRed()));
+    ASSERT_EQ(GetModel().GetNextPlayer(), cxmodel::Player("Mary Foo", cxmodel::MakeBlue()));
 
     const cxmodel::Disc RED_CHIP{cxmodel::MakeRed()};
-    model.DropChip(RED_CHIP, 0u);
+    GetModel().DropChip(RED_CHIP, 0u);
 
-    ASSERT_EQ(model.GetActivePlayer(), cxmodel::Player("Jane Doe", cxmodel::MakeBlue()));
-    ASSERT_EQ(model.GetNextPlayer(), cxmodel::Player("John Doe", cxmodel::MakeRed()));
+    ASSERT_EQ(GetModel().GetActivePlayer(), cxmodel::Player("Mary Foo", cxmodel::MakeBlue()));
+    ASSERT_EQ(GetModel().GetNextPlayer(), cxmodel::Player("John Doe", cxmodel::MakeRed()));
 }
 
-TEST(Model, /*DISABLED_*/DropChip_ValidModelTwoSameChipsDropped_GameDataNotUpdated)
+TEST_F(ModelTestFixture, /*DISABLED_*/DropChip_ValidModelTwoSameChipsDropped_GameDataNotUpdated)
 {
     DisableStdStreamsRAII streamDisabler;
-
-    // We create a model:
-    LoggerMock logger;
-    cxmodel::Model model{std::make_unique<cxmodel::CommandStack>(200), logger};
-
-    // We create valid new game information:
-    cxmodel::NewGameInformation newGameInfo;
-    newGameInfo.m_inARowValue = 4u;
-    newGameInfo.m_gridWidth = 7u;
-    newGameInfo.m_gridHeight = 6u;
-    newGameInfo.AddPlayer({"John Doe", cxmodel::MakeRed()});
-    newGameInfo.AddPlayer({"Jane Doe", cxmodel::MakeBlue()});
-
-    // Then we create the new game:
-    model.CreateNewGame(newGameInfo);
+    CreateNewGame(6u, 7u, NbPlayers::TWO, InARowValue::FOUR);
 
     // We drop a chip:
-    ASSERT_EQ(model.GetActivePlayer(), cxmodel::Player("John Doe", cxmodel::MakeRed()));
-    ASSERT_EQ(model.GetNextPlayer(), cxmodel::Player("Jane Doe", cxmodel::MakeBlue()));
+    ASSERT_EQ(GetModel().GetActivePlayer(), cxmodel::Player("John Doe", cxmodel::MakeRed()));
+    ASSERT_EQ(GetModel().GetNextPlayer(), cxmodel::Player("Mary Foo", cxmodel::MakeBlue()));
 
     const cxmodel::Disc RED_CHIP{cxmodel::MakeRed()};
-    model.DropChip(RED_CHIP, 0u);
+    GetModel().DropChip(RED_CHIP, 0u);
 
     // This will assert:
-    model.DropChip(RED_CHIP, 0u);
+    GetModel().DropChip(RED_CHIP, 0u);
 
-    ASSERT_EQ(model.GetActivePlayer(), cxmodel::Player("Jane Doe", cxmodel::MakeBlue()));
-    ASSERT_EQ(model.GetNextPlayer(), cxmodel::Player("John Doe", cxmodel::MakeRed()));
+    ASSERT_EQ(GetModel().GetActivePlayer(), cxmodel::Player("Jane Doe", cxmodel::MakeBlue()));
+    ASSERT_EQ(GetModel().GetNextPlayer(), cxmodel::Player("John Doe", cxmodel::MakeRed()));
 }
 
-TEST(Model, /*DISABLED_*/DropChip_ValidModelGameIsWon_NotificationsHappen)
+TEST_F(ModelTestFixture, /*DISABLED_*/DropChip_ValidModelGameIsWon_NotificationsHappen)
 {
-    // We create a model:
-    LoggerMock logger;
-    cxmodel::Model model{std::make_unique<cxmodel::CommandStack>(200), logger};
-
     ModelNotificationCatcher gameWonObserver{cxmodel::NotificationContext::GAME_WON};
-    model.Attach(&gameWonObserver);
 
-    // We create valid new game information:
-    cxmodel::NewGameInformation newGameInfo;
-    newGameInfo.m_inARowValue = 4u;
-    newGameInfo.m_gridWidth = 7u;
-    newGameInfo.m_gridHeight = 6u;
-    newGameInfo.AddPlayer({"John Doe", cxmodel::MakeRed()});
-    newGameInfo.AddPlayer({"Jane Doe", cxmodel::MakeBlue()});
-
-    // Then we create the new game:
-    model.CreateNewGame(newGameInfo);
+    GetModel().Attach(&gameWonObserver);
+    CreateNewGame(6u, 7u, NbPlayers::TWO, InARowValue::FOUR);
 
     // We drop chips:
     const cxmodel::Disc RED_CHIP{cxmodel::MakeRed()};
     const cxmodel::Disc BLUE_CHIP{cxmodel::MakeBlue()};
 
-    ASSERT_EQ(model.GetActivePlayer(), cxmodel::Player("John Doe", cxmodel::MakeRed()));
-    ASSERT_EQ(model.GetNextPlayer(), cxmodel::Player("Jane Doe", cxmodel::MakeBlue()));
+    ASSERT_EQ(GetModel().GetActivePlayer(), cxmodel::Player("John Doe", cxmodel::MakeRed()));
+    ASSERT_EQ(GetModel().GetNextPlayer(), cxmodel::Player("Mary Foo", cxmodel::MakeBlue()));
 
-    model.DropChip(RED_CHIP, 0u);
-    model.DropChip(BLUE_CHIP, 1u);
-    model.DropChip(RED_CHIP, 0u);
-    model.DropChip(BLUE_CHIP, 1u);
-    model.DropChip(RED_CHIP, 0u);
-    model.DropChip(BLUE_CHIP, 1u);
+    // DropChips...
+    GetModel().DropChip(RED_CHIP, 0u);
+    GetModel().DropChip(BLUE_CHIP, 1u);
+    GetModel().DropChip(RED_CHIP, 0u);
+    GetModel().DropChip(BLUE_CHIP, 1u);
+    GetModel().DropChip(RED_CHIP, 0u);
+    GetModel().DropChip(BLUE_CHIP, 1u);
 
     // And the first player wins:
     ASSERT_FALSE(gameWonObserver.WasNotified());
-    model.DropChip(RED_CHIP, 0u);
+    GetModel().DropChip(RED_CHIP, 0u);
     ASSERT_TRUE(gameWonObserver.WasNotified());
 }
 
-TEST(Model, /*DISABLED_*/DropChip_ValidModelGameIsWon_WinnerIsFirstPlayer)
+TEST_F(ModelTestFixture, /*DISABLED_*/DropChip_ValidModelGameIsWon_WinnerIsFirstPlayer)
 {
-    // We create a model:
-    LoggerMock logger;
-    cxmodel::Model model{std::make_unique<cxmodel::CommandStack>(200), logger};
-
     // We create valid new game information:
     const cxmodel::ChipColor FIRST_PLAYER_COLOR{cxmodel::MakeRed()};
     const cxmodel::Player FIRST_PLAYER{"John Doe", FIRST_PLAYER_COLOR};
@@ -318,553 +236,328 @@ TEST(Model, /*DISABLED_*/DropChip_ValidModelGameIsWon_WinnerIsFirstPlayer)
     const cxmodel::ChipColor THRIRD_PLAYER_COLOR{cxmodel::MakeYellow()};
     const cxmodel::Player THIRD_PLAYER{"Bob Morane", THRIRD_PLAYER_COLOR};
 
-    cxmodel::NewGameInformation newGameInfo;
-    newGameInfo.m_inARowValue = 4u;
-    newGameInfo.m_gridWidth = 7u;
-    newGameInfo.m_gridHeight = 6u;
-    newGameInfo.AddPlayer(FIRST_PLAYER);
-    newGameInfo.AddPlayer(SECOND_PLAYER);
-    newGameInfo.AddPlayer(THIRD_PLAYER);
-
-    // Then we create the new game:
-    model.CreateNewGame(newGameInfo);
+    CreateNewGame(6u, 7u, NbPlayers::THREE, InARowValue::FOUR);
 
     // We drop chips:
     const cxmodel::Disc FIRST_PLAYER_CHIP{FIRST_PLAYER_COLOR};
     const cxmodel::Disc SECOND_PLAYER_CHIP{SECOND_PLAYER_COLOR};
     const cxmodel::Disc THIRD_PLAYER_CHIP{THRIRD_PLAYER_COLOR};
 
-    ASSERT_EQ(model.GetActivePlayer(), FIRST_PLAYER);
-    ASSERT_EQ(model.GetNextPlayer(), SECOND_PLAYER);
+    ASSERT_EQ(GetModel().GetActivePlayer(), FIRST_PLAYER);
+    ASSERT_EQ(GetModel().GetNextPlayer(), SECOND_PLAYER);
 
-    model.DropChip(FIRST_PLAYER_CHIP, 0u);
-    model.DropChip(SECOND_PLAYER_CHIP, 1u);
-    model.DropChip(THIRD_PLAYER_CHIP, 2u);
+    // DropChips...
+    GetModel().DropChip(FIRST_PLAYER_CHIP, 0u);
+    GetModel().DropChip(SECOND_PLAYER_CHIP, 1u);
+    GetModel().DropChip(THIRD_PLAYER_CHIP, 2u);
 
-    model.DropChip(FIRST_PLAYER_CHIP, 0u);
-    model.DropChip(SECOND_PLAYER_CHIP, 1u);
-    model.DropChip(THIRD_PLAYER_CHIP, 2u);
+    GetModel().DropChip(FIRST_PLAYER_CHIP, 0u);
+    GetModel().DropChip(SECOND_PLAYER_CHIP, 1u);
+    GetModel().DropChip(THIRD_PLAYER_CHIP, 2u);
 
-    model.DropChip(FIRST_PLAYER_CHIP, 0u);
-    model.DropChip(SECOND_PLAYER_CHIP, 1u);
-    model.DropChip(THIRD_PLAYER_CHIP, 2u);
+    GetModel().DropChip(FIRST_PLAYER_CHIP, 0u);
+    GetModel().DropChip(SECOND_PLAYER_CHIP, 1u);
+    GetModel().DropChip(THIRD_PLAYER_CHIP, 2u);
 
     // And the first player wins:
-    model.DropChip(FIRST_PLAYER_CHIP, 0u);
+    GetModel().DropChip(FIRST_PLAYER_CHIP, 0u);
 
-    ASSERT_EQ(FIRST_PLAYER, model.GetActivePlayer());
+    ASSERT_EQ(FIRST_PLAYER, GetModel().GetActivePlayer());
 }
 
-TEST(Model, /*DISABLED_*/DropChip_ValidModelGameIsWon_WinnerIsMiddlePlayer)
+TEST_F(ModelTestFixture, /*DISABLED_*/DropChip_ValidModelGameIsWon_WinnerIsMiddlePlayer)
 {
-    // We create a model:
-    LoggerMock logger;
-    cxmodel::Model model{std::make_unique<cxmodel::CommandStack>(200), logger};
-
-    // We create valid new game information:
-    const cxmodel::ChipColor FIRST_PLAYER_COLOR{cxmodel::MakeRed()};
-    const cxmodel::Player FIRST_PLAYER{"John Doe", FIRST_PLAYER_COLOR};
-
-    const cxmodel::ChipColor SECOND_PLAYER_COLOR{cxmodel::MakeBlue()};
-    const cxmodel::Player SECOND_PLAYER{"Jane Doe", SECOND_PLAYER_COLOR};
-
-    const cxmodel::ChipColor THRIRD_PLAYER_COLOR{cxmodel::MakeYellow()};
-    const cxmodel::Player THIRD_PLAYER{"Bob Morane", THRIRD_PLAYER_COLOR};
-
-    cxmodel::NewGameInformation newGameInfo;
-    newGameInfo.m_inARowValue = 4u;
-    newGameInfo.m_gridWidth = 7u;
-    newGameInfo.m_gridHeight = 6u;
-    newGameInfo.AddPlayer(FIRST_PLAYER);
-    newGameInfo.AddPlayer(SECOND_PLAYER);
-    newGameInfo.AddPlayer(THIRD_PLAYER);
-
-    // Then we create the new game:
-    model.CreateNewGame(newGameInfo);
+    CreateNewGame(6u, 7u, NbPlayers::THREE, InARowValue::FOUR);
 
     // We drop chips:
-    const cxmodel::Disc FIRST_PLAYER_CHIP{FIRST_PLAYER_COLOR};
-    const cxmodel::Disc SECOND_PLAYER_CHIP{SECOND_PLAYER_COLOR};
-    const cxmodel::Disc THIRD_PLAYER_CHIP{THRIRD_PLAYER_COLOR};
+    const cxmodel::Player& FIRST_PLAYER = GetPlayer(0u);
+    const cxmodel::Player& SECOND_PLAYER = GetPlayer(1u);
+    const cxmodel::Player& THIRD_PLAYER = GetPlayer(2u);
+    ASSERT_EQ(GetModel().GetActivePlayer(), FIRST_PLAYER);
+    ASSERT_EQ(GetModel().GetNextPlayer(), SECOND_PLAYER);
 
-    ASSERT_EQ(model.GetActivePlayer(), FIRST_PLAYER);
-    ASSERT_EQ(model.GetNextPlayer(), SECOND_PLAYER);
+    // DropChips...
+    const cxmodel::IChip& FIRST_PLAYER_CHIP = FIRST_PLAYER.GetChip();
+    const cxmodel::IChip& SECOND_PLAYER_CHIP = SECOND_PLAYER.GetChip();
+    const cxmodel::IChip& THIRD_PLAYER_CHIP = THIRD_PLAYER.GetChip();
+    GetModel().DropChip(FIRST_PLAYER_CHIP, 0u);
+    GetModel().DropChip(SECOND_PLAYER_CHIP, 1u);
+    GetModel().DropChip(THIRD_PLAYER_CHIP, 2u);
 
-    model.DropChip(FIRST_PLAYER_CHIP, 0u);
-    model.DropChip(SECOND_PLAYER_CHIP, 1u);
-    model.DropChip(THIRD_PLAYER_CHIP, 2u);
+    GetModel().DropChip(FIRST_PLAYER_CHIP, 0u);
+    GetModel().DropChip(SECOND_PLAYER_CHIP, 1u);
+    GetModel().DropChip(THIRD_PLAYER_CHIP, 2u);
 
-    model.DropChip(FIRST_PLAYER_CHIP, 0u);
-    model.DropChip(SECOND_PLAYER_CHIP, 1u);
-    model.DropChip(THIRD_PLAYER_CHIP, 2u);
+    GetModel().DropChip(FIRST_PLAYER_CHIP, 0u);
+    GetModel().DropChip(SECOND_PLAYER_CHIP, 1u);
+    GetModel().DropChip(THIRD_PLAYER_CHIP, 2u);
 
-    model.DropChip(FIRST_PLAYER_CHIP, 0u);
-    model.DropChip(SECOND_PLAYER_CHIP, 1u);
-    model.DropChip(THIRD_PLAYER_CHIP, 2u);
-
-    model.DropChip(FIRST_PLAYER_CHIP, 4u);
+    GetModel().DropChip(FIRST_PLAYER_CHIP, 4u);
 
     // And the second player wins:
-    model.DropChip(SECOND_PLAYER_CHIP, 1u);
+    GetModel().DropChip(SECOND_PLAYER_CHIP, 1u);
 
-    ASSERT_EQ(SECOND_PLAYER, model.GetActivePlayer());
+    ASSERT_EQ(SECOND_PLAYER, GetModel().GetActivePlayer());
 }
 
-TEST(Model, /*DISABLED_*/DropChip_ValidModelGameIsWon_WinnerIsLastPlayer)
+TEST_F(ModelTestFixture, /*DISABLED_*/DropChip_ValidModelGameIsWon_WinnerIsLastPlayer)
 {
-    // We create a model:
-    LoggerMock logger;
-    cxmodel::Model model{std::make_unique<cxmodel::CommandStack>(200), logger};
-
-    // We create valid new game information:
-    const cxmodel::ChipColor FIRST_PLAYER_COLOR{cxmodel::MakeRed()};
-    const cxmodel::Player FIRST_PLAYER{"John Doe", FIRST_PLAYER_COLOR};
-
-    const cxmodel::ChipColor SECOND_PLAYER_COLOR{cxmodel::MakeBlue()};
-    const cxmodel::Player SECOND_PLAYER{"Jane Doe", SECOND_PLAYER_COLOR};
-
-    const cxmodel::ChipColor THRIRD_PLAYER_COLOR{cxmodel::MakeYellow()};
-    const cxmodel::Player THIRD_PLAYER{"Bob Morane", THRIRD_PLAYER_COLOR};
-
-    cxmodel::NewGameInformation newGameInfo;
-    newGameInfo.m_inARowValue = 4u;
-    newGameInfo.m_gridWidth = 7u;
-    newGameInfo.m_gridHeight = 6u;
-    newGameInfo.AddPlayer(FIRST_PLAYER);
-    newGameInfo.AddPlayer(SECOND_PLAYER);
-    newGameInfo.AddPlayer(THIRD_PLAYER);
-
-    // Then we create the new game:
-    model.CreateNewGame(newGameInfo);
+    CreateNewGame(6u, 7u, NbPlayers::THREE, InARowValue::FOUR);
 
     // We drop chips:
-    const cxmodel::Disc FIRST_PLAYER_CHIP{FIRST_PLAYER_COLOR};
-    const cxmodel::Disc SECOND_PLAYER_CHIP{SECOND_PLAYER_COLOR};
-    const cxmodel::Disc THIRD_PLAYER_CHIP{THRIRD_PLAYER_COLOR};
+    const cxmodel::Player& FIRST_PLAYER = GetPlayer(0u);
+    const cxmodel::Player& SECOND_PLAYER = GetPlayer(1u);
+    const cxmodel::Player& THIRD_PLAYER = GetPlayer(2u);
 
-    ASSERT_EQ(model.GetActivePlayer(), FIRST_PLAYER);
-    ASSERT_EQ(model.GetNextPlayer(), SECOND_PLAYER);
+    // DropChips...
+    const cxmodel::IChip& FIRST_PLAYER_CHIP = FIRST_PLAYER.GetChip();
+    const cxmodel::IChip& SECOND_PLAYER_CHIP = SECOND_PLAYER.GetChip();
+    const cxmodel::IChip& THIRD_PLAYER_CHIP = THIRD_PLAYER.GetChip();
 
-    model.DropChip(FIRST_PLAYER_CHIP, 0u);
-    model.DropChip(SECOND_PLAYER_CHIP, 1u);
-    model.DropChip(THIRD_PLAYER_CHIP, 2u);
+    ASSERT_EQ(GetModel().GetActivePlayer(), FIRST_PLAYER);
+    ASSERT_EQ(GetModel().GetNextPlayer(), SECOND_PLAYER);
 
-    model.DropChip(FIRST_PLAYER_CHIP, 0u);
-    model.DropChip(SECOND_PLAYER_CHIP, 1u);
-    model.DropChip(THIRD_PLAYER_CHIP, 2u);
+    GetModel().DropChip(FIRST_PLAYER_CHIP, 0u);
+    GetModel().DropChip(SECOND_PLAYER_CHIP, 1u);
+    GetModel().DropChip(THIRD_PLAYER_CHIP, 2u);
 
-    model.DropChip(FIRST_PLAYER_CHIP, 0u);
-    model.DropChip(SECOND_PLAYER_CHIP, 1u);
-    model.DropChip(THIRD_PLAYER_CHIP, 2u);
+    GetModel().DropChip(FIRST_PLAYER_CHIP, 0u);
+    GetModel().DropChip(SECOND_PLAYER_CHIP, 1u);
+    GetModel().DropChip(THIRD_PLAYER_CHIP, 2u);
 
-    model.DropChip(FIRST_PLAYER_CHIP, 4u);
-    model.DropChip(SECOND_PLAYER_CHIP, 4u);
+    GetModel().DropChip(FIRST_PLAYER_CHIP, 0u);
+    GetModel().DropChip(SECOND_PLAYER_CHIP, 1u);
+    GetModel().DropChip(THIRD_PLAYER_CHIP, 2u);
+
+    GetModel().DropChip(FIRST_PLAYER_CHIP, 4u);
+    GetModel().DropChip(SECOND_PLAYER_CHIP, 4u);
 
     // And the third player wins:
-    model.DropChip(THIRD_PLAYER_CHIP, 2u);
+    GetModel().DropChip(THIRD_PLAYER_CHIP, 2u);
 
-    ASSERT_EQ(THIRD_PLAYER, model.GetActivePlayer());
+    ASSERT_EQ(THIRD_PLAYER, GetModel().GetActivePlayer());
 }
 
-TEST(Model, /*DISABLED_*/EndCurrentGame_ValidModel_NotificationsSent)
+TEST_F(ModelTestFixture, /*DISABLED_*/EndCurrentGame_ValidModel_NotificationsSent)
 {
     ModelNotificationCatcher gameEndedObserver{cxmodel::NotificationContext::GAME_ENDED};
     
-    // We create a model:
-    LoggerMock logger;
-    cxmodel::Model model{std::make_unique<cxmodel::CommandStack>(200), logger};
-
-    // We create valid game information:
-    cxmodel::NewGameInformation newGameInfo;
-    newGameInfo.m_inARowValue = 4u;
-    newGameInfo.m_gridWidth = 7u;
-    newGameInfo.m_gridHeight = 6u;
-    newGameInfo.AddPlayer({"John Doe", cxmodel::MakeRed()});
-    newGameInfo.AddPlayer({"Jane Doe", cxmodel::MakeBlue()});
-
-    // Then we create the new game:
-    model.CreateNewGame(newGameInfo);
+    CreateNewGame(6u, 7u, NbPlayers::TWO, InARowValue::FOUR);
 
     // We attach our observer:
-    model.Attach(&gameEndedObserver);
+    GetModel().Attach(&gameEndedObserver);
 
     ASSERT_FALSE(gameEndedObserver.WasNotified());
-    model.EndCurrentGame();
+    GetModel().EndCurrentGame();
     ASSERT_TRUE(gameEndedObserver.WasNotified());
 }
 
-TEST(Model, /*DISABLED_*/EndCurrentGame_ValidModel_CommandStackEmptied)
+TEST_F(ModelTestFixture, /*DISABLED_*/EndCurrentGame_ValidModel_CommandStackEmptied)
 {
-    // We create a model:
-    LoggerMock logger;
-
-    auto cmdStack = std::make_unique<cxmodel::CommandStack>(200);
-    auto* commands = cmdStack.get();
-    cxmodel::Model model{std::move(cmdStack), logger};
-
-    // We create valid game information:
-    cxmodel::NewGameInformation newGameInfo;
-    newGameInfo.m_inARowValue = 4u;
-    newGameInfo.m_gridWidth = 7u;
-    newGameInfo.m_gridHeight = 6u;
-    newGameInfo.AddPlayer({"John Doe", cxmodel::MakeRed()});
-    newGameInfo.AddPlayer({"Jane Doe", cxmodel::MakeBlue()});
-
-    // Then we create the new game:
-    model.CreateNewGame(newGameInfo);
-    ASSERT_FALSE(commands->IsEmpty());
+    CreateNewGame(6u, 7u, NbPlayers::TWO, InARowValue::FOUR);
+    ASSERT_FALSE(GetInternalCommandStack().IsEmpty());
 
     // And end it:
-    model.EndCurrentGame();
+    GetModel().EndCurrentGame();
 
-    ASSERT_TRUE(commands->IsEmpty());
+    ASSERT_TRUE(GetInternalCommandStack().IsEmpty());
 }
 
-TEST(Model, /*DISABLED_*/EndCurrentGame_ValidModel_PlayersInfoReset)
+TEST_F(ModelTestFixture, /*DISABLED_*/EndCurrentGame_ValidModel_PlayersInfoReset)
 {
     DisableStdStreamsRAII m_noStream;
 
-    // We create a model:
-    LoggerMock logger;
-    cxmodel::Model model{std::make_unique<cxmodel::CommandStack>(200), logger};
+    // We create a new game:
+    CreateNewGame(6u, 7u, NbPlayers::TWO, InARowValue::FOUR);
 
-    // We create valid game information:
-    const cxmodel::Player ACTIVE{"John Doe", cxmodel::MakeRed()};
-    const cxmodel::Player NEXT{"Jane Doe", cxmodel::MakeBlue()};
-
-    cxmodel::NewGameInformation newGameInfo;
-    newGameInfo.m_inARowValue = 4u;
-    newGameInfo.m_gridWidth = 7u;
-    newGameInfo.m_gridHeight = 6u;
-    newGameInfo.AddPlayer(ACTIVE);
-    newGameInfo.AddPlayer(NEXT);
-
-    // Then we create the new game:
-    model.CreateNewGame(newGameInfo);
-    ASSERT_EQ(ACTIVE, model.GetActivePlayer());
-    ASSERT_EQ(NEXT, model.GetNextPlayer());
+    const cxmodel::Player ACTIVE = GetPlayer(0u);
+    const cxmodel::Player NEXT = GetPlayer(1u);
+    ASSERT_EQ(ACTIVE, GetModel().GetActivePlayer());
+    ASSERT_EQ(NEXT, GetModel().GetNextPlayer());
 
     // And end it:
-    model.EndCurrentGame();
+    GetModel().EndCurrentGame();
 
     const cxmodel::Player NO_ACTIVE_PLAYER{"Woops (active)!", {0, 0, 0, 0}};
     const cxmodel::Player NO_NEXT_PLAYER{"Woops! (next)", {0, 0, 0, 0}};
 
     // Will assert here...
-    ASSERT_EQ(NO_ACTIVE_PLAYER, model.GetActivePlayer());
-    ASSERT_EQ(NO_NEXT_PLAYER, model.GetNextPlayer());
+    ASSERT_EQ(NO_ACTIVE_PLAYER, GetModel().GetActivePlayer());
+    ASSERT_EQ(NO_NEXT_PLAYER, GetModel().GetNextPlayer());
 }
 
-TEST(Model, /*DISABLED_*/EndCurrentGame_ValidModel_InARowValueReset)
+TEST_F(ModelTestFixture, /*DISABLED_*/EndCurrentGame_ValidModel_InARowValueReset)
 {
-    // We create a model:
-    LoggerMock logger;
-    cxmodel::Model model{std::make_unique<cxmodel::CommandStack>(200), logger};
+    CreateNewGame(6u, 7u, NbPlayers::TWO, InARowValue::FIVE);
+    ASSERT_EQ(5u, GetModel().GetCurrentInARowValue());
 
-    // We create valid game information:
-    cxmodel::NewGameInformation newGameInfo;
-    newGameInfo.m_inARowValue = 5u;
-    newGameInfo.m_gridWidth = 7u;
-    newGameInfo.m_gridHeight = 6u;
-    newGameInfo.AddPlayer({"John Doe", cxmodel::MakeRed()});
-    newGameInfo.AddPlayer({"Jane Doe", cxmodel::MakeBlue()});
-
-    // Then we create the new game:
-    model.CreateNewGame(newGameInfo);
-    ASSERT_EQ(5u, model.GetCurrentInARowValue());
-
-    // And end it:
-    model.EndCurrentGame();
-    ASSERT_EQ(4u, model.GetCurrentInARowValue());
+    GetModel().EndCurrentGame();
+    ASSERT_EQ(4u, GetModel().GetCurrentInARowValue());
 }
 
-TEST(Model, /*DISABLED_*/ReinitializeCurrentGame_ValidModel_NotificationHappens)
+TEST_F(ModelTestFixture, /*DISABLED_*/ReinitializeCurrentGame_ValidModel_NotificationHappens)
 {
     ModelNotificationCatcher gameReinitializedObserver{cxmodel::NotificationContext::GAME_REINITIALIZED};
     
-    // We create a model:
-    LoggerMock logger;
-    cxmodel::Model model{std::make_unique<cxmodel::CommandStack>(200), logger};
-
-    // We create valid game information:
-    cxmodel::NewGameInformation newGameInfo;
-    newGameInfo.m_inARowValue = 4u;
-    newGameInfo.m_gridWidth = 7u;
-    newGameInfo.m_gridHeight = 6u;
-    newGameInfo.AddPlayer({"John Doe", cxmodel::MakeRed()});
-    newGameInfo.AddPlayer({"Jane Doe", cxmodel::MakeBlue()});
-
-    // Then we create the new game:
-    model.CreateNewGame(newGameInfo);
+    CreateNewGame(6u, 7u, NbPlayers::TWO, InARowValue::FOUR);
 
     // We attach our observer:
-    model.Attach(&gameReinitializedObserver);
+    GetModel().Attach(&gameReinitializedObserver);
 
     ASSERT_FALSE(gameReinitializedObserver.WasNotified());
-    model.ReinitializeCurrentGame();
+    GetModel().ReinitializeCurrentGame();
     ASSERT_TRUE(gameReinitializedObserver.WasNotified());
 }
 
-TEST(Model, /*DISABLED_*/ReinitializeCurrentGame_ValidModel_CommandStackEmptied)
+TEST_F(ModelTestFixture, /*DISABLED_*/ReinitializeCurrentGame_ValidModel_CommandStackEmptied)
 {
-    // We create a model:
-    LoggerMock logger;
-
-    auto cmdStack = std::make_unique<cxmodel::CommandStack>(200);
-    auto* commands = cmdStack.get();
-    cxmodel::Model model{std::move(cmdStack), logger};
-
-    // We create valid game information:
-    cxmodel::NewGameInformation newGameInfo;
-    newGameInfo.m_inARowValue = 4u;
-    newGameInfo.m_gridWidth = 7u;
-    newGameInfo.m_gridHeight = 6u;
-    newGameInfo.AddPlayer({"John Doe", cxmodel::MakeRed()});
-    newGameInfo.AddPlayer({"Jane Doe", cxmodel::MakeBlue()});
-
-    // Then we create the new game:
-    model.CreateNewGame(newGameInfo);
-    ASSERT_FALSE(commands->IsEmpty());
+    CreateNewGame(6u, 7u, NbPlayers::TWO, InARowValue::FOUR);
+    ASSERT_FALSE(GetInternalCommandStack().IsEmpty());
 
     // And reinitialize it:
-    model.ReinitializeCurrentGame();
+    GetModel().ReinitializeCurrentGame();
 
-    ASSERT_TRUE(commands->IsEmpty());
+    ASSERT_TRUE(GetInternalCommandStack().IsEmpty());
 }
 
-TEST(Model, /*DISABLED_*/ReinitializeCurrentGame_ValidModel_BoardReinitialized)
+TEST_F(ModelTestFixture, /*DISABLED_*/ReinitializeCurrentGame_ValidModel_BoardReinitialized)
 {
-    // We create a model:
-    LoggerMock logger;
-    cxmodel::Model model{std::make_unique<cxmodel::CommandStack>(200), logger};
+    CreateNewGame(6u, 7u, NbPlayers::TWO, InARowValue::FOUR);
 
     // We create valid new game information:
-    const cxmodel::ChipColor FIRST_PLAYER_COLOR{cxmodel::MakeRed()};
-    const cxmodel::Player FIRST_PLAYER{"John Doe", FIRST_PLAYER_COLOR};
-
-    const cxmodel::ChipColor SECOND_PLAYER_COLOR{cxmodel::MakeBlue()};
-    const cxmodel::Player SECOND_PLAYER{"Jane Doe", SECOND_PLAYER_COLOR};
-
-    cxmodel::NewGameInformation newGameInfo;
-    newGameInfo.m_inARowValue = 4u;
-    newGameInfo.m_gridWidth = 7u;
-    newGameInfo.m_gridHeight = 6u;
-    newGameInfo.AddPlayer(FIRST_PLAYER);
-    newGameInfo.AddPlayer(SECOND_PLAYER);
-
-    // Then we create the new game:
-    model.CreateNewGame(newGameInfo);
+    const cxmodel::Player FIRST_PLAYER = GetPlayer(0u);
+    const cxmodel::Player SECOND_PLAYER = GetPlayer(1u);
+    ASSERT_EQ(GetModel().GetActivePlayer(), FIRST_PLAYER);
+    ASSERT_EQ(GetModel().GetNextPlayer(), SECOND_PLAYER);
 
     // We drop chips:
-    const cxmodel::Disc FIRST_PLAYER_CHIP{FIRST_PLAYER_COLOR};
-    const cxmodel::Disc SECOND_PLAYER_CHIP{SECOND_PLAYER_COLOR};
+    const cxmodel::IChip& FIRST_PLAYER_CHIP = FIRST_PLAYER.GetChip();
+    const cxmodel::IChip& SECOND_PLAYER_CHIP = SECOND_PLAYER.GetChip();
 
-    ASSERT_EQ(model.GetActivePlayer(), FIRST_PLAYER);
-    ASSERT_EQ(model.GetNextPlayer(), SECOND_PLAYER);
+    // DropChips...
+    GetModel().DropChip(FIRST_PLAYER_CHIP, 0u);
+    GetModel().DropChip(SECOND_PLAYER_CHIP, 1u);
 
-    model.DropChip(FIRST_PLAYER_CHIP, 0u);
-    model.DropChip(SECOND_PLAYER_CHIP, 1u);
+    ASSERT_EQ(FIRST_PLAYER_CHIP.GetColor(), GetModel().GetChip(0u, 0u).GetColor());
+    ASSERT_EQ(SECOND_PLAYER_CHIP.GetColor(), GetModel().GetChip(0u, 1u).GetColor());
 
-    ASSERT_EQ(FIRST_PLAYER_COLOR, model.GetChip(0u, 0u).GetColor());
-    ASSERT_EQ(SECOND_PLAYER_COLOR, model.GetChip(0u, 1u).GetColor());
+    GetModel().ReinitializeCurrentGame();
 
-    model.ReinitializeCurrentGame();
-
-    for(size_t row = 0u; row < model.GetCurrentGridHeight(); ++row)
+    for(size_t row = 0u; row < GetModel().GetCurrentGridHeight(); ++row)
     {
-        for(size_t column = 0u; column < model.GetCurrentGridWidth(); ++column)
+        for(size_t column = 0u; column < GetModel().GetCurrentGridWidth(); ++column)
         {
-            ASSERT_EQ(cxmodel::MakeTransparent(), model.GetChip(row, column).GetColor());
+            ASSERT_EQ(cxmodel::MakeTransparent(), GetModel().GetChip(row, column).GetColor());
         }
     }
 }
 
-TEST(Model, /*DISABLED_*/ReinitializeCurrentGame_ValidModel_PlayersReinitialized)
+TEST_F(ModelTestFixture, /*DISABLED_*/ReinitializeCurrentGame_ValidModel_PlayersReinitialized)
 {
-    // We create a model:
-    LoggerMock logger;
-    cxmodel::Model model{std::make_unique<cxmodel::CommandStack>(200), logger};
+    CreateNewGame(6u, 7u, NbPlayers::TWO, InARowValue::FOUR);
 
-    // We create valid new game information:
-    const cxmodel::ChipColor FIRST_PLAYER_COLOR{cxmodel::MakeRed()};
-    const cxmodel::Player FIRST_PLAYER{"John Doe", FIRST_PLAYER_COLOR};
+    const cxmodel::Player FIRST_PLAYER = GetPlayer(0u);
+    const cxmodel::Player SECOND_PLAYER = GetPlayer(1u);
 
-    const cxmodel::ChipColor SECOND_PLAYER_COLOR{cxmodel::MakeBlue()};
-    const cxmodel::Player SECOND_PLAYER{"Jane Doe", SECOND_PLAYER_COLOR};
+    // DropChips...
+    const cxmodel::IChip& FIRST_PLAYER_CHIP = FIRST_PLAYER.GetChip();
+    GetModel().DropChip(FIRST_PLAYER_CHIP, 0u);
 
-    cxmodel::NewGameInformation newGameInfo;
-    newGameInfo.m_inARowValue = 4u;
-    newGameInfo.m_gridWidth = 7u;
-    newGameInfo.m_gridHeight = 6u;
-    newGameInfo.AddPlayer(FIRST_PLAYER);
-    newGameInfo.AddPlayer(SECOND_PLAYER);
+    ASSERT_EQ(GetModel().GetActivePlayer(), SECOND_PLAYER);
+    ASSERT_EQ(GetModel().GetNextPlayer(), FIRST_PLAYER);
 
-    // Then we create the new game:
-    model.CreateNewGame(newGameInfo);
+    GetModel().ReinitializeCurrentGame();
 
-    // We drop a chip:
-    const cxmodel::Disc FIRST_PLAYER_CHIP{FIRST_PLAYER_COLOR};
-    model.DropChip(FIRST_PLAYER_CHIP, 0u);
-
-    ASSERT_EQ(model.GetActivePlayer(), SECOND_PLAYER);
-    ASSERT_EQ(model.GetNextPlayer(), FIRST_PLAYER);
-
-    model.ReinitializeCurrentGame();
-
-    ASSERT_EQ(model.GetActivePlayer(), FIRST_PLAYER);
-    ASSERT_EQ(model.GetNextPlayer(), SECOND_PLAYER);
+    ASSERT_EQ(GetModel().GetActivePlayer(), FIRST_PLAYER);
+    ASSERT_EQ(GetModel().GetNextPlayer(), SECOND_PLAYER);
 }
 
-TEST(Model, /*DISABLED_*/ReinitializeCurrentGame_ValidModel_WinResolutionReinitialized)
+TEST_F(ModelTestFixture, /*DISABLED_*/ReinitializeCurrentGame_ValidModel_WinResolutionReinitialized)
 {
-    // We create a model:
-    LoggerMock logger;
-    cxmodel::Model model{std::make_unique<cxmodel::CommandStack>(200), logger};
+    CreateNewGame(6u, 7u, NbPlayers::THREE, InARowValue::FOUR);
 
-    // We create valid new game information:
-    const cxmodel::ChipColor FIRST_PLAYER_COLOR{cxmodel::MakeRed()};
-    const cxmodel::Player FIRST_PLAYER{"John Doe", FIRST_PLAYER_COLOR};
+    const cxmodel::Player FIRST_PLAYER = GetPlayer(0u);
+    const cxmodel::Player SECOND_PLAYER = GetPlayer(1u);
+    const cxmodel::Player THIRD_PLAYER = GetPlayer(2u);
 
-    const cxmodel::ChipColor SECOND_PLAYER_COLOR{cxmodel::MakeBlue()};
-    const cxmodel::Player SECOND_PLAYER{"Jane Doe", SECOND_PLAYER_COLOR};
+    const cxmodel::IChip& FIRST_PLAYER_CHIP = FIRST_PLAYER.GetChip();
+    const cxmodel::IChip& SECOND_PLAYER_CHIP = SECOND_PLAYER.GetChip();
+    const cxmodel::IChip& THIRD_PLAYER_CHIP = THIRD_PLAYER.GetChip();
 
-    const cxmodel::ChipColor THRIRD_PLAYER_COLOR{cxmodel::MakeYellow()};
-    const cxmodel::Player THIRD_PLAYER{"Bob Morane", THRIRD_PLAYER_COLOR};
+    ASSERT_EQ(GetModel().GetActivePlayer(), FIRST_PLAYER);
+    ASSERT_EQ(GetModel().GetNextPlayer(), SECOND_PLAYER);
 
-    cxmodel::NewGameInformation newGameInfo;
-    newGameInfo.m_inARowValue = 4u;
-    newGameInfo.m_gridWidth = 7u;
-    newGameInfo.m_gridHeight = 6u;
-    newGameInfo.AddPlayer(FIRST_PLAYER);
-    newGameInfo.AddPlayer(SECOND_PLAYER);
-    newGameInfo.AddPlayer(THIRD_PLAYER);
+    // DropChips...
+    GetModel().DropChip(FIRST_PLAYER_CHIP, 0u);
+    GetModel().DropChip(SECOND_PLAYER_CHIP, 1u);
+    GetModel().DropChip(THIRD_PLAYER_CHIP, 2u);
 
-    // Then we create the new game:
-    model.CreateNewGame(newGameInfo);
+    GetModel().DropChip(FIRST_PLAYER_CHIP, 0u);
+    GetModel().DropChip(SECOND_PLAYER_CHIP, 1u);
+    GetModel().DropChip(THIRD_PLAYER_CHIP, 2u);
 
-    // We drop chips:
-    const cxmodel::Disc FIRST_PLAYER_CHIP{FIRST_PLAYER_COLOR};
-    const cxmodel::Disc SECOND_PLAYER_CHIP{SECOND_PLAYER_COLOR};
-    const cxmodel::Disc THIRD_PLAYER_CHIP{THRIRD_PLAYER_COLOR};
-
-    ASSERT_EQ(model.GetActivePlayer(), FIRST_PLAYER);
-    ASSERT_EQ(model.GetNextPlayer(), SECOND_PLAYER);
-
-    model.DropChip(FIRST_PLAYER_CHIP, 0u);
-    model.DropChip(SECOND_PLAYER_CHIP, 1u);
-    model.DropChip(THIRD_PLAYER_CHIP, 2u);
-
-    model.DropChip(FIRST_PLAYER_CHIP, 0u);
-    model.DropChip(SECOND_PLAYER_CHIP, 1u);
-    model.DropChip(THIRD_PLAYER_CHIP, 2u);
-
-    model.DropChip(FIRST_PLAYER_CHIP, 0u);
-    model.DropChip(SECOND_PLAYER_CHIP, 1u);
-    model.DropChip(THIRD_PLAYER_CHIP, 2u);
+    GetModel().DropChip(FIRST_PLAYER_CHIP, 0u);
+    GetModel().DropChip(SECOND_PLAYER_CHIP, 1u);
+    GetModel().DropChip(THIRD_PLAYER_CHIP, 2u);
 
     // At this point, the first player could win by dropping a chip
     // at the first row. Instead, we reinitialize the game:
-    model.ReinitializeCurrentGame();
+    GetModel().ReinitializeCurrentGame();
 
     // Then we play the "what could have been" the winning drop:
-    model.DropChip(FIRST_PLAYER_CHIP, 0u);
+    GetModel().DropChip(FIRST_PLAYER_CHIP, 0u);
 
     // And we check if the game is resolved:
-    ASSERT_FALSE(model.IsWon());
+    ASSERT_FALSE(GetModel().IsWon());
 }
 
-TEST(Model, /*DISABLED_*/GetChip_ValidModel_ChipReturned)
+TEST_F(ModelTestFixture, /*DISABLED_*/GetChip_ValidModel_ChipReturned)
 {
-    // We create a model:
-    LoggerMock logger;
-    cxmodel::Model model{std::make_unique<cxmodel::CommandStack>(200), logger};
-
-    // We create valid new game information:
-    cxmodel::NewGameInformation newGameInfo;
-    newGameInfo.m_inARowValue = 4u;
-    newGameInfo.m_gridWidth = 7u;
-    newGameInfo.m_gridHeight = 6u;
-    newGameInfo.AddPlayer({"John Doe", cxmodel::MakeRed()});
-    newGameInfo.AddPlayer({"Jane Doe", cxmodel::MakeBlue()});
-
-    // Then we create the new game:
-    model.CreateNewGame(newGameInfo);
+    CreateNewGame(6u, 7u, NbPlayers::TWO, InARowValue::FOUR);
 
     // For now, no chip has been dropped, all returned chips should be transparent:
-    const cxmodel::IChip& chipBefore = model.GetChip(0u, 0u);
+    const cxmodel::IChip& chipBefore = GetModel().GetChip(0u, 0u);
     ASSERT_EQ(chipBefore, cxmodel::Disc(cxmodel::MakeTransparent()));
 
     // We drop a chip:
     const cxmodel::Disc RED_CHIP{cxmodel::MakeRed()};
-    model.DropChip(RED_CHIP, 0u);
+    GetModel().DropChip(RED_CHIP, 0u);
 
     // We now have a red chip at (0,0):
-    const cxmodel::IChip& chipAfter = model.GetChip(0u, 0u);
+    const cxmodel::IChip& chipAfter = GetModel().GetChip(0u, 0u);
     ASSERT_EQ(chipAfter, cxmodel::Disc(cxmodel::MakeRed()));
 }
 
-TEST(Model, /*DISABLED_*/GetChip_InvalidRow_ReturnsNoDisc)
+TEST_F(ModelTestFixture, /*DISABLED_*/GetChip_InvalidRow_ReturnsNoDisc)
 {
-    // We create a model:
-    LoggerMock logger;
-    cxmodel::Model model{std::make_unique<cxmodel::CommandStack>(200), logger};
-
-    // We create valid new game information:
-    cxmodel::NewGameInformation newGameInfo;
-    newGameInfo.m_inARowValue = 4u;
-    newGameInfo.m_gridWidth = 7u;
-    newGameInfo.m_gridHeight = 6u;
-    newGameInfo.AddPlayer({"John Doe", cxmodel::MakeRed()});
-    newGameInfo.AddPlayer({"Jane Doe", cxmodel::MakeBlue()});
-
-    // Then we create the new game:
-    model.CreateNewGame(newGameInfo);
+    CreateNewGame(6u, 7u, NbPlayers::TWO, InARowValue::FOUR);
 
     // For now, no chip has been dropped, all returned chips should be transparent:
-    const cxmodel::IChip& chipBefore = model.GetChip(model.GetCurrentGridHeight(), 0u);
+    const cxmodel::IChip& chipBefore = GetModel().GetChip(GetModel().GetCurrentGridHeight(), 0u);
     ASSERT_EQ(chipBefore, cxmodel::Disc(cxmodel::MakeTransparent()));
 }
 
-TEST(Model, /*DISABLED_*/GetChip_InvalidColumn_ReturnsNoDisc)
+TEST_F(ModelTestFixture, /*DISABLED_*/GetChip_InvalidColumn_ReturnsNoDisc)
 {
-    // We create a model:
-    LoggerMock logger;
-    cxmodel::Model model{std::make_unique<cxmodel::CommandStack>(200), logger};
-
-    // We create valid new game information:
-    cxmodel::NewGameInformation newGameInfo;
-    newGameInfo.m_inARowValue = 4u;
-    newGameInfo.m_gridWidth = 7u;
-    newGameInfo.m_gridHeight = 6u;
-    newGameInfo.AddPlayer({"John Doe", cxmodel::MakeRed()});
-    newGameInfo.AddPlayer({"Jane Doe", cxmodel::MakeBlue()});
-
-    // Then we create the new game:
-    model.CreateNewGame(newGameInfo);
+    CreateNewGame(6u, 7u, NbPlayers::TWO, InARowValue::FOUR);
 
     // For now, no chip has been dropped, all returned chips should be transparent:
-    const cxmodel::IChip& chipBefore = model.GetChip(0u, model.GetCurrentGridWidth());
+    const cxmodel::IChip& chipBefore = GetModel().GetChip(0u, GetModel().GetCurrentGridWidth());
     ASSERT_EQ(chipBefore, cxmodel::Disc(cxmodel::MakeTransparent()));
 }
 
-TEST(Model, /*DISABLED_*/IsWon_ValidModel_DoesNotThrow)
+TEST_F(ModelTestFixture, /*DISABLED_*/IsWon_ValidModel_DoesNotThrow)
 {
     DisableStdStreamsRAII streamDisabler;
 
-    LoggerMock logger;
-    cxmodel::Model model{std::make_unique<cxmodel::CommandStack>(200), logger};
-
     // This will assert:
-    ASSERT_NO_THROW(model.IsWon());
-    ASSERT_FALSE(model.IsWon());
+    ASSERT_NO_THROW(GetModel().IsWon());
+    ASSERT_FALSE(GetModel().IsWon());
 }
 
-TEST(Model, /*DISABLED_*/IsTie_ValidModel_ThrowsForNow)
+TEST_F(ModelTestFixture, /*DISABLED_*/IsTie_ValidModel_ThrowsForNow)
 {
-    LoggerMock logger;
-    cxmodel::Model model{std::make_unique<cxmodel::CommandStack>(200), logger};
-
-    ASSERT_THROW(model.IsTie(), std::logic_error);
+    ASSERT_THROW(GetModel().IsTie(), std::logic_error);
 }
 
 TEST(Model, /*DISABLED_*/Undo_RandomCommand_UndoCalledOnCommandStack)
@@ -905,17 +598,13 @@ TEST(Model, /*DISABLED_*/Redo_RandomCommand_RedoCalledOnCommandStack)
     ASSERT_TRUE(cmdStackMock.IsRedoed());
 }
 
-TEST(Model, /*DISABLED_*/SetVerbosityLevel_FromNoneToDebug_VerbosityLevelSet)
+TEST_F(ModelTestFixture, /*DISABLED_*/SetVerbosityLevel_FromNoneToDebug_VerbosityLevelSet)
 {
-    // We create a model:
-    LoggerMock logger;
-    cxmodel::Model model{std::make_unique<cxmodel::CommandStack>(200), logger};
-
     // Set verbosity level to none:
-    model.SetVerbosityLevel(cxlog::VerbosityLevel::NONE);
-    ASSERT_EQ(model.GetVerbosityLevel(), cxlog::VerbosityLevel::NONE);
+    GetModel().SetVerbosityLevel(cxlog::VerbosityLevel::NONE);
+    ASSERT_EQ(GetModel().GetVerbosityLevel(), cxlog::VerbosityLevel::NONE);
 
     // We change it to debug and check it has an impact:
-    model.SetVerbosityLevel(cxlog::VerbosityLevel::DEBUG);
-    ASSERT_EQ(model.GetVerbosityLevel(), cxlog::VerbosityLevel::DEBUG);
+    GetModel().SetVerbosityLevel(cxlog::VerbosityLevel::DEBUG);
+    ASSERT_EQ(GetModel().GetVerbosityLevel(), cxlog::VerbosityLevel::DEBUG);
 }
