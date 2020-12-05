@@ -181,6 +181,17 @@ TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/IsNewGamePossible_ChipDroppe
     ASSERT_TRUE(presenter.IsNewGamePossible());
 }
 
+TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/IsNewGamePossible_GameReinitializedNotification_TrueReturned)
+{
+    auto& actionModel = GetActionsModel();
+    actionModel.CreateNewGame(cxmodel::NewGameInformation{});
+
+    SendNotification(cxmodel::NotificationContext::GAME_REINITIALIZED);
+    
+    const auto& presenter = GetPresenter();
+    ASSERT_TRUE(presenter.IsNewGamePossible());
+}
+
 TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/IsNewGamePossible_AllOtherNotifications_FalseReturned)
 {
     auto& actionModel = GetActionsModel();
@@ -189,9 +200,6 @@ TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/IsNewGamePossible_AllOtherNo
     const auto& presenter = GetPresenter();
 
     SendNotification(cxmodel::NotificationContext::GAME_ENDED);
-    ASSERT_FALSE(presenter.IsNewGamePossible());
-
-    SendNotification(cxmodel::NotificationContext::GAME_REINITIALIZED);
     ASSERT_FALSE(presenter.IsNewGamePossible());
 }
 

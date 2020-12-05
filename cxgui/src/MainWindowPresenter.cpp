@@ -100,6 +100,7 @@ void cxgui::MainWindowPresenter::Update(cxmodel::NotificationContext p_context, 
             }
             case cxmodel::NotificationContext::GAME_REINITIALIZED:
             {
+                m_canRequestNewGame = true;
                 UpdateGameReinitialized();
                 break;
             }
