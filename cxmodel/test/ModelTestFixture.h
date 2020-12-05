@@ -186,6 +186,7 @@ private:
     cxmodel::CommandStack* m_commandStack;
 
     std::unique_ptr<cxmodel::Model> m_model;
+    size_t m_nbOfPlayersInCurrentGame;
 
 };
 

@@ -93,56 +93,25 @@ TEST_F(ModelTestFixture, /*DISABLED_*/GetMaximumNumberOfPlayers_ValidModel_Value
 
 TEST_F(ModelTestFixture, /*DISABLED_*/CreateNewGame_ValidNewGameInformation_NewGameCreated)
 {
-    // We create a model:
-    LoggerMock logger;
-    cxmodel::Model model{std::make_unique<cxmodel::CommandStack>(200), logger};
+    CreateNewGame(6u, 7u, ModelTestFixture::NbPlayers::TWO, ModelTestFixture::InARowValue::FOUR);
 
-    // We create valid new game information:
-    constexpr size_t GRID_WIDTH = 7u;
-    constexpr size_t GRID_HEIGHT = 6u;
-    constexpr size_t IN_A_ROW = 4u;
     const cxmodel::Player JOHN_DOE{"John Doe", cxmodel::MakeRed()};
-    const cxmodel::Player JANE_DOE{"Jane Doe", cxmodel::MakeBlue()};
+    const cxmodel::Player JANE_DOE{"Mary Doe", cxmodel::MakeBlue()};
 
-    cxmodel::NewGameInformation newGameInfo;
-    newGameInfo.m_gridWidth = GRID_WIDTH;
-    newGameInfo.m_gridHeight = GRID_HEIGHT;
-    newGameInfo.m_inARowValue = IN_A_ROW;
-    newGameInfo.AddPlayer(JOHN_DOE);
-    newGameInfo.AddPlayer(JANE_DOE);
-
-    // We create a new game:
-    model.CreateNewGame(newGameInfo);
-
-    // And check it has indeed been created:
-    ASSERT_EQ(model.GetActivePlayer(), JOHN_DOE);
-    ASSERT_EQ(model.GetNextPlayer(), JANE_DOE);
-    ASSERT_EQ(model.GetCurrentGridWidth(), 7u);
-    ASSERT_EQ(model.GetCurrentGridHeight(), 6u);
-    ASSERT_EQ(model.GetCurrentInARowValue(), 4u);
+    ASSERT_EQ(GetModel().GetActivePlayer(), JOHN_DOE);
+    ASSERT_EQ(GetModel().GetNextPlayer(), JANE_DOE);
+    ASSERT_EQ(GetModel().GetCurrentGridWidth(), 7u);
+    ASSERT_EQ(GetModel().GetCurrentGridHeight(), 6u);
+    ASSERT_EQ(GetModel().GetCurrentInARowValue(), 4u);
 }
 
 TEST_F(ModelTestFixture, /*DISABLED_*/CreateNewGame_ValidNewGameInformation_CreateNewGameNotificationSent)
 {
-    // We create a model:
-    LoggerMock logger;
-    cxmodel::Model model{std::make_unique<cxmodel::CommandStack>(200), logger};
-
-    // And attach it to our observer:
     ModelNotificationCatcher createNewGameObserver{cxmodel::NotificationContext::CREATE_NEW_GAME};
     GetModel().Attach(&createNewGameObserver);
 
-    // We create valid new game information:
-    cxmodel::NewGameInformation newGameInfo;
-    newGameInfo.m_inARowValue = 4u;
-    newGameInfo.m_gridWidth = 7u;
-    newGameInfo.m_gridHeight = 6u;
-    newGameInfo.AddPlayer({"John Doe", cxmodel::MakeRed()});
-    newGameInfo.AddPlayer({"Jane Doe", cxmodel::MakeBlue()});
-
-    // Then we create the new game:
     ASSERT_FALSE(createNewGameObserver.WasNotified());
-    GetModel().CreateNewGame(newGameInfo);
+    CreateNewGame(6u, 7u, ModelTestFixture::NbPlayers::TWO, ModelTestFixture::InARowValue::FOUR);
     ASSERT_TRUE(createNewGameObserver.WasNotified());
 }
 
@@ -155,10 +124,8 @@ TEST_F(ModelTestFixture, /*DISABLED_*/DropChip_ValidModelChipAndColumn_ChipDropp
     GetModel().Attach(&chipDropObserver);
 
     // We drop a chip. It should trigger a notification since the board is empty:
-    const cxmodel::Disc RED_CHIP{cxmodel::MakeRed()};
-
     ASSERT_FALSE(chipDropObserver.WasNotified());
-    GetModel().DropChip(RED_CHIP, 0u);
+    DropChips(1u);
     ASSERT_TRUE(chipDropObserver.WasNotified());
 }
 
@@ -166,12 +133,11 @@ TEST_F(ModelTestFixture, /*DISABLED_*/DropChip_ValidModelChipAndColumn_GameDataU
 {
     CreateNewGame(6u, 7u, NbPlayers::TWO, InARowValue::FOUR);
 
-    // We drop a chip:
     ASSERT_EQ(GetModel().GetActivePlayer(), cxmodel::Player("John Doe", cxmodel::MakeRed()));
     ASSERT_EQ(GetModel().GetNextPlayer(), cxmodel::Player("Mary Foo", cxmodel::MakeBlue()));
 
-    const cxmodel::Disc RED_CHIP{cxmodel::MakeRed()};
-    GetModel().DropChip(RED_CHIP, 0u);
+    // We drop a chip:
+    DropChips(1u);
 
     ASSERT_EQ(GetModel().GetActivePlayer(), cxmodel::Player("Mary Foo", cxmodel::MakeBlue()));
     ASSERT_EQ(GetModel().GetNextPlayer(), cxmodel::Player("John Doe", cxmodel::MakeRed()));
@@ -210,57 +176,26 @@ TEST_F(ModelTestFixture, /*DISABLED_*/DropChip_ValidModelGameIsWon_Notifications
     ASSERT_EQ(GetModel().GetActivePlayer(), cxmodel::Player("John Doe", cxmodel::MakeRed()));
     ASSERT_EQ(GetModel().GetNextPlayer(), cxmodel::Player("Mary Foo", cxmodel::MakeBlue()));
 
-    // DropChips...
-    GetModel().DropChip(RED_CHIP, 0u);
-    GetModel().DropChip(BLUE_CHIP, 1u);
-    GetModel().DropChip(RED_CHIP, 0u);
-    GetModel().DropChip(BLUE_CHIP, 1u);
-    GetModel().DropChip(RED_CHIP, 0u);
-    GetModel().DropChip(BLUE_CHIP, 1u);
+    DropChips(6u);
 
     // And the first player wins:
     ASSERT_FALSE(gameWonObserver.WasNotified());
-    GetModel().DropChip(RED_CHIP, 0u);
+    DropChips(1u);
     ASSERT_TRUE(gameWonObserver.WasNotified());
 }
 
 TEST_F(ModelTestFixture, /*DISABLED_*/DropChip_ValidModelGameIsWon_WinnerIsFirstPlayer)
 {
-    // We create valid new game information:
-    const cxmodel::ChipColor FIRST_PLAYER_COLOR{cxmodel::MakeRed()};
-    const cxmodel::Player FIRST_PLAYER{"John Doe", FIRST_PLAYER_COLOR};
-
-    const cxmodel::ChipColor SECOND_PLAYER_COLOR{cxmodel::MakeBlue()};
-    const cxmodel::Player SECOND_PLAYER{"Jane Doe", SECOND_PLAYER_COLOR};
-
-    const cxmodel::ChipColor THRIRD_PLAYER_COLOR{cxmodel::MakeYellow()};
-    const cxmodel::Player THIRD_PLAYER{"Bob Morane", THRIRD_PLAYER_COLOR};
-
     CreateNewGame(6u, 7u, NbPlayers::THREE, InARowValue::FOUR);
 
-    // We drop chips:
-    const cxmodel::Disc FIRST_PLAYER_CHIP{FIRST_PLAYER_COLOR};
-    const cxmodel::Disc SECOND_PLAYER_CHIP{SECOND_PLAYER_COLOR};
-    const cxmodel::Disc THIRD_PLAYER_CHIP{THRIRD_PLAYER_COLOR};
+    const cxmodel::Player FIRST_PLAYER = GetPlayer(0u);
+    const cxmodel::Player SECOND_PLAYER = GetPlayer(1u);
 
     ASSERT_EQ(GetModel().GetActivePlayer(), FIRST_PLAYER);
     ASSERT_EQ(GetModel().GetNextPlayer(), SECOND_PLAYER);
 
-    // DropChips...
-    GetModel().DropChip(FIRST_PLAYER_CHIP, 0u);
-    GetModel().DropChip(SECOND_PLAYER_CHIP, 1u);
-    GetModel().DropChip(THIRD_PLAYER_CHIP, 2u);
-
-    GetModel().DropChip(FIRST_PLAYER_CHIP, 0u);
-    GetModel().DropChip(SECOND_PLAYER_CHIP, 1u);
-    GetModel().DropChip(THIRD_PLAYER_CHIP, 2u);
-
-    GetModel().DropChip(FIRST_PLAYER_CHIP, 0u);
-    GetModel().DropChip(SECOND_PLAYER_CHIP, 1u);
-    GetModel().DropChip(THIRD_PLAYER_CHIP, 2u);
-
-    // And the first player wins:
-    GetModel().DropChip(FIRST_PLAYER_CHIP, 0u);
+    // We drop chips, and the first player wins:
+    DropChips(10u);
 
     ASSERT_EQ(FIRST_PLAYER, GetModel().GetActivePlayer());
 }
@@ -272,26 +207,14 @@ TEST_F(ModelTestFixture, /*DISABLED_*/DropChip_ValidModelGameIsWon_WinnerIsMiddl
     // We drop chips:
     const cxmodel::Player& FIRST_PLAYER = GetPlayer(0u);
     const cxmodel::Player& SECOND_PLAYER = GetPlayer(1u);
-    const cxmodel::Player& THIRD_PLAYER = GetPlayer(2u);
     ASSERT_EQ(GetModel().GetActivePlayer(), FIRST_PLAYER);
     ASSERT_EQ(GetModel().GetNextPlayer(), SECOND_PLAYER);
 
     // DropChips...
     const cxmodel::IChip& FIRST_PLAYER_CHIP = FIRST_PLAYER.GetChip();
     const cxmodel::IChip& SECOND_PLAYER_CHIP = SECOND_PLAYER.GetChip();
-    const cxmodel::IChip& THIRD_PLAYER_CHIP = THIRD_PLAYER.GetChip();
-    GetModel().DropChip(FIRST_PLAYER_CHIP, 0u);
-    GetModel().DropChip(SECOND_PLAYER_CHIP, 1u);
-    GetModel().DropChip(THIRD_PLAYER_CHIP, 2u);
 
-    GetModel().DropChip(FIRST_PLAYER_CHIP, 0u);
-    GetModel().DropChip(SECOND_PLAYER_CHIP, 1u);
-    GetModel().DropChip(THIRD_PLAYER_CHIP, 2u);
-
-    GetModel().DropChip(FIRST_PLAYER_CHIP, 0u);
-    GetModel().DropChip(SECOND_PLAYER_CHIP, 1u);
-    GetModel().DropChip(THIRD_PLAYER_CHIP, 2u);
-
+    DropChips(9u);
     GetModel().DropChip(FIRST_PLAYER_CHIP, 4u);
 
     // And the second player wins:
@@ -309,7 +232,6 @@ TEST_F(ModelTestFixture, /*DISABLED_*/DropChip_ValidModelGameIsWon_WinnerIsLastP
     const cxmodel::Player& SECOND_PLAYER = GetPlayer(1u);
     const cxmodel::Player& THIRD_PLAYER = GetPlayer(2u);
 
-    // DropChips...
     const cxmodel::IChip& FIRST_PLAYER_CHIP = FIRST_PLAYER.GetChip();
     const cxmodel::IChip& SECOND_PLAYER_CHIP = SECOND_PLAYER.GetChip();
     const cxmodel::IChip& THIRD_PLAYER_CHIP = THIRD_PLAYER.GetChip();
@@ -317,18 +239,7 @@ TEST_F(ModelTestFixture, /*DISABLED_*/DropChip_ValidModelGameIsWon_WinnerIsLastP
     ASSERT_EQ(GetModel().GetActivePlayer(), FIRST_PLAYER);
     ASSERT_EQ(GetModel().GetNextPlayer(), SECOND_PLAYER);
 
-    GetModel().DropChip(FIRST_PLAYER_CHIP, 0u);
-    GetModel().DropChip(SECOND_PLAYER_CHIP, 1u);
-    GetModel().DropChip(THIRD_PLAYER_CHIP, 2u);
-
-    GetModel().DropChip(FIRST_PLAYER_CHIP, 0u);
-    GetModel().DropChip(SECOND_PLAYER_CHIP, 1u);
-    GetModel().DropChip(THIRD_PLAYER_CHIP, 2u);
-
-    GetModel().DropChip(FIRST_PLAYER_CHIP, 0u);
-    GetModel().DropChip(SECOND_PLAYER_CHIP, 1u);
-    GetModel().DropChip(THIRD_PLAYER_CHIP, 2u);
-
+    DropChips(9u);
     GetModel().DropChip(FIRST_PLAYER_CHIP, 4u);
     GetModel().DropChip(SECOND_PLAYER_CHIP, 4u);
 
@@ -431,12 +342,10 @@ TEST_F(ModelTestFixture, /*DISABLED_*/ReinitializeCurrentGame_ValidModel_BoardRe
     ASSERT_EQ(GetModel().GetNextPlayer(), SECOND_PLAYER);
 
     // We drop chips:
+    DropChips(2u);
+
     const cxmodel::IChip& FIRST_PLAYER_CHIP = FIRST_PLAYER.GetChip();
     const cxmodel::IChip& SECOND_PLAYER_CHIP = SECOND_PLAYER.GetChip();
-
-    // DropChips...
-    GetModel().DropChip(FIRST_PLAYER_CHIP, 0u);
-    GetModel().DropChip(SECOND_PLAYER_CHIP, 1u);
 
     ASSERT_EQ(FIRST_PLAYER_CHIP.GetColor(), GetModel().GetChip(0u, 0u).GetColor());
     ASSERT_EQ(SECOND_PLAYER_CHIP.GetColor(), GetModel().GetChip(0u, 1u).GetColor());
@@ -478,34 +387,17 @@ TEST_F(ModelTestFixture, /*DISABLED_*/ReinitializeCurrentGame_ValidModel_WinReso
 
     const cxmodel::Player FIRST_PLAYER = GetPlayer(0u);
     const cxmodel::Player SECOND_PLAYER = GetPlayer(1u);
-    const cxmodel::Player THIRD_PLAYER = GetPlayer(2u);
-
-    const cxmodel::IChip& FIRST_PLAYER_CHIP = FIRST_PLAYER.GetChip();
-    const cxmodel::IChip& SECOND_PLAYER_CHIP = SECOND_PLAYER.GetChip();
-    const cxmodel::IChip& THIRD_PLAYER_CHIP = THIRD_PLAYER.GetChip();
-
     ASSERT_EQ(GetModel().GetActivePlayer(), FIRST_PLAYER);
     ASSERT_EQ(GetModel().GetNextPlayer(), SECOND_PLAYER);
 
-    // DropChips...
-    GetModel().DropChip(FIRST_PLAYER_CHIP, 0u);
-    GetModel().DropChip(SECOND_PLAYER_CHIP, 1u);
-    GetModel().DropChip(THIRD_PLAYER_CHIP, 2u);
-
-    GetModel().DropChip(FIRST_PLAYER_CHIP, 0u);
-    GetModel().DropChip(SECOND_PLAYER_CHIP, 1u);
-    GetModel().DropChip(THIRD_PLAYER_CHIP, 2u);
-
-    GetModel().DropChip(FIRST_PLAYER_CHIP, 0u);
-    GetModel().DropChip(SECOND_PLAYER_CHIP, 1u);
-    GetModel().DropChip(THIRD_PLAYER_CHIP, 2u);
+    DropChips(9u);
 
     // At this point, the first player could win by dropping a chip
     // at the first row. Instead, we reinitialize the game:
     GetModel().ReinitializeCurrentGame();
 
     // Then we play the "what could have been" the winning drop:
-    GetModel().DropChip(FIRST_PLAYER_CHIP, 0u);
+    DropChips(1u);
 
     // And we check if the game is resolved:
     ASSERT_FALSE(GetModel().IsWon());

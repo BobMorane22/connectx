@@ -61,6 +61,7 @@ size_t GetUnderlyingValue(T p_enumValue)
 } // namespace
 
 ModelTestFixture::ModelTestFixture()
+: m_nbOfPlayersInCurrentGame{0u}
 {
     m_logger = std::make_unique<LoggerMock>();
     EXPECT_TRUE(m_logger);
@@ -107,6 +108,7 @@ void ModelTestFixture::CreateNewGame(size_t p_boardHeight,
     const size_t nbOfPlayers = GetUnderlyingValue(p_nbPlayers);
     EXPECT_TRUE(nbOfPlayers >= m_model->GetMinimumNumberOfPlayers());
     EXPECT_TRUE(nbOfPlayers <= m_model->GetMaximumNumberOfPlayers());
+    m_nbOfPlayersInCurrentGame = nbOfPlayers;
 
     const size_t inARow = GetUnderlyingValue(p_inARowValue);
     EXPECT_TRUE(inARow >= m_model->GetMinimumInARowValue());
@@ -140,8 +142,15 @@ const cxmodel::Player& ModelTestFixture::GetPlayer(size_t p_playerIndex) const
     }
 }
 
-void ModelTestFixture::DropChips(size_t /*p_nbOfDrops*/)
+void ModelTestFixture::DropChips(size_t p_nbOfDrops)
 {
-    // Not yet implemented...
-    EXPECT_TRUE(false);
+    EXPECT_TRUE(p_nbOfDrops <= m_model->GetCurrentGridHeight() * m_model->GetCurrentGridWidth());
+    EXPECT_TRUE(m_nbOfPlayersInCurrentGame >= 2u);
+    EXPECT_TRUE(m_nbOfPlayersInCurrentGame <= PLAYERS.size());
+
+    for(size_t index = 0u; index < p_nbOfDrops; ++index)
+    {
+        const size_t column = index % m_nbOfPlayersInCurrentGame;
+        m_model->DropChip(PLAYERS[column].GetChip(), column);
+    }
 }
