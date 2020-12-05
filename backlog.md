@@ -70,6 +70,14 @@ And you will see the oversized window. This is due to the Main Window not being 
 when views are switched from Game to New Game (resize happens from New Game to Game).
 
 
+## (24-11-2020) Hightlight the current column as players drop chips
+
+For big boards, it can become very hard (almost impossible without touching the screen
+for players to see the discs in the column in which they are about to drop their chip.
+This is especially true if the game has just started and they are not a lot of dripped
+chips. To make it easier for users to know where their chip would land, the column on
+which their about to be dropped chip stands should be highlighted.
+
 
 ## (XX-XX-XXXX) Title
 
