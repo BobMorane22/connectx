@@ -65,6 +65,7 @@ OBJS_$(d) := $(d)/BoardTests.o \
              $(d)/StatusTests.o \
              $(d)/SubjectTestFixture.o \
              $(d)/SubjectTests.o \
+             $(d)/TieGameResolutionStrategyTests.o \
              $(d)/WinGameResolutionStrategyTests.o \
              cxmodel/libcxmodel.a
 

@@ -62,6 +62,7 @@ public:
                               const std::vector<Player>& p_players,
                               const std::vector<IBoard::Position>& p_takenPositions);
 
+    // cxmodel::IGameResolutionStrategy:
     bool Handle(const Player& p_activePlayer) const override;
 
 private:

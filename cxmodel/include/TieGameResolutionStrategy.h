@@ -56,8 +56,6 @@ public:
      * @param p_inARowValue        The in-a-row value.
      * @param p_players            A list of players.
      * @param p_takenPositions     A list of all taken positions on the board.
-     * @param p_activePlayerIndex  The index, in the list, of the active player.
-     * @param p_nbOfCompletedMoves The number of completed moves so far.
      *
      ********************************************************************************************/
     TieGameResolutionStrategy(const IBoard& p_board,
@@ -65,6 +63,7 @@ public:
                               const std::vector<Player>& p_players,
                               const std::vector<IBoard::Position>& p_takenPositions);
 
+    // cxmodel::IGameResolutionStrategy:
     bool Handle(const Player& p_activePlayer) const override;
 
 private:
@@ -89,6 +88,14 @@ private:
     const std::vector<IBoard::Position>& m_takenPositions;
     const int m_nbRows;
     const int m_nbColumns;
+
+    // The `m_turn` variable represented the active player's index
+    // in the player list. I have decided to leave it here named
+    // as such for historical reasons. Since it is an implementation
+    // only variable, I have made it mutable because it only
+    // remvoves the need to duplicated a calculation (I make it
+    // once in `Handle`, which is `const`.
+    mutable int m_turn;
 
 };
 

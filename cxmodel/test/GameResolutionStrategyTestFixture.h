@@ -46,7 +46,7 @@ public:
     cxmodel::Board MakeClassicBoard() const;
     cxmodel::Board Make9By9Board() const;
     cxmodel::Board Make6By10Board() const;
-    cxmodel::Board Make8By9Board() const;
+    cxmodel::Board Make9By8Board() const;
 
 private:
 
