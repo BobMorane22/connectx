@@ -33,7 +33,7 @@
 #include <Disc.h>
 #include <Model.h>
 #include <NotificationContext.h>
-#include <WinGameResolutionStrategy.h>
+#include <GameResolutionStrategyFactory.h>
 
 namespace
 {
@@ -152,12 +152,11 @@ void cxmodel::Model::CreateNewGame(const NewGameInformation& p_gameInformation)
 
     IF_CONDITION_NOT_MET_DO(m_board, return;);
 
-    m_winResolutionStrategy = std::make_unique<WinGameResolutionStrategy>(*m_board,
-                                                                          m_inARowValue,
-                                                                          m_playersInfo.m_players,
-                                                                          m_takenPositions);
-
+    m_winResolutionStrategy = GameResolutionStrategyFactory::Make(*m_board, m_inARowValue, m_playersInfo.m_players, m_takenPositions, GameResolution::WIN);
     IF_CONDITION_NOT_MET_DO(m_winResolutionStrategy, return;);
+
+    m_tieResolutionStrategy = GameResolutionStrategyFactory::Make(*m_board, m_inARowValue, m_playersInfo.m_players, m_takenPositions, GameResolution::TIE);
+    IF_CONDITION_NOT_MET_DO(m_tieResolutionStrategy, return;);
 
     Notify(NotificationContext::CREATE_NEW_GAME);
 
@@ -262,14 +261,14 @@ void cxmodel::Model::ReinitializeCurrentGame()
     m_playersInfo.m_activePlayerIndex = 0u;
     m_playersInfo.m_nextPlayerIndex = 1u;
 
-    // The resolution strategy has to be recreated, as the old reference to the board
+    // The win resolution strategy has to be recreated, as the old reference to the board
     // was destroyed upon assignement:
-    m_winResolutionStrategy = std::make_unique<WinGameResolutionStrategy>(*m_board,
-                                                                          m_inARowValue,
-                                                                          m_playersInfo.m_players,
-                                                                          m_takenPositions);
-
+    m_winResolutionStrategy = GameResolutionStrategyFactory::Make(*m_board, m_inARowValue, m_playersInfo.m_players, m_takenPositions, GameResolution::WIN);
     IF_CONDITION_NOT_MET_DO(m_winResolutionStrategy, return;);
+
+    // Same thing for the tie resolution strategy:
+    m_tieResolutionStrategy = GameResolutionStrategyFactory::Make(*m_board, m_inARowValue, m_playersInfo.m_players, m_takenPositions, GameResolution::TIE);
+    IF_CONDITION_NOT_MET_DO(m_tieResolutionStrategy, return;);
 
     Notify(NotificationContext::GAME_REINITIALIZED);
 
@@ -330,7 +329,9 @@ bool cxmodel::Model::IsWon() const
 
 bool cxmodel::Model::IsTie() const
 {
-    throw std::logic_error{"Not yet implemented."};
+    IF_CONDITION_NOT_MET_DO(m_tieResolutionStrategy, return false;);
+
+    return m_tieResolutionStrategy->Handle(GetActivePlayer());
 }
 
 void cxmodel::Model::Undo()

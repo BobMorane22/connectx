@@ -55,6 +55,7 @@ OBJS_$(d) := $(d)/src/CommandCreateNewGame.o \
              $(d)/src/CommandStack.o \
              $(d)/src/Disc.o \
              $(d)/src/Board.o \
+             $(d)/src/GameResolutionStrategyFactory.o \
              $(d)/src/IBoard.o \
              $(d)/src/IChip.o \
              $(d)/src/Model.o \

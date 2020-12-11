@@ -449,7 +449,11 @@ TEST_F(ModelTestFixture, /*DISABLED_*/IsWon_ValidModel_DoesNotThrow)
 
 TEST_F(ModelTestFixture, /*DISABLED_*/IsTie_ValidModel_ThrowsForNow)
 {
-    ASSERT_THROW(GetModel().IsTie(), std::logic_error);
+    DisableStdStreamsRAII streamDisabler;
+
+    // This will assert:
+    ASSERT_NO_THROW(GetModel().IsTie());
+    ASSERT_FALSE(GetModel().IsTie());
 }
 
 TEST(Model, /*DISABLED_*/Undo_RandomCommand_UndoCalledOnCommandStack)

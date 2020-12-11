@@ -144,6 +144,7 @@ private:
     std::vector<IBoard::Position> m_takenPositions;
 
     std::unique_ptr<IGameResolutionStrategy> m_winResolutionStrategy;
+    std::unique_ptr<IGameResolutionStrategy> m_tieResolutionStrategy;
 };
 
 } // namespace cxmodel

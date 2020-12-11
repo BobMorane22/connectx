@@ -57,6 +57,7 @@ OBJS_$(d) := $(d)/BoardTests.o \
              $(d)/ConcreteSubjectMock.o \
              $(d)/DisableStdStreamsRAII.o \
              $(d)/DiscTests.o \
+             $(d)/GameResolutionStrategyFactoryTests.o \
              $(d)/IBoardTests.o \
              $(d)/GameResolutionStrategyTestFixture.o \
              $(d)/LoggerMock.o \
