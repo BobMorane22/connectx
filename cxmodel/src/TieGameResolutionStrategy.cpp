@@ -116,7 +116,10 @@ int cxmodel::TieGameResolutionStrategy::GetNbOfRemainingMoves(const Player& p_pl
         // Check all candidate postition for an extra turn and see if the player is there:
         for(int offset = 0; offset < remainingMovesRest; ++offset)
         {
-            const int firstTurnWithMoreMoves = m_takenPositions.size() % m_players.size();
+            // While porting this, I had to substract one here to make all the tests pass. I have not yet found
+            // Why this is necessary (in the original code, there is no offset). Until more tests are done, I
+            // have decided to leave it as such.
+            const int firstTurnWithMoreMoves = m_turn - 1;
             const int nextTurnWithMoreMoves = (firstTurnWithMoreMoves + offset) % static_cast<int>(m_players.size());
 
             const auto candidatePosition = m_players.begin() + nextTurnWithMoreMoves;

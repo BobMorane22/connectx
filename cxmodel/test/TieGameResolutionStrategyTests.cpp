@@ -99,31 +99,30 @@ TEST_F(GameResolutionStrategyTestFixture, /*DISABLED*/TieHandle_ClassicGameBoard
     DropChip(4u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[0]));
     DropChip(5u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[1]));
 
-    // Pass active player index to Handle. Pass the takenPosition vector (not only its size).
-    cxmodel::TieGameResolutionStrategy tieStrategy{board, inARowValue, players, takenPositions};
-
     DropChip(6u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[0]));
     DropChip(0u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[1]));
-    ASSERT_FALSE(tieStrategy.Handle(players[1]));
 
-    // Form this point on, the game should report a tie on every move, until completion:
+    cxmodel::TieGameResolutionStrategy tieStrategy{board, inARowValue, players, takenPositions};
+    ASSERT_FALSE(tieStrategy.Handle(players[0]));
+
+    // From this point on, the game should report a tie on every move, until completion:
     DropChip(1u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[0]));
-    ASSERT_TRUE(tieStrategy.Handle(players[0]));
+    ASSERT_TRUE(tieStrategy.Handle(players[1]));
 
     DropChip(2u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[1]));
-    ASSERT_TRUE(tieStrategy.Handle(players[1]));
+    ASSERT_TRUE(tieStrategy.Handle(players[0]));
 
     DropChip(3u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[0]));
-    ASSERT_TRUE(tieStrategy.Handle(players[0]));
+    ASSERT_TRUE(tieStrategy.Handle(players[1]));
 
     DropChip(4u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[1]));
-    ASSERT_TRUE(tieStrategy.Handle(players[1]));
-
-    DropChip(5u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[0]));
     ASSERT_TRUE(tieStrategy.Handle(players[0]));
 
-    DropChip(6u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[1]));
+    DropChip(5u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[0]));
     ASSERT_TRUE(tieStrategy.Handle(players[1]));
+
+    DropChip(6u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[1]));
+    ASSERT_TRUE(tieStrategy.Handle(players[0]));
 }
 
 TEST_F(GameResolutionStrategyTestFixture, /*DISABLED*/TieHandle_9by8GameBoardConnect7ThreePlayersEdgeCaseHorizontal_ReturnsTrue)
@@ -207,67 +206,66 @@ TEST_F(GameResolutionStrategyTestFixture, /*DISABLED*/TieHandle_9by8GameBoardCon
     DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[0]));
     DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[1]));
 
-    // Pass active player index to Handle. Pass the takenPosition vector (not only its size).
     cxmodel::TieGameResolutionStrategy tieStrategy{board, inARowValue, players, takenPositions};
-    ASSERT_FALSE(tieStrategy.Handle(players[1]));
+    ASSERT_FALSE(tieStrategy.Handle(players[2]));
 
-    // Form this point on, the game should report a tie on every move, until completion:
+    // From this point on, the game should report a tie on every move, until completion:
     DropChip(2u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[2]));
-    ASSERT_TRUE(tieStrategy.Handle(players[2]));
+    ASSERT_TRUE(tieStrategy.Handle(players[0]));
 
     DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[0]));
-    ASSERT_TRUE(tieStrategy.Handle(players[0]));
+    ASSERT_TRUE(tieStrategy.Handle(players[1]));
 
     DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[1]));
-    ASSERT_TRUE(tieStrategy.Handle(players[1]));
+    ASSERT_TRUE(tieStrategy.Handle(players[2]));
 
     DropChip(2u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[2]));
-    ASSERT_TRUE(tieStrategy.Handle(players[2]));
-
-    DropChip(3u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[0]));
     ASSERT_TRUE(tieStrategy.Handle(players[0]));
 
-    DropChip(4u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[1]));
+    DropChip(3u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[0]));
     ASSERT_TRUE(tieStrategy.Handle(players[1]));
 
-    DropChip(5u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[2]));
+    DropChip(4u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[1]));
     ASSERT_TRUE(tieStrategy.Handle(players[2]));
 
-    DropChip(3u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[0]));
+    DropChip(5u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[2]));
     ASSERT_TRUE(tieStrategy.Handle(players[0]));
 
-    DropChip(4u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[1]));
+    DropChip(3u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[0]));
     ASSERT_TRUE(tieStrategy.Handle(players[1]));
 
-    DropChip(5u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[2]));
+    DropChip(4u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[1]));
     ASSERT_TRUE(tieStrategy.Handle(players[2]));
 
-    DropChip(3u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[0]));
+    DropChip(5u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[2]));
     ASSERT_TRUE(tieStrategy.Handle(players[0]));
 
-    DropChip(4u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[1]));
+    DropChip(3u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[0]));
     ASSERT_TRUE(tieStrategy.Handle(players[1]));
 
-    DropChip(5u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[2]));
+    DropChip(4u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[1]));
     ASSERT_TRUE(tieStrategy.Handle(players[2]));
+
+    DropChip(5u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[2]));
+    ASSERT_TRUE(tieStrategy.Handle(players[0]));
 
     DropChip(6u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[0]));
-    ASSERT_TRUE(tieStrategy.Handle(players[0]));
+    ASSERT_TRUE(tieStrategy.Handle(players[1]));
 
     DropChip(6u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[1]));
-    ASSERT_TRUE(tieStrategy.Handle(players[1]));
+    ASSERT_TRUE(tieStrategy.Handle(players[2]));
 
     DropChip(6u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[2]));
-    ASSERT_TRUE(tieStrategy.Handle(players[2]));
-
-    DropChip(7u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[0]));
     ASSERT_TRUE(tieStrategy.Handle(players[0]));
 
-    DropChip(7u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[1]));
+    DropChip(7u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[0]));
     ASSERT_TRUE(tieStrategy.Handle(players[1]));
 
-    DropChip(7u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[2]));
+    DropChip(7u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[1]));
     ASSERT_TRUE(tieStrategy.Handle(players[2]));
+
+    DropChip(7u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[2]));
+    ASSERT_TRUE(tieStrategy.Handle(players[0]));
 }
 
 // This test may not be such an edge case... Enhancement seems possible.
@@ -338,22 +336,21 @@ TEST_F(GameResolutionStrategyTestFixture, /*DISABLED*/TieHandle_ClassicGameBoard
     DropChip(5u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[0]));
     DropChip(5u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[1]));
 
-    // Pass active player index to Handle. Pass the takenPosition vector (not only its size).
     cxmodel::TieGameResolutionStrategy tieStrategy{board, inARowValue, players, takenPositions};
-    ASSERT_FALSE(tieStrategy.Handle(players[1]));
+    ASSERT_FALSE(tieStrategy.Handle(players[0]));
 
-    // Form this point on, the game should report a tie on every move, until completion:
+    // From this point on, the game should report a tie on every move, until completion:
     DropChip(5u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[0]));
-    ASSERT_TRUE(tieStrategy.Handle(players[0]));
+    ASSERT_TRUE(tieStrategy.Handle(players[1]));
 
     DropChip(6u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[1]));
-    ASSERT_TRUE(tieStrategy.Handle(players[1]));
+    ASSERT_TRUE(tieStrategy.Handle(players[0]));
 
     DropChip(6u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[0]));
-    ASSERT_TRUE(tieStrategy.Handle(players[0]));
+    ASSERT_TRUE(tieStrategy.Handle(players[1]));
 
     DropChip(6u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[1]));
-    ASSERT_TRUE(tieStrategy.Handle(players[1]));
+    ASSERT_TRUE(tieStrategy.Handle(players[0]));
 }
 
 TEST_F(GameResolutionStrategyTestFixture, /*DISABLED*/TieHandle_9by8GameBoardConnect7ThreePlayersEdgeCaseVertical_ReturnsTrue)
@@ -411,7 +408,7 @@ TEST_F(GameResolutionStrategyTestFixture, /*DISABLED*/TieHandle_9by8GameBoardCon
     DropChip(2u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[2]));
 
     DropChip(3u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[0]));
-    DropChip(2u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[1])); // Fails from here...
+    DropChip(2u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[1]));
     DropChip(3u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[2]));
 
     DropChip(4u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[0]));
@@ -440,61 +437,60 @@ TEST_F(GameResolutionStrategyTestFixture, /*DISABLED*/TieHandle_9by8GameBoardCon
 
     DropChip(7u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[0]));
 
-    // Pass active player index to Handle. Pass the takenPosition vector (not only its size).
     cxmodel::TieGameResolutionStrategy tieStrategy{board, inARowValue, players, takenPositions};
-    ASSERT_FALSE(tieStrategy.Handle(players[0]));
+    ASSERT_FALSE(tieStrategy.Handle(players[1]));
 
-    // Form this point on, the game should report a tie on every move, until completion:
+    // From this point on, the game should report a tie on every move, until completion:
     DropChip(5u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[1]));
-    ASSERT_TRUE(tieStrategy.Handle(players[1]));
+    ASSERT_TRUE(tieStrategy.Handle(players[2]));
 
     DropChip(5u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[2]));
-    ASSERT_TRUE(tieStrategy.Handle(players[2]));
+    ASSERT_TRUE(tieStrategy.Handle(players[0]));
 
     DropChip(5u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[0]));
-    ASSERT_TRUE(tieStrategy.Handle(players[0]));
+    ASSERT_TRUE(tieStrategy.Handle(players[1]));
 
     DropChip(5u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[1]));
-    ASSERT_TRUE(tieStrategy.Handle(players[1]));
+    ASSERT_TRUE(tieStrategy.Handle(players[2]));
 
     DropChip(5u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[2]));
-    ASSERT_TRUE(tieStrategy.Handle(players[2]));
+    ASSERT_TRUE(tieStrategy.Handle(players[0]));
 
     DropChip(5u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[0]));
-    ASSERT_TRUE(tieStrategy.Handle(players[0]));
-
-    DropChip(6u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[1]));
     ASSERT_TRUE(tieStrategy.Handle(players[1]));
 
-    DropChip(6u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[2]));
+    DropChip(6u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[1]));
     ASSERT_TRUE(tieStrategy.Handle(players[2]));
 
-    DropChip(6u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[0]));
+    DropChip(6u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[2]));
     ASSERT_TRUE(tieStrategy.Handle(players[0]));
 
-    DropChip(6u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[1]));
+    DropChip(6u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[0]));
     ASSERT_TRUE(tieStrategy.Handle(players[1]));
 
-    DropChip(6u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[2]));
+    DropChip(6u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[1]));
     ASSERT_TRUE(tieStrategy.Handle(players[2]));
 
-    DropChip(6u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[0]));
+    DropChip(6u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[2]));
     ASSERT_TRUE(tieStrategy.Handle(players[0]));
+
+    DropChip(6u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[0]));
+    ASSERT_TRUE(tieStrategy.Handle(players[1]));
 
     DropChip(7u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[1]));
-    ASSERT_TRUE(tieStrategy.Handle(players[1]));
+    ASSERT_TRUE(tieStrategy.Handle(players[2]));
 
     DropChip(7u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[2]));
-    ASSERT_TRUE(tieStrategy.Handle(players[2]));
+    ASSERT_TRUE(tieStrategy.Handle(players[0]));
 
     DropChip(7u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[0]));
-    ASSERT_TRUE(tieStrategy.Handle(players[0]));
-
-    DropChip(7u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[1]));
     ASSERT_TRUE(tieStrategy.Handle(players[1]));
 
-    DropChip(7u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[2]));
+    DropChip(7u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[1]));
     ASSERT_TRUE(tieStrategy.Handle(players[2]));
+
+    DropChip(7u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[2]));
+    ASSERT_TRUE(tieStrategy.Handle(players[0]));
 }
 
 TEST_F(GameResolutionStrategyTestFixture, /*DISABLED*/TieHandle_ClassicGameBoardEdgeCaseDiagonalUpward_ReturnsTrue)
@@ -566,19 +562,18 @@ TEST_F(GameResolutionStrategyTestFixture, /*DISABLED*/TieHandle_ClassicGameBoard
 
     DropChip(6u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[0]));
 
-    // Pass active player index to Handle. Pass the takenPosition vector (not only its size).
     cxmodel::TieGameResolutionStrategy tieStrategy{board, inARowValue, players, takenPositions};
-    ASSERT_FALSE(tieStrategy.Handle(players[0]));
+    ASSERT_FALSE(tieStrategy.Handle(players[1]));
 
-    // Form this point on, the game should report a tie on every move, until completion:
+    // From this point on, the game should report a tie on every move, until completion:
     DropChip(4u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[1]));
-    ASSERT_TRUE(tieStrategy.Handle(players[1]));
-
-    DropChip(5u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[0]));
     ASSERT_TRUE(tieStrategy.Handle(players[0]));
 
-    DropChip(6u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[1]));
+    DropChip(5u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[0]));
     ASSERT_TRUE(tieStrategy.Handle(players[1]));
+
+    DropChip(6u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[1]));
+    ASSERT_TRUE(tieStrategy.Handle(players[0]));
 }
 
 TEST_F(GameResolutionStrategyTestFixture, /*DISABLED*/TieHandle_9by8GameBoardConnect7ThreePlayersEdgeCaseDiagonalUpward_ReturnsTrue)
@@ -665,61 +660,60 @@ TEST_F(GameResolutionStrategyTestFixture, /*DISABLED*/TieHandle_9by8GameBoardCon
 
     DropChip(5u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[0]));
 
-    // Pass active player index to Handle. Pass the takenPosition vector (not only its size).
     cxmodel::TieGameResolutionStrategy tieStrategy{board, inARowValue, players, takenPositions};
-    ASSERT_FALSE(tieStrategy.Handle(players[0]));
+    ASSERT_FALSE(tieStrategy.Handle(players[1]));
 
-    // Form this point on, the game should report a tie on every move, until completion:
+    // From this point on, the game should report a tie on every move, until completion:
     DropChip(5u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[1]));
-    ASSERT_TRUE(tieStrategy.Handle(players[1]));
+    ASSERT_TRUE(tieStrategy.Handle(players[2]));
 
     DropChip(2u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[2]));
-    ASSERT_TRUE(tieStrategy.Handle(players[2]));
+    ASSERT_TRUE(tieStrategy.Handle(players[0]));
 
     DropChip(3u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[0]));
-    ASSERT_TRUE(tieStrategy.Handle(players[0]));
+    ASSERT_TRUE(tieStrategy.Handle(players[1]));
 
     DropChip(3u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[1]));
-    ASSERT_TRUE(tieStrategy.Handle(players[1]));
+    ASSERT_TRUE(tieStrategy.Handle(players[2]));
 
     DropChip(4u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[2]));
-    ASSERT_TRUE(tieStrategy.Handle(players[2]));
+    ASSERT_TRUE(tieStrategy.Handle(players[0]));
 
     DropChip(4u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[0]));
-    ASSERT_TRUE(tieStrategy.Handle(players[0]));
+    ASSERT_TRUE(tieStrategy.Handle(players[1]));
 
     DropChip(4u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[1]));
-    ASSERT_TRUE(tieStrategy.Handle(players[1]));
-
-    DropChip(6u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[2]));
     ASSERT_TRUE(tieStrategy.Handle(players[2]));
 
-    DropChip(6u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[0]));
+    DropChip(6u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[2]));
     ASSERT_TRUE(tieStrategy.Handle(players[0]));
+
+    DropChip(6u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[0]));
+    ASSERT_TRUE(tieStrategy.Handle(players[1]));
 
     DropChip(6u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[1]));
-    ASSERT_TRUE(tieStrategy.Handle(players[1]));
+    ASSERT_TRUE(tieStrategy.Handle(players[2]));
 
     DropChip(6u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[2]));
-    ASSERT_TRUE(tieStrategy.Handle(players[2]));
+    ASSERT_TRUE(tieStrategy.Handle(players[0]));
 
     DropChip(6u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[0]));
-    ASSERT_TRUE(tieStrategy.Handle(players[0]));
-
-    DropChip(7u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[1]));
     ASSERT_TRUE(tieStrategy.Handle(players[1]));
 
-    DropChip(7u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[2]));
+    DropChip(7u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[1]));
     ASSERT_TRUE(tieStrategy.Handle(players[2]));
+
+    DropChip(7u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[2]));
+    ASSERT_TRUE(tieStrategy.Handle(players[0]));
 
     DropChip(7u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[0]));
-    ASSERT_TRUE(tieStrategy.Handle(players[0]));
-
-    DropChip(7u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[1]));
     ASSERT_TRUE(tieStrategy.Handle(players[1]));
 
-    DropChip(7u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[2]));
+    DropChip(7u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[1]));
     ASSERT_TRUE(tieStrategy.Handle(players[2]));
+
+    DropChip(7u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[2]));
+    ASSERT_TRUE(tieStrategy.Handle(players[0]));
 }
 
 TEST_F(GameResolutionStrategyTestFixture, /*DISABLED*/TieHandle_ClassicGameBoardEdgeCaseDiagonalDownward_ReturnsTrue)
@@ -791,19 +785,18 @@ TEST_F(GameResolutionStrategyTestFixture, /*DISABLED*/TieHandle_ClassicGameBoard
 
     DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[0]));
 
-    // Pass active player index to Handle. Pass the takenPosition vector (not only its size).
     cxmodel::TieGameResolutionStrategy tieStrategy{board, inARowValue, players, takenPositions};
-    ASSERT_FALSE(tieStrategy.Handle(players[0]));
+    ASSERT_FALSE(tieStrategy.Handle(players[1]));
 
-    // Form this point on, the game should report a tie on every move, until completion:
+    // From this point on, the game should report a tie on every move, until completion:
     DropChip(2u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[1]));
-    ASSERT_TRUE(tieStrategy.Handle(players[1]));
-
-    DropChip(1u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[0]));
     ASSERT_TRUE(tieStrategy.Handle(players[0]));
 
-    DropChip(0u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[1]));
+    DropChip(1u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[0]));
     ASSERT_TRUE(tieStrategy.Handle(players[1]));
+
+    DropChip(0u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[1]));
+    ASSERT_TRUE(tieStrategy.Handle(players[0]));
 }
 
 TEST_F(GameResolutionStrategyTestFixture, /*DISABLED*/TieHandle_9by8GameBoardConnect7ThreePlayersEdgeCaseDiagonalDownward_ReturnsTrue)
@@ -890,59 +883,58 @@ TEST_F(GameResolutionStrategyTestFixture, /*DISABLED*/TieHandle_9by8GameBoardCon
 
     DropChip(2u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[0]));
 
-    // Pass active player index to Handle. Pass the takenPosition vector (not only its size).
     cxmodel::TieGameResolutionStrategy tieStrategy{board, inARowValue, players, takenPositions};
-    ASSERT_FALSE(tieStrategy.Handle(players[0]));
+    ASSERT_FALSE(tieStrategy.Handle(players[1]));
 
-    // Form this point on, the game should report a tie on every move, until completion:
+    // From this point on, the game should report a tie on every move, until completion:
     DropChip(2u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[1]));
-    ASSERT_TRUE(tieStrategy.Handle(players[1]));
+    ASSERT_TRUE(tieStrategy.Handle(players[2]));
 
     DropChip(5u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[2]));
-    ASSERT_TRUE(tieStrategy.Handle(players[2]));
+    ASSERT_TRUE(tieStrategy.Handle(players[0]));
 
     DropChip(4u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[0]));
-    ASSERT_TRUE(tieStrategy.Handle(players[0]));
+    ASSERT_TRUE(tieStrategy.Handle(players[1]));
 
     DropChip(4u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[1]));
-    ASSERT_TRUE(tieStrategy.Handle(players[1]));
+    ASSERT_TRUE(tieStrategy.Handle(players[2]));
 
     DropChip(3u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[2]));
-    ASSERT_TRUE(tieStrategy.Handle(players[2]));
+    ASSERT_TRUE(tieStrategy.Handle(players[0]));
 
     DropChip(3u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[0]));
-    ASSERT_TRUE(tieStrategy.Handle(players[0]));
+    ASSERT_TRUE(tieStrategy.Handle(players[1]));
 
     DropChip(3u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[1]));
-    ASSERT_TRUE(tieStrategy.Handle(players[1]));
-
-    DropChip(1u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[2]));
     ASSERT_TRUE(tieStrategy.Handle(players[2]));
 
-    DropChip(1u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[0]));
+    DropChip(1u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[2]));
     ASSERT_TRUE(tieStrategy.Handle(players[0]));
+
+    DropChip(1u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[0]));
+    ASSERT_TRUE(tieStrategy.Handle(players[1]));
 
     DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[1]));
-    ASSERT_TRUE(tieStrategy.Handle(players[1]));
+    ASSERT_TRUE(tieStrategy.Handle(players[2]));
 
     DropChip(1u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[2]));
-    ASSERT_TRUE(tieStrategy.Handle(players[2]));
+    ASSERT_TRUE(tieStrategy.Handle(players[0]));
 
     DropChip(1u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[0]));
-    ASSERT_TRUE(tieStrategy.Handle(players[0]));
-
-    DropChip(0u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[1]));
     ASSERT_TRUE(tieStrategy.Handle(players[1]));
 
-    DropChip(0u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[2]));
+    DropChip(0u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[1]));
     ASSERT_TRUE(tieStrategy.Handle(players[2]));
+
+    DropChip(0u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[2]));
+    ASSERT_TRUE(tieStrategy.Handle(players[0]));
 
     DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[0]));
-    ASSERT_TRUE(tieStrategy.Handle(players[0]));
-
-    DropChip(0u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[1]));
     ASSERT_TRUE(tieStrategy.Handle(players[1]));
 
-    DropChip(0u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[2]));
+    DropChip(0u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[1]));
     ASSERT_TRUE(tieStrategy.Handle(players[2]));
+
+    DropChip(0u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(winStrategy.Handle(players[2]));
+    ASSERT_TRUE(tieStrategy.Handle(players[0]));
 }
