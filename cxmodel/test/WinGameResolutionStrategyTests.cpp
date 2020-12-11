@@ -32,6 +32,13 @@
 
 #include "GameResolutionStrategyTestFixture.h"
 
+namespace
+{
+
+static const cxmodel::Player UNUSED_PLAYER{"Unused", cxmodel::MakeRed()};
+
+} // namespace
+
 TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_ClassicBoardNoDiscs_ReturnsFalse)
 {
     const cxmodel::Board board = MakeClassicBoard();
@@ -42,7 +49,7 @@ TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_ClassicBoardNoDisc
 
     cxmodel::WinGameResolutionStrategy strategy{board, inARowValue, players, takenPositions};
 
-    ASSERT_FALSE(strategy.Handle(players[0]));
+    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
 }
 
 TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_9By9BoardNoDiscs_ReturnsFalse)
@@ -55,7 +62,7 @@ TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_9By9BoardNoDiscs_R
 
     cxmodel::WinGameResolutionStrategy strategy{board, inARowValue, players, takenPositions};
 
-    ASSERT_FALSE(strategy.Handle(players[0]));
+    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
 }
 
 TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_6By10GameBoardNoDiscs_ReturnsFalse)
@@ -68,7 +75,7 @@ TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_6By10GameBoardNoDi
 
     cxmodel::WinGameResolutionStrategy strategy{board, inARowValue, players, takenPositions};
 
-    ASSERT_FALSE(strategy.Handle(players[0]));
+    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
 }
 
 TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_ClassicGameBoardHorizontalWinBottomLeftCorner_ReturnsTrue)
@@ -81,15 +88,15 @@ TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_ClassicGameBoardHo
 
     cxmodel::WinGameResolutionStrategy strategy{board, inARowValue, players, takenPositions};
 
-    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(5u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(1u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(6u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(2u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(5u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
+    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(5u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(6u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(2u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(5u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
     DropChip(3u, players[0].GetChip(), board, takenPositions);
 
-    ASSERT_TRUE(strategy.Handle(players[0]));
+    ASSERT_TRUE(strategy.Handle(UNUSED_PLAYER));
 }
 
 TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_ClassicGameBoardHorizontalNoWinBottomLeftCorner_ReturnsFalse)
@@ -102,13 +109,13 @@ TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_ClassicGameBoardHo
 
     cxmodel::WinGameResolutionStrategy strategy{board, inARowValue, players, takenPositions};
 
-    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(5u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(1u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(6u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
+    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(5u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(6u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
     DropChip(2u, players[0].GetChip(), board, takenPositions);
 
-    ASSERT_FALSE(strategy.Handle(players[0]));
+    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
 }
 
 TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_6By10GameBoardHorizontalWinBottomLeftCorner_ReturnsTrue)
@@ -121,21 +128,21 @@ TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_6By10GameBoardHori
 
     cxmodel::WinGameResolutionStrategy strategy{board, inARowValue, players, takenPositions};
 
-    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(8u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(9u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(1u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(9u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(8u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(2u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(8u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(9u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(3u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(9u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(8u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
+    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(8u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(9u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(9u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(8u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(2u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(8u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(9u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(3u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(9u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(8u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
     DropChip(4u, players[0].GetChip(), board, takenPositions);
 
-    ASSERT_TRUE(strategy.Handle(players[0]));
+    ASSERT_TRUE(strategy.Handle(UNUSED_PLAYER));
 }
 
 TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_6By10GameBoardHorizontalNoWinBottomLeftCorner_ReturnsFalse)
@@ -148,18 +155,18 @@ TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_6By10GameBoardHori
 
     cxmodel::WinGameResolutionStrategy strategy{board, inARowValue, players, takenPositions};
 
-    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(8u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(9u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(1u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(9u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(8u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(2u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(8u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(9u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
+    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(8u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(9u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(9u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(8u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(2u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(8u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(9u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
     DropChip(3u, players[0].GetChip(), board, takenPositions);
 
-    ASSERT_FALSE(strategy.Handle(players[0]));
+    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
 }
 
 TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_ClassicGameBoardHorizontalWinBottomRightCorner_ReturnsTrue)
@@ -172,15 +179,15 @@ TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_ClassicGameBoardHo
 
     cxmodel::WinGameResolutionStrategy strategy{board, inARowValue, players, takenPositions};
 
-    DropChip(3u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(0u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(4u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(5u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
+    DropChip(3u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(4u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(5u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
     DropChip(6u, players[0].GetChip(), board, takenPositions);
 
-    ASSERT_TRUE(strategy.Handle(players[0]));
+    ASSERT_TRUE(strategy.Handle(UNUSED_PLAYER));
 }
 
 TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_ClassicGameBoardHorizontalNoWinBottomRightCorner_ReturnsFalse)
@@ -193,13 +200,13 @@ TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_ClassicGameBoardHo
 
     cxmodel::WinGameResolutionStrategy strategy{board, inARowValue, players, takenPositions};
 
-    DropChip(3u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(0u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(4u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
+    DropChip(3u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(4u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
     DropChip(5u, players[0].GetChip(), board, takenPositions);
 
-    ASSERT_FALSE(strategy.Handle(players[0]));
+    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
 }
 
 TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_6By10GameBoardHorizontalWinBottomRightCorner_ReturnsTrue)
@@ -212,21 +219,21 @@ TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_6By10GameBoardHori
 
     cxmodel::WinGameResolutionStrategy strategy{board, inARowValue, players, takenPositions};
 
-    DropChip(5u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(0u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(1u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(6u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(0u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(7u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(0u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(1u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(8u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(0u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
+    DropChip(5u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(6u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(7u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(8u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
     DropChip(9u, players[0].GetChip(), board, takenPositions);
 
-    ASSERT_TRUE(strategy.Handle(players[0]));}
+    ASSERT_TRUE(strategy.Handle(UNUSED_PLAYER));}
 
 TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_6By10GameBoardHorizontalNoWinBottomRightCorner_ReturnsFalse)
 {
@@ -238,18 +245,18 @@ TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_6By10GameBoardHori
 
     cxmodel::WinGameResolutionStrategy strategy{board, inARowValue, players, takenPositions};
 
-    DropChip(5u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(0u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(1u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(6u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(0u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(7u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(0u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(1u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
+    DropChip(5u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(6u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(7u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
     DropChip(8u, players[0].GetChip(), board, takenPositions);
 
-    ASSERT_FALSE(strategy.Handle(players[0]));
+    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
 }
 
 TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_ClassicGameBoardHorizontalWinTopLeftCorner_ReturnsTrue)
@@ -262,37 +269,37 @@ TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_ClassicGameBoardHo
 
     cxmodel::WinGameResolutionStrategy strategy{board, inARowValue, players, takenPositions};
 
-    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(2u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(3u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(4u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(0u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(1u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(2u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(3u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(0u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(1u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(2u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(3u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(4u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(2u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(3u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(2u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(3u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(5u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(1u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(6u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(2u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(5u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
+    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(2u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(3u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(4u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(2u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(3u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(2u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(3u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(4u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(2u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(3u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(2u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(3u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(5u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(6u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(2u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(5u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
     DropChip(3u, players[0].GetChip(), board, takenPositions);
 
-    ASSERT_TRUE(strategy.Handle(players[0]));
+    ASSERT_TRUE(strategy.Handle(UNUSED_PLAYER));
 }
 
 TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_ClassicGameBoardHorizontalNoWinTopLeftCorner_ReturnsFalse)
@@ -305,35 +312,35 @@ TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_ClassicGameBoardHo
 
     cxmodel::WinGameResolutionStrategy strategy{board, inARowValue, players, takenPositions};
 
-    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(2u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(3u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(4u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(0u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(1u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(2u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(3u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(0u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(1u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(2u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(3u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(4u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(2u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(3u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(2u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(3u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(5u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(1u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(6u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
+    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(2u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(3u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(4u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(2u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(3u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(2u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(3u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(4u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(2u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(3u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(2u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(3u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(5u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(6u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
     DropChip(2u, players[0].GetChip(), board, takenPositions);
 
-    ASSERT_FALSE(strategy.Handle(players[0]));
+    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
 }
 
 TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_6By10GameBoardHorizontalWinTopLeftCorner_ReturnsTrue)
@@ -346,48 +353,48 @@ TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_6By10GameBoardHori
 
     cxmodel::WinGameResolutionStrategy strategy{board, inARowValue, players, takenPositions};
 
-    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(2u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(3u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(4u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(5u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(6u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(0u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(1u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(2u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(3u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(4u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(2u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(3u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(4u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(0u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(1u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(2u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(3u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(4u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(0u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(1u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(2u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(3u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(4u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(5u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(5u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(1u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(5u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(5u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(2u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(6u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(6u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(3u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(6u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(6u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
+    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(2u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(3u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(4u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(5u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(6u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(2u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(3u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(4u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(2u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(3u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(4u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(2u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(3u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(4u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(2u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(3u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(4u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(5u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(5u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(5u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(5u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(2u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(6u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(6u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(3u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(6u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(6u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
     DropChip(4u, players[0].GetChip(), board, takenPositions);
 
-    ASSERT_TRUE(strategy.Handle(players[0]));
+    ASSERT_TRUE(strategy.Handle(UNUSED_PLAYER));
 }
 
 TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_6By10GameBoardHorizontalNoWinTopLeftCorner_ReturnsFalse)
@@ -400,45 +407,45 @@ TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_6By10GameBoardHori
 
     cxmodel::WinGameResolutionStrategy strategy{board, inARowValue, players, takenPositions};
 
-    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(2u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(3u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(4u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(5u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(6u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(0u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(1u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(2u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(3u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(4u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(2u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(3u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(4u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(0u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(1u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(2u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(3u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(4u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(0u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(1u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(2u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(3u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(4u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(5u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(5u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(1u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(5u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(5u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(2u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(6u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(6u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
+    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(2u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(3u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(4u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(5u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(6u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(2u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(3u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(4u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(2u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(3u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(4u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(2u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(3u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(4u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(2u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(3u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(4u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(5u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(5u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(5u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(5u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(2u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(6u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(6u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
     DropChip(3u, players[0].GetChip(), board, takenPositions);
 
-    ASSERT_FALSE(strategy.Handle(players[0]));
+    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
 }
 
 TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_ClassicGameBoardHorizontalWinTopRightCorner_ReturnsTrue)
@@ -451,37 +458,37 @@ TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_ClassicGameBoardHo
 
     cxmodel::WinGameResolutionStrategy strategy{board, inARowValue, players, takenPositions};
 
-    DropChip(6u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(5u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(4u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(3u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(2u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(6u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(5u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(4u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(3u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(6u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(5u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(4u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(3u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(2u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(6u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(5u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(4u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(3u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(6u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(5u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(4u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(3u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(6u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(5u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(0u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(4u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
+    DropChip(6u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(5u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(4u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(3u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(2u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(6u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(5u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(4u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(3u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(6u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(5u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(4u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(3u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(2u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(6u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(5u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(4u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(3u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(6u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(5u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(4u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(3u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(6u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(5u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(4u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
     DropChip(3u, players[0].GetChip(), board, takenPositions);
 
-    ASSERT_TRUE(strategy.Handle(players[0]));
+    ASSERT_TRUE(strategy.Handle(UNUSED_PLAYER));
 }
 
 TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_ClassicGameBoardHorizontalNoWinTopRightCorner_ReturnsFalse)
@@ -494,35 +501,35 @@ TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_ClassicGameBoardHo
 
     cxmodel::WinGameResolutionStrategy strategy{board, inARowValue, players, takenPositions};
 
-    DropChip(6u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(5u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(4u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(3u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(2u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(6u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(5u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(4u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(3u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(6u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(5u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(4u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(3u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(2u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(6u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(5u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(4u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(3u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(6u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(5u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(4u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(3u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(6u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(5u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(0u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
+    DropChip(6u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(5u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(4u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(3u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(2u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(6u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(5u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(4u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(3u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(6u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(5u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(4u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(3u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(2u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(6u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(5u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(4u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(3u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(6u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(5u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(4u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(3u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(6u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(5u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
     DropChip(4u, players[0].GetChip(), board, takenPositions);
 
-    ASSERT_FALSE(strategy.Handle(players[0]));
+    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
 }
 
 TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_6By10GameBoardHorizontalWinTopRightCorner_ReturnsTrue)
@@ -535,48 +542,48 @@ TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_6By10GameBoardHori
 
     cxmodel::WinGameResolutionStrategy strategy{board, inARowValue, players, takenPositions};
 
-    DropChip(9u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(8u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(7u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(6u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(5u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(4u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(3u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(9u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(8u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(7u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(6u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(5u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(9u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(8u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(7u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(6u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(5u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(9u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(8u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(7u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(6u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(5u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(9u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(8u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(7u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(6u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(5u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(9u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(4u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(4u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(8u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(4u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(4u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(7u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(3u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(3u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(6u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(3u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(3u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
+    DropChip(9u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(8u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(7u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(6u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(5u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(4u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(3u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(9u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(8u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(7u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(6u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(5u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(9u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(8u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(7u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(6u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(5u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(9u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(8u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(7u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(6u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(5u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(9u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(8u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(7u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(6u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(5u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(9u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(4u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(4u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(8u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(4u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(4u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(7u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(3u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(3u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(6u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(3u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(3u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
     DropChip(5u, players[0].GetChip(), board, takenPositions);
 
-    ASSERT_TRUE(strategy.Handle(players[0]));
+    ASSERT_TRUE(strategy.Handle(UNUSED_PLAYER));
 }
 
 TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_6By10GameBoardHorizontalNoWinTopRightCorner_ReturnsFalse)
@@ -589,45 +596,45 @@ TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_6By10GameBoardHori
 
     cxmodel::WinGameResolutionStrategy strategy{board, inARowValue, players, takenPositions};
 
-    DropChip(9u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(8u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(7u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(6u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(5u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(4u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(3u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(9u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(8u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(7u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(6u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(5u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(9u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(8u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(7u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(6u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(5u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(9u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(8u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(7u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(6u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(5u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(9u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(8u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(7u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(6u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(5u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(9u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(4u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(4u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(8u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(4u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(4u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(7u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(3u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(3u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
+    DropChip(9u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(8u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(7u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(6u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(5u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(4u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(3u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(9u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(8u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(7u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(6u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(5u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(9u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(8u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(7u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(6u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(5u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(9u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(8u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(7u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(6u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(5u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(9u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(8u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(7u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(6u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(5u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(9u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(4u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(4u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(8u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(4u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(4u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(7u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(3u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(3u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
     DropChip(6u, players[0].GetChip(), board, takenPositions);
 
-    ASSERT_FALSE(strategy.Handle(players[0]));
+    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
 }
 
 TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_ClassicGameBoardVerticalWinBottomLeftCorner_ReturnsTrue)
@@ -640,15 +647,15 @@ TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_ClassicGameBoardVe
 
     cxmodel::WinGameResolutionStrategy strategy{board, inARowValue, players, takenPositions};
 
-    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(2u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
+    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(2u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
     DropChip(0u, players[0].GetChip(), board, takenPositions);
 
-    ASSERT_TRUE(strategy.Handle(players[0]));
+    ASSERT_TRUE(strategy.Handle(UNUSED_PLAYER));
 }
 
 TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_ClassicGameBoardVerticalNoWinBottomLeftCorner_ReturnsFalse)
@@ -661,13 +668,13 @@ TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_ClassicGameBoardVe
 
     cxmodel::WinGameResolutionStrategy strategy{board, inARowValue, players, takenPositions};
 
-    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
+    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
     DropChip(0u, players[0].GetChip(), board, takenPositions);
 
-    ASSERT_FALSE(strategy.Handle(players[0]));
+    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
 }
 
 TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_6By10GameBoardVerticalWinBottomLeftCorner_ReturnsTrue)
@@ -680,21 +687,21 @@ TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_6By10GameBoardVert
 
     cxmodel::WinGameResolutionStrategy strategy{board, inARowValue, players, takenPositions};
 
-    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(2u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(2u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(1u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(2u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(2u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(1u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
+    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(2u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(2u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(2u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(2u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
     DropChip(0u, players[0].GetChip(), board, takenPositions);
 
-    ASSERT_TRUE(strategy.Handle(players[0]));
+    ASSERT_TRUE(strategy.Handle(UNUSED_PLAYER));
 }
 
 TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_6By10GameBoardVerticalNoWinBottomLeftCorner_ReturnsFalse)
@@ -707,18 +714,18 @@ TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_6By10GameBoardVert
 
     cxmodel::WinGameResolutionStrategy strategy{board, inARowValue, players, takenPositions};
 
-    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(2u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(2u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(1u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(2u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
+    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(2u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(2u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(2u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
     DropChip(0u, players[0].GetChip(), board, takenPositions);
 
-    ASSERT_FALSE(strategy.Handle(players[0]));
+    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
 }
 
 TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_ClassicGameBoardVerticalWinBottomRightCorner_ReturnsTrue)
@@ -732,15 +739,15 @@ TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_ClassicGameBoardVe
 
     cxmodel::WinGameResolutionStrategy strategy{board, inARowValue, players, takenPositions};
 
-    DropChip(6u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(5u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(6u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(5u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(6u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(4u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
+    DropChip(6u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(5u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(6u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(5u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(6u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(4u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
     DropChip(6u, players[0].GetChip(), board, takenPositions);
 
-    ASSERT_TRUE(strategy.Handle(players[0]));
+    ASSERT_TRUE(strategy.Handle(UNUSED_PLAYER));
 }
 
 TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_ClassicGameBoardVerticalNoWinBottomRightCorner_ReturnsFalse)
@@ -753,13 +760,13 @@ TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_ClassicGameBoardVe
 
     cxmodel::WinGameResolutionStrategy strategy{board, inARowValue, players, takenPositions};
 
-    DropChip(6u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(5u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(6u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(5u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
+    DropChip(6u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(5u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(6u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(5u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
     DropChip(6u, players[0].GetChip(), board, takenPositions);
 
-    ASSERT_FALSE(strategy.Handle(players[0]));
+    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
 }
 
 TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_6By10GameBoardVerticalWinBottomRightCorner_ReturnsTrue)
@@ -772,21 +779,21 @@ TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_6By10GameBoardVert
 
     cxmodel::WinGameResolutionStrategy strategy{board, inARowValue, players, takenPositions};
 
-    DropChip(9u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(8u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(7u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(9u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(7u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(8u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(9u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(8u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(7u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(9u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(7u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(8u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
+    DropChip(9u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(8u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(7u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(9u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(7u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(8u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(9u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(8u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(7u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(9u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(7u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(8u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
     DropChip(9u, players[0].GetChip(), board, takenPositions);
 
-    ASSERT_TRUE(strategy.Handle(players[0]));}
+    ASSERT_TRUE(strategy.Handle(UNUSED_PLAYER));}
 
 TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_6By10GameBoardVerticalNoWinBottomRightCorner_ReturnsFalse)
 {
@@ -798,18 +805,18 @@ TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_6By10GameBoardVert
 
     cxmodel::WinGameResolutionStrategy strategy{board, inARowValue, players, takenPositions};
 
-    DropChip(9u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(8u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(7u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(9u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(7u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(8u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(9u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(8u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(7u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
+    DropChip(9u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(8u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(7u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(9u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(7u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(8u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(9u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(8u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(7u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
     DropChip(9u, players[0].GetChip(), board, takenPositions);
 
-    ASSERT_FALSE(strategy.Handle(players[0]));
+    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
 }
 
 TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_ClassicGameBoardVerticalWinTopLeftCorner_ReturnsTrue)
@@ -822,17 +829,17 @@ TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_ClassicGameBoardVe
 
     cxmodel::WinGameResolutionStrategy strategy{board, inARowValue, players, takenPositions};
 
-    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(0u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(2u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
+    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(2u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
     DropChip(0u, players[0].GetChip(), board, takenPositions);
 
-    ASSERT_TRUE(strategy.Handle(players[0]));
+    ASSERT_TRUE(strategy.Handle(UNUSED_PLAYER));
 }
 
 TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_ClassicGameBoardVerticalNoWinTopLeftCorner_ReturnsFalse)
@@ -845,15 +852,15 @@ TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_ClassicGameBoardVe
 
     cxmodel::WinGameResolutionStrategy strategy{board, inARowValue, players, takenPositions};
 
-    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(0u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
+    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
     DropChip(0u, players[0].GetChip(), board, takenPositions);
 
-    ASSERT_FALSE(strategy.Handle(players[0]));
+    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
 }
 
 TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_6By10GameBoardVerticalWinTopLeftCorner_ReturnsTrue)
@@ -866,24 +873,24 @@ TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_6By10GameBoardVert
 
     cxmodel::WinGameResolutionStrategy strategy{board, inARowValue, players, takenPositions};
 
-    DropChip(2u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(0u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(2u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(2u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(1u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(2u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(2u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(1u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
+    DropChip(2u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(2u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(2u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(2u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(2u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
     DropChip(0u, players[0].GetChip(), board, takenPositions);
 
-    ASSERT_TRUE(strategy.Handle(players[0]));
+    ASSERT_TRUE(strategy.Handle(UNUSED_PLAYER));
 }
 
 TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_6By10GameBoardVerticalNoWinTopLeftCorner_ReturnsFalse)
@@ -896,21 +903,21 @@ TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_6By10GameBoardVert
 
     cxmodel::WinGameResolutionStrategy strategy{board, inARowValue, players, takenPositions};
 
-    DropChip(2u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(0u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(1u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(2u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(2u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(1u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(0u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(1u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(2u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
+    DropChip(2u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(2u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(2u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(2u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
     DropChip(0u, players[0].GetChip(), board, takenPositions);
 
-    ASSERT_FALSE(strategy.Handle(players[0]));
+    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
 }
 
 TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_ClassicGameBoardVerticalWinTopRightCorner_ReturnsTrue)
@@ -923,17 +930,17 @@ TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_ClassicGameBoardVe
 
     cxmodel::WinGameResolutionStrategy strategy{board, inARowValue, players, takenPositions};
 
-    DropChip(6u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(6u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(6u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(5u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(6u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(5u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(6u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(4u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
+    DropChip(6u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(6u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(6u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(5u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(6u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(5u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(6u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(4u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
     DropChip(6u, players[0].GetChip(), board, takenPositions);
 
-    ASSERT_TRUE(strategy.Handle(players[0]));
+    ASSERT_TRUE(strategy.Handle(UNUSED_PLAYER));
 }
 
 TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_ClassicGameBoardVerticalNoWinTopRightCorner_ReturnsFalse)
@@ -946,15 +953,15 @@ TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_ClassicGameBoardVe
 
     cxmodel::WinGameResolutionStrategy strategy{board, inARowValue, players, takenPositions};
 
-    DropChip(6u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(6u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(6u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(5u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(6u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(5u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
+    DropChip(6u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(6u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(6u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(5u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(6u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(5u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
     DropChip(6u, players[0].GetChip(), board, takenPositions);
 
-    ASSERT_FALSE(strategy.Handle(players[0]));
+    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
 }
 
 TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_6By10GameBoardVerticalWinTopRightCorner_ReturnsTrue)
@@ -967,24 +974,24 @@ TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_6By10GameBoardVert
 
     cxmodel::WinGameResolutionStrategy strategy{board, inARowValue, players, takenPositions};
 
-    DropChip(7u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(8u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(9u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(9u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(8u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(7u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(9u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(7u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(8u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(9u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(8u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(7u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(9u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(7u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(8u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
+    DropChip(7u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(8u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(9u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(9u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(8u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(7u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(9u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(7u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(8u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(9u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(8u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(7u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(9u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(7u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(8u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
     DropChip(9u, players[0].GetChip(), board, takenPositions);
 
-    ASSERT_TRUE(strategy.Handle(players[0]));
+    ASSERT_TRUE(strategy.Handle(UNUSED_PLAYER));
 }
 
 TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_6By10GameBoardVerticalNoWinTopRightCorner_ReturnsFalse)
@@ -997,21 +1004,21 @@ TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_6By10GameBoardVert
 
     cxmodel::WinGameResolutionStrategy strategy{board, inARowValue, players, takenPositions};
 
-    DropChip(7u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(8u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(9u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(9u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(8u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(7u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(9u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(7u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(8u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(9u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(8u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(7u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
+    DropChip(7u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(8u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(9u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(9u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(8u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(7u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(9u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(7u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(8u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(9u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(8u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(7u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
     DropChip(9u, players[0].GetChip(), board, takenPositions);
 
-    ASSERT_FALSE(strategy.Handle(players[0]));
+    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
 }
 
 TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_ClassicGameBoardDiagonalUpwardWinBottomLeftCorner_ReturnsTrue)
@@ -1024,21 +1031,21 @@ TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_ClassicGameBoardDi
 
     cxmodel::WinGameResolutionStrategy strategy{board, inARowValue, players, takenPositions};
 
-    DropChip(1u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(2u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(3u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(2u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(3u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(3u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(6u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(1u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(5u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(2u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(5u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
+    DropChip(1u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(2u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(3u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(2u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(3u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(3u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(6u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(5u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(2u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(5u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
     DropChip(3u, players[0].GetChip(), board, takenPositions);
 
-    ASSERT_TRUE(strategy.Handle(players[0]));
+    ASSERT_TRUE(strategy.Handle(UNUSED_PLAYER));
 }
 
 TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_ClassicGameBoardDiagonalUpwardNoWinBottomLeftCorner_ReturnsFalse)
@@ -1051,19 +1058,19 @@ TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_ClassicGameBoardDi
 
     cxmodel::WinGameResolutionStrategy strategy{board, inARowValue, players, takenPositions};
 
-    DropChip(1u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(2u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(3u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(2u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(3u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(3u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(6u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(1u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(5u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
+    DropChip(1u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(2u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(3u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(2u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(3u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(3u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(6u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(5u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
     DropChip(2u, players[0].GetChip(), board, takenPositions);
 
-    ASSERT_FALSE(strategy.Handle(players[0]));
+    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
 }
 
 TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_6By10GameBoardDiagonalUpwardWinBottomLeftCorner_ReturnsTrue)
@@ -1076,31 +1083,31 @@ TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_6By10GameBoardDiag
 
     cxmodel::WinGameResolutionStrategy strategy{board, inARowValue, players, takenPositions};
 
-    DropChip(1u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(2u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(3u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(4u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(2u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(3u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(4u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(3u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(4u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(4u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(0u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(6u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(7u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(8u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(9u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(2u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(6u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(7u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(3u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(8u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(9u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
+    DropChip(1u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(2u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(3u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(4u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(2u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(3u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(4u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(3u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(4u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(4u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(6u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(7u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(8u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(9u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(2u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(6u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(7u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(3u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(8u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(9u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
     DropChip(4u, players[1].GetChip(), board, takenPositions);
 
-    ASSERT_TRUE(strategy.Handle(players[0]));
+    ASSERT_TRUE(strategy.Handle(UNUSED_PLAYER));
 }
 
 TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_6By10GameBoardDiagonalUpwardNoWinBottomLeftCorner_ReturnsFalse)
@@ -1113,28 +1120,28 @@ TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_6By10GameBoardDiag
 
     cxmodel::WinGameResolutionStrategy strategy{board, inARowValue, players, takenPositions};
 
-    DropChip(1u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(2u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(3u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(4u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(2u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(3u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(4u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(3u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(4u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(4u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(0u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(6u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(7u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(8u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(9u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(2u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(6u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(7u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
+    DropChip(1u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(2u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(3u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(4u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(2u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(3u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(4u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(3u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(4u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(4u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(6u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(7u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(8u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(9u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(2u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(6u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(7u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
     DropChip(3u, players[1].GetChip(), board, takenPositions);
 
-    ASSERT_FALSE(strategy.Handle(players[1]));
+    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
 }
 
 TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_ClassicGameBoardDiagonalUpwardWinTopRightCorner_ReturnsTrue)
@@ -1147,25 +1154,25 @@ TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_ClassicGameBoardDi
 
     cxmodel::WinGameResolutionStrategy strategy{board, inARowValue, players, takenPositions};
 
-    DropChip(3u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(4u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(5u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(6u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(4u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(5u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(6u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(5u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(6u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(6u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(6u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(0u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(5u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(0u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(4u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
+    DropChip(3u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(4u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(5u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(6u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(4u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(5u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(6u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(5u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(6u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(6u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(6u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(5u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(4u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
     DropChip(3u, players[0].GetChip(), board, takenPositions);
 
-    ASSERT_TRUE(strategy.Handle(players[0]));
+    ASSERT_TRUE(strategy.Handle(UNUSED_PLAYER));
 }
 
 TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_ClassicGameBoardDiagonalUpwardNoWinTopRightCorner_ReturnsFalse)
@@ -1178,23 +1185,23 @@ TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_ClassicGameBoardDi
 
     cxmodel::WinGameResolutionStrategy strategy{board, inARowValue, players, takenPositions};
 
-    DropChip(3u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(4u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(5u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(6u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(4u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(5u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(6u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(5u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(6u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(6u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(6u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(0u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(5u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(0u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
+    DropChip(3u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(4u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(5u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(6u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(4u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(5u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(6u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(5u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(6u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(6u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(6u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(5u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
     DropChip(4u, players[0].GetChip(), board, takenPositions);
 
-    ASSERT_FALSE(strategy.Handle(players[0]));
+    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
 }
 
 TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_6By10GameBoardDiagonalUpwardWinTopRightCorner_ReturnsTrue)
@@ -1207,36 +1214,36 @@ TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_6By10GameBoardDiag
 
     cxmodel::WinGameResolutionStrategy strategy{board, inARowValue, players, takenPositions};
 
-    DropChip(5u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(6u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(7u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(8u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(9u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(6u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(7u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(8u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(9u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(7u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(8u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(9u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(8u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(9u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(9u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(9u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(0u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(1u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(8u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(2u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(3u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(7u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(0u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(1u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(6u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(2u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(3u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
+    DropChip(5u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(6u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(7u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(8u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(9u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(6u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(7u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(8u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(9u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(7u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(8u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(9u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(8u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(9u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(9u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(9u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(8u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(2u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(3u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(7u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(6u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(2u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(3u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
     DropChip(5u, players[0].GetChip(), board, takenPositions);
 
-    ASSERT_TRUE(strategy.Handle(players[0]));
+    ASSERT_TRUE(strategy.Handle(UNUSED_PLAYER));
 }
 
 TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_6By10GameBoardDiagonalUpwardNoWinTopRightCorner_ReturnsFalse)
@@ -1249,33 +1256,33 @@ TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_6By10GameBoardDiag
 
     cxmodel::WinGameResolutionStrategy strategy{board, inARowValue, players, takenPositions};
 
-    DropChip(5u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(6u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(7u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(8u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(9u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(6u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(7u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(8u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(9u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(7u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(8u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(9u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(8u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(9u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(9u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(9u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(0u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(1u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(8u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(2u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(3u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(7u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(0u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(1u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
+    DropChip(5u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(6u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(7u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(8u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(9u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(6u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(7u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(8u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(9u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(7u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(8u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(9u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(8u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(9u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(9u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(9u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(8u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(2u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(3u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(7u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
     DropChip(6u, players[0].GetChip(), board, takenPositions);
 
-    ASSERT_FALSE(strategy.Handle(players[0]));
+    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
 }
 
 TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_ClassicGameBoardDiagonalDownwardWinBottomRightCorner_ReturnsTrue)
@@ -1288,21 +1295,21 @@ TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_ClassicGameBoardDi
 
     cxmodel::WinGameResolutionStrategy strategy{board, inARowValue, players, takenPositions};
 
-    DropChip(5u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(4u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(3u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(4u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(3u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(3u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(6u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(0u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(5u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(0u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(4u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
+    DropChip(5u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(4u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(3u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(4u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(3u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(3u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(6u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(5u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(4u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
     DropChip(3u, players[0].GetChip(), board, takenPositions);
 
-    ASSERT_TRUE(strategy.Handle(players[0]));
+    ASSERT_TRUE(strategy.Handle(UNUSED_PLAYER));
 }
 
 TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_ClassicGameBoardDiagonalDownwardNoWinBottomRightCorner_ReturnsFalse)
@@ -1315,19 +1322,19 @@ TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_ClassicGameBoardDi
 
     cxmodel::WinGameResolutionStrategy strategy{board, inARowValue, players, takenPositions};
 
-    DropChip(5u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(4u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(3u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(4u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(3u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(3u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(6u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(0u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(5u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(0u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
+    DropChip(5u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(4u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(3u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(4u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(3u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(3u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(6u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(5u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
     DropChip(4u, players[0].GetChip(), board, takenPositions);
 
-    ASSERT_FALSE(strategy.Handle(players[0]));
+    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
 }
 
 TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_6By10GameBoardDiagonalDownwardWinBottomRightCorner_ReturnsTrue)
@@ -1340,31 +1347,31 @@ TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_6By10GameBoardDiag
 
     cxmodel::WinGameResolutionStrategy strategy{board, inARowValue, players, takenPositions};
 
-    DropChip(8u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(7u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(6u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(5u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(7u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(6u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(5u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(6u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(5u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(5u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(9u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(0u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(1u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(8u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(2u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(3u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(7u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(0u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(1u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(6u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(2u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(3u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
+    DropChip(8u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(7u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(6u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(5u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(7u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(6u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(5u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(6u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(5u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(5u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(9u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(8u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(2u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(3u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(7u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(6u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(2u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(3u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
     DropChip(5u, players[1].GetChip(), board, takenPositions);
 
-    ASSERT_TRUE(strategy.Handle(players[1]));
+    ASSERT_TRUE(strategy.Handle(UNUSED_PLAYER));
 }
 
 TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_6By10GameBoardDiagonalDownwardNoWinBottomRightCorner_ReturnsFalse)
@@ -1377,28 +1384,28 @@ TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_6By10GameBoardDiag
 
     cxmodel::WinGameResolutionStrategy strategy{board, inARowValue, players, takenPositions};
 
-    DropChip(8u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(7u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(6u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(5u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(7u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(6u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(5u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(6u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(5u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(5u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(9u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(0u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(1u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(8u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(2u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(3u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(7u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(0u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(1u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
+    DropChip(8u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(7u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(6u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(5u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(7u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(6u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(5u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(6u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(5u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(5u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(9u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(8u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(2u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(3u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(7u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
     DropChip(6u, players[1].GetChip(), board, takenPositions);
 
-    ASSERT_FALSE(strategy.Handle(players[1]));
+    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
 }
 
 TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_ClassicGameBoardDiagonalDownwardWinTopLeftCorner_ReturnsTrue)
@@ -1411,30 +1418,30 @@ TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_ClassicGameBoardDi
 
     cxmodel::WinGameResolutionStrategy strategy{board, inARowValue, players, takenPositions};
 
-    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(2u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(3u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(2u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(3u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(4u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(0u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(1u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(2u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(0u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(5u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(5u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(2u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(6u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
+    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(2u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(3u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(2u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(3u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(4u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(2u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(5u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(5u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(2u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(6u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
     DropChip(3u, players[1].GetChip(), board, takenPositions);
 
-    ASSERT_TRUE(strategy.Handle(players[1]));
+    ASSERT_TRUE(strategy.Handle(UNUSED_PLAYER));
 }
 
 TEST_F(GameResolutionStrategyTestFixture, DISABLED_Handle_ClassicGameBoardDiagonalDownwardNoWinTopLeftCorner_ReturnsFalse)
@@ -1447,28 +1454,28 @@ TEST_F(GameResolutionStrategyTestFixture, DISABLED_Handle_ClassicGameBoardDiagon
 
     cxmodel::WinGameResolutionStrategy strategy{board, inARowValue, players, takenPositions};
 
-    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(2u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(3u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(2u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(3u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(4u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(0u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(1u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(2u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(1u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(0u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1])); // Fails here (there is a win...)
-    DropChip(5u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(5u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
+    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(2u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(3u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(2u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(3u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(4u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(2u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER)); // Fails here (there is a win...)
+    DropChip(5u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(5u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
     DropChip(2u, players[1].GetChip(), board, takenPositions);
 
-    ASSERT_FALSE(strategy.Handle(players[1]));
+    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
 }
 
 TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_6By10GameBoardDiagonalDownwardWinTopLeftCorner_ReturnsTrue)
@@ -1481,36 +1488,36 @@ TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_6By10GameBoardDiag
 
     cxmodel::WinGameResolutionStrategy strategy{board, inARowValue, players, takenPositions};
 
-    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(2u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(3u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(4u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(0u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(1u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(2u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(3u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(2u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(0u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(6u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(7u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(1u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(8u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(9u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(2u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(6u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(7u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(3u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(8u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(9u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
+    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(2u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(3u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(4u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(2u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(3u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(2u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(6u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(7u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(8u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(9u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(2u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(6u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(7u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(3u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(8u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(9u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
     DropChip(4u, players[0].GetChip(), board, takenPositions);
 
-    ASSERT_TRUE(strategy.Handle(players[0]));
+    ASSERT_TRUE(strategy.Handle(UNUSED_PLAYER));
 }
 
 TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_6By10GameBoardDiagonalDownwardNoWinTopLeftCorner_ReturnsFalse)
@@ -1523,31 +1530,31 @@ TEST_F(GameResolutionStrategyTestFixture, /*DISABLED_*/Handle_6By10GameBoardDiag
 
     cxmodel::WinGameResolutionStrategy strategy{board, inARowValue, players, takenPositions};
 
-    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(2u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(3u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(4u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(0u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(1u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(2u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(3u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(2u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(0u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(6u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(7u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(1u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(8u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(9u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
-    DropChip(2u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[0]));
-    DropChip(6u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[1]));
-    DropChip(7u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(players[2]));
+    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(2u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(3u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(4u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(2u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(3u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(2u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(0u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(6u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(7u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(1u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(8u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(9u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(2u, players[0].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(6u, players[1].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
+    DropChip(7u, players[2].GetChip(), board, takenPositions);    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
     DropChip(3u, players[0].GetChip(), board, takenPositions);
 
-    ASSERT_FALSE(strategy.Handle(players[0]));
+    ASSERT_FALSE(strategy.Handle(UNUSED_PLAYER));
 }
