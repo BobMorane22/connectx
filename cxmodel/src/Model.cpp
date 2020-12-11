@@ -325,7 +325,7 @@ bool cxmodel::Model::IsWon() const
 {
     IF_CONDITION_NOT_MET_DO(m_winResolutionStrategy, return false;);
 
-    return m_winResolutionStrategy->Handle();
+    return m_winResolutionStrategy->Handle(GetActivePlayer());
 }
 
 bool cxmodel::Model::IsTie() const

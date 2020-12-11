@@ -58,6 +58,7 @@ OBJS_$(d) := $(d)/BoardTests.o \
              $(d)/DisableStdStreamsRAII.o \
              $(d)/DiscTests.o \
              $(d)/IBoardTests.o \
+             $(d)/GameResolutionStrategyTestFixture.o \
              $(d)/LoggerMock.o \
              $(d)/ModelTestFixture.o \
              $(d)/ModelTestHelpers.o \
@@ -67,6 +68,7 @@ OBJS_$(d) := $(d)/BoardTests.o \
              $(d)/StatusTests.o \
              $(d)/SubjectTestFixture.o \
              $(d)/SubjectTests.o \
+             $(d)/TieGameResolutionStrategyTests.o \
              $(d)/WinGameResolutionStrategyTests.o \
              cxmodel/libcxmodel.a
 
