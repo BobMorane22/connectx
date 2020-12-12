@@ -38,7 +38,7 @@ public:
 
     bool Handle(const cxmodel::Player& /*p_activePlayer*/) const override
     {
-        return false;
+        return false; // LCOV_EXCL_LINE
     }
 
 };
@@ -74,8 +74,8 @@ std::unique_ptr<cxmodel::IGameResolutionStrategy> cxmodel::GameResolutionStrateg
 
         default:
         {
-            ASSERT_ERROR_MSG("No game resolution strategy found.");
-            break;
+            ASSERT_ERROR_MSG("No game resolution strategy found."); // LCOV_EXCL_LINE
+            break;                                                  // LCOV_EXCL_LINE
         }
     }
 
