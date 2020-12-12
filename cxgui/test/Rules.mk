@@ -56,6 +56,7 @@ OBJS_$(d) := $(d)/AboutWindowPresenterTestFixture.o \
              $(d)/MenuItemTests.o \
              $(d)/NewGamePresenterTests.o \
              $(d)/StatusBarPresenterTests.o \
+             $(d)/TieGameResolutionDialogPresenterTests.o \
              $(d)/WinGameResolutionDialogControllerTests.o \
              $(d)/WinGameResolutionDialogControllerTestFixture.o \
              cxgui/libcxgui.a

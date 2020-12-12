@@ -71,6 +71,7 @@ OBJS_$(d) := $(d)/src/About.o \
              $(d)/src/NewPlayerList.o \
              $(d)/src/StatusBar.o \
              $(d)/src/StatusBarPresenter.o \
+             $(d)/src/TieGameResolutionDialogPresenter.o \
              $(d)/src/WinGameResolutionDialogController.o \
              $(d)/src/WinGameResolutionDialogPresenter.o \
              cxinv/libcxinv.a \
