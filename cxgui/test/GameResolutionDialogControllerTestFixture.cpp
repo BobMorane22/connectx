@@ -16,56 +16,56 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file WinGameResolutionDialogControllerTestFixture.cpp
+ * @file GameResolutionDialogControllerTestFixture.cpp
  * @date 2020
  *
  *************************************************************************************************/
 
-#include <WinGameResolutionDialogController.h>
+#include <GameResolutionDialogController.h>
 
-#include "WinGameResolutionDialogControllerTestFixture.h"
+#include "GameResolutionDialogControllerTestFixture.h"
 
-WinGameResolutionDialogControllerTestFixture::WinGameResolutionDialogControllerTestFixture()
+GameResolutionDialogControllerTestFixture::GameResolutionDialogControllerTestFixture()
 {
     m_model = std::make_unique<GameResolutionDialogControllerMockModel>(*this);
     EXPECT_TRUE(m_model);
 
-    m_controller = std::make_unique<cxgui::WinGameResolutionDialogController>(*m_model);
+    m_controller = std::make_unique<cxgui::GameResolutionDialogController>(*m_model);
     EXPECT_TRUE(m_controller);
 }
 
-bool WinGameResolutionDialogControllerTestFixture::GetNewGameRequested() const
+bool GameResolutionDialogControllerTestFixture::GetNewGameRequested() const
 {
     return m_newGameRequested;
 }
 
-cxgui::IGameResolutionDialogController& WinGameResolutionDialogControllerTestFixture::GetController()
+cxgui::IGameResolutionDialogController& GameResolutionDialogControllerTestFixture::GetController()
 {
     EXPECT_TRUE(m_controller);
     return *m_controller;
 }
 
-WinGameResolutionDialogControllerTestFixture::GameResolutionDialogControllerMockModel::GameResolutionDialogControllerMockModel(WinGameResolutionDialogControllerTestFixture& p_outer)
+GameResolutionDialogControllerTestFixture::GameResolutionDialogControllerMockModel::GameResolutionDialogControllerMockModel(GameResolutionDialogControllerTestFixture& p_outer)
 : m_outer{p_outer}
 {
 }
 
-void WinGameResolutionDialogControllerTestFixture::GameResolutionDialogControllerMockModel::CreateNewGame(const cxmodel::NewGameInformation& /*p_gameInformation*/)
+void GameResolutionDialogControllerTestFixture::GameResolutionDialogControllerMockModel::CreateNewGame(const cxmodel::NewGameInformation& /*p_gameInformation*/)
 {
     // Nothing to do...
 }
 
-void WinGameResolutionDialogControllerTestFixture::GameResolutionDialogControllerMockModel::DropChip(const cxmodel::IChip& /*p_chip*/, size_t /*p_column*/)
+void GameResolutionDialogControllerTestFixture::GameResolutionDialogControllerMockModel::DropChip(const cxmodel::IChip& /*p_chip*/, size_t /*p_column*/)
 {
     // Nothing to do...
 }
 
-void WinGameResolutionDialogControllerTestFixture::GameResolutionDialogControllerMockModel::EndCurrentGame()
+void GameResolutionDialogControllerTestFixture::GameResolutionDialogControllerMockModel::EndCurrentGame()
 {
     m_outer.m_newGameRequested = true;
 }
 
-void WinGameResolutionDialogControllerTestFixture::GameResolutionDialogControllerMockModel::ReinitializeCurrentGame()
+void GameResolutionDialogControllerTestFixture::GameResolutionDialogControllerMockModel::ReinitializeCurrentGame()
 {
     // Nothing to do...
 }

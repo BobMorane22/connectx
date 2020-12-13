@@ -207,6 +207,24 @@ void cxmodel::Model::DropChip(const cxmodel::IChip& p_chip, size_t p_column)
         return;
     }
 
+    if(IsTie())
+    {
+        Notify(NotificationContext::CHIP_DROPPED);
+
+        // In the case of a tie, we must revert the next player -> active player update, since
+        // the next player will never be able to play:
+        m_playersInfo.m_activePlayerIndex = activePlayerIndexBefore;
+        m_playersInfo.m_nextPlayerIndex = nextPlayerIndexBefore;
+
+        Notify(NotificationContext::GAME_TIED);
+
+        Log(cxlog::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__, "Game tied!");
+
+        CheckInvariants();
+
+        return;
+    }
+
     if(activePlayerIndexBefore != m_playersInfo.m_activePlayerIndex)
     {
         Notify(NotificationContext::CHIP_DROPPED);

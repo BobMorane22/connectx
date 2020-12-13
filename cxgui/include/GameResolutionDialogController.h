@@ -16,38 +16,43 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file NotificationContext.h
+ * @file GameResolutionDialogController.h
  * @date 2020
  *
  *************************************************************************************************/
 
-#ifndef NOTIFICATIONCONTEXT_H_3B763656_2127_4F2A_B522_85ECBA656CB8
-#define NOTIFICATIONCONTEXT_H_3B763656_2127_4F2A_B522_85ECBA656CB8
+#ifndef GAMERESOLUTIONDIALOGCONTROLLER_H_021D83A0_55DA_4155_B5F6_3AA46D5A6BF8
+#define GAMERESOLUTIONDIALOGCONTROLLER_H_021D83A0_55DA_4155_B5F6_3AA46D5A6BF8
+
+#include "IGameResolutionDialogController.h"
 
 namespace cxmodel
 {
+    class IConnectXGameActions;
+}
 
-/**********************************************************************************************//**
- * @brief Connect X model notification context.
- *
- * Describes all the contexts from which the Connect X model may notify.
+namespace cxgui
+{
+
+/*********************************************************************************************//**
+ * @brief Game resolution dialog controller.
  *
  ************************************************************************************************/
-enum class NotificationContext
+class GameResolutionDialogController : public IGameResolutionDialogController
 {
-    // User operations:
-    CREATE_NEW_GAME,
-    CHIP_DROPPED,
-    REDO,
-    UNDO,
 
-    // Game states:
-    GAME_WON,
-    GAME_TIED,
-    GAME_ENDED,
-    GAME_REINITIALIZED
+public:
+
+    GameResolutionDialogController(cxmodel::IConnectXGameActions& p_modelAsActions);
+
+    void OnNewGameRequested();
+
+private:
+
+    cxmodel::IConnectXGameActions& m_modelAsActions;
+
 };
 
-} // namespace cxmodel
+} // namespace cxgui
 
-#endif // NOTIFICATIONCONTEXT_H_3B763656_2127_4F2A_B522_85ECBA656CB8
+#endif // GAMERESOLUTIONDIALOGCONTROLLER_H_021D83A0_55DA_4155_B5F6_3AA46D5A6BF8

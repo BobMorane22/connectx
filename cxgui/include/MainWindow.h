@@ -115,6 +115,7 @@ private:
     void UpdateCreateNewGame();
     void UpdateChipDropped(cxmodel::NotificationContext p_context);
     void UpdateGameWon(cxmodel::NotificationContext p_context);
+    void UpdateGameTied(cxmodel::NotificationContext p_context);
     void UpdateGameEnded();
     void UpdateGameReinitialized(cxmodel::NotificationContext p_context);
     void UpdateMenuItems();
@@ -133,7 +134,7 @@ private:
     void OnNewGame();
     void OnReinitializeCurrentGame();
 
-    void CreateGameResolutionWindow();
+    void CreateGameResolutionWindow(cxmodel::NotificationContext p_context);
 
     void ActivateNewGameView();
     void DeactivateNewGameView();

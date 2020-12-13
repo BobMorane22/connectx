@@ -48,7 +48,9 @@ OBJS_$(d) := $(d)/AboutWindowPresenterTestFixture.o \
              $(d)/DisableStdStreamsRAII.o \
              $(d)/extractRawUserInputTests.o \
              $(d)/GamePresenterTests.o \
-             $(d)/WinGameResolutionDialogPresenterTests.o \
+             $(d)/GameResolutionDialogPresenterFactoryTests.o \
+             $(d)/GameResolutionDialogControllerTests.o \
+             $(d)/GameResolutionDialogControllerTestFixture.o \
              $(d)/MainWindowPresenterTestFixture.o \
              $(d)/MainWindowControllerTests.o \
              $(d)/MainWindowControllerTestFixture.o \
@@ -57,8 +59,7 @@ OBJS_$(d) := $(d)/AboutWindowPresenterTestFixture.o \
              $(d)/NewGamePresenterTests.o \
              $(d)/StatusBarPresenterTests.o \
              $(d)/TieGameResolutionDialogPresenterTests.o \
-             $(d)/WinGameResolutionDialogControllerTests.o \
-             $(d)/WinGameResolutionDialogControllerTestFixture.o \
+             $(d)/WinGameResolutionDialogPresenterTests.o \
              cxgui/libcxgui.a
 
 # We include all the generated rules. These are created by GCC to make sure that

@@ -16,48 +16,50 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file WinGameResolutionDialogPresenter.h
+ * @file GameResolutionDialogPresenterFactory.h
  * @date 2020
  *
  *************************************************************************************************/
 
-#ifndef WINGAMERESOLUTIONDIALOGPRESENTER_H_FEF07B2E_B0F6_4FAC_88B7_FE78EC4007CE
-#define WINGAMERESOLUTIONDIALOGPRESENTER_H_FEF07B2E_B0F6_4FAC_88B7_FE78EC4007CE
+#ifndef GAMERESOLUTIONDIALOGPRESENTERFACTORY_H_0DEB58AF_5E6C_41B3_BDA0_DE2C38CE8416
+#define GAMERESOLUTIONDIALOGPRESENTERFACTORY_H_0DEB58AF_5E6C_41B3_BDA0_DE2C38CE8416
+
+#include <memory>
 
 #include "IGameResolutionDialogPresenter.h"
+
+namespace cxmodel
+{
+    enum class GameResolution;
+    class IConnectXGameInformation;
+}
 
 namespace cxgui
 {
 
 /*********************************************************************************************//**
- * @brief Presenter for the win game resolution window.
+ * @brief Factory for creating game resolution dialog presenters.
  *
  ************************************************************************************************/
-class WinGameResolutionDialogPresenter : public IGameResolutionDialogPresenter
+class GameResolutionDialogPresenterFactory
 {
 
 public:
 
     /******************************************************************************************//**
-     * @brief Constructor.
+     * @brief Creates a game resolution dialog presenter.
      *
-     * @param p_modelAsInformation The model (Game information).
+     * @param p_modelAsInformation The model.
+     * @param p_resolution         The game resolution type.
+     *
+     * @return The game resolution dialog presenter.
      *
      ********************************************************************************************/
-    WinGameResolutionDialogPresenter(const cxmodel::IConnectXGameInformation& p_modelAsInformation);
+    static std::unique_ptr<IGameResolutionDialogPresenter> Make(const cxmodel::IConnectXGameInformation& p_modelAsInformation,
+                                                                cxmodel::GameResolution p_resolution);
 
-    // IGameResolutionDialogPresenter:
-    std::string GetTitle() const override;
-    std::string GetResolutionMessage() const override;
-    std::string GetStartNewGameButtonText() const override;
-
-private:
-
-    const cxmodel::IConnectXGameInformation& m_modelAsInformation;
-
-    std::string m_resolutionMessage;
 };
 
 } // namespace cxgui
 
-#endif // WINGAMERESOLUTIONDIALOGPRESENTER_H_FEF07B2E_B0F6_4FAC_88B7_FE78EC4007CE
+#endif // GAMERESOLUTIONDIALOGPRESENTERFACTORY_H_0DEB58AF_5E6C_41B3_BDA0_DE2C38CE8416

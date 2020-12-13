@@ -16,48 +16,21 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file WinGameResolutionDialogController.h
+ * @file GameResolutionDialogController.cpp
  * @date 2020
  *
  *************************************************************************************************/
 
-#ifndef WINGAMERESOLUTIONDIALOGCONTROLLER_H_021D83A0_55DA_4155_B5F6_3AA46D5A6BF8
-#define WINGAMERESOLUTIONDIALOGCONTROLLER_H_021D83A0_55DA_4155_B5F6_3AA46D5A6BF8
+#include <cxmodel/include/IConnectXGameActions.h>
 
-#include "IGameResolutionDialogController.h"
+#include <GameResolutionDialogController.h>
 
-namespace cxmodel
+cxgui::GameResolutionDialogController::GameResolutionDialogController(cxmodel::IConnectXGameActions& p_modelAsActions)
+: m_modelAsActions{p_modelAsActions}
 {
-    class IConnectXGameActions;
 }
 
-namespace cxgui
+void cxgui::GameResolutionDialogController::OnNewGameRequested()
 {
-
-/*********************************************************************************************//**
- * @brief DESCRIPTION
- *
- * @invariant
- * @invariant
- *
- * DESCRIPTION
- *
- ************************************************************************************************/
-class WinGameResolutionDialogController : public IGameResolutionDialogController
-{
-
-public:
-
-    WinGameResolutionDialogController(cxmodel::IConnectXGameActions& p_modelAsActions);
-
-    void OnNewGameRequested();
-
-private:
-
-    cxmodel::IConnectXGameActions& m_modelAsActions;
-
-};
-
-} // namespace cxgui
-
-#endif // WINGAMERESOLUTIONDIALOGCONTROLLER_H_021D83A0_55DA_4155_B5F6_3AA46D5A6BF8
+    m_modelAsActions.EndCurrentGame();
+}

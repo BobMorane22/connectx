@@ -16,16 +16,16 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file WinGameResolutionDialogControllerTests.cpp
+ * @file GameResolutionDialogControllerTests.cpp
  * @date 2020
  *
  *************************************************************************************************/
 
 #include <gtest/gtest.h>
 
-#include "WinGameResolutionDialogControllerTestFixture.h"
+#include "GameResolutionDialogControllerTestFixture.h"
 
-TEST_F(WinGameResolutionDialogControllerTestFixture, OnNewGameRequested_ValidModel_EndCurrentGameCalledOnModel)
+TEST_F(GameResolutionDialogControllerTestFixture, OnNewGameRequested_ValidModel_EndCurrentGameCalledOnModel)
 {
     ASSERT_FALSE(GetNewGameRequested());
 

@@ -117,6 +117,7 @@ void cxgui::GameView::Update(cxmodel::NotificationContext p_context)
             break;
         }
         case cxmodel::NotificationContext::GAME_WON:
+        case cxmodel::NotificationContext::GAME_TIED:
         {
             UpdateGameResolved();
             break;

@@ -16,13 +16,13 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file WinGameResolutionDialogControllerTestFixture.h
+ * @file GameResolutionDialogControllerTestFixture.h
  * @date 2020
  *
  *************************************************************************************************/
 
-#ifndef WINGAMERESOLUTIONDIALOGCONTROLLERTESTFIXTURE_H_27CF95E0_02C0_4019_A321_26C5670AB81F
-#define WINGAMERESOLUTIONDIALOGCONTROLLERTESTFIXTURE_H_27CF95E0_02C0_4019_A321_26C5670AB81F
+#ifndef GAMERESOLUTIONDIALOGCONTROLLERTESTFIXTURE_H_27CF95E0_02C0_4019_A321_26C5670AB81F
+#define GAMERESOLUTIONDIALOGCONTROLLERTESTFIXTURE_H_27CF95E0_02C0_4019_A321_26C5670AB81F
 
 #include <gtest/gtest.h>
 
@@ -30,12 +30,12 @@
 
 #include <IGameResolutionDialogController.h>
 
-class WinGameResolutionDialogControllerTestFixture : public testing::Test
+class GameResolutionDialogControllerTestFixture : public testing::Test
 {
 
 public:
 
-    WinGameResolutionDialogControllerTestFixture();
+    GameResolutionDialogControllerTestFixture();
 
     bool GetNewGameRequested() const;
 
@@ -48,7 +48,7 @@ private:
 
     public:
 
-        GameResolutionDialogControllerMockModel(WinGameResolutionDialogControllerTestFixture& p_outer);
+        GameResolutionDialogControllerMockModel(GameResolutionDialogControllerTestFixture& p_outer);
 
         // IConnectXGameActions:
         void CreateNewGame(const cxmodel::NewGameInformation& p_gameInformation) override;
@@ -58,7 +58,7 @@ private:
 
     private:
 
-        WinGameResolutionDialogControllerTestFixture& m_outer;
+        GameResolutionDialogControllerTestFixture& m_outer;
 
     };
 
@@ -69,4 +69,4 @@ private:
 
 };
 
-#endif // WINGAMERESOLUTIONDIALOGCONTROLLERTESTFIXTURE_H_27CF95E0_02C0_4019_A321_26C5670AB81F
+#endif // GAMERESOLUTIONDIALOGCONTROLLERTESTFIXTURE_H_27CF95E0_02C0_4019_A321_26C5670AB81F

@@ -16,21 +16,21 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file WinGameResolutionDialogController.cpp
+ * @file GameResolutionDialogController.cpp
  * @date 2020
  *
  *************************************************************************************************/
 
 #include <cxmodel/include/IConnectXGameActions.h>
 
-#include <WinGameResolutionDialogController.h>
+#include <GameResolutionDialogController.h>
 
-cxgui::WinGameResolutionDialogController::WinGameResolutionDialogController(cxmodel::IConnectXGameActions& p_modelAsActions)
+cxgui::GameResolutionDialogController::WinGameResolutionDialogController(cxmodel::IConnectXGameActions& p_modelAsActions)
 : m_modelAsActions{p_modelAsActions}
 {
 }
 
-void cxgui::WinGameResolutionDialogController::OnNewGameRequested()
+void cxgui::GameResolutionDialogController::OnNewGameRequested()
 {
     m_modelAsActions.EndCurrentGame();
 }

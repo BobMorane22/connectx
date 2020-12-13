@@ -31,10 +31,13 @@
 #include <cxmodel/include/IConnectXGameActions.h>
 #include <cxmodel/include/IConnectXGameInformation.h>
 #include <cxmodel/include/IVersioning.h>
+#include <cxmodel/include/GameResolutionStrategyFactory.h>
 
 #include <About.h>
 #include <AboutWindowPresenter.h>
 #include <GameResolutionDialog.h>
+#include <GameResolutionDialogController.h>
+#include <GameResolutionDialogPresenterFactory.h>
 #include <GameView.h>
 #include <IMainWindowController.h>
 #include <IMainWindowPresenter.h>
@@ -42,8 +45,7 @@
 #include <NewGameView.h>
 #include <StatusBar.h>
 #include <StatusBarPresenter.h>
-#include <WinGameResolutionDialogController.h>
-#include <WinGameResolutionDialogPresenter.h>
+#include <GameResolutionDialogController.h>
 
 cxgui::MainWindow::MainWindow(Gtk::Application& p_gtkApplication,
                               cxmodel::Subject& p_model,
@@ -129,10 +131,17 @@ void cxgui::MainWindow::Update(cxmodel::NotificationContext p_context, cxmodel::
                 break;
             }
             case cxmodel::NotificationContext::UNDO:
+                break;
             case cxmodel::NotificationContext::REDO:
+                break;
             case cxmodel::NotificationContext::GAME_WON:
             {
                 UpdateGameWon(p_context);
+                break;
+            }
+            case cxmodel::NotificationContext::GAME_TIED:
+            {
+                UpdateGameTied(p_context);
                 break;
             }
             case cxmodel::NotificationContext::GAME_ENDED:
@@ -170,7 +179,13 @@ void cxgui::MainWindow::UpdateChipDropped(cxmodel::NotificationContext p_context
 void cxgui::MainWindow::UpdateGameWon(cxmodel::NotificationContext p_context)
 {
     m_gameView->Update(p_context);
-    CreateGameResolutionWindow();
+    CreateGameResolutionWindow(p_context);
+}
+
+void cxgui::MainWindow::UpdateGameTied(cxmodel::NotificationContext p_context)
+{
+    m_gameView->Update(p_context);
+    CreateGameResolutionWindow(p_context);
 }
 
 void cxgui::MainWindow::UpdateGameEnded()
@@ -249,20 +264,36 @@ void cxgui::MainWindow::OnReinitializeCurrentGame()
    m_controller.OnReinitializeCurrentGame();
 }
 
-void cxgui::MainWindow::CreateGameResolutionWindow()
+void cxgui::MainWindow::CreateGameResolutionWindow(cxmodel::NotificationContext p_context)
 {
+
+    cxmodel::GameResolution resolutionType;
+    if(p_context == cxmodel::NotificationContext::GAME_WON)
+    {
+        resolutionType = cxmodel::GameResolution::WIN;
+    }
+    else if(p_context == cxmodel::NotificationContext::GAME_TIED)
+    {
+        resolutionType = cxmodel::GameResolution::TIE;
+    }
+    else
+    {
+        ASSERT_ERROR_MSG("Unhandled context.");
+        return;
+    }
+
     if(!m_gameResolution)
     {
         cxmodel::IConnectXGameInformation* gameInformationModel = dynamic_cast<cxmodel::IConnectXGameInformation*>(&m_model);
         IF_CONDITION_NOT_MET_DO(gameInformationModel, return;);
 
-        std::unique_ptr<IGameResolutionDialogPresenter> gameResolutionPresenter = std::make_unique<WinGameResolutionDialogPresenter>(*gameInformationModel);
+        auto gameResolutionPresenter = GameResolutionDialogPresenterFactory::Make(*gameInformationModel, resolutionType);
         IF_CONDITION_NOT_MET_DO(gameResolutionPresenter, return;);
 
         cxmodel::IConnectXGameActions* gameActionsModel = dynamic_cast<cxmodel::IConnectXGameActions*>(&m_model);
         IF_CONDITION_NOT_MET_DO(gameActionsModel, return;);
 
-        std::unique_ptr<IGameResolutionDialogController> gameResolutionController = std::make_unique<WinGameResolutionDialogController>(*gameActionsModel);
+        std::unique_ptr<IGameResolutionDialogController> gameResolutionController = std::make_unique<GameResolutionDialogController>(*gameActionsModel);
         IF_CONDITION_NOT_MET_DO(gameResolutionController, return;);
 
         {
