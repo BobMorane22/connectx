@@ -61,6 +61,11 @@ TEST(StatusBarPresenter, MakeStatusBarContextString_GameWon_GameWonStringCreated
     ASSERT_EQ(cxgui::MakeStatusBarContextString(cxmodel::NotificationContext::GAME_WON), "Game won!");
 }
 
+TEST(StatusBarPresenter, MakeStatusBarContextString_GameTied_GameTiedStringCreated)
+{
+    ASSERT_EQ(cxgui::MakeStatusBarContextString(cxmodel::NotificationContext::GAME_TIED), "Game tied!");
+}
+
 TEST(StatusBarPresenter, MakeStatusBarContextString_GameEnded_NoMessage)
 {
     ASSERT_EQ(cxgui::MakeStatusBarContextString(cxmodel::NotificationContext::GAME_ENDED), "");

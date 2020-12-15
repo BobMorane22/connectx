@@ -57,6 +57,9 @@ std::string cxgui::MakeStatusBarContextString(cxmodel::NotificationContext p_con
         case cxmodel::NotificationContext::GAME_WON:
             return "Game won!";
 
+        case cxmodel::NotificationContext::GAME_TIED:
+            return "Game tied!";
+
         case cxmodel::NotificationContext::GAME_ENDED:
             return "";
 
