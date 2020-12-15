@@ -249,6 +249,88 @@ TEST_F(ModelTestFixture, /*DISABLED_*/DropChip_ValidModelGameIsWon_WinnerIsLastP
     ASSERT_EQ(THIRD_PLAYER, GetModel().GetActivePlayer());
 }
 
+TEST_F(ModelTestFixture, /*DISABLED_*/DropChip_ValidModelGameIsTied_NotificationsHappen)
+{
+    ModelNotificationCatcher gameTiedObserver{cxmodel::NotificationContext::GAME_TIED};
+
+    GetModel().Attach(&gameTiedObserver);
+    CreateNewGame(6u, 7u, NbPlayers::TWO, InARowValue::FOUR);
+
+    // We drop chips:
+    const cxmodel::Disc RED_CHIP{cxmodel::MakeRed()};
+    const cxmodel::Disc BLUE_CHIP{cxmodel::MakeBlue()};
+
+    ASSERT_EQ(GetModel().GetActivePlayer(), cxmodel::Player("John Doe", cxmodel::MakeRed()));
+    ASSERT_EQ(GetModel().GetNextPlayer(), cxmodel::Player("Mary Foo", cxmodel::MakeBlue()));
+
+    GetModel().DropChip(RED_CHIP, 0u);
+    GetModel().DropChip(BLUE_CHIP, 1u);
+
+    GetModel().DropChip(RED_CHIP, 1u);
+    GetModel().DropChip(BLUE_CHIP, 0u);
+
+    GetModel().DropChip(RED_CHIP, 0u);
+    GetModel().DropChip(BLUE_CHIP, 1u);
+
+    GetModel().DropChip(RED_CHIP, 1u);
+    GetModel().DropChip(BLUE_CHIP, 0u);
+
+    GetModel().DropChip(RED_CHIP, 0u);
+    GetModel().DropChip(BLUE_CHIP, 1u);
+
+    GetModel().DropChip(RED_CHIP, 1u);
+    GetModel().DropChip(BLUE_CHIP, 0u);
+
+    GetModel().DropChip(RED_CHIP, 2u);
+    GetModel().DropChip(BLUE_CHIP, 2u);
+
+    GetModel().DropChip(RED_CHIP, 2u);
+    GetModel().DropChip(BLUE_CHIP, 2u);
+
+    GetModel().DropChip(RED_CHIP, 2u);
+    GetModel().DropChip(BLUE_CHIP, 2u);
+
+    GetModel().DropChip(RED_CHIP, 3u);
+    GetModel().DropChip(BLUE_CHIP, 3u);
+
+    GetModel().DropChip(RED_CHIP, 3u);
+    GetModel().DropChip(BLUE_CHIP, 3u);
+
+    GetModel().DropChip(RED_CHIP, 3u);
+    GetModel().DropChip(BLUE_CHIP, 3u);
+
+    GetModel().DropChip(RED_CHIP, 4u);
+    GetModel().DropChip(BLUE_CHIP, 5u);
+
+    GetModel().DropChip(RED_CHIP, 5u);
+    GetModel().DropChip(BLUE_CHIP, 4u);
+
+    GetModel().DropChip(RED_CHIP, 4u);
+    GetModel().DropChip(BLUE_CHIP, 5u);
+
+    GetModel().DropChip(RED_CHIP, 5u);
+    GetModel().DropChip(BLUE_CHIP, 4u);
+
+    GetModel().DropChip(RED_CHIP, 4u);
+    GetModel().DropChip(BLUE_CHIP, 5u);
+
+    GetModel().DropChip(RED_CHIP, 4u);
+    GetModel().DropChip(BLUE_CHIP, 5u);
+
+    GetModel().DropChip(RED_CHIP, 6u);
+    GetModel().DropChip(BLUE_CHIP, 6u);
+
+    GetModel().DropChip(RED_CHIP, 6u);
+    GetModel().DropChip(BLUE_CHIP, 6u);
+
+    GetModel().DropChip(RED_CHIP, 6u);
+
+    // And the game is a tie:
+    ASSERT_FALSE(gameTiedObserver.WasNotified());
+    GetModel().DropChip(BLUE_CHIP, 6u);
+    ASSERT_TRUE(gameTiedObserver.WasNotified());
+}
+
 TEST_F(ModelTestFixture, /*DISABLED_*/EndCurrentGame_ValidModel_NotificationsSent)
 {
     ModelNotificationCatcher gameEndedObserver{cxmodel::NotificationContext::GAME_ENDED};
