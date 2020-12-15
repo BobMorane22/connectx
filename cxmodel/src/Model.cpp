@@ -347,9 +347,14 @@ bool cxmodel::Model::IsWon() const
 
 bool cxmodel::Model::IsTie() const
 {
+    IF_CONDITION_NOT_MET_DO(m_board, return false;);
     IF_CONDITION_NOT_MET_DO(m_tieResolutionStrategy, return false;);
 
-    return m_tieResolutionStrategy->Handle(GetActivePlayer());
+    return m_takenPositions.size() >= m_board->GetNbPositions();
+    // TG-146 Reactivate this line whenever the tests are conclusive enough
+    //        to be sure the algorithm is good.
+    //
+    // return m_tieResolutionStrategy->Handle(GetActivePlayer());
 }
 
 void cxmodel::Model::Undo()
