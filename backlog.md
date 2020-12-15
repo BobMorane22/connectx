@@ -79,6 +79,17 @@ chips. To make it easier for users to know where their chip would land, the colu
 which their about to be dropped chip stands should be highlighted.
 
 
+## (12-12-2020) Centralize mocks
+
+As the application grows, the number of unit tests requiring mocks is growing as well.
+More often than not, mocks are simply duplicated (we often don't really care about
+their implementations). Whenever a method is added to a model interface, all mocks
+depending on this interface have to be updated, which is a pain. It would be nice to
+have a common mock class that could be overriden whenever necessary, and that would
+serve as a single point to handle when such a scenario arises.
+
+
+
 ## (XX-XX-XXXX) Title
 
 Description...
