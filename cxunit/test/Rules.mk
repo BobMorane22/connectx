@@ -44,6 +44,7 @@ d := $(dir)
 #
 TGTS_$(d) := $(d)/cxunittests
 OBJS_$(d) := $(d)/DisableStdStreamsRAIITests.o \
+             $(d)/StdStreamRedirectorTests.o \
              cxunit/libcxunit.a
 
 # We include all the generated rules. These are created by GCC to make sure that
