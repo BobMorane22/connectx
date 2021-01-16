@@ -121,6 +121,7 @@ cxlog/test/cxlogtests
 cxmodel/test/cxmodeltests
 cxgui/test/cxguitests
 cxexec/test/cxexectests
+cxunit/test/cxunittests
 
 # Coverage
 coverage/report

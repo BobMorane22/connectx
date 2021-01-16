@@ -47,6 +47,9 @@ all: targets
 # low level sub-directories must NOT be handled here. They must be handled in their parent
 # directory's "Rules.mk" file for the recursive inclusion process to work as expected.
 #
+dir := cxunit
+include $(dir)/Rules.mk
+
 dir := cxinv
 include $(dir)/Rules.mk
 
