@@ -37,7 +37,7 @@
  *
  * For a fixture class name `MyFixture`, the following aliases are created:
  *
- *  - `MyFixtureNoStreamRedirector` (equivalent to `MyFixture`).
+ *  - `MyFixtureNoStreamRedirector`     : equivalent to `MyFixture`.
  *  - `MyFixtureStdOutStreamRedirector` : use this alias to redirect STDOUT only.
  *  - `MyFixtureStdErrStreamRedirector` : use this alias to redirect STDERR only.
  *  - `MyFixtureBothStreamsRedirector`  : use this alias to redirect both STDOUT and STDERR.
@@ -68,95 +68,83 @@ enum class Redirection
 };
 
 /*********************************************************************************************//**
- * @brief Standard stream redirector.
+ * @brief Automatically redirect outputs.
  *
- * In this scenario, nothing gets redirected. The created class is essentially the test
- * fixture itself, with no possible redirection.
+ * For a test fixture `T`, adds specific streams redirection according to a specified scenario.
+ * Using this, the user can add stream redirection, for his/her fixture `T`, only for the needed
+ * stream. For example, only STDERR could be redirected and STDOUT left untouched.
  *
- * @tparam T The redirected class (not that is must be a test fixture to compile).
- * @tparam R The redirection scenario (`Redirection::NONE` in this case).
+ * @note Instances of this should only be declared via the `ADD_STREAM_REDIRECTORS` macro (see above).
+ * @note Will only compile for test fixtures.
+ *
+ * @tparam T The test fixture.
+ * @tparam R The redirection scenario.
  *
  ************************************************************************************************/
 template <typename T, Redirection R>
 class StdStreamRedirector : public T
 {
-    static_assert(std::is_base_of_v<::testing::Test, T>);
-};
-
-/*********************************************************************************************//**
- * @brief Standard stream redirector.
- *
- * In this scenario, the standard output (STDOUT) gets redirected, but not the standard error
- * output. The created class is essentially the test with an additionnal redirection method.
- * The class acts as an RAII and streams are automatically redirected.
- *
- * @tparam T The redirected class (not that is must be a test fixture to compile).
- * @tparam R The redirection scenario (`Redirection::STDOUT` in this case).
- *
- ************************************************************************************************/
-template <typename T>
-class StdStreamRedirector<T, Redirection::STDOUT> : public T
-{
-    static_assert(std::is_base_of_v<::testing::Test, T>);
 
 public:
 
-    std::string GetStdOutContents() const {return m_raii.GetStdOutContents();}
+    /*****************************************************************************************//**
+     * @brief Constructor.
+     *
+     * Since the stream redirector member is an RAII, all streams are redirected by default
+     * for any scenario. The job of this constructor is to re-enable specific streams (if
+     * needed) according to the chosen scenario.
+     *
+     ********************************************************************************************/
+    StdStreamRedirector()
+    {
+        if constexpr(R == Redirection::NONE)
+        {
+            m_raii.EnableStdOut();
+            m_raii.EnableStdErr();
+        }
+        else if(R == Redirection::STDOUT)
+        {
+            m_raii.EnableStdErr();
+        }
+        else if(R == Redirection::STDERR)
+        {
+            m_raii.EnableStdOut();
+        }
+    }
+
+    /*****************************************************************************************//**
+     * @brief Gets the redirected STDOUT contents as a string.
+     *
+     * Only available for the `Redirection::STDOUT` and `Redirection::BOTH` scenarios.
+     *
+     ********************************************************************************************/
+    template<
+        Redirection Q = R,
+        typename = std::enable_if_t<(Q == Redirection::STDOUT || Q == Redirection::BOTH)>
+    >
+    std::string GetStdOutContents() const
+    {
+        return m_raii.GetStdOutContents();
+    }
+
+    /*****************************************************************************************//**
+     * @brief Gets the redirected STDERR contents as a string.
+     *
+     * Only available for the `Redirection::STDERR` and `Redirection::BOTH` scenarios.
+     *
+     ********************************************************************************************/
+    template<
+        Redirection Q = R,
+        typename = std::enable_if_t<(Q == Redirection::STDERR || Q == Redirection::BOTH)>
+    >
+    std::string GetStdErrContents() const
+    {
+        return m_raii.GetStdErrContents();
+    }
 
 private:
 
-    DisableStdStreamsRAII m_raii;
-
-};
-
-/*********************************************************************************************//**
- * @brief Standard stream redirector.
- *
- * In this scenario, the standard error output (STDERR) gets redirected, but not the standard
- * output. The created class is essentially the test with an additionnal redirection method.
- * The class acts as an RAII and streams are automatically redirected.
- *
- * @tparam T The redirected class (not that is must be a test fixture to compile).
- * @tparam R The redirection scenario (`Redirection::STDERR` in this case).
- *
- ************************************************************************************************/
-template <typename T>
-class StdStreamRedirector<T, Redirection::STDERR> : public T
-{
     static_assert(std::is_base_of_v<::testing::Test, T>);
-
-public:
-
-    std::string GetStdErrContents() const {return m_raii.GetStdErrContents();}
-
-private:
-
-    DisableStdStreamsRAII m_raii;
-
-};
-
-/*********************************************************************************************//**
- * @brief Standard stream redirector.
- *
- * In this scenario, both standard outputs (STOUT and STDERR) are redirected. The created class
- * is essentially the test with two additionnal redirection methods. The class acts as an RAII
- * and streams are automatically redirected. 
- *
- * @tparam T The redirected class (not that is must be a test fixture to compile).
- * @tparam R The redirection scenario (`Redirection::STDERR` in this case).
- *
- ************************************************************************************************/
-template <typename T>
-class StdStreamRedirector<T, Redirection::BOTH> : public T
-{
-    static_assert(std::is_base_of_v<::testing::Test, T>);
-
-public:
-
-    std::string GetStdOutContents() const {return m_raii.GetStdOutContents();}
-    std::string GetStdErrContents() const {return m_raii.GetStdErrContents();}
-
-private:
 
     DisableStdStreamsRAII m_raii;
 

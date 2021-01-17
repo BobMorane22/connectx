@@ -19,6 +19,9 @@
  * @file StdStreamRedirectorTests.h
  * @date 2021
  *
+ * @note For some of these tests, some stream output will pollute the test report, which is
+ *       wanted. It proves that stream redirection(s) did not occur.
+ *
  *************************************************************************************************/
 
 #include <iostream>
@@ -38,44 +41,44 @@ public:
     void WriteToStdErr() {std::cerr << "STDERR";}
 };
 
-TEST(StreamRedirector, RedirectNone_ContentsOutput_NothingIsRedirected)
+TEST(StreamRedirector, /*DISABLED_*/RedirectNone_ContentsOutput_NothingIsRedirected)
 {
     cxunit::StdStreamRedirector<StdStreamWriter, cxunit::Redirection::NONE> redirector;
 
+    redirector.WriteToStdOut(); // Should be printed to the console.
     // Will not compile:
-    //   redirector.WriteToStdOut();
     //   ASSERT_EQ(redirector.GetStdOutContents(), "STDOUT");
 
+    redirector.WriteToStdErr(); // Should be printed to the console.
     // Will not compile:
-    //   redirector.WriteToStdErr();
     //   ASSERT_EQ(redirector.GetStdErrContents(), "STDERR");
 }
 
-TEST(StreamRedirector, RedirectStdOutOnly_ContentsOutput_OnlyStdOutRedirected)
+TEST(StreamRedirector, /*DISABLED_*/RedirectStdOutOnly_ContentsOutput_OnlyStdOutRedirected)
 {
     cxunit::StdStreamRedirector<StdStreamWriter, cxunit::Redirection::STDOUT> redirector;
 
     redirector.WriteToStdOut();
     ASSERT_EQ(redirector.GetStdOutContents(), "STDOUT");
 
+    redirector.WriteToStdErr(); // Should be printed to the console.
     // Will not compile:
-    //   redirector.WriteToStdErr();
     //   ASSERT_EQ(redirector.GetStdErrContents(), "STDERR");
 }
 
-TEST(StreamRedirector, RedirectStdErrOnly_ContentsOutput_OnlyStdErrOutRedirected)
+TEST(StreamRedirector, /*DISABLED_*/RedirectStdErrOnly_ContentsOutput_OnlyStdErrOutRedirected)
 {
     cxunit::StdStreamRedirector<StdStreamWriter, cxunit::Redirection::STDERR> redirector;
 
+    redirector.WriteToStdOut(); // Should be printed to the console.
     // Will not compile:
-    //   redirector.WriteToStdOut();
     //   ASSERT_EQ(redirector.GetStdOutContents(), "STDOUT");
 
     redirector.WriteToStdErr();
     ASSERT_EQ(redirector.GetStdErrContents(), "STDERR");
 }
 
-TEST(StreamRedirector, RedirectBoth_ContentsOutput_AllIsRedirected)
+TEST(StreamRedirector, /*DISABLED_*/RedirectBoth_ContentsOutput_AllIsRedirected)
 {
     cxunit::StdStreamRedirector<StdStreamWriter, cxunit::Redirection::BOTH> redirector;
 
@@ -95,22 +98,22 @@ class SomeFixture : public ::testing::Test
 
 ADD_STREAM_REDIRECTORS(SomeFixture);
 
-TEST_F(SomeFixtureNoStreamRedirector, NoStreamRedirector_Alias_TestCompiles)
+TEST_F(SomeFixtureNoStreamRedirector, /*DISABLED_*/NoStreamRedirector_Alias_TestCompiles)
 {
     ASSERT_TRUE(true);
 }
 
-TEST_F(SomeFixtureStdOutStreamRedirector, StdOutStreamRedirector_Alias_TestCompiles)
+TEST_F(SomeFixtureStdOutStreamRedirector, /*DISABLED_*/StdOutStreamRedirector_Alias_TestCompiles)
 {
     ASSERT_TRUE(true);
 }
 
-TEST_F(SomeFixtureStdErrStreamRedirector, StdErrStreamRedirector_Alias_TestCompiles)
+TEST_F(SomeFixtureStdErrStreamRedirector, /*DISABLED_*/StdErrStreamRedirector_Alias_TestCompiles)
 {
     ASSERT_TRUE(true);
 }
 
-TEST_F(SomeFixtureBothStreamsRedirector, BothStreamRedirector_Alias_TestCompiles)
+TEST_F(SomeFixtureBothStreamsRedirector, /*DISABLED_*/BothStreamRedirector_Alias_TestCompiles)
 {
     ASSERT_TRUE(true);
 }
