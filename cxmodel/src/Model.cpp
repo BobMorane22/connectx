@@ -148,7 +148,8 @@ void cxmodel::Model::CreateNewGame(const NewGameInformation& p_gameInformation)
     }
 
     std::unique_ptr<ICommand> command = std::make_unique<CommandCreateNewGame>(*this, m_board, m_playersInfo.m_players, m_inARowValue, p_gameInformation);
-    m_cmdStack->Execute(std::move(command));
+    IF_CONDITION_NOT_MET_DO(command, return;);
+    command->Execute();
 
     IF_CONDITION_NOT_MET_DO(m_board, return;);
 

@@ -348,9 +348,13 @@ TEST_F(ModelTestFixture, /*DISABLED_*/EndCurrentGame_ValidModel_NotificationsSen
 TEST_F(ModelTestFixture, /*DISABLED_*/EndCurrentGame_ValidModel_CommandStackEmptied)
 {
     CreateNewGame(6u, 7u, NbPlayers::TWO, InARowValue::FOUR);
+
+    // We add a command to the stack:
+    const cxmodel::Player firstPlayer = GetPlayer(0u);
+    GetModel().DropChip(firstPlayer.GetChip(), 0u);
     ASSERT_FALSE(GetInternalCommandStack().IsEmpty());
 
-    // And end it:
+    // And end the game:
     GetModel().EndCurrentGame();
 
     ASSERT_TRUE(GetInternalCommandStack().IsEmpty());
@@ -405,9 +409,13 @@ TEST_F(ModelTestFixture, /*DISABLED_*/ReinitializeCurrentGame_ValidModel_Notific
 TEST_F(ModelTestFixture, /*DISABLED_*/ReinitializeCurrentGame_ValidModel_CommandStackEmptied)
 {
     CreateNewGame(6u, 7u, NbPlayers::TWO, InARowValue::FOUR);
+
+    // We add a command to the stack:
+    const cxmodel::Player firstPlayer = GetPlayer(0u);
+    GetModel().DropChip(firstPlayer.GetChip(), 0u);
     ASSERT_FALSE(GetInternalCommandStack().IsEmpty());
 
-    // And reinitialize it:
+    // And reinitialize the game:
     GetModel().ReinitializeCurrentGame();
 
     ASSERT_TRUE(GetInternalCommandStack().IsEmpty());
