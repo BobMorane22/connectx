@@ -220,10 +220,12 @@ void cxmodel::Model::DropChip(const cxmodel::IChip& p_chip, size_t p_column)
     }
 
     IBoard::Position droppedPosition;
-    if(m_board->DropChip(p_column, p_chip, droppedPosition))
+    if(!m_board->IsColumnFull(p_column))
     {
-        // TG-114 This should be what the new command does: update information and keep a reference to
-        //        the necessary data to come back later of if a call to Undo() is issued.
+        // TG-114 This should be what the new command does: drop the chip after all checks have been
+        //        performed and saves the necessary data to come back later of if a call to Undo()
+        //        is issued.
+        IF_CONDITION_NOT_MET_DO(m_board->DropChip(p_column, p_chip, droppedPosition), return;);
 
         // Update player information:
         UpdatePlayerIndex(m_playersInfo.m_activePlayerIndex, m_playersInfo.m_players.size());

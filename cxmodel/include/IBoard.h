@@ -133,6 +133,8 @@ public:
      *
      * If the column is already full, the action is ignored and the top-most position is returned.
      *
+     * @pre The p_column argument is between 0 and the maximum column number for the model.
+
      * @param p_column          The column where to insert the chip.
      * @param p_chip            The chip to insert.
      * @param p_droppedPosition The position where the chip was dropped. If the chip could not be
@@ -141,10 +143,20 @@ public:
      *
      * @return `true` if the chip could be dropped, `false` otherwise.
      *
-     * @pre The p_column argument is between 0 and the maximum column number for the model.
-     *
      **********************************************************************************************/
     virtual bool DropChip(size_t p_column, const IChip& p_chip, Position& p_droppedPosition) = 0;
+
+    /*******************************************************************************************//**
+     * @brief Indicates if a column is full.
+     *
+     * @pre The p_column argument is between 0 and the maximum column number for the model.
+
+     * @param p_column The column to check.
+     *
+     * @return `true` if the column is full, `false` otherwise.
+     *
+     **********************************************************************************************/
+    virtual bool IsColumnFull(size_t p_column) const = 0;
 
 };
 
