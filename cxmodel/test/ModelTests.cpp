@@ -345,7 +345,7 @@ TEST_F(ModelTestFixture, /*DISABLED_*/EndCurrentGame_ValidModel_NotificationsSen
     ASSERT_TRUE(gameEndedObserver.WasNotified());
 }
 
-TEST_F(ModelTestFixture, /*DISABLED_*/EndCurrentGame_ValidModel_CommandStackEmptied)
+TEST_F(ModelTestFixture, /*TG-114*/DISABLED_EndCurrentGame_ValidModel_CommandStackEmptied)
 {
     CreateNewGame(6u, 7u, NbPlayers::TWO, InARowValue::FOUR);
 
@@ -406,7 +406,7 @@ TEST_F(ModelTestFixture, /*DISABLED_*/ReinitializeCurrentGame_ValidModel_Notific
     ASSERT_TRUE(gameReinitializedObserver.WasNotified());
 }
 
-TEST_F(ModelTestFixture, /*DISABLED_*/ReinitializeCurrentGame_ValidModel_CommandStackEmptied)
+TEST_F(ModelTestFixture, /*TG-114*/DISABLED_ReinitializeCurrentGame_ValidModel_CommandStackEmptied)
 {
     CreateNewGame(6u, 7u, NbPlayers::TWO, InARowValue::FOUR);
 

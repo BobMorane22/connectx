@@ -21,6 +21,7 @@
  *
  *************************************************************************************************/
 
+#include <algorithm>
 #include <exception>
 #include <sstream>
 
@@ -57,6 +58,19 @@ static constexpr size_t NUMBER_OF_PLAYERS_MAX = 10u;
 static const cxmodel::Player ACTIVE_PLAYER{"Woops (active)!", {0, 0, 0, 0}};
 static const cxmodel::Player NEXT_PLAYER {"Woops! (next)", {0, 0, 0, 0}};
 static const cxmodel::Disc NO_DISC{cxmodel::MakeTransparent()};
+
+
+void UpdatePlayerIndex(size_t& p_playerIndex, size_t p_nbOfPlayers)
+{
+    if(p_playerIndex == p_nbOfPlayers - 1)
+    {
+        p_playerIndex = 0u;
+    }
+    else
+    {
+        ++p_playerIndex;
+    }
+}
 
 } // namespace
 
@@ -176,19 +190,66 @@ void cxmodel::Model::CreateNewGame(const NewGameInformation& p_gameInformation)
 void cxmodel::Model::DropChip(const cxmodel::IChip& p_chip, size_t p_column)
 {
     IF_PRECONDITION_NOT_MET_DO(m_board, return;);
+    IF_PRECONDITION_NOT_MET_DO(p_column < m_board->GetNbColumns(), return;);
 
     // Here, we take a copy of the active player's index. If it is updated after the drop,
     // it means the drop worked and we can notify:
     const size_t activePlayerIndexBefore = m_playersInfo.m_activePlayerIndex;
     const size_t nextPlayerIndexBefore = m_playersInfo.m_nextPlayerIndex;
 
-    std::unique_ptr<ICommand> command = std::make_unique<CommandDropChip>(*this,
-                                                                          *m_board,
-                                                                          m_playersInfo,
-                                                                          p_chip,
-                                                                          p_column,
-                                                                          m_takenPositions);
-    m_cmdStack->Execute(std::move(command));
+
+    // -- Begin CommandDropChip
+
+    const Player& activePlayer = m_playersInfo.m_players[m_playersInfo.m_activePlayerIndex];
+    if(!PRECONDITION(activePlayer.GetChip() == p_chip))
+    {
+        const IChip& activePlayerChip = activePlayer.GetChip();
+        std::ostringstream logStream;
+        logStream << "Active player's color: (" << activePlayerChip.GetColor().R() << ", "
+                                                << activePlayerChip.GetColor().G() << ", "
+                                                << activePlayerChip.GetColor().B() << ")";
+        m_logger.Log(cxlog::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__, logStream.str());
+
+        logStream.str("");
+        logStream << "Dropped disc color: (" << p_chip.GetColor().R() << ", "
+                                             << p_chip.GetColor().G() << ", "
+                                             << p_chip.GetColor().B() << ")";
+        m_logger.Log(cxlog::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__, logStream.str());
+
+        return;
+    }
+
+    IBoard::Position droppedPosition;
+    if(m_board->DropChip(p_column, p_chip, droppedPosition))
+    {
+        // TG-114 This should be what the new command does: update information and keep a reference to
+        //        the necessary data to come back later of if a call to Undo() is issued.
+
+        // Update player information:
+        UpdatePlayerIndex(m_playersInfo.m_activePlayerIndex, m_playersInfo.m_players.size());
+        UpdatePlayerIndex(m_playersInfo.m_nextPlayerIndex, m_playersInfo.m_players.size());
+
+        IF_CONDITION_NOT_MET_DO(m_playersInfo.m_activePlayerIndex < m_playersInfo.m_players.size(), return;);
+        IF_CONDITION_NOT_MET_DO(m_playersInfo.m_nextPlayerIndex < m_playersInfo.m_players.size(), return;);
+        IF_CONDITION_NOT_MET_DO(m_playersInfo.m_activePlayerIndex != m_playersInfo.m_nextPlayerIndex, return;);
+
+        // Update taken positions:
+        const bool isPositionFree = std::find(m_takenPositions.cbegin(), m_takenPositions.cend(), droppedPosition) == m_takenPositions.cend();
+        IF_CONDITION_NOT_MET_DO(isPositionFree, return;);
+
+        m_takenPositions.push_back(droppedPosition);
+
+        std::ostringstream stream;
+        stream << activePlayer.GetName() << "'s chip dropped at (" << droppedPosition.m_row << ", " << droppedPosition.m_column << ")";
+        m_logger.Log(cxlog::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__, stream.str());
+    }
+    else
+    {
+        m_logger.Log(cxlog::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__, "Chip drop failed for " + activePlayer.GetName());
+    }
+
+    // -- End CommandDropChip
+
 
     if(IsWon())
     {
