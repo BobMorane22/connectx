@@ -223,7 +223,7 @@ bool cxgui::GameView::OnKeyPressed(GdkEventKey* p_event)
         return true; // Do not propagate...
     }
 
-    const auto strategy = m_keyEventStrategyFactory.Create(p_event->keyval);
+    const auto strategy = m_keyEventStrategyFactory.Create(p_event);
 
     if(!strategy || !m_board)
     {

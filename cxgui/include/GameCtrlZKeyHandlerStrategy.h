@@ -1,5 +1,3 @@
-#pragma once
-
 /**************************************************************************************************
  *  This file is part of Connect X.
  *
@@ -18,12 +16,13 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file GameKeyHandlerStrategyFactory.h
- * @date 2020
+ * @file GameCtrlZKeyHandlerStrategy.h
+ * @date 2021
  *
  *************************************************************************************************/
 
-#include <memory>
+#ifndef GAMECTRLZKEYHANDLERSTRATEGY_H_234AC57C_5E0C_45A9_85BF_03867FDDFEA6
+#define GAMECTRLZKEYHANDLERSTRATEGY_H_234AC57C_5E0C_45A9_85BF_03867FDDFEA6
 
 #include "IGameKeyHandlerStrategy.h"
 
@@ -31,28 +30,23 @@ namespace cxgui
 {
 
 /*********************************************************************************************//**
- * @brief Factory for key handling strategies.
+ * @brief DESCRIPTION
  *
- * Creates the right strategy for the given keyboard key (GdkKey).
+ * @invariant
+ * @invariant
+ *
+ * DESCRIPTION
  *
  ************************************************************************************************/
-class GameKeyHandlerStrategyFactory final
+class GameCtrlZKeyHandlerStrategy : public IGameKeyHandlerStrategy
 {
 
 public:
 
-    /******************************************************************************************//**
-     * @brief Creates a key handling strategy from a keyboard key identifier.
-     *
-     * @post The returned value is never nullptr.
-     *
-     * @param p_event Describes a key press/release event.
-     *
-     * @return The strategy, or a noop strategy if no corresponding strategy was found.
-     *
-     ********************************************************************************************/
-    std::unique_ptr<cxgui::IGameKeyHandlerStrategy> Create(GdkEventKey* p_event);
+    bool Handle(Board& p_gameBoard) override;
 
 };
 
 } // namespace cxgui
+
+#endif // GAMECTRLZKEYHANDLERSTRATEGY_H_234AC57C_5E0C_45A9_85BF_03867FDDFEA6
