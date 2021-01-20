@@ -109,6 +109,7 @@ local.properties
 
 ### Vim/Ctags ###
 tags
+Session.vim
 
 ### Connect X ###
 
