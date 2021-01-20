@@ -30,11 +30,6 @@
 #include "ICommand.h"
 #include "PlayerInformation.h"
 
-namespace cxlog
-{
-    class ILogger;
-}
-
 namespace cxmodel
 {
     class IChip;
@@ -47,7 +42,8 @@ namespace cxmodel
 /*********************************************************************************************//**
  * @brief Command to drop a chip in the game board.
  *
- * This commands drops a chip into the game board.
+ * It is the caller's responsibility to make sure the arguments are valid and that all conditions
+ * for a successful drop are met. This command only performs the drop, without asking questions.
  *
  ************************************************************************************************/
 class CommandDropChip : public cxmodel::ICommand
@@ -60,17 +56,15 @@ public:
      *
      * @pre The column passed as argument is within the board limits.
      *
-     * @param p_logger            A logger.
      * @param p_board             The game board.
-     * @param p_playerInfo        Information relative to the players.
+     * @param p_playersInfo       Information relative to the players.
      * @param p_droppedChip       The chip being dropped.
      * @param p_column            The column into which to drop the chip.
      * @param p_takenPositions    A collection of non-free positions.
      *
      ********************************************************************************************/
-    CommandDropChip(cxlog::ILogger& p_logger,
-                    IBoard& p_board,
-                    PlayerInformation& p_playerInfo,
+    CommandDropChip(IBoard& p_board,
+                    PlayerInformation& p_playersInfo,
                     const cxmodel::IChip& p_droppedChip,
                     const size_t p_column,
                     std::vector<IBoard::Position>& p_takenPositions);
@@ -81,10 +75,8 @@ public:
 
 private:
 
-    cxlog::ILogger& m_logger;
-
     cxmodel::IBoard& m_board;
-    cxmodel::PlayerInformation& m_playerInfo;
+    cxmodel::PlayerInformation& m_playersInfo;
     const cxmodel::IChip& m_droppedChip;
     const size_t m_column;
     std::vector<IBoard::Position>& m_takenPositions;

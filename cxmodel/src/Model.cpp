@@ -21,7 +21,6 @@
  *
  *************************************************************************************************/
 
-#include <algorithm>
 #include <exception>
 #include <sstream>
 
@@ -58,19 +57,6 @@ static constexpr size_t NUMBER_OF_PLAYERS_MAX = 10u;
 static const cxmodel::Player ACTIVE_PLAYER{"Woops (active)!", {0, 0, 0, 0}};
 static const cxmodel::Player NEXT_PLAYER {"Woops! (next)", {0, 0, 0, 0}};
 static const cxmodel::Disc NO_DISC{cxmodel::MakeTransparent()};
-
-
-void UpdatePlayerIndex(size_t& p_playerIndex, size_t p_nbOfPlayers)
-{
-    if(p_playerIndex == p_nbOfPlayers - 1)
-    {
-        p_playerIndex = 0u;
-    }
-    else
-    {
-        ++p_playerIndex;
-    }
-}
 
 } // namespace
 
@@ -197,9 +183,6 @@ void cxmodel::Model::DropChip(const cxmodel::IChip& p_chip, size_t p_column)
     const size_t activePlayerIndexBefore = m_playersInfo.m_activePlayerIndex;
     const size_t nextPlayerIndexBefore = m_playersInfo.m_nextPlayerIndex;
 
-
-    // -- Begin CommandDropChip
-
     const Player& activePlayer = m_playersInfo.m_players[m_playersInfo.m_activePlayerIndex];
     if(!PRECONDITION(activePlayer.GetChip() == p_chip))
     {
@@ -219,29 +202,18 @@ void cxmodel::Model::DropChip(const cxmodel::IChip& p_chip, size_t p_column)
         return;
     }
 
-    IBoard::Position droppedPosition;
     if(!m_board->IsColumnFull(p_column))
     {
-        // TG-114 This should be what the new command does: drop the chip after all checks have been
-        //        performed and saves the necessary data to come back later of if a call to Undo()
-        //        is issued.
-        IF_CONDITION_NOT_MET_DO(m_board->DropChip(p_column, p_chip, droppedPosition), return;);
-
-        // Update player information:
-        UpdatePlayerIndex(m_playersInfo.m_activePlayerIndex, m_playersInfo.m_players.size());
-        UpdatePlayerIndex(m_playersInfo.m_nextPlayerIndex, m_playersInfo.m_players.size());
-
-        IF_CONDITION_NOT_MET_DO(m_playersInfo.m_activePlayerIndex < m_playersInfo.m_players.size(), return;);
-        IF_CONDITION_NOT_MET_DO(m_playersInfo.m_nextPlayerIndex < m_playersInfo.m_players.size(), return;);
-        IF_CONDITION_NOT_MET_DO(m_playersInfo.m_activePlayerIndex != m_playersInfo.m_nextPlayerIndex, return;);
-
-        // Update taken positions:
-        const bool isPositionFree = std::find(m_takenPositions.cbegin(), m_takenPositions.cend(), droppedPosition) == m_takenPositions.cend();
-        IF_CONDITION_NOT_MET_DO(isPositionFree, return;);
-
-        m_takenPositions.push_back(droppedPosition);
+        std::unique_ptr<ICommand> command = std::make_unique<CommandDropChip>(*m_board,
+                                                                              m_playersInfo,
+                                                                              p_chip,
+                                                                              p_column,
+                                                                              m_takenPositions);
+        IF_CONDITION_NOT_MET_DO(command, return;);                                                                          
+        m_cmdStack->Execute(std::move(command));
 
         std::ostringstream stream;
+        const IBoard::Position& droppedPosition = m_takenPositions.back();
         stream << activePlayer.GetName() << "'s chip dropped at (" << droppedPosition.m_row << ", " << droppedPosition.m_column << ")";
         m_logger.Log(cxlog::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__, stream.str());
     }
@@ -249,9 +221,6 @@ void cxmodel::Model::DropChip(const cxmodel::IChip& p_chip, size_t p_column)
     {
         m_logger.Log(cxlog::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__, "Chip drop failed for " + activePlayer.GetName());
     }
-
-    // -- End CommandDropChip
-
 
     if(IsWon())
     {
