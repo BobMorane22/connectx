@@ -39,6 +39,7 @@ namespace cxmodel
     class IConnectXGameActions;
     class IConnectXGameInformation;
     class IConnectXLimits;
+    class IUndoRedo;
     class IVersioning;
     class Subject;
 }
@@ -72,6 +73,7 @@ public:
      * @param p_modelAsGameInformation The Connect X compatible model (Game information).
      * @param p_modelAsLimits          The Connect X compatible model (Limits).
      * @param p_modelAsVersionning     The Connect X compatible model (Versionning).
+     * @param p_modelAsUndoRedo        The Connect X compatible model (Undo/redo).
      * @param p_logger                 A chain logger.
      *
      ********************************************************************************************/
@@ -82,6 +84,7 @@ public:
                 cxmodel::IConnectXGameInformation& p_modelAsGameInformation,
                 cxmodel::IConnectXLimits& p_modelAsLimits,
                 cxmodel::IVersioning& p_modelAsVersionning,
+                cxmodel::IUndoRedo& p_modelAsUndoRedo,
                 cxlog::ILogger& p_logger);
 
     int Run() override;

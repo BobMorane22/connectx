@@ -42,6 +42,7 @@ TEST_F(ApplicationTestFixture, /*DISABLED_*/Run_BadArgumentCount_ExitFailure)
                                                                               GetGameInformationModel(),
                                                                               GetLimitsModel(),
                                                                               GetVersionningModel(),
+                                                                              GetUndoRedoModel(),
                                                                               GetLogger());
 
     EXPECT_EQ(app->Run(), EXIT_FAILURE);
@@ -59,6 +60,7 @@ TEST_F(ApplicationTestFixture, /*DISABLED_*/Run_BadArgument_ExitFailure)
                                                                               GetGameInformationModel(),
                                                                               GetLimitsModel(),
                                                                               GetVersionningModel(),
+                                                                              GetUndoRedoModel(),
                                                                               GetLogger());
     EXPECT_EQ(app->Run(), EXIT_FAILURE);
 }
@@ -75,6 +77,7 @@ TEST_F(ApplicationTestFixture, /*DISABLED_*/Run_Help_ExitSuccess)
                                                                               GetGameInformationModel(),
                                                                               GetLimitsModel(),
                                                                               GetVersionningModel(),
+                                                                              GetUndoRedoModel(),
                                                                               GetLogger());
     EXPECT_EQ(app->Run(), EXIT_SUCCESS);
 }
@@ -91,6 +94,7 @@ TEST_F(ApplicationTestFixture, /*DISABLED_*/Run_Version_ExitSuccess)
                                                                               GetGameInformationModel(),
                                                                               GetLimitsModel(),
                                                                               GetVersionningModel(),
+                                                                              GetUndoRedoModel(),
                                                                               GetLogger());
     EXPECT_EQ(app->Run(), EXIT_SUCCESS);
 }
@@ -107,6 +111,7 @@ TEST_F(ApplicationTestFixture, /*DISABLED_*/Run_HelpAndVersion_ExitSuccess)
                                                                               GetGameInformationModel(),
                                                                               GetLimitsModel(),
                                                                               GetVersionningModel(),
+                                                                              GetUndoRedoModel(),
                                                                               GetLogger());
     EXPECT_EQ(app->Run(), EXIT_SUCCESS);
 }
@@ -123,6 +128,7 @@ TEST_F(ApplicationTestFixture, /*DISABLED_*/Run_VersionAndHelp_ExitSuccess)
                                                                               GetGameInformationModel(),
                                                                               GetLimitsModel(),
                                                                               GetVersionningModel(),
+                                                                              GetUndoRedoModel(),
                                                                               GetLogger());
     EXPECT_EQ(app->Run(), EXIT_SUCCESS);
 }
@@ -139,6 +145,7 @@ TEST_F(ApplicationTestFixture, /*DISABLED_*/Run_TwoManyValidArguments_ExitSucces
                                                                               GetGameInformationModel(),
                                                                               GetLimitsModel(),
                                                                               GetVersionningModel(),
+                                                                              GetUndoRedoModel(),
                                                                               GetLogger());
     EXPECT_EQ(app->Run(), EXIT_SUCCESS);
 }
@@ -155,6 +162,7 @@ TEST_F(ApplicationTestFixture, /*DISABLED_*/Run_MixedArguments_ExitFailure)
                                                                               GetGameInformationModel(),
                                                                               GetLimitsModel(),
                                                                               GetVersionningModel(),
+                                                                              GetUndoRedoModel(),
                                                                               GetLogger());
     EXPECT_EQ(app->Run(), EXIT_FAILURE);
 }

@@ -23,9 +23,11 @@
 
 #include <iostream>
 
-#include "GameRightKeyHandlerStrategy.h"
+#include <Board.h>
+#include <GameRightKeyHandlerStrategy.h>
+#include <IGameViewController.h>
 
-bool cxgui::GameRightKeyHandlerStrategy::Handle(Board& p_gameBoard)
+bool cxgui::GameRightKeyHandlerStrategy::Handle(IGameViewController& /*p_controller*/, Board& p_gameBoard)
 {
     p_gameBoard.MoveRight();
 

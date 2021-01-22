@@ -21,11 +21,11 @@
  *
  *************************************************************************************************/
 
-#include <iostream>
+#include <Board.h>
+#include <GameLeftKeyHandlerStrategy.h>
+#include <IGameViewController.h>
 
-#include "GameLeftKeyHandlerStrategy.h"
-
-bool cxgui::GameLeftKeyHandlerStrategy::Handle(Board& p_gameBoard)
+bool cxgui::GameLeftKeyHandlerStrategy::Handle(IGameViewController& /*p_controller*/, Board& p_gameBoard)
 {
     p_gameBoard.MoveLeft();
 

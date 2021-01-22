@@ -27,18 +27,21 @@
 #include <cxinv/include/assertion.h>
 #include <cxmodel/include/Disc.h>
 #include <cxmodel/include/IConnectXGameActions.h>
+#include <cxmodel/include/IUndoRedo.h>
 
 #include <MainWindowController.h>
 
-cxgui::MainWindowController::MainWindowController(cxmodel::IConnectXGameActions& p_model)
- : m_model{p_model}
+cxgui::MainWindowController::MainWindowController(cxmodel::IConnectXGameActions& p_modelAsGameActions,
+                                                  cxmodel::IUndoRedo& p_modelAsUndoRedo)
+ : m_modelAsGameActions{p_modelAsGameActions}
+ , m_modelAsUndoRedo{p_modelAsUndoRedo}
  , m_currentChip{std::make_unique<cxmodel::Disc>(cxmodel::Disc::MakeTransparentDisc())}
 {
 }
 
 void cxgui::MainWindowController::OnStart(const cxmodel::NewGameInformation p_gameInformation)
 {
-    m_model.CreateNewGame(p_gameInformation);
+    m_modelAsGameActions.CreateNewGame(p_gameInformation);
 }
 
 void cxgui::MainWindowController::OnDown(const cxmodel::ChipColor& p_chipColor, size_t p_column)
@@ -46,15 +49,20 @@ void cxgui::MainWindowController::OnDown(const cxmodel::ChipColor& p_chipColor, 
     IF_PRECONDITION_NOT_MET_DO(p_chipColor != cxmodel::MakeTransparent(), return;);
 
     m_currentChip = std::make_unique<cxmodel::Disc>(p_chipColor);
-    m_model.DropChip(*m_currentChip, p_column);
+    m_modelAsGameActions.DropChip(*m_currentChip, p_column);
 }
 
 void cxgui::MainWindowController::OnNewGame()
 {
-    m_model.EndCurrentGame(); 
+    m_modelAsGameActions.EndCurrentGame(); 
 }
 
 void cxgui::MainWindowController::OnReinitializeCurrentGame()
 {
-    m_model.ReinitializeCurrentGame();
+    m_modelAsGameActions.ReinitializeCurrentGame();
+}
+
+void cxgui::MainWindowController::OnUndo()
+{
+    m_modelAsUndoRedo.Undo();
 }

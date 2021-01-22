@@ -54,6 +54,7 @@ std::unique_ptr<cx::ICmdArgWorkflowStrategy> cx::CmdArgWorkflowFactory::Create(i
                                                                                cxmodel::IConnectXGameInformation& p_modelAsGameInformation,
                                                                                cxmodel::IConnectXLimits& p_modelAsLimits,
                                                                                cxmodel::IVersioning& p_modelAsVersionning,
+                                                                               cxmodel::IUndoRedo& p_modelAsUndoRedo,
                                                                                cxlog::ILogger& p_logger)
 {
     std::unique_ptr<cx::ICmdArgWorkflowStrategy> strategy = std::make_unique<CmdArgNoStrategy>();
@@ -69,7 +70,9 @@ std::unique_ptr<cx::ICmdArgWorkflowStrategy> cx::CmdArgWorkflowFactory::Create(i
                                                         p_modelAsSubject,
                                                         p_modelAsGameActions,
                                                         p_modelAsGameInformation,
-                                                        p_modelAsLimits);
+                                                        p_modelAsLimits,
+                                                        p_modelAsUndoRedo);
+
     }
     else
     {
@@ -132,6 +135,7 @@ std::unique_ptr<cx::ICmdArgWorkflowStrategy> cx::CmdArgWorkflowFactory::Create(i
                                                                    p_modelAsGameInformation,
                                                                    p_modelAsLimits,
                                                                    p_modelAsVersionning,
+                                                                   p_modelAsUndoRedo,
                                                                    &p_logger);
             }
         }

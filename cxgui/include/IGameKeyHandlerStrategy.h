@@ -25,7 +25,11 @@
 
 #include <gtkmm/window.h>
 
-#include "Board.h"
+namespace cxgui
+{
+    class Board;
+    class IGameViewController;
+}
 
 namespace cxgui
 {
@@ -50,13 +54,13 @@ public:
     /******************************************************************************************//**
      * @brief Handle key press on the board.
      *
-     * @param p_gameBoard The board to act on.
-     * @param
+     * @param p_controller The Game View controller.
+     * @param p_gameBoard  The board to act on.
      *
      * @return `true` if the handling must stop propagating, `false` otherwise.
      *
      ********************************************************************************************/
-    virtual bool Handle(Board& p_gameBoard) = 0;
+    virtual bool Handle(IGameViewController& p_controller, Board& p_gameBoard) = 0;
 
 };
 
@@ -66,9 +70,9 @@ public:
  * Used when no suitable strategy is accessible.
  *
  ************************************************************************************************/
-class GameKeyHandlerNoStrategy : public cxgui::IGameKeyHandlerStrategy
+class GameKeyHandlerNoStrategy : public IGameKeyHandlerStrategy
 {
-    bool Handle(Board& /*p_gameBoard*/) override
+    bool Handle(IGameViewController& /*p_controller*/, Board& /*p_gameBoard*/) override
     {
         return false; // propagate...
     }

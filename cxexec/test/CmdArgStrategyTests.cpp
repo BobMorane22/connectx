@@ -140,6 +140,7 @@ TEST_F(ApplicationTestFixture, Handle_VerboseStrategy_InvalidLoggerError)
                                                                                                              GetGameInformationModel(),
                                                                                                              GetLimitsModel(),
                                                                                                              GetVersionningModel(),
+                                                                                                             GetUndoRedoModel(),
                                                                                                              nullptr);
 
     ASSERT_TRUE(strategy);
@@ -166,6 +167,7 @@ TEST_F(ApplicationTestFixture, Handle_VerboseStrategy_LoggerIsNotAChainLoggerErr
                                                                                                              GetGameInformationModel(),
                                                                                                              GetLimitsModel(),
                                                                                                              GetVersionningModel(),
+                                                                                                             GetUndoRedoModel(),
                                                                                                              logger.get());
 
     ASSERT_TRUE(strategy);

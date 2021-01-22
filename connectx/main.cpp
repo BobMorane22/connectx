@@ -79,6 +79,7 @@ int main(int argc, char *argv[])
         cxmodel::IConnectXGameInformation& modelAsGameInformation = concreteModel;
         cxmodel::IConnectXLimits& modelAsLimits = concreteModel;
         cxmodel::IVersioning& modelAsVersionning = concreteModel;
+        cxmodel::IUndoRedo& modelAsUndoRedo = concreteModel;
 
         std::unique_ptr<cx::IApplication> app = std::make_unique<cx::Application>(argc,
                                                                                   argv,
@@ -87,6 +88,7 @@ int main(int argc, char *argv[])
                                                                                   modelAsGameInformation,
                                                                                   modelAsLimits,
                                                                                   modelAsVersionning,
+                                                                                  modelAsUndoRedo,
                                                                                   *logger);
 
         result = app->Run();

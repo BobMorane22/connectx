@@ -21,9 +21,11 @@
  *
  *************************************************************************************************/
 
-#include "GameDownKeyHandlerStrategy.h"
+#include <Board.h>
+#include <GameDownKeyHandlerStrategy.h>
+#include <IGameViewController.h>
 
-bool cxgui::GameDownKeyHandlerStrategy::Handle(Board& p_gameBoard)
+bool cxgui::GameDownKeyHandlerStrategy::Handle(IGameViewController& /*p_controller*/, Board& p_gameBoard)
 {
     p_gameBoard.DropChip();
 

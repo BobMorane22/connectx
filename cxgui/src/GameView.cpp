@@ -230,7 +230,7 @@ bool cxgui::GameView::OnKeyPressed(GdkEventKey* p_event)
         return false;
     }
 
-    return strategy->Handle(*m_board);
+    return strategy->Handle(m_controller, *m_board);
 }
 
 void cxgui::GameView::UpdateChipDropped()

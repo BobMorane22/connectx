@@ -29,6 +29,7 @@
 namespace cxmodel
 {
     class IConnectXGameActions;
+    class IUndoRedo;
 }
 
 namespace cxgui
@@ -39,7 +40,8 @@ class MainWindowController : public cxgui::IMainWindowController
 
 public:
 
-    MainWindowController(cxmodel::IConnectXGameActions& p_model);
+    MainWindowController(cxmodel::IConnectXGameActions& p_modelAsGameActions,
+                         cxmodel::IUndoRedo& p_modelAsUndoRedo);
 
 ///@{ @name New Game View
 // ------------------------------------------------------------------------------------------------
@@ -54,12 +56,14 @@ public:
     void OnDown(const cxmodel::ChipColor& p_chipColor, size_t p_column) override;
     void OnNewGame() override;
     void OnReinitializeCurrentGame() override;
+    void OnUndo() override;
 
 ///@}
 
 private:
 
-    cxmodel::IConnectXGameActions& m_model;
+    cxmodel::IConnectXGameActions& m_modelAsGameActions;
+    cxmodel::IUndoRedo& m_modelAsUndoRedo;
 
     std::unique_ptr<cxmodel::IChip> m_currentChip;
 };

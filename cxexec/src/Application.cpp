@@ -37,6 +37,7 @@ cx::Application::Application(int argc,
                              cxmodel::IConnectXGameInformation& p_modelAsGameInformation,
                              cxmodel::IConnectXLimits& p_modelAsLimits,
                              cxmodel::IVersioning& p_modelAsVersionning,
+                             cxmodel::IUndoRedo& p_modelAsUndoRedo,
                              cxlog::ILogger& p_logger)
 {
     PRECONDITION(argc >= 1);
@@ -51,6 +52,7 @@ cx::Application::Application(int argc,
                                 p_modelAsGameInformation,
                                 p_modelAsLimits,
                                 p_modelAsVersionning,
+                                p_modelAsUndoRedo,
                                 p_logger);
 
     POSTCONDITION(m_workflow);

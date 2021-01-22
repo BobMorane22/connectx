@@ -33,7 +33,8 @@ cx::GtkmmUIManager::GtkmmUIManager(int argc,
                                    cxmodel::Subject& p_modelAsSubject,
                                    cxmodel::IConnectXGameActions& p_modelAsGameActions,
                                    cxmodel::IConnectXGameInformation& p_modelAsGameInformation,
-                                   cxmodel::IConnectXLimits& p_modelAsLimits)
+                                   cxmodel::IConnectXLimits& p_modelAsLimits,
+                                   cxmodel::IUndoRedo& p_modelAsUndoRedo)
 {
     PRECONDITION(argc > 0);
     PRECONDITION(argv);
@@ -43,7 +44,7 @@ cx::GtkmmUIManager::GtkmmUIManager(int argc,
     // At this point, the Gtkmm engine is initialized. This means that Gtkmm widgets can safely be
     // instantiated...
 
-    m_controller = std::make_unique<cxgui::MainWindowController>(p_modelAsGameActions);
+    m_controller = std::make_unique<cxgui::MainWindowController>(p_modelAsGameActions, p_modelAsUndoRedo);
     m_presenter = std::make_unique<cxgui::MainWindowPresenter>(p_modelAsLimits, p_modelAsGameInformation);
 
     // Note: we must use the 'get' method with the 'operator*' because Gtk::RefPtr does not

@@ -29,6 +29,7 @@
 #include <gtest/gtest.h>
 
 #include <cxmodel/include/IConnectXGameActions.h>
+#include <cxmodel/include/IUndoRedo.h>
 #include <cxgui/include/IMainWindowController.h>
 
 #include "DisableStdStreamsRAII.h"
@@ -51,7 +52,8 @@ public:
 
 private:
 
-    class MainWindowControllerMockModel : public cxmodel::IConnectXGameActions
+    class MainWindowControllerMockModel : public cxmodel::IConnectXGameActions,
+                                          public cxmodel::IUndoRedo
     {
 
     public:
@@ -66,6 +68,10 @@ private:
         void DropChip(const cxmodel::IChip& p_chip, size_t p_column) override;
         void EndCurrentGame() override;
         void ReinitializeCurrentGame() override;
+
+        // IUndoRedo:
+        void Undo() override {};
+        void Redo() override {};
 
     private:
 

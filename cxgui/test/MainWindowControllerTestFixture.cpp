@@ -29,7 +29,7 @@ MainWindowControllerTestFixture::MainWindowControllerTestFixture()
     m_model = std::make_unique<MainWindowControllerMockModel>(*this);
     EXPECT_TRUE(m_model);
 
-    m_controller = std::make_unique<cxgui::MainWindowController>(*m_model);
+    m_controller = std::make_unique<cxgui::MainWindowController>(*m_model, *m_model);
     EXPECT_TRUE(m_controller);
 }
 

@@ -21,12 +21,13 @@
  *
  *************************************************************************************************/
 
-#include <iostream>
-
+#include <Board.h>
 #include <GameCtrlZKeyHandlerStrategy.h>
+#include <IGameViewController.h>
 
-bool cxgui::GameCtrlZKeyHandlerStrategy::Handle(Board& /*p_gameBoard*/)
+bool cxgui::GameCtrlZKeyHandlerStrategy::Handle(IGameViewController& p_controller, Board& /*p_gameBoard*/)
 {
-    std::cout << "'Ctrl + z' pressed!" << std::endl;
+    p_controller.OnUndo();
+
     return true;
 }

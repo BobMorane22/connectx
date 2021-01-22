@@ -29,6 +29,7 @@
 #include <cxmodel/include/IConnectXGameActions.h>
 #include <cxmodel/include/IConnectXGameInformation.h>
 #include <cxmodel/include/IConnectXLimits.h>
+#include <cxmodel/include/IUndoRedo.h>
 #include <cxmodel/include/IVersioning.h>
 #include <cxmodel/include/Subject.h>
 
@@ -52,6 +53,7 @@ public:
     cxmodel::IConnectXGameActions& GetGameActionsModel();
     cxmodel::IConnectXGameInformation& GetGameInformationModel();
     cxmodel::IConnectXLimits& GetLimitsModel();
+    cxmodel::IUndoRedo& GetUndoRedoModel();
     cxmodel::IVersioning& GetVersionningModel();
 
     std::string GetStdOutContents() const;
@@ -64,6 +66,7 @@ private:
                                  public cxmodel::IConnectXGameActions,
                                  public cxmodel::IConnectXGameInformation,
                                  public cxmodel::IConnectXLimits,
+                                 public cxmodel::IUndoRedo,
                                  public cxmodel::IVersioning
     {
 
@@ -77,27 +80,31 @@ private:
 
         // IConnectXGameInformation:
         size_t GetCurrentGridHeight() const override {return 6u;}
-        size_t GetCurrentGridWidth() const override {return 7u;};
-        size_t GetCurrentInARowValue() const override {return 4u;};
-        const cxmodel::Player& GetActivePlayer() const override {return m_ACTIVE_PLAYER;};
-        const cxmodel::Player& GetNextPlayer() const override {return m_NEXT_PLAYER;};
+        size_t GetCurrentGridWidth() const override {return 7u;}
+        size_t GetCurrentInARowValue() const override {return 4u;}
+        const cxmodel::Player& GetActivePlayer() const override {return m_ACTIVE_PLAYER;}
+        const cxmodel::Player& GetNextPlayer() const override {return m_NEXT_PLAYER;}
         const cxmodel::IChip& GetChip(size_t p_row, size_t p_column) const override;
-        bool IsWon() const override {throw std::logic_error("Not implemented!");};
-        bool IsTie() const override {throw std::logic_error("Not implemented!");};
+        bool IsWon() const override {throw std::logic_error("Not implemented!");}
+        bool IsTie() const override {throw std::logic_error("Not implemented!");}
 
         // IConnectXLimits:
-        size_t GetMinimumGridHeight() const override {return 7u;};
-        size_t GetMinimumGridWidth() const override {return 6u;};
-        size_t GetMinimumInARowValue() const override {return 3u;};
-        size_t GetMaximumGridHeight() const override {return 64u;};
-        size_t GetMaximumGridWidth() const override {return 7u;};
-        size_t GetMaximumInARowValue() const override {return 8u;};
-        size_t GetMinimumNumberOfPlayers() const override {return 2u;};
-        size_t GetMaximumNumberOfPlayers() const override {return 10u;};
+        size_t GetMinimumGridHeight() const override {return 7u;}
+        size_t GetMinimumGridWidth() const override {return 6u;}
+        size_t GetMinimumInARowValue() const override {return 3u;}
+        size_t GetMaximumGridHeight() const override {return 64u;}
+        size_t GetMaximumGridWidth() const override {return 7u;}
+        size_t GetMaximumInARowValue() const override {return 8u;}
+        size_t GetMinimumNumberOfPlayers() const override {return 2u;}
+        size_t GetMaximumNumberOfPlayers() const override {return 10u;}
+
+        // IUndoRedo:
+        void Undo() override {}
+        void Redo() override {}
 
         // IVersionning:
-        std::string GetName() const override {return "Connect X";};
-        std::string GetVersionNumber() const override {return "v0.0";};
+        std::string GetName() const override {return "Connect X";}
+        std::string GetVersionNumber() const override {return "v0.0";}
 
     private:
 

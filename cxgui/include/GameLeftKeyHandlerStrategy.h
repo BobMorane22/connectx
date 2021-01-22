@@ -37,10 +37,11 @@ class GameLeftKeyHandlerStrategy : public cxgui::IGameKeyHandlerStrategy
     /******************************************************************************************//**
      * @brief Handler for a left key press.
      *
-     * @param p_gameBoard The board to act on.
+     * @param p_controller The game view controller.
+     * @param p_gameBoard  The board to act on.
      *
      ********************************************************************************************/
-    bool Handle(Board& p_gameBoard) override;
+    bool Handle(IGameViewController& p_controller, Board& p_gameBoard) override;
 };
 
 } // namespace cxgui

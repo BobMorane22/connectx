@@ -64,6 +64,7 @@ cx::CmdArgVerboseStrategy::CmdArgVerboseStrategy(int argc,
                                                  cxmodel::IConnectXGameInformation& p_modelAsGameInformation,
                                                  cxmodel::IConnectXLimits& p_modelAsLimits,
                                                  cxmodel::IVersioning& p_modelAsVersionning,
+                                                 cxmodel::IUndoRedo& p_modelAsUndoRedo,
                                                  cxlog::ILogger* p_logger)
  : m_argc{argc}
  , m_argv{argv}
@@ -72,6 +73,7 @@ cx::CmdArgVerboseStrategy::CmdArgVerboseStrategy(int argc,
  , m_modelAsGameInformation{p_modelAsGameInformation}
  , m_modelAsLimits{p_modelAsLimits}
  , m_modelAsVersionning{p_modelAsVersionning}
+ , m_modelAsUndoRedo{p_modelAsUndoRedo}
  , m_logger{p_logger}
 {
     PRECONDITION(p_logger);
@@ -97,7 +99,8 @@ int cx::CmdArgVerboseStrategy::Handle()
                                         m_modelAsSubject,
                                         m_modelAsGameActions,
                                         m_modelAsGameInformation,
-                                        m_modelAsLimits};
+                                        m_modelAsLimits,
+                                        m_modelAsUndoRedo};
 
     return mainStrategy.Handle();
 }

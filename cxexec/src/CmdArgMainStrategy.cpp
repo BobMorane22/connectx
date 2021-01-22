@@ -25,7 +25,9 @@
 
 #include <cxinv/include/assertion.h>
 #include <cxmodel/include/IConnectXGameActions.h>
+#include <cxmodel/include/IUndoRedo.h>
 #include <cxmodel/include/Subject.h>
+
 
 #include <CmdArgMainStrategy.h>
 
@@ -34,7 +36,8 @@ cx::CmdArgMainStrategy::CmdArgMainStrategy(int argc,
                                            cxmodel::Subject& p_modelAsSubject,
                                            cxmodel::IConnectXGameActions& p_modelAsGameActions,
                                            cxmodel::IConnectXGameInformation& p_modelAsGameInformation,
-                                           cxmodel::IConnectXLimits& p_modelAsLimits)
+                                           cxmodel::IConnectXLimits& p_modelAsLimits,
+                                           cxmodel::IUndoRedo& p_modelAsUndoRedo)
 {
     PRECONDITION(argc > 0);
     PRECONDITION(argv);
@@ -45,7 +48,8 @@ cx::CmdArgMainStrategy::CmdArgMainStrategy(int argc,
                                                    p_modelAsSubject,
                                                    p_modelAsGameActions,
                                                    p_modelAsGameInformation,
-                                                   p_modelAsLimits);
+                                                   p_modelAsLimits,
+                                                   p_modelAsUndoRedo);
 
     POSTCONDITION(m_uiMgr);
 }

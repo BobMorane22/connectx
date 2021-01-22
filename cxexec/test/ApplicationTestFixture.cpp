@@ -61,6 +61,13 @@ cxmodel::IConnectXLimits& ApplicationTestFixture::GetLimitsModel()
     return *m_model;
 }
 
+cxmodel::IUndoRedo& ApplicationTestFixture::GetUndoRedoModel()
+{
+    EXPECT_TRUE(m_model);
+
+    return *m_model;
+}
+
 cxmodel::IVersioning& ApplicationTestFixture::GetVersionningModel()
 {
     EXPECT_TRUE(m_model);

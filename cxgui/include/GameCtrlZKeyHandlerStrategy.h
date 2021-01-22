@@ -30,12 +30,7 @@ namespace cxgui
 {
 
 /*********************************************************************************************//**
- * @brief DESCRIPTION
- *
- * @invariant
- * @invariant
- *
- * DESCRIPTION
+ * @brief Strategy for when a user pressed 'Crtl + z'.
  *
  ************************************************************************************************/
 class GameCtrlZKeyHandlerStrategy : public IGameKeyHandlerStrategy
@@ -43,7 +38,14 @@ class GameCtrlZKeyHandlerStrategy : public IGameKeyHandlerStrategy
 
 public:
 
-    bool Handle(Board& p_gameBoard) override;
+    /******************************************************************************************//**
+     * @brief Handler for a Ctrl + z key press.
+     *
+     * @param p_controller The game view controller.
+     * @param p_gameBoard  The board to act on.
+     *
+     ********************************************************************************************/
+    bool Handle(IGameViewController& p_controller, Board& p_gameBoard) override;
 
 };
 
