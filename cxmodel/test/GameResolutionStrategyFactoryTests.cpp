@@ -45,6 +45,7 @@ public:
     size_t GetNbPositions() const override {return 42u;}
     const cxmodel::IChip& GetChip(const Position& /*p_position*/) const override {return m_disc;}
     bool DropChip(size_t /*p_column*/, const cxmodel::IChip& /*p_chip*/, cxmodel::IBoard::Position& /*p_droppedPosition*/) override {return true;}
+    void ResetChip(Position& /*p_position*/) override {}
     bool IsColumnFull(size_t /*p_column*/) const override {return false;}
 
 private:

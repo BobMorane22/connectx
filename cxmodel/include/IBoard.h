@@ -147,6 +147,19 @@ public:
     virtual bool DropChip(size_t p_column, const IChip& p_chip, Position& p_droppedPosition) = 0;
 
     /*******************************************************************************************//**
+     * @brief Resets the chip at the specified position.
+     *
+     * When a chip has been reset, it has no more color associated to it.
+     *
+     * @pre The position exist on the board.
+     * @pre The chip at the specified position is not transparent.
+     *
+     * @param p_position The position on the board where the chip to reset is located.
+     *
+     **********************************************************************************************/
+    virtual void ResetChip(Position& p_position) = 0;
+
+    /*******************************************************************************************//**
      * @brief Indicates if a column is full.
      *
      * @pre The p_column argument is between 0 and the maximum column number for the model.

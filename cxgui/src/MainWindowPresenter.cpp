@@ -104,6 +104,27 @@ void cxgui::MainWindowPresenter::Update(cxmodel::NotificationContext p_context, 
                 UpdateGameReinitialized();
                 break;
             }
+            case cxmodel::NotificationContext::UNDO:
+            {
+                m_canRequestNewGame = true;
+                
+                m_canCurrentGameBeReinitialized = false;
+                for(size_t row = 0u; row < m_modelAsGameInformation.GetCurrentGridHeight(); ++row)
+                {
+                    for(size_t column = 0u; column < m_modelAsGameInformation.GetCurrentGridWidth(); ++column)
+                    {
+                        const cxmodel::IChip& chip = m_modelAsGameInformation.GetChip(row, column);
+                        if(chip.GetColor() != cxmodel::MakeTransparent())
+                        {
+                            m_canCurrentGameBeReinitialized = true;
+                            break;
+                        }
+                    }
+                }
+
+                UpdateChipDropped();
+                break;
+            }
             default:
                 break;
         }

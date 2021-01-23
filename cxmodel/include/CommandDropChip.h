@@ -29,6 +29,7 @@
 #include "IBoard.h"
 #include "ICommand.h"
 #include "PlayerInformation.h"
+#include "Subject.h"
 
 namespace cxmodel
 {
@@ -46,7 +47,8 @@ namespace cxmodel
  * for a successful drop are met. This command only performs the drop, without asking questions.
  *
  ************************************************************************************************/
-class CommandDropChip : public cxmodel::ICommand
+class CommandDropChip : public ICommand,
+                        public Subject
 {
 
 public:
@@ -75,12 +77,17 @@ public:
 
 private:
 
-    cxmodel::IBoard& m_board;
-    cxmodel::PlayerInformation& m_playersInfo;
+    IBoard& m_board;
+    PlayerInformation& m_playersInfo;
     const cxmodel::IChip& m_droppedChip;
     const size_t m_column;
     std::vector<IBoard::Position>& m_takenPositions;
 
+    // Members stored for undoing the drop:
+    const PlayerInformation m_previousPlayerInformation;
+    const ChipColor m_previousChipColor;
+    const size_t m_previousColumn;
+    IBoard::Position m_previousDropPosition;
 };
 
 } // namespace cxmodel

@@ -35,6 +35,7 @@
 #include "IConnectXGameInformation.h"
 #include "IConnectXLimits.h"
 #include "IGameResolutionStrategy.h"
+#include "IObserver.h"
 #include "IUndoRedo.h"
 #include "IVersioning.h"
 #include "PlayerInformation.h"
@@ -53,6 +54,7 @@ namespace cxmodel
  ************************************************************************************************/
 class Model : public cxlog::ILogger,
               public Subject,
+              public IObserver,
               public IVersioning,
               public IUndoRedo,
               public IConnectXLimits,
@@ -79,6 +81,12 @@ public:
     void Log(const cxlog::VerbosityLevel p_verbosityLevel, const std::string& p_fileName, const std::string& p_functionName, const size_t p_lineNumber, const std::string& p_message) override;
     void SetVerbosityLevel(const cxlog::VerbosityLevel p_verbosityLevel) override;
     cxlog::VerbosityLevel GetVerbosityLevel() const override;
+
+///@}
+
+///@{ @name IObserver
+
+    void Update(NotificationContext p_context, Subject* p_subject) override;
 
 ///@}
 

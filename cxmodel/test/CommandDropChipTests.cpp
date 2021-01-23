@@ -239,7 +239,7 @@ TEST_F(CommandDropChipTestFixture, /*DISABLED_*/Execute_RowFull_NoDataUpdated)
     ASSERT_TRUE(takenPositions.empty());
 }
 
-TEST_F(CommandDropChipTestFixture, /*DISABLED_*/Undo_Whatever_Asserts)
+TEST_F(CommandDropChipTestFixture, DISABLED_Undo_Whatever_Asserts)
 {
     // Data setup:
     cxmodel::Board board{6u, 7u, ModelAsLimitsGet()};

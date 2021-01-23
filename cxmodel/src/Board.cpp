@@ -116,12 +116,24 @@ bool cxmodel::Board::DropChip(size_t p_column, const cxmodel::IChip& p_disc, Pos
     return true;
 }
 
+void cxmodel::Board::ResetChip(Position& p_position)
+{
+    PRECONDITION(p_position.m_row < GetNbRows());
+    PRECONDITION(p_position.m_column < GetNbColumns());
+    PRECONDITION(GetChip(p_position) != *NoChip());
+
+    auto& chipToReset = m_grid[p_position.m_row][p_position.m_column];
+    IF_PRECONDITION_NOT_MET_DO(chipToReset, return;);
+
+    chipToReset->Reset();
+}
+
 bool cxmodel::Board::IsColumnFull(size_t p_column) const
 {
     PRECONDITION(p_column < m_nbColumns);
 
     bool isPlayable = false;
-    size_t  rowSubscript = m_nbRows - 1;
+    size_t rowSubscript = m_nbRows - 1;
 
     for(auto row = m_grid.rbegin(); row != m_grid.rend(); ++row)
     {

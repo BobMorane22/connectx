@@ -29,12 +29,18 @@ cxmodel::Disc::Disc(const ChipColor p_color)
     // Nothing to do...
 }
 
+cxmodel::Disc cxmodel::Disc::MakeTransparentDisc()
+{
+    return cxmodel::Disc(cxmodel::MakeTransparent());
+}
+
 cxmodel::ChipColor cxmodel::Disc::GetColor() const
 {
     return m_color;
 }
 
-cxmodel::Disc cxmodel::Disc::MakeTransparentDisc()
+void cxmodel::Disc::Reset()
 {
-    return cxmodel::Disc(cxmodel::MakeTransparent());
+    m_color = cxmodel::MakeTransparent();
 }
+

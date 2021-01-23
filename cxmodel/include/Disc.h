@@ -50,9 +50,6 @@ public:
      ********************************************************************************************/
     explicit Disc(const ChipColor p_color);
 
-    // IChip:
-    ChipColor GetColor() const override;
-
     /******************************************************************************************//**
      * @brief Makes a transparent disc.
      *
@@ -60,6 +57,11 @@ public:
      *
      ********************************************************************************************/
     static Disc MakeTransparentDisc();
+
+    // IChip:
+    ChipColor GetColor() const override;
+    void Reset() override;
+
 
 private:
 

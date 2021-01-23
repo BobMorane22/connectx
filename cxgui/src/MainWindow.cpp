@@ -131,7 +131,10 @@ void cxgui::MainWindow::Update(cxmodel::NotificationContext p_context, cxmodel::
                 break;
             }
             case cxmodel::NotificationContext::UNDO:
+            {
+                UpdateChipDropped(p_context);
                 break;
+            }
             case cxmodel::NotificationContext::REDO:
                 break;
             case cxmodel::NotificationContext::GAME_WON:

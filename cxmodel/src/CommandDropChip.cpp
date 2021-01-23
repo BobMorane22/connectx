@@ -58,6 +58,9 @@ cxmodel::CommandDropChip::CommandDropChip(cxmodel::IBoard& p_board,
  , m_droppedChip{p_droppedChip}
  , m_column{p_column}
  , m_takenPositions{p_takenPositions}
+ , m_previousPlayerInformation{p_playersInfo}
+ , m_previousChipColor{p_droppedChip.GetColor()}
+ , m_previousColumn{p_column}
 {
     PRECONDITION(p_column < p_board.GetNbColumns());
 }
@@ -66,6 +69,7 @@ void cxmodel::CommandDropChip::Execute()
 {
     IBoard::Position droppedPosition;
     IF_CONDITION_NOT_MET_DO(m_board.DropChip(m_column, m_droppedChip, droppedPosition), return;);
+    m_previousDropPosition = droppedPosition;
 
     // Update player information:
     UpdatePlayerIndex(m_playersInfo.m_activePlayerIndex, m_playersInfo.m_players.size());
@@ -84,5 +88,19 @@ void cxmodel::CommandDropChip::Execute()
 
 void cxmodel::CommandDropChip::Undo()
 {
-    ASSERT_ERROR_MSG("Not implemented.");
+    const size_t takenPositionsInitialSize = m_takenPositions.size();
+
+    // Put playersInfo back:
+    m_playersInfo = m_previousPlayerInformation;
+    
+    // Erase the dropped position from the taken positions:
+    m_takenPositions.erase(std::remove(m_takenPositions.begin(), m_takenPositions.end(), m_previousDropPosition),
+                           m_takenPositions.end());
+    ASSERT(m_takenPositions.size() == takenPositionsInitialSize - 1u);
+
+    // Reset the chip in the board:
+    m_board.ResetChip(m_previousDropPosition);
+
+    // Notify:
+    Notify(NotificationContext::UNDO);
 }

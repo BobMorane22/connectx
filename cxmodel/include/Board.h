@@ -46,6 +46,7 @@ public:
     size_t GetNbPositions() const override;
     const IChip& GetChip(const Position& p_position) const override;
     bool DropChip(size_t p_column, const IChip& p_chip, Position& p_droppedPosition) override;
+    void ResetChip(Position& p_position) override;
     bool IsColumnFull(size_t p_column) const override;
 
 protected:

@@ -81,6 +81,14 @@ cxmodel::Model::~Model()
     DetatchAll();
 }
 
+void cxmodel::Model::Update(cxmodel::NotificationContext p_context, cxmodel::Subject* p_subject)
+{
+    if(ASSERT(p_subject))
+    {
+        Notify(p_context);
+    }
+}
+
 std::string cxmodel::Model::GetName() const
 {
     return std::string{NAME};
@@ -204,12 +212,13 @@ void cxmodel::Model::DropChip(const cxmodel::IChip& p_chip, size_t p_column)
 
     if(!m_board->IsColumnFull(p_column))
     {
-        std::unique_ptr<ICommand> command = std::make_unique<CommandDropChip>(*m_board,
-                                                                              m_playersInfo,
-                                                                              p_chip,
-                                                                              p_column,
-                                                                              m_takenPositions);
+        std::unique_ptr<cxmodel::CommandDropChip> command = std::make_unique<CommandDropChip>(*m_board,
+                                                                                              m_playersInfo,
+                                                                                              p_chip,
+                                                                                              p_column,
+                                                                                              m_takenPositions);
         IF_CONDITION_NOT_MET_DO(command, return;);                                                                          
+        command->Attach(this);
         m_cmdStack->Execute(std::move(command));
 
         std::ostringstream stream;
@@ -393,8 +402,6 @@ bool cxmodel::Model::IsTie() const
 void cxmodel::Model::Undo()
 {
     m_cmdStack->Undo();
-
-    Notify(NotificationContext::UNDO);
 
     Log(cxlog::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__, "Last action undoed.");
 

@@ -122,6 +122,12 @@ void cxgui::Board::Update(Context p_context)
             RefreshBoardArea();
             break;
         }
+        case Context::UNDO_CHIP_DROPPED:
+        {
+            MoveCurrentDiscAtFirstRow();
+            RefreshBoardArea();
+            break;
+        }
         case Context::GAME_WON:
         {
             ClearNextDiscArea();

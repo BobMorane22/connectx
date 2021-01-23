@@ -56,6 +56,7 @@ public:
     enum class Context
     {
         CHIP_DROPPED,
+        UNDO_CHIP_DROPPED,
         GAME_WON,
         GAME_REINITIALIZED
     };
