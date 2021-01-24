@@ -127,7 +127,7 @@ void cxgui::GameView::Update(cxmodel::NotificationContext p_context)
             UpdateGameReinitialized();
             break;
         }
-        case cxmodel::NotificationContext::UNDO:
+        case cxmodel::NotificationContext::UNDO_CHIP_DROPPED:
         {
             UpdateChipDropped();
             break;

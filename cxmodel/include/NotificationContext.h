@@ -38,8 +38,8 @@ enum class NotificationContext
     // User operations:
     CREATE_NEW_GAME,
     CHIP_DROPPED,
+    UNDO_CHIP_DROPPED,
     REDO,
-    UNDO,
 
     // Game states:
     GAME_WON,

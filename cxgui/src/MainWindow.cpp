@@ -130,7 +130,7 @@ void cxgui::MainWindow::Update(cxmodel::NotificationContext p_context, cxmodel::
                 UpdateCreateNewGame();
                 break;
             }
-            case cxmodel::NotificationContext::UNDO:
+            case cxmodel::NotificationContext::UNDO_CHIP_DROPPED:
             {
                 UpdateChipDropped(p_context);
                 break;

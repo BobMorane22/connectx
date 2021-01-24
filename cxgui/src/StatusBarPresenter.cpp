@@ -51,7 +51,7 @@ std::string cxgui::MakeStatusBarContextString(cxmodel::NotificationContext p_con
         case cxmodel::NotificationContext::REDO:
             return "Redo.";
 
-        case cxmodel::NotificationContext::UNDO:
+        case cxmodel::NotificationContext::UNDO_CHIP_DROPPED:
             return "Undo.";
 
         case cxmodel::NotificationContext::GAME_WON:

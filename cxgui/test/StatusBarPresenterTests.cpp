@@ -38,7 +38,7 @@ public:
 
 TEST(StatusBarPresenter, MakeStatusBarContextString_Undo_UndoStringCreated)
 {
-    ASSERT_EQ(cxgui::MakeStatusBarContextString(cxmodel::NotificationContext::UNDO), "Undo.");
+    ASSERT_EQ(cxgui::MakeStatusBarContextString(cxmodel::NotificationContext::UNDO_CHIP_DROPPED), "Undo.");
 }
 
 TEST(StatusBarPresenter, MakeStatusBarContextString_Redo_RedoStringCreated)
@@ -90,7 +90,7 @@ TEST(StatusBarPresenter, Update_Undo_UndoMessageIsOn)
 
     ASSERT_TRUE(presenter.GetStatusBarMessage().empty());
 
-    presenter.Update(cxmodel::NotificationContext::UNDO, &subject);
+    presenter.Update(cxmodel::NotificationContext::UNDO_CHIP_DROPPED, &subject);
 
     ASSERT_EQ(presenter.GetStatusBarMessage(), "Undo.");
 }

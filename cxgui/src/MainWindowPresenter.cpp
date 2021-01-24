@@ -104,7 +104,7 @@ void cxgui::MainWindowPresenter::Update(cxmodel::NotificationContext p_context, 
                 UpdateGameReinitialized();
                 break;
             }
-            case cxmodel::NotificationContext::UNDO:
+            case cxmodel::NotificationContext::UNDO_CHIP_DROPPED:
             {
                 m_canRequestNewGame = true;
                 

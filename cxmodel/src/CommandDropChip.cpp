@@ -102,5 +102,5 @@ void cxmodel::CommandDropChip::Undo()
     m_board.ResetChip(m_previousDropPosition);
 
     // Notify:
-    Notify(NotificationContext::UNDO);
+    Notify(NotificationContext::UNDO_CHIP_DROPPED);
 }
