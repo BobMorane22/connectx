@@ -1,7 +1,6 @@
 #!/bin/bash
 
 #---------------------------------------------------------------------------------------------------
-#
 # This script prints header guards for C++ with a random GUID included for uniqueness. For example, 
 # if you have a class named 'MyClass' and that you run this script with 'MyClass' as a parameter,
 # you will get (printed on the terminal) header guards of the form:
