@@ -144,6 +144,7 @@ const cxmodel::Player& ModelTestFixture::GetPlayer(size_t p_playerIndex) const
 
 void ModelTestFixture::DropChips(size_t p_nbOfDrops)
 {
+    EXPECT_TRUE(p_nbOfDrops > 0u);
     EXPECT_TRUE(p_nbOfDrops <= m_model->GetCurrentGridHeight() * m_model->GetCurrentGridWidth());
     EXPECT_TRUE(m_nbOfPlayersInCurrentGame >= 2u);
     EXPECT_TRUE(m_nbOfPlayersInCurrentGame <= PLAYERS.size());

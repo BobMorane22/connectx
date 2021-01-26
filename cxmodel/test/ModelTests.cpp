@@ -36,6 +36,22 @@
 #include "ModelTestFixture.h"
 #include "ModelTestHelpers.h"
 
+TEST_F(ModelTestFixture, /*DISABLED_*/Update_ValidModel_CalledOnUndoChipDrop)
+{
+    CreateNewGame(6u, 7u, ModelTestFixture::NbPlayers::TWO, ModelTestFixture::InARowValue::FOUR);
+
+    ModelNotificationCatcher undoDropChipObserver{cxmodel::NotificationContext::UNDO_CHIP_DROPPED};
+    GetModel().Attach(&undoDropChipObserver);
+
+    DropChips(1u);
+    ASSERT_FALSE(undoDropChipObserver.WasNotified());
+
+    // When calling undo, the model should be notified and
+    // forward the notification:
+    GetModel().Undo();
+    ASSERT_TRUE(undoDropChipObserver.WasNotified());
+}
+
 TEST_F(ModelTestFixture, /*DISABLED_*/GetName_ValidModel_NameReturned)
 {
     ASSERT_EQ(GetModel().GetName(), "Connect X");
@@ -127,6 +143,37 @@ TEST_F(ModelTestFixture, /*DISABLED_*/DropChip_ValidModelChipAndColumn_ChipDropp
     ASSERT_FALSE(chipDropObserver.WasNotified());
     DropChips(1u);
     ASSERT_TRUE(chipDropObserver.WasNotified());
+}
+
+TEST_F(ModelTestFixture, /*DISABLED_*/DropChip_ValidModelChipAndColumn_ChipDroppedOnFullColumnNotificationNotSent)
+{
+    CreateNewGame(6u, 7u, ModelTestFixture::NbPlayers::TWO, ModelTestFixture::InARowValue::FOUR);
+
+    // We then attach the model to our observer:
+    ModelNotificationCatcher chipDropObserverNotFull{cxmodel::NotificationContext::CHIP_DROPPED};
+    ModelNotificationCatcher chipDropObserverFull{cxmodel::NotificationContext::CHIP_DROPPED};
+
+    const int column = 0u;
+    GetModel().DropChip(GetPlayer(0u).GetChip(), column);
+    GetModel().DropChip(GetPlayer(1u).GetChip(), column);
+    GetModel().DropChip(GetPlayer(0u).GetChip(), column);
+    GetModel().DropChip(GetPlayer(1u).GetChip(), column);
+    GetModel().DropChip(GetPlayer(0u).GetChip(), column);
+
+    // At this point, a notification is sent, but it's the last one for this
+    // column:
+    GetModel().Attach(&chipDropObserverNotFull);
+    GetModel().DropChip(GetPlayer(1u).GetChip(), column);
+    ASSERT_TRUE(chipDropObserverNotFull.WasNotified());
+
+    // No more notification:
+    GetModel().Attach(&chipDropObserverFull);
+    GetModel().DropChip(GetPlayer(0u).GetChip(), column);
+    ASSERT_FALSE(chipDropObserverFull.WasNotified());
+
+    // This drop is necessary only to make sure the test passes. If no notification
+    // occurs on chipDropObserverFull, the test will fail:
+    GetModel().DropChip(GetPlayer(0u).GetChip(), column + 1u);
 }
 
 TEST_F(ModelTestFixture, /*DISABLED_*/DropChip_ValidModelChipAndColumn_GameDataUpdated)
@@ -563,6 +610,38 @@ TEST(Model, /*DISABLED_*/Undo_RandomCommand_UndoCalledOnCommandStack)
     model.Undo();
 
     ASSERT_TRUE(cmdStackMock.IsUndoed());
+}
+
+TEST_F(ModelTestFixture, /*DISABLED_*/Undo_CommandDropChip_PreviousStateRecovered)
+{
+    CreateNewGame(6u, 7u, NbPlayers::TWO, InARowValue::FOUR);
+
+    // We record the initial state here:
+    const std::string activePlayerName = GetModel().GetActivePlayer().GetName();
+    const std::string nextPlayerName = GetModel().GetNextPlayer().GetName();
+    const cxmodel::ChipColor colorAt00 = GetModel().GetChip(0u, 0u).GetColor();
+
+    // We drop a chip at (0, 0) and check that the state has changed:
+    DropChips(1u);
+    const std::string activePlayerNameAfterDrop = GetModel().GetActivePlayer().GetName();
+    ASSERT_FALSE(activePlayerName == activePlayerNameAfterDrop);
+
+    const std::string nextPlayerNameAfterDrop = GetModel().GetNextPlayer().GetName();
+    ASSERT_FALSE(nextPlayerName == nextPlayerNameAfterDrop);
+
+    const cxmodel::ChipColor colorAt00AfterDrop = GetModel().GetChip(0u, 0u).GetColor();
+    ASSERT_FALSE(colorAt00 == colorAt00AfterDrop);
+    
+    // We undo the drop and check that the previous state has been recovered:
+    GetModel().Undo();
+    const std::string activePlayerNameAfterUndo = GetModel().GetActivePlayer().GetName();
+    ASSERT_TRUE(activePlayerName == activePlayerNameAfterUndo);
+
+    const std::string nextPlayerNameAfterUndo = GetModel().GetNextPlayer().GetName();
+    ASSERT_TRUE(nextPlayerName == nextPlayerNameAfterUndo);
+
+    const cxmodel::ChipColor colorAt00AfterUndo = GetModel().GetChip(0u, 0u).GetColor();
+    ASSERT_TRUE(colorAt00 == colorAt00AfterUndo);
 }
 
 TEST(Model, /*DISABLED_*/Redo_RandomCommand_RedoCalledOnCommandStack)
