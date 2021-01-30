@@ -30,9 +30,10 @@ namespace cxgui
 enum class MenuItem
 {
     GAME,
-    QUIT,
     NEW_GAME,
     REINITIALIZE_GAME,
+    UNDO,
+    QUIT,
 
     HELP,
     ABOUT,

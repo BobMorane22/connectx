@@ -130,9 +130,10 @@ private:
     void RegisterStatusBar();
     void RegisterMenuBar();
 
-    void OnCreateAboutWindow();
     void OnNewGame();
     void OnReinitializeCurrentGame();
+    void OnUndo();
+    void OnCreateAboutWindow();
 
     void CreateGameResolutionWindow(cxmodel::NotificationContext p_context);
 
@@ -155,9 +156,10 @@ private:
     Gtk::MenuBar m_menubar;
     Gtk::MenuItem m_gameMenuItem;
     Gtk::Menu m_gameMenu;
-    Gtk::ImageMenuItem m_quitMenuItem{Gtk::Stock::QUIT};
     Gtk::MenuItem m_newGameMenuItem;
     Gtk::MenuItem m_reinitializeMenuItem;
+    Gtk::ImageMenuItem m_undoMenuItem{Gtk::Stock::UNDO};
+    Gtk::ImageMenuItem m_quitMenuItem{Gtk::Stock::QUIT};
     Gtk::MenuItem m_helpMenuItem;
     Gtk::Menu m_helpMenu;
     Gtk::ImageMenuItem m_aboutMenuItem{Gtk::Stock::ABOUT};

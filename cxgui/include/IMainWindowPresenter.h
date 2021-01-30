@@ -92,6 +92,14 @@ public:
      ********************************************************************************************/
     virtual bool IsCurrentGameReinitializationPossible() const = 0;
 
+    /******************************************************************************************//**
+     * @brief Indicates if undoing is possible.
+     *
+     * @return `true` if undoing is possible, `false` otherwise.
+     *
+     ********************************************************************************************/
+    virtual bool IsUndoPossible() const = 0;
+
 ///@}
 
 ///@{ @name New Game View

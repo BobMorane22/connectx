@@ -47,6 +47,9 @@ std::string cxgui::MakeLabel(MenuItem p_menuItem)
         case MenuItem::ABOUT:
             return "About";
 
+        case MenuItem::UNDO:
+            return "Undo [Ctrl+z]";
+
         default:                   // LCOV_EXCL_LINE
             return "";             // LCOV_EXCL_LINE
     }

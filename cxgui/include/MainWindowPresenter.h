@@ -53,6 +53,7 @@ public:
     std::string GetMenuLabel(MenuItem p_menuItem) const override;
     bool IsNewGamePossible() const override;
     bool IsCurrentGameReinitializationPossible() const override;
+    bool IsUndoPossible() const override;
 
 ///@}
 
@@ -121,11 +122,14 @@ private:
     void UpdateChipDropped();
     void UpdateGameReinitialized();
 
+    bool IsBoardEmpty() const;
+
     const cxmodel::IConnectXLimits& m_modelAsLimits;
     const cxmodel::IConnectXGameInformation& m_modelAsGameInformation;
     
     bool m_canRequestNewGame;
     bool m_canCurrentGameBeReinitialized;
+    bool m_isUndoPossible;
 
     size_t m_currentBoardWidth;
     size_t m_currentBoardHeight;

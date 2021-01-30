@@ -69,6 +69,7 @@ cxgui::MainWindowPresenter::MainWindowPresenter(const cxmodel::IConnectXLimits& 
  , m_modelAsGameInformation{p_modelAsGameInformation}
  , m_canRequestNewGame{false}
  , m_canCurrentGameBeReinitialized{false}
+ , m_isUndoPossible{false}
  , m_currentBoardWidth{p_modealAsLimits.GetMinimumGridWidth()}
  , m_currentBoardHeight{p_modealAsLimits.GetMinimumGridHeight()}
  , m_activePlayer{NO_PLAYER}
@@ -82,6 +83,7 @@ void cxgui::MainWindowPresenter::Update(cxmodel::NotificationContext p_context, 
     {
         m_canRequestNewGame = false;
         m_canCurrentGameBeReinitialized = false;
+        m_isUndoPossible = false;
 
         switch(p_context)
         {
@@ -95,6 +97,7 @@ void cxgui::MainWindowPresenter::Update(cxmodel::NotificationContext p_context, 
             {
                 m_canRequestNewGame = true;
                 m_canCurrentGameBeReinitialized = true;
+                m_isUndoPossible = !IsBoardEmpty();
                 UpdateChipDropped();
                 break;
             }
@@ -107,20 +110,8 @@ void cxgui::MainWindowPresenter::Update(cxmodel::NotificationContext p_context, 
             case cxmodel::NotificationContext::UNDO_CHIP_DROPPED:
             {
                 m_canRequestNewGame = true;
-                
-                m_canCurrentGameBeReinitialized = false;
-                for(size_t row = 0u; row < m_modelAsGameInformation.GetCurrentGridHeight(); ++row)
-                {
-                    for(size_t column = 0u; column < m_modelAsGameInformation.GetCurrentGridWidth(); ++column)
-                    {
-                        const cxmodel::IChip& chip = m_modelAsGameInformation.GetChip(row, column);
-                        if(chip.GetColor() != cxmodel::MakeTransparent())
-                        {
-                            m_canCurrentGameBeReinitialized = true;
-                            break;
-                        }
-                    }
-                }
+                m_canCurrentGameBeReinitialized = !IsBoardEmpty();
+                m_isUndoPossible = !IsBoardEmpty();
 
                 UpdateChipDropped();
                 break;
@@ -151,6 +142,11 @@ bool cxgui::MainWindowPresenter::IsNewGamePossible() const
 bool cxgui::MainWindowPresenter::IsCurrentGameReinitializationPossible() const
 {
     return m_canCurrentGameBeReinitialized;
+}
+
+bool cxgui::MainWindowPresenter::IsUndoPossible() const
+{
+    return m_isUndoPossible;
 }
 
 /**************************************************************************************************
@@ -431,4 +427,23 @@ void cxgui::MainWindowPresenter::UpdateChipDropped()
 void cxgui::MainWindowPresenter::UpdateGameReinitialized()
 {
     UpdateChipDropped();
+}
+
+bool cxgui::MainWindowPresenter::IsBoardEmpty() const
+{
+    bool isBoardEmpty = true;
+    for(size_t row = 0u; row < m_modelAsGameInformation.GetCurrentGridHeight(); ++row)
+    {
+        for(size_t column = 0u; column < m_modelAsGameInformation.GetCurrentGridWidth(); ++column)
+        {
+            const cxmodel::IChip& chip = m_modelAsGameInformation.GetChip(row, column);
+            if(chip.GetColor() != cxmodel::MakeTransparent())
+            {
+                isBoardEmpty = false;
+                break;
+            }
+        }
+    }
+
+    return isBoardEmpty;
 }
