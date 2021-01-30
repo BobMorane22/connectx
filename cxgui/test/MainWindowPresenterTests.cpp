@@ -25,8 +25,12 @@
 
 #include <gtest/gtest.h>
 
+#include <cxmodel/include/Disc.h>
 #include <cxmodel/include/NewGameInformation.h>
 
+#include "BasicConnectXGameInformationModelMock.h"
+#include "BasicConnectXLimitsModelMock.h"
+#include "ConfigurableMainWindowPresenterTestFixture.h"
 #include "MainWindowPresenterTestFixture.h"
 
 TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetWindowTitle_GetWindowTitle_GetWindowTitleLabelReturned)
@@ -155,6 +159,141 @@ TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/Update_GameReinitialized_Boa
     }
 }
 
+namespace
+{
+
+/*********************************************************************************************//**
+ * @brief Mock for testing the effect of undo operations on the main window presenter.
+ *
+ ************************************************************************************************/
+class ConnectXGameInformationModelMock : public BasicConnectXGameInformationModelMock,
+                                         public cxmodel::Subject
+{
+
+public:
+
+    ConnectXGameInformationModelMock(bool p_makeEmpty = true)
+    {
+        for(size_t row = 0u; row < GetCurrentGridHeight(); ++row)
+        {
+            m_board.push_back(std::vector<cxmodel::Disc>());
+            for(size_t column = 0u; column < GetCurrentGridWidth(); ++column)
+            {
+                m_board[row].push_back(cxmodel::Disc::MakeTransparentDisc());
+            }
+        }
+
+        if(!p_makeEmpty)
+        {
+            m_board[0][0] = cxmodel::Disc{cxmodel::MakeRed()};
+        }
+    }
+
+    void NotifyCreateNewGame()
+    {
+        Notify(cxmodel::NotificationContext::CREATE_NEW_GAME);
+    }
+
+    void NotifyUndo()
+    {
+        Notify(cxmodel::NotificationContext::UNDO_CHIP_DROPPED);
+    }
+
+    const cxmodel::Player& GetActivePlayer() const override {return m_activePlayer;}
+    const cxmodel::Player& GetNextPlayer() const override {return m_nextPlayer;}
+    const cxmodel::IChip& GetChip(size_t p_row, size_t p_column) const override
+    {
+        EXPECT_TRUE(p_row < GetCurrentGridHeight());
+        EXPECT_TRUE(p_column < GetCurrentGridWidth());
+
+        return m_board[p_row][p_column];
+    }
+
+private:
+
+    cxmodel::Player m_activePlayer{"John Doe", cxmodel::MakeRed()};
+    cxmodel::Player m_nextPlayer{"Jane Doe", cxmodel::MakeGreen()};
+    std::vector<std::vector<cxmodel::Disc>> m_board;
+};
+
+} // namespace
+
+TEST_F(ConfigurableMainWindowPresenterTestFixture, /*DISABLED_*/Update_DiscDropUndoedToInitialState_GameIsNotReinitializable)
+{
+    constexpr bool BOARD_EMPTY = true;
+    auto model = std::make_unique<ConnectXGameInformationModelMock>(BOARD_EMPTY);
+    ASSERT_TRUE(model);
+
+    auto* modelRef = model.get();
+
+    SetGameInformationModel(std::move(model)); // model moved from here, do not use anymore.
+
+    ASSERT_FALSE(GetPresenter().IsCurrentGameReinitializationPossible());
+
+    modelRef->Attach(&GetPresenter());
+    modelRef->NotifyCreateNewGame();
+    modelRef->NotifyUndo();
+
+    ASSERT_FALSE(GetPresenter().IsCurrentGameReinitializationPossible());
+}
+
+TEST_F(ConfigurableMainWindowPresenterTestFixture, /*DISABLED_*/Update_DiscDropUndoedToSomeState_GameIsReinitializable)
+{
+    constexpr bool BOARD_NOT_EMPTY = false;
+    auto model = std::make_unique<ConnectXGameInformationModelMock>(BOARD_NOT_EMPTY);
+    ASSERT_TRUE(model);
+
+    auto* modelRef = model.get();
+
+    SetGameInformationModel(std::move(model)); // model moved from here, do not use anymore.
+
+    ASSERT_FALSE(GetPresenter().IsCurrentGameReinitializationPossible());
+
+    modelRef->Attach(&GetPresenter());
+    modelRef->NotifyCreateNewGame();
+    modelRef->NotifyUndo();
+
+    ASSERT_TRUE(GetPresenter().IsCurrentGameReinitializationPossible());
+}
+
+TEST_F(ConfigurableMainWindowPresenterTestFixture, /*DISABLED_*/Update_DiscDropUndoedToInitialState_NewGameIsPossible)
+{
+    constexpr bool BOARD_EMPTY = false;
+    auto model = std::make_unique<ConnectXGameInformationModelMock>(BOARD_EMPTY);
+    ASSERT_TRUE(model);
+
+    auto* modelRef = model.get();
+
+    SetGameInformationModel(std::move(model)); // model moved from here, do not use anymore.
+
+    ASSERT_FALSE(GetPresenter().IsNewGamePossible());
+
+    modelRef->Attach(&GetPresenter());
+    modelRef->NotifyCreateNewGame();
+    modelRef->NotifyUndo();
+
+    ASSERT_TRUE(GetPresenter().IsNewGamePossible());
+}
+
+TEST_F(ConfigurableMainWindowPresenterTestFixture, /*DISABLED_*/Update_DiscDropUndoedToSomeState_NewGameIsPossible)
+{
+    constexpr bool BOARD_NOT_EMPTY = false;
+    auto model = std::make_unique<ConnectXGameInformationModelMock>(BOARD_NOT_EMPTY);
+    ASSERT_TRUE(model);
+
+    auto* modelRef = model.get();
+
+    SetGameInformationModel(std::move(model)); // model moved from here, do not use anymore.
+
+    ASSERT_FALSE(GetPresenter().IsNewGamePossible());
+
+    modelRef->Attach(&GetPresenter());
+    modelRef->NotifyCreateNewGame();
+    modelRef->NotifyUndo();
+
+    ASSERT_TRUE(GetPresenter().IsNewGamePossible());
+}
+
 TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/IsNewGamePossible_NoNotification_FalseReturned)
 {
     const auto& presenter = GetPresenter();
@@ -176,7 +315,7 @@ TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/IsNewGamePossible_ChipDroppe
     actionModel.CreateNewGame(cxmodel::NewGameInformation{});
 
     SendNotification(cxmodel::NotificationContext::CHIP_DROPPED);
-    
+
     const auto& presenter = GetPresenter();
     ASSERT_TRUE(presenter.IsNewGamePossible());
 }
@@ -187,7 +326,7 @@ TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/IsNewGamePossible_GameReinit
     actionModel.CreateNewGame(cxmodel::NewGameInformation{});
 
     SendNotification(cxmodel::NotificationContext::GAME_REINITIALIZED);
-    
+
     const auto& presenter = GetPresenter();
     ASSERT_TRUE(presenter.IsNewGamePossible());
 }
@@ -216,7 +355,7 @@ TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/IsCurrentGameReinitializatio
     actionModel.CreateNewGame(cxmodel::NewGameInformation{});
 
     SendNotification(cxmodel::NotificationContext::CHIP_DROPPED);
-    
+
     const auto& presenter = GetPresenter();
     ASSERT_TRUE(presenter.IsCurrentGameReinitializationPossible());
 }
@@ -235,3 +374,4 @@ TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/IsCurrentGameReinitializatio
     SendNotification(cxmodel::NotificationContext::GAME_REINITIALIZED);
     ASSERT_FALSE(presenter.IsCurrentGameReinitializationPossible());
 }
+

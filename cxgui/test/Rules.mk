@@ -45,6 +45,7 @@ d := $(dir)
 TGTS_$(d) := $(d)/cxguitests
 OBJS_$(d) := $(d)/AboutWindowPresenterTestFixture.o \
              $(d)/AboutWindowPresenterTests.o \
+             $(d)/ConfigurableMainWindowPresenterTestFixture.o \
              $(d)/DisableStdStreamsRAII.o \
              $(d)/extractRawUserInputTests.o \
              $(d)/GamePresenterTests.o \
@@ -60,6 +61,7 @@ OBJS_$(d) := $(d)/AboutWindowPresenterTestFixture.o \
              $(d)/StatusBarPresenterTests.o \
              $(d)/TieGameResolutionDialogPresenterTests.o \
              $(d)/WinGameResolutionDialogPresenterTests.o \
+             cxunit/libcxunit.a \
              cxgui/libcxgui.a
 
 # We include all the generated rules. These are created by GCC to make sure that
