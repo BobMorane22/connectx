@@ -51,6 +51,7 @@ include $(dir)/Rules.mk
 # i.e. the ones we want deleted by a "make clean" command.
 #
 OBJS_$(d) := $(d)/src/DisableStdStreamsRAII.o \
+             $(d)/src/NotImplementedException.o
 
 # We include all the generated rules. These are created by GCC to make sure that
 # changes to header files are recognized by make.
