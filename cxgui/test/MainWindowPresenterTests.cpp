@@ -33,6 +33,70 @@
 #include "ConfigurableMainWindowPresenterTestFixture.h"
 #include "MainWindowPresenterTestFixture.h"
 
+namespace
+{
+
+/*********************************************************************************************//**
+ * @brief Mock for testing the effect of undo operations on the main window presenter.
+ *
+ ************************************************************************************************/
+class UndoConnectXGameInformationModelMock : public BasicConnectXGameInformationModelMock,
+                                             public cxmodel::Subject
+{
+
+public:
+
+    UndoConnectXGameInformationModelMock(bool p_makeEmpty = true)
+    {
+        for(size_t row = 0u; row < GetCurrentGridHeight(); ++row)
+        {
+            m_board.push_back(std::vector<cxmodel::Disc>());
+            for(size_t column = 0u; column < GetCurrentGridWidth(); ++column)
+            {
+                m_board[row].push_back(cxmodel::Disc::MakeTransparentDisc());
+            }
+        }
+
+        if(!p_makeEmpty)
+        {
+            m_board[0][0] = cxmodel::Disc{cxmodel::MakeRed()};
+        }
+    }
+
+    void NotifyCreateNewGame()
+    {
+        Notify(cxmodel::NotificationContext::CREATE_NEW_GAME);
+    }
+
+    void NotifyDropChip()
+    {
+        Notify(cxmodel::NotificationContext::CHIP_DROPPED);
+    }
+
+    void NotifyUndo()
+    {
+        Notify(cxmodel::NotificationContext::UNDO_CHIP_DROPPED);
+    }
+
+    const cxmodel::Player& GetActivePlayer() const override {return m_activePlayer;}
+    const cxmodel::Player& GetNextPlayer() const override {return m_nextPlayer;}
+    const cxmodel::IChip& GetChip(size_t p_row, size_t p_column) const override
+    {
+        EXPECT_TRUE(p_row < GetCurrentGridHeight());
+        EXPECT_TRUE(p_column < GetCurrentGridWidth());
+
+        return m_board[p_row][p_column];
+    }
+
+private:
+
+    cxmodel::Player m_activePlayer{"John Doe", cxmodel::MakeRed()};
+    cxmodel::Player m_nextPlayer{"Jane Doe", cxmodel::MakeGreen()};
+    std::vector<std::vector<cxmodel::Disc>> m_board;
+};
+
+} // namespace
+
 TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetWindowTitle_GetWindowTitle_GetWindowTitleLabelReturned)
 {
     ASSERT_EQ(GetPresenter().GetWindowTitle(), "Connect X");
@@ -56,6 +120,11 @@ TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetMenuLabel_HelpMenu_HelpMe
 TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetMenuLabel_AboutMenu_AboutMenuLabelReturned)
 {
     ASSERT_EQ(GetPresenter().GetMenuLabel(cxgui::MenuItem::ABOUT), "About");
+}
+
+TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetMenuLabel_UndoMenu_UndoMenuLabelReturned)
+{
+    ASSERT_EQ(GetPresenter().GetMenuLabel(cxgui::MenuItem::UNDO), "Undo [Ctrl+z]");
 }
 
 TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/Update_CreateNewGame_NewGameInformationUpdated)
@@ -159,69 +228,11 @@ TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/Update_GameReinitialized_Boa
     }
 }
 
-namespace
-{
-
-/*********************************************************************************************//**
- * @brief Mock for testing the effect of undo operations on the main window presenter.
- *
- ************************************************************************************************/
-class ConnectXGameInformationModelMock : public BasicConnectXGameInformationModelMock,
-                                         public cxmodel::Subject
-{
-
-public:
-
-    ConnectXGameInformationModelMock(bool p_makeEmpty = true)
-    {
-        for(size_t row = 0u; row < GetCurrentGridHeight(); ++row)
-        {
-            m_board.push_back(std::vector<cxmodel::Disc>());
-            for(size_t column = 0u; column < GetCurrentGridWidth(); ++column)
-            {
-                m_board[row].push_back(cxmodel::Disc::MakeTransparentDisc());
-            }
-        }
-
-        if(!p_makeEmpty)
-        {
-            m_board[0][0] = cxmodel::Disc{cxmodel::MakeRed()};
-        }
-    }
-
-    void NotifyCreateNewGame()
-    {
-        Notify(cxmodel::NotificationContext::CREATE_NEW_GAME);
-    }
-
-    void NotifyUndo()
-    {
-        Notify(cxmodel::NotificationContext::UNDO_CHIP_DROPPED);
-    }
-
-    const cxmodel::Player& GetActivePlayer() const override {return m_activePlayer;}
-    const cxmodel::Player& GetNextPlayer() const override {return m_nextPlayer;}
-    const cxmodel::IChip& GetChip(size_t p_row, size_t p_column) const override
-    {
-        EXPECT_TRUE(p_row < GetCurrentGridHeight());
-        EXPECT_TRUE(p_column < GetCurrentGridWidth());
-
-        return m_board[p_row][p_column];
-    }
-
-private:
-
-    cxmodel::Player m_activePlayer{"John Doe", cxmodel::MakeRed()};
-    cxmodel::Player m_nextPlayer{"Jane Doe", cxmodel::MakeGreen()};
-    std::vector<std::vector<cxmodel::Disc>> m_board;
-};
-
-} // namespace
 
 TEST_F(ConfigurableMainWindowPresenterTestFixture, /*DISABLED_*/Update_DiscDropUndoedToInitialState_GameIsNotReinitializable)
 {
     constexpr bool BOARD_EMPTY = true;
-    auto model = std::make_unique<ConnectXGameInformationModelMock>(BOARD_EMPTY);
+    auto model = std::make_unique<UndoConnectXGameInformationModelMock>(BOARD_EMPTY);
     ASSERT_TRUE(model);
 
     auto* modelRef = model.get();
@@ -240,7 +251,7 @@ TEST_F(ConfigurableMainWindowPresenterTestFixture, /*DISABLED_*/Update_DiscDropU
 TEST_F(ConfigurableMainWindowPresenterTestFixture, /*DISABLED_*/Update_DiscDropUndoedToSomeState_GameIsReinitializable)
 {
     constexpr bool BOARD_NOT_EMPTY = false;
-    auto model = std::make_unique<ConnectXGameInformationModelMock>(BOARD_NOT_EMPTY);
+    auto model = std::make_unique<UndoConnectXGameInformationModelMock>(BOARD_NOT_EMPTY);
     ASSERT_TRUE(model);
 
     auto* modelRef = model.get();
@@ -259,7 +270,7 @@ TEST_F(ConfigurableMainWindowPresenterTestFixture, /*DISABLED_*/Update_DiscDropU
 TEST_F(ConfigurableMainWindowPresenterTestFixture, /*DISABLED_*/Update_DiscDropUndoedToInitialState_NewGameIsPossible)
 {
     constexpr bool BOARD_EMPTY = false;
-    auto model = std::make_unique<ConnectXGameInformationModelMock>(BOARD_EMPTY);
+    auto model = std::make_unique<UndoConnectXGameInformationModelMock>(BOARD_EMPTY);
     ASSERT_TRUE(model);
 
     auto* modelRef = model.get();
@@ -278,7 +289,7 @@ TEST_F(ConfigurableMainWindowPresenterTestFixture, /*DISABLED_*/Update_DiscDropU
 TEST_F(ConfigurableMainWindowPresenterTestFixture, /*DISABLED_*/Update_DiscDropUndoedToSomeState_NewGameIsPossible)
 {
     constexpr bool BOARD_NOT_EMPTY = false;
-    auto model = std::make_unique<ConnectXGameInformationModelMock>(BOARD_NOT_EMPTY);
+    auto model = std::make_unique<UndoConnectXGameInformationModelMock>(BOARD_NOT_EMPTY);
     ASSERT_TRUE(model);
 
     auto* modelRef = model.get();
@@ -375,3 +386,93 @@ TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/IsCurrentGameReinitializatio
     ASSERT_FALSE(presenter.IsCurrentGameReinitializationPossible());
 }
 
+TEST_F(ConfigurableMainWindowPresenterTestFixture, /*DISABLED_*/IsUndoPossible_ChipDroppedNotificationBoardNotEmpty_TrueReturned)
+{
+    constexpr bool BOARD_NOT_EMPTY = false;
+    auto model = std::make_unique<UndoConnectXGameInformationModelMock>(BOARD_NOT_EMPTY);
+    ASSERT_TRUE(model);
+
+    auto* modelRef = model.get();
+
+    SetGameInformationModel(std::move(model)); // model moved from here, do not use anymore.
+
+    ASSERT_FALSE(GetPresenter().IsUndoPossible());
+
+    modelRef->Attach(&GetPresenter());
+    modelRef->NotifyCreateNewGame();
+    modelRef->NotifyDropChip();
+
+    ASSERT_TRUE(GetPresenter().IsUndoPossible());
+}
+
+TEST_F(ConfigurableMainWindowPresenterTestFixture, /*DISABLED_*/IsUndoPossible_ChipDroppedNotificationBoardEmpty_FalseReturned)
+{
+    constexpr bool BOARD_EMPTY = true;
+    auto model = std::make_unique<UndoConnectXGameInformationModelMock>(BOARD_EMPTY);
+    ASSERT_TRUE(model);
+
+    auto* modelRef = model.get();
+
+    SetGameInformationModel(std::move(model)); // model moved from here, do not use anymore.
+
+    ASSERT_FALSE(GetPresenter().IsUndoPossible());
+
+    modelRef->Attach(&GetPresenter());
+    modelRef->NotifyCreateNewGame();
+    modelRef->NotifyDropChip();
+
+    ASSERT_FALSE(GetPresenter().IsUndoPossible());
+}
+
+TEST_F(ConfigurableMainWindowPresenterTestFixture, /*DISABLED_*/IsUndoPossible_UndoChipDroppedNotificationBoardNotEmpty_TrueReturned)
+{
+    constexpr bool BOARD_NOT_EMPTY = false;
+    auto model = std::make_unique<UndoConnectXGameInformationModelMock>(BOARD_NOT_EMPTY);
+    ASSERT_TRUE(model);
+
+    auto* modelRef = model.get();
+
+    SetGameInformationModel(std::move(model)); // model moved from here, do not use anymore.
+
+    ASSERT_FALSE(GetPresenter().IsUndoPossible());
+
+    modelRef->Attach(&GetPresenter());
+    modelRef->NotifyCreateNewGame();
+    modelRef->NotifyUndo();
+
+    ASSERT_TRUE(GetPresenter().IsUndoPossible());
+}
+
+TEST_F(ConfigurableMainWindowPresenterTestFixture, /*DISABLED_*/IsUndoPossible_UndoChipDroppedNotificationBoardEmpty_FalseReturned)
+{
+    constexpr bool BOARD_EMPTY = true;
+    auto model = std::make_unique<UndoConnectXGameInformationModelMock>(BOARD_EMPTY);
+    ASSERT_TRUE(model);
+
+    auto* modelRef = model.get();
+
+    SetGameInformationModel(std::move(model)); // model moved from here, do not use anymore.
+
+    ASSERT_FALSE(GetPresenter().IsUndoPossible());
+
+    modelRef->Attach(&GetPresenter());
+    modelRef->NotifyCreateNewGame();
+    modelRef->NotifyUndo();
+
+    ASSERT_FALSE(GetPresenter().IsUndoPossible());
+}
+
+TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/IsUndoPossible_AllOtherNotifications_FalseReturned)
+{
+    auto& actionModel = GetActionsModel();
+    actionModel.CreateNewGame(cxmodel::NewGameInformation{});
+
+    const auto& presenter = GetPresenter();
+    ASSERT_FALSE(presenter.IsUndoPossible());
+
+    SendNotification(cxmodel::NotificationContext::GAME_ENDED);
+    ASSERT_FALSE(presenter.IsUndoPossible());
+
+    SendNotification(cxmodel::NotificationContext::GAME_REINITIALIZED);
+    ASSERT_FALSE(presenter.IsUndoPossible());
+}
