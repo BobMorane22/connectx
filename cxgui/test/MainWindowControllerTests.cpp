@@ -65,3 +65,12 @@ TEST_F(MainWindowControllerTestFixture, /*DISABLED_*/OnDown_ValidGame_Reinitiali
 
     ASSERT_TRUE(GetCurrentGameReinitialized());
 }
+
+TEST_F(MainWindowControllerTestFixture, /*DISABLED_*/OnUndo_ValidGame_UndoCalledOnModel)
+{
+    ASSERT_FALSE(GetUndoCalled());
+
+    GetController().OnUndo();
+
+    ASSERT_TRUE(GetUndoCalled());
+}

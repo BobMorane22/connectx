@@ -53,6 +53,11 @@ bool MainWindowControllerTestFixture::GetCurrentGameReinitialized() const
     return m_currentGameReinitialized;
 }
 
+bool MainWindowControllerTestFixture::GetUndoCalled() const
+{
+    return m_undoCalled;
+}
+
 cxmodel::IConnectXGameActions& MainWindowControllerTestFixture::GetModel()
 {
     EXPECT_TRUE(m_model != nullptr);
@@ -92,4 +97,9 @@ void MainWindowControllerTestFixture::MainWindowControllerMockModel::EndCurrentG
 void MainWindowControllerTestFixture::MainWindowControllerMockModel::ReinitializeCurrentGame()
 {
     m_outer.m_currentGameReinitialized = true;
+}
+
+void MainWindowControllerTestFixture::MainWindowControllerMockModel::Undo()
+{
+    m_outer.m_undoCalled = true;
 }

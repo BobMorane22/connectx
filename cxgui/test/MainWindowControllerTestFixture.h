@@ -45,6 +45,7 @@ public:
     bool GetChipDropped() const;
     bool GetCurrentGameEnded() const;
     bool GetCurrentGameReinitialized() const;
+    bool GetUndoCalled() const;
 
     cxmodel::IConnectXGameActions& GetModel();
     cxgui::IMainWindowController& GetController();
@@ -70,7 +71,7 @@ private:
         void ReinitializeCurrentGame() override;
 
         // IUndoRedo:
-        void Undo() override {};
+        void Undo() override;
         void Redo() override {};
 
     private:
@@ -83,6 +84,7 @@ private:
     bool m_chipDropped = false;
     bool m_currentGameEnded = false;
     bool m_currentGameReinitialized = false;
+    bool m_undoCalled = false;
 
     std::unique_ptr<cxgui::IMainWindowController> m_controller;
     std::unique_ptr<MainWindowControllerMockModel> m_model;
