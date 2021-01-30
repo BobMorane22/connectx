@@ -228,7 +228,6 @@ TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/Update_GameReinitialized_Boa
     }
 }
 
-
 TEST_F(ConfigurableMainWindowPresenterTestFixture, /*DISABLED_*/Update_DiscDropUndoedToInitialState_GameIsNotReinitializable)
 {
     constexpr bool BOARD_EMPTY = true;
