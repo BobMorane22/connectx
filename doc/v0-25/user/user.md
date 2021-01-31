@@ -14,10 +14,14 @@ In this iteration:
 When the following conditions are met:
 
 1. a game has been started;
-2. one (or more) discs have been dropped.
+2. one (or more) discs have been dropped,
 
-Undoing is unlocked. At this point, a user can hit `Ctrl + z` to undo his
-or her last disc drop.
+undoing is unlocked. At this point, a user can go in the `Game->Undo`
+menu to undo his last disc drop:
+
+![Undoing in the menu bar](./menu.png)
+
+Alternatively, the user can hit `Ctrl + z` to undo his last disc drop.
 
 
 ### Limitation
