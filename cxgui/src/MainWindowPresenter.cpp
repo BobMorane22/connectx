@@ -70,6 +70,7 @@ cxgui::MainWindowPresenter::MainWindowPresenter(const cxmodel::IConnectXLimits& 
  , m_canRequestNewGame{false}
  , m_canCurrentGameBeReinitialized{false}
  , m_isUndoPossible{false}
+ , m_isRedoPossible{false}
  , m_currentBoardWidth{p_modealAsLimits.GetMinimumGridWidth()}
  , m_currentBoardHeight{p_modealAsLimits.GetMinimumGridHeight()}
  , m_activePlayer{NO_PLAYER}
@@ -84,6 +85,7 @@ void cxgui::MainWindowPresenter::Update(cxmodel::NotificationContext p_context, 
         m_canRequestNewGame = false;
         m_canCurrentGameBeReinitialized = false;
         m_isUndoPossible = false;
+        m_isRedoPossible = false;
 
         switch(p_context)
         {
@@ -110,6 +112,7 @@ void cxgui::MainWindowPresenter::Update(cxmodel::NotificationContext p_context, 
             case cxmodel::NotificationContext::UNDO_CHIP_DROPPED:
             {
                 m_canRequestNewGame = true;
+                m_isRedoPossible = true;
                 m_canCurrentGameBeReinitialized = !IsBoardEmpty();
                 m_isUndoPossible = !IsBoardEmpty();
 
@@ -148,6 +151,12 @@ bool cxgui::MainWindowPresenter::IsUndoPossible() const
 {
     return m_isUndoPossible;
 }
+
+bool cxgui::MainWindowPresenter::IsRedoPossible() const
+{
+    return m_isRedoPossible;
+}
+
 
 /**************************************************************************************************
  *

@@ -54,6 +54,7 @@ public:
     bool IsNewGamePossible() const override;
     bool IsCurrentGameReinitializationPossible() const override;
     bool IsUndoPossible() const override;
+    bool IsRedoPossible() const override;
 
 ///@}
 
@@ -130,6 +131,7 @@ private:
     bool m_canRequestNewGame;
     bool m_canCurrentGameBeReinitialized;
     bool m_isUndoPossible;
+    bool m_isRedoPossible;
 
     size_t m_currentBoardWidth;
     size_t m_currentBoardHeight;

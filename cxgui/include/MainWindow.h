@@ -133,6 +133,7 @@ private:
     void OnNewGame();
     void OnReinitializeCurrentGame();
     void OnUndo();
+    void OnRedo();
     void OnCreateAboutWindow();
 
     void CreateGameResolutionWindow(cxmodel::NotificationContext p_context);
@@ -159,6 +160,7 @@ private:
     Gtk::MenuItem m_newGameMenuItem;
     Gtk::MenuItem m_reinitializeMenuItem;
     Gtk::ImageMenuItem m_undoMenuItem{Gtk::Stock::UNDO};
+    Gtk::ImageMenuItem m_redoMenuItem{Gtk::Stock::REDO};
     Gtk::ImageMenuItem m_quitMenuItem{Gtk::Stock::QUIT};
     Gtk::MenuItem m_helpMenuItem;
     Gtk::Menu m_helpMenu;

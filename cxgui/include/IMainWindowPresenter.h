@@ -100,6 +100,14 @@ public:
      ********************************************************************************************/
     virtual bool IsUndoPossible() const = 0;
 
+    /******************************************************************************************//**
+     * @brief Indicates if redoing is possible.
+     *
+     * @return `true` if redoing is possible, `false` otherwise.
+     *
+     ********************************************************************************************/
+    virtual bool IsRedoPossible() const = 0;
+
 ///@}
 
 ///@{ @name New Game View

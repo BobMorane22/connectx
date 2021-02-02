@@ -64,6 +64,7 @@ public:
     void OnNewGame() override = 0;
     void OnReinitializeCurrentGame() override = 0;
     void OnUndo() override = 0;
+    void OnRedo() override = 0;
 
 ///@}
 

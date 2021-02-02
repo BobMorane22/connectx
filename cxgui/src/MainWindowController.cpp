@@ -66,3 +66,8 @@ void cxgui::MainWindowController::OnUndo()
 {
     m_modelAsUndoRedo.Undo();
 }
+
+void cxgui::MainWindowController::OnRedo()
+{
+    m_modelAsUndoRedo.Redo();
+}

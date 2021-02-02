@@ -33,6 +33,7 @@ enum class MenuItem
     NEW_GAME,
     REINITIALIZE_GAME,
     UNDO,
+    REDO,
     QUIT,
 
     HELP,

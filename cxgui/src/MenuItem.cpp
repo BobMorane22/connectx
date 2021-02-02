@@ -50,6 +50,9 @@ std::string cxgui::MakeLabel(MenuItem p_menuItem)
         case MenuItem::UNDO:
             return "Undo [Ctrl+z]";
 
+        case MenuItem::REDO:
+            return "Redo [Ctrl+y]";
+
         default:                   // LCOV_EXCL_LINE
             return "";             // LCOV_EXCL_LINE
     }

@@ -94,6 +94,7 @@ void cxgui::MainWindow::ConfigureWidgets()
     m_newGameMenuItem.set_label(m_presenter.GetMenuLabel(MenuItem::NEW_GAME));
     m_reinitializeMenuItem.set_label(m_presenter.GetMenuLabel(MenuItem::REINITIALIZE_GAME));
     m_undoMenuItem.set_label(m_presenter.GetMenuLabel(MenuItem::UNDO));
+    m_redoMenuItem.set_label(m_presenter.GetMenuLabel(MenuItem::REDO));
     m_helpMenuItem.set_label(m_presenter.GetMenuLabel(MenuItem::HELP));
     m_aboutMenuItem.set_label(m_presenter.GetMenuLabel(MenuItem::ABOUT));
 
@@ -106,6 +107,7 @@ void cxgui::MainWindow::ConfigureSignalHandlers()
     m_newGameMenuItem.signal_activate().connect([this](){OnNewGame();});
     m_reinitializeMenuItem.signal_activate().connect([this](){OnReinitializeCurrentGame();});
     m_undoMenuItem.signal_activate().connect([this]{OnUndo();});
+    m_redoMenuItem.signal_activate().connect([this]{OnRedo();});
     m_quitMenuItem.signal_activate().connect([this](){m_window.close();});
     m_aboutMenuItem.signal_activate().connect([this](){OnCreateAboutWindow();});
 }
@@ -207,6 +209,7 @@ void cxgui::MainWindow::UpdateMenuItems()
     m_newGameMenuItem.set_sensitive(m_presenter.IsNewGamePossible());
     m_reinitializeMenuItem.set_sensitive(m_presenter.IsCurrentGameReinitializationPossible());
     m_undoMenuItem.set_sensitive(m_presenter.IsUndoPossible());
+    m_redoMenuItem.set_sensitive(m_presenter.IsRedoPossible());
 }
 
 void cxgui::MainWindow::RegisterMenuBar()
@@ -217,6 +220,7 @@ void cxgui::MainWindow::RegisterMenuBar()
     m_gameMenu.append(m_newGameMenuItem);
     m_gameMenu.append(m_reinitializeMenuItem);
     m_gameMenu.append(m_undoMenuItem);
+    m_gameMenu.append(m_redoMenuItem);
     m_gameMenu.append(m_quitMenuItem);
     m_helpMenuItem.set_submenu(m_helpMenu);
     m_helpMenu.append(m_aboutMenuItem);
@@ -224,6 +228,7 @@ void cxgui::MainWindow::RegisterMenuBar()
     m_newGameMenuItem.set_sensitive(m_presenter.IsNewGamePossible());
     m_reinitializeMenuItem.set_sensitive(m_presenter.IsCurrentGameReinitializationPossible());
     m_undoMenuItem.set_sensitive(m_presenter.IsUndoPossible());
+    m_redoMenuItem.set_sensitive(m_presenter.IsRedoPossible());
 }
 
 void cxgui::MainWindow::RegisterStatusBar()
@@ -273,6 +278,11 @@ void cxgui::MainWindow::OnReinitializeCurrentGame()
 void cxgui::MainWindow::OnUndo()
 {
     m_controller.OnUndo();
+}
+
+void cxgui::MainWindow::OnRedo()
+{
+    m_controller.OnRedo();
 }
 
 void cxgui::MainWindow::CreateGameResolutionWindow(cxmodel::NotificationContext p_context)
