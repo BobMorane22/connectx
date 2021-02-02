@@ -403,8 +403,6 @@ void cxmodel::Model::Redo()
 {
     m_cmdStack->Redo();
 
-    Notify(NotificationContext::REDO);
-
     Log(cxlog::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__, "Last action redoed.");
 
     CheckInvariants();

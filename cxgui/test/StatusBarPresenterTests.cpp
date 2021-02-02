@@ -41,11 +41,6 @@ TEST(StatusBarPresenter, MakeStatusBarContextString_Undo_UndoStringCreated)
     ASSERT_EQ(cxgui::MakeStatusBarContextString(cxmodel::NotificationContext::UNDO_CHIP_DROPPED), "Undo.");
 }
 
-TEST(StatusBarPresenter, MakeStatusBarContextString_Redo_RedoStringCreated)
-{
-    ASSERT_EQ(cxgui::MakeStatusBarContextString(cxmodel::NotificationContext::REDO), "Redo.");
-}
-
 TEST(StatusBarPresenter, MakeStatusBarContextString_CreateNewGame_NewGameCreatedStringCreated)
 {
     ASSERT_EQ(cxgui::MakeStatusBarContextString(cxmodel::NotificationContext::CREATE_NEW_GAME), "New game created.");
@@ -93,16 +88,4 @@ TEST(StatusBarPresenter, Update_Undo_UndoMessageIsOn)
     presenter.Update(cxmodel::NotificationContext::UNDO_CHIP_DROPPED, &subject);
 
     ASSERT_EQ(presenter.GetStatusBarMessage(), "Undo.");
-}
-
-TEST(StatusBarPresenter, Update_Redo_RedoMessageIsOn)
-{
-    cxgui::StatusBarPresenter presenter;
-    ConcreteSubject subject;
-
-    ASSERT_TRUE(presenter.GetStatusBarMessage().empty());
-
-    presenter.Update(cxmodel::NotificationContext::REDO, &subject);
-
-    ASSERT_EQ(presenter.GetStatusBarMessage(), "Redo.");
 }

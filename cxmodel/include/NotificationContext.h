@@ -39,7 +39,6 @@ enum class NotificationContext
     CREATE_NEW_GAME,
     CHIP_DROPPED,
     UNDO_CHIP_DROPPED,
-    REDO,
 
     // Game states:
     GAME_WON,
