@@ -84,6 +84,9 @@ void cxmodel::CommandDropChip::Execute()
     IF_CONDITION_NOT_MET_DO(isPositionFree, return;);
 
     m_takenPositions.push_back(droppedPosition);
+
+    // Send notifications for the drop:
+    Notify(NotificationContext::CHIP_DROPPED);
 }
 
 void cxmodel::CommandDropChip::Undo()

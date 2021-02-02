@@ -233,8 +233,6 @@ void cxmodel::Model::DropChip(const cxmodel::IChip& p_chip, size_t p_column)
 
     if(IsWon())
     {
-        Notify(NotificationContext::CHIP_DROPPED);
-
         // In the case of a win, we must revert the next player -> active player update, since
         // the next player will never be able to play:
         m_playersInfo.m_activePlayerIndex = activePlayerIndexBefore;
@@ -251,8 +249,6 @@ void cxmodel::Model::DropChip(const cxmodel::IChip& p_chip, size_t p_column)
 
     if(IsTie())
     {
-        Notify(NotificationContext::CHIP_DROPPED);
-
         // In the case of a tie, we must revert the next player -> active player update, since
         // the next player will never be able to play:
         m_playersInfo.m_activePlayerIndex = activePlayerIndexBefore;
@@ -265,11 +261,6 @@ void cxmodel::Model::DropChip(const cxmodel::IChip& p_chip, size_t p_column)
         CheckInvariants();
 
         return;
-    }
-
-    if(activePlayerIndexBefore != m_playersInfo.m_activePlayerIndex)
-    {
-        Notify(NotificationContext::CHIP_DROPPED);
     }
 
     CheckInvariants();
