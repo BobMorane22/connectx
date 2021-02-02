@@ -43,9 +43,9 @@ d := $(dir)
 # i.e. the ones we want deleted by a "make clean" command.
 #
 TGTS_$(d) := $(d)/cxinvtests
-OBJS_$(d) := $(d)/DisableStdStreamsRAII.o \
-             $(d)/HandleAssertTestFixture.o \
+OBJS_$(d) := $(d)/HandleAssertTestFixture.o \
              $(d)/handleAssertTests.o \
+             cxunit/libcxunit.a \
              cxinv/libcxinv.a
 
 # We include all the generated rules. These are created by GCC to make sure that
@@ -65,8 +65,8 @@ CLEAN := $(CLEAN) $(OBJS_$(d)) $(TGTS_$(d)) $(DEPS_$(d))
 # Since the executable needs to access all libraries, we make sure its include directory
 # is the project root. That way, all include files can be found.
 #
-$(OBJS_$(d)): CF_TGT := -I$(d)/../include -I$(d)
-$(TGTS_$(d)): LL_TGT := cxinv/libcxinv.a -lgtest -lgtest_main -lpthread
+$(OBJS_$(d)): CF_TGT := -I. -I$(d)/../include -I$(d)
+$(TGTS_$(d)): LL_TGT := cxinv/libcxinv.a cxunit/libcxunit.a -lgtest -lgtest_main -lpthread
 
 $(TGTS_$(d)): $(OBJS_$(d)) $(LL_TGT)
 	@echo ~~~ Generating the cxinv unit tests executable ~~~

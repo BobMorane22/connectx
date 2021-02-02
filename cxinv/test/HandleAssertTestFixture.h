@@ -26,9 +26,9 @@
 
 #include <gtest/gtest.h>
 
-#include <assertion.h>
+#include <cxunit/include/DisableStdStreamsRAII.h>
 
-#include <DisableStdStreamsRAII.h>
+#include <assertion.h>
 
 /*********************************************************************************************//**
  * @brief Test fixture for the class @c cxinv::HandleAssert function.
@@ -58,7 +58,7 @@ protected:
 
 private:
 
-    DisableStdStreamsRAII m_disableStreamsRAII;
+    cxunit::DisableStdStreamsRAII m_disableStreamsRAII;
 
 };
 
