@@ -50,25 +50,28 @@ void UpdatePlayerIndex(size_t& p_playerIndex, size_t p_nbOfPlayers)
 
 cxmodel::CommandDropChip::CommandDropChip(cxmodel::IBoard& p_board,
                                           cxmodel::PlayerInformation& p_playersInfo,
-                                          const cxmodel::IChip& p_droppedChip,
+                                          std::unique_ptr<cxmodel::IChip>&& p_droppedChip,
                                           const size_t p_column,
                                           std::vector<IBoard::Position>& p_takenPositions)
  : m_board{p_board}
  , m_playersInfo{p_playersInfo}
- , m_droppedChip{p_droppedChip}
+ , m_droppedChip{std::move(p_droppedChip)}
  , m_column{p_column}
  , m_takenPositions{p_takenPositions}
  , m_previousPlayerInformation{p_playersInfo}
- , m_previousChipColor{p_droppedChip.GetColor()}
  , m_previousColumn{p_column}
 {
     PRECONDITION(p_column < p_board.GetNbColumns());
+
+    POSTCONDITION(m_droppedChip);
 }
 
 void cxmodel::CommandDropChip::Execute()
 {
+    IF_CONDITION_NOT_MET_DO(m_droppedChip, return;);
+
     IBoard::Position droppedPosition;
-    IF_CONDITION_NOT_MET_DO(m_board.DropChip(m_column, m_droppedChip, droppedPosition), return;);
+    IF_CONDITION_NOT_MET_DO(m_board.DropChip(m_column, *m_droppedChip, droppedPosition), return;);
     m_previousDropPosition = droppedPosition;
 
     // Update player information:

@@ -24,6 +24,7 @@
 #ifndef COMMANDDROPCHIP_H_412DF355_E70F_413B_B531_63838B549644
 #define COMMANDDROPCHIP_H_412DF355_E70F_413B_B531_63838B549644
 
+#include <memory>
 #include <vector>
 
 #include "IBoard.h"
@@ -67,7 +68,7 @@ public:
      ********************************************************************************************/
     CommandDropChip(IBoard& p_board,
                     PlayerInformation& p_playersInfo,
-                    const cxmodel::IChip& p_droppedChip,
+                    std::unique_ptr<cxmodel::IChip>&& p_droppedChip,
                     const size_t p_column,
                     std::vector<IBoard::Position>& p_takenPositions);
 
@@ -79,13 +80,12 @@ private:
 
     IBoard& m_board;
     PlayerInformation& m_playersInfo;
-    const cxmodel::IChip& m_droppedChip;
+    const std::unique_ptr<cxmodel::IChip> m_droppedChip;
     const size_t m_column;
     std::vector<IBoard::Position>& m_takenPositions;
 
     // Members stored for undoing the drop:
     const PlayerInformation m_previousPlayerInformation;
-    const ChipColor m_previousChipColor;
     const size_t m_previousColumn;
     IBoard::Position m_previousDropPosition;
 };

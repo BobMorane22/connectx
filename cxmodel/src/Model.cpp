@@ -214,7 +214,7 @@ void cxmodel::Model::DropChip(const cxmodel::IChip& p_chip, size_t p_column)
     {
         std::unique_ptr<cxmodel::CommandDropChip> command = std::make_unique<CommandDropChip>(*m_board,
                                                                                               m_playersInfo,
-                                                                                              p_chip,
+                                                                                              std::make_unique<cxmodel::Disc>(p_chip.GetColor()),
                                                                                               p_column,
                                                                                               m_takenPositions);
         IF_CONDITION_NOT_MET_DO(command, return;);                                                                          

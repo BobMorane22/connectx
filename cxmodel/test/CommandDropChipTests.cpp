@@ -93,7 +93,7 @@ TEST_F(CommandDropChipTestFixture, /*DISABLED_*/Execute_EmptyRowAndTwoPlayers_Al
     // The command is created and executed:
     std::unique_ptr<cxmodel::ICommand> cmd = std::make_unique<cxmodel::CommandDropChip>(board,
                                                                                         playerInfo,
-                                                                                        droppedDisc,
+                                                                                        std::make_unique<cxmodel::Disc>(droppedDisc),
                                                                                         0u,
                                                                                         takenPositions);
 
@@ -133,7 +133,7 @@ TEST_F(CommandDropChipTestFixture, /*DISABLED_*/Execute_EmptyRowAndThreePlayers_
     // The command is created and executed:
     std::unique_ptr<cxmodel::ICommand> cmd = std::make_unique<cxmodel::CommandDropChip>(board,
                                                                                         playerInfo,
-                                                                                        droppedDisc,
+                                                                                        std::make_unique<cxmodel::Disc>(droppedDisc),
                                                                                         0u,
                                                                                         takenPositions);
 
@@ -177,7 +177,7 @@ TEST_F(CommandDropChipTestFixture, /*DISABLED_*/Execute_RowNotFull_AllDataUpdate
     // The command is created and executed:
     std::unique_ptr<cxmodel::ICommand> cmd = std::make_unique<cxmodel::CommandDropChip>(board,
                                                                                         playerInfo,
-                                                                                        droppedDisc,
+                                                                                        std::make_unique<cxmodel::Disc>(droppedDisc),
                                                                                         5u,
                                                                                         takenPositions);
 
@@ -226,7 +226,7 @@ TEST_F(CommandDropChipTestFixture, /*DISABLED_*/Execute_RowFull_NoDataUpdated)
     // The command is created and executed:
     std::unique_ptr<cxmodel::ICommand> cmd = std::make_unique<cxmodel::CommandDropChip>(board,
                                                                                         playerInfo,
-                                                                                        droppedDisc,
+                                                                                        std::make_unique<cxmodel::Disc>(droppedDisc),
                                                                                         6u,
                                                                                         takenPositions);
 
