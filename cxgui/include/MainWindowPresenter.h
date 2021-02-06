@@ -34,6 +34,7 @@ namespace cxmodel
 {
     class IConnectXGameInformation;
     class IConnectXLimits;
+    class IUndoRedo;
 }
 
 namespace cxgui
@@ -45,7 +46,8 @@ class MainWindowPresenter : public cxgui::IMainWindowPresenter
 public:
 
     MainWindowPresenter(const cxmodel::IConnectXLimits& p_modealAsLimits,
-                        const cxmodel::IConnectXGameInformation& p_modelAsGameInformation);
+                        const cxmodel::IConnectXGameInformation& p_modelAsGameInformation,
+                        const cxmodel::IUndoRedo& p_modelAsUndoRedo);
 
 ///@{ @name Main Window
 // -----------------------------------------------------------------------------------------------
@@ -127,11 +129,10 @@ private:
 
     const cxmodel::IConnectXLimits& m_modelAsLimits;
     const cxmodel::IConnectXGameInformation& m_modelAsGameInformation;
+    const cxmodel::IUndoRedo& m_modelAsUndoRedo;
     
     bool m_canRequestNewGame;
     bool m_canCurrentGameBeReinitialized;
-    bool m_isUndoPossible;
-    bool m_isRedoPossible;
 
     size_t m_currentBoardWidth;
     size_t m_currentBoardHeight;

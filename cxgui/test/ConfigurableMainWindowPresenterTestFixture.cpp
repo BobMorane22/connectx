@@ -23,11 +23,24 @@
 
 #include <exception>
 
+#include <cxmodel/include/IUndoRedo.h>
 #include <cxgui/include/MainWindowPresenter.h>
 
 #include "BasicConnectXGameInformationModelMock.h"
 #include "BasicConnectXLimitsModelMock.h"
 #include "ConfigurableMainWindowPresenterTestFixture.h"
+
+class BasicUndoRedoModelMock : public cxmodel::IUndoRedo
+{
+
+public:
+
+    void Undo() override {}
+    void Redo() override {}
+    bool CanUndo() const override {return true;}
+    bool CanRedo() const override {return true;}
+
+};
 
 ConfigurableMainWindowPresenterTestFixture::ConfigurableMainWindowPresenterTestFixture()
 {
@@ -37,7 +50,10 @@ ConfigurableMainWindowPresenterTestFixture::ConfigurableMainWindowPresenterTestF
     m_modelAsLimits = std::make_unique<BasicConnectXLimitsModelMock>();
     EXPECT_TRUE(m_modelAsLimits);
 
-    m_presenter = std::make_unique<cxgui::MainWindowPresenter>(*m_modelAsLimits, *m_modelAsGameInformation);
+    m_modelAsUndoRedo = std::make_unique<BasicUndoRedoModelMock>();
+    EXPECT_TRUE(m_modelAsUndoRedo);
+
+    m_presenter = std::make_unique<cxgui::MainWindowPresenter>(*m_modelAsLimits, *m_modelAsGameInformation, *m_modelAsUndoRedo);
     EXPECT_TRUE(m_presenter);
 }
 
@@ -52,7 +68,7 @@ void ConfigurableMainWindowPresenterTestFixture::SetGameInformationModel(std::un
     EXPECT_TRUE(p_model);
     m_modelAsGameInformation = std::move(p_model);
 
-    m_presenter = std::make_unique<cxgui::MainWindowPresenter>(*m_modelAsLimits, *m_modelAsGameInformation);
+    m_presenter = std::make_unique<cxgui::MainWindowPresenter>(*m_modelAsLimits, *m_modelAsGameInformation, *m_modelAsUndoRedo);
     EXPECT_TRUE(m_presenter);
 }
 
@@ -61,7 +77,7 @@ void ConfigurableMainWindowPresenterTestFixture::SetLimitsModel(std::unique_ptr<
     EXPECT_TRUE(p_model);
     m_modelAsLimits = std::move(p_model);
 
-    m_presenter = std::make_unique<cxgui::MainWindowPresenter>(*m_modelAsLimits, *m_modelAsGameInformation);
+    m_presenter = std::make_unique<cxgui::MainWindowPresenter>(*m_modelAsLimits, *m_modelAsGameInformation, *m_modelAsUndoRedo);
     EXPECT_TRUE(m_presenter);
 }
 

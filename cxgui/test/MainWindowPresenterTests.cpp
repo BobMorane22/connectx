@@ -385,7 +385,7 @@ TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/IsCurrentGameReinitializatio
     ASSERT_FALSE(presenter.IsCurrentGameReinitializationPossible());
 }
 
-TEST_F(ConfigurableMainWindowPresenterTestFixture, /*DISABLED_*/IsUndoPossible_ChipDroppedNotificationBoardNotEmpty_TrueReturned)
+TEST_F(ConfigurableMainWindowPresenterTestFixture, DISABLED_IsUndoPossible_ChipDroppedNotificationBoardNotEmpty_TrueReturned)
 {
     constexpr bool BOARD_NOT_EMPTY = false;
     auto model = std::make_unique<UndoConnectXGameInformationModelMock>(BOARD_NOT_EMPTY);
@@ -404,7 +404,7 @@ TEST_F(ConfigurableMainWindowPresenterTestFixture, /*DISABLED_*/IsUndoPossible_C
     ASSERT_TRUE(GetPresenter().IsUndoPossible());
 }
 
-TEST_F(ConfigurableMainWindowPresenterTestFixture, /*DISABLED_*/IsUndoPossible_ChipDroppedNotificationBoardEmpty_FalseReturned)
+TEST_F(ConfigurableMainWindowPresenterTestFixture, DISABLED_IsUndoPossible_ChipDroppedNotificationBoardEmpty_FalseReturned)
 {
     constexpr bool BOARD_EMPTY = true;
     auto model = std::make_unique<UndoConnectXGameInformationModelMock>(BOARD_EMPTY);
@@ -423,7 +423,7 @@ TEST_F(ConfigurableMainWindowPresenterTestFixture, /*DISABLED_*/IsUndoPossible_C
     ASSERT_FALSE(GetPresenter().IsUndoPossible());
 }
 
-TEST_F(ConfigurableMainWindowPresenterTestFixture, /*DISABLED_*/IsUndoPossible_UndoChipDroppedNotificationBoardNotEmpty_TrueReturned)
+TEST_F(ConfigurableMainWindowPresenterTestFixture, DISABLED_IsUndoPossible_UndoChipDroppedNotificationBoardNotEmpty_TrueReturned)
 {
     constexpr bool BOARD_NOT_EMPTY = false;
     auto model = std::make_unique<UndoConnectXGameInformationModelMock>(BOARD_NOT_EMPTY);
@@ -442,7 +442,7 @@ TEST_F(ConfigurableMainWindowPresenterTestFixture, /*DISABLED_*/IsUndoPossible_U
     ASSERT_TRUE(GetPresenter().IsUndoPossible());
 }
 
-TEST_F(ConfigurableMainWindowPresenterTestFixture, /*DISABLED_*/IsUndoPossible_UndoChipDroppedNotificationBoardEmpty_FalseReturned)
+TEST_F(ConfigurableMainWindowPresenterTestFixture, DISABLED_IsUndoPossible_UndoChipDroppedNotificationBoardEmpty_FalseReturned)
 {
     constexpr bool BOARD_EMPTY = true;
     auto model = std::make_unique<UndoConnectXGameInformationModelMock>(BOARD_EMPTY);
@@ -461,7 +461,7 @@ TEST_F(ConfigurableMainWindowPresenterTestFixture, /*DISABLED_*/IsUndoPossible_U
     ASSERT_FALSE(GetPresenter().IsUndoPossible());
 }
 
-TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/IsUndoPossible_AllOtherNotifications_FalseReturned)
+TEST_F(MainWindowPresenterTestFixture, DISABLED_IsUndoPossible_AllOtherNotifications_FalseReturned)
 {
     auto& actionModel = GetActionsModel();
     actionModel.CreateNewGame(cxmodel::NewGameInformation{});

@@ -30,6 +30,7 @@
 #include <cxmodel/include/IConnectXGameActions.h>
 #include <cxmodel/include/IConnectXGameInformation.h>
 #include <cxmodel/include/IConnectXLimits.h>
+#include <cxmodel/include/IUndoRedo.h>
 #include <cxmodel/include/IVersioning.h>
 #include <cxmodel/include/Subject.h>
 #include <cxgui/include/IMainWindowPresenter.h>
@@ -59,7 +60,8 @@ private:
                                          public cxmodel::IVersioning,
                                          public cxmodel::IConnectXGameActions,
                                          public cxmodel::IConnectXGameInformation,
-                                         public cxmodel::IConnectXLimits
+                                         public cxmodel::IConnectXLimits,
+                                         public cxmodel::IUndoRedo
     {
     public:
 
@@ -96,6 +98,12 @@ private:
         size_t GetMaximumInARowValue() const override {return 8u;};
         size_t GetMinimumNumberOfPlayers() const override {return 2u;};
         size_t GetMaximumNumberOfPlayers() const override {return 10u;};
+
+        // IUndoRedo:
+        void Undo() override {}
+        void Redo() override {}
+        bool CanUndo() const override {return true;}
+        bool CanRedo() const override {return true;}
 
     private:
 

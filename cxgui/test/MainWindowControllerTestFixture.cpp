@@ -103,3 +103,13 @@ void MainWindowControllerTestFixture::MainWindowControllerMockModel::Undo()
 {
     m_outer.m_undoCalled = true;
 }
+
+bool MainWindowControllerTestFixture::MainWindowControllerMockModel::CanUndo() const
+{
+    return true;
+}
+
+bool MainWindowControllerTestFixture::MainWindowControllerMockModel::CanRedo() const
+{
+    return true;
+}

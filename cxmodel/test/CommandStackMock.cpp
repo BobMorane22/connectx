@@ -69,6 +69,16 @@ void CommandStackMock::Redo()
     m_isRedoed = true;
 }
 
+bool CommandStackMock::CanUndo() const
+{
+    throw NotImplementedException();
+}
+
+bool CommandStackMock::CanRedo() const
+{
+    throw NotImplementedException();
+}
+
 bool CommandStackMock::IsEmpty() const
 {
     return true;

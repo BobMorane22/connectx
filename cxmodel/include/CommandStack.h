@@ -49,6 +49,8 @@ public:
 
     void Undo() override;
     void Redo() override;
+    bool CanUndo() const override;
+    bool CanRedo() const override;
 
     bool IsEmpty() const override;
     bool IsFull() const override;

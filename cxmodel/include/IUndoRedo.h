@@ -60,6 +60,25 @@ public:
      *
      ********************************************************************************************/
     virtual void Redo() = 0;
+
+    /******************************************************************************************//**
+     * @brief Check is there are commands than can be undone in the stack.
+     *
+     * @return `true` if there is at least one command that can be undone in the stack and
+     *         `false` otherwise.
+     *
+     ********************************************************************************************/
+    virtual bool CanUndo() const = 0;
+
+    /******************************************************************************************//**
+     * @brief Check is there are commands in the stack that can be redone.
+     *
+     * @return `true` if there is at least one command that can be redone in the stack and
+     *         `false` otherwise.
+     *
+     ********************************************************************************************/
+    virtual bool CanRedo() const = 0;
+
 };
 
 } // namespace cxmodel

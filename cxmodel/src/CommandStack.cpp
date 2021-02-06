@@ -84,8 +84,8 @@ void cxmodel::CommandStack::Execute(std::unique_ptr<cxmodel::ICommand>&& p_newCo
     // At this point a new command was added. We execute it:
     if(m_currentPosition < m_commands.size())
     {
-        m_commands.back()->Execute();
         ++m_currentPosition;
+        m_commands.back()->Execute();
     }
 
     CheckInvariants();
@@ -102,7 +102,6 @@ void cxmodel::CommandStack::Clear()
     CheckInvariants();
 }
 
-
 void cxmodel::CommandStack::Undo()
 {
     if(m_commands.empty())
@@ -117,8 +116,8 @@ void cxmodel::CommandStack::Undo()
 
     if(m_currentPosition > 0)
     {
-        m_commands[m_currentPosition - 1]->Undo();
         --m_currentPosition;
+        m_commands[m_currentPosition]->Undo();
     }
 
     CheckInvariants();
@@ -138,11 +137,21 @@ void cxmodel::CommandStack::Redo()
 
     if(m_currentPosition < m_commands.size())
     {
-        m_commands[m_currentPosition]->Execute();
         ++m_currentPosition;
+        m_commands[m_currentPosition - 1]->Execute();
     }
 
     CheckInvariants();
+}
+
+bool cxmodel::CommandStack::CanUndo() const
+{
+    return !IsEmpty() && m_currentPosition > 0;
+}
+
+bool cxmodel::CommandStack::CanRedo() const
+{
+    return !IsEmpty() && m_currentPosition < GetLastCommandPosition() + 1;
 }
 
 bool cxmodel::CommandStack::IsEmpty() const

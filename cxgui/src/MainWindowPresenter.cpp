@@ -29,6 +29,7 @@
 #include <cxmodel/include/NewGameInformation.h>
 #include <cxmodel/include/IConnectXGameInformation.h>
 #include <cxmodel/include/IConnectXLimits.h>
+#include <cxmodel/include/IUndoRedo.h>
 
 #include <MainWindowPresenter.h>
 
@@ -64,13 +65,13 @@ std::string MakeBoardHeightValueOutOfLimitsWarningDialog(size_t p_lower, size_t 
 } // namespace
 
 cxgui::MainWindowPresenter::MainWindowPresenter(const cxmodel::IConnectXLimits& p_modealAsLimits,
-                                                const cxmodel::IConnectXGameInformation& p_modelAsGameInformation)
+                                                const cxmodel::IConnectXGameInformation& p_modelAsGameInformation,
+                                                const cxmodel::IUndoRedo& p_modelAsUndoRedo)
  : m_modelAsLimits{p_modealAsLimits}
  , m_modelAsGameInformation{p_modelAsGameInformation}
+ , m_modelAsUndoRedo{p_modelAsUndoRedo}
  , m_canRequestNewGame{false}
  , m_canCurrentGameBeReinitialized{false}
- , m_isUndoPossible{false}
- , m_isRedoPossible{false}
  , m_currentBoardWidth{p_modealAsLimits.GetMinimumGridWidth()}
  , m_currentBoardHeight{p_modealAsLimits.GetMinimumGridHeight()}
  , m_activePlayer{NO_PLAYER}
@@ -84,8 +85,6 @@ void cxgui::MainWindowPresenter::Update(cxmodel::NotificationContext p_context, 
     {
         m_canRequestNewGame = false;
         m_canCurrentGameBeReinitialized = false;
-        m_isUndoPossible = false;
-        m_isRedoPossible = false;
 
         switch(p_context)
         {
@@ -99,7 +98,6 @@ void cxgui::MainWindowPresenter::Update(cxmodel::NotificationContext p_context, 
             {
                 m_canRequestNewGame = true;
                 m_canCurrentGameBeReinitialized = true;
-                m_isUndoPossible = !IsBoardEmpty();
                 UpdateChipDropped();
                 break;
             }
@@ -112,9 +110,7 @@ void cxgui::MainWindowPresenter::Update(cxmodel::NotificationContext p_context, 
             case cxmodel::NotificationContext::UNDO_CHIP_DROPPED:
             {
                 m_canRequestNewGame = true;
-                m_isRedoPossible = true;
                 m_canCurrentGameBeReinitialized = !IsBoardEmpty();
-                m_isUndoPossible = !IsBoardEmpty();
 
                 UpdateChipDropped();
                 break;
@@ -149,12 +145,12 @@ bool cxgui::MainWindowPresenter::IsCurrentGameReinitializationPossible() const
 
 bool cxgui::MainWindowPresenter::IsUndoPossible() const
 {
-    return m_isUndoPossible;
+    return m_modelAsUndoRedo.CanUndo();
 }
 
 bool cxgui::MainWindowPresenter::IsRedoPossible() const
 {
-    return m_isRedoPossible;
+    return m_modelAsUndoRedo.CanRedo();
 }
 
 

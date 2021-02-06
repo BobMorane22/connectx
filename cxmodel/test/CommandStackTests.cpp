@@ -272,3 +272,71 @@ TEST_F(CommandStackTestFixture, /*DISABLED_*/UndoRedo_CommandExecuteedInBetween_
     ASSERT_EQ(GetCommandStack()->GetNbCommands(), 3);
     ASSERT_EQ(result, 18.0);
 }
+
+TEST_F(CommandStackTestFixture, /*DISABLED_*/CanUndo_NoCommandExecuted_ReturnsFalse)
+{
+    ASSERT_FALSE(GetCommandStack()->CanUndo());
+}
+
+TEST_F(CommandStackTestFixture, /*DISABLED_*/CanUndo_SomeCommandExecuted_ReturnsTrue)
+{
+    double result{0.0};
+
+    GetCommandStack()->Execute(std::make_unique<CommandAddTwoMock>(result));
+
+    ASSERT_TRUE(GetCommandStack()->CanUndo());
+}
+
+TEST_F(CommandStackTestFixture, /*DISABLED_*/CanUndo_AllUndoed_ReturnsFalse)
+{
+    double result{0.0};
+
+    GetCommandStack()->Execute(std::make_unique<CommandAddTwoMock>(result));
+    GetCommandStack()->Undo();
+
+    ASSERT_FALSE(GetCommandStack()->CanUndo());
+}
+
+TEST_F(CommandStackTestFixture, /*DISABLED_*/CanRedo_NoCommandUndoed_ReturnsFalse)
+{
+    double result{0.0};
+
+    GetCommandStack()->Execute(std::make_unique<CommandAddTwoMock>(result));
+
+    ASSERT_FALSE(GetCommandStack()->CanRedo());
+}
+
+TEST_F(CommandStackTestFixture, /*DISABLED_*/CanRedo_SomeCommandsUndoed_ReturnsTrue)
+{
+    double result{0.0};
+
+    GetCommandStack()->Execute(std::make_unique<CommandAddTwoMock>(result));
+    GetCommandStack()->Execute(std::make_unique<CommandAddTwoMock>(result));
+    GetCommandStack()->Undo();
+
+    ASSERT_TRUE(GetCommandStack()->CanRedo());
+}
+
+TEST_F(CommandStackTestFixture, /*DISABLED_*/CanRedo_SomeMoreCommandsUndoed_ReturnsTrue)
+{
+    double result{0.0};
+
+    GetCommandStack()->Execute(std::make_unique<CommandAddTwoMock>(result));
+    GetCommandStack()->Execute(std::make_unique<CommandAddTwoMock>(result));
+    GetCommandStack()->Execute(std::make_unique<CommandAddTwoMock>(result));
+    GetCommandStack()->Undo();
+
+    ASSERT_TRUE(GetCommandStack()->CanRedo());
+}
+
+TEST_F(CommandStackTestFixture, /*DISABLED_*/CanRedo_AllCommandsUndoed_ReturnsTrue)
+{
+    double result{0.0};
+
+    GetCommandStack()->Execute(std::make_unique<CommandAddTwoMock>(result));
+    GetCommandStack()->Execute(std::make_unique<CommandAddTwoMock>(result));
+    GetCommandStack()->Undo();
+    GetCommandStack()->Undo();
+
+    ASSERT_TRUE(GetCommandStack()->CanRedo());
+}

@@ -73,6 +73,8 @@ private:
         // IUndoRedo:
         void Undo() override;
         void Redo() override {};
+        bool CanUndo() const override;
+        bool CanRedo() const override;
 
     private:
 

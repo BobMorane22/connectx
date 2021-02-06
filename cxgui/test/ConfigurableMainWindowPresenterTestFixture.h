@@ -30,6 +30,7 @@
 
 #include <cxmodel/include/IConnectXGameInformation.h>
 #include <cxmodel/include/IConnectXLimits.h>
+#include <cxmodel/include/IUndoRedo.h>
 
 #include <cxgui/include/IMainWindowPresenter.h>
 
@@ -103,6 +104,7 @@ private:
 
     std::unique_ptr<cxmodel::IConnectXGameInformation> m_modelAsGameInformation;
     std::unique_ptr<cxmodel::IConnectXLimits> m_modelAsLimits;
+    std::unique_ptr<cxmodel::IUndoRedo> m_modelAsUndoRedo;
 
 };
 

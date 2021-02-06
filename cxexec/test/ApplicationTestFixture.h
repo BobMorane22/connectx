@@ -101,6 +101,8 @@ private:
         // IUndoRedo:
         void Undo() override {}
         void Redo() override {}
+        bool CanUndo() const override {return true;}
+        bool CanRedo() const override {return true;}
 
         // IVersionning:
         std::string GetName() const override {return "Connect X";}

@@ -392,6 +392,8 @@ bool cxmodel::Model::IsTie() const
 
 void cxmodel::Model::Undo()
 {
+    IF_CONDITION_NOT_MET_DO(m_cmdStack, return;);
+
     m_cmdStack->Undo();
 
     Log(cxlog::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__, "Last action undoed.");
@@ -401,11 +403,27 @@ void cxmodel::Model::Undo()
 
 void cxmodel::Model::Redo()
 {
+    IF_CONDITION_NOT_MET_DO(m_cmdStack, return;);
+
     m_cmdStack->Redo();
 
     Log(cxlog::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__, "Last action redoed.");
 
     CheckInvariants();
+}
+
+bool cxmodel::Model::CanUndo() const
+{
+    IF_CONDITION_NOT_MET_DO(m_cmdStack, return false;);
+
+    return m_cmdStack->CanUndo();
+}
+
+bool cxmodel::Model::CanRedo() const
+{
+    IF_CONDITION_NOT_MET_DO(m_cmdStack, return false;);
+
+    return m_cmdStack->CanRedo();
 }
 
 void cxmodel::Model::Log(const cxlog::VerbosityLevel p_verbosityLevel, const std::string& p_fileName, const std::string& p_functionName, const size_t p_lineNumber, const std::string& p_message)
