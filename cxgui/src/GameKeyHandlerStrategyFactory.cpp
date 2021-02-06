@@ -25,7 +25,6 @@
 
 #include "GameKeyHandlerStrategyFactory.h"
 
-#include "GameCtrlZKeyHandlerStrategy.h"
 #include "GameDownKeyHandlerStrategy.h"
 #include "GameLeftKeyHandlerStrategy.h"
 #include "GameRightKeyHandlerStrategy.h"
@@ -44,16 +43,6 @@ std::unique_ptr<cxgui::IGameKeyHandlerStrategy> cxgui::GameKeyHandlerStrategyFac
 
         case GDK_KEY_Down:
             return std::make_unique<cxgui::GameDownKeyHandlerStrategy>();
-
-        case GDK_KEY_z:
-        {
-            if(p_event->state & GDK_CONTROL_MASK)
-            {
-                return std::make_unique<cxgui::GameCtrlZKeyHandlerStrategy>();
-            }
-
-            return std::make_unique<cxgui::GameKeyHandlerNoStrategy>();
-        }
 
         default:
             return std::make_unique<cxgui::GameKeyHandlerNoStrategy>();

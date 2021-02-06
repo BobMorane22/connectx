@@ -214,6 +214,22 @@ void cxgui::MainWindow::UpdateMenuItems()
 
 void cxgui::MainWindow::RegisterMenuBar()
 {
+    // Adding accelerators:
+    auto acceleratorGroup = Gtk::AccelGroup::create();
+    m_window.add_accel_group(acceleratorGroup);
+
+    m_undoMenuItem.add_accelerator("activate",
+                                   acceleratorGroup,
+                                   GDK_KEY_z,
+                                   Gdk::ModifierType::CONTROL_MASK,
+                                   Gtk::ACCEL_VISIBLE);
+
+    m_redoMenuItem.add_accelerator("activate",
+                                   acceleratorGroup,
+                                   GDK_KEY_y,
+                                   Gdk::ModifierType::CONTROL_MASK,
+                                   Gtk::ACCEL_VISIBLE);
+
     m_menubar.append(m_gameMenuItem);
     m_menubar.append(m_helpMenuItem);
     m_gameMenuItem.set_submenu(m_gameMenu);

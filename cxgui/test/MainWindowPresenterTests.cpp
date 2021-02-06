@@ -124,7 +124,12 @@ TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetMenuLabel_AboutMenu_About
 
 TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetMenuLabel_UndoMenu_UndoMenuLabelReturned)
 {
-    ASSERT_EQ(GetPresenter().GetMenuLabel(cxgui::MenuItem::UNDO), "Undo [Ctrl+z]");
+    ASSERT_EQ(GetPresenter().GetMenuLabel(cxgui::MenuItem::UNDO), "Undo");
+}
+
+TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetMenuLabel_RedoMenu_RedoMenuLabelReturned)
+{
+    ASSERT_EQ(GetPresenter().GetMenuLabel(cxgui::MenuItem::REDO), "Redo");
 }
 
 TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/Update_CreateNewGame_NewGameInformationUpdated)
