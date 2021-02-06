@@ -21,23 +21,11 @@
  *
  *************************************************************************************************/
 
-#include <stdexcept>
-
 #include <gtest/gtest.h>
 
+#include <cxunit/include/NotImplementedException.h>
+
 #include "CommandStackMock.h"
-
-class NotImplementedException : public std::runtime_error
-{
-
-public:
-
-    NotImplementedException()
-    : runtime_error("Not implemented.")
-    {
-        // Nothing to do...
-    }
-};
 
 bool CommandStackMock::IsRedoed() const
 {
@@ -56,7 +44,7 @@ void CommandStackMock::Execute(std::unique_ptr<cxmodel::ICommand>&& /*p_newComma
 
 void CommandStackMock::Clear()
 {
-    throw NotImplementedException();
+    throw cxunit::NotImplementedException();
 }
 
 void CommandStackMock::Undo()
@@ -71,12 +59,12 @@ void CommandStackMock::Redo()
 
 bool CommandStackMock::CanUndo() const
 {
-    throw NotImplementedException();
+    throw cxunit::NotImplementedException();
 }
 
 bool CommandStackMock::CanRedo() const
 {
-    throw NotImplementedException();
+    throw cxunit::NotImplementedException();
 }
 
 bool CommandStackMock::IsEmpty() const
@@ -86,10 +74,10 @@ bool CommandStackMock::IsEmpty() const
 
 bool CommandStackMock::IsFull() const
 {
-    throw NotImplementedException();
+    throw cxunit::NotImplementedException();
 }
 
 size_t CommandStackMock::GetNbCommands() const
 {
-    throw NotImplementedException();
+    throw cxunit::NotImplementedException();
 }

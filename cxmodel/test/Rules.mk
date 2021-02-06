@@ -71,6 +71,7 @@ OBJS_$(d) := $(d)/BoardTests.o \
              $(d)/SubjectTests.o \
              $(d)/TieGameResolutionStrategyTests.o \
              $(d)/WinGameResolutionStrategyTests.o \
+             cxunit/libcxunit.a \
              cxmodel/libcxmodel.a
 
 # We include all the generated rules. These are created by GCC to make sure that
@@ -87,7 +88,7 @@ CLEAN := $(CLEAN) $(OBJS_$(d)) $(TGTS_$(d)) $(DEPS_$(d))
 # Executable is compiled and linked.
 #
 $(TGTS_$(d)): CF_TGT := -I$(d)/../include -I$(d) -I.
-$(TGTS_$(d)): LL_TGT := cxmodel/libcxmodel.a cxlog/libcxlog.a cxinv/libcxinv.a -lgtest -lgtest_main -lpthread
+$(TGTS_$(d)): LL_TGT := cxunit/libcxunit.a cxmodel/libcxmodel.a cxlog/libcxlog.a cxinv/libcxinv.a -lgtest -lgtest_main -lpthread
 
 $(TGTS_$(d)): $(OBJS_$(d)) $(LL_TGT)
 	@echo ~~~ Generating the cxmodel unit tests executable ~~~
