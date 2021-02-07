@@ -47,6 +47,34 @@ IsCurrentGameReinitializationPossible_AllOtherNotifications_FalseReturned
 ```
 
 
+## (07-02-2021) Log the Gtkmm version
+
+Sometimes, there are bugs specific to a Gtkmm version (see TG-115). Right now,
+there is no way of knowing which specific Gtkmm version was used by Connect X,
+which could cause problems in diagnosing specific issues.
+
+It would be interesting to have, in the Connect X log, an entry for the current
+Gtkmm version number. The following code snippet accomplishes just that:
+
+```
+#include <gtkmm.h>
+#include <iostream>
+
+int main()
+{
+    std::cout << gtk_get_major_version() << "."
+              << gtk_get_minor_version() << "."
+              << gtk_get_micro_version()
+              << std::endl;
+
+    return 0;
+}
+```
+
+The goal of this task is then to integrate this code in Connect X and to log the
+Gtkmm version.
+
+
 ## (XX-XX-XXXX) Title
 
 Description...
