@@ -16,16 +16,43 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file NotImplementedException.cpp
+ * @file NotImplementedExceptionTests.cpp
  * @date 2021
  *
  *************************************************************************************************/
 
+#include <gtest/gtest.h>
+
 #include <NotImplementedException.h>
 
-
-cxunit::NotImplementedException::NotImplementedException()
-: std::logic_error{"Not implemented."}
+class NotImplemented
 {
-    // Nothing to do...
+
+public:
+
+    void NotImplementedMethod()
+    {
+        throw cxunit::NotImplementedException();
+    }
+};
+
+TEST(NotImplementedException, SomeOperation_ExceptionThrown_NotImplementedMessageRetreived)
+{
+    NotImplemented object;
+    
+    bool exceptionThrown = false;
+    std::string exceptionMessage = "";
+
+    try
+    {
+        object.NotImplementedMethod();
+    }
+    catch(const cxunit::NotImplementedException& p_exception)
+    {
+        exceptionThrown = true;
+        exceptionMessage = p_exception.what();
+    }
+
+    ASSERT_TRUE(exceptionThrown);
+    ASSERT_EQ("Not implemented.", exceptionMessage);
 }

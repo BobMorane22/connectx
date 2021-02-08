@@ -48,18 +48,6 @@ public:
      ********************************************************************************************/
     NotImplementedException();
 
-    /******************************************************************************************//**
-     * @brief Retreive the exception's associated error message.
-     *
-     * @return The message.
-     *
-     ********************************************************************************************/
-    const char* what() const noexcept override;
-
-private:
-
-    const std::string m_message;
-
 };
 
 } // namespace cxunit

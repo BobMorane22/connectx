@@ -44,6 +44,7 @@ d := $(dir)
 #
 TGTS_$(d) := $(d)/cxunittests
 OBJS_$(d) := $(d)/DisableStdStreamsRAIITests.o \
+             $(d)/NotImplementedExceptionTests.o \
              $(d)/StdStreamRedirectorTests.o \
              cxunit/libcxunit.a
 
