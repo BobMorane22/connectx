@@ -37,6 +37,16 @@ bool CommandStackMock::IsUndoed() const
     return m_isUndoed;
 }
 
+void CommandStackMock::SetCanUndo(bool p_canUndo)
+{
+    m_canUndo = p_canUndo;
+}
+
+void CommandStackMock::SetCanRedo(bool p_canRedo)
+{
+    m_canRedo = p_canRedo;
+}
+
 void CommandStackMock::Execute(std::unique_ptr<cxmodel::ICommand>&& /*p_newCommand*/)
 {
     // Does nothing.
@@ -59,12 +69,12 @@ void CommandStackMock::Redo()
 
 bool CommandStackMock::CanUndo() const
 {
-    throw cxunit::NotImplementedException();
+    return m_canUndo;
 }
 
 bool CommandStackMock::CanRedo() const
 {
-    throw cxunit::NotImplementedException();
+    return m_canRedo;
 }
 
 bool CommandStackMock::IsEmpty() const

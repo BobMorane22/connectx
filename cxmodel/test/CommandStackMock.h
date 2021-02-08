@@ -28,10 +28,14 @@
 
 class CommandStackMock : public cxmodel::ICommandStack
 {
+
 public:
 
     bool IsRedoed() const;
     bool IsUndoed() const;
+
+    void SetCanUndo(bool p_canUndo);
+    void SetCanRedo(bool p_canRedo);
 
     // cxmodel::ICommandStack:
     void Execute(std::unique_ptr<cxmodel::ICommand>&& p_newCommand) override;
@@ -48,6 +52,9 @@ private:
 
     bool m_isRedoed{false};
     bool m_isUndoed{false};
+
+    bool m_canUndo{false};
+    bool m_canRedo{false};
 };
 
 #endif // COMMANDSTACKMOCK_H_1C1D7FE3_9103_4716_9765_AF876798E1CB

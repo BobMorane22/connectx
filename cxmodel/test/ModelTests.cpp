@@ -663,6 +663,66 @@ TEST(Model, /*DISABLED_*/Redo_RandomCommand_RedoCalledOnCommandStack)
     ASSERT_TRUE(cmdStackMock.IsRedoed());
 }
 
+TEST(Model, /*DISABLED_*/CanUndo_CmdStackCannotUndo_ReturnsFalse)
+{
+    std::unique_ptr<CommandStackMock> cmdStack = std::make_unique<CommandStackMock>();
+    ASSERT_TRUE(cmdStack);
+
+    CommandStackMock& cmdStackMock = *cmdStack;
+    cmdStackMock.SetCanUndo(false);
+
+    // We create a model:
+    LoggerMock logger;
+    cxmodel::Model model{std::move(cmdStack), logger};
+
+    ASSERT_FALSE(model.CanUndo());
+}
+
+TEST(Model, /*DISABLED_*/CanUndo_CmdStackCanUndo_ReturnsTrue)
+{
+    std::unique_ptr<CommandStackMock> cmdStack = std::make_unique<CommandStackMock>();
+    ASSERT_TRUE(cmdStack);
+
+    CommandStackMock& cmdStackMock = *cmdStack;
+    cmdStackMock.SetCanUndo(true);
+
+    // We create a model:
+    LoggerMock logger;
+    cxmodel::Model model{std::move(cmdStack), logger};
+
+    ASSERT_TRUE(model.CanUndo());
+}
+
+TEST(Model, /*DISABLED_*/CanRedo_CmdStackCannotRedo_ReturnsFalse)
+{
+    std::unique_ptr<CommandStackMock> cmdStack = std::make_unique<CommandStackMock>();
+    ASSERT_TRUE(cmdStack);
+
+    CommandStackMock& cmdStackMock = *cmdStack;
+    cmdStackMock.SetCanRedo(false);
+
+    // We create a model:
+    LoggerMock logger;
+    cxmodel::Model model{std::move(cmdStack), logger};
+
+    ASSERT_FALSE(model.CanUndo());
+}
+
+TEST(Model, /*DISABLED_*/CanRedo_CmdStackCanRedo_ReturnsTrue)
+{
+    std::unique_ptr<CommandStackMock> cmdStack = std::make_unique<CommandStackMock>();
+    ASSERT_TRUE(cmdStack);
+
+    CommandStackMock& cmdStackMock = *cmdStack;
+    cmdStackMock.SetCanRedo(true);
+
+    // We create a model:
+    LoggerMock logger;
+    cxmodel::Model model{std::move(cmdStack), logger};
+
+    ASSERT_TRUE(model.CanRedo());
+}
+
 TEST_F(ModelTestFixture, /*DISABLED_*/SetVerbosityLevel_FromNoneToDebug_VerbosityLevelSet)
 {
     // Set verbosity level to none:

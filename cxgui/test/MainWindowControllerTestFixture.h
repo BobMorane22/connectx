@@ -46,6 +46,7 @@ public:
     bool GetCurrentGameEnded() const;
     bool GetCurrentGameReinitialized() const;
     bool GetUndoCalled() const;
+    bool GetRedoCalled() const;
 
     cxmodel::IConnectXGameActions& GetModel();
     cxgui::IMainWindowController& GetController();
@@ -72,7 +73,7 @@ private:
 
         // IUndoRedo:
         void Undo() override;
-        void Redo() override {};
+        void Redo() override;
         bool CanUndo() const override;
         bool CanRedo() const override;
 
@@ -87,6 +88,7 @@ private:
     bool m_currentGameEnded = false;
     bool m_currentGameReinitialized = false;
     bool m_undoCalled = false;
+    bool m_redoCalled = false;
 
     std::unique_ptr<cxgui::IMainWindowController> m_controller;
     std::unique_ptr<MainWindowControllerMockModel> m_model;

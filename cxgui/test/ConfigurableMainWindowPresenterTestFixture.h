@@ -67,7 +67,7 @@ public:
      *
      * @param p_model A `IConnectXGameInformation` compatible model.
      *
-     * @warning Then this method is called, the presenter's state is reset to its initial state.
+     * @warning When this method is called, the presenter's state is reset to its initial state.
      *
      ********************************************************************************************/
     void SetGameInformationModel(std::unique_ptr<cxmodel::IConnectXGameInformation>&& p_model);
@@ -77,10 +77,20 @@ public:
      *
      * @param p_model A `IConnectXLimits` compatible model.
      *
-     * @warning Then this method is called, the presenter's state is reset to its initial state.
+     * @warning When this method is called, the presenter's state is reset to its initial state.
      *
      ********************************************************************************************/
     void SetLimitsModel(std::unique_ptr<cxmodel::IConnectXLimits>&& p_model);
+
+    /******************************************************************************************//**
+     * @brief Sets a new `IUndoRedo` compatible model.
+     *
+     * @param p_model A `IUndoRedo` compatible model.
+     *
+     * @warning When this method is called, the presenter's state is reset to its initial state.
+     *
+     ********************************************************************************************/
+    void SetUndoRedoModel(std::unique_ptr<cxmodel::IUndoRedo>&& p_model);
 
     /******************************************************************************************//**
      * @brief Access to the underlying `IConnectXGameInformation` model.

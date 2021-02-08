@@ -37,6 +37,22 @@ namespace
 {
 
 /*********************************************************************************************//**
+ * @brief Mock testing when undoing and redoing should be unlocked.
+ *
+ ************************************************************************************************/
+class CanUndoRedoModel : public cxmodel::IUndoRedo
+{
+
+public:
+
+    void Undo() override {throw cxunit::NotImplementedException();}
+    void Redo() override {throw cxunit::NotImplementedException();}
+    bool CanUndo() const override {return false;}
+    bool CanRedo() const override {return false;}
+
+};
+
+/*********************************************************************************************//**
  * @brief Mock for testing the effect of undo operations on the main window presenter.
  *
  ************************************************************************************************/
@@ -390,93 +406,74 @@ TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/IsCurrentGameReinitializatio
     ASSERT_FALSE(presenter.IsCurrentGameReinitializationPossible());
 }
 
-TEST_F(ConfigurableMainWindowPresenterTestFixture, DISABLED_IsUndoPossible_ChipDroppedNotificationBoardNotEmpty_TrueReturned)
+TEST_F(ConfigurableMainWindowPresenterTestFixture, /*DISABLED_*/IsUndoPossible_ModelCanUndo_TrueReturned)
 {
-    constexpr bool BOARD_NOT_EMPTY = false;
-    auto model = std::make_unique<UndoConnectXGameInformationModelMock>(BOARD_NOT_EMPTY);
-    ASSERT_TRUE(model);
+    class CanUndoModel : public CanUndoRedoModel
+    {
 
-    auto* modelRef = model.get();
+    public:
 
-    SetGameInformationModel(std::move(model)); // model moved from here, do not use anymore.
+        // Unlock undoing:
+        bool CanUndo() const override {return true;}
 
-    ASSERT_FALSE(GetPresenter().IsUndoPossible());
+    };
 
-    modelRef->Attach(&GetPresenter());
-    modelRef->NotifyCreateNewGame();
-    modelRef->NotifyDropChip();
+    SetUndoRedoModel(std::make_unique<CanUndoModel>());
 
     ASSERT_TRUE(GetPresenter().IsUndoPossible());
+    ASSERT_FALSE(GetPresenter().IsRedoPossible());
 }
 
-TEST_F(ConfigurableMainWindowPresenterTestFixture, DISABLED_IsUndoPossible_ChipDroppedNotificationBoardEmpty_FalseReturned)
+TEST_F(ConfigurableMainWindowPresenterTestFixture, /*DISABLED_*/IsUndoPossible_ModelCannotUndo_FalseReturned)
 {
-    constexpr bool BOARD_EMPTY = true;
-    auto model = std::make_unique<UndoConnectXGameInformationModelMock>(BOARD_EMPTY);
-    ASSERT_TRUE(model);
+    class CannotUndoModel : public CanUndoRedoModel
+    {
 
-    auto* modelRef = model.get();
+    public:
 
-    SetGameInformationModel(std::move(model)); // model moved from here, do not use anymore.
+        // Lock undoing:
+        bool CanUndo() const override {return false;}
 
-    ASSERT_FALSE(GetPresenter().IsUndoPossible());
+    };
 
-    modelRef->Attach(&GetPresenter());
-    modelRef->NotifyCreateNewGame();
-    modelRef->NotifyDropChip();
+    SetUndoRedoModel(std::make_unique<CannotUndoModel>());
 
     ASSERT_FALSE(GetPresenter().IsUndoPossible());
+    ASSERT_FALSE(GetPresenter().IsRedoPossible());
 }
 
-TEST_F(ConfigurableMainWindowPresenterTestFixture, DISABLED_IsUndoPossible_UndoChipDroppedNotificationBoardNotEmpty_TrueReturned)
+TEST_F(ConfigurableMainWindowPresenterTestFixture, /*DISABLED_*/IsRedoPossible_ModelCanUndo_TrueReturned)
 {
-    constexpr bool BOARD_NOT_EMPTY = false;
-    auto model = std::make_unique<UndoConnectXGameInformationModelMock>(BOARD_NOT_EMPTY);
-    ASSERT_TRUE(model);
+    class CanRedoModel : public CanUndoRedoModel
+    {
 
-    auto* modelRef = model.get();
+    public:
 
-    SetGameInformationModel(std::move(model)); // model moved from here, do not use anymore.
+        // Unlock redoing:
+        bool CanRedo() const override {return true;}
+
+    };
+
+    SetUndoRedoModel(std::make_unique<CanRedoModel>());
 
     ASSERT_FALSE(GetPresenter().IsUndoPossible());
-
-    modelRef->Attach(&GetPresenter());
-    modelRef->NotifyCreateNewGame();
-    modelRef->NotifyUndo();
-
-    ASSERT_TRUE(GetPresenter().IsUndoPossible());
+    ASSERT_TRUE(GetPresenter().IsRedoPossible());
 }
 
-TEST_F(ConfigurableMainWindowPresenterTestFixture, DISABLED_IsUndoPossible_UndoChipDroppedNotificationBoardEmpty_FalseReturned)
+TEST_F(ConfigurableMainWindowPresenterTestFixture, /*DISABLED_*/IsRedoPossible_ModelCannotUndo_FalseReturned)
 {
-    constexpr bool BOARD_EMPTY = true;
-    auto model = std::make_unique<UndoConnectXGameInformationModelMock>(BOARD_EMPTY);
-    ASSERT_TRUE(model);
+    class CannotRedoModel : public CanUndoRedoModel
+    {
 
-    auto* modelRef = model.get();
+    public:
 
-    SetGameInformationModel(std::move(model)); // model moved from here, do not use anymore.
+        // Lock redoing:
+        bool CanRedo() const override {return false;}
+
+    };
+
+    SetUndoRedoModel(std::make_unique<CannotRedoModel>());
 
     ASSERT_FALSE(GetPresenter().IsUndoPossible());
-
-    modelRef->Attach(&GetPresenter());
-    modelRef->NotifyCreateNewGame();
-    modelRef->NotifyUndo();
-
-    ASSERT_FALSE(GetPresenter().IsUndoPossible());
-}
-
-TEST_F(MainWindowPresenterTestFixture, DISABLED_IsUndoPossible_AllOtherNotifications_FalseReturned)
-{
-    auto& actionModel = GetActionsModel();
-    actionModel.CreateNewGame(cxmodel::NewGameInformation{});
-
-    const auto& presenter = GetPresenter();
-    ASSERT_FALSE(presenter.IsUndoPossible());
-
-    SendNotification(cxmodel::NotificationContext::GAME_ENDED);
-    ASSERT_FALSE(presenter.IsUndoPossible());
-
-    SendNotification(cxmodel::NotificationContext::GAME_REINITIALIZED);
-    ASSERT_FALSE(presenter.IsUndoPossible());
+    ASSERT_FALSE(GetPresenter().IsRedoPossible());
 }

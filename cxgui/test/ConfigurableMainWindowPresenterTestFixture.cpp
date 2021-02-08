@@ -81,6 +81,15 @@ void ConfigurableMainWindowPresenterTestFixture::SetLimitsModel(std::unique_ptr<
     EXPECT_TRUE(m_presenter);
 }
 
+void ConfigurableMainWindowPresenterTestFixture::SetUndoRedoModel(std::unique_ptr<cxmodel::IUndoRedo>&& p_model)
+{
+    EXPECT_TRUE(p_model);
+    m_modelAsUndoRedo = std::move(p_model);
+
+    m_presenter = std::make_unique<cxgui::MainWindowPresenter>(*m_modelAsLimits, *m_modelAsGameInformation, *m_modelAsUndoRedo);
+    EXPECT_TRUE(m_presenter);
+}
+
 cxmodel::IConnectXGameInformation& ConfigurableMainWindowPresenterTestFixture::GetGameInformationModel()
 {
     EXPECT_TRUE(m_modelAsGameInformation);

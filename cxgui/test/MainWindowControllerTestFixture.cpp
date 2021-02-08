@@ -21,6 +21,8 @@
  *
  *************************************************************************************************/
 
+#include <cxunit/include/NotImplementedException.h>
+
 #include "MainWindowController.h"
 #include "MainWindowControllerTestFixture.h"
 
@@ -56,6 +58,11 @@ bool MainWindowControllerTestFixture::GetCurrentGameReinitialized() const
 bool MainWindowControllerTestFixture::GetUndoCalled() const
 {
     return m_undoCalled;
+}
+
+bool MainWindowControllerTestFixture::GetRedoCalled() const
+{
+    return m_redoCalled;
 }
 
 cxmodel::IConnectXGameActions& MainWindowControllerTestFixture::GetModel()
@@ -104,12 +111,17 @@ void MainWindowControllerTestFixture::MainWindowControllerMockModel::Undo()
     m_outer.m_undoCalled = true;
 }
 
+void MainWindowControllerTestFixture::MainWindowControllerMockModel::Redo()
+{
+    m_outer.m_redoCalled = true;
+}
+
 bool MainWindowControllerTestFixture::MainWindowControllerMockModel::CanUndo() const
 {
-    return true;
+    throw cxunit::NotImplementedException();
 }
 
 bool MainWindowControllerTestFixture::MainWindowControllerMockModel::CanRedo() const
 {
-    return true;
+    throw cxunit::NotImplementedException();
 }

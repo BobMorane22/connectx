@@ -74,3 +74,12 @@ TEST_F(MainWindowControllerTestFixture, /*DISABLED_*/OnUndo_ValidGame_UndoCalled
 
     ASSERT_TRUE(GetUndoCalled());
 }
+
+TEST_F(MainWindowControllerTestFixture, /*DISABLED_*/OnRedo_ValidGame_RedoCalledOnModel)
+{
+    ASSERT_FALSE(GetRedoCalled());
+
+    GetController().OnRedo();
+
+    ASSERT_TRUE(GetRedoCalled());
+}
