@@ -46,10 +46,10 @@
  *
  ************************************************************************************************/
 #define ADD_STREAM_REDIRECTORS(p_fixtureClassName)                                                                                \
-    using p_fixtureClassName##NoStreamRedirector     = cxunit::StdStreamRedirector<StdStreamWriter, cxunit::Redirection::NONE>;   \
-    using p_fixtureClassName##StdOutStreamRedirector = cxunit::StdStreamRedirector<StdStreamWriter, cxunit::Redirection::STDOUT>; \
-    using p_fixtureClassName##StdErrStreamRedirector = cxunit::StdStreamRedirector<StdStreamWriter, cxunit::Redirection::STDERR>; \
-    using p_fixtureClassName##BothStreamsRedirector  = cxunit::StdStreamRedirector<StdStreamWriter, cxunit::Redirection::BOTH>
+    using p_fixtureClassName##NoStreamRedirector     = cxunit::StdStreamRedirector<p_fixtureClassName, cxunit::Redirection::NONE>;   \
+    using p_fixtureClassName##StdOutStreamRedirector = cxunit::StdStreamRedirector<p_fixtureClassName, cxunit::Redirection::STDOUT>; \
+    using p_fixtureClassName##StdErrStreamRedirector = cxunit::StdStreamRedirector<p_fixtureClassName, cxunit::Redirection::STDERR>; \
+    using p_fixtureClassName##BothStreamsRedirector  = cxunit::StdStreamRedirector<p_fixtureClassName, cxunit::Redirection::BOTH>
 
 
 namespace cxunit
