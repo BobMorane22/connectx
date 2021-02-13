@@ -23,12 +23,12 @@
 
 #include <gtest/gtest.h>
 
+#include <cxunit/include/DisableStdStreamsRAII.h>
 #include <cxmodel/include/Disc.h>
 #include <cxmodel/include/IConnectXGameInformation.h>
 #include <cxmodel/include/Player.h>
-#include <WinGameResolutionDialogPresenter.h>
 
-#include "DisableStdStreamsRAII.h"
+#include <WinGameResolutionDialogPresenter.h>
 
 namespace
 {
@@ -92,7 +92,7 @@ TEST(WinGameResolutionDialogPresenter, GetResolutionMessage_GameWon_GameWonResol
 
 TEST(WinGameResolutionDialogPresenter, GetResolutionMessage_GameNotWon_NoMessageReturnedAndAssertion)
 {
-    DisableStdStreamsRAII m_streamDisabler;
+    cxunit::DisableStdStreamsRAII streamDisabler;
 
     ModelMock model;
 
@@ -101,10 +101,10 @@ TEST(WinGameResolutionDialogPresenter, GetResolutionMessage_GameNotWon_NoMessage
 
     cxgui::WinGameResolutionDialogPresenter presenter{model};
 
-    ASSERT_EQ("", m_streamDisabler.GetStdErrContents());
+    ASSERT_EQ("", streamDisabler.GetStdErrContents());
     ASSERT_EQ("", presenter.GetResolutionMessage());
 
-    const std::string stdErrContents = m_streamDisabler.GetStdErrContents();
+    const std::string stdErrContents = streamDisabler.GetStdErrContents();
     ASSERT_TRUE(stdErrContents.find("Assertion") != std::string::npos);
 }
 

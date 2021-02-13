@@ -32,8 +32,6 @@
 #include <cxmodel/include/IUndoRedo.h>
 #include <cxgui/include/IMainWindowController.h>
 
-#include "DisableStdStreamsRAII.h"
-
 class MainWindowControllerTestFixture : public testing::Test
 {
 
@@ -92,9 +90,6 @@ private:
 
     std::unique_ptr<cxgui::IMainWindowController> m_controller;
     std::unique_ptr<MainWindowControllerMockModel> m_model;
-
-    DisableStdStreamsRAII m_streamDisablerRAII;
-
 };
 
 #endif // MAINWINDOWCONTROLLERTESTFIXTURE_H_797225B7_98E8_412C_BF3D_6976E0C5B6AD

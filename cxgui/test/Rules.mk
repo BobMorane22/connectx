@@ -46,7 +46,6 @@ TGTS_$(d) := $(d)/cxguitests
 OBJS_$(d) := $(d)/AboutWindowPresenterTestFixture.o \
              $(d)/AboutWindowPresenterTests.o \
              $(d)/ConfigurableMainWindowPresenterTestFixture.o \
-             $(d)/DisableStdStreamsRAII.o \
              $(d)/extractRawUserInputTests.o \
              $(d)/GamePresenterTests.o \
              $(d)/GameResolutionDialogPresenterFactoryTests.o \
@@ -83,6 +82,7 @@ $(TGTS_$(d)): CF_TGT := -I. -I$(d)/../include `pkg-config gtkmm-3.0 --cflags --l
 $(TGTS_$(d)): LL_TGT := cxgui/libcxgui.a \
                         cxmodel/libcxmodel.a \
                         cxinv/libcxinv.a \
+                        cxunit/libcxunit.a \
                         -lgtest \
                         -lgtest_main \
                         -lpthread
