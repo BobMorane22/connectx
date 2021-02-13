@@ -21,16 +21,16 @@
  *
  *************************************************************************************************/
 
+#include <limits>
+
 #include <gtest/gtest.h>
 
-#include <limits>
+#include <cxunit/include/DisableStdStreamsRAII.h>
 
 #include <Disc.h>
 #include <GameResolutionStrategyFactory.h>
 #include <WinGameResolutionStrategy.h>
 #include <TieGameResolutionStrategy.h>
-
-#include "DisableStdStreamsRAII.h"
 
 namespace
 {
@@ -92,7 +92,7 @@ TEST(GameResolutionStrategyFactory, Make_TieGameResolution_TieStrategyReturned)
 
 TEST(GameResolutionStrategyFactory, Make_InARowTooSmall_AssertsAndNoStrategyReturned)
 {
-    DisableStdStreamsRAII m_streamDisabler;
+    cxunit::DisableStdStreamsRAII streamDisabler;
 
     // Setup:
     BoardMock board;
@@ -108,13 +108,13 @@ TEST(GameResolutionStrategyFactory, Make_InARowTooSmall_AssertsAndNoStrategyRetu
     ASSERT_FALSE(dynamic_cast<cxmodel::WinGameResolutionStrategy*>(strategy.get()));
     ASSERT_FALSE(dynamic_cast<cxmodel::TieGameResolutionStrategy*>(strategy.get()));
 
-    const std::string errorStream = m_streamDisabler.GetStdErrContents();
+    const std::string errorStream = streamDisabler.GetStdErrContents();
     ASSERT_TRUE(errorStream.find("Precondition") != std::string::npos);
 }
 
 TEST(GameResolutionStrategyFactory, Make_InARowTooBig_AssertsAndNoStrategyReturned)
 {
-    DisableStdStreamsRAII m_streamDisabler;
+    cxunit::DisableStdStreamsRAII streamDisabler;
 
     // Setup:
     BoardMock board;
@@ -130,13 +130,13 @@ TEST(GameResolutionStrategyFactory, Make_InARowTooBig_AssertsAndNoStrategyReturn
     ASSERT_FALSE(dynamic_cast<cxmodel::WinGameResolutionStrategy*>(strategy.get()));
     ASSERT_FALSE(dynamic_cast<cxmodel::TieGameResolutionStrategy*>(strategy.get()));
 
-    const std::string errorStream = m_streamDisabler.GetStdErrContents();
+    const std::string errorStream = streamDisabler.GetStdErrContents();
     ASSERT_TRUE(errorStream.find("Precondition") != std::string::npos);
 }
 
 TEST(GameResolutionStrategyFactory, Make_NotEnoughPlayers_AssertsAndNoStrategyReturned)
 {
-    DisableStdStreamsRAII m_streamDisabler;
+    cxunit::DisableStdStreamsRAII streamDisabler;
 
     // Setup:
     BoardMock board;
@@ -151,6 +151,6 @@ TEST(GameResolutionStrategyFactory, Make_NotEnoughPlayers_AssertsAndNoStrategyRe
     ASSERT_FALSE(dynamic_cast<cxmodel::WinGameResolutionStrategy*>(strategy.get()));
     ASSERT_FALSE(dynamic_cast<cxmodel::TieGameResolutionStrategy*>(strategy.get()));
 
-    const std::string errorStream = m_streamDisabler.GetStdErrContents();
+    const std::string errorStream = streamDisabler.GetStdErrContents();
     ASSERT_TRUE(errorStream.find("Precondition") != std::string::npos);
 }

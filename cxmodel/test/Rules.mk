@@ -55,7 +55,6 @@ OBJS_$(d) := $(d)/BoardTests.o \
              $(d)/CommandTimesThreeMock.o \
              $(d)/ConcreteObserverMock.o \
              $(d)/ConcreteSubjectMock.o \
-             $(d)/DisableStdStreamsRAII.o \
              $(d)/DiscTests.o \
              $(d)/GameResolutionStrategyFactoryTests.o \
              $(d)/IBoardTests.o \

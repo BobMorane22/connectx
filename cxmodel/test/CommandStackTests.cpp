@@ -45,7 +45,13 @@ TEST_F(CommandStackTestFixture, /*DISABLED_*/Execute_InvalidCommand_CommandNotAd
     std::unique_ptr<cxmodel::ICommand> cmd;
     ASSERT_FALSE(cmd);
 
-    GetCommandStack()->Execute(std::move(cmd));
+    {
+        // Usually, the validity of the command should be check before feeding
+        // it to Execute. Here, we do not check it for unit testing purposes.
+        // The call to execute will assert and we need to silence it.
+        cxunit::DisableStdStreamsRAII streamDisabler;
+        GetCommandStack()->Execute(std::move(cmd));
+    }
 
     ASSERT_TRUE(GetCommandStack()->IsEmpty());
 }

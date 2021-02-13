@@ -25,12 +25,12 @@
 
 #include <gtest/gtest.h>
 
+#include <cxunit/include/DisableStdStreamsRAII.h>
+
 #include <Board.h>
 #include <CommandDropChip.h>
 #include <Disc.h>
 #include <IConnectXLimits.h>
-
-#include "DisableStdStreamsRAII.h"
 
 static const cxmodel::Disc NO_CHIP{cxmodel::MakeTransparent()};
 
@@ -38,11 +38,6 @@ class CommandDropChipTestFixture : public ::testing::Test
 {
 
 public:
-
-    std::string GetStdErrContents() const
-    {
-        return m_disableStreamRAII.GetStdErrContents();
-    }
 
     cxmodel::IConnectXLimits& ModelAsLimitsGet()
     {
@@ -63,7 +58,6 @@ private:
         size_t GetMaximumNumberOfPlayers() const override {return 10u;};
     };
 
-    DisableStdStreamsRAII m_disableStreamRAII;
     ModelMock m_model;
 
 };
@@ -230,7 +224,14 @@ TEST_F(CommandDropChipTestFixture, /*DISABLED_*/Execute_RowFull_NoDataUpdated)
                                                                                         6u,
                                                                                         takenPositions);
 
-    cmd->Execute();
+    {
+        // In production code, the availability of a column should
+        // always be checked before dropping a disc. Here, for testing
+        // purposes, we call the command directly on a full column and
+        // an assertion occurs. We silence it for testing purposes:
+        cxunit::DisableStdStreamsRAII streamDisabler;
+        cmd->Execute();
+    }
 
     // Data is now checked, no update should have occured:
     ASSERT_TRUE(board.GetChip({5u, 6u}) == cxmodel::Disc(cxmodel::MakeBlue()));

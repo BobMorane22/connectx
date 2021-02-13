@@ -31,7 +31,6 @@
 #include <Model.h>
 
 #include "CommandStackMock.h"
-#include "DisableStdStreamsRAII.h"
 #include "LoggerMock.h"
 #include "ModelTestFixture.h"
 #include "ModelTestHelpers.h"
@@ -190,9 +189,8 @@ TEST_F(ModelTestFixture, /*DISABLED_*/DropChip_ValidModelChipAndColumn_GameDataU
     ASSERT_EQ(GetModel().GetNextPlayer(), cxmodel::Player("John Doe", cxmodel::MakeRed()));
 }
 
-TEST_F(ModelTestFixture, /*DISABLED_*/DropChip_ValidModelTwoSameChipsDropped_GameDataNotUpdated)
+TEST_F(ModelTestFixtureStdErrStreamRedirector, /*DISABLED_*/DropChip_ValidModelTwoSameChipsDropped_GameDataNotUpdated)
 {
-    DisableStdStreamsRAII streamDisabler;
     CreateNewGame(6u, 7u, NbPlayers::TWO, InARowValue::FOUR);
 
     // We drop a chip:
@@ -407,10 +405,8 @@ TEST_F(ModelTestFixture, /*DISABLED_*/EndCurrentGame_ValidModel_CommandStackEmpt
     ASSERT_TRUE(GetInternalCommandStack().IsEmpty());
 }
 
-TEST_F(ModelTestFixture, /*DISABLED_*/EndCurrentGame_ValidModel_PlayersInfoReset)
+TEST_F(ModelTestFixtureStdErrStreamRedirector, /*DISABLED_*/EndCurrentGame_ValidModel_PlayersInfoReset)
 {
-    DisableStdStreamsRAII m_noStream;
-
     // We create a new game:
     CreateNewGame(6u, 7u, NbPlayers::TWO, InARowValue::FOUR);
 
@@ -575,19 +571,15 @@ TEST_F(ModelTestFixture, /*DISABLED_*/GetChip_InvalidColumn_ReturnsNoDisc)
     ASSERT_EQ(chipBefore, cxmodel::Disc(cxmodel::MakeTransparent()));
 }
 
-TEST_F(ModelTestFixture, /*DISABLED_*/IsWon_ValidModel_DoesNotThrow)
+TEST_F(ModelTestFixtureStdErrStreamRedirector, /*DISABLED_*/IsWon_ValidModel_DoesNotThrow)
 {
-    DisableStdStreamsRAII streamDisabler;
-
     // This will assert:
     ASSERT_NO_THROW(GetModel().IsWon());
     ASSERT_FALSE(GetModel().IsWon());
 }
 
-TEST_F(ModelTestFixture, /*DISABLED_*/IsTie_ValidModel_ThrowsForNow)
+TEST_F(ModelTestFixtureStdErrStreamRedirector, /*DISABLED_*/IsTie_ValidModel_ThrowsForNow)
 {
-    DisableStdStreamsRAII streamDisabler;
-
     // This will assert:
     ASSERT_NO_THROW(GetModel().IsTie());
     ASSERT_FALSE(GetModel().IsTie());

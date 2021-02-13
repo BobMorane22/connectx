@@ -23,9 +23,9 @@
 
 #include <gtest/gtest.h>
 
-#include <CommandStack.h>
+#include <cxunit/include/StdStreamRedirector.h>
 
-#include "DisableStdStreamsRAII.h"
+#include <CommandStack.h>
 
 class CommandStackTestFixture : public testing::Test
 {
@@ -42,7 +42,4 @@ private:
 
     const size_t m_STACK_SIZE;
     std::unique_ptr< cxmodel::ICommandStack > m_stack;
-
-    DisableStdStreamsRAII m_disableStreamsRAII;
-
 };

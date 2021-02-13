@@ -26,9 +26,10 @@
 
 #include <gtest/gtest.h>
 
+#include <cxunit/include/StdStreamRedirector.h>
+
 #include <ConcreteObserverMock.h>
 #include <ConcreteSubjectMock.h>
-#include <DisableStdStreamsRAII.h>
 
 class SubjectTestFixture : public testing::Test
 {
@@ -37,21 +38,14 @@ public:
 
     SubjectTestFixture();
 
-    std::string GetStdOutContents() const;
-    std::string GetStdErrContents() const;
-
-
 protected:
 
     ConcreteSubjectMock m_subject;
     ConcreteObserverMock m_observer1;
     ConcreteObserverMock m_observer2;
 
-
-private:
-
-    DisableStdStreamsRAII m_disableStreamsRAII;
-
 };
+
+ADD_STREAM_REDIRECTORS(SubjectTestFixture);
 
 #endif // SUBJECTTESTFIXTURE_H_83B6FB5F_0CB1_4F54_9400_C95474AF439B

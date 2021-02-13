@@ -23,7 +23,7 @@
 
 #include <gtest/gtest.h>
 
-#include "DisableStdStreamsRAII.h"
+#include <cxunit/include/StdStreamRedirector.h>
 
 #include <Board.h>
 #include <Disc.h>
@@ -33,11 +33,6 @@ class BoardTestFixture: public::testing::Test
 {
 
 public:
-
-    std::string GetStdErrContents() const
-    {
-        return m_streamDisablerRAII.GetStdErrContents();
-    }
 
     size_t GetMinimumGridHeight() const {return m_model.GetMinimumGridHeight();};
     size_t GetMinimumGridWidth() const {return m_model.GetMinimumGridWidth();};
@@ -74,8 +69,9 @@ private:
     };
 
     ModelMock m_model;
-    DisableStdStreamsRAII m_streamDisablerRAII;
 };
+
+ADD_STREAM_REDIRECTORS(BoardTestFixture);
 
 TEST_F(BoardTestFixture, /*DISABLED_*/GetNbRows_ValidGameBoard_ReturnsNbRows)
 {
@@ -312,7 +308,7 @@ TEST_F(BoardTestFixture, /*DISABLED_*/GetChip_ExistingPositionAsParameter_Return
     ASSERT_EQ(BLUE_CHIP, board->GetChip(position));
 }
 
-TEST_F(BoardTestFixture, /*DISABLED_*/GetChip_InputPositionOutOfLimits_ReturnsFirstDiscAndAsserts)
+TEST_F(BoardTestFixtureStdErrStreamRedirector, /*DISABLED_*/GetChip_InputPositionOutOfLimits_ReturnsFirstDiscAndAsserts)
 {
     const auto board = GetClassicBoard();
 

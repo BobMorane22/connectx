@@ -23,9 +23,9 @@
 
 #include <gtest/gtest.h>
 
-#include <Status.h>
+#include <cxunit/include/StdStreamRedirector.h>
 
-#include "DisableStdStreamsRAII.h"
+#include <Status.h>
 
 TEST(Status, MakeSuccess_ValidContext_SuccessReturned)
 {
@@ -52,7 +52,7 @@ TEST(Status, GetMessage_ErrorWithMessage_MessageReturned)
 
 TEST(Status, GetMessage_Success_EmptyMessageReturned)
 {
-    DisableStdStreamsRAII streamDisabler;
+    cxunit::DisableStdStreamsRAII streamDisabler;
 
     const auto status = cxmodel::MakeSuccess();
 
@@ -61,7 +61,7 @@ TEST(Status, GetMessage_Success_EmptyMessageReturned)
 
 TEST(Status, MakeError_WithoutErrorMessage_EmptyMessageReturned)
 {
-    DisableStdStreamsRAII streamDisabler;
+    cxunit::DisableStdStreamsRAII streamDisabler;
 
     const auto status = cxmodel::MakeError("");
 
@@ -70,7 +70,7 @@ TEST(Status, MakeError_WithoutErrorMessage_EmptyMessageReturned)
 
 TEST(Status, GetMessage_Success_Asserts)
 {
-    DisableStdStreamsRAII streamDisabler;
+    cxunit::DisableStdStreamsRAII streamDisabler;
 
     const auto status = cxmodel::MakeSuccess();
     const std::string message = status.GetMessage();
@@ -82,7 +82,7 @@ TEST(Status, GetMessage_Success_Asserts)
 
 TEST(Status, MakeError_WithoutErrorMessage_Asserts)
 {
-    DisableStdStreamsRAII streamDisabler;
+    cxunit::DisableStdStreamsRAII streamDisabler;
 
     const auto status = cxmodel::MakeError("");
 

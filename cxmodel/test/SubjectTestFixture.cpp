@@ -27,13 +27,3 @@ SubjectTestFixture::SubjectTestFixture()
  : m_subject{0}
 {
 }
-
-std::string SubjectTestFixture::GetStdOutContents() const
-{
-    return m_disableStreamsRAII.GetStdOutContents();
-}
-
-std::string SubjectTestFixture::GetStdErrContents() const
-{
-    return m_disableStreamsRAII.GetStdErrContents();
-}

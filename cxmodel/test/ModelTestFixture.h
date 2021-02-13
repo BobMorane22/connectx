@@ -26,6 +26,7 @@
 
 #include <gtest/gtest.h>
 
+#include <cxunit/include/StdStreamRedirector.h>
 #include <cxlog/include/ILogger.h>
 
 #include <CommandStack.h>
@@ -189,5 +190,7 @@ private:
     size_t m_nbOfPlayersInCurrentGame;
 
 };
+
+ADD_STREAM_REDIRECTORS(ModelTestFixture);
 
 #endif // MODELTESTFIXTURE_H_6497DE9C_2D19_4A9D_92AF_C48DBD06DF40
