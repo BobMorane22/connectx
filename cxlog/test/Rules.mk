@@ -48,7 +48,6 @@ OBJS_$(d) := $(d)/CSVLoggerChainLoggingTests.o \
              $(d)/CSVLoggerTests.o \
              $(d)/CSVLoggerUtil.o \
              $(d)/CSVMessageFormatterTests.o \
-             $(d)/DisableStdStreamsRAII.o \
              $(d)/ISO8601TimestampFormatterTests.o \
              $(d)/StdLogTargetTests.o \
              $(d)/StringStreamLogTargetTests.o \
