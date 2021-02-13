@@ -53,6 +53,7 @@ OBJS_$(d) := $(d)/CSVLoggerChainLoggingTests.o \
              $(d)/StdLogTargetTests.o \
              $(d)/StringStreamLogTargetTests.o \
              $(d)/VerbosityLevelTests.o \
+             cxunit/libcxunit.a \
              cxlog/libcxlog.a
              
 # We include all the generated rules. These are created by GCC to make sure that
@@ -71,7 +72,7 @@ CLEAN := $(CLEAN) $(OBJS_$(d)) $(TGTS_$(d)) $(DEPS_$(d))
 # Executable is compiled and linked.
 #
 $(TGTS_$(d)): CF_TGT := -I$(d)/../include -I$(d) -I.
-$(TGTS_$(d)): LL_TGT := cxlog/libcxlog.a cxinv/libcxinv.a -lgtest -lgtest_main -lpthread
+$(TGTS_$(d)): LL_TGT := cxlog/libcxlog.a cxinv/libcxinv.a cxunit/libcxunit.a -lgtest -lgtest_main -lpthread
 
 $(TGTS_$(d)): $(OBJS_$(d)) $(LL_TGT)
 	@echo ~~~ Generating the cxlog unit tests executable ~~~

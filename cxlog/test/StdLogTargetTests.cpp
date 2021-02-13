@@ -25,11 +25,11 @@
 
 #include <StdLogTarget.h>
 
-#include "DisableStdStreamsRAII.h"
+#include <cxunit/include/DisableStdStreamsRAII.h>
 
 TEST(StdLogTarget, /*DISABLED_*/Log_SomeString_StringLoggedToStdout)
 {
-    DisableStdStreamsRAII raii;
+    cxunit::DisableStdStreamsRAII raii;
 
     const std::string before = raii.GetStdOutContents();
     ASSERT_TRUE(before.empty());
