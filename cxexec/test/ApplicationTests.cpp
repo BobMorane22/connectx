@@ -30,7 +30,7 @@
 
 #include "ApplicationTestFixture.h"
 
-TEST_F(ApplicationTestFixture, /*DISABLED_*/Run_BadArgumentCount_ExitFailure)
+TEST_F(ApplicationTestFixtureStdErrStreamRedirector, /*DISABLED_*/Run_BadArgumentCount_ExitFailure)
 {
     const int argc = 0;
     const char *argv[] = {"connectx"};
@@ -48,7 +48,7 @@ TEST_F(ApplicationTestFixture, /*DISABLED_*/Run_BadArgumentCount_ExitFailure)
     EXPECT_EQ(app->Run(), EXIT_FAILURE);
 }
 
-TEST_F(ApplicationTestFixture, /*DISABLED_*/Run_BadArgument_ExitFailure)
+TEST_F(ApplicationTestFixtureStdErrStreamRedirector, /*DISABLED_*/Run_BadArgument_ExitFailure)
 {
     const int argc = 2;
     const char *argv[] = {"connectx", "--bad"};
@@ -65,7 +65,7 @@ TEST_F(ApplicationTestFixture, /*DISABLED_*/Run_BadArgument_ExitFailure)
     EXPECT_EQ(app->Run(), EXIT_FAILURE);
 }
 
-TEST_F(ApplicationTestFixture, /*DISABLED_*/Run_Help_ExitSuccess)
+TEST_F(ApplicationTestFixtureStdOutStreamRedirector, /*DISABLED_*/Run_Help_ExitSuccess)
 {
     const int argc = 2;
     const char *argv[] = {"connectx", "--help"};
@@ -82,7 +82,7 @@ TEST_F(ApplicationTestFixture, /*DISABLED_*/Run_Help_ExitSuccess)
     EXPECT_EQ(app->Run(), EXIT_SUCCESS);
 }
 
-TEST_F(ApplicationTestFixture, /*DISABLED_*/Run_Version_ExitSuccess)
+TEST_F(ApplicationTestFixtureStdOutStreamRedirector, /*DISABLED_*/Run_Version_ExitSuccess)
 {
     const int argc = 2;
     const char *argv[] = {"connectx", "--version"};
@@ -99,7 +99,7 @@ TEST_F(ApplicationTestFixture, /*DISABLED_*/Run_Version_ExitSuccess)
     EXPECT_EQ(app->Run(), EXIT_SUCCESS);
 }
 
-TEST_F(ApplicationTestFixture, /*DISABLED_*/Run_HelpAndVersion_ExitSuccess)
+TEST_F(ApplicationTestFixtureStdOutStreamRedirector, /*DISABLED_*/Run_HelpAndVersion_ExitSuccess)
 {
     const int argc = 3;
     const char *argv[] = {"connectx", "--help", "--version"};
@@ -116,7 +116,7 @@ TEST_F(ApplicationTestFixture, /*DISABLED_*/Run_HelpAndVersion_ExitSuccess)
     EXPECT_EQ(app->Run(), EXIT_SUCCESS);
 }
 
-TEST_F(ApplicationTestFixture, /*DISABLED_*/Run_VersionAndHelp_ExitSuccess)
+TEST_F(ApplicationTestFixtureStdOutStreamRedirector, /*DISABLED_*/Run_VersionAndHelp_ExitSuccess)
 {
     const int argc = 3;
     const char *argv[] = {"connectx", "--version", "--help"};
@@ -133,7 +133,7 @@ TEST_F(ApplicationTestFixture, /*DISABLED_*/Run_VersionAndHelp_ExitSuccess)
     EXPECT_EQ(app->Run(), EXIT_SUCCESS);
 }
 
-TEST_F(ApplicationTestFixture, /*DISABLED_*/Run_TwoManyValidArguments_ExitSuccess)
+TEST_F(ApplicationTestFixtureStdOutStreamRedirector, /*DISABLED_*/Run_TwoManyValidArguments_ExitSuccess)
 {
     const int argc = 4;
     const char *argv[] = {"connectx", "--help", "--version", "--help"};
@@ -150,7 +150,7 @@ TEST_F(ApplicationTestFixture, /*DISABLED_*/Run_TwoManyValidArguments_ExitSucces
     EXPECT_EQ(app->Run(), EXIT_SUCCESS);
 }
 
-TEST_F(ApplicationTestFixture, /*DISABLED_*/Run_MixedArguments_ExitFailure)
+TEST_F(ApplicationTestFixtureStdErrStreamRedirector, /*DISABLED_*/Run_MixedArguments_ExitFailure)
 {
     const int argc = 4;
     const char *argv[] = {"connectx", "--version", "--bad", "--help"};

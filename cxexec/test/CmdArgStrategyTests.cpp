@@ -39,7 +39,7 @@
 
 #include "ApplicationTestFixture.h"
 
-TEST_F(ApplicationTestFixture, Handle_NoStrategy_NothingPrinted)
+TEST_F(ApplicationTestFixtureBothStreamsRedirector, Handle_NoStrategy_NothingPrinted)
 {
     const std::unique_ptr<cx::ICmdArgWorkflowStrategy> strategy = std::make_unique<cx::CmdArgNoStrategy>();
 
@@ -62,7 +62,7 @@ TEST_F(ApplicationTestFixture, Handle_NoStrategy_NothingPrinted)
     ASSERT_EQ(expectedStdErrContents, stdErrContents);
 }
 
-TEST_F(ApplicationTestFixture, Handle_HelpStrategy_HelpStringIsValid)
+TEST_F(ApplicationTestFixtureBothStreamsRedirector, Handle_HelpStrategy_HelpStringIsValid)
 {
     const std::unique_ptr<cx::ICmdArgWorkflowStrategy> strategy = std::make_unique<cx::CmdArgHelpStrategy>();
 
@@ -95,7 +95,7 @@ TEST_F(ApplicationTestFixture, Handle_HelpStrategy_HelpStringIsValid)
     ASSERT_EQ(expectedStdErrContents, stdErrContents);
 }
 
-TEST_F(ApplicationTestFixture, Handle_VersionStrategy_VersionStringIsValid)
+TEST_F(ApplicationTestFixtureBothStreamsRedirector, Handle_VersionStrategy_VersionStringIsValid)
 {
     const std::unique_ptr<cx::ICmdArgWorkflowStrategy> strategy = std::make_unique<cx::CmdArgVersionStrategy>(GetVersionningModel());
 
@@ -128,7 +128,7 @@ TEST_F(ApplicationTestFixture, Handle_VersionStrategy_VersionStringIsValid)
     ASSERT_EQ(expectedStdErrContents, stdErrContents);
 }
 
-TEST_F(ApplicationTestFixture, Handle_VerboseStrategy_InvalidLoggerError)
+TEST_F(ApplicationTestFixtureStdErrStreamRedirector, Handle_VerboseStrategy_InvalidLoggerError)
 {
     const int argc = 2;
     const char *argv[] = {"connectx", "--verbose"};
@@ -148,7 +148,7 @@ TEST_F(ApplicationTestFixture, Handle_VerboseStrategy_InvalidLoggerError)
     ASSERT_EQ(strategy->Handle(), EXIT_FAILURE);
 }
 
-TEST_F(ApplicationTestFixture, Handle_VerboseStrategy_LoggerIsNotAChainLoggerError)
+TEST_F(ApplicationTestFixtureStdErrStreamRedirector, Handle_VerboseStrategy_LoggerIsNotAChainLoggerError)
 {
     const int argc = 2;
     const char *argv[] = {"connectx", "--verbose"};
@@ -174,7 +174,7 @@ TEST_F(ApplicationTestFixture, Handle_VerboseStrategy_LoggerIsNotAChainLoggerErr
     ASSERT_EQ(strategy->Handle(), EXIT_FAILURE);
 }
 
-TEST_F(ApplicationTestFixture, Handle_InvalidArgStrategy_ErrorPrinted)
+TEST_F(ApplicationTestFixtureBothStreamsRedirector, Handle_InvalidArgStrategy_ErrorPrinted)
 {
     const std::unique_ptr<cx::ICmdArgWorkflowStrategy> strategy = std::make_unique<cx::CmdArgInvalidStrategy>("--invalid");
 

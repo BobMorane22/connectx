@@ -75,16 +75,6 @@ cxmodel::IVersioning& ApplicationTestFixture::GetVersionningModel()
     return *m_model;
 }
 
-std::string ApplicationTestFixture::GetStdOutContents() const
-{
-    return m_disableStreamsRAII.GetStdOutContents();
-}
-
-std::string ApplicationTestFixture::GetStdErrContents() const
-{
-    return m_disableStreamsRAII.GetStdErrContents();
-}
-
 void ApplicationTestFixture::ModelApplicationMock::CreateNewGame(const cxmodel::NewGameInformation& /*p_gameInformation*/)
 {
     // Not used...

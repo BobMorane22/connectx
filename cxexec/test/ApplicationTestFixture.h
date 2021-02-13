@@ -26,6 +26,7 @@
 
 #include <gtest/gtest.h>
 
+#include <cxunit/include/StdStreamRedirector.h>
 #include <cxmodel/include/IConnectXGameActions.h>
 #include <cxmodel/include/IConnectXGameInformation.h>
 #include <cxmodel/include/IConnectXLimits.h>
@@ -33,7 +34,6 @@
 #include <cxmodel/include/IVersioning.h>
 #include <cxmodel/include/Subject.h>
 
-#include "DisableStdStreamsRAII.h"
 #include "LoggerMock.h"
 
 /*********************************************************************************************//**
@@ -55,10 +55,6 @@ public:
     cxmodel::IConnectXLimits& GetLimitsModel();
     cxmodel::IUndoRedo& GetUndoRedoModel();
     cxmodel::IVersioning& GetVersionningModel();
-
-    std::string GetStdOutContents() const;
-    std::string GetStdErrContents() const;
-
 
 private:
 
@@ -116,7 +112,8 @@ private:
 
     LoggerMock m_logger;
     std::unique_ptr<ModelApplicationMock> m_model;
-    DisableStdStreamsRAII m_disableStreamsRAII;
 };
+
+ADD_STREAM_REDIRECTORS(ApplicationTestFixture);
 
 #endif // APPLICATIONTESTFIXTURE_H_91B6841E_7598_474B_BE68_991DB1816418
