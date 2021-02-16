@@ -80,6 +80,66 @@ constexpr ChipColor MakeGreen()
     return ChipColor::MakePredefined(ChipColor::Predefined::GREEN);
 }
 
+/******************************************************************************************//**
+ * @brief Factory method for creating chip colors from HSL values. Colors are opaque.
+ *
+ * @param p_hue        Hue channel value.
+ * @param p_saturation Saturation channel value.
+ * @param p_lightness  Lightness channel value.
+ *
+ * @return The chip color.
+ *
+ *********************************************************************************************/
+ChipColor MakeFromHSL(double p_hue,
+                      double p_saturation,
+                      double p_lightness);
+
+/******************************************************************************************//**
+ * @brief Factory method for creating chip colors from HSLA values.
+ *
+ * @param p_hue        Hue channel value.
+ * @param p_saturation Saturation channel value.
+ * @param p_lightness  Lightness channel value.
+ * @param p_alpha      Alpha channel value.
+ *
+ * @return The chip color.
+ *
+ *********************************************************************************************/
+ChipColor MakeFromHSLA(double p_hue,
+                       double p_saturation,
+                       double p_lightness,
+                       double p_alpha);
+
+/******************************************************************************************//**
+ * @brief Computes the hue channel of a chip color.
+ *
+ * @param p_color The chip color.
+ *
+ * @return The hue channel in [0, 1].
+ *
+ *********************************************************************************************/
+double ComputeHue(const ChipColor& p_color);
+
+/******************************************************************************************//**
+ * @brief Computes the saturation channel of a chip color.
+ *
+ * @param p_color The chip color.
+ *
+ * @return The saturation channel in [0, 1].
+ *
+ *********************************************************************************************/
+double ComputeSaturation(const ChipColor& p_color);
+
+/******************************************************************************************//**
+ * @brief Computes the luminosity channel of a chip color.
+ *
+ * @param p_color The chip color.
+ *
+ * @return The luminosity channel in [0, 1].
+ *
+ *********************************************************************************************/
+double ComputeLuminosity(const ChipColor& p_color);
+
 } // namespace cxmodel
 
 #endif // CHIPCOLOR_H_B5759AA2_F394_4B95_900C_C9DEA836633B

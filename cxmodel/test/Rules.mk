@@ -44,6 +44,7 @@ d := $(dir)
 #
 TGTS_$(d) := $(d)/cxmodeltests
 OBJS_$(d) := $(d)/BoardTests.o \
+             $(d)/ChipColorTests.o \
              $(d)/ColorTests.o \
              $(d)/CommandAddTwoMock.o \
              $(d)/CommandCreateNewGameTests.o \

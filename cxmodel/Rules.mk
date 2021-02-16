@@ -50,7 +50,8 @@ include $(dir)/Rules.mk
 # To the global variable "CLEAN", we add the files that the rules present here may create,
 # i.e. the ones we want deleted by a "make clean" command.
 #
-OBJS_$(d) := $(d)/src/CommandCreateNewGame.o \
+OBJS_$(d) := $(d)/src/ChipColor.o \
+             $(d)/src/CommandCreateNewGame.o \
              $(d)/src/CommandDropChip.o \
              $(d)/src/CommandStack.o \
              $(d)/src/Disc.o \
