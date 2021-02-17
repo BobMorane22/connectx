@@ -82,17 +82,6 @@ void cxgui::GameView::Activate()
 
     // Add new view layout:
     m_mainLayout.attach(m_viewLayout, m_viewLeft, m_viewTop, 2, 1);
-
-    // Resize parent:
-    if(ASSERT(m_parent))
-    {
-        // Here we use a trick: in order resize the window, we first remove the
-        // main layout and add it back before calling 'show all'. This enables
-        // resizing the window to smaller sizes:
-        m_parent->remove();
-        m_parent->add(m_mainLayout);
-        m_parent->resize(m_mainLayout.get_width(), m_mainLayout.get_height());
-    }
 }
 
 void cxgui::GameView::DeActivate()

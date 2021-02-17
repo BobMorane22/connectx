@@ -352,6 +352,7 @@ void cxgui::MainWindow::ActivateNewGameView()
     }
 
     m_newGameView->Activate();
+    m_window.resize(1, 1);
     m_window.show_all();
 }
 
@@ -372,6 +373,7 @@ void cxgui::MainWindow::ActivateGameView()
     }
 
     m_gameView->Activate();
+    m_window.resize(1, 1);
     m_window.show_all();
 }
 
