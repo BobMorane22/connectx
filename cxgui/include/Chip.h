@@ -74,6 +74,20 @@ public:
      ********************************************************************************************/
     cxmodel::ChipColor GetColor() const;
 
+    /******************************************************************************************//**
+     * @brief Highlights the current chip.
+     *
+     * The chip's background is hilighted.
+     *
+     ********************************************************************************************/
+    void Highlight();
+
+    /******************************************************************************************//**
+     * @brief Removes highlighting from the current chip, if any.
+     *
+     ********************************************************************************************/
+    void UnHighlight();
+
 private:
 
     void Redraw();
@@ -89,6 +103,7 @@ private:
 
     cxmodel::ChipColor m_fillColor;
     cxmodel::ChipColor m_backgroundColor;
+    const cxmodel::ChipColor m_initialBackgroundColor;
 
 };
 

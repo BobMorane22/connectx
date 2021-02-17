@@ -118,6 +118,9 @@ private:
     void ClearNextDiscArea();
     void ClearBoardArea();
 
+    void HighlightCurrentColumn();
+    void UnHighlightCurrentColumn();
+
     const IGameViewPresenter& m_presenter;
     IGameViewController& m_controller;
 

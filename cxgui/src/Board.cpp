@@ -89,6 +89,7 @@ cxgui::Board::Board(const IGameViewPresenter& p_presenter, IGameViewController& 
 
     InitializeNextDiscArea(m_presenter.GetGameViewBoardWidth());
     InitializeBoard(m_presenter.GetGameViewBoardHeight(), m_presenter.GetGameViewBoardWidth());
+    HighlightCurrentColumn();
 
     pack1(m_nextDiscAreaLayout, true, false);
     pack2(m_boardLayout, true, false);
@@ -157,8 +158,12 @@ cxgui::Chip* cxgui::Board::GetChip(Gtk::Grid& p_discArea, int p_left, int p_top)
 void cxgui::Board::Move(Side p_side)
 {
     ChangeCurrentDisc(cxmodel::MakeTransparent());
+    UnHighlightCurrentColumn();
+
     UpdateNextDiscPosition(p_side);
+
     ChangeCurrentDisc(m_presenter.GetGameViewActivePlayerChipColor());
+    HighlightCurrentColumn();
 }
 
 void cxgui::Board::ChangeCurrentDisc(const cxmodel::ChipColor& p_newColor)
@@ -246,7 +251,10 @@ void cxgui::Board::MoveCurrentDiscAtFirstRow()
 
     currentChip->ChangeColor(cxmodel::MakeTransparent());
 
+    UnHighlightCurrentColumn();
     m_currentDiscPosition = 0u;
+    HighlightCurrentColumn();
+
     Chip* startChip = GetChip(m_nextDiscAreaLayout, m_currentDiscPosition, 0);
     IF_CONDITION_NOT_MET_DO(startChip, return;);
 
@@ -290,6 +298,40 @@ void cxgui::Board::ClearBoardArea()
             IF_CONDITION_NOT_MET_DO(chip, return;);
 
             chip->ChangeColor(cxmodel::MakeTransparent());
+        }
+    }
+}
+
+void cxgui::Board::HighlightCurrentColumn()
+{
+    for(size_t row = 0u; row < m_presenter.GetGameViewBoardHeight(); ++row)
+    {
+        for(size_t column = 0u; column < m_presenter.GetGameViewBoardWidth(); ++column)
+        {
+            if(column == m_currentDiscPosition)
+            {
+                Chip* chip = GetChip(m_boardLayout, column, row);
+                IF_CONDITION_NOT_MET_DO(chip, return;);
+
+                chip->Highlight();
+            }
+        }
+    }
+}
+
+void cxgui::Board::UnHighlightCurrentColumn()
+{
+    for(size_t row = 0u; row < m_presenter.GetGameViewBoardHeight(); ++row)
+    {
+        for(size_t column = 0u; column < m_presenter.GetGameViewBoardWidth(); ++column)
+        {
+            if(column == m_currentDiscPosition)
+            {
+                Chip* chip = GetChip(m_boardLayout, column, row);
+                IF_CONDITION_NOT_MET_DO(chip, return;);
+
+                chip->UnHighlight();
+            }
         }
     }
 }

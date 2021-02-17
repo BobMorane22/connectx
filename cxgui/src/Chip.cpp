@@ -23,6 +23,8 @@
 
 #include <algorithm>
 
+#include <cxinv/include/assertion.h>
+
 #include <Chip.h>
 
 cxgui::Chip::Chip(const cxmodel::ChipColor& p_fillColor,
@@ -31,6 +33,7 @@ cxgui::Chip::Chip(const cxmodel::ChipColor& p_fillColor,
                   int p_height)
 : m_fillColor{p_fillColor}
 , m_backgroundColor{p_backgroundColor}
+, m_initialBackgroundColor{p_backgroundColor}
 {
     set_size_request(p_width, p_height);
 }
@@ -47,6 +50,24 @@ void cxgui::Chip::ChangeColor(const cxmodel::ChipColor& p_newFillColor)
 cxmodel::ChipColor cxgui::Chip::GetColor() const
 {
     return m_fillColor;
+}
+
+void cxgui::Chip::Highlight()
+{
+    const double hue = cxmodel::ComputeHue(m_backgroundColor);
+    const double saturation = cxmodel::ComputeSaturation(m_backgroundColor);
+    double luminosity = cxmodel::ComputeLuminosity(m_backgroundColor);
+
+    luminosity *= 1.4;
+
+    m_backgroundColor = cxmodel::MakeFromHSL(hue, saturation, luminosity);
+    Redraw();
+}
+
+void cxgui::Chip::UnHighlight()
+{
+    m_backgroundColor = m_initialBackgroundColor;
+    Redraw();
 }
 
 void cxgui::Chip::Redraw()
