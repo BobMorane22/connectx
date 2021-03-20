@@ -191,8 +191,10 @@ BoardConfigurationData ExtractBoardConfigurationData(const std::string& p_asciiG
             offsetToNextCell = cellContents.size() + 1u;
         }
 
-        // Could be updated only once...
-        boardConfigurationData.m_nbColumns = currentColumn;
+        if(boardConfigurationData.m_nbColumns == 0u)
+        {
+            boardConfigurationData.m_nbColumns = std::count(lineRow.cbegin(), lineRow.cend(), COLUMN_SEPARATOR) - 1u;
+        }
 
         ++nbRows;
     }
@@ -212,6 +214,42 @@ BoardConfigurationData ExtractBoardConfigurationData(const std::string& p_asciiG
     EXPECT_TRUE(boardConfigurationData.m_nbRows > 0u);
     EXPECT_TRUE(boardConfigurationData.m_nbColumns > 0u);
     EXPECT_TRUE(boardConfigurationData.m_moves.size() > 0u);
+
+    const auto& lastMove = moves.back();
+    if(!lastMove.m_isWon && !lastMove.m_isTied)
+    {
+        ADD_FAILURE() << "Last move (" << lastMove.m_turn << ") is neither a win nor a tie." << std::endl;
+    }
+
+    for(size_t index = 0u; index < moves.size() - 1u; ++index)
+    {
+        if(moves[index].m_turn == moves[index + 1u].m_turn)
+        {
+            ADD_FAILURE() << "Duplicate turn found in the game :" << moves[index].m_turn << std::endl;
+        }
+
+        if( moves[index + 1u].m_turn - moves[index].m_turn > 1u )
+        {
+            ADD_FAILURE() << "Forgotten turn found in the game after :" << moves[index].m_turn << std::endl;
+        }
+    }
+
+    const size_t nbWinAndTies = std::count_if(moves.cbegin(),
+                                              moves.cend(),
+                                              [](const Move& p_move)
+                                              {
+                                                  return p_move.m_isWon || p_move.m_isTied;
+                                              });
+
+    if(nbWinAndTies == 0u)
+    {
+        ADD_FAILURE() << "No win or tie detected in the encoded game." << std::endl;
+    }
+
+    if(nbWinAndTies > 1u)
+    {
+        ADD_FAILURE() << "More than one win or tie detected in the encoded game." << std::endl;
+    }
 
     return boardConfigurationData;
 }
@@ -299,17 +337,17 @@ bool ValidateGameInternal(const std::vector<cxmodel::Player>& p_players,
         DropChipInternal(move.m_column, p_players[index].GetChip(), board, takenPositions);
 
         // After the drop, the next player becomes the active player:
-        const size_t activePlayerIndex = (index + 1u) % p_players.size();
+        index = (index + 1u) % p_players.size();
 
         if(move.m_isWon)
         {
-            if(!winStrategy.Handle(p_players[activePlayerIndex]))
+            if(!winStrategy.Handle(p_players[index]))
             {
                 ADD_FAILURE() << "Expected win at turn " << move.m_turn << ", but no win detected." << std::endl;
                 return false;
             }
 
-            if(tieStrategy.Handle(p_players[activePlayerIndex]))
+            if(tieStrategy.Handle(p_players[index]))
             {
                 ADD_FAILURE() << "Unexpected tie at turn " << move.m_turn << ", but a win was expected." << std::endl;
                 return false;
@@ -320,15 +358,14 @@ bool ValidateGameInternal(const std::vector<cxmodel::Player>& p_players,
 
         if(move.m_isTied)
         {
-            if(winStrategy.Handle(p_players[activePlayerIndex]))
+            if(winStrategy.Handle(p_players[index]))
             {
                 ADD_FAILURE() << "Unexpected win at turn " << move.m_turn << ", but a tie was expected." << std::endl;
                 return false;
             }
 
-            if(!tieStrategy.Handle(p_players[activePlayerIndex]))
+            if(!tieStrategy.Handle(p_players[index]))
             {
-                tieStrategy.Handle(p_players[activePlayerIndex]);
                 ADD_FAILURE() << "Expected tie at turn " << move.m_turn << ", but no tie detected." << std::endl;
                 return false;
             }
@@ -336,19 +373,18 @@ bool ValidateGameInternal(const std::vector<cxmodel::Player>& p_players,
             continue;
         }
 
-        if(winStrategy.Handle(p_players[activePlayerIndex]))
+        if(winStrategy.Handle(p_players[index]))
         {
             ADD_FAILURE() << "Unexpected win at turn " << move.m_turn << std::endl;
             return false;
         }
 
-        if(tieStrategy.Handle(p_players[activePlayerIndex]))
+        if(tieStrategy.Handle(p_players[index]))
         {
+            tieStrategy.Handle(p_players[index]);
             ADD_FAILURE() << "Unexpected tie at turn " << move.m_turn << std::endl;
             return false;
         }
-
-        index = activePlayerIndex;
     }
 
     return true;
