@@ -90,10 +90,10 @@ private:
     const int m_nbColumns;
 
     // The `m_turn` variable represented the active player's index
-    // in the player list. I have decided to leave it here named
+    // in the players list. I have decided to leave it here named
     // as such for historical reasons. Since it is an implementation
     // only variable, I have made it mutable because it only
-    // remvoves the need to duplicated a calculation (I make it
+    // remvoves the need to duplicate a calculation (I make it
     // once in `Handle`, which is `const`.
     mutable int m_turn;
 

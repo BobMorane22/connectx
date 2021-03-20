@@ -60,7 +60,7 @@ bool cxmodel::TieGameResolutionStrategy::Handle(const Player& p_activePlayer) co
         return false;
     }
 
-    m_turn = static_cast<int>((m_takenPositions.size() + 1u) % m_players.size());
+    m_turn = static_cast<int>((m_takenPositions.size()) % m_players.size());
 
     return IsDraw(p_activePlayer);
 }
@@ -113,13 +113,10 @@ int cxmodel::TieGameResolutionStrategy::GetNbOfRemainingMoves(const Player& p_pl
         // Find position of p_player in the player list:
         const auto playerPosition = std::find(m_players.begin(), m_players.end(), p_player);
 
-        // Check all candidate postition for an extra turn and see if the player is there:
+        // Check all candidate postitions for an extra turn and see if the player is there:
         for(int offset = 0; offset < remainingMovesRest; ++offset)
         {
-            // While porting this, I had to substract one here to make all the tests pass. I have not yet found
-            // Why this is necessary (in the original code, there is no offset). Until more tests are done, I
-            // have decided to leave it as such.
-            const int firstTurnWithMoreMoves = m_turn - 1;
+            const int firstTurnWithMoreMoves = m_turn;
             const int nextTurnWithMoreMoves = (firstTurnWithMoreMoves + offset) % static_cast<int>(m_players.size());
 
             const auto candidatePosition = m_players.begin() + nextTurnWithMoreMoves;
@@ -184,7 +181,7 @@ int cxmodel::TieGameResolutionStrategy::GetNbOfMovesSinceLastPlay(const Player& 
 
     const int positionInspected = GetPlayerTurn(p_player, p_activePlayer);
 
-    // Find the distance between the two Players:
+    // Find the distance between the two players:
     int nbOfMoves = 0;
 
     if(positionCurrent < positionInspected)
