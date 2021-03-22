@@ -363,6 +363,45 @@ TEST_F(ClassicGameFixture, /*DISABLED_*/Handle_UpCenterDescendingWin_ReturnsTrue
     ASSERT_TRUE(ValidateGame(MakeTwoPlayersList(), 4u, gameStream.str()));
 }
 
+TEST_F(ClassicGameFixture, /*DISABLED_*/Handle_HorizontalWinNotAtEndpoint_ReturnsTrue)
+{
+    std::ostringstream game;
+    game << "|   |   |    |   |  |  |  |" << std::endl;
+    game << "|   |   |    |   |  |  |  |" << std::endl;
+    game << "|   |   |    |   |  |  |  |" << std::endl;
+    game << "|   |   |    |   |  |  |  |" << std::endl;
+    game << "| 2 | 4 |    | 6 |  |  |  |" << std::endl;
+    game << "| 1 | 3 | 7w | 5 |  |  |  |";
+
+    ASSERT_TRUE(ValidateGame(MakeTwoPlayersList(), 4u, game.str())); 
+}
+
+TEST_F(ClassicGameFixture, /*DISABLED_*/Handle_AscendingWinNotAtEndpoint_ReturnsTrue)
+{
+    std::ostringstream game;
+    game << "|    |   |     |    |   |   |   |" << std::endl;
+    game << "|    |   |     |    |   |   |   |" << std::endl;
+    game << "|    |   |     | 10 |   |   |   |" << std::endl;
+    game << "| 11 |   | 12w | 8  |   |   |   |" << std::endl;
+    game << "| 9  | 4 | 7   | 6  |   |   |   |" << std::endl;
+    game << "| 2  | 1 | 3   | 5  |   |   |   |";
+
+    ASSERT_TRUE(ValidateGame(MakeTwoPlayersList(), 4u, game.str())); 
+}
+
+TEST_F(ClassicGameFixture, /*DISABLED_*/Handle_DescendingWinNotAtEndpoint_ReturnsTrue)
+{
+    std::ostringstream game;
+    game << "|   |     |   |   |    |   |   |" << std::endl;
+    game << "|   |     |   |   |    |   |   |" << std::endl;
+    game << "| 9 |     |   |   |    |   |   |" << std::endl;
+    game << "| 8 | 11w |   |   |    |   |   |" << std::endl;
+    game << "| 7 | 5   | 3 |   |    |   |   |" << std::endl;
+    game << "| 6 | 4   | 2 | 1 | 10 |   |   |";
+
+    ASSERT_TRUE(ValidateGame(MakeTwoPlayersList(), 4u, game.str())); 
+}
+
 TEST_F(ClassicGameFixture, /*DISABLED_*/Handle_AlmostFullBoardWin_ReturnsTrue)
 {
     std::ostringstream game;
@@ -375,3 +414,4 @@ TEST_F(ClassicGameFixture, /*DISABLED_*/Handle_AlmostFullBoardWin_ReturnsTrue)
 
     ASSERT_TRUE(ValidateGame(MakeTwoPlayersList(), 4u, game.str())); 
 }
+
