@@ -188,18 +188,6 @@ int cxmodel::WinGameResolutionStrategy::UpperValidationLimit(GridValidationType 
             upperSubscript = lastPlayedRow + (lastPlayedColumn - leftSubscript);
         }
     }
-    else if(p_validationType == GridValidationType::DiagonalUpward)
-    {
-        int rightSubscript = lastPlayedColumn + (m_inARowValue - 1);
-
-        ASSERT(m_board.GetNbRows() <= std::numeric_limits<int>::max());
-        rightSubscript = std::min(rightSubscript, static_cast<int>(m_board.GetNbColumns()) - 1);
-
-        if(upperSubscript - lastPlayedRow > rightSubscript - lastPlayedColumn)
-        {
-            upperSubscript = lastPlayedRow + (rightSubscript - lastPlayedColumn);
-        }
-    }
 
     return upperSubscript;
 }
@@ -216,19 +204,7 @@ int cxmodel::WinGameResolutionStrategy::LowerValidationLimit(GridValidationType 
     int lowerSubscript = lastPlayedRow - (m_inARowValue - 1);
     lowerSubscript = std::max(0, lowerSubscript);
 
-    if(p_validationType == GridValidationType::DiagonalDownward)
-    {
-        int rightSubscript = lastPlayedColumn + (m_inARowValue - 1);
-
-        ASSERT(m_board.GetNbColumns() <= std::numeric_limits<int>::max());
-        rightSubscript = std::min(rightSubscript, static_cast<int>(m_board.GetNbColumns() - 1));
-
-        if(lastPlayedRow - lowerSubscript > rightSubscript - lastPlayedColumn)
-        {
-            lowerSubscript = lastPlayedRow - (rightSubscript - lastPlayedColumn);
-        }
-    }
-    else if(p_validationType == GridValidationType::DiagonalUpward)
+    if(p_validationType == GridValidationType::DiagonalUpward)
     {
         int leftSubscript = lastPlayedColumn - (m_inARowValue - 1);
         leftSubscript = std::max(leftSubscript, 0);
