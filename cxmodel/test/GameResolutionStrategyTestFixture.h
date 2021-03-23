@@ -30,74 +30,63 @@
 #include <IConnectXLimits.h>
 #include <Player.h>
 
+/*************************************************************************************************
+ * @brief Fixture for testing game resolution strategies.
+ *
+ * Specialize this fixture to create different game scenarios.
+ *
+ *************************************************************************************************/
 class GameResolutionStrategyTestFixture : public ::testing::Test
 {
 
 public:
-
     
-   /**************************************************************************************************
-    * @brief Validates a game encoded into an ASCII string.
-    *
-    * The ascii format for a game is a board is the following:
-    *
-    *     |  | | | | | | |
-    *     |  | | | | | | |
-    *     |7w| | | | | | |
-    *     |5 |6| | | | | |
-    *     |3 |4| | | | | |
-    *     |1 |2| | | | | |
-    *
-    * In which numbers represent the nth move (e.g. 6 means the 6th move) and letters game states.
-    * Possible game states are:
-    *
-    *   - Ongoing : represented by a move number alone.
-    *   - Won     : represented by a move number followed by the letter 'w'
-    *   - Tied    : represented by a move number followed by the letter 't'
-    *
-    * For every moved marked as 'Ongoing', the absence of a win and of a tie are validated. In this
-    * case, the game is considered not valid if either a win or a tie is detected. For every move
-    * marked as 'Won', the absence of a tied is checked as well as the presence of a win. If any one
-    * of these conditions is not met, the game is consideted invalid. Finally, for every move marked
-    * as 'Tied', the absence of a win and the presence is checked. If any one of these conditions is
-    * not met, the game is considered invalid.
-    *
-    * @param p_playerList  The list of players.
-    * @param p_inARowValue The in-a-row value for the game.
-    * @param p_asciiGame   The game encoded as an ascii string (see expexted format above).
-    *
-    * @return `true` if the game is valid, `false` otherwise.
-    *
-    *************************************************************************************************/
+    /*********************************************************************************************
+     * @brief Validates a game encoded into an ASCII string.
+     *
+     * The ascii format for a game is a board is the following:
+     *
+     *     |  | | | | | | |
+     *     |  | | | | | | |
+     *     |7w| | | | | | |
+     *     |5 |6| | | | | |
+     *     |3 |4| | | | | |
+     *     |1 |2| | | | | |
+     *
+     * In which numbers represent the nth move (e.g. 6 means the 6th move) and letters game states.
+     * Possible game states are:
+     *
+     *   - Ongoing : represented by a move number alone.
+     *   - Won     : represented by a move number followed by the letter 'w'
+     *   - Tied    : represented by a move number followed by the letter 't'
+     *
+     * For every moved marked as 'Ongoing', the absence of a win and of a tie are validated. In this
+     * case, the game is considered not valid if either a win or a tie is detected. For every move
+     * marked as 'Won', the absence of a tied is checked as well as the presence of a win. If any one
+     * of these conditions is not met, the game is consideted invalid. Finally, for every move marked
+     * as 'Tied', the absence of a win and the presence is checked. If any one of these conditions is
+     * not met, the game is considered invalid.
+     *
+     * @param p_playerList  The list of players.
+     * @param p_inARowValue The in-a-row value for the game.
+     * @param p_asciiGame   The game encoded as an ascii string (see expexted format above).
+     *
+     * @return `true` if the game is valid, `false` otherwise.
+     *
+     ************************************************************************************************/
     [[nodiscard]] bool ValidateGame(const std::vector<cxmodel::Player>& p_playerList,
                                     const size_t p_inARowValue,
                                     const std::string& p_asciiGame);
 
-   /**************************************************************************************************
-    * @brief Drops a chip and updates the taken position list.
-    *
-    * @pre There is room in the specified column to add a chip.
-    *
-    * @param p_column         The column in which to drop the chip.
-    * @param p_chip           The chip to drop.
-    * @param p_board          The board in which to drop the chip.
-    * @param p_takenPositions The list of taken positions.
-    *
-    *************************************************************************************************/
-    void DropChip(size_t p_column,
-                  const cxmodel::IChip& p_chip,
-                  cxmodel::IBoard& p_board,
-                  std::vector<cxmodel::IBoard::Position>& p_takenPositions);
+    /*************************************************************************************************
+     * @brief Creates a players list.
+     *
+     * @return The players list.
+     *
+     ************************************************************************************************/
+    [[nodiscard]] virtual std::vector<cxmodel::Player> CreatePlayersList() const = 0;
 
-    static std::vector<cxmodel::Player> MakeTwoPlayersList();
-    static std::vector<cxmodel::Player> MakeThreePlayersList();
-
-    cxmodel::Board MakeClassicBoard() const;
-    cxmodel::Board Make9By9Board() const;
-    cxmodel::Board Make6By10Board() const;
-    cxmodel::Board Make9By8Board() const;
-
-private:
+protected:
 
     class LimitsModelMock : public cxmodel::IConnectXLimits
     {
