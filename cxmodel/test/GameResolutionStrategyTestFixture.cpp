@@ -25,6 +25,7 @@
 #include <sstream>
 #include <string>
 
+#include <Board.h>
 #include <Disc.h>
 
 #include <cxmodel/include/TieGameResolutionStrategy.h>

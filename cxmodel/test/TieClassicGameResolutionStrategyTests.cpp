@@ -23,9 +23,24 @@
 
 #include <sstream>
 
-#include "TwoPlayersGameResolutionStrategyTestFixture.h"
+#include "GameResolutionStrategyTestFixture.h"
 
-TEST_F(TwoPlayersGameResolutionStrategyTestFixture, /*DISABLED_*/Handle_LeftVerticalTie_ReturnsTrue)
+using ClassicTwoPlayersGameTestFixture = GameResolutionStrategyTestFixture;
+
+namespace
+{
+
+std::vector<cxmodel::Player> CreatePlayersList()
+{
+    return {
+        {"Player 1", cxmodel::MakeRed()},
+        {"Player 2", cxmodel::MakeBlue()}
+    };
+}
+
+} // namespace
+
+TEST_F(ClassicTwoPlayersGameTestFixture, /*DISABLED_*/Handle_LeftVerticalTie_ReturnsTrue)
 {
     std::ostringstream game;
     game << "|    | 39t | 6  | 12 | 29 | 30 | 18 |" << std::endl;
@@ -38,7 +53,7 @@ TEST_F(TwoPlayersGameResolutionStrategyTestFixture, /*DISABLED_*/Handle_LeftVert
     ASSERT_TRUE(ValidateGame(CreatePlayersList(), 4u, game.str())); 
 }
 
-TEST_F(TwoPlayersGameResolutionStrategyTestFixture, /*DISABLED_*/Handle_CenterVerticalTie_ReturnsTrue)
+TEST_F(ClassicTwoPlayersGameTestFixture, /*DISABLED_*/Handle_CenterVerticalTie_ReturnsTrue)
 {
     std::ostringstream game;
     game << "| 24 | 27 |     |    |    | 33 | 30 |" << std::endl;
@@ -51,7 +66,7 @@ TEST_F(TwoPlayersGameResolutionStrategyTestFixture, /*DISABLED_*/Handle_CenterVe
     ASSERT_TRUE(ValidateGame(CreatePlayersList(), 4u, game.str())); 
 }
 
-TEST_F(TwoPlayersGameResolutionStrategyTestFixture, /*DISABLED_*/Handle_RightVerticalTie_ReturnsTrue)
+TEST_F(ClassicTwoPlayersGameTestFixture, /*DISABLED_*/Handle_RightVerticalTie_ReturnsTrue)
 {
     std::ostringstream game;
     game << "| 18 | 30 | 29 | 12 | 6  | 39t |    |" << std::endl;
@@ -64,7 +79,7 @@ TEST_F(TwoPlayersGameResolutionStrategyTestFixture, /*DISABLED_*/Handle_RightVer
     ASSERT_TRUE(ValidateGame(CreatePlayersList(), 4u, game.str())); 
 }
 
-TEST_F(TwoPlayersGameResolutionStrategyTestFixture, /*DISABLED_*/Handle_LeftHorizontalTie_ReturnsTrue)
+TEST_F(ClassicTwoPlayersGameTestFixture, /*DISABLED_*/Handle_LeftHorizontalTie_ReturnsTrue)
 {
     std::ostringstream game;
     game << "|    |    |    |    |    | 37t | 36 |" << std::endl;
@@ -77,7 +92,7 @@ TEST_F(TwoPlayersGameResolutionStrategyTestFixture, /*DISABLED_*/Handle_LeftHori
     ASSERT_TRUE(ValidateGame(CreatePlayersList(), 4u, game.str())); 
 }
 
-TEST_F(TwoPlayersGameResolutionStrategyTestFixture, /*DISABLED_*/Handle_CenterHorizontalTie_ReturnsTrue)
+TEST_F(ClassicTwoPlayersGameTestFixture, /*DISABLED_*/Handle_CenterHorizontalTie_ReturnsTrue)
 {
     std::ostringstream game;
     game << "| 36 |    |    |    |    | 38t | 37 |" << std::endl;
@@ -90,7 +105,7 @@ TEST_F(TwoPlayersGameResolutionStrategyTestFixture, /*DISABLED_*/Handle_CenterHo
     ASSERT_TRUE(ValidateGame(CreatePlayersList(), 4u, game.str())); 
 }
 
-TEST_F(TwoPlayersGameResolutionStrategyTestFixture, /*DISABLED_*/Handle_RightHorizontalTie_ReturnsTrue)
+TEST_F(ClassicTwoPlayersGameTestFixture, /*DISABLED_*/Handle_RightHorizontalTie_ReturnsTrue)
 {
     std::ostringstream game;
     game << "| 36 | 37t |    |    |    |    |    |" << std::endl;
@@ -103,7 +118,7 @@ TEST_F(TwoPlayersGameResolutionStrategyTestFixture, /*DISABLED_*/Handle_RightHor
     ASSERT_TRUE(ValidateGame(CreatePlayersList(), 4u, game.str())); 
 }
 
-TEST_F(TwoPlayersGameResolutionStrategyTestFixture, /*DISABLED_*/Handle_RightAscendingTie_ReturnsTrue)
+TEST_F(ClassicTwoPlayersGameTestFixture, /*DISABLED_*/Handle_RightAscendingTie_ReturnsTrue)
 {
     std::ostringstream game;
     game << "| 6 | 20 | 25 | 30 | 40t |    |    |" << std::endl;
@@ -116,7 +131,7 @@ TEST_F(TwoPlayersGameResolutionStrategyTestFixture, /*DISABLED_*/Handle_RightAsc
     ASSERT_TRUE(ValidateGame(CreatePlayersList(), 4u, game.str())); 
 }
 
-TEST_F(TwoPlayersGameResolutionStrategyTestFixture, /*DISABLED_*/Handle_LeftDescendingTie_ReturnsTrue)
+TEST_F(ClassicTwoPlayersGameTestFixture, /*DISABLED_*/Handle_LeftDescendingTie_ReturnsTrue)
 {
     std::ostringstream game;
     game << "|    |    | 40t | 30 | 25 | 20 | 6  |" << std::endl;
@@ -129,7 +144,7 @@ TEST_F(TwoPlayersGameResolutionStrategyTestFixture, /*DISABLED_*/Handle_LeftDesc
     ASSERT_TRUE(ValidateGame(CreatePlayersList(), 4u, game.str())); 
 }
 
-TEST_F(TwoPlayersGameResolutionStrategyTestFixture, /*DISABLED_*/Handle_AlmostFullBoardTie_ReturnsTrue)
+TEST_F(ClassicTwoPlayersGameTestFixture, /*DISABLED_*/Handle_AlmostFullBoardTie_ReturnsTrue)
 {
     std::ostringstream game;
     game << "| 12 | 11 | 24 | 23 | 30 |    | 41t |" << std::endl;

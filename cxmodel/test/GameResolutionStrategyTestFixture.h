@@ -26,7 +26,6 @@
 
 #include <gtest/gtest.h>
 
-#include <Board.h>
 #include <IConnectXLimits.h>
 #include <Player.h>
 
@@ -40,7 +39,7 @@ class GameResolutionStrategyTestFixture : public ::testing::Test
 {
 
 public:
-    
+
     /*********************************************************************************************
      * @brief Validates a game encoded into an ASCII string.
      *
@@ -78,15 +77,7 @@ public:
                                     const size_t p_inARowValue,
                                     const std::string& p_asciiGame);
 
-    /*************************************************************************************************
-     * @brief Creates a players list.
-     *
-     * @return The players list.
-     *
-     ************************************************************************************************/
-    [[nodiscard]] virtual std::vector<cxmodel::Player> CreatePlayersList() const = 0;
-
-protected:
+private:
 
     class LimitsModelMock : public cxmodel::IConnectXLimits
     {
