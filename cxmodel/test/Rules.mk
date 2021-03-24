@@ -70,9 +70,7 @@ OBJS_$(d) := $(d)/BoardTests.o \
              $(d)/SubjectTestFixture.o \
              $(d)/SubjectTests.o \
              $(d)/TieClassicGameResolutionStrategyTests.o \
-             $(d)/TieGameResolutionStrategyTests.o \
              $(d)/WinClassicGameResolutionStrategyTests.o \
-             $(d)/WinGameResolutionStrategyTests.o \
              cxunit/libcxunit.a \
              cxmodel/libcxmodel.a
 
