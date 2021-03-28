@@ -71,6 +71,7 @@ OBJS_$(d) := $(d)/BoardTests.o \
              $(d)/SubjectTests.o \
              $(d)/TieClassicGameResolutionStrategyTests.o \
              $(d)/WinClassicGameResolutionStrategyTests.o \
+             $(d)/WinSquareBoardGameStrategyTests.o \
              cxunit/libcxunit.a \
              cxmodel/libcxmodel.a
 
