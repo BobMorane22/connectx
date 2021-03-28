@@ -214,7 +214,11 @@ BoardConfigurationData ExtractBoardConfigurationData(const std::string& p_asciiG
     // Post conditions:
     EXPECT_TRUE(boardConfigurationData.m_nbRows > 0u);
     EXPECT_TRUE(boardConfigurationData.m_nbColumns > 0u);
-    EXPECT_TRUE(boardConfigurationData.m_moves.size() > 0u);
+    if(boardConfigurationData.m_moves.size() == 0u)
+    {
+        ADD_FAILURE() << "No moves in game" << std::endl;
+        return boardConfigurationData;
+    }
 
     const auto& lastMove = moves.back();
     if(!lastMove.m_isWon && !lastMove.m_isTied)
