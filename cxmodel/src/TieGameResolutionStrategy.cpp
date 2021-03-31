@@ -110,10 +110,12 @@ int cxmodel::TieGameResolutionStrategy::GetNbOfRemainingMoves(const Player& p_pl
     // Check if process is really necessary: do all players deserve an equal share?
     if(remainingMovesRest != 0)
     {
-        // Find position of p_player in the player list:
+        // Some players have more moves left than others. We find position of
+        // p_player in the player list:
         const auto playerPosition = std::find(m_players.begin(), m_players.end(), p_player);
 
-        // Check all candidate postitions for an extra turn and see if the player is there:
+        // Check all such players and see if one matches the player is there. In other
+        // words, we check if p_player has some extra moves left:
         for(int offset = 0; offset < remainingMovesRest; ++offset)
         {
             const int firstTurnWithMoreMoves = m_turn;
@@ -121,9 +123,12 @@ int cxmodel::TieGameResolutionStrategy::GetNbOfRemainingMoves(const Player& p_pl
 
             const auto candidatePosition = m_players.begin() + nextTurnWithMoreMoves;
 
+            // He does, we signal it:
             if(playerPosition == candidatePosition)
             {
                 nbOfRemainingMoves = remainingMovesQuotient + 1;
+
+                return nbOfRemainingMoves;
             }
             else
             {
@@ -419,7 +424,7 @@ bool cxmodel::TieGameResolutionStrategy::CanPlayerWinDiagonalDownward(const Play
     for(int rowIndex = 0; rowIndex < (m_nbRows - (m_inARowValue - 1)); ++rowIndex)
     {
         // Use these columns for starting point of the checks:
-        for(int columnIndex = m_inARowValue - 1; columnIndex < m_nbColumns - 1; ++columnIndex)
+        for(int columnIndex = m_inARowValue - 1; columnIndex < m_nbColumns; ++columnIndex)
         {
             bool isPlayFree = true;
             int nbOfEmptyDiscsInDiagonal = 0;
