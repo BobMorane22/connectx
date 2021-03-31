@@ -386,7 +386,6 @@ bool ValidateGameInternal(const std::vector<cxmodel::Player>& p_players,
 
         if(tieStrategy.Handle(p_players[index]))
         {
-            tieStrategy.Handle(p_players[index]);
             ADD_FAILURE() << "Unexpected tie at turn " << move.m_turn << std::endl;
             return false;
         }
