@@ -348,12 +348,14 @@ bool ValidateGameInternal(const std::vector<cxmodel::Player>& p_players,
         {
             if(!winStrategy.Handle(p_players[index]))
             {
+                winStrategy.Handle(p_players[index]);
                 ADD_FAILURE() << "Expected win at turn " << move.m_turn << ", but no win detected." << std::endl;
                 return false;
             }
 
             if(tieStrategy.Handle(p_players[index]))
             {
+                tieStrategy.Handle(p_players[index]);
                 ADD_FAILURE() << "Unexpected tie at turn " << move.m_turn << ", but a win was expected." << std::endl;
                 return false;
             }
@@ -365,12 +367,14 @@ bool ValidateGameInternal(const std::vector<cxmodel::Player>& p_players,
         {
             if(winStrategy.Handle(p_players[index]))
             {
+                winStrategy.Handle(p_players[index]);
                 ADD_FAILURE() << "Unexpected win at turn " << move.m_turn << ", but a tie was expected." << std::endl;
                 return false;
             }
 
             if(!tieStrategy.Handle(p_players[index]))
             {
+                tieStrategy.Handle(p_players[index]);
                 ADD_FAILURE() << "Expected tie at turn " << move.m_turn << ", but no tie detected." << std::endl;
                 return false;
             }
@@ -380,12 +384,14 @@ bool ValidateGameInternal(const std::vector<cxmodel::Player>& p_players,
 
         if(winStrategy.Handle(p_players[index]))
         {
+            winStrategy.Handle(p_players[index]);
             ADD_FAILURE() << "Unexpected win at turn " << move.m_turn << std::endl;
             return false;
         }
 
         if(tieStrategy.Handle(p_players[index]))
         {
+            tieStrategy.Handle(p_players[index]);
             ADD_FAILURE() << "Unexpected tie at turn " << move.m_turn << std::endl;
             return false;
         }
