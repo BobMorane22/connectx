@@ -99,6 +99,18 @@ bool cxmodel::TieGameResolutionStrategy::IsDraw(const Player& p_activePlayer) co
     return !validPlaysAreStillAvailable;
 }
 
+/**************************************************************************************************
+ * Computes the number of remaining possible moves a player has from the numbers of moves already
+ * concluded in the game.
+ *
+ * @param p_player             The player for which we want to know the current count of remaining
+ *                             available moves.
+ * @param p_nbOfCompletedMoves The number of moves completed at the point in the game for which
+ *                             the number of remaining moves needs to be known.
+ *
+ * @return The number of remaining moves for the player.
+ *
+ *************************************************************************************************/
 int cxmodel::TieGameResolutionStrategy::GetNbOfRemainingMoves(const Player& p_player, const int p_nbOfCompletedMoves) const
 {
     const int nbMovesLeft = m_board.GetNbPositions() - p_nbOfCompletedMoves;
@@ -118,7 +130,7 @@ int cxmodel::TieGameResolutionStrategy::GetNbOfRemainingMoves(const Player& p_pl
         // words, we check if p_player has some extra moves left:
         for(int offset = 0; offset < remainingMovesRest; ++offset)
         {
-            const int firstTurnWithMoreMoves = m_turn;
+            const int firstTurnWithMoreMoves = p_nbOfCompletedMoves % m_players.size();
             const int nextTurnWithMoreMoves = (firstTurnWithMoreMoves + offset) % static_cast<int>(m_players.size());
 
             const auto candidatePosition = m_players.begin() + nextTurnWithMoreMoves;
@@ -143,7 +155,6 @@ int cxmodel::TieGameResolutionStrategy::GetNbOfRemainingMoves(const Player& p_pl
 
     return nbOfRemainingMoves;
 }
-
 
 int cxmodel::TieGameResolutionStrategy::GetNbOfRemainingMoves(const Player& p_player) const
 {
@@ -304,11 +315,21 @@ bool cxmodel::TieGameResolutionStrategy::CanPlayerWinVertical(const Player& p_pl
 {
     bool canPlayerWin = false;
 
-    // We calculate the number of remaining moves for all the other players:
-    int nbOfRemainingMovesOtherPlayers = 0;
-
     // Find the inspected Player's turn:
     int inspectedPlayerTurn = GetPlayerTurn(p_player, p_activePlayer);
+
+    // We calculate the number of remaining moves for all the other players. For each
+    // player which is not p_player (the inspected player), we calculate:
+    //
+    //   1. The number of available moves remaining at the time of the last
+    //      player's move.
+    //   2. From this, we can dedude the number of remaining available moves
+    //      for this particular player.
+    //
+    // We add up all of these results to get the total number of remaining moves for
+    // the other players.
+    //
+    int nbOfRemainingMovesOtherPlayers = 0;
 
     for(int playerTurn = 0; playerTurn < static_cast<int>(m_players.size()); ++playerTurn)
     {
@@ -320,8 +341,6 @@ bool cxmodel::TieGameResolutionStrategy::CanPlayerWinVertical(const Player& p_pl
     }
 
     // Then we perform the check on the grid:
-
-    // Column to check:
     for(int columnIndex = 0; columnIndex <  m_nbColumns; ++columnIndex)
     {
         // Use these columns for starting point of the checks:
@@ -330,6 +349,7 @@ bool cxmodel::TieGameResolutionStrategy::CanPlayerWinVertical(const Player& p_pl
             bool isPlayFree = true;
 
             // Check only for the good inARow value:
+            int nbPiledDiscs = 0;
             for(int offset = 0; offset < m_inARowValue; ++offset)
             {
                 ASSERT(rowIndex + offset >= 0);
@@ -339,22 +359,35 @@ bool cxmodel::TieGameResolutionStrategy::CanPlayerWinVertical(const Player& p_pl
 
                 isPlayFree &= m_board.GetChip({row, column}) == p_player.GetChip() ||
                               m_board.GetChip({row, column}) == NO_CHIP;
+
+                if(m_board.GetChip({row, column}) == p_player.GetChip())
+                {
+                    ++nbPiledDiscs;
+                }
             }
 
-                // The following makes sure that even though a move is seen as free, there is
-                // enough free positions and remaining moves for the current player.
-                if(isPlayFree)
-                {
-                    const int  nbOfRemainingMovesTotal = m_board.GetNbPositions() - m_takenPositions.size();
-                    const bool isPlayerInColumn = IsPlayerPresentInColumn(p_player, columnIndex);
-                    const int  maxVerticalPositionForPlayer = isPlayerInColumn ? GetMaxVerticalPositionForPlayerInColumn(p_player, columnIndex): -1;
-                    const int  nbOfRemainingMovesInOtherColumns = nbOfRemainingMovesTotal - (m_nbRows - (maxVerticalPositionForPlayer + 1));
+            // We check here that even though there are enough moves left to the
+            // player to possibly win on the column. We take into account the
+            // moves already done (in previous turns) by the player:
+            const int  nbOfRemainingMovesTotal = m_board.GetNbPositions() - m_takenPositions.size();
+            isPlayFree &= (m_inARowValue - nbPiledDiscs <= nbOfRemainingMovesTotal - nbOfRemainingMovesOtherPlayers);
 
-                    // There should be enough room elswhere on the board to store all other players'
-                    // remaining moves, otherwhise the move will pile up on the critical column and
-                    // a win becomes impossible: the discs will alternate!
-                    isPlayFree &= (nbOfRemainingMovesOtherPlayers <= nbOfRemainingMovesInOtherColumns);
-                }
+            // The player may have enough moves left to possibly win, but we must also make
+            // sure other players have enough room in other columns to make their moves, otherwise
+            // there chips will pile up on the inspected player's chips and cancel the win:
+            if(isPlayFree)
+            {
+                const bool isPlayerInColumn = IsPlayerPresentInColumn(p_player, columnIndex);
+                const int  maxVerticalPositionForPlayer = isPlayerInColumn ? GetMaxVerticalPositionForPlayerInColumn(p_player, columnIndex): -1;
+                const int  nbOfRemainingMovesInOtherColumns = nbOfRemainingMovesTotal - (m_nbRows - (maxVerticalPositionForPlayer + 1));
+
+                // Other players minimal amount of moves needed to make sure the current
+                // player can still play all of its chips safely is computed here. It depends
+                // on the amount of moves already successfully piled by the inspected player
+                // on the column:
+                const int otherPlayersMinimalRequiredMoves = (m_players.size() - 1) * (m_inARowValue  - nbPiledDiscs - 1);
+                isPlayFree &= (otherPlayersMinimalRequiredMoves <= nbOfRemainingMovesInOtherColumns);
+            }
 
             // As soon as one play is still free for a win, we record it:
             canPlayerWin |= isPlayFree;
