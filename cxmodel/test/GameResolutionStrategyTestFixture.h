@@ -91,7 +91,7 @@ private:
         size_t GetMaximumGridWidth() const override {return 10u;};
         size_t GetMaximumInARowValue() const override {return 7u;};
         size_t GetMinimumNumberOfPlayers() const override {return 2u;};
-        size_t GetMaximumNumberOfPlayers() const override {return 3u;};
+        size_t GetMaximumNumberOfPlayers() const override {return 4u;};
     };
 
     const LimitsModelMock m_model;
