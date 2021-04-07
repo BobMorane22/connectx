@@ -69,6 +69,7 @@ OBJS_$(d) := $(d)/BoardTests.o \
              $(d)/StatusTests.o \
              $(d)/SubjectTestFixture.o \
              $(d)/SubjectTests.o \
+             $(d)/Tie8By7BoardGameStrategyTests.o \
              $(d)/TieClassicGameResolutionStrategyTests.o \
              $(d)/TieSquareBoardGameStrategyTests.o \
              $(d)/WinClassicGameResolutionStrategyTests.o \
