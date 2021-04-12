@@ -336,6 +336,27 @@ cxmodel::Status cxgui::MainWindowPresenter::ArePlayersInformationValid(const std
    return cxmodel::MakeSuccess();
 }
 
+cxmodel::Status cxgui::MainWindowPresenter::IsNewGameWinnable(size_t p_inARowValue,
+                                                              size_t p_nbOfPlayers,
+                                                              size_t p_boardHeight,
+                                                              size_t p_boardWidth) const
+{
+    // Are there enough locations on the board so that the minimum amount
+    // of moves required by a user to win is reachable?
+    const size_t nbLocations = p_boardHeight * p_boardWidth;
+    if(nbLocations < (p_nbOfPlayers - 1u)*(p_inARowValue - 1u) + p_inARowValue)
+    {
+        return cxmodel::MakeError("There is not enough room on the board. Adjust the number of players or the in-a-row value.");
+    }
+
+    // Can the in-a-row value fit on the board?
+    if(p_inARowValue > std::max<size_t>(p_boardHeight, p_boardWidth))
+    {
+        return cxmodel::MakeError("The in-a-row value does not fit on the board.");
+    }
+
+    return cxmodel::MakeSuccess();
+}
 
 /**************************************************************************************************
  *

@@ -137,6 +137,10 @@ public:
     cxmodel::Status AreBoardDimensionsValid(size_t p_boardHeight, size_t p_boardWidth) override = 0;
     cxmodel::Status ArePlayersInformationValid(const std::vector<std::string>& p_playerNames,
                                                const std::vector<cxmodel::ChipColor>& p_chipColors) override = 0;
+    cxmodel::Status IsNewGameWinnable(size_t p_inARowValue,
+                                      size_t p_nbOfPlayers,
+                                      size_t p_boardHeight,
+                                      size_t p_boardWidth) const override = 0;
 
 ///@}
 

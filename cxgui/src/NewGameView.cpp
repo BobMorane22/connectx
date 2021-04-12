@@ -269,6 +269,13 @@ void cxgui::NewGameView::OnStart()
         return;
     }
 
+    const auto newGameIsWinnableStatus = m_presenter.IsNewGameWinnable(inARowValue, playerNames.size(), boardHeight, boardWidth);
+    if(!newGameIsWinnableStatus.IsSuccess())
+    {
+        DisplayWarningDialog(*parent, newGameIsWinnableStatus.GetMessage());
+        return;
+    }
+
     // Start game:
     cxmodel::NewGameInformation gameInformation;
 

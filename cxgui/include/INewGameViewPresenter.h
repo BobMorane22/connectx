@@ -239,6 +239,22 @@ public:
     virtual cxmodel::Status ArePlayersInformationValid(const std::vector<std::string>& p_playerNames,
                                                        const std::vector<cxmodel::ChipColor>& p_chipColors) = 0;
 
+    /******************************************************************************************//**
+     * @brief Checks if the new game created by the user is winnable (i.e. do the parameters
+     *        make it possible for the game to be winnable).
+     *
+     * @param p_inARowValue The in-a-row value for the new game.
+     * @param p_nbOfPlayers Then number of players for the new game.
+     * @param p_boardHeight The board height for the new game.
+     * @param p_boardWidth  The board width for the new game.
+     *
+     * @return `Success` if the game is winnable, `Error` otherwise.
+     *
+     ********************************************************************************************/
+    virtual cxmodel::Status IsNewGameWinnable(size_t p_inARowValue,
+                                              size_t p_nbOfPlayers,
+                                              size_t p_boardHeight,
+                                              size_t p_boardWidth) const = 0;
 };
 
 }
