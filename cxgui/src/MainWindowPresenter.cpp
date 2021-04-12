@@ -278,7 +278,7 @@ cxmodel::Status cxgui::MainWindowPresenter::IsInARowValueValid(size_t p_inARowVa
     return cxmodel::MakeSuccess();
 }
 
-cxmodel::Status cxgui::MainWindowPresenter::AreBoardDimensionsValid(size_t p_boardHeight, size_t p_boardWidth)
+cxmodel::Status cxgui::MainWindowPresenter::AreBoardDimensionsValid(size_t p_boardHeight, size_t p_boardWidth) const
 {
     if(p_boardHeight < GetNewGameViewMinBoardHeightValue() ||
        p_boardHeight > GetNewGameViewMaxBoardHeightValue())
@@ -300,7 +300,7 @@ cxmodel::Status cxgui::MainWindowPresenter::AreBoardDimensionsValid(size_t p_boa
 }
 
 cxmodel::Status cxgui::MainWindowPresenter::ArePlayersInformationValid(const std::vector<std::string>& p_playerNames,
-                                                                       const std::vector<cxmodel::ChipColor>& p_chipColors)
+                                                                       const std::vector<cxmodel::ChipColor>& p_chipColors) const
 {
     // Player names (should not be empty):
     const bool emptyNamesExist = std::any_of(p_playerNames.cbegin(),

@@ -225,7 +225,7 @@ public:
      * @return `Success` if both height and width are valid, `Error` otherwise.
      *
      ********************************************************************************************/
-    virtual cxmodel::Status AreBoardDimensionsValid(size_t p_boardHeight, size_t p_boardWidth) = 0;
+    virtual cxmodel::Status AreBoardDimensionsValid(size_t p_boardHeight, size_t p_boardWidth) const = 0;
 
     /******************************************************************************************//**
      * @brief Checks if the player information passed as arguments are valid.
@@ -237,7 +237,7 @@ public:
      *
      ********************************************************************************************/
     virtual cxmodel::Status ArePlayersInformationValid(const std::vector<std::string>& p_playerNames,
-                                                       const std::vector<cxmodel::ChipColor>& p_chipColors) = 0;
+                                                       const std::vector<cxmodel::ChipColor>& p_chipColors) const = 0;
 
     /******************************************************************************************//**
      * @brief Checks if the new game created by the user is winnable (i.e. do the parameters

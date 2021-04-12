@@ -91,9 +91,9 @@ public:
     size_t GetNewGameViewMaxBoardHeightValue() const override;
 
     cxmodel::Status IsInARowValueValid(size_t p_inARowValue) const override;
-    cxmodel::Status AreBoardDimensionsValid(size_t p_boardHeight, size_t p_boardWidth) override;
+    cxmodel::Status AreBoardDimensionsValid(size_t p_boardHeight, size_t p_boardWidth) const override;
     cxmodel::Status ArePlayersInformationValid(const std::vector<std::string>& p_playerNames,
-                                               const std::vector<cxmodel::ChipColor>& p_chipColors) override;
+                                               const std::vector<cxmodel::ChipColor>& p_chipColors) const override;
     cxmodel::Status IsNewGameWinnable(size_t p_inARowValue,
                                       size_t p_nbOfPlayers,
                                       size_t p_boardHeight,
