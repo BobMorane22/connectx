@@ -392,3 +392,58 @@ TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/ArePlayersInformationValid_N
     const auto status = GetNewGameViewPresenter().ArePlayersInformationValid(playerNames, chipColors);
     ASSERT_FALSE(status.IsSuccess());
 }
+
+TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/IsNewGameWinnable_TooManyPlayersForTheBoard_ReturnsError)
+{
+    const size_t inARowValue = 7u; // Too large...
+    const size_t nbOfPlayers = 7u; // and too many. Does not fit the board.
+    const size_t boardHeight = 6u;
+    const size_t boardWidth  = 7u;
+
+    const auto status = GetNewGameViewPresenter().IsNewGameWinnable(inARowValue, nbOfPlayers, boardHeight, boardWidth);
+    ASSERT_FALSE(status.IsSuccess());
+}
+
+TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/IsNewGameWinnable_InARowValueTooBig_ReturnsError)
+{
+    const size_t inARowValue = 8u; // Too large.
+    const size_t nbOfPlayers = 2u;
+    const size_t boardHeight = 6u;
+    const size_t boardWidth  = 7u;
+
+    const auto status = GetNewGameViewPresenter().IsNewGameWinnable(inARowValue, nbOfPlayers, boardHeight, boardWidth);
+    ASSERT_FALSE(status.IsSuccess());
+}
+
+TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/IsNewGameWinnable_JustEnoughPlayersForTheBoardAndInARowFits_ReturnsSuccess)
+{
+    const size_t inARowValue = 7u;
+    const size_t nbOfPlayers = 6u; // Just enough
+    const size_t boardHeight = 6u;
+    const size_t boardWidth  = 7u;
+
+    const auto status = GetNewGameViewPresenter().IsNewGameWinnable(inARowValue, nbOfPlayers, boardHeight, boardWidth);
+    ASSERT_TRUE(status.IsSuccess());
+}
+
+TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/IsNewGameWinnable_TooManyPlayersForTheBoard_TooManyPlayersOrInnapropriateInARowMessageReturned)
+{
+    const size_t inARowValue = 7u; // Too large...
+    const size_t nbOfPlayers = 7u; // and too many. Does not fit the board.
+    const size_t boardHeight = 6u;
+    const size_t boardWidth  = 7u;
+
+    const auto status = GetNewGameViewPresenter().IsNewGameWinnable(inARowValue, nbOfPlayers, boardHeight, boardWidth);
+    ASSERT_EQ(status.GetMessage(), "There is not enough room on the board. Adjust the number of players or the in-a-row value.");
+}
+
+TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/IsNewGameWinnable_InARowValueTooBig_InvalidInARowMessageReturned)
+{
+    const size_t inARowValue = 8u; // Too large.
+    const size_t nbOfPlayers = 2u;
+    const size_t boardHeight = 6u;
+    const size_t boardWidth  = 7u;
+
+    const auto status = GetNewGameViewPresenter().IsNewGameWinnable(inARowValue, nbOfPlayers, boardHeight, boardWidth);
+    ASSERT_EQ(status.GetMessage(), "The in-a-row value does not fit on the board.");
+}
