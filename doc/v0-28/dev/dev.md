@@ -1,4 +1,4 @@
-# Connect X v0.28 (Month DD, YYYY)
+# Connect X v0.28 (April 25, 2021)
 
 ## New features
 
@@ -74,8 +74,3 @@ following is equivalent to the above examples to the eyes of `ValidateGame`:
 |1|2||||||
 ```
 Spaces are used only to help readibility.
-
-
-## Feature 2
-
-Description for feature 2 here...
