@@ -73,6 +73,7 @@ OBJS_$(d) := $(d)/BoardTests.o \
              $(d)/TieClassicGameResolutionStrategyTests.o \
              $(d)/TieLegacyGameResolutionStrategyTests.o \
              $(d)/TieSquareBoardGameStrategyTests.o \
+             $(d)/Win8By7BoardGameStrategyTests.o \
              $(d)/WinClassicGameResolutionStrategyTests.o \
              $(d)/WinSquareBoardGameStrategyTests.o \
              cxunit/libcxunit.a \
