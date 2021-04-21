@@ -69,13 +69,15 @@ OBJS_$(d) := $(d)/BoardTests.o \
              $(d)/StatusTests.o \
              $(d)/SubjectTestFixture.o \
              $(d)/SubjectTests.o \
-             $(d)/Tie8By7BoardGameStrategyTests.o \
+             $(d)/Tie8By7BoardGameResolutionStrategyTests.o \
              $(d)/TieClassicGameResolutionStrategyTests.o \
+             $(d)/TieEdgeCasesGameResolutionStrategyTests.o \
              $(d)/TieLegacyGameResolutionStrategyTests.o \
-             $(d)/TieSquareBoardGameStrategyTests.o \
-             $(d)/Win8By7BoardGameStrategyTests.o \
+             $(d)/TieSquareBoardGameResolutionStrategyTests.o \
+             $(d)/Win8By7BoardGameResolutionStrategyTests.o \
              $(d)/WinClassicGameResolutionStrategyTests.o \
-             $(d)/WinSquareBoardGameStrategyTests.o \
+             $(d)/WinEdgeCasesGameResolutionStrategyTests.o \
+             $(d)/WinSquareBoardGameResolutionStrategyTests.o \
              cxunit/libcxunit.a \
              cxmodel/libcxmodel.a
 
