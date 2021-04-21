@@ -337,6 +337,7 @@ bool ValidateGameInternal(const std::vector<cxmodel::Player>& p_players,
 
     // Game validation:
     size_t index = 0u;
+    bool winLocated = false;
     for(const auto& move : p_boardData.m_moves)
     {
         DropChipInternal(move.m_column, p_players[index].GetChip(), board, takenPositions);
@@ -353,7 +354,9 @@ bool ValidateGameInternal(const std::vector<cxmodel::Player>& p_players,
                 return false;
             }
 
-            if(tieStrategy.Handle(p_players[index]))
+            winLocated = true;
+
+            if(!winLocated && tieStrategy.Handle(p_players[index]))
             {
                 tieStrategy.Handle(p_players[index]);
                 ADD_FAILURE() << "Unexpected tie at turn " << move.m_turn << ", but a win was expected." << std::endl;
