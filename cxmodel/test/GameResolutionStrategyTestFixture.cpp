@@ -324,9 +324,6 @@ bool ValidateGameInternal(const std::vector<cxmodel::Player>& p_players,
     EXPECT_TRUE(inARow >= p_model.GetMinimumInARowValue());
     EXPECT_TRUE(inARow <= p_model.GetMaximumInARowValue());
 
-    const size_t nbMoves = p_boardData.m_moves.size();
-    EXPECT_TRUE(nbMoves >= (nbPlayers * inARow - (nbPlayers - 1u)));
-
     // Game creation:
     cxmodel::Board board{p_boardData.m_nbRows, p_boardData.m_nbColumns, p_model};
     std::vector<cxmodel::IBoard::Position> takenPositions;
