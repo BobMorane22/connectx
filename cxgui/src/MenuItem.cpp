@@ -53,6 +53,9 @@ std::string cxgui::MakeLabel(MenuItem p_menuItem)
         case MenuItem::REDO:
             return "Redo";
 
+        case MenuItem::CONTENTS:
+            return "Contents";
+
         default:                   // LCOV_EXCL_LINE
             return "";             // LCOV_EXCL_LINE
     }

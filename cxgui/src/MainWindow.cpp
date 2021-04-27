@@ -97,6 +97,7 @@ void cxgui::MainWindow::ConfigureWidgets()
     m_redoMenuItem.set_label(m_presenter.GetMenuLabel(MenuItem::REDO));
     m_helpMenuItem.set_label(m_presenter.GetMenuLabel(MenuItem::HELP));
     m_aboutMenuItem.set_label(m_presenter.GetMenuLabel(MenuItem::ABOUT));
+    m_contentsMenuItem.set_label(m_presenter.GetMenuLabel(MenuItem::CONTENTS));
 
     m_model.Attach(m_statusbarPresenter.get());
     m_statusbarPresenter->Attach(m_statusbar.get());
@@ -110,6 +111,7 @@ void cxgui::MainWindow::ConfigureSignalHandlers()
     m_redoMenuItem.signal_activate().connect([this]{OnRedo();});
     m_quitMenuItem.signal_activate().connect([this](){m_window.close();});
     m_aboutMenuItem.signal_activate().connect([this](){OnCreateAboutWindow();});
+    m_contentsMenuItem.signal_activate().connect([this](){OnHelpContentsRequested();});
 }
 
 int cxgui::MainWindow::Show()
@@ -230,6 +232,12 @@ void cxgui::MainWindow::RegisterMenuBar()
                                    Gdk::ModifierType::CONTROL_MASK,
                                    Gtk::ACCEL_VISIBLE);
 
+    m_aboutMenuItem.add_accelerator("activate",
+                                    acceleratorGroup,
+                                    GDK_KEY_F1,
+                                    ~Gdk::ModifierType::MODIFIER_MASK,
+                                    Gtk::ACCEL_VISIBLE);
+
     m_menubar.append(m_gameMenuItem);
     m_menubar.append(m_helpMenuItem);
     m_gameMenuItem.set_submenu(m_gameMenu);
@@ -240,6 +248,7 @@ void cxgui::MainWindow::RegisterMenuBar()
     m_gameMenu.append(m_quitMenuItem);
     m_helpMenuItem.set_submenu(m_helpMenu);
     m_helpMenu.append(m_aboutMenuItem);
+    m_helpMenu.append(m_contentsMenuItem);
 
     m_newGameMenuItem.set_sensitive(m_presenter.IsNewGamePossible());
     m_reinitializeMenuItem.set_sensitive(m_presenter.IsCurrentGameReinitializationPossible());
@@ -279,6 +288,12 @@ void cxgui::MainWindow::OnCreateAboutWindow()
     }
 
     m_about->Show();
+}
+
+#include <iostream>
+void cxgui::MainWindow::OnHelpContentsRequested()
+{
+    std::cout << "Help contents requested..." << std::endl;
 }
 
 void cxgui::MainWindow::OnNewGame()
