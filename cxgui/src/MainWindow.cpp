@@ -96,8 +96,8 @@ void cxgui::MainWindow::ConfigureWidgets()
     m_undoMenuItem.set_label(m_presenter.GetMenuLabel(MenuItem::UNDO));
     m_redoMenuItem.set_label(m_presenter.GetMenuLabel(MenuItem::REDO));
     m_helpMenuItem.set_label(m_presenter.GetMenuLabel(MenuItem::HELP));
-    m_aboutMenuItem.set_label(m_presenter.GetMenuLabel(MenuItem::ABOUT));
     m_contentsMenuItem.set_label(m_presenter.GetMenuLabel(MenuItem::CONTENTS));
+    m_aboutMenuItem.set_label(m_presenter.GetMenuLabel(MenuItem::ABOUT));
 
     m_model.Attach(m_statusbarPresenter.get());
     m_statusbarPresenter->Attach(m_statusbar.get());
@@ -110,8 +110,8 @@ void cxgui::MainWindow::ConfigureSignalHandlers()
     m_undoMenuItem.signal_activate().connect([this]{OnUndo();});
     m_redoMenuItem.signal_activate().connect([this]{OnRedo();});
     m_quitMenuItem.signal_activate().connect([this](){m_window.close();});
-    m_aboutMenuItem.signal_activate().connect([this](){OnCreateAboutWindow();});
     m_contentsMenuItem.signal_activate().connect([this](){OnHelpContentsRequested();});
+    m_aboutMenuItem.signal_activate().connect([this](){OnCreateAboutWindow();});
 }
 
 int cxgui::MainWindow::Show()
@@ -247,8 +247,8 @@ void cxgui::MainWindow::RegisterMenuBar()
     m_gameMenu.append(m_redoMenuItem);
     m_gameMenu.append(m_quitMenuItem);
     m_helpMenuItem.set_submenu(m_helpMenu);
-    m_helpMenu.append(m_aboutMenuItem);
     m_helpMenu.append(m_contentsMenuItem);
+    m_helpMenu.append(m_aboutMenuItem);
 
     m_newGameMenuItem.set_sensitive(m_presenter.IsNewGamePossible());
     m_reinitializeMenuItem.set_sensitive(m_presenter.IsCurrentGameReinitializationPossible());
@@ -267,6 +267,12 @@ void cxgui::MainWindow::RegisterStatusBar()
 
     POSTCONDITION(m_statusbarPresenter);
     POSTCONDITION(m_statusbar);
+}
+
+#include <iostream>
+void cxgui::MainWindow::OnHelpContentsRequested()
+{
+    std::cout << "Help contents requested..." << std::endl;
 }
 
 void cxgui::MainWindow::OnCreateAboutWindow()
@@ -288,12 +294,6 @@ void cxgui::MainWindow::OnCreateAboutWindow()
     }
 
     m_about->Show();
-}
-
-#include <iostream>
-void cxgui::MainWindow::OnHelpContentsRequested()
-{
-    std::cout << "Help contents requested..." << std::endl;
 }
 
 void cxgui::MainWindow::OnNewGame()

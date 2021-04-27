@@ -38,23 +38,23 @@ std::string cxgui::MakeLabel(MenuItem p_menuItem)
         case MenuItem::REINITIALIZE_GAME:
             return "Reinitialize";
 
-        case MenuItem::QUIT:
-            return "Quit";
-
-        case MenuItem::HELP:
-            return "Help";
-
-        case MenuItem::ABOUT:
-            return "About";
-
         case MenuItem::UNDO:
             return "Undo";
 
         case MenuItem::REDO:
             return "Redo";
 
+        case MenuItem::QUIT:
+            return "Quit";
+
+        case MenuItem::HELP:
+            return "Help";
+
         case MenuItem::CONTENTS:
             return "Contents";
+
+        case MenuItem::ABOUT:
+            return "About";
 
         default:                   // LCOV_EXCL_LINE
             return "";             // LCOV_EXCL_LINE

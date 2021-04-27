@@ -134,8 +134,8 @@ private:
     void OnReinitializeCurrentGame();
     void OnUndo();
     void OnRedo();
-    void OnCreateAboutWindow();
     void OnHelpContentsRequested();
+    void OnCreateAboutWindow();
 
     void CreateGameResolutionWindow(cxmodel::NotificationContext p_context);
 
@@ -165,8 +165,8 @@ private:
     Gtk::ImageMenuItem m_quitMenuItem{Gtk::Stock::QUIT};
     Gtk::MenuItem m_helpMenuItem;
     Gtk::Menu m_helpMenu;
-    Gtk::ImageMenuItem m_aboutMenuItem{Gtk::Stock::ABOUT};
     Gtk::ImageMenuItem m_contentsMenuItem{Gtk::Stock::HELP}; 
+    Gtk::ImageMenuItem m_aboutMenuItem{Gtk::Stock::ABOUT};
 
     // Views:
     const int m_viewLeft;
