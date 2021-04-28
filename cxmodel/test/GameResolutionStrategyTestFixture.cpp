@@ -172,7 +172,7 @@ BoardConfigurationData ExtractBoardConfigurationData(const std::string& p_asciiG
             }
 
             // We cast the remaining information to extract the turn:
-            size_t turn;
+            size_t turn = 0u;
             try
             {
                 std::size_t nbProcessedChars = 0u;
