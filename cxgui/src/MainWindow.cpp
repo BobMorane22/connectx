@@ -269,10 +269,23 @@ void cxgui::MainWindow::RegisterStatusBar()
     POSTCONDITION(m_statusbar);
 }
 
-#include <iostream>
 void cxgui::MainWindow::OnHelpContentsRequested()
 {
-    std::cout << "Help contents requested..." << std::endl;
+    const guint32 timestamp = gtk_get_current_event_time();
+    GError* error = nullptr;
+
+    // Trigger the Gnome help system:
+    Gtk::Window* window = dynamic_cast<Gtk::Window*>(&m_window);
+    const bool status = gtk_show_uri_on_window(window->gobj(),
+                                               "help:connectx",
+                                               timestamp,
+                                               &error);
+
+    if(!status)
+    {
+        ASSERT_ERROR_MSG(error->message);
+        return;
+    }
 }
 
 void cxgui::MainWindow::OnCreateAboutWindow()

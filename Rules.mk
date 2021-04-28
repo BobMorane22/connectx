@@ -74,6 +74,14 @@ dir := coverage
 include $(dir)/Rules.mk
 endif
 
+### User documentation.
+#
+# To de removed as soon as TG-182 is completed.
+#
+user-doc:
+	@echo ~~~ Installing user documentation ~~~
+	bash -c ./tools/script/installHelp.sh
+
 
 ### General directory independent rules
 #
@@ -96,7 +104,7 @@ endif
 # subdirectories.
 #
 .PHONY: targets
-targets: $(TGT_BIN) $(TGT_SBIN) $(TGT_ETC) $(TGT_LIB)
+targets: $(TGT_BIN) $(TGT_SBIN) $(TGT_ETC) $(TGT_LIB) user-doc
 
 .PHONY: clean
 clean:
