@@ -1,0 +1,22 @@
+<page xmlns="http://projectmallard.org/1.0/"
+      type="topic"
+      id="connectx-intro">
+
+<title>Connect X introduction</title>
+
+<section id="sec-intro">
+<title>What is Connect X</title>
+
+<p>Connect X is a parametrizable Connect 4 clone.</p>
+
+<p>In Connect 4, two players play against each other on
+a 6 by 7 board. The first to line up four chips wins. In
+Connect X, not only can more than two players play against
+each other, but many board dimensions are available as
+well as many in-a-row values.</p>
+
+<p>Enjoy!</p>
+
+</section>
+
+</page>

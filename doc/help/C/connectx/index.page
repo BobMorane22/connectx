@@ -1,5 +1,10 @@
 <page xmlns="http://projectmallard.org/1.0/"
       type="guide"
       id="index">
-<title>Example help</title>
+
+<title>Connect X</title>
+
+<p>Welcome to the Connect X help guide. For an introduction on Connect X,
+visit the <link xref="connectx-intro">Connect X introduction</link> page.</p>
+
 </page>
