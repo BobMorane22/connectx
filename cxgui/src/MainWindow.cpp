@@ -276,6 +276,8 @@ void cxgui::MainWindow::OnHelpContentsRequested()
 
     // Trigger the Gnome help system:
     Gtk::Window* window = dynamic_cast<Gtk::Window*>(&m_window);
+    IF_CONDITION_NOT_MET_DO(window, return;);
+
     const bool status = gtk_show_uri_on_window(window->gobj(),
                                                "help:connectx",
                                                timestamp,
