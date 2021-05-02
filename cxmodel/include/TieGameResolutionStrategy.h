@@ -81,6 +81,9 @@ private:
     int GetNbOfMovesSinceLastPlay(const Player& p_player, const Player& p_activePlayer) const;
     bool IsPlayerPresentInColumn(const Player& p_player, int p_column) const;
     int GetPlayerTurn(const Player& p_player, const Player& p_activePlayer) const;
+    size_t GetNbAvailableFreeMovesInColumn(size_t p_columnIndex,
+                                           size_t p_fromRowIndex,
+                                           size_t p_toRowIndex) const;
 
     const IBoard& m_board;
     const int m_inARowValue;
