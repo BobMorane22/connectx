@@ -345,13 +345,13 @@ bool cxmodel::TieGameResolutionStrategy::CanPlayerWinHorizontal(const Player& p_
             // might have to drop its chip on winning path, invalidating it.
             if(isPlayFree)
             {
-                // First, we calculate the available moves in the column not
+                // We calculate the available moves in the column not
                 // impacted by the winning path (i.e. outside of it):
                 size_t nbFreeMovesInUnusedColumns = 0u;
 
                 // First, the columns before the winning path:
                 const size_t lastColumnIndexBeforeFreePlay = static_cast<size_t>(columnIndex);
-                for(size_t beforeIndex = 0u; beforeIndex < lastColumnIndexBeforeFreePlay + 1u; ++beforeIndex)
+                for(size_t beforeIndex = 0u; beforeIndex < lastColumnIndexBeforeFreePlay; ++beforeIndex)
                 {
                     const size_t lowerRowIndex = 0u;
                     const size_t upperRowIndex = static_cast<size_t>(m_nbRows) - 1u;
@@ -368,31 +368,30 @@ bool cxmodel::TieGameResolutionStrategy::CanPlayerWinHorizontal(const Player& p_
                 }
 
                 // At this point, all free spaces in columns that do not cross the winning
-                // path are calculated. There remaines the free spaces over and under the
+                // path are calculated. There remains the free spaces over and under the
                 // winning path to consider.
                 size_t nbOfFreePlaysBelowAndAboveWinPath = 0u;
 
                 // First we compute the number of available moves under the winning path's row:
-                for(int offset = columnIndex; offset < columnIndex + m_inARowValue; ++offset)
+                for(int column = columnIndex; column < columnIndex + m_inARowValue; ++column)
                 {
                     const size_t lowerRowIndex = 0u;
                     const size_t upperRowIndex = rowIndex > 0 ? static_cast<size_t>(rowIndex) - 1u : 0;
-                    nbOfFreePlaysBelowAndAboveWinPath += GetNbAvailableFreeMovesInColumn(offset, lowerRowIndex, upperRowIndex);
+                    nbOfFreePlaysBelowAndAboveWinPath += GetNbAvailableFreeMovesInColumn(column, lowerRowIndex, upperRowIndex);
                 }
 
                 // Then, we compute the number of available moves over (on top
                 // of) the winning path:
-                for(int offset = columnIndex; offset < columnIndex + m_inARowValue; ++offset)
+                for(int column = columnIndex; column < columnIndex + m_inARowValue - 1; ++column)
                 {
                     const size_t lowerRowIndex = std::min(static_cast<size_t>(rowIndex) + 1u, static_cast<size_t>(m_nbRows) - 1u);
                     const size_t upperRowIndex = static_cast<size_t>(m_nbRows) - 1u;
-                    nbOfFreePlaysBelowAndAboveWinPath += GetNbAvailableFreeMovesInColumn(offset, lowerRowIndex, upperRowIndex);
+                    nbOfFreePlaysBelowAndAboveWinPath += GetNbAvailableFreeMovesInColumn(column, lowerRowIndex, upperRowIndex);
                 }
 
                 // Finally, we compute the number of moves that players other than
                 // the expected player have to make before the win can occur:
-                const size_t nbOfMovesLeftForOtherPlayersBeforeWin = m_inARowValue - nbOfEmptyDiscsInRow - 1u;
-                const size_t nbOfOtherPlayersFreeMovesLeft = (nbOfMovesLeftForOtherPlayersBeforeWin * (m_players.size() - 1u));
+                const size_t nbOfOtherPlayersFreeMovesLeft = (nbOfEmptyDiscsInRow - 1) * (m_players.size() - 1u);
                 
                 // We check the play really is free:
                 isPlayFree &= (nbOfOtherPlayersFreeMovesLeft <= nbFreeMovesInUnusedColumns + nbOfFreePlaysBelowAndAboveWinPath);

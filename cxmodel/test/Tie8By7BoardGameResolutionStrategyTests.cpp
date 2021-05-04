@@ -320,6 +320,9 @@ TEST_F(HeightBySevenFourPlayersGameTestFixture, /*DISABLED_*/Handle_HorizontalTi
     //      to the chips already dropped, the free positions and the
     //      in-a-row value.
     //   2. Players have enough moves left to possibly win.
+    //   3. For every possible wins, other players (the ones that
+    //      do not win) have enough room around the winning move to
+    //      make all their moves leading to it.
     //
     // This means that some really early tie scenarios, such as the
     // following, are not detected:
@@ -342,7 +345,9 @@ TEST_F(HeightBySevenFourPlayersGameTestFixture, /*DISABLED_*/Handle_HorizontalTi
     // This limitation is not a no-go because ties are not detected too
     // early, but should still be addressed in time. See TG-215 for more
     // information.
-
+    //
+    // Why a tie is detected at move 37?
+    //
     // At this point all players have 5 moves left, which is not
     // enough in any scenario to win here. This is why a tie
     // occurs:
@@ -361,18 +366,23 @@ TEST_F(HeightBySevenFourPlayersGameTestFixture, /*DISABLED_*/Handle_HorizontalTi
 
 TEST_F(HeightBySevenFourPlayersGameTestFixture, /*DISABLED_*/Handle_HorizontalTie2_ReturnsTrue)
 {
-    // At this point all players only have 1 or 0 move left, which is not
-    // enough in any scenario to win here. This is why a tie occurs.
-    // See TG-215.
+    // Why a tie is detected at move 38?
+    //
+    // At this point for every possible win, there is not enough
+    // room for other players (the ones loosing) to drop their
+    // chips. Hence, even if six winning chips could theoritically
+    // be aligned, in practice, it will never happen.
+    //
+    // See TG-215 for more information.
     std::ostringstream game;
-    game << "| 38 | 42 | 46 | 50 |     |    | 47 |" << std::endl;
-    game << "| 37 | 41 | 45 | 49 |     |    | 43 |" << std::endl;
-    game << "| 36 | 40 | 44 | 48 | 51t |    | 39 |" << std::endl;
-    game << "| 31 | 32 | 29 | 33 | 30  | 34 | 35 |" << std::endl;
-    game << "| 28 | 27 | 26 | 25 | 24  | 23 | 22 |" << std::endl;
-    game << "| 15 | 16 | 17 | 18 | 19  | 20 | 21 |" << std::endl;
-    game << "| 8  | 9  | 10 | 11 | 12  | 13 | 14 |" << std::endl;
-    game << "| 1  | 2  | 3  | 4  | 5   | 6  | 7  |";
+    game << "| 38t |    |    |    |    |    |    |" << std::endl;
+    game << "| 37  |    |    |    |    |    |    |" << std::endl;
+    game << "| 36  |    |    |    |    |    |    |" << std::endl;
+    game << "| 31  | 32 | 29 | 33 | 30 | 34 | 35 |" << std::endl;
+    game << "| 28  | 27 | 26 | 25 | 24 | 23 | 22 |" << std::endl;
+    game << "| 15  | 16 | 17 | 18 | 19 | 20 | 21 |" << std::endl;
+    game << "| 8   | 9  | 10 | 11 | 12 | 13 | 14 |" << std::endl;
+    game << "| 1   | 2  | 3  | 4  | 5  | 6  | 7  |";
 
     ASSERT_TRUE(ValidateGame(CreatePlayersList(), 6u, game.str()));
 }
