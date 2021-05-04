@@ -146,7 +146,7 @@ TEST_F(SquareBoardThreePlayersGameTestFixture, /*DISABLED_*/Handle_RightAscendin
     // does not occur here (he thinks the third players still has a
     // shot), but at the next turn.
     //
-    // See TG- for more details.
+    // See TG-215 for more details.
 
     std::ostringstream game;
     game << "| 42 | 43 | 44 | 45 | 46 | 47 |     |" << std::endl;
