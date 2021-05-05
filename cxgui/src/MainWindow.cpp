@@ -232,11 +232,8 @@ void cxgui::MainWindow::RegisterMenuBar()
                                    Gdk::ModifierType::CONTROL_MASK,
                                    Gtk::ACCEL_VISIBLE);
 
-    m_aboutMenuItem.add_accelerator("activate",
-                                    acceleratorGroup,
-                                    GDK_KEY_F1,
-                                    ~Gdk::ModifierType::MODIFIER_MASK,
-                                    Gtk::ACCEL_VISIBLE);
+    // Note that the <F1> accelerator is enabled by default for the
+    // contents menu, which launches the Gnome help browser.
 
     m_menubar.append(m_gameMenuItem);
     m_menubar.append(m_helpMenuItem);
