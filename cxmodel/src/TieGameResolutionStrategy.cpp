@@ -32,17 +32,30 @@
 namespace
 {
 
+// A transparent chip is used to represent the absence of a chip.
 const cxmodel::Disc NO_CHIP = cxmodel::Disc::MakeTransparentDisc();
 
 } // namespace
 
+/**************************************************************************************************
+ * @brief Constructor.
+ *
+ * @param p_board
+ *      The board in which chips are dropped.
+ * @param p_inARowValue
+ *      The in-a-row value for the game.
+ * @param p_players
+ *      A list of all players.
+ * @param p_takenPositions
+ *      A list of all positions on the board at which chips have been dropped.
+ *
+ *************************************************************************************************/
 cxmodel::TieGameResolutionStrategy::TieGameResolutionStrategy(const IBoard& p_board,
                                                               size_t p_inARowValue,
                                                               const std::vector<Player>& p_players,
                                                               const std::vector<IBoard::Position>& p_takenPositions)
 : m_board{p_board}
-, m_inARowValue(p_inARowValue)
-, m_players{p_players}
+, m_inARowValue(p_inARowValue) , m_players{p_players}
 , m_takenPositions{p_takenPositions}
 , m_nbRows(m_board.GetNbRows())
 , m_nbColumns(m_board.GetNbColumns())
@@ -53,6 +66,19 @@ cxmodel::TieGameResolutionStrategy::TieGameResolutionStrategy(const IBoard& p_bo
     PRECONDITION(m_players.size() >= 2);
 }
 
+/**************************************************************************************************
+ * @brief Handles the game resolution (tie).
+ *
+ * @param p_activePlayer
+ *      The active player. Note that this does not represent the player that just drop the last
+ *      chip in the board (this player is no longer the active player). It represents the player
+ *      that is active after the chip was dropped. For example, if player A just dropped a chip,
+ *      it is now player B which is the active player.
+ *
+ * @return
+ *      `true` if a tie is detected, `false` otherwise.
+ *
+ *************************************************************************************************/
 bool cxmodel::TieGameResolutionStrategy::Handle(const Player& p_activePlayer) const
 {
     if(!PRECONDITION(std::find(m_players.cbegin(), m_players.cend(), p_activePlayer) != m_players.cend()))
@@ -65,6 +91,19 @@ bool cxmodel::TieGameResolutionStrategy::Handle(const Player& p_activePlayer) co
     return IsDraw(p_activePlayer);
 }
 
+/**************************************************************************************************
+ * @brief Checks if a game is a draw.
+ *
+ * @param p_activePlayer
+ *      The active player. Note that this does not represent the player that just drop the last
+ *      chip in the board (this player is no longer the active player). It represents the player
+ *      that is active after the chip was dropped. For example, if player A just dropped a chip,
+ *      it is now player B which is the active player.
+ *
+ * @return
+ *      `true` if a tie is detected, `false` otherwise.
+ *
+ *************************************************************************************************/
 bool cxmodel::TieGameResolutionStrategy::IsDraw(const Player& p_activePlayer) const
 {
     if(m_takenPositions.size() == m_board.GetNbPositions())
@@ -100,15 +139,17 @@ bool cxmodel::TieGameResolutionStrategy::IsDraw(const Player& p_activePlayer) co
 }
 
 /**************************************************************************************************
- * Computes the number of remaining possible moves a player has from the numbers of moves already
- * concluded in the game.
+ * @brief Computes the number of remaining possible moves a player has from the numbers of moves
+ *        already concluded in the game.
  *
- * @param p_player             The player for which we want to know the current count of remaining
- *                             available moves.
- * @param p_nbOfCompletedMoves The number of moves completed at the point in the game for which
- *                             the number of remaining moves needs to be known.
+ * @param p_player
+ *      The player for which we want to know the current count of remaining available moves.
+ * @param p_nbOfCompletedMoves
+ *      The number of moves completed at the point in the game for which the number of remaining
+ *      moves needs to be known.
  *
- * @return The number of remaining moves for the player.
+ * @return
+ *      The number of remaining moves for the player.
  *
  *************************************************************************************************/
 int cxmodel::TieGameResolutionStrategy::GetNbOfRemainingMoves(const Player& p_player, const int p_nbOfCompletedMoves) const
@@ -156,11 +197,41 @@ int cxmodel::TieGameResolutionStrategy::GetNbOfRemainingMoves(const Player& p_pl
     return nbOfRemainingMoves;
 }
 
+/**************************************************************************************************
+ * @brief Computes the number of remaining possible moves a player has from the numbers of moves
+ *        already concluded in the game.
+ *
+ * This version only is a convenience wrapper that considers all currently completed moves.
+ *
+ * @param p_player
+ *      The player for which we want to know the current count of remaining available moves.
+ *
+ * @return
+ *      The number of remaining moves for the player.
+ *
+ *************************************************************************************************/
 int cxmodel::TieGameResolutionStrategy::GetNbOfRemainingMoves(const Player& p_player) const
 {
     return GetNbOfRemainingMoves(p_player, m_takenPositions.size());
 }
 
+/**************************************************************************************************
+ * @brief Gets the maximum vertical position at which a specific player is located in a given
+ *        column.
+ *
+ * Note that this functions assumes the speficied player is indeed present in the given column.
+ * Because of this, a call to `IsPlayerPresentInColumn` should be made before using this.
+ *
+ * @param p_player
+ *      The player to look for.
+ * @param p_column
+ *      The column in which to look for the player.
+ *
+ * @return
+ *      The row index at which the player is located in the column (and 0 if not found, which
+ *      is ambiguous, see note above).
+ *
+ *************************************************************************************************/
 int cxmodel::TieGameResolutionStrategy::GetMaxVerticalPositionForPlayerInColumn(const Player& p_player, const int p_column) const
 {
     PRECONDITION(p_column >= 0);
@@ -182,6 +253,22 @@ int cxmodel::TieGameResolutionStrategy::GetMaxVerticalPositionForPlayerInColumn(
     return maxPosition;
 }
 
+/**************************************************************************************************
+ * @brief Gets the number of moves that have been completed since the last time the speficied
+ *        player last played.
+ *
+ * @param p_player
+ *      The player of interest.
+ * @param p_activePlayer
+ *      The active player. Note that this does not represent the player that just drop the last
+ *      chip in the board (this player is no longer the active player). It represents the player
+ *      that is active after the chip was dropped. For example, if player A just dropped a chip,
+ *      it is now player B which is the active player.
+ *
+ * @return
+ *      The number of completed moves since the last move of the specified player.
+ *
+ *************************************************************************************************/
 int cxmodel::TieGameResolutionStrategy::GetNbOfMovesSinceLastPlay(const Player& p_player, const Player& p_activePlayer) const
 {
     int positionCurrent = 0;
@@ -213,6 +300,18 @@ int cxmodel::TieGameResolutionStrategy::GetNbOfMovesSinceLastPlay(const Player& 
     return nbOfMoves;
 }
 
+/**************************************************************************************************
+ * @brief Checks if a specific player is present in a given column.
+ *
+ * @param p_player
+ *      The player to look for.
+ * @param p_column
+ *      The column to look into.
+ *
+ * @return
+ *      `true` if the player is found in the given column, `false` otherwise.
+ *
+ *************************************************************************************************/
 bool cxmodel::TieGameResolutionStrategy::IsPlayerPresentInColumn(const Player& p_player, int p_column) const
 {
     PRECONDITION(p_column >= 0);
@@ -235,6 +334,32 @@ bool cxmodel::TieGameResolutionStrategy::IsPlayerPresentInColumn(const Player& p
     return isPlayerPresent;
 }
 
+/**************************************************************************************************
+ * @brief Gets the 'turn' associated to a player.
+ *
+ * A turn is an integer representing the location of a player in the players list. For example,
+ * given a game with three players A, B and C, the turns are the following:
+ *
+ *                                       +--------+------+
+ *                                       | Player | Turn |
+ *                                       +--------+------+
+ *                                       | A      | 0    |
+ *                                       | B      | 1    |
+ *                                       | C      | 2    |
+ *                                       +--------+------+
+ *
+ * @param p_player
+ *      The player to look for.
+ * @param p_activePlayer
+ *      The active player. Note that this does not represent the player that just drop the last
+ *      chip in the board (this player is no longer the active player). It represents the player
+ *      that is active after the chip was dropped. For example, if player A just dropped a chip,
+ *      it is now player B which is the active player.
+ *
+ * @return
+ *      The speficied player's turn.
+ *
+ *************************************************************************************************/
 int cxmodel::TieGameResolutionStrategy::GetPlayerTurn(const Player& p_player, const Player& p_activePlayer) const
 {
     int playerTurn = 0;
@@ -259,6 +384,63 @@ int cxmodel::TieGameResolutionStrategy::GetPlayerTurn(const Player& p_player, co
     return playerTurn;
 }
 
+/**************************************************************************************************
+ * @brief Counts the number of free spaces for a specific column in between a given row index range.
+ *
+ * The number of free spaces is counted in the interval [p_fromRowIndex, p_toRowIndex].
+ *
+ * @param p_columnIndex
+ *      The index of the column for which we want to count free spaces.
+ * @param p_fromRowIndex
+ *      The lower row index at which to start counting.
+ * @param p_toRowIndex
+ *      The upper row index at which to stop counting.
+ *
+ * @return
+ *      The number of free spaces for the specified column in the given row range.
+ *
+ ************************************************************************************************/
+size_t cxmodel::TieGameResolutionStrategy::GetNbAvailableFreeMovesInColumn(size_t p_columnIndex,
+                                                                           size_t p_fromRowIndex,
+                                                                           size_t p_toRowIndex) const
+{
+    const int columnIndex = static_cast<int>(p_columnIndex);
+    IF_CONDITION_NOT_MET_DO(columnIndex >= 0, return 0u;);
+    IF_CONDITION_NOT_MET_DO(columnIndex < m_nbColumns, return 0u;);
+
+    const int fromRowIndex = static_cast<int>(p_fromRowIndex);
+    IF_CONDITION_NOT_MET_DO(fromRowIndex >= 0, return 0u;);
+    IF_CONDITION_NOT_MET_DO(fromRowIndex < m_nbRows, return 0u;);
+
+    const int toRowIndex = static_cast<int>(p_toRowIndex);
+    IF_CONDITION_NOT_MET_DO(toRowIndex >= 0, return 0u;);
+    IF_CONDITION_NOT_MET_DO(toRowIndex < m_nbRows, return 0u;);
+
+    IF_CONDITION_NOT_MET_DO(fromRowIndex <= toRowIndex, return 0u;);
+
+    size_t nbFreePositions = 0u;
+    for(int rowIndex = fromRowIndex; rowIndex < toRowIndex + 1; ++rowIndex)
+    {
+        const cxmodel::IBoard::Position position{static_cast<size_t>(rowIndex), static_cast<size_t>(columnIndex)};
+        if(m_board.GetChip(position) == NO_CHIP)
+        {
+            ++nbFreePositions;
+        }
+    }
+
+    return nbFreePositions;
+}
+
+/**************************************************************************************************
+ * @brief Indicates if the specified player has a chance of winning with an horizontal combination.
+ *
+ * @param p_player
+ *      The specific player.
+ *
+ * @return
+ *      `true` if the specified player can still win horizontally, `false` otherwise.
+ *
+ *************************************************************************************************/
 bool cxmodel::TieGameResolutionStrategy::CanPlayerWinHorizontal(const Player& p_player) const
 {
     bool canPlayerWin = false;
@@ -293,6 +475,64 @@ bool cxmodel::TieGameResolutionStrategy::CanPlayerWinHorizontal(const Player& p_
             // Make sure there is enough space left for the current player to win:
             isPlayFree &= (nbOfEmptyDiscsInRow <= GetNbOfRemainingMoves(p_player));
 
+            // At this point, gravity must be taken into account. Even if there is
+            // enough moves left for a possible win, it does not mean that these moves
+            // are actually playable, because some other players, forced by gravity,
+            // might have to drop its chip on winning path, invalidating it.
+            if(isPlayFree)
+            {
+                // We calculate the available moves in the column not
+                // impacted by the winning path (i.e. outside of it):
+                size_t nbFreeMovesInUnusedColumns = 0u;
+
+                // First, the columns before the winning path:
+                const size_t lastColumnIndexBeforeFreePlay = static_cast<size_t>(columnIndex);
+                for(size_t beforeIndex = 0u; beforeIndex < lastColumnIndexBeforeFreePlay; ++beforeIndex)
+                {
+                    const size_t lowerRowIndex = 0u;
+                    const size_t upperRowIndex = static_cast<size_t>(m_nbRows) - 1u;
+                    nbFreeMovesInUnusedColumns += GetNbAvailableFreeMovesInColumn(beforeIndex, lowerRowIndex, upperRowIndex);
+                }
+
+                // Second, the columns after:
+                const int firstColumnIndexAfterFreePlay = columnIndex + m_inARowValue;
+                for(int afterIndex = firstColumnIndexAfterFreePlay; afterIndex < m_nbColumns; ++afterIndex)
+                {
+                    const size_t lowerRowIndex = 0u;
+                    const size_t upperRowIndex = static_cast<size_t>(m_nbRows) - 1u;
+                    nbFreeMovesInUnusedColumns += GetNbAvailableFreeMovesInColumn(static_cast<size_t>(afterIndex), lowerRowIndex, upperRowIndex);
+                }
+
+                // At this point, all free spaces in columns that do not cross the winning
+                // path are calculated. There remains the free spaces over and under the
+                // winning path to consider.
+                size_t nbOfFreePlaysBelowAndAboveWinPath = 0u;
+
+                // First we compute the number of available moves under the winning path's row:
+                for(int column = columnIndex; column < columnIndex + m_inARowValue; ++column)
+                {
+                    const size_t lowerRowIndex = 0u;
+                    const size_t upperRowIndex = rowIndex > 0 ? static_cast<size_t>(rowIndex) - 1u : 0;
+                    nbOfFreePlaysBelowAndAboveWinPath += GetNbAvailableFreeMovesInColumn(column, lowerRowIndex, upperRowIndex);
+                }
+
+                // Then, we compute the number of available moves over (on top
+                // of) the winning path:
+                for(int column = columnIndex; column < columnIndex + m_inARowValue - 1; ++column)
+                {
+                    const size_t lowerRowIndex = std::min(static_cast<size_t>(rowIndex) + 1u, static_cast<size_t>(m_nbRows) - 1u);
+                    const size_t upperRowIndex = static_cast<size_t>(m_nbRows) - 1u;
+                    nbOfFreePlaysBelowAndAboveWinPath += GetNbAvailableFreeMovesInColumn(column, lowerRowIndex, upperRowIndex);
+                }
+
+                // Finally, we compute the number of moves that players other than
+                // the expected player have to make before the win can occur:
+                const size_t nbOfOtherPlayersFreeMovesLeft = (nbOfEmptyDiscsInRow - 1) * (m_players.size() - 1u);
+                
+                // We check the play really is free:
+                isPlayFree &= (nbOfOtherPlayersFreeMovesLeft <= nbFreeMovesInUnusedColumns + nbOfFreePlaysBelowAndAboveWinPath);
+            }
+
             // As soon as one play is still free for a win, we record it:
             canPlayerWin |= isPlayFree;
 
@@ -311,6 +551,21 @@ bool cxmodel::TieGameResolutionStrategy::CanPlayerWinHorizontal(const Player& p_
     return canPlayerWin;
 }
 
+/**************************************************************************************************
+ * @brief Indicates if the specified player has a chance of winning with a vertical combination.
+ *
+ * @param p_player
+ *      The specific player.
+ * @param p_activePlayer
+ *      The active player. Note that this does not represent the player that just drop the last
+ *      chip in the board (this player is no longer the active player). It represents the player
+ *      that is active after the chip was dropped. For example, if player A just dropped a chip,
+ *      it is now player B which is the active player.
+ *
+ * @return
+ *      `true` if the specified player can still win vertically, `false` otherwise.
+ *
+ *************************************************************************************************/
 bool cxmodel::TieGameResolutionStrategy::CanPlayerWinVertical(const Player& p_player, const Player& p_activePlayer) const
 {
     bool canPlayerWin = false;
@@ -397,6 +652,17 @@ bool cxmodel::TieGameResolutionStrategy::CanPlayerWinVertical(const Player& p_pl
     return canPlayerWin;
 }
 
+/**************************************************************************************************
+ * @brief Indicates if the specified player has a chance of winning with a diagonal ascending
+ *        combination.
+ *
+ * @param p_player
+ *      The specific player.
+ *
+ * @return
+ *      `true` if the specified player can still win diagonally (ascending), `false` otherwise.
+ *
+ *************************************************************************************************/
 bool cxmodel::TieGameResolutionStrategy::CanPlayerWinDiagonalUpward(const Player& p_player) const
 {
     bool canPlayerWin = false;
@@ -449,6 +715,17 @@ bool cxmodel::TieGameResolutionStrategy::CanPlayerWinDiagonalUpward(const Player
     return canPlayerWin;
 }
 
+/**************************************************************************************************
+ * @brief Indicates if the specified player has a chance of winning with a diagonal descending
+ *        combination.
+ *
+ * @param p_player
+ *      The specific player.
+ *
+ * @return
+ *      `true` if the specified player can still win diagonally (descending), `false` otherwise.
+ *
+ *************************************************************************************************/
 bool cxmodel::TieGameResolutionStrategy::CanPlayerWinDiagonalDownward(const Player& p_player) const
 {
     bool canPlayerWin = false;

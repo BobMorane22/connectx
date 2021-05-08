@@ -52,7 +52,10 @@ public:
     /******************************************************************************************//**
      * @brief Handles the game resolution.
      *
-     * @param p_activePlayer The active player.
+     * @pre The active player passed as an argument is one of the players in the game.
+     *
+     * @param p_activePlayer The active player. Note that if some player just dropped a chip,
+     *                       the active is no longer that player, but the one after.
      *
      * @return `true` if the game is resolved, `false` if it goes on.
      *

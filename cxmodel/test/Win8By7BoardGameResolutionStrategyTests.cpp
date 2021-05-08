@@ -25,7 +25,7 @@
 
 #include "GameResolutionStrategyTestFixture.h"
 
-using HeightBySevenTwoPlayersGameTestFixture = GameResolutionStrategyTestFixture;
+using HeightBySevenFourPlayersGameTestFixture = GameResolutionStrategyTestFixture;
 
 namespace
 {
@@ -42,7 +42,7 @@ std::vector<cxmodel::Player> CreatePlayersList()
 
 } // namespace
 
-TEST_F(HeightBySevenTwoPlayersGameTestFixture, /*DISABLED_*/Handle_DownLeftVerticalWin_ReturnsTrue)
+TEST_F(HeightBySevenFourPlayersGameTestFixture, /*DISABLED_*/Handle_DownLeftVerticalWin_ReturnsTrue)
 {
     std::ostringstream game;
     game << "|     |    |    |    |   |   |   |" << std::endl;
@@ -57,7 +57,7 @@ TEST_F(HeightBySevenTwoPlayersGameTestFixture, /*DISABLED_*/Handle_DownLeftVerti
     ASSERT_TRUE(ValidateGame(CreatePlayersList(), 6u, game.str()));
 }
 
-TEST_F(HeightBySevenTwoPlayersGameTestFixture, /*DISABLED_*/Handle_UpLeftVerticalWin_ReturnsTrue)
+TEST_F(HeightBySevenFourPlayersGameTestFixture, /*DISABLED_*/Handle_UpLeftVerticalWin_ReturnsTrue)
 {
     std::ostringstream game;
     game << "|    |    | 31w |    |    |   |   |" << std::endl;
@@ -72,7 +72,7 @@ TEST_F(HeightBySevenTwoPlayersGameTestFixture, /*DISABLED_*/Handle_UpLeftVertica
     ASSERT_TRUE(ValidateGame(CreatePlayersList(), 6u, game.str()));
 }
 
-TEST_F(HeightBySevenTwoPlayersGameTestFixture, /*DISABLED_*/Handle_DownRightVerticalWin_ReturnsTrue)
+TEST_F(HeightBySevenFourPlayersGameTestFixture, /*DISABLED_*/Handle_DownRightVerticalWin_ReturnsTrue)
 {
     std::ostringstream game;
     game << "|   |   |    |    |    |    |     |" << std::endl;
@@ -87,7 +87,7 @@ TEST_F(HeightBySevenTwoPlayersGameTestFixture, /*DISABLED_*/Handle_DownRightVert
     ASSERT_TRUE(ValidateGame(CreatePlayersList(), 6u, game.str()));
 }
 
-TEST_F(HeightBySevenTwoPlayersGameTestFixture, /*DISABLED_*/Handle_UpRightVerticalWin_ReturnsTrue)
+TEST_F(HeightBySevenFourPlayersGameTestFixture, /*DISABLED_*/Handle_UpRightVerticalWin_ReturnsTrue)
 {
     std::ostringstream game;
     game << "|   |   |    |    |    |    | 30w |" << std::endl;
@@ -102,7 +102,7 @@ TEST_F(HeightBySevenTwoPlayersGameTestFixture, /*DISABLED_*/Handle_UpRightVertic
     ASSERT_TRUE(ValidateGame(CreatePlayersList(), 6u, game.str()));
 }
 
-TEST_F(HeightBySevenTwoPlayersGameTestFixture, /*DISABLED_*/Handle_DownCenterVerticalWin_ReturnsTrue)
+TEST_F(HeightBySevenFourPlayersGameTestFixture, /*DISABLED_*/Handle_DownCenterVerticalWin_ReturnsTrue)
 {
     std::ostringstream game;
     game << "|   |    |     |    |    |    |   |" << std::endl;
@@ -117,7 +117,7 @@ TEST_F(HeightBySevenTwoPlayersGameTestFixture, /*DISABLED_*/Handle_DownCenterVer
     ASSERT_TRUE(ValidateGame(CreatePlayersList(), 6u, game.str()));
 }
 
-TEST_F(HeightBySevenTwoPlayersGameTestFixture, /*DISABLED_*/Handle_UpCenterVerticalWin_ReturnsTrue)
+TEST_F(HeightBySevenFourPlayersGameTestFixture, /*DISABLED_*/Handle_UpCenterVerticalWin_ReturnsTrue)
 {
     std::ostringstream game;
     game << "|   |   | 29w |    |    |    |   |" << std::endl;
@@ -132,7 +132,7 @@ TEST_F(HeightBySevenTwoPlayersGameTestFixture, /*DISABLED_*/Handle_UpCenterVerti
     ASSERT_TRUE(ValidateGame(CreatePlayersList(), 6u, game.str()));
 }
 
-TEST_F(HeightBySevenTwoPlayersGameTestFixture, /*DISABLED_*/Handle_DownLeftHorizontalWin_ReturnsTrue)
+TEST_F(HeightBySevenFourPlayersGameTestFixture, /*DISABLED_*/Handle_DownLeftHorizontalWin_ReturnsTrue)
 {
     std::ostringstream game;
     game << "|    |    |    |    |    |     |    |" << std::endl;
@@ -147,7 +147,7 @@ TEST_F(HeightBySevenTwoPlayersGameTestFixture, /*DISABLED_*/Handle_DownLeftHoriz
     ASSERT_TRUE(ValidateGame(CreatePlayersList(), 6u, game.str()));
 }
 
-TEST_F(HeightBySevenTwoPlayersGameTestFixture, /*DISABLED_*/Handle_UpLeftHorizontalWin_ReturnsTrue)
+TEST_F(HeightBySevenFourPlayersGameTestFixture, /*DISABLED_*/Handle_UpLeftHorizontalWin_ReturnsTrue)
 {
     std::ostringstream game;
     game << "| 30 | 34 | 38 | 42 | 46 | 50w |    |" << std::endl;
@@ -162,7 +162,7 @@ TEST_F(HeightBySevenTwoPlayersGameTestFixture, /*DISABLED_*/Handle_UpLeftHorizon
     ASSERT_TRUE(ValidateGame(CreatePlayersList(), 6u, game.str()));
 }
 
-TEST_F(HeightBySevenTwoPlayersGameTestFixture, /*DISABLED_*/Handle_DownRightHorizontalWin_ReturnsTrue)
+TEST_F(HeightBySevenFourPlayersGameTestFixture, /*DISABLED_*/Handle_DownRightHorizontalWin_ReturnsTrue)
 {
     std::ostringstream game;
     game << "|    |    |    |    |    |    |     |" << std::endl;
@@ -177,7 +177,7 @@ TEST_F(HeightBySevenTwoPlayersGameTestFixture, /*DISABLED_*/Handle_DownRightHori
     ASSERT_TRUE(ValidateGame(CreatePlayersList(), 6u, game.str()));
 }
 
-TEST_F(HeightBySevenTwoPlayersGameTestFixture, /*DISABLED_*/Handle_UpRightHorizontalWin_ReturnsTrue)
+TEST_F(HeightBySevenFourPlayersGameTestFixture, /*DISABLED_*/Handle_UpRightHorizontalWin_ReturnsTrue)
 {
     std::ostringstream game;
     game << "|    | 31 | 35 | 39 | 43 | 47 | 51w |" << std::endl;
@@ -192,7 +192,7 @@ TEST_F(HeightBySevenTwoPlayersGameTestFixture, /*DISABLED_*/Handle_UpRightHorizo
     ASSERT_TRUE(ValidateGame(CreatePlayersList(), 6u, game.str()));
 }
 
-TEST_F(HeightBySevenTwoPlayersGameTestFixture, /*DISABLED_*/Handle_DownLeftAscendingWin_ReturnsTrue)
+TEST_F(HeightBySevenFourPlayersGameTestFixture, /*DISABLED_*/Handle_DownLeftAscendingWin_ReturnsTrue)
 {
     std::ostringstream game;
     game << "|   |   |    |    |    |     |    |" << std::endl;
@@ -207,7 +207,7 @@ TEST_F(HeightBySevenTwoPlayersGameTestFixture, /*DISABLED_*/Handle_DownLeftAscen
     ASSERT_TRUE(ValidateGame(CreatePlayersList(), 6u, game.str()));
 }
 
-TEST_F(HeightBySevenTwoPlayersGameTestFixture, /*DISABLED_*/Handle_UpLeftAscendingWin_ReturnsTrue)
+TEST_F(HeightBySevenFourPlayersGameTestFixture, /*DISABLED_*/Handle_UpLeftAscendingWin_ReturnsTrue)
 {
     std::ostringstream game;
     game << "|    |    |    |    |    | 33w |   |" << std::endl;
@@ -222,7 +222,7 @@ TEST_F(HeightBySevenTwoPlayersGameTestFixture, /*DISABLED_*/Handle_UpLeftAscendi
     ASSERT_TRUE(ValidateGame(CreatePlayersList(), 6u, game.str()));
 }
 
-TEST_F(HeightBySevenTwoPlayersGameTestFixture, /*DISABLED_*/Handle_DownRightAscendingWin_ReturnsTrue)
+TEST_F(HeightBySevenFourPlayersGameTestFixture, /*DISABLED_*/Handle_DownRightAscendingWin_ReturnsTrue)
 {
     std::ostringstream game;
     game << "|    |   |   |    |    |    |     |" << std::endl;
@@ -237,7 +237,7 @@ TEST_F(HeightBySevenTwoPlayersGameTestFixture, /*DISABLED_*/Handle_DownRightAsce
     ASSERT_TRUE(ValidateGame(CreatePlayersList(), 6u, game.str()));
 }
 
-TEST_F(HeightBySevenTwoPlayersGameTestFixture, /*DISABLED_*/Handle_UpRightAscendingWin_ReturnsTrue)
+TEST_F(HeightBySevenFourPlayersGameTestFixture, /*DISABLED_*/Handle_UpRightAscendingWin_ReturnsTrue)
 {
     std::ostringstream game;
     game << "|    |    |    |    |    |    | 35w |" << std::endl;
@@ -252,7 +252,7 @@ TEST_F(HeightBySevenTwoPlayersGameTestFixture, /*DISABLED_*/Handle_UpRightAscend
     ASSERT_TRUE(ValidateGame(CreatePlayersList(), 6u, game.str()));
 }
 
-TEST_F(HeightBySevenTwoPlayersGameTestFixture, /*DISABLED_*/Handle_DownLeftDescendingWin_ReturnsTrue)
+TEST_F(HeightBySevenFourPlayersGameTestFixture, /*DISABLED_*/Handle_DownLeftDescendingWin_ReturnsTrue)
 {
     std::ostringstream game;
     game << "|     |    |    |    |   |   |    |" << std::endl;
@@ -267,7 +267,7 @@ TEST_F(HeightBySevenTwoPlayersGameTestFixture, /*DISABLED_*/Handle_DownLeftDesce
     ASSERT_TRUE(ValidateGame(CreatePlayersList(), 6u, game.str()));
 }
 
-TEST_F(HeightBySevenTwoPlayersGameTestFixture, /*DISABLED_*/Handle_UpLeftDescendingWin_ReturnsTrue)
+TEST_F(HeightBySevenFourPlayersGameTestFixture, /*DISABLED_*/Handle_UpLeftDescendingWin_ReturnsTrue)
 {
     std::ostringstream game;
     game << "| 35w |    |    |    |    |    |    |" << std::endl;
@@ -282,7 +282,7 @@ TEST_F(HeightBySevenTwoPlayersGameTestFixture, /*DISABLED_*/Handle_UpLeftDescend
     ASSERT_TRUE(ValidateGame(CreatePlayersList(), 6u, game.str()));
 }
 
-TEST_F(HeightBySevenTwoPlayersGameTestFixture, /*DISABLED_*/Handle_DownRightDescendingWin_ReturnsTrue)
+TEST_F(HeightBySevenFourPlayersGameTestFixture, /*DISABLED_*/Handle_DownRightDescendingWin_ReturnsTrue)
 {
     std::ostringstream game;
     game << "|    |     |    |    |    |   |   |" << std::endl;
@@ -297,7 +297,7 @@ TEST_F(HeightBySevenTwoPlayersGameTestFixture, /*DISABLED_*/Handle_DownRightDesc
     ASSERT_TRUE(ValidateGame(CreatePlayersList(), 6u, game.str()));
 }
 
-TEST_F(HeightBySevenTwoPlayersGameTestFixture, /*DISABLED_*/Handle_UpRightDescendingWin_ReturnsTrue)
+TEST_F(HeightBySevenFourPlayersGameTestFixture, /*DISABLED_*/Handle_UpRightDescendingWin_ReturnsTrue)
 {
     std::ostringstream game;
     game << "|   | 33w |    |    |    |    |    |" << std::endl;
@@ -312,7 +312,7 @@ TEST_F(HeightBySevenTwoPlayersGameTestFixture, /*DISABLED_*/Handle_UpRightDescen
     ASSERT_TRUE(ValidateGame(CreatePlayersList(), 6u, game.str()));
 }
 
-TEST_F(HeightBySevenTwoPlayersGameTestFixture, /*DISABLED_*/Handle_HorizontalWinNotAtEndpoint_ReturnsTrue)
+TEST_F(HeightBySevenFourPlayersGameTestFixture, /*DISABLED_*/Handle_HorizontalWinNotAtEndpoint_ReturnsTrue)
 {
     std::ostringstream game;
     game << "|    |    |     |    |    |    |   |" << std::endl;
@@ -327,7 +327,7 @@ TEST_F(HeightBySevenTwoPlayersGameTestFixture, /*DISABLED_*/Handle_HorizontalWin
     ASSERT_TRUE(ValidateGame(CreatePlayersList(), 6u, game.str()));
 }
 
-TEST_F(HeightBySevenTwoPlayersGameTestFixture, /*DISABLED_*/Handle_AscendingWinNotAtEndpoint_ReturnsTrue)
+TEST_F(HeightBySevenFourPlayersGameTestFixture, /*DISABLED_*/Handle_AscendingWinNotAtEndpoint_ReturnsTrue)
 {
     std::ostringstream game;
     game << "|    |    |     |    |    |    |    |" << std::endl;
@@ -342,7 +342,7 @@ TEST_F(HeightBySevenTwoPlayersGameTestFixture, /*DISABLED_*/Handle_AscendingWinN
     ASSERT_TRUE(ValidateGame(CreatePlayersList(), 6u, game.str()));
 }
 
-TEST_F(HeightBySevenTwoPlayersGameTestFixture, /*DISABLED_*/Handle_DescendingWinNotAtEndpoint_ReturnsTrue)
+TEST_F(HeightBySevenFourPlayersGameTestFixture, /*DISABLED_*/Handle_DescendingWinNotAtEndpoint_ReturnsTrue)
 {
     std::ostringstream game;
     game << "|    |    |     |    |    |    |    |" << std::endl;
@@ -357,7 +357,7 @@ TEST_F(HeightBySevenTwoPlayersGameTestFixture, /*DISABLED_*/Handle_DescendingWin
     ASSERT_TRUE(ValidateGame(CreatePlayersList(), 6u, game.str()));
 }
 
-TEST_F(HeightBySevenTwoPlayersGameTestFixture, /*DISABLED_*/Handle_AlmostFullBoardWin_ReturnsTrue)
+TEST_F(HeightBySevenFourPlayersGameTestFixture, /*DISABLED_*/Handle_AlmostFullBoardWin_ReturnsTrue)
 {
     std::ostringstream game;
     game << "| 50 | 51 | 52 | 53 | 54 | 55w |    |" << std::endl;
