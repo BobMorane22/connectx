@@ -346,7 +346,7 @@ TEST_F(HeightBySevenFourPlayersGameTestFixture, /*DISABLED_*/Handle_HorizontalTi
     // early, but should still be addressed in time. See TG-215 for more
     // information.
     //
-    // Why a tie is detected at move 37?
+    // Why is a tie detected at move 37?
     //
     // At this point all players have 5 moves left, which is not
     // enough in any scenario to win here. This is why a tie
@@ -366,7 +366,7 @@ TEST_F(HeightBySevenFourPlayersGameTestFixture, /*DISABLED_*/Handle_HorizontalTi
 
 TEST_F(HeightBySevenFourPlayersGameTestFixture, /*DISABLED_*/Handle_HorizontalTie2_ReturnsTrue)
 {
-    // Why a tie is detected at move 38?
+    // Why is a tie detected at move 38?
     //
     // At this point for every possible win, there is not enough
     // room for other players (the ones loosing) to drop their
