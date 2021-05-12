@@ -359,20 +359,8 @@ TEST_F(ModelTestFixture, /*DISABLED_*/DropChip_ValidModelGameIsTied_Notification
     GetModel().DropChip(RED_CHIP, 4u);
     GetModel().DropChip(BLUE_CHIP, 5u);
 
-    GetModel().DropChip(RED_CHIP, 4u);
-    GetModel().DropChip(BLUE_CHIP, 5u);
-
-    GetModel().DropChip(RED_CHIP, 6u);
-    GetModel().DropChip(BLUE_CHIP, 6u);
-
-    GetModel().DropChip(RED_CHIP, 6u);
-    GetModel().DropChip(BLUE_CHIP, 6u);
-
-    GetModel().DropChip(RED_CHIP, 6u);
-
-    // And the game is a tie:
     ASSERT_FALSE(gameTiedObserver.WasNotified());
-    GetModel().DropChip(BLUE_CHIP, 6u);
+    GetModel().DropChip(RED_CHIP, 4u);
     ASSERT_TRUE(gameTiedObserver.WasNotified());
 }
 
