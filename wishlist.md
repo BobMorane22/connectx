@@ -10,8 +10,6 @@ These ideas are not ready yet to become official story in Taiga. For now, they a
 - Add user configurations to save some parameters (i.e. window positioning, scaling, etc).
 - Add a sound player.
 - Add utf8 support inside the model.
-- Add portable help system (one that can be maintained only once, but displayed offline,
-  inside the application and also online).
 - Add animations for the Grid widget. Discs should fall smoothly (gravity feel).
 - In `cxgui`, add global GUI settings that can be reused across windows and widgets
   (spacing between widgets, fonts, etc).
