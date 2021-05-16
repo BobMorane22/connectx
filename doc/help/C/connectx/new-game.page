@@ -1,0 +1,107 @@
+<page xmlns="http://projectmallard.org/1.0/"
+      type="topic"
+      id="new-game">
+
+<info>
+    <link type="guide" xref="index#sec-play"/>
+    <desc>Start a new game and start playing Connect X!</desc>
+</info>
+
+<title>New game</title>
+
+<p>When Connect X launches, the <em>New Game</em> window immediately appears.
+This is where game parameters are defined and new games created.</p>
+
+<section id="sec-new-game-parametrize">
+<title>Parametrize the new game</title>
+
+<p>The following controls are used to parametrize the new game:</p>
+
+<terms>
+    <item>
+        <title><gui>Game/In-a-row</gui></title>
+        <p>The number of chips that must be aligned for a win to occur. In
+           Connect 4, the in-a-row value is 4. In Connect X however, this
+           value can be anything between 3 and 8 inclusively.</p>
+    </item>
+    <item>
+        <title><gui>Board/Width</gui></title>
+        <p>The number of available chip spaces, horizontally, for the game
+           board. In Connect 4, this number is fixed to 7. In Connect X,
+           it can range from anywhere between 7 and 64 inclusively.</p>
+    </item>
+    <item>
+        <title><gui>Board/Height</gui></title>
+        <p>The number of available chip spaces, vertically, for the game
+           board. In Connect 4, this number is fixed to 6. In Connect X,
+           it can range from anywhere between 6 and 64 inclusively.</p>
+    </item>
+    <item>
+        <title><gui>Players/Name</gui></title>
+        <p>Default players names are automatically added, but these names
+           can be modified, if wanted. Note that player names cannot be empty.</p>
+    </item>
+    <item>
+        <title><gui>Players/Disc</gui></title>
+        <p>This is where chip colors are selected. Note that each players
+           must have his own unique chip color.</p>
+    </item>
+    <item>
+        <title><gui>Players/Remove player</gui></title>
+        <p>In Connect 4, only two players can play against each other.
+           In Connect X, any number of players between 2 and 10 inclusively
+           can play. If unwanted players are registered for the new game,
+           they can be removed using this button. Note however that this button
+           is only available when three or more players are registered.</p>
+    </item>
+    <item>
+        <title><gui style="button">Players/Add player</gui></title>
+        <p>Similarily, this button adds a new player to the game. It is
+           only available when 9 or less players are already registered.</p>
+    </item>
+</terms>
+
+</section>
+
+
+<section id="sec-new-game-start">
+<title>Start the new game</title>
+
+<p>When all game parameters have been set, the <gui>Start</gui> button can
+be clicked to start the game.</p>
+
+<p>In some specific cases, even if all game parameters have been set
+appropriately, a new game can be refused. This usually happens in limit
+cases where a combination of parameter values would yield an ill-formed
+game.</p>
+
+<p>For example, a game on a 7 by 6 game board with an in-a-row value of 8
+could never be won, simply because the board dimensions don't allow it. In
+this case, the game would be refused.</p>
+
+</section>
+
+<section id="sec-new-game-menu">
+<title>Start a new game from the menu</title>
+
+<p>Even when already playing a game, a new game can be started. There are
+two ways to achieve this, both from the <gui>Game</gui> menu:</p>
+
+<terms>
+    <item>
+        <title><gui>Game/New</gui></title>
+        <p>Shows <em>New Game</em> window from where a new game can be
+           configured and started.</p>
+    </item>
+    <item>
+        <title><gui>Game/Reinitialize</gui></title>
+        <p>Reinitializes the current game with exactly the same parameters
+           as the previous game.</p>
+    </item>
+</terms>
+
+<p>Note that the current game's context is lost.</p>
+
+</section>
+
+</page>

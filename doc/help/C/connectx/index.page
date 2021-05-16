@@ -2,9 +2,19 @@
       type="guide"
       id="index">
 
-<title>Connect X</title>
+<title>
+    <media type="image" mime="image/png" src="figures/connectx.png">
+        The Connect X logo
+    </media>
+    Connect X
+</title>
 
-<p>Welcome to the Connect X help guide. For an introduction on Connect X,
-visit the <link xref="connectx-intro">Connect X introduction</link> page.</p>
+<section id="sec-getting-started">
+    <title>Getting started</title>
+</section>
+
+<section id="sec-play">
+    <title>Play</title>
+</section>
 
 </page>
