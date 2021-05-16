@@ -2,10 +2,15 @@
       type="topic"
       id="connectx-intro">
 
-<title>Connect X introduction</title>
+<info>
+    <link type="guide" xref="index#sec-getting-started"/>
+    <desc>What is Connect X?</desc>
+</info>
+
+<title>Getting started</title>
 
 <section id="sec-intro">
-<title>What is Connect X</title>
+<title>What is Connect X?</title>
 
 <p>Connect X is a parametrizable Connect 4 clone.</p>
 
