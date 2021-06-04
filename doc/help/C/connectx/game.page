@@ -1,0 +1,94 @@
+<!--
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ This file is part of Connect X.
+
+ Connect X is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ Connect X is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with Connect X. If not, see <https://www.gnu.org/licenses/>.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ file : game.page
+ date : 2021
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ -->
+<page xmlns="http://projectmallard.org/1.0/"
+      type="topic"
+      id="game">
+
+<info>
+    <link type="guide" xref="index#sec-play" group="second"/>
+    <desc>Move around, drop chips and try to win!</desc>
+    <title type="sort">2</title>
+</info>
+
+<title>Gameplay</title>
+
+<p>Each player, in turn, drops a chip in the Connect X game board. This
+goes on until either one of the players has aligned enough chips
+in a row to win or a tie is detected.</p>
+
+<section id="sec-game-moving">
+<title>Moving around</title>
+
+<p>The active player can move his chip left and right to pick in which
+column of the board to drop it. This can be done using the <key>Left</key>
+and <key>Right</key> keys.</p>
+
+</section>
+
+
+<section id="sec-drop-chip">
+<title>Dropping chips</title>
+
+<p>When the active player has moved his chip to the wanted column, he
+can drop it using the <key>Down</key> key. When the chip is dropped, it is
+immediately placed at the first available location (from the bottom) of
+the game board.</p>
+
+<p>At this point, the next player's turn starts.</p>
+
+</section>
+
+<section id="sec-undo-redo">
+<title>Undoing and redoing</title>
+
+<p>At any point during the game, a move can be undone. To undo a move,
+use the <gui>Game/Undo</gui> menu. To redo a move use the <gui>Game/Redo</gui>
+menu.</p>
+
+</section>
+
+<section id="sec-resolution">
+<title>Game end</title>
+
+<p>A Connect X game can end in one of three ways:</p>
+<terms>
+    <item>
+        <title>Win</title>
+        <p>A player sucessfully aligned enough chips in a row before the board
+           is full. At this point, the player wins the game.</p>
+    </item>
+    <item>
+        <title>Tie</title>
+        <p>As soon as Connect X detects that no player can win, the game is tied.
+           This might happen before the board is full since Connect X integrates
+           an early tie detection algorithm.</p>
+    </item>
+    <item>
+        <title>Manual interruption</title>
+        <p>A player manually either decided to create a new game or to reinitialize
+           the current game as described in <link xref="new-game#sec-new-game-menu"/>.</p>
+    </item>
+</terms>
+
+</section>
+
+</page>
