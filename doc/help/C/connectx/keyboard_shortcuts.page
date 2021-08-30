@@ -15,31 +15,41 @@
  You should have received a copy of the GNU General Public License
  along with Connect X. If not, see <https://www.gnu.org/licenses/>.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- file : index.page
+ file : keyboard_shortcuts.page
  date : 2021
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 -->
 <page xmlns="http://projectmallard.org/1.0/"
       type="guide"
-      id="index">
+      id="keyboard-shortcuts">
 
-<title>
-    <media type="image" mime="image/png" src="figures/connectx.png">
-        The Connect X logo
-    </media>
-    Connect X
-</title>
+<info>
+    <link type="guide" xref="index#sec-key-shortcuts" group="second"/>
+    <desc>Be most effective with keyboard shortcuts!</desc>
+    <title type="sort">2</title>
+</info>
 
-<section id="sec-getting-started">
-    <title>Getting started</title>
-</section>
+<title>Keyboard shortcuts</title>
 
-<section id="sec-play">
-    <title>Play</title>
-</section>
+<p>The following keyboard shortcuts are available:</p>
 
-<section id="sec-key-shortcuts">
-    <title>Keyboard shortcuts</title>
-</section>
+<terms>
+    <item>
+        <title><keyseq><key>Crtl</key><key>Z</key></keyseq></title>
+        <p>Undo the last undoable action.</p>
+    </item>
+    <item>
+        <title><keyseq><key>Crtl</key><key>Y</key></keyseq></title>
+        <p>Redo the last undone action.</p>
+    </item>
+    <item>
+        <title><keyseq><key>Crtl</key><key>Q</key></keyseq></title>
+        <p>Quit the application.</p>
+    </item>
+    <item>
+        <title><keyseq><key>F1</key></keyseq></title>
+        <p>Display user help.</p>
+    </item>
+</terms>
 
 </page>
