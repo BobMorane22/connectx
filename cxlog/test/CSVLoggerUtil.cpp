@@ -96,7 +96,7 @@ std::unique_ptr<cxlog::ILogger> CreateCSVStringStreamLogger(std::ostringstream& 
 
     t_logger->SetVerbosityLevel(cxlog::VerbosityLevel::DEBUG);
 
-    return std::move(t_logger);
+    return t_logger;
 }
 
 std::unique_ptr<cxlog::ChainLogger> CreateCSVStringStreamChainLogger(std::ostringstream& p_stream,
@@ -115,5 +115,5 @@ std::unique_ptr<cxlog::ChainLogger> CreateCSVStringStreamChainLogger(std::ostrin
 
     t_logger->SetVerbosityLevel(cxlog::VerbosityLevel::DEBUG);
 
-    return std::move(t_logger);
+    return t_logger;
 }

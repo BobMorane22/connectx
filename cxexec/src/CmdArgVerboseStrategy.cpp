@@ -54,7 +54,7 @@ std::unique_ptr<cxlog::ILogger> CreateVerboseLogger(cxlog::VerbosityLevel p_verb
 
     POSTCONDITION(logger);
 
-    return std::move(logger);
+    return logger;
 }
 
 cx::CmdArgVerboseStrategy::CmdArgVerboseStrategy(int argc,

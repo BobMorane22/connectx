@@ -48,7 +48,7 @@ public:
         std::unique_ptr<cxmodel::IBoard> board = std::make_unique<cxmodel::Board>(6u, 7u, m_model);
         EXPECT_TRUE(board);
 
-        return std::move(board);
+        return board;
     }
 
 private:
