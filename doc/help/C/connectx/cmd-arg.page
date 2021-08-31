@@ -15,40 +15,28 @@
  You should have received a copy of the GNU General Public License
  along with Connect X. If not, see <https://www.gnu.org/licenses/>.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- file : keyboard_shortcuts.page
+ file : cmd_arg.page
  date : 2021
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 -->
 <page xmlns="http://projectmallard.org/1.0/"
       type="guide"
-      id="keyboard-shortcuts">
+      id="cmd-arg">
 
 <info>
     <link type="guide" xref="index#sec-others" group="second"/>
-    <desc>Be most effective with keyboard shortcuts!</desc>
+    <desc>Learn about command line options!</desc>
     <title type="sort">2</title>
 </info>
 
-<title>Keyboard shortcuts</title>
+<title>Command line arguments</title>
 
-<p>The following keyboard shortcuts are available:</p>
+<p>The following command line arguments are available:</p>
 
 <terms>
     <item>
-        <title><keyseq><key>Crtl</key><key>Z</key></keyseq></title>
-        <p>Undo the last undoable action.</p>
-    </item>
-    <item>
-        <title><keyseq><key>Crtl</key><key>Y</key></keyseq></title>
-        <p>Redo the last undone action.</p>
-    </item>
-    <item>
-        <title><keyseq><key>Crtl</key><key>Q</key></keyseq></title>
-        <p>Quit the application.</p>
-    </item>
-    <item>
-        <title><keyseq><key>F1</key></keyseq></title>
-        <p>Display user help.</p>
+        <title><cmd>--version</cmd></title>
+        <p>Prints the Connect X version to the console.</p>
     </item>
 </terms>
 
