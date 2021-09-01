@@ -61,6 +61,7 @@ OBJS_$(d) := $(d)/BoardTests.o \
              $(d)/IBoardTests.o \
              $(d)/GameResolutionStrategyTestFixture.o \
              $(d)/LoggerMock.o \
+             $(d)/mathTests.o \
              $(d)/ModelTestFixture.o \
              $(d)/ModelTestHelpers.o \
              $(d)/ModelTests.o \
