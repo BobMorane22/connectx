@@ -39,7 +39,7 @@ TEST_F(ModelTestFixture, /*DISABLED_*/Update_ValidModel_CalledOnUndoChipDrop)
 {
     CreateNewGame(6u, 7u, ModelTestFixture::NbPlayers::TWO, ModelTestFixture::InARowValue::FOUR);
 
-    ModelNotificationCatcher undoDropChipObserver{cxmodel::NotificationContext::UNDO_CHIP_DROPPED};
+    ModelNotificationCatcher undoDropChipObserver{cxmodel::ModelNotificationContext::UNDO_CHIP_DROPPED};
     GetModel().Attach(&undoDropChipObserver);
 
     DropChips(1u);
@@ -122,7 +122,7 @@ TEST_F(ModelTestFixture, /*DISABLED_*/CreateNewGame_ValidNewGameInformation_NewG
 
 TEST_F(ModelTestFixture, /*DISABLED_*/CreateNewGame_ValidNewGameInformation_CreateNewGameNotificationSent)
 {
-    ModelNotificationCatcher createNewGameObserver{cxmodel::NotificationContext::CREATE_NEW_GAME};
+    ModelNotificationCatcher createNewGameObserver{cxmodel::ModelNotificationContext::CREATE_NEW_GAME};
     GetModel().Attach(&createNewGameObserver);
 
     ASSERT_FALSE(createNewGameObserver.WasNotified());
@@ -135,7 +135,7 @@ TEST_F(ModelTestFixture, /*DISABLED_*/DropChip_ValidModelChipAndColumn_ChipDropp
     CreateNewGame(6u, 7u, ModelTestFixture::NbPlayers::TWO, ModelTestFixture::InARowValue::FOUR);
 
     // We then attach the model to our observer:
-    ModelNotificationCatcher chipDropObserver{cxmodel::NotificationContext::CHIP_DROPPED};
+    ModelNotificationCatcher chipDropObserver{cxmodel::ModelNotificationContext::CHIP_DROPPED};
     GetModel().Attach(&chipDropObserver);
 
     // We drop a chip. It should trigger a notification since the board is empty:
@@ -149,8 +149,8 @@ TEST_F(ModelTestFixture, /*DISABLED_*/DropChip_ValidModelChipAndColumn_ChipDropp
     CreateNewGame(6u, 7u, ModelTestFixture::NbPlayers::TWO, ModelTestFixture::InARowValue::FOUR);
 
     // We then attach the model to our observer:
-    ModelNotificationCatcher chipDropObserverNotFull{cxmodel::NotificationContext::CHIP_DROPPED};
-    ModelNotificationCatcher chipDropObserverFull{cxmodel::NotificationContext::CHIP_DROPPED};
+    ModelNotificationCatcher chipDropObserverNotFull{cxmodel::ModelNotificationContext::CHIP_DROPPED};
+    ModelNotificationCatcher chipDropObserverFull{cxmodel::ModelNotificationContext::CHIP_DROPPED};
 
     const int column = 0u;
     GetModel().DropChip(GetPlayer(0u).GetChip(), column);
@@ -209,7 +209,7 @@ TEST_F(ModelTestFixtureStdErrStreamRedirector, /*DISABLED_*/DropChip_ValidModelT
 
 TEST_F(ModelTestFixture, /*DISABLED_*/DropChip_ValidModelGameIsWon_NotificationsHappen)
 {
-    ModelNotificationCatcher gameWonObserver{cxmodel::NotificationContext::GAME_WON};
+    ModelNotificationCatcher gameWonObserver{cxmodel::ModelNotificationContext::GAME_WON};
 
     GetModel().Attach(&gameWonObserver);
     CreateNewGame(6u, 7u, NbPlayers::TWO, InARowValue::FOUR);
@@ -296,7 +296,7 @@ TEST_F(ModelTestFixture, /*DISABLED_*/DropChip_ValidModelGameIsWon_WinnerIsLastP
 
 TEST_F(ModelTestFixture, /*DISABLED_*/DropChip_ValidModelGameIsTied_NotificationsHappen)
 {
-    ModelNotificationCatcher gameTiedObserver{cxmodel::NotificationContext::GAME_TIED};
+    ModelNotificationCatcher gameTiedObserver{cxmodel::ModelNotificationContext::GAME_TIED};
 
     GetModel().Attach(&gameTiedObserver);
     CreateNewGame(6u, 7u, NbPlayers::TWO, InARowValue::FOUR);
@@ -366,7 +366,7 @@ TEST_F(ModelTestFixture, /*DISABLED_*/DropChip_ValidModelGameIsTied_Notification
 
 TEST_F(ModelTestFixture, /*DISABLED_*/EndCurrentGame_ValidModel_NotificationsSent)
 {
-    ModelNotificationCatcher gameEndedObserver{cxmodel::NotificationContext::GAME_ENDED};
+    ModelNotificationCatcher gameEndedObserver{cxmodel::ModelNotificationContext::GAME_ENDED};
     
     CreateNewGame(6u, 7u, NbPlayers::TWO, InARowValue::FOUR);
 
@@ -425,7 +425,7 @@ TEST_F(ModelTestFixture, /*DISABLED_*/EndCurrentGame_ValidModel_InARowValueReset
 
 TEST_F(ModelTestFixture, /*DISABLED_*/ReinitializeCurrentGame_ValidModel_NotificationHappens)
 {
-    ModelNotificationCatcher gameReinitializedObserver{cxmodel::NotificationContext::GAME_REINITIALIZED};
+    ModelNotificationCatcher gameReinitializedObserver{cxmodel::ModelNotificationContext::GAME_REINITIALIZED};
     
     CreateNewGame(6u, 7u, NbPlayers::TWO, InARowValue::FOUR);
 

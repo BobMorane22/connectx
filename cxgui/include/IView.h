@@ -26,7 +26,7 @@
 
 namespace cxmodel
 {
-    enum class NotificationContext;
+    enum class ModelNotificationContext;
 }
 
 namespace cxgui
@@ -80,7 +80,7 @@ public:
      * @param p_context The context.
      *
      ********************************************************************************************/
-    virtual void Update(cxmodel::NotificationContext p_context) = 0;
+    virtual void Update(cxmodel::ModelNotificationContext p_context) = 0;
 
 };
 

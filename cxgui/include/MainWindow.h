@@ -110,14 +110,14 @@ public:
 
 private:
 
-    void Update(cxmodel::NotificationContext p_context, cxmodel::ModelSubject* p_subject) override;
+    void Update(cxmodel::ModelNotificationContext p_context, cxmodel::ModelSubject* p_subject) override;
 
     void UpdateCreateNewGame();
-    void UpdateChipDropped(cxmodel::NotificationContext p_context);
-    void UpdateGameWon(cxmodel::NotificationContext p_context);
-    void UpdateGameTied(cxmodel::NotificationContext p_context);
+    void UpdateChipDropped(cxmodel::ModelNotificationContext p_context);
+    void UpdateGameWon(cxmodel::ModelNotificationContext p_context);
+    void UpdateGameTied(cxmodel::ModelNotificationContext p_context);
     void UpdateGameEnded();
-    void UpdateGameReinitialized(cxmodel::NotificationContext p_context);
+    void UpdateGameReinitialized(cxmodel::ModelNotificationContext p_context);
     void UpdateMenuItems();
 
     void ConfigureWindow() override;
@@ -137,7 +137,7 @@ private:
     void OnHelpContentsRequested();
     void OnCreateAboutWindow();
 
-    void CreateGameResolutionWindow(cxmodel::NotificationContext p_context);
+    void CreateGameResolutionWindow(cxmodel::ModelNotificationContext p_context);
 
     void ActivateNewGameView();
     void DeactivateNewGameView();

@@ -23,7 +23,7 @@
 
 #include <gtest/gtest.h>
 
-#include <NotificationContext.h>
+#include <ModelNotificationContext.h>
 
 #include "ConcreteObserverMock.h"
 #include "ConcreteSubjectMock.h"

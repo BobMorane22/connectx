@@ -21,7 +21,7 @@
  *
  *************************************************************************************************/
 
-#include <NotificationContext.h>
+#include <ModelNotificationContext.h>
 
 /*********************************************************************************************//**
  * @brief Make sure a notification has been sent by the model.
@@ -42,7 +42,7 @@ public:
      * @param p_contextUnderTest The notification context to catch.
      *
      ********************************************************************************************/
-    ModelNotificationCatcher(cxmodel::NotificationContext p_contextUnderTest);
+    ModelNotificationCatcher(cxmodel::ModelNotificationContext p_contextUnderTest);
 
     /*****************************************************************************************//**
      * @brief Destructor.
@@ -59,10 +59,10 @@ public:
     bool WasNotified() const;
 
     // cxmodel::IObserver:
-    void Update(cxmodel::NotificationContext p_context, cxmodel::ModelSubject* p_subject) override;
+    void Update(cxmodel::ModelNotificationContext p_context, cxmodel::ModelSubject* p_subject) override;
 
 private:
 
-    const cxmodel::NotificationContext m_contextUnderTest;
+    const cxmodel::ModelNotificationContext m_contextUnderTest;
     bool m_wasNotified = false;
 };

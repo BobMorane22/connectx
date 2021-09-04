@@ -26,7 +26,7 @@
 
 #include <string>
 
-#include <cxmodel/include/NotificationContext.h>
+#include <cxmodel/include/ModelNotificationContext.h>
 
 /*********************************************************************************************//**
  * @brief Interface for status bars.

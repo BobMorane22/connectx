@@ -120,43 +120,43 @@ int cxgui::MainWindow::Show()
     return m_gtkApplication.run(m_window);
 }
 
-void cxgui::MainWindow::Update(cxmodel::NotificationContext p_context, cxmodel::ModelSubject* p_subject)
+void cxgui::MainWindow::Update(cxmodel::ModelNotificationContext p_context, cxmodel::ModelSubject* p_subject)
 {
     if(PRECONDITION(p_subject))
     {
         switch(p_context)
         {
-            case cxmodel::NotificationContext::CHIP_DROPPED:
+            case cxmodel::ModelNotificationContext::CHIP_DROPPED:
             {
                 UpdateChipDropped(p_context);
                 break;
             }
-            case cxmodel::NotificationContext::CREATE_NEW_GAME:
+            case cxmodel::ModelNotificationContext::CREATE_NEW_GAME:
             {
                 UpdateCreateNewGame();
                 break;
             }
-            case cxmodel::NotificationContext::UNDO_CHIP_DROPPED:
+            case cxmodel::ModelNotificationContext::UNDO_CHIP_DROPPED:
             {
                 UpdateChipDropped(p_context);
                 break;
             }
-            case cxmodel::NotificationContext::GAME_WON:
+            case cxmodel::ModelNotificationContext::GAME_WON:
             {
                 UpdateGameWon(p_context);
                 break;
             }
-            case cxmodel::NotificationContext::GAME_TIED:
+            case cxmodel::ModelNotificationContext::GAME_TIED:
             {
                 UpdateGameTied(p_context);
                 break;
             }
-            case cxmodel::NotificationContext::GAME_ENDED:
+            case cxmodel::ModelNotificationContext::GAME_ENDED:
             {
                 UpdateGameEnded();
                 break;
             }
-            case cxmodel::NotificationContext::GAME_REINITIALIZED:
+            case cxmodel::ModelNotificationContext::GAME_REINITIALIZED:
             {
                 UpdateGameReinitialized(p_context);
                 break;
@@ -175,7 +175,7 @@ void cxgui::MainWindow::UpdateCreateNewGame()
     ActivateGameView();
 }
 
-void cxgui::MainWindow::UpdateChipDropped(cxmodel::NotificationContext p_context)
+void cxgui::MainWindow::UpdateChipDropped(cxmodel::ModelNotificationContext p_context)
 {
     if(ASSERT(m_gameView))
     {
@@ -183,13 +183,13 @@ void cxgui::MainWindow::UpdateChipDropped(cxmodel::NotificationContext p_context
     }
 }
 
-void cxgui::MainWindow::UpdateGameWon(cxmodel::NotificationContext p_context)
+void cxgui::MainWindow::UpdateGameWon(cxmodel::ModelNotificationContext p_context)
 {
     m_gameView->Update(p_context);
     CreateGameResolutionWindow(p_context);
 }
 
-void cxgui::MainWindow::UpdateGameTied(cxmodel::NotificationContext p_context)
+void cxgui::MainWindow::UpdateGameTied(cxmodel::ModelNotificationContext p_context)
 {
     m_gameView->Update(p_context);
     CreateGameResolutionWindow(p_context);
@@ -201,7 +201,7 @@ void cxgui::MainWindow::UpdateGameEnded()
     ActivateNewGameView();
 }
 
-void cxgui::MainWindow::UpdateGameReinitialized(cxmodel::NotificationContext p_context)
+void cxgui::MainWindow::UpdateGameReinitialized(cxmodel::ModelNotificationContext p_context)
 {
     m_gameView->Update(p_context); 
 }
@@ -328,15 +328,15 @@ void cxgui::MainWindow::OnRedo()
     m_controller.OnRedo();
 }
 
-void cxgui::MainWindow::CreateGameResolutionWindow(cxmodel::NotificationContext p_context)
+void cxgui::MainWindow::CreateGameResolutionWindow(cxmodel::ModelNotificationContext p_context)
 {
 
     cxmodel::GameResolution resolutionType;
-    if(p_context == cxmodel::NotificationContext::GAME_WON)
+    if(p_context == cxmodel::ModelNotificationContext::GAME_WON)
     {
         resolutionType = cxmodel::GameResolution::WIN;
     }
-    else if(p_context == cxmodel::NotificationContext::GAME_TIED)
+    else if(p_context == cxmodel::ModelNotificationContext::GAME_TIED)
     {
         resolutionType = cxmodel::GameResolution::TIE;
     }

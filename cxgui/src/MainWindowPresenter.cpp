@@ -79,7 +79,7 @@ cxgui::MainWindowPresenter::MainWindowPresenter(const cxmodel::IConnectXLimits& 
 {
 }
 
-void cxgui::MainWindowPresenter::Update(cxmodel::NotificationContext p_context, cxmodel::ModelSubject* p_subject)
+void cxgui::MainWindowPresenter::Update(cxmodel::ModelNotificationContext p_context, cxmodel::ModelSubject* p_subject)
 {
     if(PRECONDITION(p_subject))
     {
@@ -88,26 +88,26 @@ void cxgui::MainWindowPresenter::Update(cxmodel::NotificationContext p_context, 
 
         switch(p_context)
         {
-            case cxmodel::NotificationContext::CREATE_NEW_GAME:
+            case cxmodel::ModelNotificationContext::CREATE_NEW_GAME:
             {
                 m_canRequestNewGame = true;
                 UpdateCreateNewGame();
                 break;
             }
-            case cxmodel::NotificationContext::CHIP_DROPPED:
+            case cxmodel::ModelNotificationContext::CHIP_DROPPED:
             {
                 m_canRequestNewGame = true;
                 m_canCurrentGameBeReinitialized = true;
                 UpdateChipDropped();
                 break;
             }
-            case cxmodel::NotificationContext::GAME_REINITIALIZED:
+            case cxmodel::ModelNotificationContext::GAME_REINITIALIZED:
             {
                 m_canRequestNewGame = true;
                 UpdateGameReinitialized();
                 break;
             }
-            case cxmodel::NotificationContext::UNDO_CHIP_DROPPED:
+            case cxmodel::ModelNotificationContext::UNDO_CHIP_DROPPED:
             {
                 m_canRequestNewGame = true;
                 m_canCurrentGameBeReinitialized = !IsBoardEmpty();

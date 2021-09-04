@@ -32,7 +32,7 @@
 #include <cxmodel/include/IConnectXLimits.h>
 #include <cxmodel/include/IUndoRedo.h>
 #include <cxmodel/include/IVersioning.h>
-#include <cxmodel/include/NotificationContext.h>
+#include <cxmodel/include/ModelNotificationContext.h>
 #include <cxgui/include/IMainWindowPresenter.h>
 
 class MainWindowPresenterTestFixture : public testing::Test
@@ -42,7 +42,7 @@ public:
 
     MainWindowPresenterTestFixture();
 
-    void SendNotification(cxmodel::NotificationContext p_context);
+    void SendNotification(cxmodel::ModelNotificationContext p_context);
 
     cxgui::IMainWindowPresenter& GetPresenter();
     cxgui::IGameViewPresenter& GetGameViewPresenter();
@@ -65,7 +65,7 @@ private:
 
         ~MainWindowPresenterModelMock() override = default;
 
-        void SendNotification(cxmodel::NotificationContext p_context);
+        void SendNotification(cxmodel::ModelNotificationContext p_context);
 
         // IVersionning:
         std::string GetName() const override {return "Connect X";}

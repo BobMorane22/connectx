@@ -26,7 +26,7 @@
 
 #include <type_traits>
 
-#include "NotificationContext.h"
+#include "ModelNotificationContext.h"
 
 namespace cxmodel
 {

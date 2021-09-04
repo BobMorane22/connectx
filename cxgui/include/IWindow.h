@@ -24,7 +24,7 @@
 #ifndef IWINDOW_H_4807796E_6C76_4D0A_BF7D_81534795BA29
 #define IWINDOW_H_4807796E_6C76_4D0A_BF7D_81534795BA29
 
-#include <cxmodel/include/NotificationContext.h>
+#include <cxmodel/include/ModelNotificationContext.h>
 
 namespace cxgui
 {

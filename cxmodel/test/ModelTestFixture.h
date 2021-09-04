@@ -134,7 +134,7 @@ public:
      *     | 3      | Donald Foo-Bar | Yellow     |
      *
      * Also note that when this method is called and the model limits are respected, the
-     * NotificationContext::CREATE_NEW_GAME is emitted.
+     * ModelNotificationContext::CREATE_NEW_GAME is emitted.
      *
      ********************************************************************************************/
     void CreateNewGame(size_t p_boardHeight,

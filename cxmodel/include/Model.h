@@ -37,7 +37,7 @@
 #include "IGameResolutionStrategy.h"
 #include "IUndoRedo.h"
 #include "IVersioning.h"
-#include "NotificationContext.h"
+#include "ModelNotificationContext.h"
 #include "PlayerInformation.h"
 
 namespace cxmodel
@@ -85,7 +85,7 @@ public:
 
 ///@{ @name IObserver
 
-    void Update(NotificationContext p_context, ModelSubject* p_subject) override;
+    void Update(ModelNotificationContext p_context, ModelSubject* p_subject) override;
 
 ///@}
 

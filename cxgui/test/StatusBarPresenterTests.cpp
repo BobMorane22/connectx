@@ -38,37 +38,37 @@ public:
 
 TEST(StatusBarPresenter, MakeStatusBarContextString_Undo_UndoStringCreated)
 {
-    ASSERT_EQ(cxgui::MakeStatusBarContextString(cxmodel::NotificationContext::UNDO_CHIP_DROPPED), "Undo.");
+    ASSERT_EQ(cxgui::MakeStatusBarContextString(cxmodel::ModelNotificationContext::UNDO_CHIP_DROPPED), "Undo.");
 }
 
 TEST(StatusBarPresenter, MakeStatusBarContextString_CreateNewGame_NewGameCreatedStringCreated)
 {
-    ASSERT_EQ(cxgui::MakeStatusBarContextString(cxmodel::NotificationContext::CREATE_NEW_GAME), "New game created.");
+    ASSERT_EQ(cxgui::MakeStatusBarContextString(cxmodel::ModelNotificationContext::CREATE_NEW_GAME), "New game created.");
 }
 
 TEST(StatusBarPresenter, MakeStatusBarContextString_DropDisc_DiscDroppedStringCreated)
 {
-    ASSERT_EQ(cxgui::MakeStatusBarContextString(cxmodel::NotificationContext::CHIP_DROPPED), "Chip dropped.");
+    ASSERT_EQ(cxgui::MakeStatusBarContextString(cxmodel::ModelNotificationContext::CHIP_DROPPED), "Chip dropped.");
 }
 
 TEST(StatusBarPresenter, MakeStatusBarContextString_GameWon_GameWonStringCreated)
 {
-    ASSERT_EQ(cxgui::MakeStatusBarContextString(cxmodel::NotificationContext::GAME_WON), "Game won!");
+    ASSERT_EQ(cxgui::MakeStatusBarContextString(cxmodel::ModelNotificationContext::GAME_WON), "Game won!");
 }
 
 TEST(StatusBarPresenter, MakeStatusBarContextString_GameTied_GameTiedStringCreated)
 {
-    ASSERT_EQ(cxgui::MakeStatusBarContextString(cxmodel::NotificationContext::GAME_TIED), "Game tied!");
+    ASSERT_EQ(cxgui::MakeStatusBarContextString(cxmodel::ModelNotificationContext::GAME_TIED), "Game tied!");
 }
 
 TEST(StatusBarPresenter, MakeStatusBarContextString_GameEnded_NoMessage)
 {
-    ASSERT_EQ(cxgui::MakeStatusBarContextString(cxmodel::NotificationContext::GAME_ENDED), "");
+    ASSERT_EQ(cxgui::MakeStatusBarContextString(cxmodel::ModelNotificationContext::GAME_ENDED), "");
 }
 
 TEST(StatusBarPresenter, MakeStatusBarContextString_GameReinitialized_GameReinitializedStringCreated)
 {
-    ASSERT_EQ(cxgui::MakeStatusBarContextString(cxmodel::NotificationContext::GAME_REINITIALIZED), "Game reinitialized.");
+    ASSERT_EQ(cxgui::MakeStatusBarContextString(cxmodel::ModelNotificationContext::GAME_REINITIALIZED), "Game reinitialized.");
 }
 
 TEST(StatusBarPresenter, Constructor_NoAction_NoMessage)
@@ -85,7 +85,7 @@ TEST(StatusBarPresenter, Update_Undo_UndoMessageIsOn)
 
     ASSERT_TRUE(presenter.GetStatusBarMessage().empty());
 
-    presenter.Update(cxmodel::NotificationContext::UNDO_CHIP_DROPPED, &subject);
+    presenter.Update(cxmodel::ModelNotificationContext::UNDO_CHIP_DROPPED, &subject);
 
     ASSERT_EQ(presenter.GetStatusBarMessage(), "Undo.");
 }

@@ -26,7 +26,7 @@
 
 #include <memory>
 
-#include <cxmodel/include/NotificationContext.h>
+#include <cxmodel/include/ModelNotificationContext.h>
 
 #include "ICmdArgWorkflowStrategy.h"
 

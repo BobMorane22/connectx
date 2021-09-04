@@ -81,17 +81,17 @@ public:
 
     void NotifyCreateNewGame()
     {
-        Notify(cxmodel::NotificationContext::CREATE_NEW_GAME);
+        Notify(cxmodel::ModelNotificationContext::CREATE_NEW_GAME);
     }
 
     void NotifyDropChip()
     {
-        Notify(cxmodel::NotificationContext::CHIP_DROPPED);
+        Notify(cxmodel::ModelNotificationContext::CHIP_DROPPED);
     }
 
     void NotifyUndo()
     {
-        Notify(cxmodel::NotificationContext::UNDO_CHIP_DROPPED);
+        Notify(cxmodel::ModelNotificationContext::UNDO_CHIP_DROPPED);
     }
 
     const cxmodel::Player& GetActivePlayer() const override {return m_activePlayer;}
@@ -349,7 +349,7 @@ TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/IsNewGamePossible_NoNotifica
 
 TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/IsNewGamePossible_CreateNewGameNotification_TrueReturned)
 {
-    SendNotification(cxmodel::NotificationContext::CREATE_NEW_GAME);
+    SendNotification(cxmodel::ModelNotificationContext::CREATE_NEW_GAME);
 
     const auto& presenter = GetPresenter();
     ASSERT_TRUE(presenter.IsNewGamePossible());
@@ -360,7 +360,7 @@ TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/IsNewGamePossible_ChipDroppe
     auto& actionModel = GetActionsModel();
     actionModel.CreateNewGame(cxmodel::NewGameInformation{});
 
-    SendNotification(cxmodel::NotificationContext::CHIP_DROPPED);
+    SendNotification(cxmodel::ModelNotificationContext::CHIP_DROPPED);
 
     const auto& presenter = GetPresenter();
     ASSERT_TRUE(presenter.IsNewGamePossible());
@@ -371,7 +371,7 @@ TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/IsNewGamePossible_GameReinit
     auto& actionModel = GetActionsModel();
     actionModel.CreateNewGame(cxmodel::NewGameInformation{});
 
-    SendNotification(cxmodel::NotificationContext::GAME_REINITIALIZED);
+    SendNotification(cxmodel::ModelNotificationContext::GAME_REINITIALIZED);
 
     const auto& presenter = GetPresenter();
     ASSERT_TRUE(presenter.IsNewGamePossible());
@@ -384,7 +384,7 @@ TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/IsNewGamePossible_AllOtherNo
 
     const auto& presenter = GetPresenter();
 
-    SendNotification(cxmodel::NotificationContext::GAME_ENDED);
+    SendNotification(cxmodel::ModelNotificationContext::GAME_ENDED);
     ASSERT_FALSE(presenter.IsNewGamePossible());
 }
 
@@ -400,7 +400,7 @@ TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/IsCurrentGameReinitializatio
     auto& actionModel = GetActionsModel();
     actionModel.CreateNewGame(cxmodel::NewGameInformation{});
 
-    SendNotification(cxmodel::NotificationContext::CHIP_DROPPED);
+    SendNotification(cxmodel::ModelNotificationContext::CHIP_DROPPED);
 
     const auto& presenter = GetPresenter();
     ASSERT_TRUE(presenter.IsCurrentGameReinitializationPossible());
@@ -414,10 +414,10 @@ TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/IsCurrentGameReinitializatio
     const auto& presenter = GetPresenter();
     ASSERT_FALSE(presenter.IsCurrentGameReinitializationPossible());
 
-    SendNotification(cxmodel::NotificationContext::GAME_ENDED);
+    SendNotification(cxmodel::ModelNotificationContext::GAME_ENDED);
     ASSERT_FALSE(presenter.IsCurrentGameReinitializationPossible());
 
-    SendNotification(cxmodel::NotificationContext::GAME_REINITIALIZED);
+    SendNotification(cxmodel::ModelNotificationContext::GAME_REINITIALIZED);
     ASSERT_FALSE(presenter.IsCurrentGameReinitializationPossible());
 }
 

@@ -5,7 +5,7 @@
 #
 # Usage:
 #
-#   > ./findreplace.sh NEW_VALUE OLD_VALUE
+#   > ./findreplace.sh OLD_VALUE NEW_VALUE
 #
 # After which every occurence of 'OLD_VALUE' in the projet will have been replaced by 'NEW_VALUE'.
 # Search and replacement will only work for the following file types: cpp, cc, h, hpp and ipp. For

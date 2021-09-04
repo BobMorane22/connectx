@@ -32,7 +32,7 @@
 #include <cxmodel/include/IConnectXLimits.h>
 #include <cxmodel/include/IUndoRedo.h>
 #include <cxmodel/include/IVersioning.h>
-#include <cxmodel/include/NotificationContext.h>
+#include <cxmodel/include/ModelNotificationContext.h>
 
 #include "LoggerMock.h"
 

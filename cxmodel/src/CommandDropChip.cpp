@@ -89,7 +89,7 @@ void cxmodel::CommandDropChip::Execute()
     m_takenPositions.push_back(droppedPosition);
 
     // Send notifications for the drop:
-    Notify(NotificationContext::CHIP_DROPPED);
+    Notify(ModelNotificationContext::CHIP_DROPPED);
 }
 
 void cxmodel::CommandDropChip::Undo()
@@ -108,5 +108,5 @@ void cxmodel::CommandDropChip::Undo()
     m_board.ResetChip(m_previousDropPosition);
 
     // Notify:
-    Notify(NotificationContext::UNDO_CHIP_DROPPED);
+    Notify(ModelNotificationContext::UNDO_CHIP_DROPPED);
 }

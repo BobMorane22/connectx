@@ -93,7 +93,7 @@ void cxgui::NewGameView::DeActivate()
     // Nothing to do...
 }
 
-void cxgui::NewGameView::Update(cxmodel::NotificationContext /*p_context*/)
+void cxgui::NewGameView::Update(cxmodel::ModelNotificationContext /*p_context*/)
 {
     // Noting to do...
 }

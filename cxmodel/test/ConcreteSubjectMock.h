@@ -24,7 +24,7 @@
 #ifndef CONCRETESUBJECTMOCK_H_8CBA88D3_AEA7_4343_9FDC_B12FCD7E945F
 #define CONCRETESUBJECTMOCK_H_8CBA88D3_AEA7_4343_9FDC_B12FCD7E945F
 
-#include <NotificationContext.h>
+#include <ModelNotificationContext.h>
 
 class ConcreteSubjectMock : public cxmodel::ModelSubject
 {

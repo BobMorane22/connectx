@@ -22,7 +22,7 @@
  *************************************************************************************************/
 
 #include <cxmodel/include/IVersioning.h>
-#include <cxmodel/include/NotificationContext.h>
+#include <cxmodel/include/ModelNotificationContext.h>
 
 #include <AboutWindowPresenter.h>
 

@@ -28,7 +28,7 @@ std::string cxgui::StatusBarPresenter::GetStatusBarMessage() const
     return m_statusBarMessage;
 }
 
-void cxgui::StatusBarPresenter::Update(cxmodel::NotificationContext p_context, cxmodel::ModelSubject* p_subject)
+void cxgui::StatusBarPresenter::Update(cxmodel::ModelNotificationContext p_context, cxmodel::ModelSubject* p_subject)
 {
     if(p_subject)
     {
@@ -38,29 +38,29 @@ void cxgui::StatusBarPresenter::Update(cxmodel::NotificationContext p_context, c
     }
 }
 
-std::string cxgui::MakeStatusBarContextString(cxmodel::NotificationContext p_context)
+std::string cxgui::MakeStatusBarContextString(cxmodel::ModelNotificationContext p_context)
 {
     switch(p_context)
     {
-        case cxmodel::NotificationContext::CREATE_NEW_GAME:
+        case cxmodel::ModelNotificationContext::CREATE_NEW_GAME:
             return "New game created.";
 
-        case cxmodel::NotificationContext::CHIP_DROPPED:
+        case cxmodel::ModelNotificationContext::CHIP_DROPPED:
             return "Chip dropped.";
 
-        case cxmodel::NotificationContext::UNDO_CHIP_DROPPED:
+        case cxmodel::ModelNotificationContext::UNDO_CHIP_DROPPED:
             return "Undo.";
 
-        case cxmodel::NotificationContext::GAME_WON:
+        case cxmodel::ModelNotificationContext::GAME_WON:
             return "Game won!";
 
-        case cxmodel::NotificationContext::GAME_TIED:
+        case cxmodel::ModelNotificationContext::GAME_TIED:
             return "Game tied!";
 
-        case cxmodel::NotificationContext::GAME_ENDED:
+        case cxmodel::ModelNotificationContext::GAME_ENDED:
             return "";
 
-        case cxmodel::NotificationContext::GAME_REINITIALIZED:
+        case cxmodel::ModelNotificationContext::GAME_REINITIALIZED:
             return "Game reinitialized.";
 
         default:                                                     // LCOV_EXCL_LINE

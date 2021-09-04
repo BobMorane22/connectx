@@ -35,7 +35,7 @@ cxgui::GameResolutionDialog::GameResolutionDialog(std::unique_ptr<IGameResolutio
     POSTCONDITION(m_controller);
 }
 
-void cxgui::GameResolutionDialog::Update(cxmodel::NotificationContext /*p_context*/, cxmodel::ModelSubject* /*p_subject*/)
+void cxgui::GameResolutionDialog::Update(cxmodel::ModelNotificationContext /*p_context*/, cxmodel::ModelSubject* /*p_subject*/)
 {
     // Nothing to do...
 }

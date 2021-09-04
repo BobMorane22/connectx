@@ -29,7 +29,7 @@
 #include <gtest/gtest.h>
 
 #include <cxmodel/include/IVersioning.h>
-#include <cxmodel/include/NotificationContext.h>
+#include <cxmodel/include/ModelNotificationContext.h>
 
 #include <IAboutWindowPresenter.h>
 

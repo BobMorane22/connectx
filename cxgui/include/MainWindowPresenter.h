@@ -123,7 +123,7 @@ public:
 
 private:
 
-    void Update(cxmodel::NotificationContext p_context, cxmodel::ModelSubject* p_subject) override;
+    void Update(cxmodel::ModelNotificationContext p_context, cxmodel::ModelSubject* p_subject) override;
 
     void UpdateCreateNewGame();
     void UpdateChipDropped();

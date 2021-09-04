@@ -38,7 +38,7 @@ MainWindowPresenterTestFixture::MainWindowPresenterTestFixture()
     m_model->Attach(m_presenter.get());
 }
 
-void MainWindowPresenterTestFixture::SendNotification(cxmodel::NotificationContext p_context)
+void MainWindowPresenterTestFixture::SendNotification(cxmodel::ModelNotificationContext p_context)
 {
     EXPECT_TRUE(m_model);
     m_model->SendNotification(p_context);
@@ -86,7 +86,7 @@ cxmodel::IConnectXLimits& MainWindowPresenterTestFixture::GetLimitsModel()
     return *m_model;
 }
 
-void MainWindowPresenterTestFixture::MainWindowPresenterModelMock::SendNotification(cxmodel::NotificationContext p_context)
+void MainWindowPresenterTestFixture::MainWindowPresenterModelMock::SendNotification(cxmodel::ModelNotificationContext p_context)
 {
     Notify(p_context);
 }
@@ -97,14 +97,14 @@ void MainWindowPresenterTestFixture::MainWindowPresenterModelMock::CreateNewGame
 
     // Here we only notify and let the presenter feed from the hardcoded
     // model mock values. The values in themselves are not important.
-    Notify(cxmodel::NotificationContext::CREATE_NEW_GAME);
+    Notify(cxmodel::ModelNotificationContext::CREATE_NEW_GAME);
 }
 
 void MainWindowPresenterTestFixture::MainWindowPresenterModelMock::DropChip(const cxmodel::IChip& /*p_chip*/, size_t p_column)
 {
     ASSERT_TRUE(p_column < GetCurrentGridWidth());
 
-    Notify(cxmodel::NotificationContext::CHIP_DROPPED);
+    Notify(cxmodel::ModelNotificationContext::CHIP_DROPPED);
 }
 
 const cxmodel::IChip& MainWindowPresenterTestFixture::MainWindowPresenterModelMock::GetChip(size_t p_row, size_t p_column) const
@@ -117,13 +117,13 @@ const cxmodel::IChip& MainWindowPresenterTestFixture::MainWindowPresenterModelMo
 
 void MainWindowPresenterTestFixture::MainWindowPresenterModelMock::EndCurrentGame()
 {
-    Notify(cxmodel::NotificationContext::GAME_ENDED);
+    Notify(cxmodel::ModelNotificationContext::GAME_ENDED);
 }
 
 void MainWindowPresenterTestFixture::MainWindowPresenterModelMock::ReinitializeCurrentGame()
 {
     // Here we only notify and let the presenter feed from the hardcoded
     // model mock values. The values in themselves are not important.
-    Notify(cxmodel::NotificationContext::GAME_REINITIALIZED);
+    Notify(cxmodel::ModelNotificationContext::GAME_REINITIALIZED);
 }
 

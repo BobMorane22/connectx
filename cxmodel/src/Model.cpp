@@ -32,7 +32,7 @@
 #include <CommandStack.h>
 #include <Disc.h>
 #include <Model.h>
-#include <NotificationContext.h>
+#include <ModelNotificationContext.h>
 #include <GameResolutionStrategyFactory.h>
 
 namespace
@@ -81,7 +81,7 @@ cxmodel::Model::~Model()
     DetatchAll();
 }
 
-void cxmodel::Model::Update(cxmodel::NotificationContext p_context, cxmodel::ModelSubject* p_subject)
+void cxmodel::Model::Update(cxmodel::ModelNotificationContext p_context, cxmodel::ModelSubject* p_subject)
 {
     if(ASSERT(p_subject))
     {
@@ -167,7 +167,7 @@ void cxmodel::Model::CreateNewGame(const NewGameInformation& p_gameInformation)
     m_tieResolutionStrategy = GameResolutionStrategyFactory::Make(*m_board, m_inARowValue, m_playersInfo.m_players, m_takenPositions, GameResolution::TIE);
     IF_CONDITION_NOT_MET_DO(m_tieResolutionStrategy, return;);
 
-    Notify(NotificationContext::CREATE_NEW_GAME);
+    Notify(ModelNotificationContext::CREATE_NEW_GAME);
 
     std::ostringstream stream;
 
@@ -238,7 +238,7 @@ void cxmodel::Model::DropChip(const cxmodel::IChip& p_chip, size_t p_column)
         m_playersInfo.m_activePlayerIndex = activePlayerIndexBefore;
         m_playersInfo.m_nextPlayerIndex = nextPlayerIndexBefore;
 
-        Notify(NotificationContext::GAME_WON);
+        Notify(ModelNotificationContext::GAME_WON);
 
         Log(cxlog::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__, "Game won by : " + GetActivePlayer().GetName());
 
@@ -254,7 +254,7 @@ void cxmodel::Model::DropChip(const cxmodel::IChip& p_chip, size_t p_column)
         m_playersInfo.m_activePlayerIndex = activePlayerIndexBefore;
         m_playersInfo.m_nextPlayerIndex = nextPlayerIndexBefore;
 
-        Notify(NotificationContext::GAME_TIED);
+        Notify(ModelNotificationContext::GAME_TIED);
 
         Log(cxlog::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__, "Game tied!");
 
@@ -285,7 +285,7 @@ void cxmodel::Model::EndCurrentGame()
     // Reset the position record:
     m_takenPositions.clear();
 
-    Notify(NotificationContext::GAME_ENDED);
+    Notify(ModelNotificationContext::GAME_ENDED);
 
     Log(cxlog::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__, "Game ended.");
 }
@@ -321,7 +321,7 @@ void cxmodel::Model::ReinitializeCurrentGame()
     m_tieResolutionStrategy = GameResolutionStrategyFactory::Make(*m_board, m_inARowValue, m_playersInfo.m_players, m_takenPositions, GameResolution::TIE);
     IF_CONDITION_NOT_MET_DO(m_tieResolutionStrategy, return;);
 
-    Notify(NotificationContext::GAME_REINITIALIZED);
+    Notify(ModelNotificationContext::GAME_REINITIALIZED);
 
     Log(cxlog::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__, "Game reinitialized.");
 }

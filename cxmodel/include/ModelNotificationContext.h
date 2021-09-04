@@ -16,7 +16,7 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file NotificationContext.h
+ * @file ModelNotificationContext.h
  * @date 2020
  *
  *************************************************************************************************/
@@ -36,7 +36,7 @@ namespace cxmodel
  * Describes all the contexts from which the Connect X model may notify.
  *
  ************************************************************************************************/
-enum class NotificationContext
+enum class ModelNotificationContext
 {
     // User operations:
     CREATE_NEW_GAME,
@@ -50,8 +50,8 @@ enum class NotificationContext
     GAME_REINITIALIZED
 };
 
-using IModelObserver = IObserver<NotificationContext>;
-using ModelSubject = Subject<NotificationContext>;
+using IModelObserver = IObserver<ModelNotificationContext>;
+using ModelSubject = Subject<ModelNotificationContext>;
 
 
 } // namespace cxmodel

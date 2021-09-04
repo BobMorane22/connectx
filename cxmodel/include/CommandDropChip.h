@@ -29,7 +29,7 @@
 
 #include "IBoard.h"
 #include "ICommand.h"
-#include "NotificationContext.h"
+#include "ModelNotificationContext.h"
 #include "PlayerInformation.h"
 
 namespace cxmodel

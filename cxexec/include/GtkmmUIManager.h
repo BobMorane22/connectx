@@ -28,7 +28,7 @@
 
 #include <gtkmm/application.h>
 
-#include <cxmodel/include/NotificationContext.h>
+#include <cxmodel/include/ModelNotificationContext.h>
 
 #include <cxgui/include/IWindow.h>
 #include <cxgui/include/IMainWindowController.h>

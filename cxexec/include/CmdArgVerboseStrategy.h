@@ -24,7 +24,7 @@
 #ifndef CMDARGVERBOSESTRATEGY_H_B2A8C38D_7DA1_4B38_9D16_B317EBF164A5
 #define CMDARGVERBOSESTRATEGY_H_B2A8C38D_7DA1_4B38_9D16_B317EBF164A5
 
-#include <cxmodel/include/NotificationContext.h>
+#include <cxmodel/include/ModelNotificationContext.h>
 
 #include "ICmdArgWorkflowStrategy.h"
 

@@ -27,7 +27,7 @@
 
 #include <cxinv/include/assertion.h>
 #include <cxmodel/include/IChip.h>
-#include <cxmodel/include/NotificationContext.h>
+#include <cxmodel/include/ModelNotificationContext.h>
 
 #include <common.h>
 #include <DiscChip.h>
@@ -96,27 +96,27 @@ void cxgui::GameView::DeActivate()
     }
 }
 
-void cxgui::GameView::Update(cxmodel::NotificationContext p_context)
+void cxgui::GameView::Update(cxmodel::ModelNotificationContext p_context)
 {
     switch(p_context)
     {
-        case cxmodel::NotificationContext::CHIP_DROPPED:
+        case cxmodel::ModelNotificationContext::CHIP_DROPPED:
         {
             UpdateChipDropped();
             break;
         }
-        case cxmodel::NotificationContext::GAME_WON:
-        case cxmodel::NotificationContext::GAME_TIED:
+        case cxmodel::ModelNotificationContext::GAME_WON:
+        case cxmodel::ModelNotificationContext::GAME_TIED:
         {
             UpdateGameResolved();
             break;
         }
-        case cxmodel::NotificationContext::GAME_REINITIALIZED:
+        case cxmodel::ModelNotificationContext::GAME_REINITIALIZED:
         {
             UpdateGameReinitialized();
             break;
         }
-        case cxmodel::NotificationContext::UNDO_CHIP_DROPPED:
+        case cxmodel::ModelNotificationContext::UNDO_CHIP_DROPPED:
         {
             UpdateChipDropped();
             break;
