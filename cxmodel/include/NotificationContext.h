@@ -24,6 +24,9 @@
 #ifndef NOTIFICATIONCONTEXT_H_3B763656_2127_4F2A_B522_85ECBA656CB8
 #define NOTIFICATIONCONTEXT_H_3B763656_2127_4F2A_B522_85ECBA656CB8
 
+#include "IObserver.h"
+#include "Subject.h"
+
 namespace cxmodel
 {
 
@@ -46,6 +49,10 @@ enum class NotificationContext
     GAME_ENDED,
     GAME_REINITIALIZED
 };
+
+using IModelObserver = IObserver<NotificationContext>;
+using ModelSubject = Subject<NotificationContext>;
+
 
 } // namespace cxmodel
 

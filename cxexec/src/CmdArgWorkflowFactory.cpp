@@ -49,7 +49,7 @@ const std::string VERBOSE_ARG = "--verbose";
 
 std::unique_ptr<cx::ICmdArgWorkflowStrategy> cx::CmdArgWorkflowFactory::Create(int argc,
                                                                                char *argv[],
-                                                                               cxmodel::Subject& p_modelAsSubject,
+                                                                               cxmodel::ModelSubject& p_modelAsSubject,
                                                                                cxmodel::IConnectXGameActions& p_modelAsGameActions,
                                                                                cxmodel::IConnectXGameInformation& p_modelAsGameInformation,
                                                                                cxmodel::IConnectXLimits& p_modelAsLimits,

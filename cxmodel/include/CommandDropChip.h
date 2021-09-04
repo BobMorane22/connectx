@@ -29,13 +29,12 @@
 
 #include "IBoard.h"
 #include "ICommand.h"
+#include "NotificationContext.h"
 #include "PlayerInformation.h"
-#include "Subject.h"
 
 namespace cxmodel
 {
     class IChip;
-    class Subject;
 }
 
 namespace cxmodel
@@ -49,7 +48,7 @@ namespace cxmodel
  *
  ************************************************************************************************/
 class CommandDropChip : public ICommand,
-                        public Subject
+                        public ModelSubject
 {
 
 public:

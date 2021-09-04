@@ -101,7 +101,7 @@ public:
      *
      ********************************************************************************************/
     MainWindow(Gtk::Application& p_gtkApplication,
-               cxmodel::Subject& p_model,
+               cxmodel::ModelSubject& p_model,
                IMainWindowController& p_controller,
                IMainWindowPresenter& p_presenter);
 
@@ -110,7 +110,7 @@ public:
 
 private:
 
-    void Update(cxmodel::NotificationContext p_context, cxmodel::Subject* p_subject) override;
+    void Update(cxmodel::NotificationContext p_context, cxmodel::ModelSubject* p_subject) override;
 
     void UpdateCreateNewGame();
     void UpdateChipDropped(cxmodel::NotificationContext p_context);
@@ -147,7 +147,7 @@ private:
 
     Gtk::Application& m_gtkApplication;
 
-    cxmodel::Subject& m_model;
+    cxmodel::ModelSubject& m_model;
 
     IMainWindowController& m_controller;
     IMainWindowPresenter& m_presenter;

@@ -21,7 +21,7 @@
  *
  *************************************************************************************************/
 
-#include <IObserver.h>
+#include <NotificationContext.h>
 
 /*********************************************************************************************//**
  * @brief Make sure a notification has been sent by the model.
@@ -31,7 +31,7 @@
  * notification is sent.
  *
  ************************************************************************************************/
-class ModelNotificationCatcher : public cxmodel::IObserver
+class ModelNotificationCatcher : public cxmodel::IModelObserver
 {
 
 public:
@@ -59,7 +59,7 @@ public:
     bool WasNotified() const;
 
     // cxmodel::IObserver:
-    void Update(cxmodel::NotificationContext p_context, cxmodel::Subject* p_subject) override;
+    void Update(cxmodel::NotificationContext p_context, cxmodel::ModelSubject* p_subject) override;
 
 private:
 

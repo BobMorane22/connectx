@@ -26,8 +26,7 @@
 
 #include <string>
 
-#include <cxmodel/include/IObserver.h>
-#include <cxmodel/include/Subject.h>
+#include <cxmodel/include/NotificationContext.h>
 
 namespace cxgui
 {
@@ -36,7 +35,8 @@ namespace cxgui
  * @brief Interface for status bar presenters.
  *
  ************************************************************************************************/
-class IStatusBarPresenter : public cxmodel::IObserver, public cxmodel::Subject
+class IStatusBarPresenter : public cxmodel::IModelObserver,
+                            public cxmodel::ModelSubject
 {
 
 public:

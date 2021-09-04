@@ -38,7 +38,7 @@ int ConcreteObserverMock::GetData() const
     return m_data;
 }
 
-void ConcreteObserverMock::Update(cxmodel::NotificationContext, cxmodel::Subject* p_subject)
+void ConcreteObserverMock::Update(cxmodel::NotificationContext, cxmodel::ModelSubject* p_subject)
 {
     ConcreteSubjectMock* subject = static_cast<ConcreteSubjectMock*>(p_subject);
 

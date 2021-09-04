@@ -36,7 +36,7 @@ public:
 
     std::string GetStatusBarMessage() const override;
 
-    virtual void Update(cxmodel::NotificationContext p_context, Subject* p_subject) override;
+    virtual void Update(cxmodel::NotificationContext p_context, cxmodel::ModelSubject* p_subject) override;
 
 
 private:

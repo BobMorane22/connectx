@@ -24,9 +24,9 @@
 #ifndef CONCRETEOBSERVERMOCK_H_E0703323_22B8_40E1_8225_57CD5FDCFF45
 #define CONCRETEOBSERVERMOCK_H_E0703323_22B8_40E1_8225_57CD5FDCFF45
 
-#include <IObserver.h>
+#include <NotificationContext.h>
 
-class ConcreteObserverMock : public cxmodel::IObserver
+class ConcreteObserverMock : public cxmodel::IModelObserver
 {
 
 public:
@@ -35,7 +35,7 @@ public:
 
     int GetData() const;
 
-    void Update(cxmodel::NotificationContext p_context, cxmodel::Subject* p_subject) override;
+    void Update(cxmodel::NotificationContext p_context, cxmodel::ModelSubject* p_subject) override;
 
 private:
 

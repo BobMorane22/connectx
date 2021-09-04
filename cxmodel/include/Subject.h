@@ -24,12 +24,16 @@
 #ifndef SUBJECT_H_520FD354_27E1_4AE7_9579_71016A78DC44
 #define SUBJECT_H_520FD354_27E1_4AE7_9579_71016A78DC44
 
+#include <algorithm>
+#include <type_traits>
 #include <vector>
 
-#include "NotificationContext.h"
+#include <cxinv/include/assertion.h>
+#include <cxmodel/include/IObserver.h>
 
 namespace cxmodel
 {
+    template<typename>
     class IObserver;
 }
 
@@ -46,11 +50,16 @@ namespace cxmodel
  * For this to occur, the @c Notify() method must be called explicitly. Not calling @c Notify()
  * will result on subscribed observers not receiving a notification.
  *
+ * @tparam T A notification context. Must be an enum.
+ *
  * @see cxmodel::IObserver
  *
  ************************************************************************************************/
+template<typename T>
 class Subject
 {
+
+    static_assert(std::is_enum_v<T>, "Notification context types must be enums.");
 
 public:
 
@@ -86,7 +95,7 @@ public:
      * @warning Never call @c Update() directly from an observer. Always use @c Notify().
      *
      ********************************************************************************************/
-    void Attach(IObserver* const p_newObserver);
+    void Attach(IObserver<T>* const p_newObserver);
 
     /******************************************************************************************//**
      * @brief Detach a specific observer from the subject.
@@ -104,7 +113,7 @@ public:
      * subject.
      *
      ********************************************************************************************/
-    void Detatch(IObserver* const p_oldObserver);
+    void Detatch(IObserver<T>* const p_oldObserver);
 
     /******************************************************************************************//**
      * @brief Detach all observers.
@@ -128,16 +137,130 @@ protected:
      * It will in turn update to state of all attached observers.
      *
      ********************************************************************************************/
-    void Notify(NotificationContext p_context);
+    void Notify(T p_context);
 
 private:
 
     void CheckInvariants();
 
-    std::vector<cxmodel::IObserver*> m_observers;
+    std::vector<cxmodel::IObserver<T>*> m_observers;
 
 };
 
 } // namespace cxmodel
+
+template<typename T>
+cxmodel::Subject<T>::Subject()
+{
+    CheckInvariants();
+}
+
+template<typename T>
+cxmodel::Subject<T>::~Subject()
+{
+    DetatchAll();
+}
+
+template<typename T>
+void cxmodel::Subject<T>::Attach(cxmodel::IObserver<T>* const p_newObserver)
+{
+    PRECONDITION(p_newObserver);
+
+    const std::size_t oldSize = m_observers.size();
+
+    if(p_newObserver)
+    {
+        const bool alreadyRegistered = std::any_of(m_observers.cbegin(),
+                                                   m_observers.cend(), [p_newObserver](cxmodel::IObserver<T>* const p_observer)
+                                                                      {
+                                                                          return p_observer == p_newObserver;
+                                                                      }
+                                                   );
+
+        PRECONDITION(!alreadyRegistered);
+
+        if(!alreadyRegistered)
+        {
+            m_observers.push_back(p_newObserver);
+        }
+    }
+
+    const std::size_t newSize = m_observers.size();
+
+    POSTCONDITION(newSize - oldSize == 1);
+
+    CheckInvariants();
+}
+
+template<typename T>
+void cxmodel::Subject<T>::Detatch(cxmodel::IObserver<T>* const p_oldObserver)
+{
+    PRECONDITION(p_oldObserver);
+
+    const std::size_t oldSize = m_observers.size();
+    PRECONDITION(oldSize > 0);
+
+    std::size_t newSize = m_observers.size();
+
+    if(p_oldObserver)
+    {
+        const auto position = std::find(m_observers.cbegin(),
+                                        m_observers.cend(),
+                                        p_oldObserver);
+
+        PRECONDITION(position != m_observers.cend());
+
+        if(position != m_observers.end())
+        {
+            m_observers.erase(position);
+            newSize = m_observers.size();
+        }
+    }
+
+
+    POSTCONDITION(oldSize - newSize == 1);
+
+    CheckInvariants();
+}
+
+template<typename T>
+void cxmodel::Subject<T>::DetatchAll()
+{
+    // Here the fact that there might be no observer listed is not a problem.
+    // This is the case because we are not looking to detach a specific observer,
+    // but all of them, regardless of who they are. This might, for example, be
+    // called as some insurance that there really are no observers listed.
+
+    m_observers.clear();
+
+    POSTCONDITION(m_observers.size() == 0);
+
+    CheckInvariants();
+}
+
+template<typename T>
+void cxmodel::Subject<T>::Notify(T p_context)
+{
+    for(const auto observer : m_observers)
+    {
+        if(observer)
+        {
+            observer->Update(p_context, this);
+        }
+    }
+
+    CheckInvariants();
+}
+
+template<typename T>
+void cxmodel::Subject<T>::CheckInvariants()
+{
+    INVARIANT(std::none_of(m_observers.cbegin(),
+                           m_observers.cend(),
+                           [](cxmodel::IObserver<T>* const p_observer)
+                           {
+                                return p_observer == nullptr;
+                           }));
+}
 
 #endif // SUBJECT_H_520FD354_27E1_4AE7_9579_71016A78DC44

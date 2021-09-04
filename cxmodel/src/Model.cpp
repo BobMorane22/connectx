@@ -81,7 +81,7 @@ cxmodel::Model::~Model()
     DetatchAll();
 }
 
-void cxmodel::Model::Update(cxmodel::NotificationContext p_context, cxmodel::Subject* p_subject)
+void cxmodel::Model::Update(cxmodel::NotificationContext p_context, cxmodel::ModelSubject* p_subject)
 {
     if(ASSERT(p_subject))
     {

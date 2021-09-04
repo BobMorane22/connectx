@@ -32,7 +32,7 @@
 #include <cxmodel/include/IConnectXLimits.h>
 #include <cxmodel/include/IUndoRedo.h>
 #include <cxmodel/include/IVersioning.h>
-#include <cxmodel/include/Subject.h>
+#include <cxmodel/include/NotificationContext.h>
 
 #include "LoggerMock.h"
 
@@ -49,7 +49,7 @@ public:
     ApplicationTestFixture();
 
     cxlog::ILogger& GetLogger();
-    cxmodel::Subject& GetSubjectModel();
+    cxmodel::ModelSubject& GetSubjectModel();
     cxmodel::IConnectXGameActions& GetGameActionsModel();
     cxmodel::IConnectXGameInformation& GetGameInformationModel();
     cxmodel::IConnectXLimits& GetLimitsModel();
@@ -58,7 +58,7 @@ public:
 
 private:
 
-    class ModelApplicationMock : public cxmodel::Subject,
+    class ModelApplicationMock : public cxmodel::ModelSubject,
                                  public cxmodel::IConnectXGameActions,
                                  public cxmodel::IConnectXGameInformation,
                                  public cxmodel::IConnectXLimits,

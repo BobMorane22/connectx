@@ -29,7 +29,7 @@
  * @brief Concrete subject only used to call the Update method with valid parameters.
  *
  ************************************************************************************************/
-class ConcreteSubject : public cxmodel::Subject
+class ConcreteSubject : public cxmodel::ModelSubject
 {
 public:
 

@@ -57,7 +57,7 @@ public:
  *
  ************************************************************************************************/
 class UndoConnectXGameInformationModelMock : public BasicConnectXGameInformationModelMock,
-                                             public cxmodel::Subject
+                                             public cxmodel::ModelSubject
 {
 
 public:

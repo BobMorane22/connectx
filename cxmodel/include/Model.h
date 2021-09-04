@@ -35,11 +35,10 @@
 #include "IConnectXGameInformation.h"
 #include "IConnectXLimits.h"
 #include "IGameResolutionStrategy.h"
-#include "IObserver.h"
 #include "IUndoRedo.h"
 #include "IVersioning.h"
+#include "NotificationContext.h"
 #include "PlayerInformation.h"
-#include "Subject.h"
 
 namespace cxmodel
 {
@@ -53,8 +52,8 @@ namespace cxmodel
  *
  ************************************************************************************************/
 class Model : public cxlog::ILogger,
-              public Subject,
-              public IObserver,
+              public ModelSubject,
+              public IModelObserver,
               public IVersioning,
               public IUndoRedo,
               public IConnectXLimits,
@@ -86,7 +85,7 @@ public:
 
 ///@{ @name IObserver
 
-    void Update(NotificationContext p_context, Subject* p_subject) override;
+    void Update(NotificationContext p_context, ModelSubject* p_subject) override;
 
 ///@}
 

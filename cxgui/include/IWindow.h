@@ -24,7 +24,7 @@
 #ifndef IWINDOW_H_4807796E_6C76_4D0A_BF7D_81534795BA29
 #define IWINDOW_H_4807796E_6C76_4D0A_BF7D_81534795BA29
 
-#include <cxmodel/include/IObserver.h>
+#include <cxmodel/include/NotificationContext.h>
 
 namespace cxgui
 {
@@ -35,7 +35,7 @@ namespace cxgui
  * This interface presents the basic utilities needed to create windows.
  *
  ************************************************************************************************/
-class IWindow : public cxmodel::IObserver
+class IWindow : public cxmodel::IModelObserver
 {
 
 public:

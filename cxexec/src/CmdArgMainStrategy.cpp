@@ -26,14 +26,12 @@
 #include <cxinv/include/assertion.h>
 #include <cxmodel/include/IConnectXGameActions.h>
 #include <cxmodel/include/IUndoRedo.h>
-#include <cxmodel/include/Subject.h>
-
 
 #include <CmdArgMainStrategy.h>
 
 cx::CmdArgMainStrategy::CmdArgMainStrategy(int argc,
                                            char *argv[],
-                                           cxmodel::Subject& p_modelAsSubject,
+                                           cxmodel::ModelSubject& p_modelAsSubject,
                                            cxmodel::IConnectXGameActions& p_modelAsGameActions,
                                            cxmodel::IConnectXGameInformation& p_modelAsGameInformation,
                                            cxmodel::IConnectXLimits& p_modelAsLimits,

@@ -26,8 +26,7 @@
 
 #include <string>
 
-#include <cxmodel/include/IObserver.h>
-#include <cxmodel/include/Subject.h>
+#include <cxmodel/include/NotificationContext.h>
 
 namespace cxgui
 {

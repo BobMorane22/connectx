@@ -33,7 +33,7 @@ cxlog::ILogger& ApplicationTestFixture::GetLogger()
     return m_logger;
 }
 
-cxmodel::Subject& ApplicationTestFixture::GetSubjectModel()
+cxmodel::ModelSubject& ApplicationTestFixture::GetSubjectModel()
 {
     EXPECT_TRUE(m_model);
 

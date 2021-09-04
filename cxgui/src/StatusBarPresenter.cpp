@@ -28,7 +28,7 @@ std::string cxgui::StatusBarPresenter::GetStatusBarMessage() const
     return m_statusBarMessage;
 }
 
-void cxgui::StatusBarPresenter::Update(cxmodel::NotificationContext p_context, cxmodel::Subject* p_subject)
+void cxgui::StatusBarPresenter::Update(cxmodel::NotificationContext p_context, cxmodel::ModelSubject* p_subject)
 {
     if(p_subject)
     {

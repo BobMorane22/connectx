@@ -64,7 +64,6 @@ OBJS_$(d) := $(d)/src/ChipColor.o \
              $(d)/src/OS.o \
              $(d)/src/Player.o \
              $(d)/src/Status.o \
-             $(d)/src/Subject.o \
              $(d)/src/TieGameResolutionStrategy.o \
              $(d)/src/WinGameResolutionStragegy.o \
              cxinv/libcxinv.a \

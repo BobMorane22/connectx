@@ -48,7 +48,7 @@
 #include <GameResolutionDialogController.h>
 
 cxgui::MainWindow::MainWindow(Gtk::Application& p_gtkApplication,
-                              cxmodel::Subject& p_model,
+                              cxmodel::ModelSubject& p_model,
                               cxgui::IMainWindowController& p_controller,
                               cxgui::IMainWindowPresenter& p_presenter)
  : m_gtkApplication{p_gtkApplication}
@@ -120,7 +120,7 @@ int cxgui::MainWindow::Show()
     return m_gtkApplication.run(m_window);
 }
 
-void cxgui::MainWindow::Update(cxmodel::NotificationContext p_context, cxmodel::Subject* p_subject)
+void cxgui::MainWindow::Update(cxmodel::NotificationContext p_context, cxmodel::ModelSubject* p_subject)
 {
     if(PRECONDITION(p_subject))
     {

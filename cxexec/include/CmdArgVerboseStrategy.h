@@ -24,6 +24,10 @@
 #ifndef CMDARGVERBOSESTRATEGY_H_B2A8C38D_7DA1_4B38_9D16_B317EBF164A5
 #define CMDARGVERBOSESTRATEGY_H_B2A8C38D_7DA1_4B38_9D16_B317EBF164A5
 
+#include <cxmodel/include/NotificationContext.h>
+
+#include "ICmdArgWorkflowStrategy.h"
+
 namespace cxmodel
 {
     class IConnectXGameActions;
@@ -31,10 +35,7 @@ namespace cxmodel
     class IConnectXLimits;
     class IUndoRedo;
     class IVersioning;
-    class Subject;
 }
-
-#include "ICmdArgWorkflowStrategy.h"
 
 namespace cxlog
 {
@@ -69,7 +70,7 @@ public:
      ********************************************************************************************/
     CmdArgVerboseStrategy(int argc,
                           char *argv[],
-                          cxmodel::Subject& p_modelAsSubject,
+                          cxmodel::ModelSubject& p_modelAsSubject,
                           cxmodel::IConnectXGameActions& p_modelAsGameActions,
                           cxmodel::IConnectXGameInformation& p_modelAsGameInformation,
                           cxmodel::IConnectXLimits& p_modelAsLimits,
@@ -84,7 +85,7 @@ private:
 
     int m_argc;
     char **m_argv;
-    cxmodel::Subject& m_modelAsSubject;
+    cxmodel::ModelSubject& m_modelAsSubject;
     cxmodel::IConnectXGameActions& m_modelAsGameActions;
     cxmodel::IConnectXGameInformation& m_modelAsGameInformation;
     cxmodel::IConnectXLimits& m_modelAsLimits;

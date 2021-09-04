@@ -79,7 +79,7 @@ cxgui::MainWindowPresenter::MainWindowPresenter(const cxmodel::IConnectXLimits& 
 {
 }
 
-void cxgui::MainWindowPresenter::Update(cxmodel::NotificationContext p_context, cxmodel::Subject* p_subject)
+void cxgui::MainWindowPresenter::Update(cxmodel::NotificationContext p_context, cxmodel::ModelSubject* p_subject)
 {
     if(PRECONDITION(p_subject))
     {

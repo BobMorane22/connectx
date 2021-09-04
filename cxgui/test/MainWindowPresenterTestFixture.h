@@ -32,7 +32,7 @@
 #include <cxmodel/include/IConnectXLimits.h>
 #include <cxmodel/include/IUndoRedo.h>
 #include <cxmodel/include/IVersioning.h>
-#include <cxmodel/include/Subject.h>
+#include <cxmodel/include/NotificationContext.h>
 #include <cxgui/include/IMainWindowPresenter.h>
 
 class MainWindowPresenterTestFixture : public testing::Test
@@ -54,7 +54,7 @@ public:
 
 private:
 
-    class MainWindowPresenterModelMock : public cxmodel::Subject,
+    class MainWindowPresenterModelMock : public cxmodel::ModelSubject,
                                          public cxmodel::IVersioning,
                                          public cxmodel::IConnectXGameActions,
                                          public cxmodel::IConnectXGameInformation,

@@ -26,13 +26,13 @@
 
 #include <string>
 
-#include <cxmodel/include/IObserver.h>
+#include <cxmodel/include/NotificationContext.h>
 
 /*********************************************************************************************//**
  * @brief Interface for status bars.
  *
  ************************************************************************************************/
-class IStatusBar : public cxmodel::IObserver
+class IStatusBar : public cxmodel::IModelObserver
 {
 
 public:

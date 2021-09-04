@@ -48,7 +48,7 @@ bool ModelNotificationCatcher::WasNotified() const
     return m_wasNotified;
 }
 
-void ModelNotificationCatcher::Update(cxmodel::NotificationContext p_context, cxmodel::Subject* p_subject)
+void ModelNotificationCatcher::Update(cxmodel::NotificationContext p_context, cxmodel::ModelSubject* p_subject)
 {
     ASSERT_TRUE(p_subject);
 

@@ -24,10 +24,13 @@
 #ifndef IOBSERVER_H_CB32427D_3430_41D8_BE7A_992F2D139BB2
 #define IOBSERVER_H_CB32427D_3430_41D8_BE7A_992F2D139BB2
 
+#include <type_traits>
+
 #include "NotificationContext.h"
 
 namespace cxmodel
 {
+    template<typename>
     class Subject;
 }
 
@@ -40,11 +43,16 @@ namespace cxmodel
  * Inherit from this to make some class capable of subscribing to notifications from some
  * Subject. For each notification, the @c IObserver instance can update its state.
  *
+ * @tparam T A notification context. Must be an enum.
+ *
  * @see cxmodel::Subject
  *
  ************************************************************************************************/
+template<typename T>
 class IObserver
 {
+
+    static_assert(std::is_enum_v<T>, "Notification context types must be enums.");
 
 public:
 
@@ -69,7 +77,7 @@ public:
      *          should call this.
      *
      ********************************************************************************************/
-    virtual void Update(NotificationContext p_context, Subject* p_subject) = 0;
+    virtual void Update(T p_context, Subject<T>* p_subject) = 0;
 
 };
 

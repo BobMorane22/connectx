@@ -24,8 +24,7 @@
 #ifndef IMAINWINDOWPRESENTER_H_D8C76920_83D9_4D15_B95A_63282E742221
 #define IMAINWINDOWPRESENTER_H_D8C76920_83D9_4D15_B95A_63282E742221
 
-#include <cxmodel/include/IObserver.h>
-#include <cxmodel/include/Subject.h>
+#include <cxmodel/include/NotificationContext.h>
 
 #include "IGameViewPresenter.h"
 #include "INewGameViewPresenter.h"
@@ -46,8 +45,8 @@ namespace cxgui
  *       because conceptually, it acts like one as far as the presenter is concerned.
  *
  ************************************************************************************************/
-class IMainWindowPresenter : public cxmodel::IObserver,
-                             public cxmodel::Subject,
+class IMainWindowPresenter : public cxmodel::IModelObserver,
+                             public cxmodel::ModelSubject,
                              public IGameViewPresenter,
                              public INewGameViewPresenter
 {

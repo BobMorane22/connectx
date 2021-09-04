@@ -37,7 +37,7 @@ void cxgui::StatusBar::SetLastUserActionStatus(const std::string& p_lastUserActi
     m_statusbar.push(p_lastUserActionDescription);
 }
 
-void cxgui::StatusBar::Update(cxmodel::NotificationContext, cxmodel::Subject* p_subject)
+void cxgui::StatusBar::Update(cxmodel::NotificationContext, cxmodel::ModelSubject* p_subject)
 {
     if(p_subject)
     {

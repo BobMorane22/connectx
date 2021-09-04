@@ -21,10 +21,10 @@
  *
  *************************************************************************************************/
 
-#include <cxmodel/include/Subject.h>
+#include <cxmodel/include/IVersioning.h>
+#include <cxmodel/include/NotificationContext.h>
 
 #include <AboutWindowPresenter.h>
-#include "../../cxmodel/include/IVersioning.h"
 
 cxgui::AboutWindowPresenter::AboutWindowPresenter(const cxmodel::IVersioning& p_model)
  : m_applicationName{p_model.GetName()}

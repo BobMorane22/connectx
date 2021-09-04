@@ -32,7 +32,6 @@
 #include "ICommand.h"
 #include "NewGameInformation.h"
 #include "Player.h"
-#include "Subject.h"
 
 namespace cxmodel
 {

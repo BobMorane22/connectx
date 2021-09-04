@@ -40,7 +40,7 @@ cxgui::About::About(std::unique_ptr<IAboutWindowPresenter>&& p_presenter)
     m_close.set_label(m_presenter->GetCloseText());
 }
 
-void cxgui::About::Update(cxmodel::NotificationContext /*p_context*/, cxmodel::Subject* /*p_subject*/)
+void cxgui::About::Update(cxmodel::NotificationContext /*p_context*/, cxmodel::ModelSubject* /*p_subject*/)
 {
     // Nothing to do...
 }

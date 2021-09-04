@@ -47,7 +47,7 @@ public:
 
 private:
 
-    virtual void Update(cxmodel::NotificationContext p_context, cxmodel::Subject* p_subject) override;
+    virtual void Update(cxmodel::NotificationContext p_context, cxmodel::ModelSubject* p_subject) override;
 
     IStatusBarPresenter& m_presenter;
     Gtk::Statusbar m_statusbar;

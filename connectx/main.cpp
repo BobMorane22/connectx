@@ -74,7 +74,7 @@ int main(int argc, char *argv[])
         }
 
         cxmodel::Model concreteModel{std::make_unique<cxmodel::CommandStack>(CMD_STACK_SIZE), *logger};
-        cxmodel::Subject& modelAsSubject = concreteModel;
+        cxmodel::ModelSubject& modelAsSubject = concreteModel;
         cxmodel::IConnectXGameActions& modelAsGameActions = concreteModel;
         cxmodel::IConnectXGameInformation& modelAsGameInformation = concreteModel;
         cxmodel::IConnectXLimits& modelAsLimits = concreteModel;

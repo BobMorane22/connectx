@@ -28,10 +28,11 @@
 
 #include <gtest/gtest.h>
 
-#include <cxmodel/include/Subject.h>
+#include <cxmodel/include/IVersioning.h>
+#include <cxmodel/include/NotificationContext.h>
 
 #include <IAboutWindowPresenter.h>
-#include "../../cxmodel/include/IVersioning.h"
+
 
 class AboutWindowPresenterTestFixture : public testing::Test
 {
@@ -45,7 +46,7 @@ public:
 
 private:
 
-    class AboutWindowPresenterModelMock : public cxmodel::Subject,
+    class AboutWindowPresenterModelMock : public cxmodel::ModelSubject,
                                           public cxmodel::IVersioning
     {
 
