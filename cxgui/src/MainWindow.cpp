@@ -131,6 +131,12 @@ void cxgui::MainWindow::Update(cxmodel::ModelNotificationContext p_context, cxmo
                 UpdateChipDropped(p_context);
                 break;
             }
+            case cxmodel::ModelNotificationContext::CHIP_MOVED_LEFT:
+            case cxmodel::ModelNotificationContext::CHIP_MOVED_RIGHT:
+            {
+                UpdateChipMoved(p_context);
+                break;
+            }
             case cxmodel::ModelNotificationContext::CREATE_NEW_GAME:
             {
                 UpdateCreateNewGame();
@@ -176,6 +182,14 @@ void cxgui::MainWindow::UpdateCreateNewGame()
 }
 
 void cxgui::MainWindow::UpdateChipDropped(cxmodel::ModelNotificationContext p_context)
+{
+    if(ASSERT(m_gameView))
+    {
+        m_gameView->Update(p_context);
+    }
+}
+
+void cxgui::MainWindow::UpdateChipMoved(cxmodel::ModelNotificationContext p_context)
 {
     if(ASSERT(m_gameView))
     {

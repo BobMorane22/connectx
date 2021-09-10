@@ -115,6 +115,16 @@ void cxgui::GameView::Update(cxmodel::ModelNotificationContext p_context)
             UpdateChipDropped();
             break;
         }
+        case cxmodel::ModelNotificationContext::CHIP_MOVED_LEFT:
+        {
+            UpdateChipMovedLeft();
+            break;
+        }
+        case cxmodel::ModelNotificationContext::CHIP_MOVED_RIGHT:
+        {
+            UpdateChipMovedRight();
+            break;
+        }
         case cxmodel::ModelNotificationContext::GAME_WON:
         case cxmodel::ModelNotificationContext::GAME_TIED:
         {
@@ -249,6 +259,22 @@ void cxgui::GameView::UpdateChipDropped()
     if(ASSERT(m_board))
     {
         m_board->PerformChipAnimation(cxgui::BoardAnimation::DROP_CHIP);
+    }
+}
+
+void cxgui::GameView::UpdateChipMovedLeft()
+{
+    if(ASSERT(m_board))
+    {
+        m_board->PerformChipAnimation(cxgui::BoardAnimation::MOVE_CHIP_LEFT_ONE_COLUMN);
+    }
+}
+
+void cxgui::GameView::UpdateChipMovedRight()
+{
+    if(ASSERT(m_board))
+    {
+        m_board->PerformChipAnimation(cxgui::BoardAnimation::MOVE_CHIP_RIGHT_ONE_COLUMN);
     }
 }
 

@@ -266,6 +266,24 @@ void cxmodel::Model::DropChip(const cxmodel::IChip& p_chip, size_t p_column)
     CheckInvariants();
 }
 
+void cxmodel::Model::MoveLeft()
+{
+    Notify(ModelNotificationContext::CHIP_MOVED_LEFT);
+
+    Log(cxlog::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__, "Chip moved left.");
+
+    CheckInvariants();
+}
+
+void cxmodel::Model::MoveRight()
+{
+    Notify(ModelNotificationContext::CHIP_MOVED_RIGHT);
+
+    Log(cxlog::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__, "Chip moved right.");
+
+    CheckInvariants();
+}
+
 void cxmodel::Model::EndCurrentGame()
 {
     // Clear the command stack:

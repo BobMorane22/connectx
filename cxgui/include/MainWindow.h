@@ -114,6 +114,7 @@ private:
 
     void UpdateCreateNewGame();
     void UpdateChipDropped(cxmodel::ModelNotificationContext p_context);
+    void UpdateChipMoved(cxmodel::ModelNotificationContext p_context);
     void UpdateGameWon(cxmodel::ModelNotificationContext p_context);
     void UpdateGameTied(cxmodel::ModelNotificationContext p_context);
     void UpdateGameEnded();

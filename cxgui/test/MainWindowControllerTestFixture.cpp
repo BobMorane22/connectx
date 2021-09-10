@@ -96,6 +96,16 @@ void MainWindowControllerTestFixture::MainWindowControllerMockModel::DropChip(co
     m_outer.m_chipDropped = true;
 }
 
+void MainWindowControllerTestFixture::MainWindowControllerMockModel::MoveLeft()
+{
+    // Nothing to do...
+}
+
+void MainWindowControllerTestFixture::MainWindowControllerMockModel::MoveRight()
+{
+    // Nothing to do...
+}
+
 void MainWindowControllerTestFixture::MainWindowControllerMockModel::EndCurrentGame()
 {
     m_outer.m_currentGameEnded = true;

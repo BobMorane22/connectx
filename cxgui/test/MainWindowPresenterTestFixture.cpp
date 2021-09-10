@@ -107,6 +107,16 @@ void MainWindowPresenterTestFixture::MainWindowPresenterModelMock::DropChip(cons
     Notify(cxmodel::ModelNotificationContext::CHIP_DROPPED);
 }
 
+void MainWindowPresenterTestFixture::MainWindowPresenterModelMock::MoveLeft()
+{
+    // Nothing to do...
+}
+
+void MainWindowPresenterTestFixture::MainWindowPresenterModelMock::MoveRight()
+{
+    // Nothing to do...
+}
+
 const cxmodel::IChip& MainWindowPresenterTestFixture::MainWindowPresenterModelMock::GetChip(size_t p_row, size_t p_column) const
 {
     EXPECT_TRUE(p_row < GetCurrentGridHeight());

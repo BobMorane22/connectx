@@ -64,6 +64,18 @@ public:
     virtual void DropChip(const cxmodel::IChip& p_chip, size_t p_column) = 0;
 
     /******************************************************************************************//**
+     * @brief Moves the chip left one position.
+     *
+     ********************************************************************************************/
+    virtual void MoveLeft() = 0;
+
+    /******************************************************************************************//**
+     * @brief Moves the chip right one position.
+     *
+     ********************************************************************************************/
+    virtual void MoveRight() = 0;
+
+    /******************************************************************************************//**
      * @brief Ends the current game.
      *
      * When a game is ended, all of its context (i.e. players, board status, etc) is cleared as

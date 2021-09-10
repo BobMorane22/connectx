@@ -66,6 +66,8 @@ private:
     bool OnKeyPressed(GdkEventKey* p_event);
 
     void UpdateChipDropped();
+    void UpdateChipMovedLeft();
+    void UpdateChipMovedRight();
     void UpdateGameResolved();
     void UpdateGameReinitialized();
 

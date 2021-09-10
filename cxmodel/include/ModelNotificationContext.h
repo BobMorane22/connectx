@@ -41,6 +41,8 @@ enum class ModelNotificationContext
     // User operations:
     CREATE_NEW_GAME,
     CHIP_DROPPED,
+    CHIP_MOVED_LEFT,
+    CHIP_MOVED_RIGHT,
     UNDO_CHIP_DROPPED,
 
     // Game states:

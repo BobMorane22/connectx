@@ -60,6 +60,16 @@ void GameResolutionDialogControllerTestFixture::GameResolutionDialogControllerMo
     // Nothing to do...
 }
 
+void GameResolutionDialogControllerTestFixture::GameResolutionDialogControllerMockModel::MoveLeft()
+{
+    // Nothing to do...
+}
+
+void GameResolutionDialogControllerTestFixture::GameResolutionDialogControllerMockModel::MoveRight()
+{
+    // Nothing to do...
+}
+
 void GameResolutionDialogControllerTestFixture::GameResolutionDialogControllerMockModel::EndCurrentGame()
 {
     m_outer.m_newGameRequested = true;

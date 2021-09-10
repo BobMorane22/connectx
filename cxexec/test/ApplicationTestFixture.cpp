@@ -87,6 +87,16 @@ void ApplicationTestFixture::ModelApplicationMock::DropChip(const cxmodel::IChip
     // Not used...
 }
 
+void ApplicationTestFixture::ModelApplicationMock::MoveLeft()
+{
+    // Not used...
+}
+
+void ApplicationTestFixture::ModelApplicationMock::MoveRight()
+{
+    // Not used...
+}
+
 const cxmodel::IChip& ApplicationTestFixture::ModelApplicationMock::GetChip(size_t p_row, size_t p_column) const
 {
     EXPECT_TRUE(p_row < GetCurrentGridHeight());

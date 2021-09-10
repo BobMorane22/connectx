@@ -23,6 +23,11 @@
 
 #include <StatusBarPresenter.h>
 
+namespace
+{
+    const std::string NO_MESSAGE = "";
+}
+
 std::string cxgui::StatusBarPresenter::GetStatusBarMessage() const
 {
     return m_statusBarMessage;
@@ -48,6 +53,12 @@ std::string cxgui::MakeStatusBarContextString(cxmodel::ModelNotificationContext 
         case cxmodel::ModelNotificationContext::CHIP_DROPPED:
             return "Chip dropped.";
 
+        case cxmodel::ModelNotificationContext::CHIP_MOVED_LEFT:
+            return NO_MESSAGE;
+
+        case cxmodel::ModelNotificationContext::CHIP_MOVED_RIGHT:
+            return NO_MESSAGE;
+
         case cxmodel::ModelNotificationContext::UNDO_CHIP_DROPPED:
             return "Undo.";
 
@@ -58,13 +69,13 @@ std::string cxgui::MakeStatusBarContextString(cxmodel::ModelNotificationContext 
             return "Game tied!";
 
         case cxmodel::ModelNotificationContext::GAME_ENDED:
-            return "";
+            return NO_MESSAGE;
 
         case cxmodel::ModelNotificationContext::GAME_REINITIALIZED:
             return "Game reinitialized.";
 
         default:                                                     // LCOV_EXCL_LINE
             ASSERT_ERROR_MSG("Unknown notification context.");       // LCOV_EXCL_LINE
-            return {};                                               // LCOV_EXCL_LINE
+            return NO_MESSAGE;                                       // LCOV_EXCL_LINE
     }
 }

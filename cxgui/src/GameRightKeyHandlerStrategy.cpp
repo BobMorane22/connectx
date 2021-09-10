@@ -28,9 +28,9 @@
 #include "GameRightKeyHandlerStrategy.h"
 #include "IGameViewController.h"
 
-bool cxgui::GameRightKeyHandlerStrategy::Handle(IGameViewController& /*p_controller*/, IBoardAnimator& p_gameBoard)
+bool cxgui::GameRightKeyHandlerStrategy::Handle(IGameViewController& p_controller, IBoardAnimator& /*p_gameBoard*/)
 {
-    p_gameBoard.PerformChipAnimation(cxgui::BoardAnimation::MOVE_CHIP_RIGHT_ONE_COLUMN);
+    p_controller.OnMoveRight();
 
     return true;
 }
