@@ -28,10 +28,11 @@
 #include <cxinv/include/assertion.h>
 #include <cxmodel/include/Disc.h>
 
-#include <Board.h>
-#include <DiscChip.h>
-#include <IGameViewController.h>
-#include <IGameViewPresenter.h>
+#include "Board.h"
+#include "BoardAnimation.h"
+#include "DiscChip.h"
+#include "IGameViewController.h"
+#include "IGameViewPresenter.h"
 
 constexpr bool FULLY_HANDLED = true;
 constexpr bool PROPAGATE = false;
@@ -95,6 +96,58 @@ cxgui::Board::Board(const IGameViewPresenter& p_presenter, IGameViewController& 
     pack2(m_boardLayout, true, false);
 }
 
+void cxgui::Board::PerformChipAnimation(BoardAnimation p_animation)
+{
+    switch(p_animation)
+    {
+        case cxgui::BoardAnimation::GAME_REINITIALIZED:
+        {
+            MoveCurrentDiscAtFirstRow();
+            ClearBoardArea();
+            break;
+        }
+        case cxgui::BoardAnimation::GAME_WON:
+        {
+            ClearNextDiscArea();
+            RefreshBoardArea();
+            break;
+        }
+        case cxgui::BoardAnimation::MOVE_CHIP_LEFT_ONE_COLUMN:
+        {
+            Move(Side::Left);
+            break;
+        }
+        case cxgui::BoardAnimation::MOVE_CHIP_RIGHT_ONE_COLUMN:
+        {
+            Move(Side::Right);
+            break;
+        }
+        case cxgui::BoardAnimation::DROP_CHIP:
+        {
+            DropChip(); // There?
+            MoveCurrentDiscAtFirstRow();
+            RefreshBoardArea();
+            break;
+        }
+        case cxgui::BoardAnimation::UNDO_DROP_CHIP:
+        {
+            MoveCurrentDiscAtFirstRow();
+            RefreshBoardArea();
+            break;
+        }
+        default:
+        {
+            ASSERT_ERROR_MSG("Unknown board animation.");
+            return;
+        }
+    }
+}
+
+size_t cxgui::Board::GetCurrentColumn() const
+{
+    return 0u;
+}
+
 void cxgui::Board::DropChip()
 {
     Chip* chip = GetChip(m_nextDiscAreaLayout, m_currentDiscPosition, 0);
@@ -111,37 +164,6 @@ void cxgui::Board::MoveLeft()
 void cxgui::Board::MoveRight()
 {
     Move(Side::Right);
-}
-
-void cxgui::Board::Update(Context p_context)
-{
-    switch(p_context)
-    {
-        case Context::CHIP_DROPPED:
-        {
-            MoveCurrentDiscAtFirstRow();
-            RefreshBoardArea();
-            break;
-        }
-        case Context::UNDO_CHIP_DROPPED:
-        {
-            MoveCurrentDiscAtFirstRow();
-            RefreshBoardArea();
-            break;
-        }
-        case Context::GAME_WON:
-        {
-            ClearNextDiscArea();
-            RefreshBoardArea();
-            break;
-        }
-        case Context::GAME_REINITIALIZED:
-        {
-            MoveCurrentDiscAtFirstRow();
-            ClearBoardArea();
-            break;
-        }
-    }
 }
 
 cxgui::Chip* cxgui::Board::GetChip(Gtk::Grid& p_discArea, int p_left, int p_top)

@@ -41,7 +41,7 @@ class GameRightKeyHandlerStrategy : public cxgui::IGameKeyHandlerStrategy
      * @param p_gameBoard  The board to act on.
      *
      ********************************************************************************************/
-    bool Handle(IGameViewController& p_controller, Board& p_gameBoard) override;
+    bool Handle(IGameViewController& p_controller, IBoardAnimator& p_gameBoard) override;
 };
 
 } // namespace cxgui

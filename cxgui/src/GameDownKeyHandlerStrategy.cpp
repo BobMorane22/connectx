@@ -21,13 +21,14 @@
  *
  *************************************************************************************************/
 
-#include <Board.h>
-#include <GameDownKeyHandlerStrategy.h>
-#include <IGameViewController.h>
+#include "BoardAnimation.h"
+#include "IBoardAnimator.h"
+#include "GameDownKeyHandlerStrategy.h"
+#include "IGameViewController.h"
 
-bool cxgui::GameDownKeyHandlerStrategy::Handle(IGameViewController& /*p_controller*/, Board& p_gameBoard)
+bool cxgui::GameDownKeyHandlerStrategy::Handle(IGameViewController& /*p_controller*/, IBoardAnimator& p_gameBoard)
 {
-    p_gameBoard.DropChip();
+    p_gameBoard.PerformChipAnimation(cxgui::BoardAnimation::DROP_CHIP);
 
     return true;
 }

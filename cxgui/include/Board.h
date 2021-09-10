@@ -30,6 +30,8 @@
 #include <cxmodel/include/ChipColor.h>
 #include <cxmodel/include/IChip.h>
 
+#include "IBoardAnimator.h"
+
 namespace cxgui
 {
     class Chip;
@@ -44,7 +46,9 @@ namespace cxgui
  * @brief A graphical Connect X game board.
  *
  ************************************************************************************************/
-class Board : public Gtk::Paned
+class Board : public IBoardAnimator,
+              public Gtk::Paned // Gtk::Container::attach. Will eventually be replaced by
+                                // Gtk::DrawingArea from the base class.
 {
 
 public:
@@ -70,31 +74,9 @@ public:
      ********************************************************************************************/
     Board(const IGameViewPresenter& p_presenter, IGameViewController& p_controller);
 
-    /******************************************************************************************//**
-     * @brief Drops the chip in the current column.
-     *
-     ********************************************************************************************/
-    void DropChip();
+    void PerformChipAnimation(BoardAnimation p_animation) override;
+    [[nodiscard]] size_t GetCurrentColumn() const override;
 
-    /******************************************************************************************//**
-     * @brief Moves the chip one column left (wraps around if necessary).
-     *
-     ********************************************************************************************/
-    void MoveLeft();
-
-    /******************************************************************************************//**
-     * @brief Moves the chip one column right (wraps around if necessary).
-     *
-     ********************************************************************************************/
-    void MoveRight();
-
-    /******************************************************************************************//**
-     * @brief Updates the board.
-     *
-     * @param p_context The update's context.
-     *
-     ********************************************************************************************/
-    void Update(Context p_context);
 
 private:
 
@@ -103,6 +85,10 @@ private:
         Left,
         Right
     };
+
+    void DropChip();
+    void MoveLeft();
+    void MoveRight();
 
     Chip* GetChip(Gtk::Grid& p_discArea, int p_left, int p_top);
 

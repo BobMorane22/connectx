@@ -29,9 +29,11 @@
 #include <cxmodel/include/IChip.h>
 #include <cxmodel/include/ModelNotificationContext.h>
 
-#include <common.h>
-#include <DiscChip.h>
-#include <GameView.h>
+#include "Board.h"
+#include "BoardAnimation.h"
+#include "common.h"
+#include "DiscChip.h"
+#include "GameView.h"
 
 cxgui::GameView::GameView(IGameViewPresenter& p_presenter,
                           IGameViewController& p_controller,
@@ -45,10 +47,18 @@ cxgui::GameView::GameView(IGameViewPresenter& p_presenter,
 , m_viewTop{p_viewTop}
 , m_activePlayerChip{std::make_unique<cxgui::DiscChip>(cxmodel::MakeTransparent(), cxmodel::MakeTransparent(), cxgui::DEFAULT_CHIP_SIZE / 4)}
 , m_nextPlayerChip{std::make_unique<cxgui::DiscChip>(cxmodel::MakeTransparent(), cxmodel::MakeTransparent(), cxgui::DEFAULT_CHIP_SIZE / 4)}
-, m_board{std::make_unique<cxgui::Board>(m_presenter, m_controller)}
 {
     PRECONDITION(m_activePlayerChip);
     PRECONDITION(m_nextPlayerChip);
+
+    {
+        // We create a board. While doing it, we keep a reference on its
+        // Gtk::Widget interface, for internal use:
+        auto board = std::make_unique<cxgui::Board>(m_presenter, m_controller);
+        m_gtkBoard = board.get();
+        m_board = std::move(board);
+
+    } // `board` is now invalid.
 
     SetLayout();
     PopulateWidgets();
@@ -134,9 +144,9 @@ void cxgui::GameView::SetLayout()
     m_viewLayout.attach(m_title, 0, 0, TOTAL_WIDTH, 1);
     m_viewLayout.attach(m_playersInfoLayout, 0, 1, TOTAL_WIDTH, 1);
 
-    if(ASSERT(m_board))
+    if(ASSERT(m_board) && ASSERT(m_gtkBoard))
     {
-        m_viewLayout.attach(*m_board, 0, 4, TOTAL_WIDTH, 1);
+        m_viewLayout.attach(*m_gtkBoard, 0, 4, TOTAL_WIDTH, 1);
     }
 
     // Players info layout:
@@ -238,13 +248,13 @@ void cxgui::GameView::UpdateChipDropped()
 
     if(ASSERT(m_board))
     {
-        m_board->Update(Board::Context::CHIP_DROPPED);
+        m_board->PerformChipAnimation(cxgui::BoardAnimation::DROP_CHIP);
     }
 }
 
 void cxgui::GameView::UpdateGameResolved()
 {
-    m_board->Update(Board::Context::GAME_WON);
+    m_board->PerformChipAnimation(cxgui::BoardAnimation::GAME_WON);
 }
 
 void cxgui::GameView::UpdateGameReinitialized()
@@ -256,5 +266,5 @@ void cxgui::GameView::UpdateGameReinitialized()
     m_nextPlayerChip->ChangeColor(m_presenter.GetGameViewNextPlayerChipColor());
     m_nextPlayerName.set_text(m_presenter.GetGameViewNextPlayerName());
 
-    m_board->Update(Board::Context::GAME_REINITIALIZED);
+    m_board->PerformChipAnimation(cxgui::BoardAnimation::GAME_REINITIALIZED);
 }

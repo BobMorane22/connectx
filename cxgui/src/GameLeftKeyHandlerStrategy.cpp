@@ -21,13 +21,14 @@
  *
  *************************************************************************************************/
 
-#include <Board.h>
-#include <GameLeftKeyHandlerStrategy.h>
-#include <IGameViewController.h>
+#include "BoardAnimation.h"
+#include "IBoardAnimator.h"
+#include "GameLeftKeyHandlerStrategy.h"
+#include "IGameViewController.h"
 
-bool cxgui::GameLeftKeyHandlerStrategy::Handle(IGameViewController& /*p_controller*/, Board& p_gameBoard)
+bool cxgui::GameLeftKeyHandlerStrategy::Handle(IGameViewController& /*p_controller*/, IBoardAnimator& p_gameBoard)
 {
-    p_gameBoard.MoveLeft();
+    p_gameBoard.PerformChipAnimation(cxgui::BoardAnimation::MOVE_CHIP_LEFT_ONE_COLUMN);
 
     return true;
 }
