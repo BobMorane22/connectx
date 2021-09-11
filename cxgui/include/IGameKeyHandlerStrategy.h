@@ -27,7 +27,7 @@
 
 namespace cxgui
 {
-    class IBoardAnimator;
+    class IBoardInformation;
     class IGameViewController;
 }
 
@@ -60,7 +60,7 @@ public:
      * @return `true` if the handling must stop propagating, `false` otherwise.
      *
      ********************************************************************************************/
-    virtual bool Handle(IGameViewController& p_controller, IBoardAnimator& p_gameBoard) = 0;
+    virtual bool Handle(IGameViewController& p_controller, IBoardInformation& p_gameBoard) = 0;
 
 };
 
@@ -72,7 +72,7 @@ public:
  ************************************************************************************************/
 class GameKeyHandlerNoStrategy : public IGameKeyHandlerStrategy
 {
-    bool Handle(IGameViewController& /*p_controller*/, IBoardAnimator& /*p_gameBoard*/) override
+    bool Handle(IGameViewController& /*p_controller*/, IBoardInformation& /*p_gameBoard*/) override
     {
         return false; // propagate...
     }

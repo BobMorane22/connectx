@@ -16,34 +16,29 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file IBoardAnimator.h
+ * @file IBoardInformation.h
  * @date 2021
  *
  *************************************************************************************************/
 
-#ifndef IBOARDANIMATOR_H_C5297993_B06E_4707_ABF4_46D42D673DA8
-#define IBOARDANIMATOR_H_C5297993_B06E_4707_ABF4_46D42D673DA8
+#ifndef IBOARDINFORMATION_H_363CE7FD_F741_40F0_829D_6868F6B77EFE
+#define IBOARDINFORMATION_H_363CE7FD_F741_40F0_829D_6868F6B77EFE
 
 #include <cstddef>
 
 namespace cxgui
 {
-
-class Chip;
-enum class BoardAnimation;
-
+    class Chip;
 }
 
 namespace cxgui
 {
 
 /**********************************************************************************************//**
- * @brief Animate a Connect X game board.
- *
- * Enables board animations for Connect X.
+ * @brief Access information about the Connect X board.
  *
  *************************************************************************************************/
-class IBoardAnimator
+class IBoardInformation
 {
 
 public:
@@ -52,19 +47,26 @@ public:
      * @brief Destructor.
      *
      *********************************************************************************************/
-    virtual ~IBoardAnimator() = default;
+     virtual ~IBoardInformation() = default;
 
     /******************************************************************************************//**
-     * @brief Animates the chip on the board.
+     * @brief Gets the column in which the chip in the next disc area is currently located.
      *
-     * @param p_direction
-     *      The wanted animation.
+     * @return The column in which the chip currently is located.
      *
      *********************************************************************************************/
-    virtual void PerformChipAnimation(BoardAnimation p_animation) = 0;
+    [[nodiscard]] virtual size_t GetCurrentColumn() const = 0;
+
+    /******************************************************************************************//**
+     * @brief Gets the chip currently in the next disc area.
+     *
+     * @return The disc in the next disc area. If there is none, nullptr.
+     *
+     *********************************************************************************************/
+    [[nodiscard]] virtual const cxgui::Chip* GetCurrentChip() const = 0;
 
 };
 
 } // namespace cxgui
 
-#endif // IBOARDANIMATOR_H_C5297993_B06E_4707_ABF4_46D42D673DA8
+#endif // IBOARDINFORMATION_H_363CE7FD_F741_40F0_829D_6868F6B77EFE

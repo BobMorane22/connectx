@@ -23,13 +23,12 @@
 
 #include <cxinv/include/assertion.h>
 
-#include "BoardAnimation.h"
 #include "Chip.h"
 #include "GameDownKeyHandlerStrategy.h"
-#include "IBoardAnimator.h"
+#include "IBoardInformation.h"
 #include "IGameViewController.h"
 
-bool cxgui::GameDownKeyHandlerStrategy::Handle(IGameViewController& p_controller, IBoardAnimator& p_gameBoard)
+bool cxgui::GameDownKeyHandlerStrategy::Handle(IGameViewController& p_controller, IBoardInformation& p_gameBoard)
 {
     const Chip* chip = p_gameBoard.GetCurrentChip();
     IF_CONDITION_NOT_MET_DO(chip, return false;);

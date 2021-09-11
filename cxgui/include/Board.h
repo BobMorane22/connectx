@@ -31,6 +31,7 @@
 #include <cxmodel/include/IChip.h>
 
 #include "IBoardAnimator.h"
+#include "IBoardInformation.h"
 
 namespace cxgui
 {
@@ -47,6 +48,7 @@ namespace cxgui
  *
  ************************************************************************************************/
 class Board : public IBoardAnimator,
+              public IBoardInformation,
               public Gtk::Paned // Gtk::Container::attach. Will eventually be replaced by
                                 // Gtk::DrawingArea from the base class.
 {
@@ -76,6 +78,8 @@ public:
 
     // cxgui::IBoardAnimator
     void PerformChipAnimation(BoardAnimation p_animation) override;
+
+    // cxgui::IBoardInformation
     [[nodiscard]] size_t GetCurrentColumn() const override;
     [[nodiscard]] const cxgui::Chip* GetCurrentChip() const override;
 

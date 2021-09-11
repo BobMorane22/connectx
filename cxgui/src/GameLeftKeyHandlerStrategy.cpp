@@ -21,12 +21,11 @@
  *
  *************************************************************************************************/
 
-#include "BoardAnimation.h"
-#include "IBoardAnimator.h"
+#include "IBoardInformation.h"
 #include "GameLeftKeyHandlerStrategy.h"
 #include "IGameViewController.h"
 
-bool cxgui::GameLeftKeyHandlerStrategy::Handle(IGameViewController& p_controller, IBoardAnimator& /*p_gameBoard*/)
+bool cxgui::GameLeftKeyHandlerStrategy::Handle(IGameViewController& p_controller, IBoardInformation& /*p_gameBoard*/)
 {
     p_controller.OnMoveLeft();
 

@@ -23,12 +23,12 @@
 
 #include <iostream>
 
-#include "BoardAnimation.h"
-#include "IBoardAnimator.h"
 #include "GameRightKeyHandlerStrategy.h"
+#include "IBoardAnimator.h"
+#include "IBoardInformation.h"
 #include "IGameViewController.h"
 
-bool cxgui::GameRightKeyHandlerStrategy::Handle(IGameViewController& p_controller, IBoardAnimator& /*p_gameBoard*/)
+bool cxgui::GameRightKeyHandlerStrategy::Handle(IGameViewController& p_controller, IBoardInformation& /*p_gameBoard*/)
 {
     p_controller.OnMoveRight();
 

@@ -27,6 +27,7 @@
 #include <gtkmm/grid.h>
 #include <gtkmm/label.h>
 
+#include "Board.h"
 #include "Chip.h"
 #include "GameKeyHandlerStrategyFactory.h"
 #include "IBoardAnimator.h"
@@ -97,8 +98,7 @@ private:
     Gtk::Label m_nextPlayerName;
     std::unique_ptr<cxgui::Chip> m_nextPlayerChip;
 
-    std::unique_ptr<cxgui::IBoardAnimator> m_board;
-    Gtk::Widget* m_gtkBoard;
+    std::unique_ptr<cxgui::Board> m_board;
 
     // Keys:
     cxgui::GameKeyHandlerStrategyFactory m_keyEventStrategyFactory;
