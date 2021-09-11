@@ -21,14 +21,20 @@
  *
  *************************************************************************************************/
 
+#include <cxinv/include/assertion.h>
+
 #include "BoardAnimation.h"
-#include "IBoardAnimator.h"
+#include "Chip.h"
 #include "GameDownKeyHandlerStrategy.h"
+#include "IBoardAnimator.h"
 #include "IGameViewController.h"
 
-bool cxgui::GameDownKeyHandlerStrategy::Handle(IGameViewController& /*p_controller*/, IBoardAnimator& p_gameBoard)
+bool cxgui::GameDownKeyHandlerStrategy::Handle(IGameViewController& p_controller, IBoardAnimator& p_gameBoard)
 {
-    p_gameBoard.PerformChipAnimation(cxgui::BoardAnimation::DROP_CHIP);
+    const Chip* chip = p_gameBoard.GetCurrentChip();
+    IF_CONDITION_NOT_MET_DO(chip, return false;);
+
+    p_controller.OnDown(chip->GetColor(), p_gameBoard.GetCurrentColumn());
 
     return true;
 }

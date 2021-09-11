@@ -124,7 +124,6 @@ void cxgui::Board::PerformChipAnimation(BoardAnimation p_animation)
         }
         case cxgui::BoardAnimation::DROP_CHIP:
         {
-            DropChip(); // There?
             MoveCurrentDiscAtFirstRow();
             RefreshBoardArea();
             break;
@@ -145,15 +144,12 @@ void cxgui::Board::PerformChipAnimation(BoardAnimation p_animation)
 
 size_t cxgui::Board::GetCurrentColumn() const
 {
-    return 0u;
+    return m_currentDiscPosition;
 }
 
-void cxgui::Board::DropChip()
+const cxgui::Chip* cxgui::Board::GetCurrentChip() const
 {
-    Chip* chip = GetChip(m_nextDiscAreaLayout, m_currentDiscPosition, 0);
-    IF_CONDITION_NOT_MET_DO(chip, return;);
-
-    m_controller.OnDown(chip->GetColor(), m_currentDiscPosition);
+    return GetChip(m_nextDiscAreaLayout, m_currentDiscPosition, 0);
 }
 
 void cxgui::Board::MoveLeft()
@@ -166,12 +162,23 @@ void cxgui::Board::MoveRight()
     Move(Side::Right);
 }
 
-cxgui::Chip* cxgui::Board::GetChip(Gtk::Grid& p_discArea, int p_left, int p_top)
+cxgui::Chip* cxgui::Board::GetChip(const Gtk::Grid& p_discArea, int p_left, int p_top)
 {
-    Widget* child = p_discArea.get_child_at(p_left, p_top);
+    // Get the const version of this board. This will make sure the const version of this
+    // method is called when using this reference (otherwise this method will be called
+    // and we will enter infinite recursion):
+    const Board& thisBoard = static_cast<const Board&>(*this);
+
+    // Call the const version, but cast away constness:
+    return const_cast<Chip*>(thisBoard.GetChip(p_discArea, p_left, p_top));
+}
+
+const cxgui::Chip* cxgui::Board::GetChip(const Gtk::Grid& p_discArea, int p_left, int p_top) const
+{
+    const Widget* child = p_discArea.get_child_at(p_left, p_top);
     IF_CONDITION_NOT_MET_DO(child, return nullptr;);
 
-    Chip* chip = dynamic_cast<Chip*>(child);
+    const Chip* chip = dynamic_cast<const Chip*>(child);
     IF_CONDITION_NOT_MET_DO(child, return nullptr;);
 
     return chip;

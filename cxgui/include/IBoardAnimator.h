@@ -6,6 +6,7 @@
 namespace cxgui
 {
 
+class Chip;
 enum class BoardAnimation;
 
 }
@@ -34,12 +35,20 @@ public:
     virtual void PerformChipAnimation(BoardAnimation p_animation) = 0;
 
     /******************************************************************************************//**
-     * @brief Gets the column in which the chip currently is located.
+     * @brief Gets the column in which the chip in the next disc area is currently located.
      *
      * @return The column in which the chip currently is located.
      *
      *********************************************************************************************/
     [[nodiscard]] virtual size_t GetCurrentColumn() const = 0;
+
+    /******************************************************************************************//**
+     * @brief Gets the chip currently in the next disc area.
+     *
+     * @return The disc in the next disc area. If there is none, nullptr.
+     *
+     *********************************************************************************************/
+    [[nodiscard]] virtual const cxgui::Chip* GetCurrentChip() const = 0;
 
 };
 

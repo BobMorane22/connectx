@@ -74,8 +74,10 @@ public:
      ********************************************************************************************/
     Board(const IGameViewPresenter& p_presenter, IGameViewController& p_controller);
 
+    // cxgui::IBoardAnimator
     void PerformChipAnimation(BoardAnimation p_animation) override;
     [[nodiscard]] size_t GetCurrentColumn() const override;
+    [[nodiscard]] const cxgui::Chip* GetCurrentChip() const override;
 
 
 private:
@@ -86,11 +88,11 @@ private:
         Right
     };
 
-    void DropChip();
     void MoveLeft();
     void MoveRight();
 
-    Chip* GetChip(Gtk::Grid& p_discArea, int p_left, int p_top);
+    Chip* GetChip(const Gtk::Grid& p_discArea, int p_left, int p_top);
+    const Chip* GetChip(const Gtk::Grid& p_discArea, int p_left, int p_top) const;
 
     void Move(Side p_side);
     void ChangeCurrentDisc(const cxmodel::ChipColor& p_newColor);
