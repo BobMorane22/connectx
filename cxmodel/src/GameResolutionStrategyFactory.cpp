@@ -73,7 +73,7 @@ std::unique_ptr<cxmodel::IGameResolutionStrategy> cxmodel::GameResolutionStrateg
         }
 
         default:                                                    // LCOV_EXCL_LINE
-        {
+        {                                                           // LCOV_EXCL_LINE
             ASSERT_ERROR_MSG("No game resolution strategy found."); // LCOV_EXCL_LINE
             break;                                                  // LCOV_EXCL_LINE
         }
