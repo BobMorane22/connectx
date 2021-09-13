@@ -36,19 +36,29 @@ public:
     ~ConcreteSubject() override = default;
 };
 
-TEST(StatusBarPresenter, MakeStatusBarContextString_Undo_UndoStringCreated)
-{
-    ASSERT_EQ(cxgui::MakeStatusBarContextString(cxmodel::ModelNotificationContext::UNDO_CHIP_DROPPED), "Undo.");
-}
-
 TEST(StatusBarPresenter, MakeStatusBarContextString_CreateNewGame_NewGameCreatedStringCreated)
 {
     ASSERT_EQ(cxgui::MakeStatusBarContextString(cxmodel::ModelNotificationContext::CREATE_NEW_GAME), "New game created.");
 }
 
-TEST(StatusBarPresenter, MakeStatusBarContextString_DropDisc_DiscDroppedStringCreated)
+TEST(StatusBarPresenter, MakeStatusBarContextString_ChipDropped_ChipDroppedStringCreated)
 {
     ASSERT_EQ(cxgui::MakeStatusBarContextString(cxmodel::ModelNotificationContext::CHIP_DROPPED), "Chip dropped.");
+}
+
+TEST(StatusBarPresenter, MakeStatusBarContextString_ChipMovedLeft_NoMessage)
+{
+    ASSERT_EQ(cxgui::MakeStatusBarContextString(cxmodel::ModelNotificationContext::CHIP_MOVED_LEFT), "");
+}
+
+TEST(StatusBarPresenter, MakeStatusBarContextString_ChipMovedRight_NoMessage)
+{
+    ASSERT_EQ(cxgui::MakeStatusBarContextString(cxmodel::ModelNotificationContext::CHIP_MOVED_RIGHT), "");
+}
+
+TEST(StatusBarPresenter, MakeStatusBarContextString_Undo_UndoStringCreated)
+{
+    ASSERT_EQ(cxgui::MakeStatusBarContextString(cxmodel::ModelNotificationContext::UNDO_CHIP_DROPPED), "Undo.");
 }
 
 TEST(StatusBarPresenter, MakeStatusBarContextString_GameWon_GameWonStringCreated)

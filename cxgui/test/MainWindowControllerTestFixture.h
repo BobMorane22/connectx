@@ -41,6 +41,8 @@ public:
 
     bool GetNewGameCreated() const;
     bool GetChipDropped() const;
+    bool GetChipMovedLeft() const;
+    bool GetChipMovedRight() const;
     bool GetCurrentGameEnded() const;
     bool GetCurrentGameReinitialized() const;
     bool GetUndoCalled() const;
@@ -85,6 +87,8 @@ private:
 
     bool m_newGameCreated = false;
     bool m_chipDropped = false;
+    bool m_chipMovedLeft = false;
+    bool m_chipMovedRight = false;
     bool m_currentGameEnded = false;
     bool m_currentGameReinitialized = false;
     bool m_undoCalled = false;

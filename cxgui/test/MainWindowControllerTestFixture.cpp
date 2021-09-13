@@ -45,6 +45,16 @@ bool MainWindowControllerTestFixture::GetChipDropped() const
     return m_chipDropped;
 }
 
+bool MainWindowControllerTestFixture::GetChipMovedLeft() const
+{
+    return m_chipMovedLeft;
+}
+
+bool MainWindowControllerTestFixture::GetChipMovedRight() const
+{
+    return m_chipMovedRight;
+}
+
 bool MainWindowControllerTestFixture::GetCurrentGameEnded() const
 {
     return m_currentGameEnded;
@@ -98,12 +108,12 @@ void MainWindowControllerTestFixture::MainWindowControllerMockModel::DropChip(co
 
 void MainWindowControllerTestFixture::MainWindowControllerMockModel::MoveLeft()
 {
-    // Nothing to do...
+    m_outer.m_chipMovedLeft = true;
 }
 
 void MainWindowControllerTestFixture::MainWindowControllerMockModel::MoveRight()
 {
-    // Nothing to do...
+    m_outer.m_chipMovedRight = true;
 }
 
 void MainWindowControllerTestFixture::MainWindowControllerMockModel::EndCurrentGame()

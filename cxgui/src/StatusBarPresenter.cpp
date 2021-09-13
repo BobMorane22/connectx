@@ -21,7 +21,7 @@
 
 #include <cxinv/include/assertion.h>
 
-#include <StatusBarPresenter.h>
+#include "StatusBarPresenter.h"
 
 namespace
 {
