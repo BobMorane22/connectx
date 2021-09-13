@@ -364,6 +364,34 @@ TEST_F(ModelTestFixture, /*DISABLED_*/DropChip_ValidModelGameIsTied_Notification
     ASSERT_TRUE(gameTiedObserver.WasNotified());
 }
 
+TEST_F(ModelTestFixture, /*DISABLED_*/MoveLeft_ValidModel_NotificationsSent)
+{
+    ModelNotificationCatcher gameEndedObserver{cxmodel::ModelNotificationContext::CHIP_MOVED_LEFT};
+    
+    CreateNewGame(6u, 7u, NbPlayers::TWO, InARowValue::FOUR);
+
+    // We attach our observer:
+    GetModel().Attach(&gameEndedObserver);
+
+    ASSERT_FALSE(gameEndedObserver.WasNotified());
+    GetModel().MoveLeft();
+    ASSERT_TRUE(gameEndedObserver.WasNotified());
+}
+
+TEST_F(ModelTestFixture, /*DISABLED_*/MoveRight_ValidModel_NotificationsSent)
+{
+    ModelNotificationCatcher gameEndedObserver{cxmodel::ModelNotificationContext::CHIP_MOVED_RIGHT};
+    
+    CreateNewGame(6u, 7u, NbPlayers::TWO, InARowValue::FOUR);
+
+    // We attach our observer:
+    GetModel().Attach(&gameEndedObserver);
+
+    ASSERT_FALSE(gameEndedObserver.WasNotified());
+    GetModel().MoveRight();
+    ASSERT_TRUE(gameEndedObserver.WasNotified());
+}
+
 TEST_F(ModelTestFixture, /*DISABLED_*/EndCurrentGame_ValidModel_NotificationsSent)
 {
     ModelNotificationCatcher gameEndedObserver{cxmodel::ModelNotificationContext::GAME_ENDED};
