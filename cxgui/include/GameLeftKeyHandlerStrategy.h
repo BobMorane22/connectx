@@ -1,5 +1,3 @@
-#pragma once
-
 /**************************************************************************************************
  *  This file is part of Connect X.
  *
@@ -23,6 +21,9 @@
  *
  *************************************************************************************************/
 
+#ifndef GAMELEFTKEYHANDLERSTRATEGY_H_2D035C6F_05E4_4C1A_B433_0FE7F72F443F
+#define GAMELEFTKEYHANDLERSTRATEGY_H_2D035C6F_05E4_4C1A_B433_0FE7F72F443F
+
 #include "IGameKeyHandlerStrategy.h"
 
 namespace cxgui
@@ -45,3 +46,5 @@ class GameLeftKeyHandlerStrategy : public cxgui::IGameKeyHandlerStrategy
 };
 
 } // namespace cxgui
+
+#endif // GAMELEFTKEYHANDLERSTRATEGY_H_2D035C6F_05E4_4C1A_B433_0FE7F72F443F

@@ -1,5 +1,3 @@
-#pragma once
-
 /**************************************************************************************************
  *  This file is part of Connect X.
  *
@@ -23,6 +21,9 @@
  *
  *************************************************************************************************/
 
+#ifndef GAMEDOWNKEYHANDLERSTRATEGY_H_CA8A3901_30FC_46DA_A256_EFF4B806B186
+#define GAMEDOWNKEYHANDLERSTRATEGY_H_CA8A3901_30FC_46DA_A256_EFF4B806B186
+
 #include "IGameKeyHandlerStrategy.h"
 
 namespace cxgui
@@ -45,3 +46,5 @@ class GameDownKeyHandlerStrategy : public cxgui::IGameKeyHandlerStrategy
 };
 
 } // namespace cxgui
+
+#endif // GAMEDOWNKEYHANDLERSTRATEGY_H_CA8A3901_30FC_46DA_A256_EFF4B806B186

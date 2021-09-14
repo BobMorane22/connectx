@@ -1,5 +1,3 @@
-#pragma once
-
 /**************************************************************************************************
  *  This file is part of Connect X.
  *
@@ -23,7 +21,12 @@
  *
  *************************************************************************************************/
 
+#ifndef GAMEKEYHANDLERSTRATEGYFACTORY_H_77F63BBC_46CA_4EF9_99A9_D6A93968231C
+#define GAMEKEYHANDLERSTRATEGYFACTORY_H_77F63BBC_46CA_4EF9_99A9_D6A93968231C
+
 #include <memory>
+
+#include <gdk/gdk.h>
 
 #include "IGameKeyHandlerStrategy.h"
 
@@ -56,3 +59,5 @@ public:
 };
 
 } // namespace cxgui
+
+#endif // GAMEKEYHANDLERSTRATEGYFACTORY_H_77F63BBC_46CA_4EF9_99A9_D6A93968231C

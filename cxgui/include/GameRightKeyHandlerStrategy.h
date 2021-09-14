@@ -1,5 +1,3 @@
-#pragma once
-
 /**************************************************************************************************
  *  This file is part of Connect X.
  *
@@ -23,6 +21,9 @@
  *
  *************************************************************************************************/
 
+#ifndef GAMERIGHTTKEYHANDLERSTRATEGY_H_D174555E_75F7_4CAB_9AAE_EA119C6BE121
+#define GAMERIGHTTKEYHANDLERSTRATEGY_H_D174555E_75F7_4CAB_9AAE_EA119C6BE121
+
 #include "IGameKeyHandlerStrategy.h"
 
 namespace cxgui
@@ -45,3 +46,5 @@ class GameRightKeyHandlerStrategy : public cxgui::IGameKeyHandlerStrategy
 };
 
 } // namespace cxgui
+
+#endif // GAMERIGHTTKEYHANDLERSTRATEGY_H_D174555E_75F7_4CAB_9AAE_EA119C6BE121

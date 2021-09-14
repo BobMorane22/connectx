@@ -47,6 +47,7 @@ OBJS_$(d) := $(d)/AboutWindowPresenterTestFixture.o \
              $(d)/AboutWindowPresenterTests.o \
              $(d)/ConfigurableMainWindowPresenterTestFixture.o \
              $(d)/extractRawUserInputTests.o \
+             $(d)/GameKeyHandlerStrategyFactoryTests.o \
              $(d)/GamePresenterTests.o \
              $(d)/GameResolutionDialogPresenterFactoryTests.o \
              $(d)/GameResolutionDialogControllerTests.o \
@@ -85,7 +86,8 @@ $(TGTS_$(d)): LL_TGT := cxgui/libcxgui.a \
                         cxunit/libcxunit.a \
                         -lgtest \
                         -lgtest_main \
-                        -lpthread
+                        -lpthread \
+                        `pkg-config gtkmm-3.0 --cflags --libs`
 
 $(TGTS_$(d)): $(OBJS_$(d)) $(LL_TGT)
 	@echo ~~~ Generating the cxgui unit tests executable ~~~

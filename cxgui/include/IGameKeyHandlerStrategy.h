@@ -1,5 +1,3 @@
-#pragma once
-
 /**************************************************************************************************
  *  This file is part of Connect X.
  *
@@ -23,7 +21,8 @@
  *
  *************************************************************************************************/
 
-#include <gtkmm/window.h>
+#ifndef IGAMEKEYHANDLERSTRATEGY_H_31AC17A9_F085_49C8_A86E_543E65DC78DC
+#define IGAMEKEYHANDLERSTRATEGY_H_31AC17A9_F085_49C8_A86E_543E65DC78DC
 
 namespace cxgui
 {
@@ -79,3 +78,5 @@ class GameKeyHandlerNoStrategy : public IGameKeyHandlerStrategy
 };
 
 } // namespace cxgui
+
+#endif // IGAMEKEYHANDLERSTRATEGY_H_31AC17A9_F085_49C8_A86E_543E65DC78DC
