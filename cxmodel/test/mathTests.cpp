@@ -21,10 +21,17 @@
  *
  *************************************************************************************************/
 
+#include <cmath>
+#include <limits>
+
 #include <gtest/gtest.h>
 
-#include <cmath>
 #include <math.h>
+
+namespace
+{
+    constexpr double DOUBLE_DEFAULT_COMPARISON_TOLERANCE = 1e-6;
+}
 
 TEST(math, /*DISABLED_*/Pi_Constant_ReturnsConstant)
 {
@@ -32,4 +39,59 @@ TEST(math, /*DISABLED_*/Pi_Constant_ReturnsConstant)
     ASSERT_NEAR(cxmath::pi<double>, std::acos(-1), 1e-9);
     ASSERT_NEAR(cxmath::pi<float>, std::acos(-1), 1e-6);
     ASSERT_EQ(cxmath::pi<int>, 3);
+}
+
+TEST(Position, /*DISABLED_*/DefaultConstructor_ValidPosition_IsOrigin)
+{
+    cxmath::Position position;
+
+    ASSERT_EQ(position.m_x, 0.0);
+    ASSERT_EQ(position.m_y, 0.0);
+}
+
+TEST(Position, /*DISABLED_*/Constructor_ValidPosition_GivenCoordinates)
+{
+    constexpr double x = 1.2345;
+    constexpr double y = 2.3456;
+    cxmath::Position position{x, y};
+
+    ASSERT_EQ(position.m_x, x);
+    ASSERT_EQ(position.m_y, y);
+}
+
+TEST(math, /*DISABLED_*/AreLogicallyEqual_LhsTooBig_ReturnsFalse)
+{
+    constexpr double lhs = 1.123456789;
+    constexpr double rhs = lhs - (DOUBLE_DEFAULT_COMPARISON_TOLERANCE + std::numeric_limits<double>::epsilon());
+
+    ASSERT_FALSE(cxmath::AreLogicallyEqual(lhs, rhs));
+}
+
+TEST(math, /*DISABLED_*/AreLogicallyEqual_RhsTooBig_ReturnsFalse)
+{
+    constexpr double rhs = 1.123456789;
+    constexpr double lhs = rhs - (DOUBLE_DEFAULT_COMPARISON_TOLERANCE + std::numeric_limits<double>::epsilon());
+
+    ASSERT_FALSE(cxmath::AreLogicallyEqual(lhs, rhs));
+}
+
+TEST(math, /*DISABLED_*/AreLogicallyEqual_BothWithinTolerance_ReturnsTrue)
+{
+    constexpr double lhs1 = 1.123456789;
+    constexpr double rhs1 = lhs1 - (DOUBLE_DEFAULT_COMPARISON_TOLERANCE - std::numeric_limits<double>::epsilon());
+
+    ASSERT_TRUE(cxmath::AreLogicallyEqual(lhs1, rhs1));
+
+    constexpr double rhs2 = 1.123456789;
+    constexpr double lhs2 = rhs2 - (DOUBLE_DEFAULT_COMPARISON_TOLERANCE - std::numeric_limits<double>::epsilon());
+
+    ASSERT_TRUE(cxmath::AreLogicallyEqual(lhs2, rhs2));
+}
+
+TEST(math, /*DISABLED_*/AreLogicallyEqual_BothBitwiseEqual_ReturnsTrue)
+{
+    constexpr double lhs = -1.123456789;
+    constexpr double rhs = lhs;
+
+    ASSERT_TRUE(cxmath::AreLogicallyEqual(lhs, rhs));
 }

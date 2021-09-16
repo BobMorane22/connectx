@@ -59,6 +59,7 @@ OBJS_$(d) := $(d)/src/ChipColor.o \
              $(d)/src/GameResolutionStrategyFactory.o \
              $(d)/src/IBoard.o \
              $(d)/src/IChip.o \
+             $(d)/src/math.o \
              $(d)/src/Model.o \
              $(d)/src/NewGameInformation.o \
              $(d)/src/OS.o \
