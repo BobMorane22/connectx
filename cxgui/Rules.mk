@@ -71,6 +71,7 @@ OBJS_$(d) := $(d)/src/About.o \
              $(d)/src/MenuItem.o \
              $(d)/src/NewGameView.o \
              $(d)/src/NewPlayerList.o \
+             $(d)/src/pathHelpers.o \
              $(d)/src/StatusBar.o \
              $(d)/src/StatusBarPresenter.o \
              $(d)/src/TieGameResolutionDialogPresenter.o \
@@ -97,7 +98,7 @@ CLEAN := $(CLEAN) $(OBJS_$(d)) $(DEPS_$(d)) \
 # instead of having to include the path.
 #
 $(OBJS_$(d)): CF_TGT := -I. -I$(d)/include `pkg-config gtkmm-3.0 --cflags --libs`
-$(OBJS_$(d)): LL_TGT := cxinv/libcxinv.a cxmodel/libcxmodel.a
+$(OBJS_$(d)): LL_TGT := cxinv/libcxinv.a cxmath/libcxmath.a cxmodel/libcxmodel.a
 
 $(d)/lib$(d).a: $(OBJS_$(d))
 	@echo ~~~ Generating the libcxgui.a static library ~~~
