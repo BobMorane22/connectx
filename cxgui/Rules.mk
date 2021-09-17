@@ -55,6 +55,7 @@ OBJS_$(d) := $(d)/src/About.o \
              $(d)/src/Board.o \
              $(d)/src/Chip.o \
              $(d)/src/ColorComboBox.o \
+             $(d)/src/ContextRestoreRAII.o \
              $(d)/src/DiscChip.o \
              $(d)/src/extractRawUserInput.o \
              $(d)/src/GameDownKeyHandlerStrategy.o \
