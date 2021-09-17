@@ -118,6 +118,7 @@ connectx/connectx
 
 # Unit tests executables
 cxinv/test/cxinvtests
+cxmath/test/cxmathtests
 cxlog/test/cxlogtests
 cxmodel/test/cxmodeltests
 cxgui/test/cxguitests

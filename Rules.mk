@@ -53,6 +53,9 @@ include $(dir)/Rules.mk
 dir := cxinv
 include $(dir)/Rules.mk
 
+dir := cxmath
+include $(dir)/Rules.mk
+
 dir := cxlog
 include $(dir)/Rules.mk
 

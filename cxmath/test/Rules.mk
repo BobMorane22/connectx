@@ -18,7 +18,7 @@
 #
 #*************************************************************************************************
 # @file Rules.mk
-# @date 2019
+# @date 2021
 #
 #************************************************************************************************/
 
@@ -37,49 +37,15 @@ d := $(dir)
 
 ### Local variables
 #
-# To the global variable "TGT_BIN", we add the "cxmodel" unit test executable.
+# To the global variable "TGT_BIN", we add the "cxmath" unit test executable.
 #
 # To the global variable "CLEAN", we add the files that the rules present here may create,
 # i.e. the ones we want deleted by a "make clean" command.
 #
-TGTS_$(d) := $(d)/cxmodeltests
-OBJS_$(d) := $(d)/BoardTests.o \
-             $(d)/ChipColorTests.o \
-             $(d)/ColorTests.o \
-             $(d)/CommandAddTwoMock.o \
-             $(d)/CommandCreateNewGameTests.o \
-             $(d)/CommandDropChipTests.o \
-             $(d)/CommandStackMock.o \
-             $(d)/CommandStackTestFixture.o \
-             $(d)/CommandStackTests.o \
-             $(d)/CommandTests.o \
-             $(d)/CommandTimesThreeMock.o \
-             $(d)/ConcreteObserverMock.o \
-             $(d)/ConcreteSubjectMock.o \
-             $(d)/DiscTests.o \
-             $(d)/GameResolutionStrategyFactoryTests.o \
-             $(d)/IBoardTests.o \
-             $(d)/GameResolutionStrategyTestFixture.o \
-             $(d)/LoggerMock.o \
-             $(d)/ModelTestFixture.o \
-             $(d)/ModelTestHelpers.o \
-             $(d)/ModelTests.o \
-             $(d)/NewGameInformationTests.o \
-             $(d)/PlayerTests.o \
-             $(d)/StatusTests.o \
-             $(d)/SubjectTestFixture.o \
-             $(d)/SubjectTests.o \
-             $(d)/Tie8By7BoardGameResolutionStrategyTests.o \
-             $(d)/TieClassicGameResolutionStrategyTests.o \
-             $(d)/TieEdgeCasesGameResolutionStrategyTests.o \
-             $(d)/TieLegacyGameResolutionStrategyTests.o \
-             $(d)/TieSquareBoardGameResolutionStrategyTests.o \
-             $(d)/Win8By7BoardGameResolutionStrategyTests.o \
-             $(d)/WinClassicGameResolutionStrategyTests.o \
-             $(d)/WinEdgeCasesGameResolutionStrategyTests.o \
-             $(d)/WinSquareBoardGameResolutionStrategyTests.o \
+TGTS_$(d) := $(d)/cxmathtests
+OBJS_$(d) := $(d)/mathTests.o \
              cxunit/libcxunit.a \
-             cxmodel/libcxmodel.a
+             cxmath/libcxmath.a
 
 # We include all the generated rules. These are created by GCC to make sure that
 # changes to header files are recognized by make.
@@ -95,7 +61,7 @@ CLEAN := $(CLEAN) $(OBJS_$(d)) $(TGTS_$(d)) $(DEPS_$(d))
 # Executable is compiled and linked.
 #
 $(TGTS_$(d)): CF_TGT := -I$(d)/../include -I$(d) -I.
-$(TGTS_$(d)): LL_TGT := cxunit/libcxunit.a cxmodel/libcxmodel.a cxlog/libcxlog.a cxinv/libcxinv.a -lgtest -lgtest_main -lpthread
+$(TGTS_$(d)): LL_TGT := cxunit/libcxunit.a cxmath/libcxmath.a cxinv/libcxinv.a -lgtest -lgtest_main -lpthread
 
 $(TGTS_$(d)): $(OBJS_$(d)) $(LL_TGT)
 	@echo ~~~ Generating the cxmodel unit tests executable ~~~

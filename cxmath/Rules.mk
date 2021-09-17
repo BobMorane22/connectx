@@ -17,10 +17,10 @@
 #************************************************************************************************/
 
 #*************************************************************************************************
-# Makefile to build the 'cxmodel' library.
+# Makefile to build the 'cxmath' library.
 #
 # @file Rules.mk
-# @date 2019
+# @date 2021
 #
 #************************************************************************************************/
 
@@ -50,24 +50,8 @@ include $(dir)/Rules.mk
 # To the global variable "CLEAN", we add the files that the rules present here may create,
 # i.e. the ones we want deleted by a "make clean" command.
 #
-OBJS_$(d) := $(d)/src/ChipColor.o \
-             $(d)/src/CommandCreateNewGame.o \
-             $(d)/src/CommandDropChip.o \
-             $(d)/src/CommandStack.o \
-             $(d)/src/Disc.o \
-             $(d)/src/Board.o \
-             $(d)/src/GameResolutionStrategyFactory.o \
-             $(d)/src/IBoard.o \
-             $(d)/src/IChip.o \
-             $(d)/src/Model.o \
-             $(d)/src/NewGameInformation.o \
-             $(d)/src/OS.o \
-             $(d)/src/Player.o \
-             $(d)/src/Status.o \
-             $(d)/src/TieGameResolutionStrategy.o \
-             $(d)/src/WinGameResolutionStragegy.o \
-             cxinv/libcxinv.a \
-             cxlog/libcxlog.a
+OBJS_$(d) := $(d)/src/math.o \
+             cxinv/libcxinv.a
 
 # We include all the generated rules. These are created by GCC to make sure that
 # changes to header files are recognized by make.
@@ -88,10 +72,10 @@ CLEAN := $(CLEAN) $(OBJS_$(d)) $(DEPS_$(d)) \
 # instead of having to include the path.
 #
 $(OBJS_$(d)): CF_TGT := -I. -I$(d)/include
-$(TGTS_$(d)): LL_TGT := cxlog/libcxlog.a cxinv/libcxinv.a
+$(TGTS_$(d)): LL_TGT := cxinv/libcxinv.a
 
 $(d)/lib$(d).a: $(OBJS_$(d))
-	@echo ~~~ Generating the libcxmodel.a static library ~~~
+	@echo ~~~ Generating the libcxmath.a static library ~~~
 	$(ARCHIVE)
 
 
