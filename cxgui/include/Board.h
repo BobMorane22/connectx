@@ -56,18 +56,6 @@ class Board : public IBoardAnimator,
 public:
 
     /******************************************************************************************//**
-     * @brief Board update contexts
-     *
-     ********************************************************************************************/
-    enum class Context
-    {
-        CHIP_DROPPED,
-        UNDO_CHIP_DROPPED,
-        GAME_WON,
-        GAME_REINITIALIZED
-    };
-
-    /******************************************************************************************//**
      * @brief Constructor.
      *
      * @param p_presenter  The Game View presenter.
