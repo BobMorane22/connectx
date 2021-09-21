@@ -52,6 +52,7 @@ include $(dir)/Rules.mk
 #
 OBJS_$(d) := $(d)/src/About.o \
              $(d)/src/AboutWindowPresenter.o \
+             $(d)/src/AnimatedBoard.o \
              $(d)/src/Board.o \
              $(d)/src/BoardElementCache.o \
              $(d)/src/Chip.o \
