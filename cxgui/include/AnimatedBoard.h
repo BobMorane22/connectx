@@ -24,7 +24,7 @@
 #ifndef ANIMATEDBOARD_H_AD051257_1B19_403D_88A6_1C3EFBAC0A08
 #define ANIMATEDBOARD_H_AD051257_1B19_403D_88A6_1C3EFBAC0A08
 
-#include <gtkmm.h>
+#include <gtkmm/drawingarea.h>
 
 #include <cxmath/include/math.h>
 

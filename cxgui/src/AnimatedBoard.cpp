@@ -25,6 +25,9 @@
 #include <chrono>
 #include <cmath>
 
+#include <gdkmm/general.h>
+#include <glibmm/main.h>
+
 #include <cxinv/include/assertion.h>
 #include <cxmodel/include/Color.h>
 #include <cxmodel/include/Disc.h>
