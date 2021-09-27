@@ -34,10 +34,10 @@
 #include "IBoardAnimator.h"
 #include "IBoardInformation.h"
 
-namespace cxmodel
+namespace cxgui
 {
 
-class Model;
+class IGameViewPresenter;
 
 }
 
@@ -71,14 +71,14 @@ public:
     /******************************************************************************************//**
      * @brief Constructor.
      *
-     * @param p_model
-     *      A Connect X compatible model.
+     * @param p_presenter
+     *      The Game View presenter.
      * @param p_speed
      *      The number of positions a disc shoulb move, per second. For example, a value of '3'
      *      would mean that a disc will move three columns (or rows) per second when animated.
      *
      *********************************************************************************************/
-    AnimatedBoard(const cxmodel::Model& p_model, size_t p_speed);
+    AnimatedBoard(const IGameViewPresenter& p_presenter, size_t p_speed);
 
     /******************************************************************************************//**
      * @brief Destructor.
@@ -91,7 +91,7 @@ public:
 
     // cxgui::IBoardInformation:
     [[nodiscard]] size_t GetCurrentColumn() const override;
-    [[nodiscard]] virtual const cxgui::Chip* GetCurrentChip() const = 0;
+    [[nodiscard]] cxmodel::ChipColor GetCurrentChipColor() const override;
 
 private:
 
@@ -113,12 +113,13 @@ private:
     void ComputeDiscVerticalPosition(const double p_halfDiscSize, double p_height);
 
     [[nodiscard]] int GetDropPosition(int p_column) const;
+    [[nodiscard]] int ComputeMinimumChipDimension(size_t p_nbRows, size_t p_nbColumns) const;
 
     // General data:
     const int m_FPS = 24; // Frames per second.
 
-    const cxmodel::Model& m_model; // The Connext X model
-    const size_t m_speed;          // The number of discs covered per second when moving.
+    const IGameViewPresenter& m_presenter; // The Game View presenter.
+    const size_t m_speed;                  // The number of discs covered per second when moving.
 
     double m_x = 0.0; // Disc center position (horizontal).
     double m_y = 0.0; // Disc center position (vertical).

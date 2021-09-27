@@ -23,17 +23,16 @@
 
 #include <cxinv/include/assertion.h>
 
-#include "Chip.h"
 #include "GameDownKeyHandlerStrategy.h"
 #include "IBoardInformation.h"
 #include "IGameViewController.h"
 
 bool cxgui::GameDownKeyHandlerStrategy::Handle(IGameViewController& p_controller, IBoardInformation& p_gameBoard)
 {
-    const Chip* chip = p_gameBoard.GetCurrentChip();
-    IF_CONDITION_NOT_MET_DO(chip, return false;);
+    const cxmodel::ChipColor chipColor = p_gameBoard.GetCurrentChipColor();
+    IF_CONDITION_NOT_MET_DO(chipColor != cxmodel::MakeTransparent(), return false;);
 
-    p_controller.OnDown(chip->GetColor(), p_gameBoard.GetCurrentColumn());
+    p_controller.OnDown(chipColor, p_gameBoard.GetCurrentColumn());
 
     return true;
 }

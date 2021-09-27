@@ -53,7 +53,6 @@ include $(dir)/Rules.mk
 OBJS_$(d) := $(d)/src/About.o \
              $(d)/src/AboutWindowPresenter.o \
              $(d)/src/AnimatedBoard.o \
-             $(d)/src/Board.o \
              $(d)/src/BoardElementCache.o \
              $(d)/src/Chip.o \
              $(d)/src/ColorComboBox.o \
@@ -80,6 +79,7 @@ OBJS_$(d) := $(d)/src/About.o \
              $(d)/src/TieGameResolutionDialogPresenter.o \
              $(d)/src/WinGameResolutionDialogPresenter.o \
              cxinv/libcxinv.a \
+             cxmath/libcxmath.a \
              cxmodel/libcxmodel.a
 
 # We include all the generated rules. These are created by GCC to make sure that

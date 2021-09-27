@@ -69,8 +69,7 @@ public:
 
     // cxgui::IBoardInformation
     [[nodiscard]] size_t GetCurrentColumn() const override;
-    [[nodiscard]] const cxgui::Chip* GetCurrentChip() const override;
-
+    [[nodiscard]] cxmodel::ChipColor GetCurrentChipColor() const override;
 
 private:
 

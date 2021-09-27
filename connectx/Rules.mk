@@ -47,6 +47,7 @@ d := $(dir)
 TGTS_$(d) := $(d)/connectx
 OBJS_$(d) := $(d)/main.o \
              cxinv/libcxinv.a \
+             cxmath/libcxmath.a \
              cxlog/libcxlog.a \
              cxmodel/libcxmodel.a \
              cxgui/libcxgui.a \
@@ -71,7 +72,7 @@ CLEAN := $(CLEAN) $(OBJS_$(d)) $(TGTS_$(d)) $(DEPS_$(d))
 # is the project root. That way, all include files can be found.
 #
 $(OBJS_$(d)): CF_TGT := -I. -I$(d)/include `pkg-config gtkmm-3.0 --cflags --libs`
-$(TGTS_$(d)): LL_TGT := cxexec/libcxexec.a cxgui/libcxgui.a cxmodel/libcxmodel.a cxlog/libcxlog.a cxinv/libcxinv.a `pkg-config gtkmm-3.0 --cflags --libs`
+$(TGTS_$(d)): LL_TGT := cxexec/libcxexec.a cxgui/libcxgui.a cxmodel/libcxmodel.a cxlog/libcxlog.a cxmath/libcxmath.a cxinv/libcxinv.a `pkg-config gtkmm-3.0 --cflags --libs`
 
 # Here we add the unit test executable as an "order-only prerequisite" to make sure it is
 # not included in the build process (i.e. not listed in the $^ automatic variables contents).

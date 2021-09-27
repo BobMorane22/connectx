@@ -34,6 +34,13 @@
 #include "DiscChip.h"
 #include "GameView.h"
 
+namespace
+{
+
+constexpr size_t NUMBER_CHIPS_MOVED_PER_SECOND = 3u;
+
+} // namespace
+
 cxgui::GameView::GameView(IGameViewPresenter& p_presenter,
                           IGameViewController& p_controller,
                           Gtk::Grid& p_mainLayout,
@@ -46,7 +53,7 @@ cxgui::GameView::GameView(IGameViewPresenter& p_presenter,
 , m_viewTop{p_viewTop}
 , m_activePlayerChip{std::make_unique<cxgui::DiscChip>(cxmodel::MakeTransparent(), cxmodel::MakeTransparent(), cxgui::DEFAULT_CHIP_SIZE / 4)}
 , m_nextPlayerChip{std::make_unique<cxgui::DiscChip>(cxmodel::MakeTransparent(), cxmodel::MakeTransparent(), cxgui::DEFAULT_CHIP_SIZE / 4)}
-, m_board{std::make_unique<cxgui::Board>(m_presenter, m_controller)}
+, m_board{std::make_unique<cxgui::AnimatedBoard>(m_presenter, NUMBER_CHIPS_MOVED_PER_SECOND)}
 {
     PRECONDITION(m_activePlayerChip);
     PRECONDITION(m_nextPlayerChip);

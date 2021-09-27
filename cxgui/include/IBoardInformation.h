@@ -26,10 +26,7 @@
 
 #include <cstddef>
 
-namespace cxgui
-{
-    class Chip;
-}
+#include <cxmodel/include/ChipColor.h>
 
 namespace cxgui
 {
@@ -58,12 +55,13 @@ public:
     [[nodiscard]] virtual size_t GetCurrentColumn() const = 0;
 
     /******************************************************************************************//**
-     * @brief Gets the chip currently in the next disc area.
+     * @brief Gets the color of the chip currently in the next disc area.
      *
-     * @return The disc in the next disc area. If there is none, nullptr.
+     * @return The color of the disc in the next disc area. If there is none, transparent
+     *         is returned.
      *
      *********************************************************************************************/
-    [[nodiscard]] virtual const cxgui::Chip* GetCurrentChip() const = 0;
+    [[nodiscard]] virtual cxmodel::ChipColor GetCurrentChipColor() const = 0;
 
 };
 

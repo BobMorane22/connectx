@@ -73,6 +73,7 @@ $(TGTS_$(d)): LL_TGT := cxexec/libcxexec.a \
                         cxgui/libcxgui.a \
                         cxmodel/libcxmodel.a \
                         cxlog/libcxlog.a \
+                        cxmath/libcxmath.a \
                         cxinv/libcxinv.a \
                         cxunit/libcxunit.a \
                         `pkg-config gtkmm-3.0 --cflags --libs` -lgtest -lgtest_main -lpthread

@@ -24,17 +24,20 @@
 #include <algorithm>
 #include <chrono>
 #include <cmath>
+#include <iostream>
 
+#include <gdkmm/display.h>
 #include <gdkmm/general.h>
 #include <glibmm/main.h>
 
 #include <cxinv/include/assertion.h>
 #include <cxmodel/include/Color.h>
 #include <cxmodel/include/Disc.h>
-#include <cxmodel/include/Model.h>
 
 #include "AnimatedBoard.h"
+#include "common.h"
 #include "ContextRestoreRAII.h"
+#include "IGameViewPresenter.h"
 #include "pathHelpers.h"
 
 #define UNUSED(p_parameter) (void)p_parameter
@@ -358,10 +361,19 @@ void ComputeMirrorDiscPosition<cxgui::BoardAnimation::MOVE_CHIP_RIGHT_ONE_COLUMN
 
 } // namespace
 
-cxgui::AnimatedBoard::AnimatedBoard(const cxmodel::Model& p_model, size_t p_speed)
-: m_model{p_model}
+cxgui::AnimatedBoard::AnimatedBoard(const IGameViewPresenter& p_presenter, size_t p_speed)
+: m_presenter{p_presenter}
 , m_speed{p_speed}
 {
+    // Customize width and height according to window dimension.
+    const int nbRows = m_presenter.GetGameViewBoardHeight();
+    const int nbColumns = m_presenter.GetGameViewBoardWidth();
+    const int chipDimension = ComputeMinimumChipDimension(nbRows, nbColumns);
+    set_size_request(nbColumns * chipDimension, nbRows * chipDimension);
+
+    set_vexpand(true);
+    set_hexpand(true);
+
     // In time, make proper RAII:
     m_timer = Glib::signal_timeout().connect([this](){return Redraw();}, 1000.0/m_FPS);
 
@@ -390,14 +402,14 @@ void cxgui::AnimatedBoard::PerformChipAnimation(BoardAnimation p_animation)
         case cxgui::BoardAnimation::MOVE_CHIP_LEFT_ONE_COLUMN:
         {
             const double width = static_cast<double>(allocation.get_width());
-            const double oneAnimationWidth = width / m_model.GetCurrentGridWidth();
+            const double oneAnimationWidth = width / m_presenter.GetGameViewBoardWidth();
             const double delta = oneAnimationWidth / (static_cast<double>(m_FPS) / static_cast<double>(m_speed));
 
             if(m_totalMoveLeftDisplacement >= oneAnimationWidth || std::abs(m_totalMoveLeftDisplacement - oneAnimationWidth) <= 1e-6)
             {
                 if(m_currentColumn <= 0)
                 {
-                    m_currentColumn = m_model.GetCurrentGridWidth() - 1;
+                    m_currentColumn = m_presenter.GetGameViewBoardWidth() - 1;
                 }
                 else
                 {
@@ -421,12 +433,12 @@ void cxgui::AnimatedBoard::PerformChipAnimation(BoardAnimation p_animation)
         case cxgui::BoardAnimation::MOVE_CHIP_RIGHT_ONE_COLUMN:
         {
             const double width = static_cast<double>(allocation.get_width());
-            const double oneAnimationWidth = width / m_model.GetCurrentGridWidth();
+            const double oneAnimationWidth = width / m_presenter.GetGameViewBoardWidth();
             const double delta = oneAnimationWidth / (static_cast<double>(m_FPS) / static_cast<double>(m_speed));
 
             if(m_totalMoveRightDisplacement >= oneAnimationWidth || std::abs(m_totalMoveRightDisplacement - oneAnimationWidth) <= 1e-6)
             {
-                if(m_currentColumn >= m_model.GetCurrentGridWidth() - 1u)
+                if(m_currentColumn >= m_presenter.GetGameViewBoardWidth() - 1u)
                 {
                     m_currentColumn = 0;
                 }
@@ -452,7 +464,7 @@ void cxgui::AnimatedBoard::PerformChipAnimation(BoardAnimation p_animation)
         case cxgui::BoardAnimation::DROP_CHIP:
         {
             const double height = static_cast<double>(allocation.get_height());
-            const double cellHeight = height / (m_model.GetCurrentGridHeight() + 1.0);
+            const double cellHeight = height / (m_presenter.GetGameViewBoardHeight() + 1.0);
             const double oneAnimationHeight = (GetDropPosition(m_currentColumn) + 1.0) * cellHeight;
 
             // Since the falling distance may vary, the number of frames needed for the
@@ -487,6 +499,20 @@ void cxgui::AnimatedBoard::PerformChipAnimation(BoardAnimation p_animation)
 size_t cxgui::AnimatedBoard::GetCurrentColumn() const
 {
     return m_currentColumn;
+}
+
+cxmodel::ChipColor cxgui::AnimatedBoard::GetCurrentChipColor() const
+{
+    // I don't think this is good. The problem is that the animation
+    // is performed AFTER the model is updated. This means that the
+    // active player is seen by the presenter is not the active player
+    // that should be used by the animation. It should be the previous
+    // player.
+    //
+    // To solve this, a cache of the presenter's state should be introduced
+    // here, keeping all previous states. The cache could be updated
+    // once the animation is completed.
+    return m_presenter.GetGameViewActivePlayerChipColor();
 }
 
 // Compute the current disc's position. If needed, the current mirror disc position is also
@@ -571,12 +597,12 @@ bool cxgui::AnimatedBoard::on_draw(const Cairo::RefPtr<Cairo::Context>& p_contex
     m_lastFrameWidth = width;
 
     // Compute useful dimensions:
-    const double maximumNbDiscs = std::max(m_model.GetCurrentGridHeight() + 1, m_model.GetCurrentGridWidth());
+    const double maximumNbDiscs = std::max(m_presenter.GetGameViewBoardHeight() + 1, m_presenter.GetGameViewBoardWidth());
     const double theoreticalRadius = (smallestDimensionSize / (maximumNbDiscs * 2.0));
     const double lineWidth = theoreticalRadius * LINE_WIDTH_SCALING_FACTOR;
     const double radius = theoreticalRadius - lineWidth / 2.0;
     const double halfDiscSize = radius + lineWidth / 2.0;
-    const double horizontalMargin = ((width / m_model.GetCurrentGridWidth()) - 2 * halfDiscSize) / 2.0;
+    const double horizontalMargin = ((width / m_presenter.GetGameViewBoardWidth()) - 2 * halfDiscSize) / 2.0;
 
     // Compute disc(s) position(s):
     const bool mirrorToTheLeft = ComputeDiscLeftPosition(width, halfDiscSize, horizontalMargin);
@@ -599,9 +625,9 @@ bool cxgui::AnimatedBoard::on_draw(const Cairo::RefPtr<Cairo::Context>& p_contex
 
     // Draw the game board:
     m_boardElementsCache.Clear();
-    for(size_t row = 0u; row < m_model.GetCurrentGridHeight(); ++row)
+    for(size_t row = 0u; row < m_presenter.GetGameViewBoardHeight(); ++row)
     {
-        for(size_t column = 0u; column < m_model.GetCurrentGridWidth(); ++column)
+        for(size_t column = 0u; column < m_presenter.GetGameViewBoardWidth(); ++column)
         {
             DrawBoardElement(bufferContext, row, column);
         }
@@ -614,7 +640,7 @@ bool cxgui::AnimatedBoard::on_draw(const Cairo::RefPtr<Cairo::Context>& p_contex
     return true;
 }
 
-// Draws a "column hilight" that follows the current chip. This helps the user locate the
+// Draws a "column highlight" that follows the current chip. This helps the user locate the
 // current column. Especially helpful on larger boards.
 void cxgui::AnimatedBoard::DrawActiveColumnHighlight(const Cairo::RefPtr<Cairo::Context>& p_context)
 {
@@ -622,8 +648,8 @@ void cxgui::AnimatedBoard::DrawActiveColumnHighlight(const Cairo::RefPtr<Cairo::
     const Gtk::Allocation allocation = get_allocation();
     const double height = static_cast<double>(allocation.get_height());
     const double width = static_cast<double>(allocation.get_width());
-    const double cellHeight = (height / (m_model.GetCurrentGridHeight() + 1.0));
-    const double cellWidth = (width / m_model.GetCurrentGridWidth());
+    const double cellHeight = (height / (m_presenter.GetGameViewBoardHeight() + 1.0));
+    const double cellWidth = (width / m_presenter.GetGameViewBoardWidth());
     const double halfCellWidth = cellWidth / 2.0;
 
     cxgui::ContextRestoreRAII contextRestoreRAII{p_context};
@@ -651,17 +677,17 @@ void cxgui::AnimatedBoard::DrawBoardElement(const Cairo::RefPtr<Cairo::Context>&
     const double width = static_cast<double>(allocation.get_width());
 
     // Compute cell dimensions:
-    const double cellWidth = (width / m_model.GetCurrentGridWidth());
-    const double cellHeight = (height / (m_model.GetCurrentGridHeight() + 1.0));
+    const double cellWidth = (width / m_presenter.GetGameViewBoardWidth());
+    const double cellHeight = (height / (m_presenter.GetGameViewBoardHeight() + 1.0));
 
     // Compute disc radius:
     const double smallestDimensionSize = std::min(width, height);
     const double lineWidth = smallestDimensionSize * LINE_WIDTH_SCALING_FACTOR;
-    const double maximumNbDiscs = std::max(m_model.GetCurrentGridHeight() + 1, m_model.GetCurrentGridWidth());
+    const double maximumNbDiscs = std::max(m_presenter.GetGameViewBoardHeight() + 1, m_presenter.GetGameViewBoardWidth());
     const double radius = (smallestDimensionSize / (maximumNbDiscs * 2.0)) - lineWidth / 2.0;
 
-    const cxmodel::IChip& chip = m_model.GetChip(p_row, p_column);
-    const cxmodel::ChipColor chipColor = chip.GetColor();
+    const IGameViewPresenter::ChipColors& chipColors = m_presenter.GetGameViewChipColors();
+    const cxmodel::ChipColor chipColor = chipColors[p_row][p_column];
     if(m_boardElementsCache.HasElement(chipColor))
     {
         // Paint that part to the canvas:
@@ -710,7 +736,6 @@ void cxgui::AnimatedBoard::DrawBoardElement(const Cairo::RefPtr<Cairo::Context>&
 
     // Paint that part to the canvas:
     p_context->set_source(buffer, p_column * cellWidth, (p_row + 1) * cellHeight);
-
     p_context->paint();
 }
 
@@ -728,7 +753,7 @@ bool cxgui::AnimatedBoard::Redraw()
         const Gtk::Allocation allocation = get_allocation();
         const double height = static_cast<double>(allocation.get_height());
         const double width = static_cast<double>(allocation.get_width());
-        const double cellWidth = width / m_model.GetCurrentGridWidth();
+        const double cellWidth = width / m_presenter.GetGameViewBoardWidth();
         const double delta = cellWidth / (static_cast<double>(m_FPS) / static_cast<double>(m_speed));
 
         if(m_x < cellWidth / 2.0)
@@ -748,7 +773,7 @@ bool cxgui::AnimatedBoard::Redraw()
         const Gtk::Allocation allocation = get_allocation();
         const double height = static_cast<double>(allocation.get_height());
         const double width = static_cast<double>(allocation.get_width());
-        const double cellWidth = width / m_model.GetCurrentGridWidth();
+        const double cellWidth = width / m_presenter.GetGameViewBoardWidth();
         const double delta = cellWidth / (static_cast<double>(m_FPS) / static_cast<double>(m_speed));
 
         if(m_x > width - cellWidth / 2.0)
@@ -768,7 +793,7 @@ bool cxgui::AnimatedBoard::Redraw()
         const Gtk::Allocation allocation = get_allocation();
         const double height = static_cast<double>(allocation.get_height());
         const double width = static_cast<double>(allocation.get_width());
-        const double cellWidth = width / m_model.GetCurrentGridWidth();
+        const double cellWidth = width / m_presenter.GetGameViewBoardWidth();
 
         queue_draw_area(m_x - cellWidth/1.5, 0, 1.5*cellWidth, height);
         PerformChipAnimation(cxgui::BoardAnimation::DROP_CHIP);
@@ -844,9 +869,11 @@ void cxgui::AnimatedBoard::Update(cxgui::BoardAnimationNotificationContext p_con
 
 int cxgui::AnimatedBoard::GetDropPosition(int p_column) const
 {
-    for(int row = m_model.GetCurrentGridHeight() - 1; row >= 0; --row)
+    const IGameViewPresenter::ChipColors& chipColors = m_presenter.GetGameViewChipColors();
+
+    for(int row = m_presenter.GetGameViewBoardHeight() - 1; row >= 0; --row)
     {
-        if(m_model.GetChip(row, p_column) == cxmodel::Disc::MakeTransparentDisc())
+        if(chipColors[row][p_column] == cxmodel::MakeTransparent())
         {
             return row;
         }
@@ -855,4 +882,43 @@ int cxgui::AnimatedBoard::GetDropPosition(int p_column) const
     ASSERT_ERROR_MSG("Column unavailable. Check of availability first");
 
     return 0;
+}
+
+// Computes the best chip dimension so that the game view, when the board is present with all
+// chips drawn, is entirely viewable on the user's screen.
+int cxgui::AnimatedBoard::ComputeMinimumChipDimension(size_t p_nbRows, size_t p_nbColumns) const
+{
+    // Get screen containing the widget:
+    const Glib::RefPtr<const Gdk::Screen> screen = get_screen();
+    IF_CONDITION_NOT_MET_DO(bool(screen), return -1;);
+
+    // Get the screen dimensions:
+    const int fullScreenHeight = screen->get_height();
+    const int fullScreenWidth = screen->get_width();
+
+    // Get minimum screen dimension:
+    const int minFullScreenDimension = std::min(fullScreenHeight, fullScreenWidth);
+
+    // First, we check if the chips can use their default size:
+    int nbRows = static_cast<int>(p_nbRows);
+    int nbColumns = static_cast<int>(p_nbColumns);
+
+    if(nbRows * cxgui::DEFAULT_CHIP_SIZE < (2 * fullScreenHeight) / 3)
+    {
+        if(nbColumns * cxgui::DEFAULT_CHIP_SIZE < (2 * fullScreenWidth) / 3)
+        {
+            return cxgui::DEFAULT_CHIP_SIZE;
+        }
+    }
+
+    // The the biggest board dimension:
+    const int maxBoardDimension = std::max(nbRows, nbColumns);
+
+    // From this, the max chip dimension (dimension at which together, chips from the board would fill the
+    // entire screen in its smallest dimension) is computed:
+    const int maxChipDimension = (minFullScreenDimension / maxBoardDimension);
+
+    // We take two thirds from this value for the board (leaving the remaining to the rest of the
+    // game view):
+    return (maxChipDimension * 2) / 3;
 }
