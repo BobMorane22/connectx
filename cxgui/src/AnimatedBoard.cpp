@@ -616,11 +616,11 @@ bool cxgui::AnimatedBoard::on_draw(const Cairo::RefPtr<Cairo::Context>& p_contex
     DrawActiveColumnHighlight(bufferContext);
 
     // Draw Disc(s):
-    constexpr cxmodel::ChipColor backgroundColor = cxmodel::ChipColor::MakePredefined(cxmodel::ChipColor::Predefined::RED);
-    DrawDisc(bufferContext, {m_x, m_y}, radius, backgroundColor);
+    const cxmodel::ChipColor chipColor = m_presenter.GetGameViewActivePlayerChipColor();
+    DrawDisc(bufferContext, {m_x, m_y}, radius, chipColor);
     if(mirrorToTheLeft || mirrorToTheRight)
     {
-        DrawDisc(bufferContext, {m_xx, m_y}, radius, backgroundColor);
+        DrawDisc(bufferContext, {m_xx, m_y}, radius, chipColor);
     }
 
     // Draw the game board:
