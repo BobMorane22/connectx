@@ -16,7 +16,7 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file AnimatedBoard.cpp
+ * @file AnimatedBoard.h
  * @date 2021
  *
  *************************************************************************************************/
@@ -28,6 +28,7 @@
 
 #include <cxmath/include/math.h>
 
+#include "AnimatedBoardPresenter.h"
 #include "BoardAnimation.h"
 #include "BoardAnimationNotificationContext.h"
 #include "BoardElementCache.h"
@@ -118,8 +119,8 @@ private:
     // General data:
     const int m_FPS = 24; // Frames per second.
 
-    const IGameViewPresenter& m_presenter; // The Game View presenter.
-    const size_t m_speed;                  // The number of discs covered per second when moving.
+    std::unique_ptr<AnimatedBoardPresenter> m_presenter; // A Game View presenter cache.
+    const size_t m_speed;                                // The number of discs covered per second when moving.
 
     double m_x = 0.0; // Disc center position (horizontal).
     double m_y = 0.0; // Disc center position (vertical).

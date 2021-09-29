@@ -25,6 +25,7 @@
 #define IGAMEVIEWPRESENTER_H_564B2260_1CAE_4391_A361_97CAB8D0102D
 
 #include <string>
+#include <vector>
 
 #include <cxmodel/include/ChipColor.h>
 
