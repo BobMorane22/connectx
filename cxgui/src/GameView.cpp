@@ -65,6 +65,10 @@ cxgui::GameView::GameView(IGameViewPresenter& p_presenter,
     // Get a reference to the parent window:
     m_parent = dynamic_cast<Gtk::Window*>(m_mainLayout.get_parent());
 
+    // Attach to the board:
+    Attach(m_board.get());
+    m_board->Attach(this);
+
     POSTCONDITION(m_parent);
 }
 
@@ -141,6 +145,31 @@ void cxgui::GameView::Update(cxmodel::ModelNotificationContext p_context)
         }
         default:
             break;
+    }
+}
+
+void cxgui::GameView::Update(cxgui::BoardAnimationNotificationContext p_context, cxgui::BoardAnimationSubject* p_subject)
+{
+    IF_CONDITION_NOT_MET_DO(p_subject, return;);
+
+    switch(p_context)
+    {
+        case cxgui::BoardAnimationNotificationContext::ANIMATE_MOVE_LEFT_ONE_COLUMN:
+        case cxgui::BoardAnimationNotificationContext::ANIMATE_MOVE_RIGHT_ONE_COLUMN:
+        case cxgui::BoardAnimationNotificationContext::ANIMATE_MOVE_DROP_CHIP:
+        {
+            return;
+        }
+
+        case cxgui::BoardAnimationNotificationContext::POST_ANIMATE_MOVE_LEFT_ONE_COLUMN:
+        case cxgui::BoardAnimationNotificationContext::POST_ANIMATE_MOVE_RIGHT_ONE_COLUMN:
+        case cxgui::BoardAnimationNotificationContext::POST_ANIMATE_DROP_CHIP:
+        {
+            // Re-activate keyboard handler. At this point the animation is completed. We
+            // reactivate keyboard events in case the user wants to request another animation:
+            m_parent->add_events(Gdk::KEY_PRESS_MASK);
+            m_keysPressedConnection = m_parent->signal_key_press_event().connect([this](GdkEventKey* p_event){return OnKeyPressed(p_event);}, false);
+        }
     }
 }
 
@@ -256,7 +285,7 @@ void cxgui::GameView::UpdateChipDropped()
 
     if(ASSERT(m_board))
     {
-        m_board->PerformChipAnimation(cxgui::BoardAnimation::DROP_CHIP);
+        Notify(cxgui::BoardAnimationNotificationContext::ANIMATE_MOVE_DROP_CHIP);
     }
 }
 
@@ -264,7 +293,7 @@ void cxgui::GameView::UpdateChipMovedLeft()
 {
     if(ASSERT(m_board))
     {
-        m_board->PerformChipAnimation(cxgui::BoardAnimation::MOVE_CHIP_LEFT_ONE_COLUMN);
+        Notify(cxgui::BoardAnimationNotificationContext::ANIMATE_MOVE_LEFT_ONE_COLUMN);
     }
 }
 
@@ -272,12 +301,13 @@ void cxgui::GameView::UpdateChipMovedRight()
 {
     if(ASSERT(m_board))
     {
-        m_board->PerformChipAnimation(cxgui::BoardAnimation::MOVE_CHIP_RIGHT_ONE_COLUMN);
+        Notify(cxgui::BoardAnimationNotificationContext::ANIMATE_MOVE_RIGHT_ONE_COLUMN);
     }
 }
 
 void cxgui::GameView::UpdateGameResolved()
 {
+    // Change to a notification...
     m_board->PerformChipAnimation(cxgui::BoardAnimation::GAME_WON);
 }
 
@@ -290,5 +320,6 @@ void cxgui::GameView::UpdateGameReinitialized()
     m_nextPlayerChip->ChangeColor(m_presenter.GetGameViewNextPlayerChipColor());
     m_nextPlayerName.set_text(m_presenter.GetGameViewNextPlayerName());
 
+    // Change to a notification...
     m_board->PerformChipAnimation(cxgui::BoardAnimation::GAME_REINITIALIZED);
 }

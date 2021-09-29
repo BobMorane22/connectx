@@ -42,7 +42,9 @@ namespace cxgui
  * @brief View for playing the game.
  *
  ************************************************************************************************/
-class GameView : public IView
+class GameView : public IView,
+                 public cxgui::IBoardAnimationObserver,
+                 public cxgui::BoardAnimationSubject
 {
 
 public:
@@ -52,6 +54,8 @@ public:
              Gtk::Grid& p_mainLayout,
              int p_viewLeft,
              int p_viewTop);
+
+    void Update(cxgui::BoardAnimationNotificationContext p_context, cxgui::BoardAnimationSubject* p_subject) override;
 
     // IView:
     void Activate() override;
