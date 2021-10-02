@@ -483,7 +483,15 @@ void cxgui::AnimatedBoard::PerformChipAnimation(BoardAnimation p_animation)
                 // End animation:
                 m_totalMoveDownDisplacement = 0.0;
                 m_animateMoveDown = false;
+
+                // Reinitialize disc:
+                m_x = 0.0;
+                m_y = 0.0;
+                m_xx = 0.0;
+                m_currentColumn = 0u;
+
                 m_presenter->Sync();
+
                 Notify(cxgui::BoardAnimationNotificationContext::POST_ANIMATE_DROP_CHIP);
                 return;
             }
@@ -796,12 +804,7 @@ bool cxgui::AnimatedBoard::Redraw()
     }
     if(m_animateMoveDown)
     {
-        const Gtk::Allocation allocation = get_allocation();
-        const double height = static_cast<double>(allocation.get_height());
-        const double width = static_cast<double>(allocation.get_width());
-        const double cellWidth = width / m_presenter->GetBoardWidth();
-
-        queue_draw_area(m_x - cellWidth/1.5, 0, 1.5*cellWidth, height);
+        queue_draw();
         PerformChipAnimation(cxgui::BoardAnimation::DROP_CHIP);
     }
 

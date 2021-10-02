@@ -125,7 +125,7 @@ private:
     double m_x = 0.0; // Disc center position (horizontal).
     double m_y = 0.0; // Disc center position (vertical).
 
-    size_t m_currentColumn = 0; // The disc current's column.
+    size_t m_currentColumn = 0u; // The disc current's column.
 
     double m_xx = 0.0; // Mirror center position (horizontal). This is used when a disc
                        // crosses over the window boundary, to trace its other half on
