@@ -44,6 +44,7 @@ d := $(dir)
 #
 TGTS_$(d) := $(d)/cxguitests
 OBJS_$(d) := $(d)/AboutWindowPresenterTestFixture.o \
+             $(d)/AnimatedBoardPresenterTests.o \
              $(d)/AboutWindowPresenterTests.o \
              $(d)/ConfigurableMainWindowPresenterTestFixture.o \
              $(d)/extractRawUserInputTests.o \

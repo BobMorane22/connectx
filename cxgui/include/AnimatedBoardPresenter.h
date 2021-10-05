@@ -41,7 +41,7 @@ namespace cxgui
  * cached values in between animations.
  *
  *************************************************************************************************/
-class AnimatedBoardPresenter final
+class AnimatedBoardPresenter
 {
 
 public:
@@ -68,7 +68,7 @@ public:
      * @return The cached board height.
      *
      *********************************************************************************************/
-    [[nodiscard]] size_t GetBoardHeight() const;
+    [[nodiscard]] virtual size_t GetBoardHeight() const;
 
     /******************************************************************************************//**
      * @brief Retreive the cached board width.
@@ -76,7 +76,7 @@ public:
      * @return The cached board width.
      *
      *********************************************************************************************/
-    [[nodiscard]] size_t GetBoardWidth() const;
+    [[nodiscard]] virtual size_t GetBoardWidth() const;
 
     /******************************************************************************************//**
      * @brief Retreive the cached active player chip color.
@@ -84,7 +84,7 @@ public:
      * @return The cached active player chip color.
      *
      *********************************************************************************************/
-    [[nodiscard]] cxmodel::ChipColor GetActivePlayerChipColor() const;
+    [[nodiscard]] virtual cxmodel::ChipColor GetActivePlayerChipColor() const;
 
     /******************************************************************************************//**
      * @brief Retreive the cached board chip colors.
@@ -92,7 +92,7 @@ public:
      * @return The cached board chip colors.
      *
      *********************************************************************************************/
-    [[nodiscard]] const IGameViewPresenter::ChipColors& GetBoardChipColors() const;
+    [[nodiscard]] virtual const IGameViewPresenter::ChipColors& GetBoardChipColors() const;
 
 private:
 
