@@ -307,8 +307,7 @@ void cxgui::GameView::UpdateChipMovedRight()
 
 void cxgui::GameView::UpdateGameResolved()
 {
-    // Change to a notification...
-    m_board->PerformChipAnimation(cxgui::BoardAnimation::GAME_WON);
+    // Notify...
 }
 
 void cxgui::GameView::UpdateGameReinitialized()
@@ -320,6 +319,5 @@ void cxgui::GameView::UpdateGameReinitialized()
     m_nextPlayerChip->ChangeColor(m_presenter.GetGameViewNextPlayerChipColor());
     m_nextPlayerName.set_text(m_presenter.GetGameViewNextPlayerName());
 
-    // Change to a notification...
-    m_board->PerformChipAnimation(cxgui::BoardAnimation::GAME_REINITIALIZED);
+    // Notify...
 }

@@ -24,7 +24,6 @@
 #include <iostream>
 
 #include "GameRightKeyHandlerStrategy.h"
-#include "IBoardAnimator.h"
 #include "IBoardInformation.h"
 #include "IGameViewController.h"
 

@@ -32,7 +32,6 @@
 #include "BoardAnimation.h"
 #include "BoardAnimationNotificationContext.h"
 #include "BoardElementCache.h"
-#include "IBoardAnimator.h"
 #include "IBoardInformation.h"
 
 namespace cxgui
@@ -60,8 +59,7 @@ namespace cxgui
  * game must not go on and the user should not be able to interract with the board.
  *
  *************************************************************************************************/
-class AnimatedBoard : public cxgui::IBoardAnimator,
-                      public cxgui::IBoardInformation,
+class AnimatedBoard : public cxgui::IBoardInformation,
                       public cxgui::IBoardAnimationObserver,
                       public cxgui::BoardAnimationSubject,
                       public Gtk::DrawingArea
@@ -87,16 +85,14 @@ public:
      *********************************************************************************************/
     ~AnimatedBoard();
 
-    // cxgui::IBoardAnimator:
-    void PerformChipAnimation(BoardAnimation p_animation) override;
-
     // cxgui::IBoardInformation:
     [[nodiscard]] size_t GetCurrentColumn() const override;
     [[nodiscard]] cxmodel::ChipColor GetCurrentChipColor() const override;
 
 private:
 
-    // Implementation methods and functions:
+    void PerformChipAnimation(BoardAnimation p_animation);
+
     bool on_draw(const Cairo::RefPtr<Cairo::Context>& p_context) override;
     void DrawActiveColumnHighlight(const Cairo::RefPtr<Cairo::Context>& p_context);
     void DrawBoardElement(const Cairo::RefPtr<Cairo::Context>& p_context, size_t p_row, size_t p_column);
@@ -116,7 +112,6 @@ private:
     [[nodiscard]] int GetDropPosition(int p_column) const;
     [[nodiscard]] int ComputeMinimumChipDimension(size_t p_nbRows, size_t p_nbColumns) const;
 
-    // General data:
     const int m_FPS = 24; // Frames per second.
 
     std::unique_ptr<AnimatedBoardPresenter> m_presenter; // A Game View presenter cache.
@@ -154,7 +149,6 @@ private:
 
     // Performance:
     BoardElementCache m_boardElementsCache;
-
 };
 
 } // namespace cxgui

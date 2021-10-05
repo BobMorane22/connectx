@@ -30,7 +30,6 @@
 #include "AnimatedBoard.h"
 #include "Chip.h"
 #include "GameKeyHandlerStrategyFactory.h"
-#include "IBoardAnimator.h"
 #include "IGameViewController.h"
 #include "IGameViewPresenter.h"
 #include "IView.h"
