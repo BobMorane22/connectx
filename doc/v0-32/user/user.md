@@ -4,13 +4,14 @@
 
 In this iteration:
 
-1. Short description of new feature
+1. The game board is now animated.
 2. Another short description
 
 
-## Feature 1
+## Animated game board
 
-Description for feature 1 here...
+When playing Connect X, chip movements in the game board are now
+animated, for a better user experience. Controls have not changed.
 
 
 ## Feature 2
