@@ -46,6 +46,11 @@ TEST(StatusBarPresenter, MakeStatusBarContextString_ChipDropped_ChipDroppedStrin
     ASSERT_EQ(cxgui::MakeStatusBarContextString(cxmodel::ModelNotificationContext::CHIP_DROPPED), "Chip dropped.");
 }
 
+TEST(StatusBarPresenter, MakeStatusBarContextString_ChipDroppedFailed_NoMessage)
+{
+    ASSERT_EQ(cxgui::MakeStatusBarContextString(cxmodel::ModelNotificationContext::CHIP_DROPPED_FAILED), "");
+}
+
 TEST(StatusBarPresenter, MakeStatusBarContextString_ChipMovedLeft_NoMessage)
 {
     ASSERT_EQ(cxgui::MakeStatusBarContextString(cxmodel::ModelNotificationContext::CHIP_MOVED_LEFT), "");

@@ -229,6 +229,7 @@ void cxmodel::Model::DropChip(const cxmodel::IChip& p_chip, size_t p_column)
     else
     {
         m_logger.Log(cxlog::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__, "Chip drop failed for " + activePlayer.GetName());
+        Notify(ModelNotificationContext::CHIP_DROPPED_FAILED);
     }
 
     if(IsWon())

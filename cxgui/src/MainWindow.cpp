@@ -127,6 +127,7 @@ void cxgui::MainWindow::Update(cxmodel::ModelNotificationContext p_context, cxmo
         switch(p_context)
         {
             case cxmodel::ModelNotificationContext::CHIP_DROPPED:
+            case cxmodel::ModelNotificationContext::CHIP_DROPPED_FAILED:
             {
                 UpdateChipDropped(p_context);
                 break;

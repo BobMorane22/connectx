@@ -68,8 +68,11 @@ private:
     void ConfigureWidgets();
 
     bool OnKeyPressed(GdkEventKey* p_event);
+    void EnableKeyHandlers();
+    void DisableKeyHandlers();
 
     void UpdateChipDropped();
+    void UpdateChipDroppedFailed();
     void UpdateChipMovedLeft();
     void UpdateChipMovedRight();
     void UpdateGameResolved();

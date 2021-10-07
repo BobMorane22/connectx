@@ -38,18 +38,35 @@ namespace cxmodel
  ************************************************************************************************/
 enum class ModelNotificationContext
 {
-    // User operations:
+    /** A new game was created.*/
     CREATE_NEW_GAME,
+
+    /** A chip was sucessfully dropped into the game board.*/
     CHIP_DROPPED,
+
+    /** A chip failed to drop into the game board. Possible causes include a full column.*/
+    CHIP_DROPPED_FAILED,
+
+    /** A chip was moved left in the New Disc Area.*/
     CHIP_MOVED_LEFT,
+
+    /** A chip was moved right in the New Disc Area.*/
     CHIP_MOVED_RIGHT,
+
+    /** The last successful disc drop was undone.*/
     UNDO_CHIP_DROPPED,
 
-    // Game states:
+    /** The current game was won.*/
     GAME_WON,
+
+    /** The current game resulted in a tie.*/
     GAME_TIED,
+
+    /** The current game was ended by the user.*/
     GAME_ENDED,
-    GAME_REINITIALIZED
+
+    /** The current game was reinitialized by the user.*/
+    GAME_REINITIALIZED,
 };
 
 using IModelObserver = IObserver<ModelNotificationContext>;

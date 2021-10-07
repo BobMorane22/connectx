@@ -74,12 +74,7 @@ cxgui::GameView::GameView(IGameViewPresenter& p_presenter,
 
 void cxgui::GameView::Activate()
 {
-    // Override default signal handler to catch keyboard events:
-    if(ASSERT(m_parent))
-    {
-        m_parent->add_events(Gdk::KEY_PRESS_MASK);
-        m_keysPressedConnection = m_parent->signal_key_press_event().connect([this](GdkEventKey* p_event){return OnKeyPressed(p_event);}, false);
-    }
+    EnableKeyHandlers();
 
     auto* currentViewLayout = m_mainLayout.get_child_at(m_viewLeft, m_viewTop);
 
@@ -98,14 +93,7 @@ void cxgui::GameView::Activate()
 
 void cxgui::GameView::DeActivate()
 {
-    if(ASSERT(m_parent))
-    {
-        // Unset key press events:
-        m_parent->add_events(m_parent->get_events() & ~Gdk::KEY_PRESS_MASK);
-
-        // Disconnect signal handler:
-        m_keysPressedConnection.disconnect();
-    }
+    DisableKeyHandlers();
 }
 
 void cxgui::GameView::Update(cxmodel::ModelNotificationContext p_context)
@@ -115,6 +103,11 @@ void cxgui::GameView::Update(cxmodel::ModelNotificationContext p_context)
         case cxmodel::ModelNotificationContext::CHIP_DROPPED:
         {
             UpdateChipDropped();
+            break;
+        }
+        case cxmodel::ModelNotificationContext::CHIP_DROPPED_FAILED:
+        {
+            UpdateChipDroppedFailed();
             break;
         }
         case cxmodel::ModelNotificationContext::CHIP_MOVED_LEFT:
@@ -165,10 +158,9 @@ void cxgui::GameView::Update(cxgui::BoardAnimationNotificationContext p_context,
         case cxgui::BoardAnimationNotificationContext::POST_ANIMATE_MOVE_RIGHT_ONE_COLUMN:
         case cxgui::BoardAnimationNotificationContext::POST_ANIMATE_DROP_CHIP:
         {
-            // Re-activate keyboard handler. At this point the animation is completed. We
-            // reactivate keyboard events in case the user wants to request another animation:
-            m_parent->add_events(Gdk::KEY_PRESS_MASK);
-            m_keysPressedConnection = m_parent->signal_key_press_event().connect([this](GdkEventKey* p_event){return OnKeyPressed(p_event);}, false);
+            // At this point the animation is completed. We reactivate keyboard events in
+            // case the user wants to request another animation:
+            EnableKeyHandlers();
         }
     }
 }
@@ -259,6 +251,10 @@ void cxgui::GameView::ConfigureWidgets()
 
 bool cxgui::GameView::OnKeyPressed(GdkEventKey* p_event)
 {
+    // We do now want the user to be able to request another animation
+    // while one is already running:
+    DisableKeyHandlers();
+
     if(!p_event)
     {
         return true; // Do not propagate...
@@ -274,6 +270,24 @@ bool cxgui::GameView::OnKeyPressed(GdkEventKey* p_event)
     return strategy->Handle(m_controller, *m_board);
 }
 
+void cxgui::GameView::EnableKeyHandlers()
+{
+    if(ASSERT(m_parent))
+    {
+        m_parent->add_events(Gdk::KEY_PRESS_MASK);
+        m_keysPressedConnection = m_parent->signal_key_press_event().connect([this](GdkEventKey* p_event){return OnKeyPressed(p_event);}, false);
+    }
+}
+
+void cxgui::GameView::DisableKeyHandlers()
+{
+    if(ASSERT(m_parent))
+    {
+        m_keysPressedConnection.disconnect();
+        m_parent->add_events(m_parent->get_events() & ~Gdk::KEY_PRESS_MASK);
+    }
+}
+
 void cxgui::GameView::UpdateChipDropped()
 {
     // Active and next players should be updated as well:
@@ -287,6 +301,11 @@ void cxgui::GameView::UpdateChipDropped()
     {
         Notify(cxgui::BoardAnimationNotificationContext::ANIMATE_MOVE_DROP_CHIP);
     }
+}
+
+void cxgui::GameView::UpdateChipDroppedFailed()
+{
+    EnableKeyHandlers();
 }
 
 void cxgui::GameView::UpdateChipMovedLeft()

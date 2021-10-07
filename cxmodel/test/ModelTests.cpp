@@ -144,7 +144,7 @@ TEST_F(ModelTestFixture, /*DISABLED_*/DropChip_ValidModelChipAndColumn_ChipDropp
     ASSERT_TRUE(chipDropObserver.WasNotified());
 }
 
-TEST_F(ModelTestFixture, /*DISABLED_*/DropChip_ValidModelChipAndColumn_ChipDroppedOnFullColumnNotificationNotSent)
+TEST_F(ModelTestFixture, /*DISABLED_*/DropChip_ValidModelChipAndColumn_ChipDroppedOnFullColumnDropNotificationNotSent)
 {
     CreateNewGame(6u, 7u, ModelTestFixture::NbPlayers::TWO, ModelTestFixture::InARowValue::FOUR);
 
@@ -173,6 +173,30 @@ TEST_F(ModelTestFixture, /*DISABLED_*/DropChip_ValidModelChipAndColumn_ChipDropp
     // This drop is necessary only to make sure the test passes. If no notification
     // occurs on chipDropObserverFull, the test will fail:
     GetModel().DropChip(GetPlayer(0u).GetChip(), column + 1u);
+}
+
+TEST_F(ModelTestFixture, /*DISABLED_*/DropChip_ValidModelChipAndColumn_ChipDroppedOnFullColumnDropFailNotificationNotSent)
+{
+    CreateNewGame(6u, 7u, ModelTestFixture::NbPlayers::TWO, ModelTestFixture::InARowValue::FOUR);
+
+    // We then attach the model to our observer:
+    ModelNotificationCatcher chipDropObserverNotFull{cxmodel::ModelNotificationContext::CHIP_DROPPED_FAILED};
+
+    const int column = 0u;
+    GetModel().DropChip(GetPlayer(0u).GetChip(), column);
+    GetModel().DropChip(GetPlayer(1u).GetChip(), column);
+    GetModel().DropChip(GetPlayer(0u).GetChip(), column);
+    GetModel().DropChip(GetPlayer(1u).GetChip(), column);
+    GetModel().DropChip(GetPlayer(0u).GetChip(), column);
+
+    // At this point, no notification is sent, but the column is now full:
+    GetModel().Attach(&chipDropObserverNotFull);
+    GetModel().DropChip(GetPlayer(1u).GetChip(), column);
+    ASSERT_FALSE(chipDropObserverNotFull.WasNotified());
+
+    // Now the failed notification is sent:
+    GetModel().DropChip(GetPlayer(0u).GetChip(), column);
+    ASSERT_TRUE(chipDropObserverNotFull.WasNotified());
 }
 
 TEST_F(ModelTestFixture, /*DISABLED_*/DropChip_ValidModelChipAndColumn_GameDataUpdated)
