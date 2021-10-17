@@ -19,6 +19,11 @@
  * @file AnimatedBoard.cpp
  * @date 2021
  *
+ * @todo Remove hardoded background color. It should be a constant.
+ * @todo In model, change "disc" to "chip".
+ * @todo In model, replace naked "doubles" by strong types, especially when there is more than
+ *       one parameter.
+ *
  *************************************************************************************************/
 
 #include <algorithm>
@@ -34,13 +39,12 @@
 #include <cxmodel/include/Color.h>
 #include <cxmodel/include/Disc.h>
 
+#include "AnimatedBoardModel.h"
 #include "AnimatedBoard.h"
 #include "common.h"
 #include "ContextRestoreRAII.h"
 #include "IGameViewPresenter.h"
 #include "pathHelpers.h"
-
-#define UNUSED(p_parameter) (void)p_parameter
 
 namespace
 {
@@ -84,287 +88,13 @@ void DrawDisc(const Cairo::RefPtr<Cairo::Context>& p_context,
     p_context->fill();
 }
 
-/**************************************************************************************************
- * @brief Checks if the disc has crossed over to one side of the window.
- *
- * A disc has "crossed over" if some part of it is located outside one edge of the window. For
- * Example:
- *
- *                                     < ---- Moving
- *
- *                        |      +  +                |   +  +
- *                        |   +        +             |+        +
- *                        |  +          +            +          +
- *                        | +            +          +|           +
- *                        | +            +          +|           +
- *                        |  +          +            +          +
- *                        |   +       +              |+       +
- *                        |      +  +                |   +  +
- *
- *                         The disc has not         The disc has
- *                          crossed over.           crossed over.
- *
- *
- * @param p_currentHorizontalPosition
- *      The current horizontal position of the disc's center.
- *
- * @param p_windowWidth
- *      The width of the window.
- *
- * @param p_halfDiscSize
- *      The width of a half disc (the radius and half the disc's line width's width). In Cairo,
- *      only half of the line width is actually included in the disc's path. The other half
- *      crosses the path's boundary.
- *
- * @return `true` if the disc has crossed over, `false` otherwise.
- *
- *************************************************************************************************/
-template<cxgui::BoardAnimation A>
-bool HasDiscCrossedOver(double p_currentHorizontalPosition,
-                        double p_windowWidth,
-                        double p_halfDiscSize);
-
-template<>
-bool HasDiscCrossedOver<cxgui::BoardAnimation::MOVE_CHIP_LEFT_ONE_COLUMN>(double p_currentHorizontalPosition,
-                                                                          double p_windowWidth,
-                                                                          double p_halfDiscSize)
-{
-    UNUSED(p_windowWidth);
-    return p_currentHorizontalPosition < p_halfDiscSize;
-}
-
-template<>
-bool HasDiscCrossedOver<cxgui::BoardAnimation::MOVE_CHIP_RIGHT_ONE_COLUMN>(double p_currentHorizontalPosition,
-                                                                           double p_windowWidth,
-                                                                           double p_halfDiscSize)
-{
-    return p_currentHorizontalPosition > p_windowWidth - p_halfDiscSize;
-}
-
-/**************************************************************************************************
- * @brief Check if disc has crossed over completely (i.e. all of it should be on the other side).
- *
- * A disc has crossed over completely on one side if all of it is outside the window (at this
- * point, it should be entirely drawn on the other side of the window). For example:
- *
- *
- *                                     < ---- Moving
- *
- *                           |   +  +                    +  +     |
- *                           |+        +              +        +  |
- *                           +          +            +          + |
- *                          +|           *          +            +|
- *                          +|           *          +            +|
- *                           +          +            +          + |
- *                           |+       +               +       +   |
- *                           |   +  +                    +  +     |
- *                                                      
- *                    
- *                          The disc has             The disc has
- *                           started to               completely
- *                           cross over.             crossed over.
- *
- *
- * @param p_currentHorizontalPosition
- *      The current horizontal position of the disc's center.
- *
- * @param p_windowWidth
- *      The width of the window.
- *
- * @param p_halfDiscSize
- *      The width of a half disc (the radius and half the disc's line width's width). In Cairo,
- *      only half of the line width is actually included in the disc's path. The other half
- *      crosses the path's boundary.
- *
- * @param p_horizontalMargin
- *      The difference between a half disc and half a disc's drawing space. In between two
- *      adjacent discs, there are two horizontal margins of space. If the disc's drawing
- *      space is a square, or a taller rectangle this margin is zero.
- *
- * @return `true` if the disc has completely crossed over, `false` otherwise.
- *
- *************************************************************************************************/
-template<cxgui::BoardAnimation A>
-bool HasDiscCompletelyCrossedOver(double p_currentHorizontalPosition,
-                                  double p_windowWidth,
-                                  double p_halfDiscSize,
-                                  double p_horizontalMargin);
-
-template<>
-bool HasDiscCompletelyCrossedOver<cxgui::BoardAnimation::MOVE_CHIP_LEFT_ONE_COLUMN>(double p_currentHorizontalPosition,
-                                                                                    double p_windowWidth,
-                                                                                    double p_halfDiscSize,
-                                                                                    double p_horizontalMargin)
-{
-    UNUSED(p_windowWidth);
-    return cxmath::AreLogicallyEqual(-p_currentHorizontalPosition, p_halfDiscSize + p_horizontalMargin); 
-}
-
-template<>
-bool HasDiscCompletelyCrossedOver<cxgui::BoardAnimation::MOVE_CHIP_RIGHT_ONE_COLUMN>(double p_currentHorizontalPosition,
-                                                                                     double p_windowWidth,
-                                                                                     double p_halfDiscSize,
-                                                                                     double p_horizontalMargin)
-{
-    return cxmath::AreLogicallyEqual(p_currentHorizontalPosition, p_windowWidth + p_halfDiscSize + p_horizontalMargin);
-}
-
-/**************************************************************************************************
- * @brief Updates position of the disc so it is drawn on the other side of the window.
- *
- * @param p_currentHorizontalPosition
- *      The current horizontal position of the disc's center.
- *
- * @param p_windowWidth
- *      The width of the window.
- *
- * @param p_halfDiscSize
- *      The width of a half disc (the radius and half the disc's line width's width). In Cairo,
- *      only half of the line width is actually included in the disc's path. The other half
- *      crosses the path's boundary.
- *
- * @param p_horizontalMargin
- *      The difference between a half disc and half a disc's drawing space. In between two
- *      adjacent discs, there are two horizontal margins of space. If the disc's drawing
- *      space is a square, or a taller rectangle this margin is zero.
- *
- *************************************************************************************************/
-template<cxgui::BoardAnimation A>
-void ComputeDiscPositionForOtherSide(double& p_currentHorizontalPosition,
-                                     double p_windowWidth,
-                                     double p_halfDiscSize,
-                                     double p_horizontalMargin);
-
-template<>
-void ComputeDiscPositionForOtherSide<cxgui::BoardAnimation::MOVE_CHIP_LEFT_ONE_COLUMN>(double& p_currentHorizontalPosition,
-                                                                                       double p_windowWidth,
-                                                                                       double p_halfDiscSize,
-                                                                                       double p_horizontalMargin)
-{
-    p_currentHorizontalPosition = p_windowWidth - p_halfDiscSize - p_horizontalMargin;
-}
-
-template<>
-void ComputeDiscPositionForOtherSide<cxgui::BoardAnimation::MOVE_CHIP_RIGHT_ONE_COLUMN>(double& p_currentHorizontalPosition,
-                                                                                        double p_windowWidth,
-                                                                                        double p_halfDiscSize,
-                                                                                        double p_horizontalMargin)
-{
-    UNUSED(p_windowWidth);
-    p_currentHorizontalPosition = p_halfDiscSize + p_horizontalMargin;
-}
-
-/**************************************************************************************************
- * @brief Clamps the disc's extrimity to one side of the window.
- *
- * @param p_currentHorizontalPosition
- *      The current horizontal position of the disc's center.
- *
- * @param p_windowWidth
- *      The width of the window.
- *
- * @param p_halfDiscSize
- *      The width of a half disc (the radius and half the disc's line width's width). In Cairo,
- *      only half of the line width is actually included in the disc's path. The other half
- *      crosses the path's boundary.
- *
- * @param p_horizontalMargin
- *      The difference between a half disc and half a disc's drawing space. In between two
- *      adjacent discs, there are two horizontal margins of space. If the disc's drawing
- *      space is a square, or a taller rectangle this margin is zero.
- *
- *************************************************************************************************/
-template<cxgui::BoardAnimation A>
-void ClampDiscPositionToCurrentSide(double& p_currentHorizontalPosition,
-                                    double p_windowWidth,
-                                    double p_halfDiscSize,
-                                    double p_horizontalMargin);
-
-template<>
-void ClampDiscPositionToCurrentSide<cxgui::BoardAnimation::MOVE_CHIP_LEFT_ONE_COLUMN>(double& p_currentHorizontalPosition,
-                                                                                      double p_windowWidth,
-                                                                                      double p_halfDiscSize,
-                                                                                      double p_horizontalMargin)
-{
-    UNUSED(p_windowWidth);
-    p_currentHorizontalPosition = p_halfDiscSize + p_horizontalMargin;
-}
-
-template<>
-void ClampDiscPositionToCurrentSide<cxgui::BoardAnimation::MOVE_CHIP_RIGHT_ONE_COLUMN>(double& p_currentHorizontalPosition,
-                                                                                       double p_windowWidth,
-                                                                                       double p_halfDiscSize,
-                                                                                       double p_horizontalMargin)
-{
-    p_currentHorizontalPosition = p_windowWidth - p_halfDiscSize - p_horizontalMargin;
-}
-
-/**************************************************************************************************
- * @brief Compute the mirror disc's center position.
- *
- * The "mirror" disc is the disc's double that is drawn to the other side of the window when it
- * crosses over to give the illusion that the disc does not go outside the window (but rather
- * translates to the other side. For example:
- *
- *
- *                                        The window frame
- *       +-------------------------------------------------------------------------------+
- *       |+  +                                                                            |
- *       |      +                                                                       + |
- *       |       +                                                                     +  |
- *       |        *                        <---- Moving                               +   |
- *       |        *                                                                   +   |
- *       |       +                                                                     +  |
- *       |     +                                                                        + |
- *       |+  +                                                                            |
- *       |                                                                                |
- *
- *     The disc has                                                              And the mirror
- *     crossed over.                                                              disc appears.
- *       
- *
- * @param p_currentMirrorHorizontalPosition
- *      the current horizontal position of the mirror disc's center.
- *
- * @param p_currentHorizontalPosition
- *      the current horizontal position of the disc's center.
- *
- * @param p_windowWidth
- *      The width of the window.
- *
- * @param p_halfDiscSize
- *      The width of a half disc (the radius and half the disc's line width's width). In Cairo,
- *      only half of the line width is actually included in the disc's path. The other half
- *      crosses the path's boundary.
- *
- *************************************************************************************************/
-template<cxgui::BoardAnimation A>
-void ComputeMirrorDiscPosition(double& p_currentMirrorHorizontalPosition,
-                               double p_currentHorizontalPosition,
-                               double p_windowWidth);
-
-template<>
-void ComputeMirrorDiscPosition<cxgui::BoardAnimation::MOVE_CHIP_LEFT_ONE_COLUMN>(double& p_currentMirrorHorizontalPosition,
-                                                                                 double p_currentHorizontalPosition,
-                                                                                 double p_windowWidth)
-{
-    p_currentMirrorHorizontalPosition = p_windowWidth + p_currentHorizontalPosition;
-}
-
-template<>
-void ComputeMirrorDiscPosition<cxgui::BoardAnimation::MOVE_CHIP_RIGHT_ONE_COLUMN>(double& p_currentMirrorHorizontalPosition,
-                                                                                  double p_currentHorizontalPosition,
-                                                                                  double p_windowWidth)
-{
-    p_currentMirrorHorizontalPosition = p_currentHorizontalPosition - p_windowWidth;
-}
-
 } // namespace
 
 cxgui::AnimatedBoard::AnimatedBoard(const IGameViewPresenter& p_presenter, size_t p_speed)
 : m_speed{p_speed}
 {
     m_presenter = std::make_unique<cxgui::AnimatedBoardPresenter>(p_presenter);
+    m_animationModel = std::make_unique<cxgui::AnimatedBoardModel>(*m_presenter);
 
     // Customize width and height according to window dimension.
     const int nbRows = m_presenter->GetBoardHeight();
@@ -376,7 +106,7 @@ cxgui::AnimatedBoard::AnimatedBoard(const IGameViewPresenter& p_presenter, size_
     set_hexpand(true);
 
     // In time, make proper RAII:
-    m_timer = Glib::signal_timeout().connect([this](){return Redraw();}, 1000.0/m_FPS);
+    m_timer = Glib::signal_timeout().connect([this](){return Redraw();}, 1000.0/m_animationModel->GetFPS());
 
     // Resize events:
     signal_configure_event().connect([this](GdkEventConfigure* p_event){
@@ -386,6 +116,7 @@ cxgui::AnimatedBoard::AnimatedBoard(const IGameViewPresenter& p_presenter, size_
     });
 
     POSTCONDITION(m_presenter);
+    POSTCONDITION(m_animationModel);
 }
 
 cxgui::AnimatedBoard::~AnimatedBoard()
@@ -406,7 +137,7 @@ void cxgui::AnimatedBoard::PerformChipAnimation(BoardAnimation p_animation)
         {
             const double width = static_cast<double>(allocation.get_width());
             const double oneAnimationWidth = width / m_presenter->GetBoardWidth();
-            const double delta = oneAnimationWidth / (static_cast<double>(m_FPS) / static_cast<double>(m_speed));
+            const double delta = oneAnimationWidth / (static_cast<double>(m_animationModel->GetFPS()) / static_cast<double>(m_speed));
 
             if(m_totalMoveLeftDisplacement >= oneAnimationWidth || std::abs(m_totalMoveLeftDisplacement - oneAnimationWidth) <= 1e-6)
             {
@@ -428,7 +159,7 @@ void cxgui::AnimatedBoard::PerformChipAnimation(BoardAnimation p_animation)
             }
             else
             {
-                m_x -= delta;
+                m_animationModel->AddDiscDisplacement(-delta, 0.0);
                 m_totalMoveLeftDisplacement += delta;
             }
 
@@ -438,7 +169,7 @@ void cxgui::AnimatedBoard::PerformChipAnimation(BoardAnimation p_animation)
         {
             const double width = static_cast<double>(allocation.get_width());
             const double oneAnimationWidth = width / m_presenter->GetBoardWidth();
-            const double delta = oneAnimationWidth / (static_cast<double>(m_FPS) / static_cast<double>(m_speed));
+            const double delta = oneAnimationWidth / (static_cast<double>(m_animationModel->GetFPS()) / static_cast<double>(m_speed));
 
             if(m_totalMoveRightDisplacement >= oneAnimationWidth || std::abs(m_totalMoveRightDisplacement - oneAnimationWidth) <= 1e-6)
             {
@@ -460,7 +191,7 @@ void cxgui::AnimatedBoard::PerformChipAnimation(BoardAnimation p_animation)
             }
             else
             {
-                m_x += delta;
+                m_animationModel->AddDiscDisplacement(delta, 0.0);
                 m_totalMoveRightDisplacement += delta;
             }
 
@@ -475,7 +206,7 @@ void cxgui::AnimatedBoard::PerformChipAnimation(BoardAnimation p_animation)
             // Since the falling distance may vary, the number of frames needed for the
             // animation has to be adjusted to make sure the speed is constant for the
             // user:
-            const double relativeFPS = static_cast<double>(m_FPS) * (oneAnimationHeight / (height - cellHeight));
+            const double relativeFPS = static_cast<double>(m_animationModel->GetFPS()) * (oneAnimationHeight / (height - cellHeight));
             const double delta = oneAnimationHeight / std::ceil(relativeFPS / static_cast<double>(m_speed));
 
             if(m_totalMoveDownDisplacement >= oneAnimationHeight || std::abs(m_totalMoveDownDisplacement - oneAnimationHeight) <= 1e-6)
@@ -485,9 +216,7 @@ void cxgui::AnimatedBoard::PerformChipAnimation(BoardAnimation p_animation)
                 m_animateMoveDown = false;
 
                 // Reinitialize disc:
-                m_x = 0.0;
-                m_y = 0.0;
-                m_xx = 0.0;
+                m_animationModel->ResetDiscPositions();
                 m_currentColumn = 0u;
 
                 m_presenter->Sync();
@@ -497,7 +226,7 @@ void cxgui::AnimatedBoard::PerformChipAnimation(BoardAnimation p_animation)
             }
             else
             {
-                m_y += delta;
+                m_animationModel->AddDiscDisplacement(0.0, delta);
                 m_totalMoveDownDisplacement += delta;
             }
 
@@ -529,65 +258,6 @@ cxmodel::ChipColor cxgui::AnimatedBoard::GetCurrentChipColor() const
     return m_presenter->GetActivePlayerChipColor();
 }
 
-// Compute the current disc's position. If needed, the current mirror disc position is also
-// computed. Refer to the subfunction documentation for more details.
-template<cxgui::BoardAnimation A>
-bool cxgui::AnimatedBoard::ComputeDiscPosition(double p_windowWidth, double p_halfDiscSize, double p_horizontalMargin)
-{
-    bool isMirrorDiscNeeded = false;
-
-    const bool isDiscMovingHorizontally = (m_animateMoveLeft || m_animateMoveRight);
-    if(!isDiscMovingHorizontally)
-    {
-        if(HasDiscCompletelyCrossedOver<A>(m_x, p_windowWidth, p_halfDiscSize, p_horizontalMargin))
-        {
-            // At this point, the disc has completely crossed over to the right,
-            // so we update its horizontal location:
-            ComputeDiscPositionForOtherSide<A>(m_x, p_windowWidth, p_halfDiscSize, p_horizontalMargin);
-        }
-        else if(HasDiscCrossedOver<A>(m_x, p_windowWidth, p_halfDiscSize))
-        {
-            // Otherwise, since it is not moving anymore and located completely
-            // to the right, we make sure it is completely visible (we do not
-            // want half a disc lost in the right edge):
-            ClampDiscPositionToCurrentSide<A>(m_x, p_windowWidth, p_halfDiscSize, p_horizontalMargin);
-        }
-    }
-    else if(HasDiscCrossedOver<A>(m_x, p_windowWidth, p_halfDiscSize))
-    {
-        // The disc has gone over the edge on the left, so an extra disc, the mirror
-        // disc, will be needed on the far right side for the animation to be smooth.
-        // We handle its horizontal position here:
-        isMirrorDiscNeeded = true;
-        ComputeMirrorDiscPosition<A>(m_xx, m_x, p_windowWidth);
-    }
-
-    return isMirrorDiscNeeded;
-}
-
-bool cxgui::AnimatedBoard::ComputeDiscLeftPosition(double p_windowWidth, double p_halfDiscSize, double p_horizontalMargin)
-{
-    return ComputeDiscPosition<cxgui::BoardAnimation::MOVE_CHIP_LEFT_ONE_COLUMN>(p_windowWidth, p_halfDiscSize, p_horizontalMargin);
-}
-
-bool cxgui::AnimatedBoard::ComputeDiscRightPosition(double p_windowWidth, double p_halfDiscSize, double p_horizontalMargin)
-{
-    return ComputeDiscPosition<cxgui::BoardAnimation::MOVE_CHIP_RIGHT_ONE_COLUMN>(p_windowWidth, p_halfDiscSize, p_horizontalMargin);
-}
-
-void cxgui::AnimatedBoard::ComputeDiscVerticalPosition(const double p_halfDiscSize, double p_height)
-{
-    if(m_y < p_halfDiscSize)
-    {
-        m_y = p_halfDiscSize;
-    }
-
-    if(m_y > p_height - p_halfDiscSize)
-    {
-        m_y = p_height - p_halfDiscSize;
-    }
-}
-
 // Does the actual drawing. Be careful it mofifying this, it is performance
 // critical:
 //
@@ -597,31 +267,16 @@ void cxgui::AnimatedBoard::ComputeDiscVerticalPosition(const double p_halfDiscSi
 // Make sure that if you change this, the performance is not decreased.
 bool cxgui::AnimatedBoard::on_draw(const Cairo::RefPtr<Cairo::Context>& p_context)
 {
-    using namespace std::chrono;
-
-    // Get window dimensions:
+    // Get window dimensions and update the model:
     const Gtk::Allocation allocation = get_allocation();
     const double height = static_cast<double>(allocation.get_height());
     const double width = static_cast<double>(allocation.get_width());
-    const double smallestDimensionSize = std::min(width, height);
+    m_animationModel->Update({Height{height}, Width{width}}, m_animateMoveLeft || m_animateMoveRight);
 
     // Prepare data for an eventual resize. We keep track of previous frame dimensions
     // to allow calculating a scaling factor:
     m_lastFrameHeight = height;
     m_lastFrameWidth = width;
-
-    // Compute useful dimensions:
-    const double maximumNbDiscs = std::max(m_presenter->GetBoardHeight() + 1, m_presenter->GetBoardWidth());
-    const double theoreticalRadius = (smallestDimensionSize / (maximumNbDiscs * 2.0));
-    const double lineWidth = theoreticalRadius * LINE_WIDTH_SCALING_FACTOR;
-    const double radius = theoreticalRadius - lineWidth / 2.0;
-    const double halfDiscSize = radius + lineWidth / 2.0;
-    const double horizontalMargin = ((width / m_presenter->GetBoardWidth()) - 2 * halfDiscSize) / 2.0;
-
-    // Compute disc(s) position(s):
-    const bool mirrorToTheLeft = ComputeDiscLeftPosition(width, halfDiscSize, horizontalMargin);
-    const bool mirrorToTheRight = ComputeDiscRightPosition(width, halfDiscSize, horizontalMargin);
-    ComputeDiscVerticalPosition(halfDiscSize, height);
 
     auto buffer = Cairo::ImageSurface::create(Cairo::Format::FORMAT_ARGB32, width, height);
     const auto bufferContext = Cairo::Context::create(buffer);
@@ -631,10 +286,17 @@ bool cxgui::AnimatedBoard::on_draw(const Cairo::RefPtr<Cairo::Context>& p_contex
 
     // Draw Disc(s):
     const cxmodel::ChipColor chipColor = m_presenter->GetActivePlayerChipColor();
-    DrawDisc(bufferContext, {m_x, m_y}, radius, chipColor);
-    if(mirrorToTheLeft || mirrorToTheRight)
+    DrawDisc(bufferContext,
+             m_animationModel->GetDiscPosition(),
+             m_animationModel->GetDiscRadius(AddLineWidth::YES),
+             chipColor);
+
+    if(m_animationModel->IsMirrorDiscNeeded())
     {
-        DrawDisc(bufferContext, {m_xx, m_y}, radius, chipColor);
+        DrawDisc(bufferContext,
+                 m_animationModel->GetMirrorDiscPosition(),
+                 m_animationModel->GetDiscRadius(AddLineWidth::YES),
+                 chipColor);
     }
 
     // Draw the game board:
@@ -669,7 +331,7 @@ void cxgui::AnimatedBoard::DrawActiveColumnHighlight(const Cairo::RefPtr<Cairo::
     cxgui::ContextRestoreRAII contextRestoreRAII{p_context};
 
     cxgui::MakeRectanglarPath(p_context,
-                              {m_x - halfCellWidth, cellHeight},
+                              {m_animationModel->GetDiscPosition().m_x - halfCellWidth, cellHeight},
                               height - cellHeight,
                               cellWidth);
 
@@ -761,6 +423,8 @@ void cxgui::AnimatedBoard::DrawBoardElement(const Cairo::RefPtr<Cairo::Context>&
 // this.
 bool cxgui::AnimatedBoard::Redraw()
 {
+    const double chipHorizontalPosition = m_animationModel->GetDiscPosition().m_x;
+
     // Schedule a redraw on the next frame:
     if(m_animateMoveLeft)
     {
@@ -768,16 +432,16 @@ bool cxgui::AnimatedBoard::Redraw()
         const double height = static_cast<double>(allocation.get_height());
         const double width = static_cast<double>(allocation.get_width());
         const double cellWidth = width / m_presenter->GetBoardWidth();
-        const double delta = cellWidth / (static_cast<double>(m_FPS) / static_cast<double>(m_speed));
+        const double delta = cellWidth / (static_cast<double>(m_animationModel->GetFPS()) / static_cast<double>(m_speed));
 
-        if(m_x < cellWidth / 2.0)
+        if(chipHorizontalPosition < cellWidth / 2.0)
         {
             // Because of the mirror disc, redraw the whole screen.
             queue_draw();
         }
         else
         {
-            queue_draw_area(m_x - cellWidth/2 - delta, 0, cellWidth + 3*delta, height);
+            queue_draw_area(chipHorizontalPosition - cellWidth/2 - delta, 0, cellWidth + 3*delta, height);
         }
 
         PerformChipAnimation(cxgui::BoardAnimation::MOVE_CHIP_LEFT_ONE_COLUMN);
@@ -788,16 +452,16 @@ bool cxgui::AnimatedBoard::Redraw()
         const double height = static_cast<double>(allocation.get_height());
         const double width = static_cast<double>(allocation.get_width());
         const double cellWidth = width / m_presenter->GetBoardWidth();
-        const double delta = cellWidth / (static_cast<double>(m_FPS) / static_cast<double>(m_speed));
+        const double delta = cellWidth / (static_cast<double>(m_animationModel->GetFPS()) / static_cast<double>(m_speed));
 
-        if(m_x > width - cellWidth / 2.0)
+        if(chipHorizontalPosition > width - cellWidth / 2.0)
         {
             // Because of the mirror disc, redraw the whole screen.
             queue_draw();
         }
         else
         {
-            queue_draw_area(m_x - cellWidth/2 - delta, 0, cellWidth + 3*delta, height);
+            queue_draw_area(chipHorizontalPosition - cellWidth/2 - delta, 0, cellWidth + 3*delta, height);
         }
 
         PerformChipAnimation(cxgui::BoardAnimation::MOVE_CHIP_RIGHT_ONE_COLUMN);
@@ -830,13 +494,13 @@ bool cxgui::AnimatedBoard::OnResize(double p_newHeight, double p_newWidth)
     if(!cxmath::AreLogicallyEqual(p_newHeight, m_lastFrameHeight))
     {
         const double verticalRatio = p_newHeight / m_lastFrameHeight;
-        m_y *= verticalRatio;
+        m_animationModel->Resize(1.0, verticalRatio);
     }
 
     if(!cxmath::AreLogicallyEqual(p_newWidth, m_lastFrameWidth))
     {
         const double horizontalRatio = p_newWidth / m_lastFrameWidth;
-        m_x *= horizontalRatio;
+        m_animationModel->Resize(horizontalRatio, 1.0);
         m_totalMoveLeftDisplacement *= horizontalRatio;
         m_totalMoveRightDisplacement *= horizontalRatio;
     }

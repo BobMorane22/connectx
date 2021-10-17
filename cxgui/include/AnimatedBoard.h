@@ -28,6 +28,7 @@
 
 #include <cxmath/include/math.h>
 
+#include "IAnimatedBoardModel.h"
 #include "AnimatedBoardPresenter.h"
 #include "BoardAnimation.h"
 #include "BoardAnimationNotificationContext.h"
@@ -103,33 +104,19 @@ private:
 
     void Update(cxgui::BoardAnimationNotificationContext p_context, BoardAnimationSubject* p_subject) override;
 
-    template<BoardAnimation A>
-    [[nodiscard]] bool ComputeDiscPosition(double p_windowWidth, double p_halfDiscSize, double p_horizontalMargin);
-    [[nodiscard]] bool ComputeDiscLeftPosition(double p_windowWidth, double p_halfDiscSize, double p_horizontalMargin);
-    [[nodiscard]] bool ComputeDiscRightPosition(double p_windowWidth, double p_halfDiscSize, double p_horizontalMargin);
-    void ComputeDiscVerticalPosition(const double p_halfDiscSize, double p_height);
-
     [[nodiscard]] int GetDropPosition(int p_column) const;
     [[nodiscard]] int ComputeMinimumChipDimension(size_t p_nbRows, size_t p_nbColumns) const;
 
-    const int m_FPS = 24; // Frames per second.
-
     std::unique_ptr<AnimatedBoardPresenter> m_presenter; // A Game View presenter cache.
-    const size_t m_speed;                                // The number of discs covered per second when moving.
+    std::unique_ptr<IAnimatedBoardModel> m_animationModel;
+    /*Model*/ const size_t m_speed;                                // The number of discs covered per second when moving.
 
-    double m_x = 0.0; // Disc center position (horizontal).
-    double m_y = 0.0; // Disc center position (vertical).
-
-    size_t m_currentColumn = 0u; // The disc current's column.
-
-    double m_xx = 0.0; // Mirror center position (horizontal). This is used when a disc
-                       // crosses over the window boundary, to trace its other half on
-                       // the other side.
+    /*Model*/ size_t m_currentColumn = 0u; // The disc current's column.
 
     sigc::connection m_timer; // Clock (ticks m_FPS times per second).
 
     // Grid information:
-    cxmath::Position m_cellCenterPosition{0.0, 0.0}; // Position of the first game board cell.
+    /*Model*/ cxmath::Position m_cellCenterPosition{0.0, 0.0}; // Position of the first game board cell.
 
     // Left move animation:
     bool m_animateMoveLeft = false;
