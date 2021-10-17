@@ -190,6 +190,14 @@ public:
      *********************************************************************************************/
     [[nodiscard]] virtual bool IsMirrorDiscNeeded() const = 0;
 
+    /******************************************************************************************//**
+     * @brief Gets the current line width value.
+     *
+     * @return The current line width value.
+     *
+     *********************************************************************************************/
+    [[nodiscard]] virtual double GetLineWidth() const = 0;
+
 ///@}
 
 };

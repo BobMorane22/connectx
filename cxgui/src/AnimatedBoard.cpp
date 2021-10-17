@@ -23,6 +23,9 @@
  * @todo In model, change "disc" to "chip".
  * @todo In model, replace naked "doubles" by strong types, especially when there is more than
  *       one parameter.
+ * @todo In model, clarify the notion of "line width". It is not clear what it means, and it
+ *       does not always have the same meaning. For example, there is a line width for chips, and
+ *       another one for board elements. This is just too confusing for the user.
  *
  *************************************************************************************************/
 
@@ -48,11 +51,6 @@
 
 namespace
 {
-
-constexpr double LINE_WIDTH_SCALING_FACTOR = 0.005;
-
-constexpr bool STOP_EVENT_PROPAGATION = true;
-constexpr bool PROPAGATE_EVENT = false;
 
 /**************************************************************************************************
  * @brief Draw a disc.
@@ -347,34 +345,29 @@ void cxgui::AnimatedBoard::DrawActiveColumnHighlight(const Cairo::RefPtr<Cairo::
 // these elements together make the board.
 void cxgui::AnimatedBoard::DrawBoardElement(const Cairo::RefPtr<Cairo::Context>& p_context, size_t p_row, size_t p_column)
 {
-    // Get window information:
-    const Gtk::Allocation allocation = get_allocation();
-    const double height = static_cast<double>(allocation.get_height());
-    const double width = static_cast<double>(allocation.get_width());
-
-    // Compute cell dimensions:
-    const double cellWidth = (width / m_presenter->GetBoardWidth());
-    const double cellHeight = (height / (m_presenter->GetBoardHeight() + 1.0));
-
-    // Compute disc radius:
-    const double smallestDimensionSize = std::min(width, height);
-    const double lineWidth = smallestDimensionSize * LINE_WIDTH_SCALING_FACTOR;
-    const double maximumNbDiscs = std::max(m_presenter->GetBoardHeight() + 1, m_presenter->GetBoardWidth());
-    const double radius = (smallestDimensionSize / (maximumNbDiscs * 2.0)) - lineWidth / 2.0;
+    const Dimensions cellDimensions = m_animationModel->GetCellDimensions();
+    const double cellWidth = cellDimensions.m_width.Get();
+    const double cellHeight = cellDimensions.m_height.Get();
+    const double radius = m_animationModel->GetDiscRadius(AddLineWidth::NO) - (m_animationModel->GetLineWidth() / 2.0);
 
     const IGameViewPresenter::ChipColors& chipColors = m_presenter->GetBoardChipColors();
     const cxmodel::ChipColor chipColor = chipColors[p_row][p_column];
     if(m_boardElementsCache.HasElement(chipColor))
     {
         // Paint that part to the canvas:
-        Gdk::Cairo::set_source_pixbuf(p_context, m_boardElementsCache.Get(chipColor), p_column * cellWidth, (p_row + 1) * cellHeight);
+        Gdk::Cairo::set_source_pixbuf(p_context,
+                                      m_boardElementsCache.Get(chipColor),
+                                      p_column * cellWidth,
+                                      (p_row + 1) * cellHeight);
         p_context->paint();
 
         return;
     }
 
     // Add a little extra to cover everything...
-    auto buffer = Cairo::ImageSurface::create(Cairo::Format::FORMAT_ARGB32, cellWidth + lineWidth, cellHeight + lineWidth);
+    auto buffer = Cairo::ImageSurface::create(Cairo::Format::FORMAT_ARGB32,
+                                              cellWidth + m_animationModel->GetLineWidth(),
+                                              cellHeight + m_animationModel->GetLineWidth());
     const auto bufferContext = Cairo::Context::create(buffer);
     {
         cxgui::ContextRestoreRAII contextRestoreRAII{bufferContext};
@@ -407,11 +400,17 @@ void cxgui::AnimatedBoard::DrawBoardElement(const Cairo::RefPtr<Cairo::Context>&
     }
 
     // Add to the cache:
-    const Glib::RefPtr<Gdk::Pixbuf> boardElement = Gdk::Pixbuf::create(buffer, 0, 0, cellWidth + lineWidth, cellHeight + lineWidth);
+    const Glib::RefPtr<Gdk::Pixbuf> boardElement = Gdk::Pixbuf::create(buffer,
+                                                                       0,
+                                                                       0,
+                                                                       cellWidth + m_animationModel->GetLineWidth(),
+                                                                       cellHeight + m_animationModel->GetLineWidth());
     m_boardElementsCache.Add(chipColor, boardElement);
 
     // Paint that part to the canvas:
-    p_context->set_source(buffer, p_column * cellWidth, (p_row + 1) * cellHeight);
+    p_context->set_source(buffer,
+                          p_column * cellWidth,
+                          (p_row + 1) * cellHeight);
     p_context->paint();
 }
 

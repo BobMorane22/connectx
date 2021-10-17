@@ -56,6 +56,7 @@ public:
     [[nodiscard]] double GetHorizontalMargin() const override;
     [[nodiscard]] cxmath::Position GetMirrorDiscPosition() const override;
     [[nodiscard]] bool IsMirrorDiscNeeded() const override;
+    [[nodiscard]] double GetLineWidth() const override;
 
 private:
 
@@ -81,6 +82,8 @@ private:
 
     double m_horizontalMargin = 0.0;
 
+    // This notion has to be clarified...
+    double m_lineWidth = 0.0;
 };
 
 } // namespace cxgui

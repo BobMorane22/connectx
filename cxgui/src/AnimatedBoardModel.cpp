@@ -372,20 +372,21 @@ void cxgui::AnimatedBoardModel::Update(Dimensions p_widgetDimensions, bool p_isD
     m_widgetDimensions = p_widgetDimensions;
 
     // Cell dimensions:
-    const Height cellHeight = Height((m_widgetDimensions.m_height.Get() / m_presenter.GetBoardHeight()) + 1.0);
+    const Height cellHeight = Height(m_widgetDimensions.m_height.Get() / (m_presenter.GetBoardHeight() + 1.0));
     const Width cellWidth = Width(m_widgetDimensions.m_width.Get() / m_presenter.GetBoardWidth());
     m_cellDimensions = Dimensions(cellHeight, cellWidth);
     const double smallestDimensionSize = std::min(m_widgetDimensions.m_height.Get(), m_widgetDimensions.m_width.Get());
+    m_lineWidth = smallestDimensionSize * LINE_WIDTH_SCALING_FACTOR;
 
     // Disc radius:
     const double maximumNbDiscs = std::max(m_presenter.GetBoardHeight() + 1, m_presenter.GetBoardWidth());
     m_theoreticalDiscRadius = (smallestDimensionSize / (maximumNbDiscs * 2.0));
 
-    const double lineWidth = m_theoreticalDiscRadius * LINE_WIDTH_SCALING_FACTOR;
-    m_discRadius = m_theoreticalDiscRadius - (lineWidth / 2.0);
+    const double discLineWidth = m_theoreticalDiscRadius * LINE_WIDTH_SCALING_FACTOR;
+    m_discRadius = m_theoreticalDiscRadius - (discLineWidth / 2.0);
 
     // Discs positions (central and mirror):
-    const double halfDiscSize = m_discRadius + lineWidth / 2.0;
+    const double halfDiscSize = m_discRadius + discLineWidth / 2.0;
     m_horizontalMargin = (cellWidth.Get() - (2.0 * halfDiscSize)) / 2.0;
 
     m_isDiscMovingHorizontally = p_isDiscMovingHorizontally;
@@ -453,4 +454,9 @@ cxmath::Position cxgui::AnimatedBoardModel::GetMirrorDiscPosition() const
 bool cxgui::AnimatedBoardModel::IsMirrorDiscNeeded() const
 {
     return m_isMirrorDiscNeeded;
+}
+
+double cxgui::AnimatedBoardModel::GetLineWidth() const
+{
+    return m_lineWidth;
 }
