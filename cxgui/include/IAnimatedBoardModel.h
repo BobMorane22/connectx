@@ -133,6 +133,14 @@ public:
     [[nodiscard]] virtual size_t GetFPS() const = 0;
 
     /******************************************************************************************//**
+     * @brief Gets the dimensions for the whole animated widget.
+     *
+     * @return The dimensions of the animated widget.
+     *
+     *********************************************************************************************/
+    [[nodiscard]] virtual Dimensions GetAnimatedAreaDimensions() const = 0;
+
+    /******************************************************************************************//**
      * @brief Gets the dimensions for a single cell.
      *
      * The animated game board is composed of "cells", which can be thought of as the single disc

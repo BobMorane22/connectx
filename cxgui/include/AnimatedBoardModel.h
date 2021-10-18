@@ -50,6 +50,7 @@ public:
     void ResetDiscPositions() override;
 
     [[nodiscard]] size_t GetFPS() const override;
+    [[nodiscard]] Dimensions GetAnimatedAreaDimensions() const override;
     [[nodiscard]] Dimensions GetCellDimensions() const override;
     [[nodiscard]] double GetDiscRadius(AddLineWidth p_mode) const override;
     [[nodiscard]] cxmath::Position GetDiscPosition() const override;
@@ -66,10 +67,9 @@ private:
     [[nodiscard]] bool ComputeDiscRightPosition(double p_windowWidth, double p_halfDiscSize, double p_horizontalMargin);
     void ComputeDiscVerticalPosition(const double p_halfDiscSize, double p_height);
 
-    Dimensions m_widgetDimensions{Height{0}, Width{0}};
-
     const cxgui::AnimatedBoardPresenter& m_presenter;
 
+    Dimensions m_widgetDimensions{Height{0}, Width{0}};
     Dimensions m_cellDimensions{Height{0}, Width{0}};
 
     double m_theoreticalDiscRadius = 0.0;

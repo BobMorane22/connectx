@@ -26,6 +26,7 @@
  * @todo In model, clarify the notion of "line width". It is not clear what it means, and it
  *       does not always have the same meaning. For example, there is a line width for chips, and
  *       another one for board elements. This is just too confusing for the user.
+ * @todo In model, make all Get*() methods return a const reference (to avoid useless copy).
  *
  *************************************************************************************************/
 
@@ -318,19 +319,15 @@ bool cxgui::AnimatedBoard::on_draw(const Cairo::RefPtr<Cairo::Context>& p_contex
 // current column. Especially helpful on larger boards.
 void cxgui::AnimatedBoard::DrawActiveColumnHighlight(const Cairo::RefPtr<Cairo::Context>& p_context)
 {
-    // Get window information:
-    const Gtk::Allocation allocation = get_allocation();
-    const double height = static_cast<double>(allocation.get_height());
-    const double width = static_cast<double>(allocation.get_width());
-    const double cellHeight = (height / (m_presenter->GetBoardHeight() + 1.0));
-    const double cellWidth = (width / m_presenter->GetBoardWidth());
-    const double halfCellWidth = cellWidth / 2.0;
+    const Dimensions cellDimensions = m_animationModel->GetCellDimensions();
+    const double cellWidth = cellDimensions.m_width.Get();
+    const double cellHeight = cellDimensions.m_height.Get();
 
     cxgui::ContextRestoreRAII contextRestoreRAII{p_context};
 
     cxgui::MakeRectanglarPath(p_context,
-                              {m_animationModel->GetDiscPosition().m_x - halfCellWidth, cellHeight},
-                              height - cellHeight,
+                              {m_animationModel->GetDiscPosition().m_x - (cellWidth / 2.0), cellHeight},
+                              m_animationModel->GetAnimatedAreaDimensions().m_height.Get() - cellHeight,
                               cellWidth);
 
     // Set background color:

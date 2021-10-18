@@ -421,6 +421,11 @@ size_t cxgui::AnimatedBoardModel::GetFPS() const
     return 24u;
 }
 
+cxgui::Dimensions cxgui::AnimatedBoardModel::GetAnimatedAreaDimensions() const
+{
+    return m_widgetDimensions;
+}
+
 cxgui::Dimensions cxgui::AnimatedBoardModel::GetCellDimensions() const
 {
     return m_cellDimensions;
