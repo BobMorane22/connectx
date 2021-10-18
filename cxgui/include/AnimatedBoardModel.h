@@ -42,7 +42,7 @@ class AnimatedBoardModel : public cxgui::IAnimatedBoardModel
 
 public:
 
-    AnimatedBoardModel(const cxgui::AnimatedBoardPresenter& p_presenter);
+    AnimatedBoardModel(const cxgui::AnimatedBoardPresenter& p_presenter, size_t p_animationSpeed);
 
     void Update(Dimensions p_widgetDimensions, bool p_isDiscMovingHorizontally) override;
     void Resize(double p_horizontalRatio, double p_verticalRatio) override;
@@ -50,6 +50,7 @@ public:
     void ResetDiscPositions() override;
 
     [[nodiscard]] size_t GetFPS() const override;
+    [[nodiscard]] size_t GetAnimationSpeed() const override;
     [[nodiscard]] Dimensions GetAnimatedAreaDimensions() const override;
     [[nodiscard]] Dimensions GetCellDimensions() const override;
     [[nodiscard]] double GetDiscRadius(AddLineWidth p_mode) const override;
@@ -68,6 +69,8 @@ private:
     void ComputeDiscVerticalPosition(const double p_halfDiscSize, double p_height);
 
     const cxgui::AnimatedBoardPresenter& m_presenter;
+
+    size_t m_animationSpeed; // Units: discs/sec
 
     Dimensions m_widgetDimensions{Height{0}, Width{0}};
     Dimensions m_cellDimensions{Height{0}, Width{0}};

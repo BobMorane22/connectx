@@ -27,6 +27,7 @@
  *       does not always have the same meaning. For example, there is a line width for chips, and
  *       another one for board elements. This is just too confusing for the user.
  * @todo In model, make all Get*() methods return a const reference (to avoid useless copy).
+ * @toto PerformFrameIncrement : remove duplication and switch case.
  *
  *************************************************************************************************/
 
@@ -90,10 +91,9 @@ void DrawDisc(const Cairo::RefPtr<Cairo::Context>& p_context,
 } // namespace
 
 cxgui::AnimatedBoard::AnimatedBoard(const IGameViewPresenter& p_presenter, size_t p_speed)
-: m_speed{p_speed}
 {
     m_presenter = std::make_unique<cxgui::AnimatedBoardPresenter>(p_presenter);
-    m_animationModel = std::make_unique<cxgui::AnimatedBoardModel>(*m_presenter);
+    m_animationModel = std::make_unique<cxgui::AnimatedBoardModel>(*m_presenter, p_speed);
 
     // Customize width and height according to window dimension.
     const int nbRows = m_presenter->GetBoardHeight();
@@ -127,22 +127,23 @@ cxgui::AnimatedBoard::~AnimatedBoard()
 // keeps track of all displacements. It also notifies when the animation completes.
 void cxgui::AnimatedBoard::PerformChipAnimation(BoardAnimation p_animation)
 {
-    // Get window dimensions:
-    const Gtk::Allocation allocation = get_allocation();
+    const double fps = static_cast<double>(m_animationModel->GetFPS());
+    const double speed = static_cast<double>(m_animationModel->GetAnimationSpeed());
 
     switch(p_animation)
     {
         case cxgui::BoardAnimation::MOVE_CHIP_LEFT_ONE_COLUMN:
         {
-            const double width = static_cast<double>(allocation.get_width());
-            const double oneAnimationWidth = width / m_presenter->GetBoardWidth();
-            const double delta = oneAnimationWidth / (static_cast<double>(m_animationModel->GetFPS()) / static_cast<double>(m_speed));
+            const double nbFramesPerDisc = fps / speed;
+
+            const double oneAnimationWidth = m_animationModel->GetAnimatedAreaDimensions().m_width.Get() / m_presenter->GetBoardWidth();
+            const double delta = oneAnimationWidth / nbFramesPerDisc;
 
             if(m_totalMoveLeftDisplacement >= oneAnimationWidth || std::abs(m_totalMoveLeftDisplacement - oneAnimationWidth) <= 1e-6)
             {
-                if(m_currentColumn <= 0)
+                if(m_currentColumn <= 0u)
                 {
-                    m_currentColumn = m_presenter->GetBoardWidth() - 1;
+                    m_currentColumn = m_presenter->GetBoardWidth() - 1u;
                 }
                 else
                 {
@@ -166,15 +167,16 @@ void cxgui::AnimatedBoard::PerformChipAnimation(BoardAnimation p_animation)
         }
         case cxgui::BoardAnimation::MOVE_CHIP_RIGHT_ONE_COLUMN:
         {
-            const double width = static_cast<double>(allocation.get_width());
-            const double oneAnimationWidth = width / m_presenter->GetBoardWidth();
-            const double delta = oneAnimationWidth / (static_cast<double>(m_animationModel->GetFPS()) / static_cast<double>(m_speed));
+            const double nbFramesPerDisc = fps / speed;
+
+            const double oneAnimationWidth = m_animationModel->GetAnimatedAreaDimensions().m_width.Get() / m_presenter->GetBoardWidth();
+            const double delta = oneAnimationWidth / nbFramesPerDisc;
 
             if(m_totalMoveRightDisplacement >= oneAnimationWidth || std::abs(m_totalMoveRightDisplacement - oneAnimationWidth) <= 1e-6)
             {
                 if(m_currentColumn >= m_presenter->GetBoardWidth() - 1u)
                 {
-                    m_currentColumn = 0;
+                    m_currentColumn = 0u;
                 }
                 else
                 {
@@ -198,15 +200,13 @@ void cxgui::AnimatedBoard::PerformChipAnimation(BoardAnimation p_animation)
         }
         case cxgui::BoardAnimation::DROP_CHIP:
         {
-            const double height = static_cast<double>(allocation.get_height());
-            const double cellHeight = height / (m_presenter->GetBoardHeight() + 1.0);
+            const double cellHeight = m_animationModel->GetCellDimensions().m_height.Get();
             const double oneAnimationHeight = (GetDropPosition(m_currentColumn) + 1.0) * cellHeight;
 
             // Since the falling distance may vary, the number of frames needed for the
-            // animation has to be adjusted to make sure the speed is constant for the
-            // user:
-            const double relativeFPS = static_cast<double>(m_animationModel->GetFPS()) * (oneAnimationHeight / (height - cellHeight));
-            const double delta = oneAnimationHeight / std::ceil(relativeFPS / static_cast<double>(m_speed));
+            // animation has to be adjusted to make sure the speed is constant for the user:
+            const double relativeFPS = fps * (oneAnimationHeight / (m_animationModel->GetAnimatedAreaDimensions().m_height.Get() - cellHeight));
+            const double delta = oneAnimationHeight / std::ceil(relativeFPS / speed);
 
             if(m_totalMoveDownDisplacement >= oneAnimationHeight || std::abs(m_totalMoveDownDisplacement - oneAnimationHeight) <= 1e-6)
             {
@@ -245,15 +245,6 @@ size_t cxgui::AnimatedBoard::GetCurrentColumn() const
 
 cxmodel::ChipColor cxgui::AnimatedBoard::GetCurrentChipColor() const
 {
-    // I don't think this is good. The problem is that the animation
-    // is performed AFTER the model is updated. This means that the
-    // active player is seen by the presenter is not the active player
-    // that should be used by the animation. It should be the previous
-    // player.
-    //
-    // To solve this, a cache of the presenter's state should be introduced
-    // here, keeping all previous states. The cache could be updated
-    // once the animation is completed.
     return m_presenter->GetActivePlayerChipColor();
 }
 
@@ -266,18 +257,17 @@ cxmodel::ChipColor cxgui::AnimatedBoard::GetCurrentChipColor() const
 // Make sure that if you change this, the performance is not decreased.
 bool cxgui::AnimatedBoard::on_draw(const Cairo::RefPtr<Cairo::Context>& p_context)
 {
-    // Get window dimensions and update the model:
+    // Get window dimensions. We keep track of previous frame dimensions to allow
+    // calculating a scaling factor in the case of a resize:
     const Gtk::Allocation allocation = get_allocation();
-    const double height = static_cast<double>(allocation.get_height());
-    const double width = static_cast<double>(allocation.get_width());
-    m_animationModel->Update({Height{height}, Width{width}}, m_animateMoveLeft || m_animateMoveRight);
+    m_lastFrameHeight = static_cast<double>(allocation.get_height());
+    m_lastFrameWidth = static_cast<double>(allocation.get_width());
 
-    // Prepare data for an eventual resize. We keep track of previous frame dimensions
-    // to allow calculating a scaling factor:
-    m_lastFrameHeight = height;
-    m_lastFrameWidth = width;
+    m_animationModel->Update({Height{m_lastFrameHeight}, Width{m_lastFrameWidth}}, m_animateMoveLeft || m_animateMoveRight);
 
-    auto buffer = Cairo::ImageSurface::create(Cairo::Format::FORMAT_ARGB32, width, height);
+    auto buffer = Cairo::ImageSurface::create(Cairo::Format::FORMAT_ARGB32,
+                                              m_animationModel->GetAnimatedAreaDimensions().m_width.Get(),
+                                              m_animationModel->GetAnimatedAreaDimensions().m_height.Get());
     const auto bufferContext = Cairo::Context::create(buffer);
 
     // Draw colum highlight:
@@ -420,15 +410,16 @@ void cxgui::AnimatedBoard::DrawBoardElement(const Cairo::RefPtr<Cairo::Context>&
 bool cxgui::AnimatedBoard::Redraw()
 {
     const double chipHorizontalPosition = m_animationModel->GetDiscPosition().m_x;
+    const cxgui::Dimensions cellDimensions = m_animationModel->GetCellDimensions();
+    const double cellWidth = cellDimensions.m_width.Get();
+    const double fps = static_cast<double>(m_animationModel->GetFPS());
+    const double speed = static_cast<double>(m_animationModel->GetAnimationSpeed());
 
     // Schedule a redraw on the next frame:
     if(m_animateMoveLeft)
     {
-        const Gtk::Allocation allocation = get_allocation();
-        const double height = static_cast<double>(allocation.get_height());
-        const double width = static_cast<double>(allocation.get_width());
-        const double cellWidth = width / m_presenter->GetBoardWidth();
-        const double delta = cellWidth / (static_cast<double>(m_animationModel->GetFPS()) / static_cast<double>(m_speed));
+        const double nbFramesPerDisc = fps / speed;
+        const double delta = cellWidth / nbFramesPerDisc;
 
         if(chipHorizontalPosition < cellWidth / 2.0)
         {
@@ -437,27 +428,24 @@ bool cxgui::AnimatedBoard::Redraw()
         }
         else
         {
-            queue_draw_area(chipHorizontalPosition - cellWidth/2 - delta, 0, cellWidth + 3*delta, height);
+            queue_draw_area(chipHorizontalPosition - cellWidth / 2.0 - delta, 0.0, cellWidth + 3 * delta, m_animationModel->GetAnimatedAreaDimensions().m_height.Get());
         }
 
         PerformChipAnimation(cxgui::BoardAnimation::MOVE_CHIP_LEFT_ONE_COLUMN);
     }
     if(m_animateMoveRight)
     {
-        const Gtk::Allocation allocation = get_allocation();
-        const double height = static_cast<double>(allocation.get_height());
-        const double width = static_cast<double>(allocation.get_width());
-        const double cellWidth = width / m_presenter->GetBoardWidth();
-        const double delta = cellWidth / (static_cast<double>(m_animationModel->GetFPS()) / static_cast<double>(m_speed));
+        const double nbFramesPerDisc = fps / speed;
+        const double delta = cellWidth / nbFramesPerDisc;
 
-        if(chipHorizontalPosition > width - cellWidth / 2.0)
+        if(chipHorizontalPosition > m_animationModel->GetAnimatedAreaDimensions().m_width.Get() - cellWidth / 2.0)
         {
             // Because of the mirror disc, redraw the whole screen.
             queue_draw();
         }
         else
         {
-            queue_draw_area(chipHorizontalPosition - cellWidth/2 - delta, 0, cellWidth + 3*delta, height);
+            queue_draw_area(chipHorizontalPosition - cellWidth / 2.0 - delta, 0.0, cellWidth + 3 * delta, m_animationModel->GetAnimatedAreaDimensions().m_height.Get());
         }
 
         PerformChipAnimation(cxgui::BoardAnimation::MOVE_CHIP_RIGHT_ONE_COLUMN);
@@ -478,12 +466,12 @@ bool cxgui::AnimatedBoard::OnResize(double p_newHeight, double p_newWidth)
     // Handling initial values to avoid division by zero:
     if(m_lastFrameHeight == 0.0)
     {
-        return STOP_EVENT_PROPAGATION;
+        return cxgui::STOP_EVENT_PROPAGATION;
     }
 
     if(m_lastFrameWidth == 0.0)
     {
-        return STOP_EVENT_PROPAGATION;
+        return cxgui::STOP_EVENT_PROPAGATION;
     }
 
     // Now the real work:
@@ -501,7 +489,7 @@ bool cxgui::AnimatedBoard::OnResize(double p_newHeight, double p_newWidth)
         m_totalMoveRightDisplacement *= horizontalRatio;
     }
 
-    return STOP_EVENT_PROPAGATION;
+    return cxgui::STOP_EVENT_PROPAGATION;
 }
 
 // Called in repetition until the animation completes.

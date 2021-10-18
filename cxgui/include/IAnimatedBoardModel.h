@@ -133,6 +133,14 @@ public:
     [[nodiscard]] virtual size_t GetFPS() const = 0;
 
     /******************************************************************************************//**
+     * @brief Gets the animation speed (discs/sec).
+     *
+     * @return The animation speed.
+     *
+     *********************************************************************************************/
+    [[nodiscard]] virtual size_t GetAnimationSpeed() const = 0;
+
+    /******************************************************************************************//**
      * @brief Gets the dimensions for the whole animated widget.
      *
      * @return The dimensions of the animated widget.

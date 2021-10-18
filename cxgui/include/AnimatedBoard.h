@@ -109,7 +109,6 @@ private:
 
     std::unique_ptr<AnimatedBoardPresenter> m_presenter; // A Game View presenter cache.
     std::unique_ptr<IAnimatedBoardModel> m_animationModel;
-    /*Model*/ const size_t m_speed;                                // The number of discs covered per second when moving.
 
     /*Model*/ size_t m_currentColumn = 0u; // The disc current's column.
 

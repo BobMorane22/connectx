@@ -301,8 +301,9 @@ void ComputeMirrorDiscPosition<cxgui::BoardAnimation::MOVE_CHIP_RIGHT_ONE_COLUMN
 
 } // namespace
 
-cxgui::AnimatedBoardModel::AnimatedBoardModel(const cxgui::AnimatedBoardPresenter& p_presenter)
+cxgui::AnimatedBoardModel::AnimatedBoardModel(const cxgui::AnimatedBoardPresenter& p_presenter, size_t p_animationSpeed)
 : m_presenter{p_presenter}
+, m_animationSpeed{p_animationSpeed}
 {
     // Nothing to do...
 }
@@ -419,6 +420,11 @@ void cxgui::AnimatedBoardModel::ResetDiscPositions()
 size_t cxgui::AnimatedBoardModel::GetFPS() const
 {
     return 24u;
+}
+
+size_t cxgui::AnimatedBoardModel::GetAnimationSpeed() const
+{
+    return m_animationSpeed;
 }
 
 cxgui::Dimensions cxgui::AnimatedBoardModel::GetAnimatedAreaDimensions() const
