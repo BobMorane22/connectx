@@ -27,7 +27,7 @@
 #include <algorithm>
 
 #include "AnimatedBoardPresenter.h"
-#include "BoardAnimation.h" // Should I make this private to the model?
+#include "BoardAnimation.h"
 #include "IAnimatedBoardModel.h"
 
 namespace cxgui
@@ -87,7 +87,6 @@ private:
 
     double m_horizontalMargin = 0.0;
 
-    // This notion has to be clarified...
     double m_lineWidth = 0.0;
 
     size_t m_currentColumn = 0u;

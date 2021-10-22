@@ -19,22 +19,11 @@
  * @file AnimatedBoard.cpp
  * @date 2021
  *
- * @todo Remove hardoded background color. It should be a constant.
- * @todo In model, change "disc" to "chip".
- * @todo In model, replace naked "doubles" by strong types, especially when there is more than
- *       one parameter.
- * @todo In model, clarify the notion of "line width". It is not clear what it means, and it
- *       does not always have the same meaning. For example, there is a line width for chips, and
- *       another one for board elements. This is just too confusing for the user.
- * @todo In model, make all Get*() methods return a const reference (to avoid useless copy).
- * @toto PerformFrameIncrement : remove duplication and switch case.
- *
  *************************************************************************************************/
 
 #include <algorithm>
 #include <chrono>
 #include <cmath>
-#include <iostream>
 
 #include <gdkmm/display.h>
 #include <gdkmm/general.h>
