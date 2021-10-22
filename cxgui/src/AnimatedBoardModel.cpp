@@ -417,6 +417,11 @@ void cxgui::AnimatedBoardModel::ResetDiscPositions()
     m_mirrorDiscPosition = {0.0, 0.0};
 }
 
+void cxgui::AnimatedBoardModel::UpdateCurrentColumn(size_t p_newCurrentColumn)
+{
+    m_currentColumn = p_newCurrentColumn;
+}
+
 size_t cxgui::AnimatedBoardModel::GetFPS() const
 {
     return 24u;
@@ -470,4 +475,9 @@ bool cxgui::AnimatedBoardModel::IsMirrorDiscNeeded() const
 double cxgui::AnimatedBoardModel::GetLineWidth() const
 {
     return m_lineWidth;
+}
+
+size_t cxgui::AnimatedBoardModel::GetCurrentColumn() const
+{
+    return m_currentColumn;
 }

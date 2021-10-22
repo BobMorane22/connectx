@@ -120,6 +120,15 @@ public:
      *********************************************************************************************/
     virtual void ResetDiscPositions() = 0;
 
+    /******************************************************************************************//**
+     * @brief Updates the current column to some new value.
+     *
+     * @param p_newCurrentColumn
+     *      The new value for the current column.
+     *
+     *********************************************************************************************/
+    virtual void UpdateCurrentColumn(size_t p_newCurrentColumn) = 0;
+
 ///@}
 
 ///@{ @name Information access
@@ -213,6 +222,17 @@ public:
      *
      *********************************************************************************************/
     [[nodiscard]] virtual double GetLineWidth() const = 0;
+
+    /******************************************************************************************//**
+     * @brief Gets the current column.
+     *
+     * The current column is the column on which the active player's chip (i.e. The next chip
+     * to be dropped) is located.
+     *
+     * @return The current column.
+     *
+     *********************************************************************************************/
+    [[nodiscard]] virtual size_t GetCurrentColumn() const = 0;
 
 ///@}
 

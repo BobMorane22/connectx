@@ -48,6 +48,7 @@ public:
     void Resize(double p_horizontalRatio, double p_verticalRatio) override;
     void AddDiscDisplacement(double p_horizontal, double p_vertical) override;
     void ResetDiscPositions() override;
+    void UpdateCurrentColumn(size_t p_newCurrentColumn) override;
 
     [[nodiscard]] size_t GetFPS() const override;
     [[nodiscard]] size_t GetAnimationSpeed() const override;
@@ -59,6 +60,7 @@ public:
     [[nodiscard]] cxmath::Position GetMirrorDiscPosition() const override;
     [[nodiscard]] bool IsMirrorDiscNeeded() const override;
     [[nodiscard]] double GetLineWidth() const override;
+    [[nodiscard]] size_t GetCurrentColumn() const override;
 
 private:
 
@@ -87,6 +89,8 @@ private:
 
     // This notion has to be clarified...
     double m_lineWidth = 0.0;
+
+    size_t m_currentColumn = 0u;
 };
 
 } // namespace cxgui

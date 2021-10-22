@@ -110,12 +110,7 @@ private:
     std::unique_ptr<AnimatedBoardPresenter> m_presenter; // A Game View presenter cache.
     std::unique_ptr<IAnimatedBoardModel> m_animationModel;
 
-    /*Model*/ size_t m_currentColumn = 0u; // The disc current's column.
-
     sigc::connection m_timer; // Clock (ticks m_FPS times per second).
-
-    // Grid information:
-    /*Model*/ cxmath::Position m_cellCenterPosition{0.0, 0.0}; // Position of the first game board cell.
 
     // Left move animation:
     bool m_animateMoveLeft = false;
