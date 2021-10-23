@@ -51,7 +51,7 @@ public:
      * @param p_value The value of the wrapped type instance.
      *
      *********************************************************************************************/
-    explicit StrongType(const Underlying& p_value)
+    explicit constexpr StrongType(const Underlying& p_value)
     : m_value(p_value)
     {
     }
@@ -62,7 +62,7 @@ public:
      * @param p_value The value of the wrapped type instance.
      *
      *********************************************************************************************/
-    explicit StrongType(Underlying&& p_value)
+    explicit constexpr StrongType(Underlying&& p_value)
     : m_value(std::move(p_value))
     {
     }
