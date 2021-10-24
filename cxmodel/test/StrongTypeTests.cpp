@@ -30,7 +30,7 @@
 using StrongInt = cxstd::StrongType<int, struct StrongIntPhantom>;
 using StrongString = cxstd::StrongType<std::string, struct StrongStringPhantom>;
 
-TEST(StrongType, Constructor_ByValue_ValidStrongType)
+TEST(StrongType, /*DISABLED_*/Constructor_ByValue_ValidStrongType)
 {
     int weakInt = 3;
     StrongInt sInt{weakInt};
@@ -41,7 +41,7 @@ TEST(StrongType, Constructor_ByValue_ValidStrongType)
     ASSERT_TRUE(sString.Get() == "Hello");
 }
 
-TEST(StrongType, Constructor_ByRef_ValidStrongType)
+TEST(StrongType, /*DISABLED_*/Constructor_ByRef_ValidStrongType)
 {
     int weakInt = 3;
     int& weakIntRef = weakInt;
@@ -53,7 +53,7 @@ TEST(StrongType, Constructor_ByRef_ValidStrongType)
     ASSERT_TRUE(sString.Get() == "Hello");
 }
 
-TEST(StrongType, Constructor_Move_ValidStrongType)
+TEST(StrongType, /*DISABLED_*/Constructor_Move_ValidStrongType)
 {
     StrongInt sInt{3};
     ASSERT_TRUE(sInt.Get() == 3);
@@ -62,7 +62,7 @@ TEST(StrongType, Constructor_Move_ValidStrongType)
     ASSERT_TRUE(sString.Get() == "Hello");
 }
 
-//TEST(StrongType, Assignement_ByValue_ValidStrongType)
+//TEST(StrongType, /*DISABLED_*/Assignement_ByValue_ValidStrongType)
 //{
 //    int weakInt = 3;
 //    StrongInt sInt = weakInt;
@@ -73,7 +73,7 @@ TEST(StrongType, Constructor_Move_ValidStrongType)
 //    ASSERT_TRUE(sString.Get() == "Hello");
 //}
 
-//TEST(StrongType, Assignement_Move_ValidStrongType)
+//TEST(StrongType, /*DISABLED_*/Assignement_Move_ValidStrongType)
 //{
 //    StrongInt sInt = 3;
 //    ASSERT_TRUE(sInt.Get() == 3);
@@ -82,7 +82,7 @@ TEST(StrongType, Constructor_Move_ValidStrongType)
 //    ASSERT_TRUE(sString.Get() == "Hello");
 //}
 
-TEST(StrongType, Get_ByRef_ValidRefReturned)
+TEST(StrongType, /*DISABLED_*/Get_ByRef_ValidRefReturned)
 {
     StrongInt sInt{3};
     int& aRefOnInt = sInt.Get();
@@ -93,7 +93,7 @@ TEST(StrongType, Get_ByRef_ValidRefReturned)
     ASSERT_TRUE(aRefOnString == "Hello");
 }
 
-TEST(StrongType, Get_ByConstRef_ValidConstRefReturned)
+TEST(StrongType, /*DISABLED_*/Get_ByConstRef_ValidConstRefReturned)
 {
     StrongInt sInt{3};
     const int& aRefOnInt = sInt.Get();
