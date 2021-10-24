@@ -84,6 +84,10 @@ public:
     /******************************************************************************************//**
      * @brief Update model calculations.
      *
+     * This should be called on every animation tick to update the model values and review all
+     * calculations. Otherwise everything that comes from the model will not be updated (as if
+     * there was no animation).
+     *
      * @param p_widgetDimensions
      *      The dimensions of the whole animated board widget.
      * @param p_isDiscMovingHorizontally
