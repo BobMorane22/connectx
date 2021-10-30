@@ -29,7 +29,7 @@
 #include <cxmath/include/math.h>
 
 #include "IAnimatedBoardModel.h"
-#include "AnimatedBoardPresenter.h"
+#include "IAnimatedBoardPresenter.h"
 #include "BoardAnimation.h"
 #include "BoardAnimationNotificationContext.h"
 #include "BoardElementCache.h"
@@ -38,6 +38,8 @@
 namespace cxgui
 {
 
+class IAnimatedBoardModel;
+class IAnimatedBoardPresenter;
 class IGameViewPresenter;
 
 }
@@ -107,7 +109,7 @@ private:
     [[nodiscard]] int GetDropPosition(int p_column) const;
     [[nodiscard]] int ComputeMinimumChipDimension(size_t p_nbRows, size_t p_nbColumns) const;
 
-    std::unique_ptr<AnimatedBoardPresenter> m_presenter; // A Game View presenter cache.
+    std::unique_ptr<IAnimatedBoardPresenter> m_presenter; // A Game View presenter cache.
     std::unique_ptr<IAnimatedBoardModel> m_animationModel;
 
     sigc::connection m_timer; // Clock (ticks m_FPS times per second).

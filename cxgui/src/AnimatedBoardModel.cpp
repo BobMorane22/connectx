@@ -21,7 +21,10 @@
  *
  *************************************************************************************************/
 
+#include <cxinv/include/assertion.h>
+
 #include "AnimatedBoardModel.h"
+#include "AnimatedBoardPresenter.h"
 
 namespace
 {
@@ -301,7 +304,7 @@ void ComputeMirrorDiscPosition<cxgui::BoardAnimation::MOVE_CHIP_RIGHT_ONE_COLUMN
 
 } // namespace
 
-cxgui::AnimatedBoardModel::AnimatedBoardModel(const cxgui::AnimatedBoardPresenter& p_presenter, size_t p_animationSpeed)
+cxgui::AnimatedBoardModel::AnimatedBoardModel(const cxgui::IAnimatedBoardPresenter& p_presenter, size_t p_animationSpeed)
 : m_presenter{p_presenter}
 , m_animationSpeed{p_animationSpeed}
 {
@@ -368,6 +371,8 @@ void cxgui::AnimatedBoardModel::ComputeDiscVerticalPosition(const double p_halfD
 
 void cxgui::AnimatedBoardModel::Update(Dimensions p_widgetDimensions, bool p_isDiscMovingHorizontally)
 {
+    IF_PRECONDITION_NOT_MET_DO((p_widgetDimensions.m_height.Get() > 0.0 && p_widgetDimensions.m_width.Get() > 0.0), return;);
+
     // First, we update the dimensions for the animated widgets. They will be the
     // basis for most other quantities:
     m_widgetDimensions = p_widgetDimensions;

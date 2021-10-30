@@ -24,7 +24,7 @@
 #ifndef ANIMATEDBOARDPRESENTER_H_CEED52F8_D734_4808_A833_448D61C817D9
 #define ANIMATEDBOARDPRESENTER_H_CEED52F8_D734_4808_A833_448D61C817D9
 
-#include <cxgui/include/IGameViewPresenter.h>
+#include "IAnimatedBoardPresenter.h"
 
 namespace cxgui
 {
@@ -41,7 +41,7 @@ namespace cxgui
  * cached values in between animations.
  *
  *************************************************************************************************/
-class AnimatedBoardPresenter
+class AnimatedBoardPresenter : public cxgui::IAnimatedBoardPresenter
 {
 
 public:
@@ -54,45 +54,12 @@ public:
      *********************************************************************************************/
     explicit AnimatedBoardPresenter(const IGameViewPresenter& p_presenter);
 
-    /******************************************************************************************//**
-     * @brief Updates the cached values.
-     * 
-     * Immediately after a call to this, the presenter should be in sync with the model.
-     *
-     *********************************************************************************************/
-    void Sync();
-
-    /******************************************************************************************//**
-     * @brief Retreive the cached board height.
-     *
-     * @return The cached board height.
-     *
-     *********************************************************************************************/
-    [[nodiscard]] virtual size_t GetBoardHeight() const;
-
-    /******************************************************************************************//**
-     * @brief Retreive the cached board width.
-     *
-     * @return The cached board width.
-     *
-     *********************************************************************************************/
-    [[nodiscard]] virtual size_t GetBoardWidth() const;
-
-    /******************************************************************************************//**
-     * @brief Retreive the cached active player chip color.
-     * 
-     * @return The cached active player chip color.
-     *
-     *********************************************************************************************/
-    [[nodiscard]] virtual cxmodel::ChipColor GetActivePlayerChipColor() const;
-
-    /******************************************************************************************//**
-     * @brief Retreive the cached board chip colors.
-     * 
-     * @return The cached board chip colors.
-     *
-     *********************************************************************************************/
-    [[nodiscard]] virtual const IGameViewPresenter::ChipColors& GetBoardChipColors() const;
+    // cxgui::IAnimatedBoardPresenter:
+    void Sync() override;
+    [[nodiscard]] size_t GetBoardHeight() const override;
+    [[nodiscard]] size_t GetBoardWidth() const override;
+    [[nodiscard]] cxmodel::ChipColor GetActivePlayerChipColor() const override;
+    [[nodiscard]] const IGameViewPresenter::ChipColors& GetBoardChipColors() const override;
 
 private:
 

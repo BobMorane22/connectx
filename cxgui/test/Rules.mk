@@ -84,6 +84,7 @@ CLEAN := $(CLEAN) $(OBJS_$(d)) $(TGTS_$(d)) $(DEPS_$(d))
 $(TGTS_$(d)): CF_TGT := -I. -I$(d)/../include `pkg-config gtkmm-3.0 --cflags --libs`
 $(TGTS_$(d)): LL_TGT := cxgui/libcxgui.a \
                         cxmodel/libcxmodel.a \
+                        cxmath/libcxmath.a \
                         cxinv/libcxinv.a \
                         cxunit/libcxunit.a \
                         -lgtest \

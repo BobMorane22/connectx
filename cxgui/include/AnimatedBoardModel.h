@@ -26,9 +26,15 @@
 
 #include <algorithm>
 
-#include "AnimatedBoardPresenter.h"
 #include "BoardAnimation.h"
 #include "IAnimatedBoardModel.h"
+
+namespace cxgui
+{
+
+class IAnimatedBoardPresenter;
+
+}
 
 namespace cxgui
 {
@@ -42,7 +48,7 @@ class AnimatedBoardModel : public cxgui::IAnimatedBoardModel
 
 public:
 
-    AnimatedBoardModel(const cxgui::AnimatedBoardPresenter& p_presenter, size_t p_animationSpeed);
+    AnimatedBoardModel(const cxgui::IAnimatedBoardPresenter& p_presenter, size_t p_animationSpeed);
 
     void Update(Dimensions p_widgetDimensions, bool p_isDiscMovingHorizontally) override;
     void Resize(double p_horizontalRatio, double p_verticalRatio) override;
@@ -70,7 +76,7 @@ private:
     [[nodiscard]] bool ComputeDiscRightPosition(double p_windowWidth, double p_halfDiscSize, double p_horizontalMargin);
     void ComputeDiscVerticalPosition(const double p_halfDiscSize, double p_height);
 
-    const cxgui::AnimatedBoardPresenter& m_presenter;
+    const cxgui::IAnimatedBoardPresenter& m_presenter;
 
     size_t m_animationSpeed; // Units: discs/sec
 

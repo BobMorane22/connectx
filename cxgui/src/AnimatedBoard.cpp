@@ -34,6 +34,7 @@
 #include <cxmodel/include/Disc.h>
 
 #include "AnimatedBoardModel.h"
+#include "AnimatedBoardPresenter.h"
 #include "AnimatedBoard.h"
 #include "common.h"
 #include "ContextRestoreRAII.h"
