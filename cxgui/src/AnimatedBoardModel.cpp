@@ -406,6 +406,8 @@ void cxgui::AnimatedBoardModel::Update(Dimensions p_widgetDimensions, bool p_isD
 
 void cxgui::AnimatedBoardModel::Resize(double p_horizontalRatio, double p_verticalRatio)
 {
+    IF_PRECONDITION_NOT_MET_DO(p_horizontalRatio > 0.0 && p_verticalRatio > 0.0, return;);
+
     m_discPosition.m_x *= p_horizontalRatio;
     m_discPosition.m_y *= p_verticalRatio;
 }

@@ -88,6 +88,8 @@ public:
      * calculations. Otherwise everything that comes from the model will not be updated (as if
      * there was no animation).
      *
+     * @pre Both widget dimensions are strictly positive.
+     *
      * @param p_widgetDimensions
      *      The dimensions of the whole animated board widget.
      * @param p_isDiscMovingHorizontally
@@ -98,6 +100,8 @@ public:
 
     /******************************************************************************************//**
      * @brief Resizes the current animation according to horizontal and vertical ratios.
+     *
+     * @pre Both ratios are strictly positive.
      *
      * @param p_horizontalRatio
      *      The horizontal scaling ratio.
