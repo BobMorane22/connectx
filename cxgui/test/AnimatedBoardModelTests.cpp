@@ -34,6 +34,9 @@
 namespace
 {
 
+constexpr bool CHIP_IS_MOVING_HORIZONTALLY = true;
+constexpr bool CHIP_IS_NOT_MOVING_HORIZONTALLY = false;
+
 // Represents model elements that are not synched:
 constexpr unsigned int NONE                 = 0x00;
 
@@ -464,11 +467,176 @@ TEST_F(AnimationModelTestFixture, /*DISABLED_*/GetDiscRadius_ValidModel_WithLine
     ASSERT_TRUE(cxmath::AreLogicallyEqual(discRadiusAfterUpdate, 7.125));
 }
 
-//TEST_F(AnimationModelTestFixture, /*DISABLED_*/GetDiscPosition_ValidModel_)
-//{
-//    // Check coverage to make sure all scenarios are tested.
-//    ASSERT_TRUE(false);
-//}
+TEST_F(AnimationModelTestFixture, /*DISABLED_*/GetDiscPosition_CrossedToTheLeftDiscIsMoving_ReturnsPosition)
+{
+    cxgui::IAnimatedBoardModel& model = GetModel();
+    model.Update({cxgui::Height{150}, cxgui::Width{100}}, CHIP_IS_MOVING_HORIZONTALLY);
+
+    const cxmath::Position chipPosition = model.GetDiscPosition();
+    const cxmath::Position mirrorChipPosition = model.GetMirrorDiscPosition();
+
+    // Since the chip is starting at (0,0) and moving, it's horizontal position is not updated:
+    ASSERT_TRUE((chipPosition == cxmath::Position{0.0, 7.1428571428571432}));
+
+    // Instead, a mirror chip will be added to represent its complement on the other side of the board:
+    ASSERT_TRUE(model.IsMirrorDiscNeeded());
+    ASSERT_TRUE((mirrorChipPosition == cxmath::Position{100.0, 7.1428571428571432}));
+}
+
+TEST_F(AnimationModelTestFixture, /*DISABLED_*/GetDiscPosition_CrossedToTheLeftDiscIsNotMoving_ReturnsPosition)
+{
+    cxgui::IAnimatedBoardModel& model = GetModel();
+    model.Update({cxgui::Height{150}, cxgui::Width{100}}, CHIP_IS_NOT_MOVING_HORIZONTALLY);
+
+    const cxmath::Position chipPosition = model.GetDiscPosition();
+    const cxmath::Position mirrorChipPosition = model.GetMirrorDiscPosition();
+
+    // Since the disc is starting at (0,0) and it is not moving, an update will
+    // make sure it is completely visible to the user:
+    ASSERT_TRUE((chipPosition == cxmath::Position{7.1428571428571432, 7.1428571428571432}));
+
+    // Also, in this case, no mirror disc will be added (it is only added to simulate
+    // continuity across the board limits as animations are performed):
+    ASSERT_FALSE(model.IsMirrorDiscNeeded());
+    ASSERT_TRUE((mirrorChipPosition == cxmath::Position{0.0, 7.1428571428571432}));
+}
+
+TEST_F(AnimationModelTestFixture, /*DISABLED_*/GetDiscPosition_CompletelyCrossedToTheLeftDiscIsMoving_ReturnsPosition)
+{
+    cxgui::IAnimatedBoardModel& model = GetModel();
+    model.AddDiscDisplacement(-7.1428571428571432, 0.0);
+    model.Update({cxgui::Height{150}, cxgui::Width{100}}, CHIP_IS_MOVING_HORIZONTALLY);
+
+    const cxmath::Position chipPosition = model.GetDiscPosition();
+    const cxmath::Position mirrorChipPosition = model.GetMirrorDiscPosition();
+
+    // Since the chip has completely crossed to the left but that it is still moving, 
+    // its position is not updated:
+    ASSERT_TRUE((chipPosition == cxmath::Position{-7.1428571428571432, 7.1428571428571432}));
+
+    // Instead, a mirror disc is added on the other side, fully visible:
+    ASSERT_TRUE(model.IsMirrorDiscNeeded());
+    ASSERT_TRUE((mirrorChipPosition == cxmath::Position{92.857142857142861, 7.1428571428571432}));
+}
+
+TEST_F(AnimationModelTestFixture, /*DISABLED_*/GetDiscPosition_CompletelyCrossedToTheLeftDiscIsNotMoving_ReturnsPosition)
+{
+    cxgui::IAnimatedBoardModel& model = GetModel();
+    model.AddDiscDisplacement(-7.1428571428571432, 0.0);
+    model.Update({cxgui::Height{150}, cxgui::Width{100}}, CHIP_IS_NOT_MOVING_HORIZONTALLY);
+
+    const cxmath::Position chipPosition = model.GetDiscPosition();
+    const cxmath::Position mirrorChipPosition = model.GetMirrorDiscPosition();
+
+    // Since the disc has completely crossed to the left, its position is updated to be
+    // at the extreme right side:
+    ASSERT_TRUE((chipPosition == cxmath::Position{92.857142857142861, 7.1428571428571432}));
+
+    // Since all of it is visible, no mirror disc is needed:
+    ASSERT_FALSE(model.IsMirrorDiscNeeded());
+    ASSERT_TRUE((mirrorChipPosition == cxmath::Position{0.0, 7.1428571428571432}));
+}
+
+TEST_F(AnimationModelTestFixture, /*DISABLED_*/GetDiscPosition_CrossedToTheRightDiscIsNotMoving_ReturnsPosition)
+{
+    cxgui::IAnimatedBoardModel& model = GetModel();
+    model.AddDiscDisplacement(100.0, 0.0);
+    model.Update({cxgui::Height{150}, cxgui::Width{100}}, CHIP_IS_NOT_MOVING_HORIZONTALLY);
+
+    const cxmath::Position chipPosition = model.GetDiscPosition();
+    const cxmath::Position mirrorChipPosition = model.GetMirrorDiscPosition();
+
+    // The chip is "clamped" to the right, to make sure all of it is visible:
+    ASSERT_TRUE((chipPosition == cxmath::Position{92.857142857142861, 7.1428571428571432}));
+
+    // No mirror chip is needed in the case:
+    ASSERT_FALSE(model.IsMirrorDiscNeeded());
+    ASSERT_TRUE((mirrorChipPosition == cxmath::Position{0.0, 7.1428571428571432}));
+}
+
+TEST_F(AnimationModelTestFixture, /*DISABLED_*/GetDiscPosition_CrossedToTheRightDiscIsMoving_ReturnsPosition)
+{
+    cxgui::IAnimatedBoardModel& model = GetModel();
+    model.AddDiscDisplacement(100.0, 0.0);
+    model.Update({cxgui::Height{150}, cxgui::Width{100}}, CHIP_IS_MOVING_HORIZONTALLY);
+
+    const cxmath::Position chipPosition = model.GetDiscPosition();
+    const cxmath::Position mirrorChipPosition = model.GetMirrorDiscPosition();
+
+    // Since the chip position makes it cross over to the right (half the chip is crossing over),
+    // and the chip is moving, a mirror chip is added, on the left side of the board to give
+    // the user the illusion of a smooth crossing over animation:
+    ASSERT_TRUE((chipPosition == cxmath::Position{100.0, 7.1428571428571432}));
+
+    ASSERT_TRUE(model.IsMirrorDiscNeeded());
+    ASSERT_TRUE((mirrorChipPosition == cxmath::Position{0.0, 7.1428571428571432}));
+}
+
+TEST_F(AnimationModelTestFixture, /*DISABLED_*/GetDiscPosition_CompletelyCrossedToTheRightDiscIsMoving_ReturnsPosition)
+{
+    cxgui::IAnimatedBoardModel& model = GetModel();
+    model.AddDiscDisplacement(107.1428571428571432, 0.0);
+    model.Update({cxgui::Height{150}, cxgui::Width{100}}, CHIP_IS_MOVING_HORIZONTALLY);
+
+    const cxmath::Position chipPosition = model.GetDiscPosition();
+    const cxmath::Position mirrorChipPosition = model.GetMirrorDiscPosition();
+
+    // Since the chip has completely crossed to the right but that it is still moving, 
+    // its position is not updated:
+    ASSERT_TRUE((chipPosition == cxmath::Position{107.1428571428571432, 7.1428571428571432}));
+
+    // Instead, a mirror disc is added on the other side, fully visible:
+    ASSERT_TRUE(model.IsMirrorDiscNeeded());
+    ASSERT_TRUE((mirrorChipPosition == cxmath::Position{7.1428571428571388, 7.1428571428571432})) << mirrorChipPosition.m_x;
+}
+
+TEST_F(AnimationModelTestFixture, /*DISABLED_*/GetDiscPosition_CompletelyCrossedToTheRightDiscIsNotMoving_ReturnsPosition)
+{
+    cxgui::IAnimatedBoardModel& model = GetModel();
+    model.AddDiscDisplacement(107.1428571428571432, 0.0);
+    model.Update({cxgui::Height{150}, cxgui::Width{100}}, CHIP_IS_NOT_MOVING_HORIZONTALLY);
+
+    const cxmath::Position chipPosition = model.GetDiscPosition();
+    const cxmath::Position mirrorChipPosition = model.GetMirrorDiscPosition();
+
+    // Since the disc has completely crossed to the right, its position is updated to be
+    // at the extreme left side:
+    ASSERT_TRUE((chipPosition == cxmath::Position{7.1428571428571432, 7.1428571428571432}));
+
+    // Since all of it is visible, no mirror disc is needed:
+    ASSERT_FALSE(model.IsMirrorDiscNeeded());
+    ASSERT_TRUE((mirrorChipPosition == cxmath::Position{0.0, 7.1428571428571432}));
+}
+
+TEST_F(AnimationModelTestFixture, /*DISABLED_*/GetDiscPosition_HorizontalOffsetTowardsTop_PositionIsFixed)
+{
+    cxgui::IAnimatedBoardModel& model = GetModel();
+
+    // Going out of the board (at top):
+    model.AddDiscDisplacement(50.0, 1.0);
+    model.Update({cxgui::Height{150}, cxgui::Width{100}}, CHIP_IS_NOT_MOVING_HORIZONTALLY);
+
+    const cxmath::Position chipPosition = model.GetDiscPosition();
+
+    // Vertical position is "clamped" to the top of the board to make sure the disc is
+    // visible to the user:
+    ASSERT_TRUE((chipPosition == cxmath::Position{50.0, 7.1428571428571432}));
+}
+
+TEST_F(AnimationModelTestFixture, /*DISABLED_*/GetDiscPosition_HorizontalOffsetTowardsBottom_PositionIsFixed)
+{
+    cxgui::IAnimatedBoardModel& model = GetModel();
+
+    // Going out of the board (at bottom, remember to bottom is in the positive y):
+    model.AddDiscDisplacement(50.0, 151.0);
+    model.Update({cxgui::Height{150}, cxgui::Width{100}}, CHIP_IS_NOT_MOVING_HORIZONTALLY);
+
+    const cxmath::Position chipPosition = model.GetDiscPosition();
+
+    // Vertical position is "clamped" to the bottom of the board to make sure the disc is
+    // visible to the user:
+    ASSERT_TRUE((chipPosition == cxmath::Position{50.0, 142.85714285714286})) << chipPosition.m_y;
+}
 
 TEST_F(AnimationModelTestFixture, /*DISABLED_*/GetHorizontalMargin_ValidModel_MarginReturned)
 {
@@ -498,12 +666,38 @@ TEST_F(AnimationModelTestFixture, /*DISABLED_*/GetHorizontalMargin_ValidModelWid
     ASSERT_TRUE(horizontalMarginAfterUpdate == 0.0);
 }
 
-//TEST_F(AnimationModelTestFixture, /*DISABLED_*/GetMirrorDiscPosition_ValidModel_MirrorDiscIsNeeded_ReturnsPosition)
+//TEST_F(AnimationModelTestFixture, /*DISABLED_*/GetMirrorDiscPosition_InitialAfterUpdateDiscIsMoving_ReturnsPosition)
+//{
+//    cxgui::IAnimatedBoardModel& model = GetModel();
+//
+//    const cxmath::Position mirrorChipPositionBeforeUpdate = model.GetMirrorDiscPosition();
+//    ASSERT_TRUE((mirrorChipPositionBeforeUpdate == cxmath::Position{0.0, 0.0}));
+//
+//    model.Update({cxgui::Height{150}, cxgui::Width{100}}, true);
+//
+//    const cxmath::Position mirrorChipPositionAfterUpdate = model.GetMirrorDiscPosition();
+//    ASSERT_TRUE((mirrorChipPositionAfterUpdate == cxmath::Position{100, 7.1428571428571432}));
+//}
+//
+//TEST_F(AnimationModelTestFixture, /*DISABLED_*/GetMirrorDiscPosition_InitialAfterUpdateDiscIsNotMoving_ReturnsPosition)
+//{
+//    cxgui::IAnimatedBoardModel& model = GetModel();
+//
+//    const cxmath::Position mirrorChipPositionBeforeUpdate = model.GetMirrorDiscPosition();
+//    ASSERT_TRUE((mirrorChipPositionBeforeUpdate == cxmath::Position{0.0, 0.0}));
+//
+//    model.Update({cxgui::Height{150}, cxgui::Width{100}}, false);
+//
+//    const cxmath::Position mirrorChipPositionAfterUpdate = model.GetMirrorDiscPosition();
+//    ASSERT_TRUE((mirrorChipPositionAfterUpdate == cxmath::Position{0.0, 7.1428571428571432}));
+//}
+
+//TEST_F(AnimationModelTestFixture, /*DISABLED_*/GetMirrorDiscPosition_DiscIsCrossingOverAndMirrorDiscIsNeeded_ReturnsPosition)
 //{
 //    ASSERT_TRUE(false);
 //}
 //
-//TEST_F(AnimationModelTestFixture, /*DISABLED_*/GetMirrorDiscPosition_ValidModel_MirrorDiscIsNotNeeded_ReturnsOldPosition)
+//TEST_F(AnimationModelTestFixture, /*DISABLED_*/GetMirrorDiscPosition_DiscIsNotCrossingOverAndMirrorDiscIsNotNeeded_ReturnsSamePosition)
 //{
 //    ASSERT_TRUE(false);
 //}
