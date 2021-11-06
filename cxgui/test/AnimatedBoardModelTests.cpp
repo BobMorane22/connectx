@@ -34,17 +34,6 @@
 namespace
 {
 
-bool operator==(const cxgui::Dimensions& p_lhs, const cxgui::Dimensions& p_rhs)
-{
-    return (p_lhs.m_height.Get() == p_rhs.m_height.Get()) &&
-           (p_lhs.m_width.Get() == p_rhs.m_width.Get());
-}
-
-bool operator!=(const cxgui::Dimensions& p_lhs, const cxgui::Dimensions& p_rhs)
-{
-    return !(p_lhs == p_rhs);
-}
-
 // Represents model elements that are not synched:
 constexpr unsigned int NONE                 = 0x00;
 

@@ -48,6 +48,7 @@ OBJS_$(d) := $(d)/AboutWindowPresenterTestFixture.o \
              $(d)/AnimatedBoardModelTests.o \
              $(d)/AboutWindowPresenterTests.o \
              $(d)/ConfigurableMainWindowPresenterTestFixture.o \
+             $(d)/DimensionsTests.o \
              $(d)/extractRawUserInputTests.o \
              $(d)/GameKeyHandlerStrategyFactoryTests.o \
              $(d)/GamePresenterTests.o \

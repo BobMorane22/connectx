@@ -26,29 +26,10 @@
 
 #include <cxmath/include/Position.h>
 #include <cxmodel/include/ChipColor.h>
-#include <cxmodel/include/StrongType.h>
+#include <cxgui/include/Dimensions.h>
 
 namespace cxgui
 {
-
-using Height = cxstd::StrongType<double, struct HeightParameter>;
-using Width = cxstd::StrongType<double, struct WidthParameter>;
-
-/**********************************************************************************************//**
- * @brief 2D dimensions (in pixels) for widgets.
- *
- *************************************************************************************************/
-struct Dimensions
-{
-    Dimensions(const Height& p_height, const Width& p_width)
-    : m_height(p_height)
-    , m_width(p_width)
-    {
-    }
-
-    Height m_height;
-    Width m_width;
-};
 
 /**********************************************************************************************//**
  * @brief Line width mode for calculations.
