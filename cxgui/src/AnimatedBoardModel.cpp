@@ -22,6 +22,7 @@
  *************************************************************************************************/
 
 #include <cxinv/include/assertion.h>
+#include <cxmath/include/math.h>
 
 #include "AnimatedBoardModel.h"
 #include "AnimatedBoardPresenter.h"

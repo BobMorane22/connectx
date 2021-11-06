@@ -26,6 +26,7 @@
 #include <gtest/gtest.h>
 
 #include <cxunit/include/StdStreamRedirector.h>
+#include <cxmath/include/math.h>
 
 #include <AnimatedBoardModel.h>
 #include <IAnimatedBoardPresenter.h>
@@ -40,16 +41,6 @@ bool operator==(const cxgui::Dimensions& p_lhs, const cxgui::Dimensions& p_rhs)
 }
 
 bool operator!=(const cxgui::Dimensions& p_lhs, const cxgui::Dimensions& p_rhs)
-{
-    return !(p_lhs == p_rhs);
-}
-
-bool operator==(const cxmath::Position& p_lhs, const cxmath::Position& p_rhs)
-{
-    return (p_lhs.m_x == p_rhs.m_x) && (p_lhs.m_y == p_rhs.m_y);
-}
-
-bool operator!=(const cxmath::Position& p_lhs, const cxmath::Position& p_rhs)
 {
     return !(p_lhs == p_rhs);
 }

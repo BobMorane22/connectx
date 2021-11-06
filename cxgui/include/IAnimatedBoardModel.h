@@ -24,7 +24,7 @@
 #ifndef IANIMATEDBOARDMODEL_H_01D250F8_D2F7_42FE_9D3F_762B6B5D1F37
 #define IANIMATEDBOARDMODEL_H_01D250F8_D2F7_42FE_9D3F_762B6B5D1F37
 
-#include <cxmath/include/math.h>
+#include <cxmath/include/Position.h>
 #include <cxmodel/include/ChipColor.h>
 #include <cxmodel/include/StrongType.h>
 

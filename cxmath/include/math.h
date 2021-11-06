@@ -31,28 +31,6 @@ template<typename T>
 inline constexpr T pi = T(3.14159265358979323846264338327950288419716939937510);
 
 /**********************************************************************************************//**
- * @brief Represents a 2D position in cartesian coordinates.
- *
- *************************************************************************************************/
-struct Position
-{
-    constexpr Position()
-    : m_x{0.0}
-    , m_y{0.0}
-    {
-    }
-
-    constexpr Position(double p_x, double p_y)
-    : m_x{p_x}
-    , m_y{p_y}
-    {
-    }
-
-    double m_x;
-    double m_y;
-};
-
-/**********************************************************************************************//**
  * @brief Checks whether two values are equal.
  *
  * The equality check performed by this function is less strict that what one would expect with

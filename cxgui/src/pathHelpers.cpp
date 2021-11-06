@@ -1,6 +1,7 @@
 #include <cairomm/context.h>
 
 #include <cxmath/include/math.h>
+#include <cxmath/include/Position.h>
 
 #include "pathHelpers.h"
 

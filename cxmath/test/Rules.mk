@@ -44,6 +44,7 @@ d := $(dir)
 #
 TGTS_$(d) := $(d)/cxmathtests
 OBJS_$(d) := $(d)/mathTests.o \
+             $(d)/PositionTests.o \
              cxunit/libcxunit.a \
              cxmath/libcxmath.a
 

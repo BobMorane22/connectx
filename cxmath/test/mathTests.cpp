@@ -41,24 +41,6 @@ TEST(math, /*DISABLED_*/Pi_Constant_ReturnsConstant)
     ASSERT_EQ(cxmath::pi<int>, 3);
 }
 
-TEST(Position, /*DISABLED_*/DefaultConstructor_ValidPosition_IsOrigin)
-{
-    cxmath::Position position;
-
-    ASSERT_EQ(position.m_x, 0.0);
-    ASSERT_EQ(position.m_y, 0.0);
-}
-
-TEST(Position, /*DISABLED_*/Constructor_ValidPosition_GivenCoordinates)
-{
-    constexpr double x = 1.2345;
-    constexpr double y = 2.3456;
-    cxmath::Position position{x, y};
-
-    ASSERT_EQ(position.m_x, x);
-    ASSERT_EQ(position.m_y, y);
-}
-
 TEST(math, /*DISABLED_*/AreLogicallyEqual_LhsTooBig_ReturnsFalse)
 {
     constexpr double lhs = 1.123456789;

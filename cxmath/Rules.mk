@@ -51,6 +51,7 @@ include $(dir)/Rules.mk
 # i.e. the ones we want deleted by a "make clean" command.
 #
 OBJS_$(d) := $(d)/src/math.o \
+             $(d)/src/Position.o \
              cxinv/libcxinv.a
 
 # We include all the generated rules. These are created by GCC to make sure that

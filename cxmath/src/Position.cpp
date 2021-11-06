@@ -16,28 +16,19 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file math.cpp
+ * @file Position.cpp
  * @date 2021
  *
  *************************************************************************************************/
 
-#include "math.h"
-
-namespace
+#include <Position.h>
+ 
+bool cxmath::operator==(const cxmath::Position& p_lhs, const cxmath::Position& p_rhs)
 {
+    return (p_lhs.m_x == p_rhs.m_x) && (p_lhs.m_y == p_rhs.m_y);
+}
 
-constexpr double DOUBLE_DEFAULT_TOLERANCE = 1e-6;
-
-} // namespace
-
-bool cxmath::AreLogicallyEqual(double p_lhs, double p_rhs)
+bool cxmath::operator!=(const cxmath::Position& p_lhs, const cxmath::Position& p_rhs)
 {
-    const double delta = p_lhs - p_rhs;
-
-    if(delta >= 0)
-    {
-        return delta <= DOUBLE_DEFAULT_TOLERANCE;
-    }
-
-    return delta >= -DOUBLE_DEFAULT_TOLERANCE;
+    return !(p_lhs == p_rhs);
 }
