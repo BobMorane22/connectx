@@ -221,6 +221,17 @@ void cxgui::AnimatedBoard::PerformChipAnimation(BoardAnimation p_animation)
 
             break;
         }
+        case cxgui::BoardAnimation::UNDO_DROP_CHIP:
+        {
+            // Reinitialize disc:
+            m_animationModel->ResetDiscPositions();
+            m_animationModel->UpdateCurrentColumn(0u);
+
+            m_presenter->Sync();
+
+            Notify(cxgui::BoardAnimationNotificationContext::POST_ANIMATE_UNDO_DROP_CHIP);
+            break;
+        }
         default:
         {
             ASSERT_ERROR_MSG("Unsupported move.");
@@ -505,6 +516,16 @@ void cxgui::AnimatedBoard::Update(cxgui::BoardAnimationNotificationContext p_con
         {
             m_animateMoveDown = true;
             PerformChipAnimation(cxgui::BoardAnimation::DROP_CHIP);
+            break;
+        }
+        case cxgui::BoardAnimationNotificationContext::ANIMATE_UNDO_DROP_CHIP:
+        {
+            PerformChipAnimation(cxgui::BoardAnimation::UNDO_DROP_CHIP);
+
+            // Because there is no real animation associated with an undo
+            // (the chip simply diseapears, PerformChipAnimation only updates
+            // the model data), we request a redraw directly here:
+            queue_draw();
             break;
         }
         default:

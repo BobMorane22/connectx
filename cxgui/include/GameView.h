@@ -73,6 +73,7 @@ private:
 
     void UpdateChipDropped();
     void UpdateChipDroppedFailed();
+    void UpdateUndoChipDropped();
     void UpdateChipMovedLeft();
     void UpdateChipMovedRight();
     void UpdateGameResolved();

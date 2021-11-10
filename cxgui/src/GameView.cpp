@@ -133,7 +133,7 @@ void cxgui::GameView::Update(cxmodel::ModelNotificationContext p_context)
         }
         case cxmodel::ModelNotificationContext::UNDO_CHIP_DROPPED:
         {
-            UpdateChipDropped();
+            UpdateUndoChipDropped();
             break;
         }
         default:
@@ -150,6 +150,7 @@ void cxgui::GameView::Update(cxgui::BoardAnimationNotificationContext p_context,
         case cxgui::BoardAnimationNotificationContext::ANIMATE_MOVE_LEFT_ONE_COLUMN:
         case cxgui::BoardAnimationNotificationContext::ANIMATE_MOVE_RIGHT_ONE_COLUMN:
         case cxgui::BoardAnimationNotificationContext::ANIMATE_MOVE_DROP_CHIP:
+        case cxgui::BoardAnimationNotificationContext::ANIMATE_UNDO_DROP_CHIP:
         {
             return;
         }
@@ -157,10 +158,12 @@ void cxgui::GameView::Update(cxgui::BoardAnimationNotificationContext p_context,
         case cxgui::BoardAnimationNotificationContext::POST_ANIMATE_MOVE_LEFT_ONE_COLUMN:
         case cxgui::BoardAnimationNotificationContext::POST_ANIMATE_MOVE_RIGHT_ONE_COLUMN:
         case cxgui::BoardAnimationNotificationContext::POST_ANIMATE_DROP_CHIP:
+        case cxgui::BoardAnimationNotificationContext::POST_ANIMATE_UNDO_DROP_CHIP:
         {
             // At this point the animation is completed. We reactivate keyboard events in
             // case the user wants to request another animation:
             EnableKeyHandlers();
+            break;
         }
     }
 }
@@ -251,20 +254,35 @@ void cxgui::GameView::ConfigureWidgets()
 
 bool cxgui::GameView::OnKeyPressed(GdkEventKey* p_event)
 {
-    // We do now want the user to be able to request another animation
+    // We do not want the user to be able to request another animation
     // while one is already running:
     DisableKeyHandlers();
 
     if(!p_event)
     {
-        return true; // Do not propagate...
+        EnableKeyHandlers();
+        return STOP_EVENT_PROPAGATION;
+    }
+
+    // TG-235 : this is a hack and should be included into the factory/strategy
+    //          technology. To be refactored:
+    if(p_event->keyval != GDK_KEY_Left && p_event->keyval != GDK_KEY_Right && p_event->keyval != GDK_KEY_Down)
+    {
+        EnableKeyHandlers();
+
+        // Here propagation of the event is wanted. Some key events are caught
+        // here, but should be handled by the main window (undo for example).
+        // If we stop the propagation, the main window never gets the event
+        // and bugs can occur:
+        return PROPAGATE_EVENT;
     }
 
     const auto strategy = m_keyEventStrategyFactory.Create(p_event);
 
     if(!strategy || !m_board)
     {
-        return false;
+        EnableKeyHandlers();
+        return PROPAGATE_EVENT;
     }
 
     return strategy->Handle(m_controller, *m_board);
@@ -300,6 +318,21 @@ void cxgui::GameView::UpdateChipDropped()
     if(ASSERT(m_board))
     {
         Notify(cxgui::BoardAnimationNotificationContext::ANIMATE_MOVE_DROP_CHIP);
+    }
+}
+
+void cxgui::GameView::UpdateUndoChipDropped()
+{
+    // Active and next players should be updated as well:
+    m_activePlayerChip->ChangeColor(m_presenter.GetGameViewActivePlayerChipColor());
+    m_activePlayerName.set_text(m_presenter.GetGameViewActivePlayerName());
+
+    m_nextPlayerChip->ChangeColor(m_presenter.GetGameViewNextPlayerChipColor());
+    m_nextPlayerName.set_text(m_presenter.GetGameViewNextPlayerName());
+
+    if(ASSERT(m_board))
+    {
+        Notify(cxgui::BoardAnimationNotificationContext::ANIMATE_UNDO_DROP_CHIP);
     }
 }
 

@@ -47,6 +47,9 @@ enum class BoardAnimationNotificationContext
 
     ANIMATE_MOVE_DROP_CHIP,
     POST_ANIMATE_DROP_CHIP,
+
+    ANIMATE_UNDO_DROP_CHIP,
+    POST_ANIMATE_UNDO_DROP_CHIP,
 };
 
 using IBoardAnimationObserver = cxmodel::IObserver<cxgui::BoardAnimationNotificationContext>;
