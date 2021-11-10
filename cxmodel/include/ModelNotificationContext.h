@@ -56,6 +56,9 @@ enum class ModelNotificationContext
     /** The last successful disc drop was undone.*/
     UNDO_CHIP_DROPPED,
 
+    /** The last successful undone disc drop was redone.*/
+    REDO_CHIP_DROPPED,
+
     /** The current game was won.*/
     GAME_WON,
 

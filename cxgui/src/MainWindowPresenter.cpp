@@ -115,6 +115,13 @@ void cxgui::MainWindowPresenter::Update(cxmodel::ModelNotificationContext p_cont
                 UpdateChipDropped();
                 break;
             }
+            case cxmodel::ModelNotificationContext::REDO_CHIP_DROPPED:
+            {
+                m_canRequestNewGame = true;
+                m_canCurrentGameBeReinitialized = true;
+                UpdateChipDropped();
+                break;
+            }
             default:
                 break;
         }

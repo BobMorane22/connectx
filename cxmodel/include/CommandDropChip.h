@@ -87,6 +87,8 @@ private:
     const PlayerInformation m_previousPlayerInformation;
     const size_t m_previousColumn;
     IBoard::Position m_previousDropPosition;
+
+    bool m_isRedo = false;
 };
 
 } // namespace cxmodel

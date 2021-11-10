@@ -39,6 +39,7 @@ enum class BoardAnimation
     MOVE_CHIP_RIGHT_ONE_COLUMN,
     DROP_CHIP,
     UNDO_DROP_CHIP,
+    REDO_DROP_CHIP,
 };
 
 } // namespace cxgui

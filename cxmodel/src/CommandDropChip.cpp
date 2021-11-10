@@ -89,7 +89,16 @@ void cxmodel::CommandDropChip::Execute()
     m_takenPositions.push_back(droppedPosition);
 
     // Send notifications for the drop:
+    if(m_isRedo)
+    {
+        Notify(ModelNotificationContext::REDO_CHIP_DROPPED);
+        return;
+    }
+
     Notify(ModelNotificationContext::CHIP_DROPPED);
+
+    // At this point, all successive calls to Execute are redos:
+    m_isRedo = true;
 }
 
 void cxmodel::CommandDropChip::Undo()

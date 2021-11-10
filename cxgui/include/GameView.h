@@ -74,10 +74,13 @@ private:
     void UpdateChipDropped();
     void UpdateChipDroppedFailed();
     void UpdateUndoChipDropped();
+    void UpdateRedoChipDropped();
     void UpdateChipMovedLeft();
     void UpdateChipMovedRight();
     void UpdateGameResolved();
     void UpdateGameReinitialized();
+
+    void SyncPlayers();
 
     IGameViewPresenter& m_presenter;
     IGameViewController& m_controller;

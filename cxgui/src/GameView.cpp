@@ -136,6 +136,11 @@ void cxgui::GameView::Update(cxmodel::ModelNotificationContext p_context)
             UpdateUndoChipDropped();
             break;
         }
+        case cxmodel::ModelNotificationContext::REDO_CHIP_DROPPED:
+        {
+            UpdateRedoChipDropped();
+            break;
+        }
         default:
             break;
     }
@@ -151,6 +156,7 @@ void cxgui::GameView::Update(cxgui::BoardAnimationNotificationContext p_context,
         case cxgui::BoardAnimationNotificationContext::ANIMATE_MOVE_RIGHT_ONE_COLUMN:
         case cxgui::BoardAnimationNotificationContext::ANIMATE_MOVE_DROP_CHIP:
         case cxgui::BoardAnimationNotificationContext::ANIMATE_UNDO_DROP_CHIP:
+        case cxgui::BoardAnimationNotificationContext::ANIMATE_REDO_DROP_CHIP:
         {
             return;
         }
@@ -159,6 +165,7 @@ void cxgui::GameView::Update(cxgui::BoardAnimationNotificationContext p_context,
         case cxgui::BoardAnimationNotificationContext::POST_ANIMATE_MOVE_RIGHT_ONE_COLUMN:
         case cxgui::BoardAnimationNotificationContext::POST_ANIMATE_DROP_CHIP:
         case cxgui::BoardAnimationNotificationContext::POST_ANIMATE_UNDO_DROP_CHIP:
+        case cxgui::BoardAnimationNotificationContext::POST_ANIMATE_REDO_DROP_CHIP:
         {
             // At this point the animation is completed. We reactivate keyboard events in
             // case the user wants to request another animation:
@@ -308,32 +315,26 @@ void cxgui::GameView::DisableKeyHandlers()
 
 void cxgui::GameView::UpdateChipDropped()
 {
-    // Active and next players should be updated as well:
-    m_activePlayerChip->ChangeColor(m_presenter.GetGameViewActivePlayerChipColor());
-    m_activePlayerName.set_text(m_presenter.GetGameViewActivePlayerName());
+    IF_CONDITION_NOT_MET_DO(m_board, return;);
 
-    m_nextPlayerChip->ChangeColor(m_presenter.GetGameViewNextPlayerChipColor());
-    m_nextPlayerName.set_text(m_presenter.GetGameViewNextPlayerName());
-
-    if(ASSERT(m_board))
-    {
-        Notify(cxgui::BoardAnimationNotificationContext::ANIMATE_MOVE_DROP_CHIP);
-    }
+    SyncPlayers();
+    Notify(cxgui::BoardAnimationNotificationContext::ANIMATE_MOVE_DROP_CHIP);
 }
 
 void cxgui::GameView::UpdateUndoChipDropped()
 {
-    // Active and next players should be updated as well:
-    m_activePlayerChip->ChangeColor(m_presenter.GetGameViewActivePlayerChipColor());
-    m_activePlayerName.set_text(m_presenter.GetGameViewActivePlayerName());
+    IF_CONDITION_NOT_MET_DO(m_board, return;);
 
-    m_nextPlayerChip->ChangeColor(m_presenter.GetGameViewNextPlayerChipColor());
-    m_nextPlayerName.set_text(m_presenter.GetGameViewNextPlayerName());
+    SyncPlayers();
+    Notify(cxgui::BoardAnimationNotificationContext::ANIMATE_UNDO_DROP_CHIP);
+}
 
-    if(ASSERT(m_board))
-    {
-        Notify(cxgui::BoardAnimationNotificationContext::ANIMATE_UNDO_DROP_CHIP);
-    }
+void cxgui::GameView::UpdateRedoChipDropped()
+{
+    IF_CONDITION_NOT_MET_DO(m_board, return;);
+
+    SyncPlayers();
+    Notify(cxgui::BoardAnimationNotificationContext::ANIMATE_REDO_DROP_CHIP);
 }
 
 void cxgui::GameView::UpdateChipDroppedFailed()
@@ -372,4 +373,13 @@ void cxgui::GameView::UpdateGameReinitialized()
     m_nextPlayerName.set_text(m_presenter.GetGameViewNextPlayerName());
 
     // Notify...
+}
+
+void cxgui::GameView::SyncPlayers()
+{
+    m_activePlayerChip->ChangeColor(m_presenter.GetGameViewActivePlayerChipColor());
+    m_activePlayerName.set_text(m_presenter.GetGameViewActivePlayerName());
+
+    m_nextPlayerChip->ChangeColor(m_presenter.GetGameViewNextPlayerChipColor());
+    m_nextPlayerName.set_text(m_presenter.GetGameViewNextPlayerName());
 }
