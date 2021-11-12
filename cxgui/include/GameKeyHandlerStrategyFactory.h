@@ -47,11 +47,11 @@ public:
     /******************************************************************************************//**
      * @brief Creates a key handling strategy from a keyboard key identifier.
      *
-     * @post The returned value is never nullptr.
-     *
      * @param p_event Describes a key press/release event.
+
+     * @pre `p_event` is valid.
      *
-     * @return The strategy, or a noop strategy if no corresponding strategy was found.
+     * @return The strategy, `nullptr` otherwise.
      *
      ********************************************************************************************/
     std::unique_ptr<cxgui::IGameKeyHandlerStrategy> Create(GdkEventKey* p_event);

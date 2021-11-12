@@ -63,20 +63,6 @@ public:
 
 };
 
-/*********************************************************************************************//**
- * @brief No-op strategy.
- *
- * Used when no suitable strategy is accessible.
- *
- ************************************************************************************************/
-class GameKeyHandlerNoStrategy : public IGameKeyHandlerStrategy
-{
-    bool Handle(IGameViewController& /*p_controller*/, IBoardInformation& /*p_gameBoard*/) override
-    {
-        return false; // propagate...
-    }
-};
-
 } // namespace cxgui
 
 #endif // IGAMEKEYHANDLERSTRATEGY_H_31AC17A9_F085_49C8_A86E_543E65DC78DC

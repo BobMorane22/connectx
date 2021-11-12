@@ -31,7 +31,7 @@
 
 std::unique_ptr<cxgui::IGameKeyHandlerStrategy> cxgui::GameKeyHandlerStrategyFactory::Create(GdkEventKey* p_event)
 {
-    IF_CONDITION_NOT_MET_DO(p_event, return std::make_unique<cxgui::GameKeyHandlerNoStrategy>(););
+    IF_PRECONDITION_NOT_MET_DO(p_event, return nullptr;);
 
     switch(p_event->keyval)
     {
@@ -45,6 +45,6 @@ std::unique_ptr<cxgui::IGameKeyHandlerStrategy> cxgui::GameKeyHandlerStrategyFac
             return std::make_unique<cxgui::GameDownKeyHandlerStrategy>();
 
         default:
-            return std::make_unique<cxgui::GameKeyHandlerNoStrategy>();
+            return nullptr;
     }
 }

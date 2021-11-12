@@ -77,7 +77,7 @@ TEST(GameDownKeyHandlerStrategy, Create_UnknownKey_NoStrategyCreated)
 
     auto strategy = factory.Create(&event);
 
-    ASSERT_TRUE(dynamic_cast<cxgui::GameKeyHandlerNoStrategy*>(strategy.get()));
+    ASSERT_TRUE(strategy == nullptr);
 }
 
 TEST(GameDownKeyHandlerStrategy, Create_InvalidGdkKeyEvent_NoStrategyCreated)
@@ -94,7 +94,7 @@ TEST(GameDownKeyHandlerStrategy, Create_InvalidGdkKeyEvent_NoStrategyCreated)
 
     assertionMessage = m_streamDisabler.GetStdErrContents();
     ASSERT_FALSE(assertionMessage.empty());
-    ASSERT_TRUE(assertionMessage.find("Assertion") != std::string::npos);
+    ASSERT_TRUE(assertionMessage.find("Precondition") != std::string::npos);
 
-    ASSERT_TRUE(dynamic_cast<cxgui::GameKeyHandlerNoStrategy*>(strategy.get()));
+    ASSERT_TRUE(strategy == nullptr);
 }

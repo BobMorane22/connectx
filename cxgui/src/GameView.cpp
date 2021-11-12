@@ -261,19 +261,16 @@ void cxgui::GameView::ConfigureWidgets()
 
 bool cxgui::GameView::OnKeyPressed(GdkEventKey* p_event)
 {
+    IF_PRECONDITION_NOT_MET_DO(p_event, return STOP_EVENT_PROPAGATION;);
+    IF_PRECONDITION_NOT_MET_DO(m_board, return STOP_EVENT_PROPAGATION;);
+
     // We do not want the user to be able to request another animation
     // while one is already running:
     DisableKeyHandlers();
 
-    if(!p_event)
-    {
-        EnableKeyHandlers();
-        return STOP_EVENT_PROPAGATION;
-    }
+    const auto strategy = m_keyEventStrategyFactory.Create(p_event);
 
-    // TG-235 : this is a hack and should be included into the factory/strategy
-    //          technology. To be refactored:
-    if(p_event->keyval != GDK_KEY_Left && p_event->keyval != GDK_KEY_Right && p_event->keyval != GDK_KEY_Down)
+    if(!strategy)
     {
         EnableKeyHandlers();
 
@@ -281,14 +278,6 @@ bool cxgui::GameView::OnKeyPressed(GdkEventKey* p_event)
         // here, but should be handled by the main window (undo for example).
         // If we stop the propagation, the main window never gets the event
         // and bugs can occur:
-        return PROPAGATE_EVENT;
-    }
-
-    const auto strategy = m_keyEventStrategyFactory.Create(p_event);
-
-    if(!strategy || !m_board)
-    {
-        EnableKeyHandlers();
         return PROPAGATE_EVENT;
     }
 
