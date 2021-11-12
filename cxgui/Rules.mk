@@ -62,14 +62,14 @@ OBJS_$(d) := $(d)/src/About.o \
              $(d)/src/Dimensions.o \
              $(d)/src/DiscChip.o \
              $(d)/src/extractRawUserInput.o \
-             $(d)/src/GameDownKeyHandlerStrategy.o \
-             $(d)/src/GameKeyHandlerStrategyFactory.o \
-             $(d)/src/GameLeftKeyHandlerStrategy.o \
              $(d)/src/GameResolutionDialog.o \
              $(d)/src/GameResolutionDialogController.o \
              $(d)/src/GameResolutionDialogPresenterFactory.o \
-             $(d)/src/GameRightKeyHandlerStrategy.o \
              $(d)/src/GameView.o \
+             $(d)/src/GameViewDownKeyHandlerStrategy.o \
+             $(d)/src/GameViewKeyHandlerStrategyFactory.o \
+             $(d)/src/GameViewLeftKeyHandlerStrategy.o \
+             $(d)/src/GameViewRightKeyHandlerStrategy.o \
              $(d)/src/MainWindow.o \
              $(d)/src/MainWindowController.o \
              $(d)/src/MainWindowPresenter.o \

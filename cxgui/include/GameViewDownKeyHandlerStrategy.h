@@ -16,48 +16,35 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file GameKeyHandlerStrategyFactory.h
+ * @file GameDownKeyHandlerStrategy.h
  * @date 2020
  *
  *************************************************************************************************/
 
-#ifndef GAMEKEYHANDLERSTRATEGYFACTORY_H_77F63BBC_46CA_4EF9_99A9_D6A93968231C
-#define GAMEKEYHANDLERSTRATEGYFACTORY_H_77F63BBC_46CA_4EF9_99A9_D6A93968231C
+#ifndef GAMEDOWNKEYHANDLERSTRATEGY_H_CA8A3901_30FC_46DA_A256_EFF4B806B186
+#define GAMEDOWNKEYHANDLERSTRATEGY_H_CA8A3901_30FC_46DA_A256_EFF4B806B186
 
-#include <memory>
-
-#include <gdk/gdk.h>
-
-#include "IGameKeyHandlerStrategy.h"
+#include "IGameViewKeyHandlerStrategy.h"
 
 namespace cxgui
 {
 
 /*********************************************************************************************//**
- * @brief Factory for key handling strategies.
- *
- * Creates the right strategy for the given keyboard key (GdkKey).
+ * @brief Down key handling strategy.
  *
  ************************************************************************************************/
-class GameKeyHandlerStrategyFactory final
+class GameViewDownKeyHandlerStrategy : public cxgui::IGameViewKeyHandlerStrategy
 {
-
-public:
-
     /******************************************************************************************//**
-     * @brief Creates a key handling strategy from a keyboard key identifier.
+     * @brief Handler for a down key press.
      *
-     * @param p_event Describes a key press/release event.
-
-     * @pre `p_event` is valid.
-     *
-     * @return The strategy, `nullptr` otherwise.
+     * @param p_controller The game view controller.
+     * @param p_gameBoard  The board to act on.
      *
      ********************************************************************************************/
-    std::unique_ptr<cxgui::IGameKeyHandlerStrategy> Create(GdkEventKey* p_event);
-
+    bool Handle(IGameViewController& p_controller, IBoardInformation& p_gameBoard) override;
 };
 
 } // namespace cxgui
 
-#endif // GAMEKEYHANDLERSTRATEGYFACTORY_H_77F63BBC_46CA_4EF9_99A9_D6A93968231C
+#endif // GAMEDOWNKEYHANDLERSTRATEGY_H_CA8A3901_30FC_46DA_A256_EFF4B806B186

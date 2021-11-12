@@ -16,35 +16,18 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file GameLeftKeyHandlerStrategy.h
+ * @file GameViewLeftKeyHandlerStrategy.cpp
  * @date 2020
  *
  *************************************************************************************************/
 
-#ifndef GAMELEFTKEYHANDLERSTRATEGY_H_2D035C6F_05E4_4C1A_B433_0FE7F72F443F
-#define GAMELEFTKEYHANDLERSTRATEGY_H_2D035C6F_05E4_4C1A_B433_0FE7F72F443F
+#include "IBoardInformation.h"
+#include "GameViewLeftKeyHandlerStrategy.h"
+#include "IGameViewController.h"
 
-#include "IGameKeyHandlerStrategy.h"
-
-namespace cxgui
+bool cxgui::GameViewLeftKeyHandlerStrategy::Handle(IGameViewController& p_controller, IBoardInformation& /*p_gameBoard*/)
 {
+    p_controller.OnMoveLeft();
 
-/*********************************************************************************************//**
- * @brief Left key handling strategy.
- *
- ************************************************************************************************/
-class GameLeftKeyHandlerStrategy : public cxgui::IGameKeyHandlerStrategy
-{
-    /******************************************************************************************//**
-     * @brief Handler for a left key press.
-     *
-     * @param p_controller The game view controller.
-     * @param p_gameBoard  The board to act on.
-     *
-     ********************************************************************************************/
-    bool Handle(IGameViewController& p_controller, IBoardInformation& p_gameBoard) override;
-};
-
-} // namespace cxgui
-
-#endif // GAMELEFTKEYHANDLERSTRATEGY_H_2D035C6F_05E4_4C1A_B433_0FE7F72F443F
+    return true;
+}

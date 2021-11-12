@@ -16,27 +16,27 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file GameRightKeyHandlerStrategy.h
+ * @file GameLeftKeyHandlerStrategy.h
  * @date 2020
  *
  *************************************************************************************************/
 
-#ifndef GAMERIGHTTKEYHANDLERSTRATEGY_H_D174555E_75F7_4CAB_9AAE_EA119C6BE121
-#define GAMERIGHTTKEYHANDLERSTRATEGY_H_D174555E_75F7_4CAB_9AAE_EA119C6BE121
+#ifndef GAMELEFTKEYHANDLERSTRATEGY_H_2D035C6F_05E4_4C1A_B433_0FE7F72F443F
+#define GAMELEFTKEYHANDLERSTRATEGY_H_2D035C6F_05E4_4C1A_B433_0FE7F72F443F
 
-#include "IGameKeyHandlerStrategy.h"
+#include "IGameViewKeyHandlerStrategy.h"
 
 namespace cxgui
 {
 
 /*********************************************************************************************//**
- * @brief Right key handling strategy.
+ * @brief Left key handling strategy.
  *
  ************************************************************************************************/
-class GameRightKeyHandlerStrategy : public cxgui::IGameKeyHandlerStrategy
+class GameViewLeftKeyHandlerStrategy : public cxgui::IGameViewKeyHandlerStrategy
 {
     /******************************************************************************************//**
-     * @brief Handler for a right key press.
+     * @brief Handler for a left key press.
      *
      * @param p_controller The game view controller.
      * @param p_gameBoard  The board to act on.
@@ -47,4 +47,4 @@ class GameRightKeyHandlerStrategy : public cxgui::IGameKeyHandlerStrategy
 
 } // namespace cxgui
 
-#endif // GAMERIGHTTKEYHANDLERSTRATEGY_H_D174555E_75F7_4CAB_9AAE_EA119C6BE121
+#endif // GAMELEFTKEYHANDLERSTRATEGY_H_2D035C6F_05E4_4C1A_B433_0FE7F72F443F

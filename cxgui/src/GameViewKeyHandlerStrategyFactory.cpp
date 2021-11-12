@@ -16,20 +16,35 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file GameRightKeyHandlerStrategy.cpp
+ * @file GameViewKeyHandlerStrategyFactory.cpp
  * @date 2020
  *
  *************************************************************************************************/
 
-#include <iostream>
+#include <cxinv/include/assertion.h>
 
-#include "GameRightKeyHandlerStrategy.h"
-#include "IBoardInformation.h"
-#include "IGameViewController.h"
+#include "GameViewKeyHandlerStrategyFactory.h"
 
-bool cxgui::GameRightKeyHandlerStrategy::Handle(IGameViewController& p_controller, IBoardInformation& /*p_gameBoard*/)
+#include "GameViewDownKeyHandlerStrategy.h"
+#include "GameViewLeftKeyHandlerStrategy.h"
+#include "GameViewRightKeyHandlerStrategy.h"
+
+std::unique_ptr<cxgui::IGameViewKeyHandlerStrategy> cxgui::GameViewKeyHandlerStrategyFactory::Create(GdkEventKey* p_event)
 {
-    p_controller.OnMoveRight();
+    IF_PRECONDITION_NOT_MET_DO(p_event, return nullptr;);
 
-    return true;
+    switch(p_event->keyval)
+    {
+        case GDK_KEY_Left:
+            return std::make_unique<cxgui::GameViewLeftKeyHandlerStrategy>();
+
+        case GDK_KEY_Right:
+            return std::make_unique<cxgui::GameViewRightKeyHandlerStrategy>();
+
+        case GDK_KEY_Down:
+            return std::make_unique<cxgui::GameViewDownKeyHandlerStrategy>();
+
+        default:
+            return nullptr;
+    }
 }

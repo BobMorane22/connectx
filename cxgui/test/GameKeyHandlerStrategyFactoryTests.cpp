@@ -27,50 +27,50 @@
 
 #include <cxunit/include/DisableStdStreamsRAII.h>
 
-#include <GameDownKeyHandlerStrategy.h>
-#include <GameKeyHandlerStrategyFactory.h>
-#include <GameLeftKeyHandlerStrategy.h>
-#include <GameRightKeyHandlerStrategy.h>
+#include <GameViewDownKeyHandlerStrategy.h>
+#include <GameViewKeyHandlerStrategyFactory.h>
+#include <GameViewLeftKeyHandlerStrategy.h>
+#include <GameViewRightKeyHandlerStrategy.h>
 
 TEST(GameDownKeyHandlerStrategy, Create_DownKey_DownStrategyCreated)
 {
-    cxgui::GameKeyHandlerStrategyFactory factory;
+    cxgui::GameViewKeyHandlerStrategyFactory factory;
 
     GdkEventKey event;
     event.keyval = GDK_KEY_Down;
 
     auto strategy = factory.Create(&event);
 
-    ASSERT_TRUE(dynamic_cast<cxgui::GameDownKeyHandlerStrategy*>(strategy.get()));
+    ASSERT_TRUE(dynamic_cast<cxgui::GameViewDownKeyHandlerStrategy*>(strategy.get()));
 }
 
-TEST(GameDownKeyHandlerStrategy, Create_LeftKey_LeftStrategyCreated)
+TEST(GameViewDownKeyHandlerStrategy, Create_LeftKey_LeftStrategyCreated)
 {
-    cxgui::GameKeyHandlerStrategyFactory factory;
+    cxgui::GameViewKeyHandlerStrategyFactory factory;
 
     GdkEventKey event;
     event.keyval = GDK_KEY_Left;
 
     auto strategy = factory.Create(&event);
 
-    ASSERT_TRUE(dynamic_cast<cxgui::GameLeftKeyHandlerStrategy*>(strategy.get()));
+    ASSERT_TRUE(dynamic_cast<cxgui::GameViewLeftKeyHandlerStrategy*>(strategy.get()));
 }
 
-TEST(GameDownKeyHandlerStrategy, Create_RightKey_RightStrategyCreated)
+TEST(GameViewDownKeyHandlerStrategy, Create_RightKey_RightStrategyCreated)
 {
-    cxgui::GameKeyHandlerStrategyFactory factory;
+    cxgui::GameViewKeyHandlerStrategyFactory factory;
 
     GdkEventKey event;
     event.keyval = GDK_KEY_Right;
 
     auto strategy = factory.Create(&event);
 
-    ASSERT_TRUE(dynamic_cast<cxgui::GameRightKeyHandlerStrategy*>(strategy.get()));
+    ASSERT_TRUE(dynamic_cast<cxgui::GameViewRightKeyHandlerStrategy*>(strategy.get()));
 }
 
-TEST(GameDownKeyHandlerStrategy, Create_UnknownKey_NoStrategyCreated)
+TEST(GameViewDownKeyHandlerStrategy, Create_UnknownKey_NoStrategyCreated)
 {
-    cxgui::GameKeyHandlerStrategyFactory factory;
+    cxgui::GameViewKeyHandlerStrategyFactory factory;
 
     GdkEventKey event;
     event.keyval = GDK_KEY_Up;
@@ -80,12 +80,12 @@ TEST(GameDownKeyHandlerStrategy, Create_UnknownKey_NoStrategyCreated)
     ASSERT_TRUE(strategy == nullptr);
 }
 
-TEST(GameDownKeyHandlerStrategy, Create_InvalidGdkKeyEvent_NoStrategyCreated)
+TEST(GameViewDownKeyHandlerStrategy, Create_InvalidGdkKeyEvent_NoStrategyCreated)
 {
     cxunit::DisableStdStreamsRAII m_streamDisabler;
     m_streamDisabler.DisableStdErr();
 
-    cxgui::GameKeyHandlerStrategyFactory factory;
+    cxgui::GameViewKeyHandlerStrategyFactory factory;
 
     std::string assertionMessage = m_streamDisabler.GetStdErrContents();
     ASSERT_TRUE(assertionMessage.empty());

@@ -29,7 +29,7 @@
 
 #include "AnimatedBoard.h"
 #include "Chip.h"
-#include "GameKeyHandlerStrategyFactory.h"
+#include "GameViewKeyHandlerStrategyFactory.h"
 #include "IGameViewController.h"
 #include "IGameViewPresenter.h"
 #include "IView.h"
@@ -111,7 +111,7 @@ private:
     std::unique_ptr<cxgui::AnimatedBoard> m_board;
 
     // Keys:
-    cxgui::GameKeyHandlerStrategyFactory m_keyEventStrategyFactory;
+    cxgui::GameViewKeyHandlerStrategyFactory m_keyEventStrategyFactory;
 
     // Signals:
     sigc::connection m_keysPressedConnection;

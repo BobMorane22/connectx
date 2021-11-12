@@ -16,35 +16,53 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file GameDownKeyHandlerStrategy.h
+ * @file IGameViewKeyHandlerStrategy.h
  * @date 2020
  *
  *************************************************************************************************/
 
-#ifndef GAMEDOWNKEYHANDLERSTRATEGY_H_CA8A3901_30FC_46DA_A256_EFF4B806B186
-#define GAMEDOWNKEYHANDLERSTRATEGY_H_CA8A3901_30FC_46DA_A256_EFF4B806B186
+#ifndef IGAMEKEYHANDLERSTRATEGY_H_31AC17A9_F085_49C8_A86E_543E65DC78DC
+#define IGAMEKEYHANDLERSTRATEGY_H_31AC17A9_F085_49C8_A86E_543E65DC78DC
 
-#include "IGameKeyHandlerStrategy.h"
+namespace cxgui
+{
+    class IBoardInformation;
+    class IGameViewController;
+}
 
 namespace cxgui
 {
 
 /*********************************************************************************************//**
- * @brief Down key handling strategy.
+ * @brief Key press handling strategy interface.
+ *
+ * Implement this to create a new keypress strategy on the board.
  *
  ************************************************************************************************/
-class GameDownKeyHandlerStrategy : public cxgui::IGameKeyHandlerStrategy
+class IGameViewKeyHandlerStrategy
 {
+
+public:
+
     /******************************************************************************************//**
-     * @brief Handler for a down key press.
-     *
-     * @param p_controller The game view controller.
-     * @param p_gameBoard  The board to act on.
+     * @brief Destructor.
      *
      ********************************************************************************************/
-    bool Handle(IGameViewController& p_controller, IBoardInformation& p_gameBoard) override;
+    virtual ~IGameViewKeyHandlerStrategy() = default;
+
+    /******************************************************************************************//**
+     * @brief Handle key press on the board.
+     *
+     * @param p_controller The Game View controller.
+     * @param p_gameBoard  The board to act on.
+     *
+     * @return `true` if the handling must stop propagating, `false` otherwise.
+     *
+     ********************************************************************************************/
+    virtual bool Handle(IGameViewController& p_controller, IBoardInformation& p_gameBoard) = 0;
+
 };
 
 } // namespace cxgui
 
-#endif // GAMEDOWNKEYHANDLERSTRATEGY_H_CA8A3901_30FC_46DA_A256_EFF4B806B186
+#endif // IGAMEKEYHANDLERSTRATEGY_H_31AC17A9_F085_49C8_A86E_543E65DC78DC

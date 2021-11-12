@@ -16,23 +16,20 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file GameDownKeyHandlerStrategy.cpp
+ * @file GameViewRightKeyHandlerStrategy.cpp
  * @date 2020
  *
  *************************************************************************************************/
 
-#include <cxinv/include/assertion.h>
+#include <iostream>
 
-#include "GameDownKeyHandlerStrategy.h"
+#include "GameViewRightKeyHandlerStrategy.h"
 #include "IBoardInformation.h"
 #include "IGameViewController.h"
 
-bool cxgui::GameDownKeyHandlerStrategy::Handle(IGameViewController& p_controller, IBoardInformation& p_gameBoard)
+bool cxgui::GameViewRightKeyHandlerStrategy::Handle(IGameViewController& p_controller, IBoardInformation& /*p_gameBoard*/)
 {
-    const cxmodel::ChipColor chipColor = p_gameBoard.GetCurrentChipColor();
-    IF_CONDITION_NOT_MET_DO(chipColor != cxmodel::MakeTransparent(), return false;);
-
-    p_controller.OnDown(chipColor, p_gameBoard.GetCurrentColumn());
+    p_controller.OnMoveRight();
 
     return true;
 }

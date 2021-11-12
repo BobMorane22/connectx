@@ -16,35 +16,23 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file GameKeyHandlerStrategyFactory.cpp
+ * @file GameViewDownKeyHandlerStrategy.cpp
  * @date 2020
  *
  *************************************************************************************************/
 
 #include <cxinv/include/assertion.h>
 
-#include "GameKeyHandlerStrategyFactory.h"
+#include "GameViewDownKeyHandlerStrategy.h"
+#include "IBoardInformation.h"
+#include "IGameViewController.h"
 
-#include "GameDownKeyHandlerStrategy.h"
-#include "GameLeftKeyHandlerStrategy.h"
-#include "GameRightKeyHandlerStrategy.h"
-
-std::unique_ptr<cxgui::IGameKeyHandlerStrategy> cxgui::GameKeyHandlerStrategyFactory::Create(GdkEventKey* p_event)
+bool cxgui::GameViewDownKeyHandlerStrategy::Handle(IGameViewController& p_controller, IBoardInformation& p_gameBoard)
 {
-    IF_PRECONDITION_NOT_MET_DO(p_event, return nullptr;);
+    const cxmodel::ChipColor chipColor = p_gameBoard.GetCurrentChipColor();
+    IF_CONDITION_NOT_MET_DO(chipColor != cxmodel::MakeTransparent(), return false;);
 
-    switch(p_event->keyval)
-    {
-        case GDK_KEY_Left:
-            return std::make_unique<cxgui::GameLeftKeyHandlerStrategy>();
+    p_controller.OnDown(chipColor, p_gameBoard.GetCurrentColumn());
 
-        case GDK_KEY_Right:
-            return std::make_unique<cxgui::GameRightKeyHandlerStrategy>();
-
-        case GDK_KEY_Down:
-            return std::make_unique<cxgui::GameDownKeyHandlerStrategy>();
-
-        default:
-            return nullptr;
-    }
+    return true;
 }
