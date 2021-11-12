@@ -33,6 +33,7 @@
 #include "common.h"
 #include "DiscChip.h"
 #include "GameView.h"
+#include "GameViewKeyHandlerStrategyFactory.h"
 
 namespace
 {
@@ -268,7 +269,7 @@ bool cxgui::GameView::OnKeyPressed(GdkEventKey* p_event)
     // while one is already running:
     DisableKeyHandlers();
 
-    const auto strategy = m_keyEventStrategyFactory.Create(p_event);
+    const auto strategy = GameViewKeyHandlerStrategyFactory::Create(p_event);
 
     if(!strategy)
     {

@@ -54,7 +54,7 @@ public:
      * @return The strategy, `nullptr` otherwise.
      *
      ********************************************************************************************/
-    std::unique_ptr<cxgui::IGameViewKeyHandlerStrategy> Create(GdkEventKey* p_event);
+    static std::unique_ptr<cxgui::IGameViewKeyHandlerStrategy> Create(GdkEventKey* p_event);
 
 };
 

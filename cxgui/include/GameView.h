@@ -110,9 +110,6 @@ private:
 
     std::unique_ptr<cxgui::AnimatedBoard> m_board;
 
-    // Keys:
-    cxgui::GameViewKeyHandlerStrategyFactory m_keyEventStrategyFactory;
-
     // Signals:
     sigc::connection m_keysPressedConnection;
 };
