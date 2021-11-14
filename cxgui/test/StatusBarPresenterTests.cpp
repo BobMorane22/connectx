@@ -66,6 +66,11 @@ TEST(StatusBarPresenter, MakeStatusBarContextString_Undo_UndoStringCreated)
     ASSERT_EQ(cxgui::MakeStatusBarContextString(cxmodel::ModelNotificationContext::UNDO_CHIP_DROPPED), "Undo.");
 }
 
+TEST(StatusBarPresenter, MakeStatusBarContextString_Redo_RedoStringCreated)
+{
+    ASSERT_EQ(cxgui::MakeStatusBarContextString(cxmodel::ModelNotificationContext::REDO_CHIP_DROPPED), "Redo.");
+}
+
 TEST(StatusBarPresenter, MakeStatusBarContextString_GameWon_GameWonStringCreated)
 {
     ASSERT_EQ(cxgui::MakeStatusBarContextString(cxmodel::ModelNotificationContext::GAME_WON), "Game won!");
