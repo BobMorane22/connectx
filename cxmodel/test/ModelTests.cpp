@@ -51,6 +51,27 @@ TEST_F(ModelTestFixture, /*DISABLED_*/Update_ValidModel_CalledOnUndoChipDrop)
     ASSERT_TRUE(undoDropChipObserver.WasNotified());
 }
 
+TEST_F(ModelTestFixture, /*DISABLED_*/Update_ValidModel_CalledOnRedoChipDrop)
+{
+    CreateNewGame(6u, 7u, ModelTestFixture::NbPlayers::TWO, ModelTestFixture::InARowValue::FOUR);
+
+    ModelNotificationCatcher redoDropChipObserver{cxmodel::ModelNotificationContext::REDO_CHIP_DROPPED};
+    GetModel().Attach(&redoDropChipObserver);
+
+    // Drop a chip. This is an initial drop, so no "redo" notification occurs:
+    DropChips(1u);
+    ASSERT_FALSE(redoDropChipObserver.WasNotified());
+
+    // The drop is undone: 
+    GetModel().Undo();
+    ASSERT_FALSE(redoDropChipObserver.WasNotified());
+
+    // We redo the last undone chip dropped. This time, since the same drop
+    // is performed again, a redo notification occurs:
+    GetModel().Redo();
+    ASSERT_TRUE(redoDropChipObserver.WasNotified());
+}
+
 TEST_F(ModelTestFixture, /*DISABLED_*/GetName_ValidModel_NameReturned)
 {
     ASSERT_EQ(GetModel().GetName(), "Connect X");
