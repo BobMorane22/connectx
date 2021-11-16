@@ -76,8 +76,8 @@ public:
      * @param p_presenter
      *      The Game View presenter.
      * @param p_speed
-     *      The number of positions a disc shoulb move, per second. For example, a value of '3'
-     *      would mean that a disc will move three columns (or rows) per second when animated.
+     *      The number of positions a chip should move, per second. For example, a value of '3'
+     *      would mean that a chip will move three columns (or rows) per second when animated.
      *
      *********************************************************************************************/
     AnimatedBoard(const IGameViewPresenter& p_presenter, size_t p_speed);
@@ -124,7 +124,7 @@ private:
 
     // Down move animation:
     bool m_animateMoveDown = false;           // Flag indicating if a "move down" animation is ongoing.
-    double m_totalMoveDownDisplacement = 0.0; // Sum of down displacement deltas in the context of a single animation (i.e. one disc only).
+    double m_totalMoveDownDisplacement = 0.0; // Sum of down displacement deltas in the context of a single animation (i.e. one chip only).
 
     // Last frame information:
     double m_lastFrameHeight = 0.0; // Height of the animation for last frame.

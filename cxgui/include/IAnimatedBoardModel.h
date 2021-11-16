@@ -45,7 +45,7 @@ enum class AddLineWidth
  * @brief Animated board model.
  *
  * The role of this model is to abstract away the redundant calculations about the animations,
- * such as disc size, positions and so on. This model should be completely agnostic to the
+ * such as chip size, positions and so on. This model should be completely agnostic to the
  * animation technology.
  *
  *************************************************************************************************/
@@ -73,11 +73,11 @@ public:
      *
      * @param p_widgetDimensions
      *      The dimensions of the whole animated board widget.
-     * @param p_isDiscMovingHorizontally
-     *      Indicates if the disc is currently moving left of right.
+     * @param p_isChipMovingHorizontally
+     *      Indicates if the chip is currently moving left of right.
      *
      *********************************************************************************************/
-    virtual void Update(Dimensions p_widgetDimensions, bool p_isDiscMovingHorizontally) = 0;
+    virtual void Update(Dimensions p_widgetDimensions, bool p_isChipMovingHorizontally) = 0;
 
     /******************************************************************************************//**
      * @brief Resizes the current animation according to horizontal and vertical ratios.
@@ -101,13 +101,13 @@ public:
      *      A vertical displacement (in pixels).
      *
      *********************************************************************************************/
-     virtual void AddDiscDisplacement(double p_horizontal, double p_vertical) = 0;
+     virtual void AddChipDisplacement(double p_horizontal, double p_vertical) = 0;
      
     /******************************************************************************************//**
      * @brief Resets all chip positions.
      *
      *********************************************************************************************/
-    virtual void ResetDiscPositions() = 0;
+    virtual void ResetChipPositions() = 0;
 
     /******************************************************************************************//**
      * @brief Updates the current column to some new value.
@@ -131,7 +131,7 @@ public:
     [[nodiscard]] virtual size_t GetFPS() const = 0;
 
     /******************************************************************************************//**
-     * @brief Gets the animation speed (discs/sec).
+     * @brief Gets the animation speed (chips/sec).
      *
      * @return The animation speed.
      *
@@ -149,8 +149,8 @@ public:
     /******************************************************************************************//**
      * @brief Gets the dimensions for a single cell.
      *
-     * The animated game board is composed of "cells", which can be thought of as the single disc
-     * visual container. It displays the disc, but also some of the area around it. All cells have
+     * The animated game board is composed of "cells", which can be thought of as the single chip
+     * visual container. It displays the chip, but also some of the area around it. All cells have
      * the same size on the board. The collection of all the cells, displayed along each other on
      * rows and columns, forms the actual board.
      *
@@ -160,14 +160,14 @@ public:
     [[nodiscard]] virtual Dimensions GetCellDimensions() const = 0;
 
     /******************************************************************************************//**
-     * @brief Gets the radius of a disc.
+     * @brief Gets the radius of a chip.
      *
      * @param p_addLineWidth Indicates if line width should be taken into account.
      *
-     * @return The radius of the disc.
+     * @return The radius of the chip.
      *
      *********************************************************************************************/
-    [[nodiscard]] virtual double GetDiscRadius(AddLineWidth p_addLineWidth) const = 0;
+    [[nodiscard]] virtual double GetChipRadius(AddLineWidth p_addLineWidth) const = 0;
 
     /******************************************************************************************//**
      * @brief Gets the main chip current position.
@@ -175,7 +175,7 @@ public:
      * @return The main chip's current position.
      *
      *********************************************************************************************/
-    [[nodiscard]] virtual cxmath::Position GetDiscPosition() const = 0;
+    [[nodiscard]] virtual cxmath::Position GetChipPosition() const = 0;
 
     /******************************************************************************************//**
      * @brief Gets the current horizontal margin.
@@ -194,15 +194,15 @@ public:
      * @return The mirror chip's current position.
      *
      *********************************************************************************************/
-    [[nodiscard]] virtual cxmath::Position GetMirrorDiscPosition() const = 0;
+    [[nodiscard]] virtual cxmath::Position GetMirrorChipPosition() const = 0;
 
     /******************************************************************************************//**
      * @brief Indicates if the drawing of a mirror chip is required.
      *
-     * @return `true` if drawing a mirror disc is required, `false` otherwise.
+     * @return `true` if drawing a mirror chip is required, `false` otherwise.
      *
      *********************************************************************************************/
-    [[nodiscard]] virtual bool IsMirrorDiscNeeded() const = 0;
+    [[nodiscard]] virtual bool IsMirrorChipNeeded() const = 0;
 
     /******************************************************************************************//**
      * @brief Gets the current line width value.

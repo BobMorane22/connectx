@@ -45,21 +45,21 @@ namespace
 {
 
 /**************************************************************************************************
- * @brief Draw a disc.
+ * @brief Draw a chip.
  *
- * The disc will have a boarder around it.
+ * The chip will have a boarder around it.
  *
  * @param p_context
  *      The cairo context to use.
  * @param p_centerPosition
- *      The disc's wanted center position.
+ *      The chip's wanted center position.
  * @param p_radius
- *      The discs wanted radius.
+ *      The chips wanted radius.
  * @param p_backgroundColor
- *      The discs wanted background color.
+ *      The chips wanted background color.
  *
  *************************************************************************************************/
-void DrawDisc(const Cairo::RefPtr<Cairo::Context>& p_context,
+void DrawChip(const Cairo::RefPtr<Cairo::Context>& p_context,
               const cxmath::Position& p_centerPosition,
               double p_radius,
               const cxmodel::ChipColor& p_backgroundColor)
@@ -124,10 +124,10 @@ void cxgui::AnimatedBoard::PerformChipAnimation(BoardAnimation p_animation)
     {
         case cxgui::BoardAnimation::MOVE_CHIP_LEFT_ONE_COLUMN:
         {
-            const double nbFramesPerDisc = fps / speed;
+            const double nbFramesPerChip = fps / speed;
 
             const double oneAnimationWidth = m_animationModel->GetAnimatedAreaDimensions().m_width.Get() / m_presenter->GetBoardWidth();
-            const double delta = oneAnimationWidth / nbFramesPerDisc;
+            const double delta = oneAnimationWidth / nbFramesPerChip;
 
             if(m_totalMoveLeftDisplacement >= oneAnimationWidth || std::abs(m_totalMoveLeftDisplacement - oneAnimationWidth) <= 1e-6)
             {
@@ -149,7 +149,7 @@ void cxgui::AnimatedBoard::PerformChipAnimation(BoardAnimation p_animation)
             }
             else
             {
-                m_animationModel->AddDiscDisplacement(-delta, 0.0);
+                m_animationModel->AddChipDisplacement(-delta, 0.0);
                 m_totalMoveLeftDisplacement += delta;
             }
 
@@ -157,10 +157,10 @@ void cxgui::AnimatedBoard::PerformChipAnimation(BoardAnimation p_animation)
         }
         case cxgui::BoardAnimation::MOVE_CHIP_RIGHT_ONE_COLUMN:
         {
-            const double nbFramesPerDisc = fps / speed;
+            const double nbFramesPerChip = fps / speed;
 
             const double oneAnimationWidth = m_animationModel->GetAnimatedAreaDimensions().m_width.Get() / m_presenter->GetBoardWidth();
-            const double delta = oneAnimationWidth / nbFramesPerDisc;
+            const double delta = oneAnimationWidth / nbFramesPerChip;
 
             if(m_totalMoveRightDisplacement >= oneAnimationWidth || std::abs(m_totalMoveRightDisplacement - oneAnimationWidth) <= 1e-6)
             {
@@ -182,7 +182,7 @@ void cxgui::AnimatedBoard::PerformChipAnimation(BoardAnimation p_animation)
             }
             else
             {
-                m_animationModel->AddDiscDisplacement(delta, 0.0);
+                m_animationModel->AddChipDisplacement(delta, 0.0);
                 m_totalMoveRightDisplacement += delta;
             }
 
@@ -204,8 +204,8 @@ void cxgui::AnimatedBoard::PerformChipAnimation(BoardAnimation p_animation)
                 m_totalMoveDownDisplacement = 0.0;
                 m_animateMoveDown = false;
 
-                // Reinitialize disc:
-                m_animationModel->ResetDiscPositions();
+                // Reinitialize chip:
+                m_animationModel->ResetChipPositions();
                 m_animationModel->UpdateCurrentColumn(0u);
 
                 m_presenter->Sync();
@@ -215,7 +215,7 @@ void cxgui::AnimatedBoard::PerformChipAnimation(BoardAnimation p_animation)
             }
             else
             {
-                m_animationModel->AddDiscDisplacement(0.0, delta);
+                m_animationModel->AddChipDisplacement(0.0, delta);
                 m_totalMoveDownDisplacement += delta;
             }
 
@@ -223,8 +223,8 @@ void cxgui::AnimatedBoard::PerformChipAnimation(BoardAnimation p_animation)
         }
         case cxgui::BoardAnimation::UNDO_DROP_CHIP:
         {
-            // Reinitialize disc:
-            m_animationModel->ResetDiscPositions();
+            // Reinitialize chip:
+            m_animationModel->ResetChipPositions();
             m_animationModel->UpdateCurrentColumn(0u);
 
             m_presenter->Sync();
@@ -234,8 +234,8 @@ void cxgui::AnimatedBoard::PerformChipAnimation(BoardAnimation p_animation)
         }
         case cxgui::BoardAnimation::REDO_DROP_CHIP:
         {
-            // Reinitialize disc:
-            m_animationModel->ResetDiscPositions();
+            // Reinitialize chip:
+            m_animationModel->ResetChipPositions();
             m_animationModel->UpdateCurrentColumn(0u);
 
             m_presenter->Sync();
@@ -285,18 +285,18 @@ bool cxgui::AnimatedBoard::on_draw(const Cairo::RefPtr<Cairo::Context>& p_contex
     // Draw colum highlight:
     DrawActiveColumnHighlight(bufferContext);
 
-    // Draw Disc(s):
+    // Draw Chip(s):
     const cxmodel::ChipColor chipColor = m_presenter->GetActivePlayerChipColor();
-    DrawDisc(bufferContext,
-             m_animationModel->GetDiscPosition(),
-             m_animationModel->GetDiscRadius(AddLineWidth::YES),
+    DrawChip(bufferContext,
+             m_animationModel->GetChipPosition(),
+             m_animationModel->GetChipRadius(AddLineWidth::YES),
              chipColor);
 
-    if(m_animationModel->IsMirrorDiscNeeded())
+    if(m_animationModel->IsMirrorChipNeeded())
     {
-        DrawDisc(bufferContext,
-                 m_animationModel->GetMirrorDiscPosition(),
-                 m_animationModel->GetDiscRadius(AddLineWidth::YES),
+        DrawChip(bufferContext,
+                 m_animationModel->GetMirrorChipPosition(),
+                 m_animationModel->GetChipRadius(AddLineWidth::YES),
                  chipColor);
     }
 
@@ -328,7 +328,7 @@ void cxgui::AnimatedBoard::DrawActiveColumnHighlight(const Cairo::RefPtr<Cairo::
     cxgui::ContextRestoreRAII contextRestoreRAII{p_context};
 
     cxgui::MakeRectanglarPath(p_context,
-                              {m_animationModel->GetDiscPosition().m_x - (cellWidth / 2.0), cellHeight},
+                              {m_animationModel->GetChipPosition().m_x - (cellWidth / 2.0), cellHeight},
                               m_animationModel->GetAnimatedAreaDimensions().m_height.Get() - cellHeight,
                               cellWidth);
 
@@ -340,14 +340,14 @@ void cxgui::AnimatedBoard::DrawActiveColumnHighlight(const Cairo::RefPtr<Cairo::
     p_context->stroke();
 }
 
-// See `on_draw()`. Basically draws a disc and the rectangular space around it (which has the board color). All
+// See `on_draw()`. Basically draws a chip and the rectangular space around it (which has the board color). All
 // these elements together make the board.
 void cxgui::AnimatedBoard::DrawBoardElement(const Cairo::RefPtr<Cairo::Context>& p_context, size_t p_row, size_t p_column)
 {
     const Dimensions cellDimensions = m_animationModel->GetCellDimensions();
     const double cellWidth = cellDimensions.m_width.Get();
     const double cellHeight = cellDimensions.m_height.Get();
-    const double radius = m_animationModel->GetDiscRadius(AddLineWidth::NO) - (m_animationModel->GetLineWidth() / 2.0);
+    const double radius = m_animationModel->GetChipRadius(AddLineWidth::NO) - (m_animationModel->GetLineWidth() / 2.0);
 
     const IGameViewPresenter::ChipColors& chipColors = m_presenter->GetBoardChipColors();
     const cxmodel::ChipColor chipColor = chipColors[p_row][p_column];
@@ -371,7 +371,7 @@ void cxgui::AnimatedBoard::DrawBoardElement(const Cairo::RefPtr<Cairo::Context>&
     {
         cxgui::ContextRestoreRAII contextRestoreRAII{bufferContext};
 
-        // Draw paths for disc space and the cell contour:
+        // Draw paths for chip space and the cell contour:
         cxgui::MakeCircularPath(bufferContext, {cellWidth / 2.0, cellHeight / 2.0}, radius);
         cxgui::MakeRectanglarPath(bufferContext, {0.0, 0.0}, cellHeight, cellWidth);
 
@@ -384,7 +384,7 @@ void cxgui::AnimatedBoard::DrawBoardElement(const Cairo::RefPtr<Cairo::Context>&
         bufferContext->stroke();
     }
 
-    // Add border and draw model discs:
+    // Add border and draw model chips:
     {
         cxgui::ContextRestoreRAII contextRestoreRAII{bufferContext};
 
@@ -421,7 +421,7 @@ void cxgui::AnimatedBoard::DrawBoardElement(const Cairo::RefPtr<Cairo::Context>&
 // this.
 bool cxgui::AnimatedBoard::Redraw()
 {
-    const double chipHorizontalPosition = m_animationModel->GetDiscPosition().m_x;
+    const double chipHorizontalPosition = m_animationModel->GetChipPosition().m_x;
     const cxgui::Dimensions cellDimensions = m_animationModel->GetCellDimensions();
     const double cellWidth = cellDimensions.m_width.Get();
     const double fps = static_cast<double>(m_animationModel->GetFPS());
@@ -430,12 +430,12 @@ bool cxgui::AnimatedBoard::Redraw()
     // Schedule a redraw on the next frame:
     if(m_animateMoveLeft)
     {
-        const double nbFramesPerDisc = fps / speed;
-        const double delta = cellWidth / nbFramesPerDisc;
+        const double nbFramesPerChip = fps / speed;
+        const double delta = cellWidth / nbFramesPerChip;
 
         if(chipHorizontalPosition < cellWidth / 2.0)
         {
-            // Because of the mirror disc, redraw the whole screen.
+            // Because of the mirror chip, redraw the whole screen.
             queue_draw();
         }
         else
@@ -447,12 +447,12 @@ bool cxgui::AnimatedBoard::Redraw()
     }
     if(m_animateMoveRight)
     {
-        const double nbFramesPerDisc = fps / speed;
-        const double delta = cellWidth / nbFramesPerDisc;
+        const double nbFramesPerChip = fps / speed;
+        const double delta = cellWidth / nbFramesPerChip;
 
         if(chipHorizontalPosition > m_animationModel->GetAnimatedAreaDimensions().m_width.Get() - cellWidth / 2.0)
         {
-            // Because of the mirror disc, redraw the whole screen.
+            // Because of the mirror chip, redraw the whole screen.
             queue_draw();
         }
         else

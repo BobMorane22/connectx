@@ -50,46 +50,46 @@ public:
 
     AnimatedBoardModel(const cxgui::IAnimatedBoardPresenter& p_presenter, size_t p_animationSpeed);
 
-    void Update(Dimensions p_widgetDimensions, bool p_isDiscMovingHorizontally) override;
+    void Update(Dimensions p_widgetDimensions, bool p_isChipMovingHorizontally) override;
     void Resize(double p_horizontalRatio, double p_verticalRatio) override;
-    void AddDiscDisplacement(double p_horizontal, double p_vertical) override;
-    void ResetDiscPositions() override;
+    void AddChipDisplacement(double p_horizontal, double p_vertical) override;
+    void ResetChipPositions() override;
     void UpdateCurrentColumn(size_t p_newCurrentColumn) override;
 
     [[nodiscard]] size_t GetFPS() const override;
     [[nodiscard]] size_t GetAnimationSpeed() const override;
     [[nodiscard]] Dimensions GetAnimatedAreaDimensions() const override;
     [[nodiscard]] Dimensions GetCellDimensions() const override;
-    [[nodiscard]] double GetDiscRadius(AddLineWidth p_mode) const override;
-    [[nodiscard]] cxmath::Position GetDiscPosition() const override;
+    [[nodiscard]] double GetChipRadius(AddLineWidth p_mode) const override;
+    [[nodiscard]] cxmath::Position GetChipPosition() const override;
     [[nodiscard]] double GetHorizontalMargin() const override;
-    [[nodiscard]] cxmath::Position GetMirrorDiscPosition() const override;
-    [[nodiscard]] bool IsMirrorDiscNeeded() const override;
+    [[nodiscard]] cxmath::Position GetMirrorChipPosition() const override;
+    [[nodiscard]] bool IsMirrorChipNeeded() const override;
     [[nodiscard]] double GetLineWidth() const override;
     [[nodiscard]] size_t GetCurrentColumn() const override;
 
 private:
 
     template<BoardAnimation A>
-    [[nodiscard]] bool ComputeDiscPosition(double p_windowWidth, double p_halfDiscSize, double p_horizontalMargin);
-    [[nodiscard]] bool ComputeDiscLeftPosition(double p_windowWidth, double p_halfDiscSize, double p_horizontalMargin);
-    [[nodiscard]] bool ComputeDiscRightPosition(double p_windowWidth, double p_halfDiscSize, double p_horizontalMargin);
-    void ComputeDiscVerticalPosition(const double p_halfDiscSize, double p_height);
+    [[nodiscard]] bool ComputeChipPosition(double p_windowWidth, double p_halfChipSize, double p_horizontalMargin);
+    [[nodiscard]] bool ComputeChipLeftPosition(double p_windowWidth, double p_halfChipSize, double p_horizontalMargin);
+    [[nodiscard]] bool ComputeChipRightPosition(double p_windowWidth, double p_halfChipSize, double p_horizontalMargin);
+    void ComputeChipVerticalPosition(const double p_halfChipSize, double p_height);
 
     const cxgui::IAnimatedBoardPresenter& m_presenter;
 
-    size_t m_animationSpeed; // Units: discs/sec
+    size_t m_animationSpeed; // Units: chips/sec
 
     Dimensions m_widgetDimensions{Height{0}, Width{0}};
     Dimensions m_cellDimensions{Height{0}, Width{0}};
 
-    double m_theoreticalDiscRadius = 0.0;
-    double m_discRadius = 0.0;
+    double m_theoreticalChipRadius = 0.0;
+    double m_chipRadius = 0.0;
 
-    bool m_isDiscMovingHorizontally = false;
-    cxmath::Position m_discPosition{0.0, 0.0};
-    cxmath::Position m_mirrorDiscPosition{0.0, 0.0};
-    bool m_isMirrorDiscNeeded = false;
+    bool m_isChipMovingHorizontally = false;
+    cxmath::Position m_chipPosition{0.0, 0.0};
+    cxmath::Position m_mirrorChipPosition{0.0, 0.0};
+    bool m_isMirrorChipNeeded = false;
 
     double m_horizontalMargin = 0.0;
 
