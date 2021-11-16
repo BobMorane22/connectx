@@ -86,6 +86,13 @@ cxmodel::IConnectXLimits& MainWindowPresenterTestFixture::GetLimitsModel()
     return *m_model;
 }
 
+cxmodel::IUndoRedo& MainWindowPresenterTestFixture::GetUndoRedoModel()
+{
+    EXPECT_TRUE(m_model);
+
+    return *m_model;
+}
+
 void MainWindowPresenterTestFixture::MainWindowPresenterModelMock::SendNotification(cxmodel::ModelNotificationContext p_context)
 {
     Notify(p_context);
@@ -137,3 +144,16 @@ void MainWindowPresenterTestFixture::MainWindowPresenterModelMock::ReinitializeC
     Notify(cxmodel::ModelNotificationContext::GAME_REINITIALIZED);
 }
 
+void MainWindowPresenterTestFixture::MainWindowPresenterModelMock::Undo()
+{
+    // Here we only notify and let the presenter feed from the hardcoded
+    // model mock values. The values in themselves are not important.
+    Notify(cxmodel::ModelNotificationContext::UNDO_CHIP_DROPPED);
+}
+
+void MainWindowPresenterTestFixture::MainWindowPresenterModelMock::Redo()
+{
+    // Here we only notify and let the presenter feed from the hardcoded
+    // model mock values. The values in themselves are not important.
+    Notify(cxmodel::ModelNotificationContext::REDO_CHIP_DROPPED);
+}

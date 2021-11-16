@@ -39,6 +39,8 @@ namespace
 /*********************************************************************************************//**
  * @brief Mock testing when undoing and redoing should be unlocked.
  *
+ * Override this to make undo or redo available (i.e. "unlocked").
+ *
  ************************************************************************************************/
 class CanUndoRedoModel : public cxmodel::IUndoRedo
 {
@@ -264,6 +266,86 @@ TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/Update_GameReinitialized_Boa
     }
 }
 
+TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/Update_DiscDropUndone_BoardInformationUpdated)
+{
+    // We create a new game to update the active player chip:
+    auto& actionModel = GetActionsModel();
+    actionModel.CreateNewGame(cxmodel::NewGameInformation{});
+
+    // Initial state:
+    const auto& presenter = GetPresenter();
+    auto boardColors = presenter.GetGameViewChipColors();
+
+    for(const auto& row : boardColors)
+    {
+        ASSERT_TRUE(std::all_of(row.cbegin(),
+                                row.cend(),
+                                [](const cxmodel::ChipColor& p_color)
+                                {
+                                    return p_color == cxmodel::MakeTransparent();
+                                }));
+    }
+
+
+    // We undo:
+    auto& undoRedoModel = GetUndoRedoModel();
+    undoRedoModel.Undo();
+
+    // Updated state:
+    auto& infoModel = GetGameInformationModel();
+    boardColors = presenter.GetGameViewChipColors();
+    for(const auto& row : boardColors)
+    {
+        ASSERT_TRUE(std::all_of(row.cbegin(),
+                                row.cend(),
+                                [&infoModel](const cxmodel::ChipColor& p_color)
+                                {
+                                    const cxmodel::IChip& activePlayerChip = infoModel.GetActivePlayer().GetChip();
+                                    return p_color == activePlayerChip.GetColor();
+                                }));
+    }
+}
+
+TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/Update_DiscDropRedone_BoardInformationUpdated)
+{
+    // We create a new game to update the active player chip:
+    auto& actionModel = GetActionsModel();
+    actionModel.CreateNewGame(cxmodel::NewGameInformation{});
+
+    // Initial state:
+    const auto& presenter = GetPresenter();
+    auto boardColors = presenter.GetGameViewChipColors();
+
+    for(const auto& row : boardColors)
+    {
+        ASSERT_TRUE(std::all_of(row.cbegin(),
+                                row.cend(),
+                                [](const cxmodel::ChipColor& p_color)
+                                {
+                                    return p_color == cxmodel::MakeTransparent();
+                                }));
+    }
+
+
+    // We redo:
+    auto& undoRedoModel = GetUndoRedoModel();
+    undoRedoModel.Redo();
+
+    // Updated state:
+    auto& infoModel = GetGameInformationModel();
+    boardColors = presenter.GetGameViewChipColors();
+    for(const auto& row : boardColors)
+    {
+        ASSERT_TRUE(std::all_of(row.cbegin(),
+                                row.cend(),
+                                [&infoModel](const cxmodel::ChipColor& p_color)
+                                {
+                                    const cxmodel::IChip& activePlayerChip = infoModel.GetActivePlayer().GetChip();
+                                    return p_color == activePlayerChip.GetColor();
+                                }));
+    }
+}
+
 TEST_F(ConfigurableMainWindowPresenterTestFixture, /*DISABLED_*/Update_DiscDropUndoedToInitialState_GameIsNotReinitializable)
 {
     constexpr bool BOARD_EMPTY = true;
@@ -377,6 +459,17 @@ TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/IsNewGamePossible_GameReinit
     ASSERT_TRUE(presenter.IsNewGamePossible());
 }
 
+TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/IsNewGamePossible_ChipDropRedoneNotification_TrueReturned)
+{
+    auto& actionModel = GetActionsModel();
+    actionModel.CreateNewGame(cxmodel::NewGameInformation{});
+
+    SendNotification(cxmodel::ModelNotificationContext::REDO_CHIP_DROPPED);
+
+    const auto& presenter = GetPresenter();
+    ASSERT_TRUE(presenter.IsNewGamePossible());
+}
+
 TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/IsNewGamePossible_AllOtherNotifications_FalseReturned)
 {
     auto& actionModel = GetActionsModel();
@@ -401,6 +494,17 @@ TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/IsCurrentGameReinitializatio
     actionModel.CreateNewGame(cxmodel::NewGameInformation{});
 
     SendNotification(cxmodel::ModelNotificationContext::CHIP_DROPPED);
+
+    const auto& presenter = GetPresenter();
+    ASSERT_TRUE(presenter.IsCurrentGameReinitializationPossible());
+}
+
+TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/IsCurrentGameReinitializationPossible_ChipDroppedRedoneNotification_TrueReturned)
+{
+    auto& actionModel = GetActionsModel();
+    actionModel.CreateNewGame(cxmodel::NewGameInformation{});
+
+    SendNotification(cxmodel::ModelNotificationContext::REDO_CHIP_DROPPED);
 
     const auto& presenter = GetPresenter();
     ASSERT_TRUE(presenter.IsCurrentGameReinitializationPossible());

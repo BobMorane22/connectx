@@ -51,6 +51,7 @@ public:
     cxmodel::IConnectXGameActions& GetActionsModel();
     cxmodel::IConnectXGameInformation& GetGameInformationModel();
     cxmodel::IConnectXLimits& GetLimitsModel();
+    cxmodel::IUndoRedo& GetUndoRedoModel();
 
 private:
 
@@ -100,8 +101,8 @@ private:
         size_t GetMaximumNumberOfPlayers() const override {return 10u;};
 
         // IUndoRedo:
-        void Undo() override {}
-        void Redo() override {}
+        void Undo() override;
+        void Redo() override;
         bool CanUndo() const override {return true;}
         bool CanRedo() const override {return true;}
 
