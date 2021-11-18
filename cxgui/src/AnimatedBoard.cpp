@@ -289,14 +289,14 @@ bool cxgui::AnimatedBoard::on_draw(const Cairo::RefPtr<Cairo::Context>& p_contex
     const cxmodel::ChipColor chipColor = m_presenter->GetActivePlayerChipColor();
     DrawChip(bufferContext,
              m_animationModel->GetChipPosition(),
-             m_animationModel->GetChipRadius(AddLineWidth::YES),
+             m_animationModel->GetChipRadius() + m_animationModel->GetLineWidth(cxgui::Feature::CHIP),
              chipColor);
 
     if(m_animationModel->IsMirrorChipNeeded())
     {
         DrawChip(bufferContext,
                  m_animationModel->GetMirrorChipPosition(),
-                 m_animationModel->GetChipRadius(AddLineWidth::YES),
+                 m_animationModel->GetChipRadius() + m_animationModel->GetLineWidth(cxgui::Feature::CHIP),
                  chipColor);
     }
 
@@ -347,7 +347,7 @@ void cxgui::AnimatedBoard::DrawBoardElement(const Cairo::RefPtr<Cairo::Context>&
     const Dimensions cellDimensions = m_animationModel->GetCellDimensions();
     const double cellWidth = cellDimensions.m_width.Get();
     const double cellHeight = cellDimensions.m_height.Get();
-    const double radius = m_animationModel->GetChipRadius(AddLineWidth::NO) - (m_animationModel->GetLineWidth() / 2.0);
+    const double radius = m_animationModel->GetChipRadius() + m_animationModel->GetLineWidth(cxgui::Feature::CHIP);
 
     const IGameViewPresenter::ChipColors& chipColors = m_presenter->GetBoardChipColors();
     const cxmodel::ChipColor chipColor = chipColors[p_row][p_column];
@@ -365,8 +365,8 @@ void cxgui::AnimatedBoard::DrawBoardElement(const Cairo::RefPtr<Cairo::Context>&
 
     // Add a little extra to cover everything...
     auto buffer = Cairo::ImageSurface::create(Cairo::Format::FORMAT_ARGB32,
-                                              cellWidth + m_animationModel->GetLineWidth(),
-                                              cellHeight + m_animationModel->GetLineWidth());
+                                              cellWidth + m_animationModel->GetLineWidth(cxgui::Feature::CELL),
+                                              cellHeight + m_animationModel->GetLineWidth(cxgui::Feature::CELL));
     const auto bufferContext = Cairo::Context::create(buffer);
     {
         cxgui::ContextRestoreRAII contextRestoreRAII{bufferContext};
@@ -402,8 +402,8 @@ void cxgui::AnimatedBoard::DrawBoardElement(const Cairo::RefPtr<Cairo::Context>&
     const Glib::RefPtr<Gdk::Pixbuf> boardElement = Gdk::Pixbuf::create(buffer,
                                                                        0,
                                                                        0,
-                                                                       cellWidth + m_animationModel->GetLineWidth(),
-                                                                       cellHeight + m_animationModel->GetLineWidth());
+                                                                       cellWidth + m_animationModel->GetLineWidth(cxgui::Feature::CELL),
+                                                                       cellHeight + m_animationModel->GetLineWidth(cxgui::Feature::CELL));
     m_boardElementsCache.Add(chipColor, boardElement);
 
     // Paint that part to the canvas:

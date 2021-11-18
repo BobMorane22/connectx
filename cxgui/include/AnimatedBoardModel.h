@@ -60,12 +60,12 @@ public:
     [[nodiscard]] size_t GetAnimationSpeed() const override;
     [[nodiscard]] Dimensions GetAnimatedAreaDimensions() const override;
     [[nodiscard]] Dimensions GetCellDimensions() const override;
-    [[nodiscard]] double GetChipRadius(AddLineWidth p_mode) const override;
+    [[nodiscard]] double GetChipRadius() const override;
     [[nodiscard]] cxmath::Position GetChipPosition() const override;
     [[nodiscard]] double GetHorizontalMargin() const override;
     [[nodiscard]] cxmath::Position GetMirrorChipPosition() const override;
     [[nodiscard]] bool IsMirrorChipNeeded() const override;
-    [[nodiscard]] double GetLineWidth() const override;
+    [[nodiscard]] double GetLineWidth(Feature p_feature) const override;
     [[nodiscard]] size_t GetCurrentColumn() const override;
 
 private:
@@ -83,7 +83,6 @@ private:
     Dimensions m_widgetDimensions{Height{0}, Width{0}};
     Dimensions m_cellDimensions{Height{0}, Width{0}};
 
-    double m_theoreticalChipRadius = 0.0;
     double m_chipRadius = 0.0;
 
     bool m_isChipMovingHorizontally = false;
@@ -93,7 +92,8 @@ private:
 
     double m_horizontalMargin = 0.0;
 
-    double m_lineWidth = 0.0;
+    double m_chipLineWidth = 0.0;
+    double m_cellLineWidth = 0.0;
 
     size_t m_currentColumn = 0u;
 };

@@ -32,13 +32,13 @@ namespace cxgui
 {
 
 /**********************************************************************************************//**
- * @brief Line width mode for calculations.
+ * @brief Type of feature for which to get the line width.
  *
  *************************************************************************************************/
-enum class AddLineWidth
+enum class Feature
 {
-    YES,
-    NO,
+    CELL,
+    CHIP,
 };
 
 /**********************************************************************************************//**
@@ -162,12 +162,10 @@ public:
     /******************************************************************************************//**
      * @brief Gets the radius of a chip.
      *
-     * @param p_addLineWidth Indicates if line width should be taken into account.
-     *
      * @return The radius of the chip.
      *
      *********************************************************************************************/
-    [[nodiscard]] virtual double GetChipRadius(AddLineWidth p_addLineWidth) const = 0;
+    [[nodiscard]] virtual double GetChipRadius() const = 0;
 
     /******************************************************************************************//**
      * @brief Gets the main chip current position.
@@ -205,12 +203,14 @@ public:
     [[nodiscard]] virtual bool IsMirrorChipNeeded() const = 0;
 
     /******************************************************************************************//**
-     * @brief Gets the current line width value.
+     * @brief Gets the current line width value for a specified feature.
+     *
+     * @paran p_feature The feature to get the line width for.
      *
      * @return The current line width value.
      *
      *********************************************************************************************/
-    [[nodiscard]] virtual double GetLineWidth() const = 0;
+    [[nodiscard]] virtual double GetLineWidth(Feature p_feature) const = 0;
 
     /******************************************************************************************//**
      * @brief Gets the current column.

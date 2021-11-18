@@ -383,23 +383,20 @@ void cxgui::AnimatedBoardModel::Update(Dimensions p_widgetDimensions, bool p_isC
     const Width cellWidth = Width(m_widgetDimensions.m_width.Get() / m_presenter.GetBoardWidth());
     m_cellDimensions = Dimensions(cellHeight, cellWidth);
     const double smallestDimensionSize = std::min(m_widgetDimensions.m_height.Get(), m_widgetDimensions.m_width.Get());
-    m_lineWidth = smallestDimensionSize * LINE_WIDTH_SCALING_FACTOR;
+    m_cellLineWidth = smallestDimensionSize * LINE_WIDTH_SCALING_FACTOR;
 
     // Chip radius:
     const double maximumNbChips = std::max(m_presenter.GetBoardHeight() + 1, m_presenter.GetBoardWidth());
-    m_theoreticalChipRadius = (smallestDimensionSize / (maximumNbChips * 2.0));
-
-    const double chipLineWidth = m_theoreticalChipRadius * LINE_WIDTH_SCALING_FACTOR;
-    m_chipRadius = m_theoreticalChipRadius - (chipLineWidth / 2.0);
+    m_chipRadius = (smallestDimensionSize / (maximumNbChips * 2.0));
+    m_chipLineWidth = m_chipRadius * LINE_WIDTH_SCALING_FACTOR;
 
     // Chips positions (central and mirror):
-    const double halfChipSize = m_chipRadius + chipLineWidth / 2.0;
-    m_horizontalMargin = (cellWidth.Get() - (2.0 * halfChipSize)) / 2.0;
+    m_horizontalMargin = (cellWidth.Get() - (2.0 * m_chipRadius)) / 2.0;
 
     m_isChipMovingHorizontally = p_isChipMovingHorizontally;
-    const bool mirrorToTheLeft = ComputeChipLeftPosition(m_widgetDimensions.m_width.Get(), halfChipSize, m_horizontalMargin);
-    const bool mirrorToTheRight = ComputeChipRightPosition(m_widgetDimensions.m_width.Get(), halfChipSize, m_horizontalMargin);
-    ComputeChipVerticalPosition(halfChipSize, m_widgetDimensions.m_height.Get());
+    const bool mirrorToTheLeft = ComputeChipLeftPosition(m_widgetDimensions.m_width.Get(), m_chipRadius, m_horizontalMargin);
+    const bool mirrorToTheRight = ComputeChipRightPosition(m_widgetDimensions.m_width.Get(), m_chipRadius, m_horizontalMargin);
+    ComputeChipVerticalPosition(m_chipRadius, m_widgetDimensions.m_height.Get());
     m_mirrorChipPosition.m_y = m_chipPosition.m_y;
 
     m_isMirrorChipNeeded = (mirrorToTheLeft || mirrorToTheRight);
@@ -450,13 +447,8 @@ cxgui::Dimensions cxgui::AnimatedBoardModel::GetCellDimensions() const
     return m_cellDimensions;
 }
 
-double cxgui::AnimatedBoardModel::GetChipRadius(AddLineWidth p_addLineWidth) const
+double cxgui::AnimatedBoardModel::GetChipRadius() const
 {
-    if(p_addLineWidth == AddLineWidth::NO)
-    {
-        return m_theoreticalChipRadius;
-    }
-
     return m_chipRadius;
 }
 
@@ -480,9 +472,20 @@ bool cxgui::AnimatedBoardModel::IsMirrorChipNeeded() const
     return m_isMirrorChipNeeded;
 }
 
-double cxgui::AnimatedBoardModel::GetLineWidth() const
+double cxgui::AnimatedBoardModel::GetLineWidth(Feature p_feature) const
 {
-    return m_lineWidth;
+    switch(p_feature)
+    {
+        case Feature::CELL:
+            return m_cellLineWidth;
+
+        case Feature::CHIP:
+            return m_chipLineWidth;
+
+        default:
+            ASSERT_ERROR_MSG("Unknown feature type.");
+            return 0.0;
+    }
 }
 
 size_t cxgui::AnimatedBoardModel::GetCurrentColumn() const
