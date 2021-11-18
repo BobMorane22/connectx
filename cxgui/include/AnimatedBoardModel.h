@@ -50,7 +50,7 @@ public:
 
     AnimatedBoardModel(const cxgui::IAnimatedBoardPresenter& p_presenter, size_t p_animationSpeed);
 
-    void Update(Dimensions p_widgetDimensions, bool p_isChipMovingHorizontally) override;
+    void Update(const Dimensions& p_widgetDimensions, bool p_isChipMovingHorizontally) override;
     void Resize(double p_horizontalRatio, double p_verticalRatio) override;
     void AddChipDisplacement(double p_horizontal, double p_vertical) override;
     void ResetChipPositions() override;
@@ -58,12 +58,12 @@ public:
 
     [[nodiscard]] size_t GetFPS() const override;
     [[nodiscard]] size_t GetAnimationSpeed() const override;
-    [[nodiscard]] Dimensions GetAnimatedAreaDimensions() const override;
-    [[nodiscard]] Dimensions GetCellDimensions() const override;
+    [[nodiscard]] const Dimensions& GetAnimatedAreaDimensions() const override;
+    [[nodiscard]] const Dimensions& GetCellDimensions() const override;
     [[nodiscard]] double GetChipRadius() const override;
-    [[nodiscard]] cxmath::Position GetChipPosition() const override;
+    [[nodiscard]] const cxmath::Position& GetChipPosition() const override;
     [[nodiscard]] double GetHorizontalMargin() const override;
-    [[nodiscard]] cxmath::Position GetMirrorChipPosition() const override;
+    [[nodiscard]] const cxmath::Position& GetMirrorChipPosition() const override;
     [[nodiscard]] bool IsMirrorChipNeeded() const override;
     [[nodiscard]] double GetLineWidth(Feature p_feature) const override;
     [[nodiscard]] size_t GetCurrentColumn() const override;

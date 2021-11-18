@@ -370,7 +370,7 @@ void cxgui::AnimatedBoardModel::ComputeChipVerticalPosition(const double p_halfC
     }
 }
 
-void cxgui::AnimatedBoardModel::Update(Dimensions p_widgetDimensions, bool p_isChipMovingHorizontally)
+void cxgui::AnimatedBoardModel::Update(const Dimensions& p_widgetDimensions, bool p_isChipMovingHorizontally)
 {
     IF_PRECONDITION_NOT_MET_DO((p_widgetDimensions.m_height.Get() > 0.0 && p_widgetDimensions.m_width.Get() > 0.0), return;);
 
@@ -437,12 +437,12 @@ size_t cxgui::AnimatedBoardModel::GetAnimationSpeed() const
     return m_animationSpeed;
 }
 
-cxgui::Dimensions cxgui::AnimatedBoardModel::GetAnimatedAreaDimensions() const
+const cxgui::Dimensions& cxgui::AnimatedBoardModel::GetAnimatedAreaDimensions() const
 {
     return m_widgetDimensions;
 }
 
-cxgui::Dimensions cxgui::AnimatedBoardModel::GetCellDimensions() const
+const cxgui::Dimensions& cxgui::AnimatedBoardModel::GetCellDimensions() const
 {
     return m_cellDimensions;
 }
@@ -452,7 +452,7 @@ double cxgui::AnimatedBoardModel::GetChipRadius() const
     return m_chipRadius;
 }
 
-cxmath::Position cxgui::AnimatedBoardModel::GetChipPosition() const
+const cxmath::Position& cxgui::AnimatedBoardModel::GetChipPosition() const
 {
     return m_chipPosition;
 }
@@ -462,7 +462,7 @@ double cxgui::AnimatedBoardModel::GetHorizontalMargin() const
     return m_horizontalMargin;
 }
 
-cxmath::Position cxgui::AnimatedBoardModel::GetMirrorChipPosition() const
+const cxmath::Position& cxgui::AnimatedBoardModel::GetMirrorChipPosition() const
 {
     return m_mirrorChipPosition;
 }

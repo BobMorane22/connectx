@@ -77,7 +77,7 @@ public:
      *      Indicates if the chip is currently moving left of right.
      *
      *********************************************************************************************/
-    virtual void Update(Dimensions p_widgetDimensions, bool p_isChipMovingHorizontally) = 0;
+    virtual void Update(const Dimensions& p_widgetDimensions, bool p_isChipMovingHorizontally) = 0;
 
     /******************************************************************************************//**
      * @brief Resizes the current animation according to horizontal and vertical ratios.
@@ -144,7 +144,7 @@ public:
      * @return The dimensions of the animated widget.
      *
      *********************************************************************************************/
-    [[nodiscard]] virtual Dimensions GetAnimatedAreaDimensions() const = 0;
+    [[nodiscard]] virtual const Dimensions& GetAnimatedAreaDimensions() const = 0;
 
     /******************************************************************************************//**
      * @brief Gets the dimensions for a single cell.
@@ -157,7 +157,7 @@ public:
      * @return Dimensions for a single cell.
      *
      *********************************************************************************************/
-    [[nodiscard]] virtual Dimensions GetCellDimensions() const = 0;
+    [[nodiscard]] virtual const Dimensions& GetCellDimensions() const = 0;
 
     /******************************************************************************************//**
      * @brief Gets the radius of a chip.
@@ -173,7 +173,7 @@ public:
      * @return The main chip's current position.
      *
      *********************************************************************************************/
-    [[nodiscard]] virtual cxmath::Position GetChipPosition() const = 0;
+    [[nodiscard]] virtual const cxmath::Position& GetChipPosition() const = 0;
 
     /******************************************************************************************//**
      * @brief Gets the current horizontal margin.
@@ -192,7 +192,7 @@ public:
      * @return The mirror chip's current position.
      *
      *********************************************************************************************/
-    [[nodiscard]] virtual cxmath::Position GetMirrorChipPosition() const = 0;
+    [[nodiscard]] virtual const cxmath::Position& GetMirrorChipPosition() const = 0;
 
     /******************************************************************************************//**
      * @brief Indicates if the drawing of a mirror chip is required.
