@@ -26,6 +26,7 @@
 
 #include <cxmath/include/Position.h>
 #include <cxmodel/include/ChipColor.h>
+#include <cxmodel/include/common.h>
 #include <cxgui/include/Dimensions.h>
 
 namespace cxgui
@@ -116,7 +117,7 @@ public:
      *      The new value for the current column.
      *
      *********************************************************************************************/
-    virtual void UpdateCurrentColumn(size_t p_newCurrentColumn) = 0;
+    virtual void UpdateCurrentColumn(const cxmodel::Column& p_newCurrentColumn) = 0;
 
 ///@}
 
@@ -221,7 +222,7 @@ public:
      * @return The current column.
      *
      *********************************************************************************************/
-    [[nodiscard]] virtual size_t GetCurrentColumn() const = 0;
+    [[nodiscard]] virtual const cxmodel::Column& GetCurrentColumn() const = 0;
 
 ///@}
 

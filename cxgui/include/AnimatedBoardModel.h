@@ -54,7 +54,7 @@ public:
     void Resize(double p_horizontalRatio, double p_verticalRatio) override;
     void AddChipDisplacement(double p_horizontal, double p_vertical) override;
     void ResetChipPositions() override;
-    void UpdateCurrentColumn(size_t p_newCurrentColumn) override;
+    void UpdateCurrentColumn(const cxmodel::Column& p_newCurrentColumn) override;
 
     [[nodiscard]] size_t GetFPS() const override;
     [[nodiscard]] size_t GetAnimationSpeed() const override;
@@ -66,7 +66,7 @@ public:
     [[nodiscard]] const cxmath::Position& GetMirrorChipPosition() const override;
     [[nodiscard]] bool IsMirrorChipNeeded() const override;
     [[nodiscard]] double GetLineWidth(Feature p_feature) const override;
-    [[nodiscard]] size_t GetCurrentColumn() const override;
+    [[nodiscard]] const cxmodel::Column& GetCurrentColumn() const override;
 
 private:
 
@@ -95,7 +95,7 @@ private:
     double m_chipLineWidth = 0.0;
     double m_cellLineWidth = 0.0;
 
-    size_t m_currentColumn = 0u;
+    cxmodel::Column m_currentColumn{0u};
 };
 
 } // namespace cxgui

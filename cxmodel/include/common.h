@@ -16,23 +16,35 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file GameViewDownKeyHandlerStrategy.cpp
- * @date 2020
+ * @file common.h
+ * @date 2021
  *
  *************************************************************************************************/
 
-#include <cxinv/include/assertion.h>
+#ifndef COMMON_H_EEBB0E3B_68E6_4C58_9FA4_E3D2897F7734
+#define COMMON_H_EEBB0E3B_68E6_4C58_9FA4_E3D2897F7734
 
-#include "GameViewDownKeyHandlerStrategy.h"
-#include "IBoardInformation.h"
-#include "IGameViewController.h"
+#include <cstddef>
 
-bool cxgui::GameViewDownKeyHandlerStrategy::Handle(IGameViewController& p_controller, IBoardInformation& p_gameBoard)
+#include "StrongType.h"
+
+namespace cxmodel
 {
-    const cxmodel::ChipColor chipColor = p_gameBoard.GetCurrentChipColor();
-    IF_CONDITION_NOT_MET_DO(chipColor != cxmodel::MakeTransparent(), return false;);
 
-    p_controller.OnDown(chipColor, p_gameBoard.GetCurrentColumn().Get());
+/** Represents a row in the game board. */
+using Row = cxstd::StrongType<size_t, struct RowParameter,
+              cxstd::EqualityComparable,
+              cxstd::Comparable,
+              cxstd::Addable
+>;
 
-    return true;
-}
+/** Represents a column in the game board. */
+using Column = cxstd::StrongType<size_t, struct ColumnParameter,
+                 cxstd::EqualityComparable,
+                 cxstd::Comparable,
+                 cxstd::Addable
+>;
+
+} // namespace cxmodel
+
+#endif // COMMON_H_EEBB0E3B_68E6_4C58_9FA4_E3D2897F7734

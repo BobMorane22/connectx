@@ -131,13 +131,13 @@ void cxgui::AnimatedBoard::PerformChipAnimation(BoardAnimation p_animation)
 
             if(m_totalMoveLeftDisplacement >= oneAnimationWidth || std::abs(m_totalMoveLeftDisplacement - oneAnimationWidth) <= 1e-6)
             {
-                if(m_animationModel->GetCurrentColumn() <= 0u)
+                if(m_animationModel->GetCurrentColumn() <= cxmodel::Column{0u})
                 {
-                    m_animationModel->UpdateCurrentColumn(m_presenter->GetBoardWidth() - 1u);
+                    m_animationModel->UpdateCurrentColumn(cxmodel::Column{m_presenter->GetBoardWidth() - 1u});
                 }
                 else
                 {
-                    m_animationModel->UpdateCurrentColumn(m_animationModel->GetCurrentColumn() - 1u);
+                    m_animationModel->UpdateCurrentColumn(m_animationModel->GetCurrentColumn() - cxmodel::Column{1u});
                 }
 
                 // End animation:
@@ -164,13 +164,13 @@ void cxgui::AnimatedBoard::PerformChipAnimation(BoardAnimation p_animation)
 
             if(m_totalMoveRightDisplacement >= oneAnimationWidth || std::abs(m_totalMoveRightDisplacement - oneAnimationWidth) <= 1e-6)
             {
-                if(m_animationModel->GetCurrentColumn() >= m_presenter->GetBoardWidth() - 1u)
+                if(m_animationModel->GetCurrentColumn() >= cxmodel::Column{m_presenter->GetBoardWidth() - 1u})
                 {
-                    m_animationModel->UpdateCurrentColumn(0u);
+                    m_animationModel->UpdateCurrentColumn(cxmodel::Column{0u});
                 }
                 else
                 {
-                    m_animationModel->UpdateCurrentColumn(m_animationModel->GetCurrentColumn() + 1u);
+                    m_animationModel->UpdateCurrentColumn(m_animationModel->GetCurrentColumn() + cxmodel::Column{1u});
                 }
 
                 // End animation:
@@ -191,7 +191,7 @@ void cxgui::AnimatedBoard::PerformChipAnimation(BoardAnimation p_animation)
         case cxgui::BoardAnimation::DROP_CHIP:
         {
             const double cellHeight = m_animationModel->GetCellDimensions().m_height.Get();
-            const double oneAnimationHeight = (GetDropPosition(m_animationModel->GetCurrentColumn()) + 1.0) * cellHeight;
+            const double oneAnimationHeight = (GetDropPosition(m_animationModel->GetCurrentColumn().Get()) + 1.0) * cellHeight;
 
             // Since the falling distance may vary, the number of frames needed for the
             // animation has to be adjusted to make sure the speed is constant for the user:
@@ -206,7 +206,7 @@ void cxgui::AnimatedBoard::PerformChipAnimation(BoardAnimation p_animation)
 
                 // Reinitialize chip:
                 m_animationModel->ResetChipPositions();
-                m_animationModel->UpdateCurrentColumn(0u);
+                m_animationModel->UpdateCurrentColumn(cxmodel::Column{0u});
 
                 m_presenter->Sync();
 
@@ -225,7 +225,7 @@ void cxgui::AnimatedBoard::PerformChipAnimation(BoardAnimation p_animation)
         {
             // Reinitialize chip:
             m_animationModel->ResetChipPositions();
-            m_animationModel->UpdateCurrentColumn(0u);
+            m_animationModel->UpdateCurrentColumn(cxmodel::Column{0u});
 
             m_presenter->Sync();
 
@@ -236,7 +236,7 @@ void cxgui::AnimatedBoard::PerformChipAnimation(BoardAnimation p_animation)
         {
             // Reinitialize chip:
             m_animationModel->ResetChipPositions();
-            m_animationModel->UpdateCurrentColumn(0u);
+            m_animationModel->UpdateCurrentColumn(cxmodel::Column{0u});
 
             m_presenter->Sync();
 
@@ -250,7 +250,7 @@ void cxgui::AnimatedBoard::PerformChipAnimation(BoardAnimation p_animation)
     }
 }
 
-size_t cxgui::AnimatedBoard::GetCurrentColumn() const
+const cxmodel::Column& cxgui::AnimatedBoard::GetCurrentColumn() const
 {
     return m_animationModel->GetCurrentColumn();
 }

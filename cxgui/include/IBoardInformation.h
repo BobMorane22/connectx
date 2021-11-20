@@ -26,6 +26,7 @@
 
 #include <cstddef>
 
+#include <cxmodel/include/common.h>
 #include <cxmodel/include/ChipColor.h>
 
 namespace cxgui
@@ -52,7 +53,7 @@ public:
      * @return The column in which the chip currently is located.
      *
      *********************************************************************************************/
-    [[nodiscard]] virtual size_t GetCurrentColumn() const = 0;
+    [[nodiscard]] virtual const cxmodel::Column& GetCurrentColumn() const = 0;
 
     /******************************************************************************************//**
      * @brief Gets the color of the chip currently in the next disc area.

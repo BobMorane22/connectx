@@ -71,7 +71,7 @@ NotSynced Validate(cxgui::IAnimatedBoardModel& p_model, const ModelOperations& p
     const bool mirrorNeededBefore                        = p_model.IsMirrorChipNeeded();
     const double cellLineWidthBefore                     = p_model.GetLineWidth(cxgui::Feature::CELL);
     const double chipLineWidthBefore                     = p_model.GetLineWidth(cxgui::Feature::CHIP);
-    const size_t currentColumnBefore                     = p_model.GetCurrentColumn();
+    const cxmodel::Column currentColumnBefore            = p_model.GetCurrentColumn();
 
     // Operation(s) performed on the model:
     EXPECT_TRUE(p_operations);
@@ -89,7 +89,7 @@ NotSynced Validate(cxgui::IAnimatedBoardModel& p_model, const ModelOperations& p
     const bool mirrorNeededAfter                        = p_model.IsMirrorChipNeeded();
     const double cellLineWidthAfter                     = p_model.GetLineWidth(cxgui::Feature::CELL);
     const double chipLineWidthAfter                     = p_model.GetLineWidth(cxgui::Feature::CHIP);
-    const size_t currentColumnAfter                     = p_model.GetCurrentColumn();
+    const cxmodel::Column currentColumnAfter            = p_model.GetCurrentColumn();
 
     // Comparing the two:
     NotSynced syncResult = NONE;
@@ -403,19 +403,19 @@ TEST_F(AnimationModelTestFixture, /*DISABLED_*/UpdateCurrentColumn_NewColumIndex
     cxgui::IAnimatedBoardModel& model = GetModel();
     model.Update({cxgui::Height{100}, cxgui::Width{150}}, true);
 
-    const size_t currentColumnBefore = model.GetCurrentColumn();
-    ASSERT_TRUE(currentColumnBefore == 0u);
+    const cxmodel::Column currentColumnBefore = model.GetCurrentColumn();
+    ASSERT_TRUE(currentColumnBefore == cxmodel::Column{0u});
 
     const NotSynced whatChanged = Validate(model,
                                   [](cxgui::IAnimatedBoardModel& p_model)
                                   {
-                                      p_model.UpdateCurrentColumn(3u);
+                                      p_model.UpdateCurrentColumn(cxmodel::Column{3u});
                                   });
 
     ASSERT_TRUE(whatChanged == CURRENT_COLUMN);
 
-    const size_t currentColumnAfter = model.GetCurrentColumn();
-    ASSERT_TRUE(currentColumnAfter == 3u);
+    const cxmodel::Column currentColumnAfter = model.GetCurrentColumn();
+    ASSERT_TRUE(currentColumnAfter == cxmodel::Column{3u});
 }
 
 TEST_F(AnimationModelTestFixture, /*DISABLED_*/GetFPS_ValidModel_FPSReturned)

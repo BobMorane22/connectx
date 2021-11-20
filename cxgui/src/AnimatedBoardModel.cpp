@@ -422,7 +422,7 @@ void cxgui::AnimatedBoardModel::ResetChipPositions()
     m_mirrorChipPosition = {0.0, 0.0};
 }
 
-void cxgui::AnimatedBoardModel::UpdateCurrentColumn(size_t p_newCurrentColumn)
+void cxgui::AnimatedBoardModel::UpdateCurrentColumn(const cxmodel::Column& p_newCurrentColumn)
 {
     m_currentColumn = p_newCurrentColumn;
 }
@@ -488,7 +488,7 @@ double cxgui::AnimatedBoardModel::GetLineWidth(Feature p_feature) const
     }
 }
 
-size_t cxgui::AnimatedBoardModel::GetCurrentColumn() const
+const cxmodel::Column& cxgui::AnimatedBoardModel::GetCurrentColumn() const
 {
     return m_currentColumn;
 }

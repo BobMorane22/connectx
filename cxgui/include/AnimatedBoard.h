@@ -89,7 +89,7 @@ public:
     ~AnimatedBoard();
 
     // cxgui::IBoardInformation:
-    [[nodiscard]] size_t GetCurrentColumn() const override;
+    [[nodiscard]] const cxmodel::Column& GetCurrentColumn() const override;
     [[nodiscard]] cxmodel::ChipColor GetCurrentChipColor() const override;
 
 private:

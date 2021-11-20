@@ -103,3 +103,257 @@ TEST(StrongType, /*DISABLED_*/Get_ByConstRef_ValidConstRefReturned)
     const std::string& aRefOnString = sString.Get();
     ASSERT_TRUE(aRefOnString == "Hello");
 }
+
+namespace
+{
+
+using ECInt = cxstd::StrongType<int, struct IntTag, cxstd::EqualityComparable>;
+
+} // namespace
+
+TEST(EqualityComparable, OperatorEquals_TwoEqualUnderlying_ReturnsTrue)
+{
+    constexpr int same = 1;
+    constexpr ECInt lhs{same};
+    constexpr ECInt rhs{same};
+
+    // Underlying equality:
+    ASSERT_TRUE(lhs.Get() == rhs.Get());
+
+    // Strong type equality:
+    ASSERT_TRUE(lhs == rhs);
+}
+
+TEST(EqualityComparable, OperatorEquals_TwoDifferentUnderlying_ReturnsFalse)
+{
+    constexpr ECInt lhs{1};
+    constexpr ECInt rhs{2};
+
+    // Underlying inequality:
+    ASSERT_TRUE(lhs.Get() != rhs.Get());
+
+    // Strong type inequality:
+    ASSERT_TRUE(lhs != rhs);
+}
+
+namespace
+{
+
+using AInt = cxstd::StrongType<int, struct IntTag, cxstd::Addable>;
+
+} // namespace
+
+TEST(Addable, OperatorPlus_OnePlusTwo_ReturnsThree)
+{
+    constexpr AInt lhs{1};
+    constexpr AInt rhs{2};
+
+    const AInt sum = lhs + rhs;
+
+    ASSERT_TRUE(sum.Get() == 3);
+}
+
+TEST(Addable, OperatorMinus_OneMinusTwo_ReturnsMinusOne)
+{
+    constexpr AInt lhs{1};
+    constexpr AInt rhs{2};
+
+    const AInt difference = lhs - rhs;
+
+    ASSERT_TRUE(difference.Get() == -1);
+}
+
+TEST(Addable, OperatorIncrementPlus_OnePlusTwo_ReturnsThree)
+{
+    AInt lhs{1};
+    constexpr AInt rhs{2};
+
+    lhs += rhs;
+
+    ASSERT_TRUE(lhs.Get() == 3);
+}
+
+TEST(Addable, OperatorIncrementPlus_Chaining_ReturnsResult)
+{
+    AInt lhs{1};
+    constexpr AInt rhs{2};
+
+    (lhs += rhs) += rhs;
+
+    ASSERT_TRUE(lhs.Get() == 5);
+}
+
+TEST(Addable, OperatorIncrementMinus_OneMinusTwo_ReturnsMinusOne)
+{
+    AInt lhs{1};
+    constexpr AInt rhs{2};
+
+    lhs -= rhs;
+
+    ASSERT_TRUE(lhs.Get() == -1);
+}
+
+TEST(Addable, OperatorIncrementMinus_Chaining_ReturnsResult)
+{
+    AInt lhs{1};
+    constexpr AInt rhs{2};
+
+    (lhs -= rhs) -= rhs;
+
+    ASSERT_TRUE(lhs.Get() == -3);
+}
+
+namespace
+{
+
+using CInt = cxstd::StrongType<int, struct IntTag, cxstd::EqualityComparable, cxstd::Comparable>;
+
+} // namespace
+
+TEST(Comparable, OperatorLessThan_IsLessThen_ReturnsTrue)
+{
+    constexpr CInt lhs{1};
+    constexpr CInt rhs{2};
+
+    // Underlying type:
+    ASSERT_TRUE(lhs.Get() < rhs.Get());
+
+    // Strong type equivalent:
+    ASSERT_TRUE(lhs < rhs);
+}
+
+TEST(Comparable, OperatorLessThan_AreEqual_ReturnsFalse)
+{
+    constexpr int same = 1;
+    constexpr CInt lhs{same};
+    constexpr CInt rhs{same};
+
+    // Underlying type:
+    ASSERT_FALSE(lhs.Get() < rhs.Get());
+
+    // Strong type equivalent:
+    ASSERT_FALSE(lhs < rhs);
+}
+
+TEST(Comparable, OperatorLessThan_NotLessThan_ReturnsFalse)
+{
+    constexpr CInt lhs{2};
+    constexpr CInt rhs{1};
+
+    // Underlying type:
+    ASSERT_FALSE(lhs.Get() < rhs.Get());
+
+    // Strong type equivalent:
+    ASSERT_FALSE(lhs < rhs);
+}
+
+TEST(Comparable, OperatorGreaterThan_IsGreaterThen_ReturnsTrue)
+{
+    constexpr CInt lhs{2};
+    constexpr CInt rhs{1};
+
+    // Underlying type:
+    ASSERT_TRUE(lhs.Get() > rhs.Get());
+
+    // Strong type equivalent:
+    ASSERT_TRUE(lhs > rhs);
+}
+
+TEST(Comparable, OperatorGreaterThan_AreEqual_ReturnsFalse)
+{
+    constexpr int same = 1;
+    constexpr CInt lhs{same};
+    constexpr CInt rhs{same};
+
+    // Underlying type:
+    ASSERT_FALSE(lhs.Get() > rhs.Get());
+
+    // Strong type equivalent:
+    ASSERT_FALSE(lhs > rhs);
+}
+
+TEST(Comparable, OperatorGreaterThan_NotGreaterThan_ReturnsFalse)
+{
+    constexpr CInt lhs{1};
+    constexpr CInt rhs{2};
+
+    // Underlying type:
+    ASSERT_FALSE(lhs.Get() > rhs.Get());
+
+    // Strong type equivalent:
+    ASSERT_FALSE(lhs > rhs);
+}
+
+TEST(Comparable, OperatorLessThanOrEqual_IsLessThen_ReturnsTrue)
+{
+    constexpr CInt lhs{1};
+    constexpr CInt rhs{2};
+
+    // Underlying type:
+    ASSERT_TRUE(lhs.Get() <= rhs.Get());
+
+    // Strong type equivalent:
+    ASSERT_TRUE(lhs <= rhs);
+}
+
+TEST(Comparable, OperatorLessThanOrEqual_AreEqual_ReturnsTrue)
+{
+    constexpr int same = 1;
+    constexpr CInt lhs{same};
+    constexpr CInt rhs{same};
+
+    // Underlying type:
+    ASSERT_TRUE(lhs.Get() <= rhs.Get());
+
+    // Strong type equivalent:
+    ASSERT_TRUE(lhs <= rhs);
+}
+
+TEST(Comparable, OperatorLessThanOrEqual_NotLessThan_ReturnsFalse)
+{
+    constexpr CInt lhs{2};
+    constexpr CInt rhs{1};
+
+    // Underlying type:
+    ASSERT_FALSE(lhs.Get() <= rhs.Get());
+
+    // Strong type equivalent:
+    ASSERT_FALSE(lhs <= rhs);
+}
+
+TEST(Comparable, OperatorGreaterThanOrEqual_IsGreaterThen_ReturnsTrue)
+{
+    constexpr CInt lhs{2};
+    constexpr CInt rhs{1};
+
+    // Underlying type:
+    ASSERT_TRUE(lhs.Get() >= rhs.Get());
+
+    // Strong type equivalent:
+    ASSERT_TRUE(lhs >= rhs);
+}
+
+TEST(Comparable, OperatorGreaterThanOrEqual_AreEqual_ReturnsTrue)
+{
+    constexpr int same = 1;
+    constexpr CInt lhs{same};
+    constexpr CInt rhs{same};
+
+    // Underlying type:
+    ASSERT_TRUE(lhs.Get() >= rhs.Get());
+
+    // Strong type equivalent:
+    ASSERT_TRUE(lhs >= rhs);
+}
+
+TEST(Comparable, OperatorGreaterThanOrEqual_NotGreaterThan_ReturnsFalse)
+{
+    constexpr CInt lhs{1};
+    constexpr CInt rhs{2};
+
+    // Underlying type:
+    ASSERT_FALSE(lhs.Get() >= rhs.Get());
+
+    // Strong type equivalent:
+    ASSERT_FALSE(lhs >= rhs);
+}
