@@ -27,8 +27,8 @@
 
 #include <StrongType.h>
 
-using StrongInt = cxstd::StrongType<int, struct StrongIntPhantom>;
-using StrongString = cxstd::StrongType<std::string, struct StrongStringPhantom>;
+using StrongInt = cxstd::StrongType<int, struct StrongIntTag>;
+using StrongString = cxstd::StrongType<std::string, struct StrongStringTag>;
 
 TEST(StrongType, /*DISABLED_*/Constructor_ByValue_ValidStrongType)
 {

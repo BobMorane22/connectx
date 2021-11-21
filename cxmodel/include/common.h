@@ -32,14 +32,14 @@ namespace cxmodel
 {
 
 /** Represents a row in the game board. */
-using Row = cxstd::StrongType<size_t, struct RowParameter,
+using Row = cxstd::StrongType<size_t, struct RowTag,
               cxstd::EqualityComparable,
               cxstd::Comparable,
               cxstd::Addable
 >;
 
 /** Represents a column in the game board. */
-using Column = cxstd::StrongType<size_t, struct ColumnParameter,
+using Column = cxstd::StrongType<size_t, struct ColumnTag,
                  cxstd::EqualityComparable,
                  cxstd::Comparable,
                  cxstd::Addable

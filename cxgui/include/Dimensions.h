@@ -29,8 +29,8 @@
 namespace cxgui
 {
 
-using Height = cxstd::StrongType<double, struct HeightParameter>;
-using Width = cxstd::StrongType<double, struct WidthParameter>;
+using Height = cxstd::StrongType<double, struct HeightTag>;
+using Width = cxstd::StrongType<double, struct WidthTag>;
 
 /**********************************************************************************************//**
  * @brief 2D dimensions (in pixels) for widgets.

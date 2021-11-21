@@ -33,18 +33,21 @@ namespace cxstd
 /**********************************************************************************************//**
  * @brief A wrapper to make data types strong.
  *
- * @tparam Underlying The underlying data type.
- * @tparam Phantom    A one-time type to differentiate strong types using the same underlying
- *                    types from one another.
- * @tparam Capacities Capacities the type will inherit.
+ * @tparam Underlying
+ *       The underlying data type.
+ * @tparam UniqueTag 
+ *       A one-time, uniqe type to differentiate strong types using the same
+ *       underlying types from one another.
+ * @tparam
+ *       Capacities Capacities the type will inherit.
  *
  * Original idea taken from Jonathan Boccara's excelent blog Fluent{C++}:
  *
  *          https://www.fluentcpp.com/2016/12/08/strong-types-for-strong-interfaces/
  *
  *************************************************************************************************/
-template <typename Underlying, typename Phantom, template<typename> class... Capacities>
-class StrongType : public Capacities<StrongType<Underlying, Phantom, Capacities...>>...
+template <typename Underlying, typename UniqueTag, template<typename> class... Capacities>
+class StrongType : public Capacities<StrongType<Underlying, UniqueTag, Capacities...>>...
 {
 
 public:
@@ -52,7 +55,8 @@ public:
     /******************************************************************************************//**
      * @brief Constructor.
      *
-     * @param p_value The value of the wrapped type instance.
+     * @param p_value
+     *      The value of the wrapped type instance.
      *
      *********************************************************************************************/
     explicit constexpr StrongType(const Underlying& p_value)
@@ -63,7 +67,8 @@ public:
     /******************************************************************************************//**
      * @brief Move constructor.
      *
-     * @param p_value The value of the wrapped type instance.
+     * @param p_value
+     *      The value of the wrapped type instance.
      *
      *********************************************************************************************/
     explicit constexpr StrongType(Underlying&& p_value)
@@ -74,6 +79,9 @@ public:
     /******************************************************************************************//**
      * @brief Write access to the underlying instance.
      *
+     * @return
+     *      A reference to the wrapped type instance.
+     *
      *********************************************************************************************/
     Underlying& Get()
     {
@@ -82,6 +90,9 @@ public:
 
     /******************************************************************************************//**
      * @brief Read access to the underlying instance.
+     *
+     * @return
+     *      A `const` reference to the wraped type instance.
      *
      *********************************************************************************************/
     constexpr const Underlying& Get() const
