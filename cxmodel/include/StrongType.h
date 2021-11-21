@@ -84,7 +84,7 @@ public:
      * @brief Read access to the underlying instance.
      *
      *********************************************************************************************/
-    const Underlying& Get() const
+    constexpr const Underlying& Get() const
     {
         return m_value;
     }
@@ -158,7 +158,7 @@ struct Addable
      * @return The addition result.
      *
      *****************************************************************************************/
-    [[nodiscard]] CRTP operator+(const CRTP& p_other) const
+    [[nodiscard]] constexpr CRTP operator+(const CRTP& p_other) const
     {
         return CRTP{static_cast<const CRTP*>(this)->Get() + static_cast<const CRTP*>(&p_other)->Get()};
     }
@@ -171,11 +171,9 @@ struct Addable
      * @return The substraction result.
      *
      *****************************************************************************************/
-    [[nodiscard]] CRTP operator-(const CRTP& p_other) const
+    [[nodiscard]] constexpr CRTP operator-(const CRTP& p_other) const
     {
-        CRTP copy{static_cast<const CRTP*>(this)->Get()};
-
-        return copy -= p_other;
+        return CRTP{static_cast<const CRTP*>(this)->Get() - static_cast<const CRTP*>(&p_other)->Get()};
     }
 
     /**************************************************************************************//**

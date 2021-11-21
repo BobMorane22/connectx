@@ -148,7 +148,7 @@ TEST(Addable, OperatorPlus_OnePlusTwo_ReturnsThree)
     constexpr AInt lhs{1};
     constexpr AInt rhs{2};
 
-    const AInt sum = lhs + rhs;
+    constexpr AInt sum = lhs + rhs;
 
     ASSERT_TRUE(sum.Get() == 3);
 }
@@ -158,7 +158,7 @@ TEST(Addable, OperatorMinus_OneMinusTwo_ReturnsMinusOne)
     constexpr AInt lhs{1};
     constexpr AInt rhs{2};
 
-    const AInt difference = lhs - rhs;
+    constexpr AInt difference = lhs - rhs;
 
     ASSERT_TRUE(difference.Get() == -1);
 }
