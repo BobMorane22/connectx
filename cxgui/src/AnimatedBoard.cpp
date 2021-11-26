@@ -243,6 +243,18 @@ void cxgui::AnimatedBoard::PerformChipAnimation(BoardAnimation p_animation)
             Notify(cxgui::BoardAnimationNotificationContext::POST_ANIMATE_REDO_DROP_CHIP);
             break;
         }
+        case cxgui::BoardAnimation::REINITIALIZE:
+        {
+            // Reinitialize chip:
+            m_animationModel->ResetChipPositions();
+            m_animationModel->UpdateCurrentColumn(cxmodel::Column{0u});
+
+            m_boardElementsCache.Clear();
+            m_presenter->Sync();
+
+            Notify(cxgui::BoardAnimationNotificationContext::POST_ANIMATE_REINITIALIZE_BOARD);
+            break;
+        }
         default:
         {
             ASSERT_ERROR_MSG("Unsupported move.");
@@ -545,6 +557,15 @@ void cxgui::AnimatedBoard::Update(cxgui::BoardAnimationNotificationContext p_con
 
             // Because there is no real animation associated with a redo
             // (the chip simply reapears, PerformChipAnimation only updates
+            // the model data), we request a redraw directly here:
+            queue_draw();
+            break;
+        }
+        case cxgui::BoardAnimationNotificationContext::ANIMATE_REINITIALIZE_BOARD:
+        {
+            PerformChipAnimation(cxgui::BoardAnimation::REINITIALIZE);
+            // Because there is no real animation associated with reinitializing
+            // (the board simply clears, PerformChipAnimation only updates
             // the model data), we request a redraw directly here:
             queue_draw();
             break;

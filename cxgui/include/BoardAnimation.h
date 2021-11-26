@@ -40,6 +40,7 @@ enum class BoardAnimation
     DROP_CHIP,
     UNDO_DROP_CHIP,
     REDO_DROP_CHIP,
+    REINITIALIZE,
 };
 
 } // namespace cxgui

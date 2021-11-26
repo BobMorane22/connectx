@@ -158,6 +158,7 @@ void cxgui::GameView::Update(cxgui::BoardAnimationNotificationContext p_context,
         case cxgui::BoardAnimationNotificationContext::ANIMATE_MOVE_DROP_CHIP:
         case cxgui::BoardAnimationNotificationContext::ANIMATE_UNDO_DROP_CHIP:
         case cxgui::BoardAnimationNotificationContext::ANIMATE_REDO_DROP_CHIP:
+        case cxgui::BoardAnimationNotificationContext::ANIMATE_REINITIALIZE_BOARD:
         {
             return;
         }
@@ -171,6 +172,10 @@ void cxgui::GameView::Update(cxgui::BoardAnimationNotificationContext p_context,
             // At this point the animation is completed. We reactivate keyboard events in
             // case the user wants to request another animation:
             EnableKeyHandlers();
+            break;
+        }
+        case cxgui::BoardAnimationNotificationContext::POST_ANIMATE_REINITIALIZE_BOARD:
+        {
             break;
         }
     }
@@ -334,35 +339,28 @@ void cxgui::GameView::UpdateChipDroppedFailed()
 
 void cxgui::GameView::UpdateChipMovedLeft()
 {
-    if(ASSERT(m_board))
-    {
-        Notify(cxgui::BoardAnimationNotificationContext::ANIMATE_MOVE_LEFT_ONE_COLUMN);
-    }
+    IF_CONDITION_NOT_MET_DO(m_board, return;);
+    Notify(cxgui::BoardAnimationNotificationContext::ANIMATE_MOVE_LEFT_ONE_COLUMN);
 }
 
 void cxgui::GameView::UpdateChipMovedRight()
 {
-    if(ASSERT(m_board))
-    {
-        Notify(cxgui::BoardAnimationNotificationContext::ANIMATE_MOVE_RIGHT_ONE_COLUMN);
-    }
+    IF_CONDITION_NOT_MET_DO(m_board, return;);
+    Notify(cxgui::BoardAnimationNotificationContext::ANIMATE_MOVE_RIGHT_ONE_COLUMN);
 }
 
 void cxgui::GameView::UpdateGameResolved()
 {
-    // Notify...
+    IF_CONDITION_NOT_MET_DO(m_board, return;);
+    Notify(cxgui::BoardAnimationNotificationContext::ANIMATE_REINITIALIZE_BOARD);
 }
 
 void cxgui::GameView::UpdateGameReinitialized()
 {
-    // Active and next players should be updated as well:
-    m_activePlayerChip->ChangeColor(m_presenter.GetGameViewActivePlayerChipColor());
-    m_activePlayerName.set_text(m_presenter.GetGameViewActivePlayerName());
+    IF_CONDITION_NOT_MET_DO(m_board, return;);
 
-    m_nextPlayerChip->ChangeColor(m_presenter.GetGameViewNextPlayerChipColor());
-    m_nextPlayerName.set_text(m_presenter.GetGameViewNextPlayerName());
-
-    // Notify...
+    SyncPlayers();
+    Notify(cxgui::BoardAnimationNotificationContext::ANIMATE_REINITIALIZE_BOARD);
 }
 
 void cxgui::GameView::SyncPlayers()
