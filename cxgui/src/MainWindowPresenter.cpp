@@ -427,6 +427,8 @@ const cxgui::IGameViewPresenter::ChipColors& cxgui::MainWindowPresenter::GetGame
 
 void cxgui::MainWindowPresenter::UpdateCreateNewGame()
 {
+    m_chipColors.clear();
+
     m_currentBoardWidth = m_modelAsGameInformation.GetCurrentGridWidth();
     m_currentBoardHeight = m_modelAsGameInformation.GetCurrentGridHeight();
 
