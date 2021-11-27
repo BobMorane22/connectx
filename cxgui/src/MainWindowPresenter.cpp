@@ -94,6 +94,12 @@ void cxgui::MainWindowPresenter::Update(cxmodel::ModelNotificationContext p_cont
                 UpdateCreateNewGame();
                 break;
             }
+            case cxmodel::ModelNotificationContext::CHIP_MOVED_LEFT:
+            case cxmodel::ModelNotificationContext::CHIP_MOVED_RIGHT:
+            {
+                m_canRequestNewGame = true;
+                break;
+            }
             case cxmodel::ModelNotificationContext::CHIP_DROPPED:
             {
                 m_canRequestNewGame = true;
