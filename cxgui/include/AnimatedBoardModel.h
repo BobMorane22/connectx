@@ -48,7 +48,16 @@ class AnimatedBoardModel : public cxgui::IAnimatedBoardModel
 
 public:
 
-    AnimatedBoardModel(const cxgui::IAnimatedBoardPresenter& p_presenter, size_t p_animationSpeed);
+    /**********************************************************************************************//**
+     * @brief Constructor.
+     *
+     * @param p_presenter
+     *      A game board presenter.
+     * @param p_animationSpeed
+     *      The animation speed (i.e. the number of chips travelled per second).
+     *
+     *************************************************************************************************/
+    AnimatedBoardModel(const cxgui::IAnimatedBoardPresenter& p_presenter, const cxgui::AnimationSpeed& p_animationSpeed);
 
     void Update(const Dimensions& p_widgetDimensions, bool p_isChipMovingHorizontally) override;
     void Resize(const cxgui::ScalingRatios& p_scalingRatios) override;
@@ -56,8 +65,8 @@ public:
     void ResetChipPositions() override;
     void UpdateCurrentColumn(const cxmodel::Column& p_newCurrentColumn) override;
 
-    [[nodiscard]] size_t GetFPS() const override;
-    [[nodiscard]] size_t GetAnimationSpeed() const override;
+    [[nodiscard]] FPS GetFPS() const override;
+    [[nodiscard]] AnimationSpeed GetAnimationSpeed() const override;
     [[nodiscard]] const Dimensions& GetAnimatedAreaDimensions() const override;
     [[nodiscard]] const Dimensions& GetCellDimensions() const override;
     [[nodiscard]] double GetChipRadius() const override;
@@ -78,7 +87,7 @@ private:
 
     const cxgui::IAnimatedBoardPresenter& m_presenter;
 
-    size_t m_animationSpeed; // Units: chips/sec
+    cxgui::AnimationSpeed m_animationSpeed;
 
     Dimensions m_widgetDimensions{Height{0}, Width{0}};
     Dimensions m_cellDimensions{Height{0}, Width{0}};

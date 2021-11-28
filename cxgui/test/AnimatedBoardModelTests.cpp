@@ -60,8 +60,8 @@ using NotSynced = unsigned int;
 NotSynced Validate(cxgui::IAnimatedBoardModel& p_model, const ModelOperations& p_operations)
 {
     // Pre-operation(s) values:
-    const size_t fpsBefore                               = p_model.GetFPS();
-    const size_t speedBefore                             = p_model.GetAnimationSpeed();
+    const cxgui::FPS fpsBefore                           = p_model.GetFPS();
+    const cxgui::AnimationSpeed speedBefore              = p_model.GetAnimationSpeed();
     const cxgui::Dimensions animatedAreaDimensionsBefore = p_model.GetAnimatedAreaDimensions();
     const cxgui::Dimensions cellDimensionsBefore         = p_model.GetCellDimensions();
     const double chipRadiusBefore                        = p_model.GetChipRadius();
@@ -78,8 +78,8 @@ NotSynced Validate(cxgui::IAnimatedBoardModel& p_model, const ModelOperations& p
     p_operations(p_model);
 
     // Post-operation(s) values:
-    const size_t fpsAfter                               = p_model.GetFPS();
-    const size_t speedAfter                             = p_model.GetAnimationSpeed();
+    const cxgui::FPS fpsAfter                           = p_model.GetFPS();
+    const cxgui::AnimationSpeed speedAfter              = p_model.GetAnimationSpeed();
     const cxgui::Dimensions animatedAreaDimensionsAfter = p_model.GetAnimatedAreaDimensions();
     const cxgui::Dimensions cellDimensionsAfter         = p_model.GetCellDimensions();
     const double chipRadiusAfter                        = p_model.GetChipRadius();
@@ -156,7 +156,7 @@ public:
         m_presenter = std::make_unique<AnimatedBoardPresenterMock>();
         EXPECT_TRUE(m_presenter);
 
-        m_model = std::make_unique<cxgui::AnimatedBoardModel>(*m_presenter, 3u);
+        m_model = std::make_unique<cxgui::AnimatedBoardModel>(*m_presenter, cxgui::AnimationSpeed{3u});
         EXPECT_TRUE(m_model);
     }
 
@@ -183,7 +183,7 @@ TEST_F(AnimationModelTestFixture, /*DISABLED_*/Constructor_ValidInput_DoesNotAss
     ASSERT_TRUE(presenter);
 
     cxunit::DisableStdStreamsRAII streamDisabler;
-    const cxgui::AnimatedBoardModel model{*presenter, 3u};
+    const cxgui::AnimatedBoardModel model{*presenter, cxgui::AnimationSpeed{3u}};
     const std::string streamContents = streamDisabler.GetStdErrContents();
 
     ASSERT_TRUE(streamContents.empty());
@@ -425,7 +425,7 @@ TEST_F(AnimationModelTestFixture, /*DISABLED_*/UpdateCurrentColumn_NewColumIndex
 TEST_F(AnimationModelTestFixture, /*DISABLED_*/GetFPS_ValidModel_FPSReturned)
 {
     cxgui::IAnimatedBoardModel& model = GetModel();
-    ASSERT_TRUE(model.GetFPS() == 24u);
+    ASSERT_TRUE(model.GetFPS() == cxgui::FPS{24u});
 }
 
 TEST_F(AnimationModelTestFixture, /*DISABLED_*/GetAnimationSpeed_ValidModel_AnimationSpeedReturned)
@@ -433,7 +433,7 @@ TEST_F(AnimationModelTestFixture, /*DISABLED_*/GetAnimationSpeed_ValidModel_Anim
     cxgui::IAnimatedBoardModel& model = GetModel();
     model.Update({cxgui::Height{100}, cxgui::Width{150}}, true);
 
-    ASSERT_TRUE(model.GetAnimationSpeed() == 3u);
+    ASSERT_TRUE(model.GetAnimationSpeed() == cxgui::AnimationSpeed{3u});
 }
 
 TEST_F(AnimationModelTestFixture, /*DISABLED_*/GetAnimatedAreaDimensions)

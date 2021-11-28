@@ -80,7 +80,7 @@ void DrawChip(const Cairo::RefPtr<Cairo::Context>& p_context,
 
 } // namespace
 
-cxgui::AnimatedBoard::AnimatedBoard(const IGameViewPresenter& p_presenter, size_t p_speed)
+cxgui::AnimatedBoard::AnimatedBoard(const IGameViewPresenter& p_presenter, const cxgui::AnimationSpeed& p_speed)
 {
     m_presenter = std::make_unique<cxgui::AnimatedBoardPresenter>(p_presenter);
     m_animationModel = std::make_unique<cxgui::AnimatedBoardModel>(*m_presenter, p_speed);
@@ -95,7 +95,7 @@ cxgui::AnimatedBoard::AnimatedBoard(const IGameViewPresenter& p_presenter, size_
     set_hexpand(true);
 
     // In time, make proper RAII:
-    m_timer = Glib::signal_timeout().connect([this](){return Redraw();}, 1000.0/m_animationModel->GetFPS());
+    m_timer = Glib::signal_timeout().connect([this](){return Redraw();}, 1000.0/m_animationModel->GetFPS().Get());
 
     // Resize events:
     signal_configure_event().connect([this](GdkEventConfigure* p_event){
@@ -117,8 +117,8 @@ cxgui::AnimatedBoard::~AnimatedBoard()
 // keeps track of all displacements. It also notifies when the animation completes.
 void cxgui::AnimatedBoard::PerformChipAnimation(BoardAnimation p_animation)
 {
-    const double fps = static_cast<double>(m_animationModel->GetFPS());
-    const double speed = static_cast<double>(m_animationModel->GetAnimationSpeed());
+    const double fps = static_cast<double>(m_animationModel->GetFPS().Get());
+    const double speed = static_cast<double>(m_animationModel->GetAnimationSpeed().Get());
 
     switch(p_animation)
     {
@@ -436,8 +436,8 @@ bool cxgui::AnimatedBoard::Redraw()
     const double chipHorizontalPosition = m_animationModel->GetChipPosition().m_x;
     const cxgui::Dimensions cellDimensions = m_animationModel->GetCellDimensions();
     const double cellWidth = cellDimensions.m_width.Get();
-    const double fps = static_cast<double>(m_animationModel->GetFPS());
-    const double speed = static_cast<double>(m_animationModel->GetAnimationSpeed());
+    const double fps = static_cast<double>(m_animationModel->GetFPS().Get());
+    const double speed = static_cast<double>(m_animationModel->GetAnimationSpeed().Get());
 
     // Schedule a redraw on the next frame:
     if(m_animateMoveLeft)

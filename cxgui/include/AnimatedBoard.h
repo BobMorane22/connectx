@@ -31,12 +31,12 @@
 #include "BoardAnimation.h"
 #include "BoardAnimationNotificationContext.h"
 #include "BoardElementCache.h"
+#include "IAnimatedBoardModel.h"
 #include "IBoardInformation.h"
 
 namespace cxgui
 {
 
-class IAnimatedBoardModel;
 class IAnimatedBoardPresenter;
 class IGameViewPresenter;
 
@@ -78,7 +78,7 @@ public:
      *      would mean that a chip will move three columns (or rows) per second when animated.
      *
      *********************************************************************************************/
-    AnimatedBoard(const IGameViewPresenter& p_presenter, size_t p_speed);
+    AnimatedBoard(const IGameViewPresenter& p_presenter, const cxgui::AnimationSpeed& p_speed);
 
     /******************************************************************************************//**
      * @brief Destructor.

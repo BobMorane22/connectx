@@ -305,7 +305,7 @@ void ComputeMirrorChipPosition<cxgui::BoardAnimation::MOVE_CHIP_RIGHT_ONE_COLUMN
 
 } // namespace
 
-cxgui::AnimatedBoardModel::AnimatedBoardModel(const cxgui::IAnimatedBoardPresenter& p_presenter, size_t p_animationSpeed)
+cxgui::AnimatedBoardModel::AnimatedBoardModel(const cxgui::IAnimatedBoardPresenter& p_presenter, const cxgui::AnimationSpeed& p_animationSpeed)
 : m_presenter{p_presenter}
 , m_animationSpeed{p_animationSpeed}
 {
@@ -429,12 +429,12 @@ void cxgui::AnimatedBoardModel::UpdateCurrentColumn(const cxmodel::Column& p_new
     m_currentColumn = p_newCurrentColumn;
 }
 
-size_t cxgui::AnimatedBoardModel::GetFPS() const
+cxgui::FPS cxgui::AnimatedBoardModel::GetFPS() const
 {
-    return 24u;
+    return cxgui::FPS{24u};
 }
 
-size_t cxgui::AnimatedBoardModel::GetAnimationSpeed() const
+cxgui::AnimationSpeed cxgui::AnimatedBoardModel::GetAnimationSpeed() const
 {
     return m_animationSpeed;
 }

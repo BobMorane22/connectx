@@ -34,6 +34,18 @@ namespace cxgui
 {
 
 /**********************************************************************************************//**
+ * @brief Number of frames per second in the animation.
+ *
+ *************************************************************************************************/
+using FPS = cxstd::StrongType<size_t, struct FpsTag, cxstd::EqualityComparable>;
+
+/**********************************************************************************************//**
+ * @brief Number of chips widths travelled per second.
+ *
+ *************************************************************************************************/
+using AnimationSpeed = cxstd::StrongType<size_t, struct AnimationSpeedTag, cxstd::EqualityComparable>;
+
+/**********************************************************************************************//**
  * @brief Type of feature for which to get the line width.
  *
  *************************************************************************************************/
@@ -128,7 +140,7 @@ public:
      * @return The "Frames per second" value.
      *
      *********************************************************************************************/
-    [[nodiscard]] virtual size_t GetFPS() const = 0;
+    [[nodiscard]] virtual FPS GetFPS() const = 0;
 
     /******************************************************************************************//**
      * @brief Gets the animation speed (chips/sec).
@@ -136,7 +148,7 @@ public:
      * @return The animation speed.
      *
      *********************************************************************************************/
-    [[nodiscard]] virtual size_t GetAnimationSpeed() const = 0;
+    [[nodiscard]] virtual AnimationSpeed GetAnimationSpeed() const = 0;
 
     /******************************************************************************************//**
      * @brief Gets the dimensions for the whole animated widget.
