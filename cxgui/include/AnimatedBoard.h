@@ -28,8 +28,6 @@
 
 #include <cxmath/include/math.h>
 
-#include "IAnimatedBoardModel.h"
-#include "IAnimatedBoardPresenter.h"
 #include "BoardAnimation.h"
 #include "BoardAnimationNotificationContext.h"
 #include "BoardElementCache.h"
