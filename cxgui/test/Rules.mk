@@ -61,6 +61,7 @@ OBJS_$(d) := $(d)/AboutWindowPresenterTestFixture.o \
              $(d)/MainWindowPresenterTests.o \
              $(d)/MenuItemTests.o \
              $(d)/NewGamePresenterTests.o \
+             $(d)/ScalingRatiosTests.o \
              $(d)/StatusBarPresenterTests.o \
              $(d)/TieGameResolutionDialogPresenterTests.o \
              $(d)/WinGameResolutionDialogPresenterTests.o \
