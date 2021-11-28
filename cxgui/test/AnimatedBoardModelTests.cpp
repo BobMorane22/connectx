@@ -257,7 +257,8 @@ TEST_F(AnimationModelTestFixture, /*DISABLED_*/Resize_ValidAndHorizontal_Resizin
     const NotSynced whatChanged = Validate(model,
                                   [](cxgui::IAnimatedBoardModel& p_model)
                                   {
-                                      p_model.Resize(2.0, 1.0);
+                                      const cxgui::ScalingRatios ratios{cxgui::HorizontalScalingRatio{2.0}};
+                                      p_model.Resize(ratios);
                                   });
 
     ASSERT_TRUE(whatChanged == CHIP_POSITION);
@@ -279,7 +280,8 @@ TEST_F(AnimationModelTestFixture, /*DISABLED_*/Resize_ValidAndVertical_ResizingO
     const NotSynced whatChanged = Validate(model,
                                   [](cxgui::IAnimatedBoardModel& p_model)
                                   {
-                                      p_model.Resize(1.0, 3.0);
+                                      const cxgui::ScalingRatios ratios{cxgui::VerticalScalingRatio{3.0}};
+                                      p_model.Resize(ratios);
                                   });
 
     ASSERT_TRUE(whatChanged == CHIP_POSITION);
@@ -298,7 +300,8 @@ TEST_F(AnimationModelTestFixtureStdErrStreamRedirector, /*DISABLED_*/Resize_Inva
     const NotSynced whatChanged = Validate(model,
                                   [](cxgui::IAnimatedBoardModel& p_model)
                                   {
-                                      p_model.Resize(-1.0, 2.0);
+                                      const cxgui::ScalingRatios ratios{cxgui::HorizontalScalingRatio{-1.0}, cxgui::VerticalScalingRatio{2.0}};
+                                      p_model.Resize(ratios);
                                   });
 
     ASSERT_TRUE(whatChanged == NONE);
@@ -316,7 +319,8 @@ TEST_F(AnimationModelTestFixtureStdErrStreamRedirector, /*DISABLED_*/Resize_Inva
     const NotSynced whatChanged = Validate(model,
                                   [](cxgui::IAnimatedBoardModel& p_model)
                                   {
-                                      p_model.Resize(1.0, -2.0);
+                                      const cxgui::ScalingRatios ratios{cxgui::HorizontalScalingRatio{1.0}, cxgui::VerticalScalingRatio{-2.0}};
+                                      p_model.Resize(ratios);
                                   });
 
     ASSERT_TRUE(whatChanged == NONE);

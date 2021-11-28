@@ -28,6 +28,7 @@
 #include <cxmodel/include/ChipColor.h>
 #include <cxmodel/include/common.h>
 #include <cxgui/include/Dimensions.h>
+#include <cxgui/include/ScalingRatios.h>
 
 namespace cxgui
 {
@@ -85,13 +86,11 @@ public:
      *
      * @pre Both ratios are strictly positive.
      *
-     * @param p_horizontalRatio
-     *      The horizontal scaling ratio.
-     * @param p_verticalRatio
-     *      The vertical scaling ratio.
+     * @param p_scalingRatios
+     *      The horizontal and vertical scaling ratios.
      *
      *********************************************************************************************/
-    virtual void Resize(double p_horizontalRatio, double p_verticalRatio) = 0;
+    virtual void Resize(const ScalingRatios& p_scalingRatios) = 0;
 
     /******************************************************************************************//**
      * @brief Adds horizontal and vertical displacements to the main chip.

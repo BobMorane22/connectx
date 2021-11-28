@@ -402,12 +402,14 @@ void cxgui::AnimatedBoardModel::Update(const Dimensions& p_widgetDimensions, boo
     m_isMirrorChipNeeded = (mirrorToTheLeft || mirrorToTheRight);
 }
 
-void cxgui::AnimatedBoardModel::Resize(double p_horizontalRatio, double p_verticalRatio)
+void cxgui::AnimatedBoardModel::Resize(const cxgui::ScalingRatios& p_scalingRatios)
 {
-    IF_PRECONDITION_NOT_MET_DO(p_horizontalRatio > 0.0 && p_verticalRatio > 0.0, return;);
+    IF_PRECONDITION_NOT_MET_DO(p_scalingRatios.m_horizontalRatio.Get() > 0.0 &&
+                               p_scalingRatios.m_verticalRatio.Get() > 0.0,
+                               return;);
 
-    m_chipPosition.m_x *= p_horizontalRatio;
-    m_chipPosition.m_y *= p_verticalRatio;
+    m_chipPosition.m_x *= p_scalingRatios.m_horizontalRatio.Get();
+    m_chipPosition.m_y *= p_scalingRatios.m_verticalRatio.Get();
 }
 
 void cxgui::AnimatedBoardModel::AddChipDisplacement(double p_horizontal, double p_vertical)

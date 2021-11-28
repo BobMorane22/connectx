@@ -51,7 +51,7 @@ public:
     AnimatedBoardModel(const cxgui::IAnimatedBoardPresenter& p_presenter, size_t p_animationSpeed);
 
     void Update(const Dimensions& p_widgetDimensions, bool p_isChipMovingHorizontally) override;
-    void Resize(double p_horizontalRatio, double p_verticalRatio) override;
+    void Resize(const cxgui::ScalingRatios& p_scalingRatios) override;
     void AddChipDisplacement(double p_horizontal, double p_vertical) override;
     void ResetChipPositions() override;
     void UpdateCurrentColumn(const cxmodel::Column& p_newCurrentColumn) override;

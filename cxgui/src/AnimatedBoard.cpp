@@ -501,16 +501,16 @@ bool cxgui::AnimatedBoard::OnResize(double p_newHeight, double p_newWidth)
     // Now the real work:
     if(!cxmath::AreLogicallyEqual(p_newHeight, m_lastFrameHeight))
     {
-        const double verticalRatio = p_newHeight / m_lastFrameHeight;
-        m_animationModel->Resize(1.0, verticalRatio);
+        const cxgui::ScalingRatios ratios{cxgui::VerticalScalingRatio{p_newHeight / m_lastFrameHeight}};
+        m_animationModel->Resize(ratios);
     }
 
     if(!cxmath::AreLogicallyEqual(p_newWidth, m_lastFrameWidth))
     {
-        const double horizontalRatio = p_newWidth / m_lastFrameWidth;
-        m_animationModel->Resize(horizontalRatio, 1.0);
-        m_totalMoveLeftDisplacement *= horizontalRatio;
-        m_totalMoveRightDisplacement *= horizontalRatio;
+        const cxgui::ScalingRatios ratios{cxgui::HorizontalScalingRatio{p_newWidth / m_lastFrameWidth}};
+        m_animationModel->Resize(ratios);
+        m_totalMoveLeftDisplacement *= ratios.m_horizontalRatio.Get();
+        m_totalMoveRightDisplacement *= ratios.m_horizontalRatio.Get();
     }
 
     return cxgui::STOP_EVENT_PROPAGATION;
