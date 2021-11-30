@@ -2,6 +2,7 @@
 
 Here is a list of all changes, per release:
 
+* December 5, 2021 - [v0.32](./v0-32/user/user.md)
 * September 12, 2021 - [v0.31](./v0-31/user/user.md)
 * May 23, 2021 - [v0.30](./v0-30/user/user.md)
 * May 9, 2021 - [v0.29](./v0-29/user/user.md)

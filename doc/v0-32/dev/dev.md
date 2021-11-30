@@ -1,4 +1,4 @@
-# Connect X v0.32 (Month DD, YYYY)
+# Connect X v0.32 (December 5, 2021)
 
 ## New features
 
@@ -46,8 +46,3 @@ if(sInt1 == sInt2)
     // ...
 }
 ```
-
-
-## Feature 2
-
-Description for feature 2 here...
