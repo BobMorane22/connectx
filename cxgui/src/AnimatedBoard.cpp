@@ -589,8 +589,6 @@ int cxgui::AnimatedBoard::GetDropPosition(int p_column) const
         }
     }
 
-    ASSERT_ERROR_MSG("Column unavailable. Check of availability first");
-
     return 0;
 }
 
