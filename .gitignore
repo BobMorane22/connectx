@@ -136,3 +136,4 @@ coverage/*.info
 
 # Log files
 *.log
+valgrind-out.txt
