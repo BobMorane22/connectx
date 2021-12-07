@@ -110,6 +110,7 @@ local.properties
 ### Vim/Ctags ###
 tags
 Session.vim
+.vimrc
 
 ### Connect X ###
 
