@@ -21,7 +21,7 @@
  *
  *************************************************************************************************/
 
-#include <Position.h>
+#include <cxmath/Position.h>
  
 bool cxmath::operator==(const cxmath::Position& p_lhs, const cxmath::Position& p_rhs)
 {
