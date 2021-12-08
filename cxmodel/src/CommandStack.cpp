@@ -23,9 +23,8 @@
 
 #include <iostream>
 
-#include <cxinv/include/assertion.h>
-
-#include <CommandStack.h>
+#include <cxinv/assertion.h>
+#include <cxmodel/CommandStack.h>
 
 cxmodel::CommandStack::CommandStack(const size_t p_capacity)
  : m_endPosition{p_capacity - 1}

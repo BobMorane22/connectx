@@ -26,7 +26,7 @@
 
 #include <vector>
 
-#include <cxlog/include/ILogger.h>
+#include <cxlog/ILogger.h>
 
 #include "IBoard.h"
 #include "ICommand.h"

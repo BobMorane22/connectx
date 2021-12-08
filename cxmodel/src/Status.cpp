@@ -21,9 +21,8 @@
  *
  *************************************************************************************************/
 
-#include <cxinv/include/assertion.h>
-
-#include <Status.h>
+#include <cxinv/assertion.h>
+#include <cxmodel/Status.h>
 
 cxmodel::Status::Status()
 : m_status{true}

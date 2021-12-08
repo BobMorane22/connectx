@@ -28,8 +28,8 @@
 #include <type_traits>
 #include <vector>
 
-#include <cxinv/include/assertion.h>
-#include <cxmodel/include/IObserver.h>
+#include <cxinv/assertion.h>
+#include <cxmodel/IObserver.h>
 
 namespace cxmodel
 {

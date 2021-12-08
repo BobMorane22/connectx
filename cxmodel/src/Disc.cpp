@@ -21,7 +21,7 @@
  *
  *************************************************************************************************/
 
-#include <Disc.h>
+#include <cxmodel/Disc.h>
 
 cxmodel::Disc::Disc(const ChipColor p_color)
  : m_color{p_color}

@@ -24,16 +24,16 @@
 #include <exception>
 #include <sstream>
 
-#include <cxinv/include/assertion.h>
+#include <cxinv/assertion.h>
 
-#include <Board.h>
-#include <CommandCreateNewGame.h>
-#include <CommandDropChip.h>
-#include <CommandStack.h>
-#include <Disc.h>
-#include <Model.h>
-#include <ModelNotificationContext.h>
-#include <GameResolutionStrategyFactory.h>
+#include <cxmodel/Board.h>
+#include <cxmodel/CommandCreateNewGame.h>
+#include <cxmodel/CommandDropChip.h>
+#include <cxmodel/CommandStack.h>
+#include <cxmodel/Disc.h>
+#include <cxmodel/Model.h>
+#include <cxmodel/ModelNotificationContext.h>
+#include <cxmodel/GameResolutionStrategyFactory.h>
 
 namespace
 {

@@ -21,11 +21,11 @@
  *
  *************************************************************************************************/
 
-#include <cxinv/include/assertion.h>
+#include <cxinv/assertion.h>
 
-#include <GameResolutionStrategyFactory.h>
-#include <TieGameResolutionStrategy.h>
-#include <WinGameResolutionStrategy.h>
+#include <cxmodel/GameResolutionStrategyFactory.h>
+#include <cxmodel/TieGameResolutionStrategy.h>
+#include <cxmodel/WinGameResolutionStrategy.h>
 
 namespace
 {
@@ -55,7 +55,7 @@ std::unique_ptr<cxmodel::IGameResolutionStrategy> cxmodel::GameResolutionStrateg
     ASSERT(strategy);
 
     IF_PRECONDITION_NOT_MET_DO(p_inARowValue >= 2u, return strategy;);
-    IF_PRECONDITION_NOT_MET_DO(p_inARowValue <= std::numeric_limits<int>::max(), return strategy;);
+    IF_PRECONDITION_NOT_MET_DO(p_inARowValue <= std::numeric_limits<size_t>::max(), return strategy;);
     IF_PRECONDITION_NOT_MET_DO(p_players.size() >= 2, return strategy;);
 
     switch(p_resolution)

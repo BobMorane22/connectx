@@ -24,9 +24,8 @@
 #include <unistd.h>
 #include <linux/limits.h>
 
-#include <cxinv/include/assertion.h>
-
-#include <OS.h>
+#include <cxinv/assertion.h>
+#include <cxmodel/OS.h>
 
 std::string cxmodel::GetCurrentExecutablePath(const bool p_pathOnly)
 {

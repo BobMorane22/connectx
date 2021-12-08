@@ -23,7 +23,7 @@
 
 #include <gtest/gtest.h>
 
-#include <cxinv/include/assertion.h>
+#include <cxinv/assertion.h>
 
 #include <ConcreteObserverMock.h>
 #include <ConcreteSubjectMock.h>

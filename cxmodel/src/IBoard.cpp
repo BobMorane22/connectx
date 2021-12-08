@@ -21,8 +21,7 @@
  *
  *************************************************************************************************/
 
-#include <IBoard.h>
-
+#include <cxmodel/IBoard.h>
 
 bool cxmodel::operator==(const cxmodel::IBoard::Position& p_lhs, const cxmodel::IBoard::Position& p_rhs)
 {

@@ -21,10 +21,9 @@
  *
  *************************************************************************************************/
 
-#include <cxinv/include/assertion.h>
-
-#include <Disc.h>
-#include <Player.h>
+#include <cxinv/assertion.h>
+#include <cxmodel/Disc.h>
+#include <cxmodel/Player.h>
 
 cxmodel::Player::Player(const std::string p_name, const cxmodel::ChipColor& p_chipColor)
  : m_name{p_name}

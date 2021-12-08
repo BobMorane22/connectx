@@ -21,7 +21,7 @@
  *
  *************************************************************************************************/
 
-#include <IChip.h>
+#include <cxmodel/IChip.h>
 
 bool cxmodel::operator==(const cxmodel::IChip& p_lhs, const cxmodel::IChip& p_rhs)
 {

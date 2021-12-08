@@ -21,9 +21,8 @@
  *
  *************************************************************************************************/
 
-#include <cxinv/include/assertion.h>
-
-#include <NewGameInformation.h>
+#include <cxinv/assertion.h>
+#include <cxmodel/NewGameInformation.h>
 
 std::size_t cxmodel::NewGameInformation::AddPlayer(const Player& p_newPlayer)
 {

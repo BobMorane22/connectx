@@ -23,11 +23,10 @@
 
 #include <algorithm>
 
-#include <cxinv/include/assertion.h>
-
-#include <Disc.h>
-#include <IBoard.h>
-#include <WinGameResolutionStrategy.h>
+#include <cxinv/assertion.h>
+#include <cxmodel/Disc.h>
+#include <cxmodel/IBoard.h>
+#include <cxmodel/WinGameResolutionStrategy.h>
 
 namespace
 {
@@ -48,7 +47,7 @@ cxmodel::WinGameResolutionStrategy::WinGameResolutionStrategy(const cxmodel::IBo
  , m_takenPositions{p_takenPositions}
 {
     if(PRECONDITION(p_inARowValue >= 2u) &&
-       PRECONDITION(p_inARowValue <= std::numeric_limits<int>::max()))
+       PRECONDITION(p_inARowValue <= std::numeric_limits<size_t>::max()))
     {
         m_inARowValue = p_inARowValue;
     }
@@ -88,8 +87,8 @@ cxmodel::IBoard::Position cxmodel::WinGameResolutionStrategy::PositionOfLastSucc
 int cxmodel::WinGameResolutionStrategy::LeftValidationLimit(GridValidationType p_validationType) const
 {
     const IBoard::Position lastMovePosition = PositionOfLastSuccessFullMove();
-    ASSERT(lastMovePosition.m_row <= std::numeric_limits<int>::max());
-    ASSERT(lastMovePosition.m_column <= std::numeric_limits<int>::max());
+    ASSERT(lastMovePosition.m_row <= std::numeric_limits<size_t>::max());
+    ASSERT(lastMovePosition.m_column <= std::numeric_limits<size_t>::max());
 
     const int lastPlayedRow = static_cast<int>(lastMovePosition.m_row);
     const int lastPlayedColumn = static_cast<int>(lastMovePosition.m_column);
@@ -101,7 +100,7 @@ int cxmodel::WinGameResolutionStrategy::LeftValidationLimit(GridValidationType p
     {
         int lowerSubscript = lastPlayedRow + (m_inARowValue - 1);
 
-        ASSERT(m_board.GetNbRows() <= std::numeric_limits<int>::max());
+        ASSERT(m_board.GetNbRows() <= std::numeric_limits<size_t>::max());
         lowerSubscript = std::min(static_cast<int>(m_board.GetNbRows()) - 1, lowerSubscript);
 
         if(lastPlayedColumn - leftSubscript > lowerSubscript - lastPlayedRow)
@@ -127,15 +126,15 @@ int cxmodel::WinGameResolutionStrategy::RightValidationLimit(GridValidationType 
 
 {
     const IBoard::Position lastMovePosition = PositionOfLastSuccessFullMove();
-    ASSERT(lastMovePosition.m_row <= std::numeric_limits<int>::max());
-    ASSERT(lastMovePosition.m_column <= std::numeric_limits<int>::max());
+    ASSERT(lastMovePosition.m_row <= std::numeric_limits<size_t>::max());
+    ASSERT(lastMovePosition.m_column <= std::numeric_limits<size_t>::max());
 
     const int lastPlayedRow = static_cast<int>(lastMovePosition.m_row);
     const int lastPlayedColumn = static_cast<int>(lastMovePosition.m_column);
 
     int rightSubscript = lastPlayedColumn + (m_inARowValue - 1);
 
-    ASSERT(m_board.GetNbRows() <= std::numeric_limits<int>::max());
+    ASSERT(m_board.GetNbRows() <= std::numeric_limits<size_t>::max());
     rightSubscript = std::min(rightSubscript, static_cast<int>(m_board.GetNbColumns()) - 1);
 
     if(p_validationType == GridValidationType::DiagonalDownward)
@@ -152,7 +151,7 @@ int cxmodel::WinGameResolutionStrategy::RightValidationLimit(GridValidationType 
     {
         int lowerSubscript = lastPlayedRow + (m_inARowValue - 1u);
 
-        ASSERT(m_board.GetNbRows() <= std::numeric_limits<int>::max());
+        ASSERT(m_board.GetNbRows() <= std::numeric_limits<size_t>::max());
         lowerSubscript = std::min(static_cast<int>(m_board.GetNbRows()) - 1, lowerSubscript);
 
         if(rightSubscript - lastPlayedColumn > lowerSubscript - lastPlayedRow)
@@ -167,15 +166,15 @@ int cxmodel::WinGameResolutionStrategy::RightValidationLimit(GridValidationType 
 int cxmodel::WinGameResolutionStrategy::UpperValidationLimit(GridValidationType p_validationType) const
 {
     const IBoard::Position lastMovePosition = PositionOfLastSuccessFullMove();
-    ASSERT(lastMovePosition.m_row <= std::numeric_limits<int>::max());
-    ASSERT(lastMovePosition.m_column <= std::numeric_limits<int>::max());
+    ASSERT(lastMovePosition.m_row <= std::numeric_limits<size_t>::max());
+    ASSERT(lastMovePosition.m_column <= std::numeric_limits<size_t>::max());
 
     const int lastPlayedRow = lastMovePosition.m_row;
     const int lastPlayedColumn = lastMovePosition.m_column;
 
     int upperSubscript = lastPlayedRow + (m_inARowValue - 1);
 
-    ASSERT(m_board.GetNbRows() <= std::numeric_limits<int>::max());
+    ASSERT(m_board.GetNbRows() <= std::numeric_limits<size_t>::max());
     upperSubscript = std::min(static_cast<int>(m_board.GetNbRows()) - 1, upperSubscript);
 
     if(p_validationType == GridValidationType::DiagonalDownward)
@@ -195,8 +194,8 @@ int cxmodel::WinGameResolutionStrategy::UpperValidationLimit(GridValidationType 
 int cxmodel::WinGameResolutionStrategy::LowerValidationLimit(GridValidationType p_validationType) const
 {
     const IBoard::Position lastMovePosition = PositionOfLastSuccessFullMove();
-    ASSERT(lastMovePosition.m_row <= std::numeric_limits<int>::max());
-    ASSERT(lastMovePosition.m_column <= std::numeric_limits<int>::max());
+    ASSERT(lastMovePosition.m_row <= std::numeric_limits<size_t>::max());
+    ASSERT(lastMovePosition.m_column <= std::numeric_limits<size_t>::max());
 
     const int lastPlayedRow = lastMovePosition.m_row;
     const int lastPlayedColumn = lastMovePosition.m_column;

@@ -26,7 +26,7 @@
 
 #include <vector>
 
-#include <cxinv/include/assertion.h>
+#include <cxinv/assertion.h>
 
 #include "Player.h"
 

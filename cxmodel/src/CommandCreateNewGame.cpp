@@ -24,10 +24,9 @@
 #include <memory>
 #include <sstream>
 
-#include <cxinv/include/assertion.h>
-
-#include <Board.h>
-#include <CommandCreateNewGame.h>
+#include <cxinv/assertion.h>
+#include <cxmodel/Board.h>
+#include <cxmodel/CommandCreateNewGame.h>
 
 cxmodel::CommandCreateNewGame::CommandCreateNewGame(const IConnectXLimits& p_modelAsLimits,
                                                     std::unique_ptr<IBoard>& p_board,

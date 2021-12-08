@@ -23,11 +23,10 @@
 
 #include <algorithm>
 
-#include <cxinv/include/assertion.h>
-#include <cxmodel/include/Disc.h>
-#include <cxmodel/include/Player.h>
-
-#include <TieGameResolutionStrategy.h>
+#include <cxinv/assertion.h>
+#include <cxmodel/Disc.h>
+#include <cxmodel/Player.h>
+#include <cxmodel/TieGameResolutionStrategy.h>
 
 namespace
 {
@@ -62,7 +61,7 @@ cxmodel::TieGameResolutionStrategy::TieGameResolutionStrategy(const IBoard& p_bo
 , m_turn{0}
 {
     PRECONDITION(p_inARowValue >= 2u);
-    PRECONDITION(p_inARowValue <= std::numeric_limits<int>::max());
+    PRECONDITION(p_inARowValue <= std::numeric_limits<size_t>::max());
     PRECONDITION(m_players.size() >= 2);
 }
 

@@ -27,7 +27,7 @@
 #include <string>
 #include <memory>
 
-#include <cxlog/include/ILogger.h>
+#include <cxlog/ILogger.h>
 
 #include "IBoard.h"
 #include "ICommandStack.h"

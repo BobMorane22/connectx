@@ -21,10 +21,9 @@
  *
  *************************************************************************************************/
 
-#include <cxinv/include/assertion.h>
-
-#include <Board.h>
-#include <Disc.h>
+#include <cxinv/assertion.h>
+#include <cxmodel/Board.h>
+#include <cxmodel/Disc.h>
 
 namespace
 {

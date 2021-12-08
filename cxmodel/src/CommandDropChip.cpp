@@ -24,11 +24,10 @@
 #include <algorithm>
 #include <sstream>
 
-#include <cxinv/include/assertion.h>
-
-#include <IChip.h>
-#include <CommandDropChip.h>
-#include <Subject.h>
+#include <cxinv/assertion.h>
+#include <cxmodel/CommandDropChip.h>
+#include <cxmodel/IChip.h>
+#include <cxmodel/Subject.h>
 
 namespace
 {

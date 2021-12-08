@@ -23,9 +23,8 @@
 
 #include <cmath>
 
-#include <cxinv/include/assertion.h>
-
-#include <ChipColor.h>
+#include <cxinv/assertion.h>
+#include <cxmodel/ChipColor.h>
 
 namespace
 {
