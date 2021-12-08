@@ -21,11 +21,11 @@
  *
  *************************************************************************************************/
 
-#include <cxinv/include/assertion.h>
+#include <cxinv/assertion.h>
 
-#include "GameViewDownKeyHandlerStrategy.h"
-#include "IBoardInformation.h"
-#include "IGameViewController.h"
+#include <cxgui/GameViewDownKeyHandlerStrategy.h>
+#include <cxgui/IBoardInformation.h>
+#include <cxgui/IGameViewController.h>
 
 bool cxgui::GameViewDownKeyHandlerStrategy::Handle(IGameViewController& p_controller, IBoardInformation& p_gameBoard)
 {

@@ -24,7 +24,7 @@
 #ifndef INEWGAMEVIEWCONTROLLER_H_C4599F8B_25C5_4F7A_9A04_07CE371790CE
 #define INEWGAMEVIEWCONTROLLER_H_C4599F8B_25C5_4F7A_9A04_07CE371790CE
 
-#include <cxmodel/include/NewGameInformation.h>
+#include <cxmodel/NewGameInformation.h>
 
 namespace cxgui
 {

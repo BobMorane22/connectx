@@ -26,7 +26,7 @@
 
 #include <string>
 
-#include <cxmodel/include/ModelNotificationContext.h>
+#include <cxmodel/ModelNotificationContext.h>
 
 namespace cxgui
 {

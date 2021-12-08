@@ -21,10 +21,9 @@
  *
  *************************************************************************************************/
 
-#include <cxinv/include/assertion.h>
-#include <cxmodel/include/IConnectXGameInformation.h>
-
-#include <WinGameResolutionDialogPresenter.h>
+#include <cxinv/assertion.h>
+#include <cxmodel/IConnectXGameInformation.h>
+#include <cxgui/WinGameResolutionDialogPresenter.h>
 
 cxgui::WinGameResolutionDialogPresenter::WinGameResolutionDialogPresenter(const cxmodel::IConnectXGameInformation& p_modelAsInformation)
 : m_modelAsInformation{p_modelAsInformation}

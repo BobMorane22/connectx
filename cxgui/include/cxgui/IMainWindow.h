@@ -24,7 +24,7 @@
 #ifndef IMAINWINDOW_H_87FB17B9_ABA6_42D6_8B00_1B898BCD3C94
 #define IMAINWINDOW_H_87FB17B9_ABA6_42D6_8B00_1B898BCD3C94
 
-#include <cxmodel/include/IObserver.h>
+#include <cxmodel/IObserver.h>
 
 namespace cxgui
 {

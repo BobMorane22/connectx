@@ -21,8 +21,8 @@
  *
  *************************************************************************************************/
 
-#include <About.h>
-#include <IAboutWindowPresenter.h>
+#include <cxgui/About.h>
+#include <cxgui/IAboutWindowPresenter.h>
 
 cxgui::About::About(std::unique_ptr<IAboutWindowPresenter>&& p_presenter)
  : Window()

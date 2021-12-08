@@ -19,9 +19,8 @@
  *
  *************************************************************************************************/
 
-#include <cxinv/include/assertion.h>
-
-#include "StatusBarPresenter.h"
+#include <cxinv/assertion.h>
+#include <cxgui/StatusBarPresenter.h>
 
 namespace
 {

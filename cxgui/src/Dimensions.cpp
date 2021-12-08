@@ -21,7 +21,7 @@
  *
  *************************************************************************************************/
 
-#include <Dimensions.h>
+#include <cxgui/Dimensions.h>
 
 bool cxgui::operator==(const cxgui::Dimensions& p_lhs, const cxgui::Dimensions& p_rhs)
 {

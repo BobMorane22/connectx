@@ -29,17 +29,16 @@
 #include <gdkmm/general.h>
 #include <glibmm/main.h>
 
-#include <cxinv/include/assertion.h>
-#include <cxmodel/include/Color.h>
-#include <cxmodel/include/Disc.h>
-
-#include "AnimatedBoardModel.h"
-#include "AnimatedBoardPresenter.h"
-#include "AnimatedBoard.h"
-#include "common.h"
-#include "ContextRestoreRAII.h"
-#include "IGameViewPresenter.h"
-#include "pathHelpers.h"
+#include <cxinv/assertion.h>
+#include <cxmodel/Color.h>
+#include <cxmodel/Disc.h>
+#include <cxgui/AnimatedBoardModel.h>
+#include <cxgui/AnimatedBoardPresenter.h>
+#include <cxgui/AnimatedBoard.h>
+#include <cxgui/common.h>
+#include <cxgui/ContextRestoreRAII.h>
+#include <cxgui/IGameViewPresenter.h>
+#include <cxgui/pathHelpers.h>
 
 namespace
 {

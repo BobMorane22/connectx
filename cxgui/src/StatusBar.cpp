@@ -21,9 +21,8 @@
  *
  *************************************************************************************************/
 
-#include <cxinv/include/assertion.h>
-
-#include <StatusBar.h>
+#include <cxinv/assertion.h>
+#include <cxgui/StatusBar.h>
 
 cxgui::StatusBar::~StatusBar() = default;
 

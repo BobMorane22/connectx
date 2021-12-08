@@ -21,11 +21,9 @@
  *
  *************************************************************************************************/
 
-#include <iostream>
-
-#include "GameViewRightKeyHandlerStrategy.h"
-#include "IBoardInformation.h"
-#include "IGameViewController.h"
+#include <cxgui/GameViewRightKeyHandlerStrategy.h>
+#include <cxgui/IBoardInformation.h>
+#include <cxgui/IGameViewController.h>
 
 bool cxgui::GameViewRightKeyHandlerStrategy::Handle(IGameViewController& p_controller, IBoardInformation& /*p_gameBoard*/)
 {

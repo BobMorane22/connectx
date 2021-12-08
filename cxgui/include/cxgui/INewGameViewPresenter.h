@@ -26,7 +26,7 @@
 
 #include <string>
 
-#include <cxmodel/include/Status.h>
+#include <cxmodel/Status.h>
 
 namespace cxgui
 {

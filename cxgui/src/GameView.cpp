@@ -25,15 +25,14 @@
 
 #include <gtkmm/window.h>
 
-#include <cxinv/include/assertion.h>
-#include <cxmodel/include/IChip.h>
-#include <cxmodel/include/ModelNotificationContext.h>
-
-#include "BoardAnimation.h"
-#include "common.h"
-#include "DiscChip.h"
-#include "GameView.h"
-#include "GameViewKeyHandlerStrategyFactory.h"
+#include <cxinv/assertion.h>
+#include <cxmodel/IChip.h>
+#include <cxmodel/ModelNotificationContext.h>
+#include <cxgui/BoardAnimation.h>
+#include <cxgui/common.h>
+#include <cxgui/DiscChip.h>
+#include <cxgui/GameView.h>
+#include <cxgui/GameViewKeyHandlerStrategyFactory.h>
 
 namespace
 {

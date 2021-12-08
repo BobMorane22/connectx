@@ -24,7 +24,7 @@
 #ifndef IANIMATEDBOARDPRESENTER_H_A2048E6E_9B10_4BE6_93E7_CD07D492BE33
 #define IANIMATEDBOARDPRESENTER_H_A2048E6E_9B10_4BE6_93E7_CD07D492BE33
 
-#include <cxgui/include/IGameViewPresenter.h>
+#include <cxgui/IGameViewPresenter.h>
 
 namespace cxgui
 {

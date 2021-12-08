@@ -24,7 +24,7 @@
 #ifndef COMMON_H_E38DC86D_677A_4508_9D75_1B9C3C899679
 #define COMMON_H_E38DC86D_677A_4508_9D75_1B9C3C899679
 
-#include <cxmodel/include/ChipColor.h>
+#include <cxmodel/ChipColor.h>
 
 namespace cxgui
 {

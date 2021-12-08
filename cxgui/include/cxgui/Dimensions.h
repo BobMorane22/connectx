@@ -24,7 +24,7 @@
 #ifndef DIMENSIONS_H_DED7FF0E_07A9_4626_B744_8A3EAAC92B7B
 #define DIMENSIONS_H_DED7FF0E_07A9_4626_B744_8A3EAAC92B7B
 
-#include <cxmodel/include/StrongType.h>
+#include <cxmodel/StrongType.h>
 
 namespace cxgui
 {

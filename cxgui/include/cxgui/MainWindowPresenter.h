@@ -26,7 +26,7 @@
 
 #include <string>
 
-#include <cxmodel/include/Player.h>
+#include <cxmodel/Player.h>
 
 #include "IMainWindowPresenter.h"
 

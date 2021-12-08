@@ -24,7 +24,7 @@
 #ifndef IMAINWINDOWPRESENTER_H_D8C76920_83D9_4D15_B95A_63282E742221
 #define IMAINWINDOWPRESENTER_H_D8C76920_83D9_4D15_B95A_63282E742221
 
-#include <cxmodel/include/ModelNotificationContext.h>
+#include <cxmodel/ModelNotificationContext.h>
 
 #include "IGameViewPresenter.h"
 #include "INewGameViewPresenter.h"

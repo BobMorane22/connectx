@@ -1,9 +1,8 @@
 #include <cairomm/context.h>
 
-#include <cxmath/include/math.h>
-#include <cxmath/include/Position.h>
-
-#include "pathHelpers.h"
+#include <cxmath/math.h>
+#include <cxmath/Position.h>
+#include <cxgui/pathHelpers.h>
 
 void cxgui::MakeRectanglarPath(const Cairo::RefPtr<Cairo::Context>& p_context,
                                const cxmath::Position& p_topLeft,

@@ -21,7 +21,7 @@
  *
  *************************************************************************************************/
 
-#include <TieGameResolutionDialogPresenter.h>
+#include <cxgui/TieGameResolutionDialogPresenter.h>
 
 std::string cxgui::TieGameResolutionDialogPresenter::GetTitle() const
 {

@@ -25,9 +25,8 @@
 
 #include <gdkmm/pixbuf.h>
 
-#include <cxinv/include/assertion.h>
-
-#include "BoardElementCache.h"
+#include <cxinv/assertion.h>
+#include <cxgui/BoardElementCache.h>
 
 void cxgui::BoardElementCache::Add(const cxmodel::ChipColor& p_color, const Glib::RefPtr<Gdk::Pixbuf> p_surface)
 {

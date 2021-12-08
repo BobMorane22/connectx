@@ -21,10 +21,10 @@
  *
  *************************************************************************************************/
 
-#include <common.h>
-#include <GameResolutionDialog.h>
-#include <IGameResolutionDialogController.h>
-#include <IGameResolutionDialogPresenter.h>
+#include <cxgui/common.h>
+#include <cxgui/GameResolutionDialog.h>
+#include <cxgui/IGameResolutionDialogController.h>
+#include <cxgui/IGameResolutionDialogPresenter.h>
 
 cxgui::GameResolutionDialog::GameResolutionDialog(std::unique_ptr<IGameResolutionDialogPresenter> p_presenter,
                                                   std::unique_ptr<IGameResolutionDialogController> p_controller)

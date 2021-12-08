@@ -23,9 +23,8 @@
 
 #include <algorithm>
 
-#include <cxinv/include/assertion.h>
-
-#include <Chip.h>
+#include <cxinv/assertion.h>
+#include <cxgui/Chip.h>
 
 cxgui::Chip::Chip(const cxmodel::ChipColor& p_fillColor,
                   const cxmodel::ChipColor& p_backgroundColor,

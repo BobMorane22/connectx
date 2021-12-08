@@ -21,9 +21,8 @@
  *
  *************************************************************************************************/
 
-#include <ColorComboBox.h>
-
-#include <cxinv/include/assertion.h>
+#include <cxinv/assertion.h>
+#include <cxgui/ColorComboBox.h>
 
 cxgui::ColorComboBox::Record::Record()
 {

@@ -24,7 +24,7 @@
 #ifndef IGAMEVIEWCONTROLLER_H_3C41DCA5_1218_4228_A8C9_545FC5071BD3
 #define IGAMEVIEWCONTROLLER_H_3C41DCA5_1218_4228_A8C9_545FC5071BD3
 
-#include <cxmodel/include/ChipColor.h>
+#include <cxmodel/ChipColor.h>
 
 namespace cxgui
 {

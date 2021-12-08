@@ -24,12 +24,11 @@
 #include <iostream>
 #include <memory>
 
-#include <cxinv/include/assertion.h>
-#include <cxmodel/include/Disc.h>
-#include <cxmodel/include/IConnectXGameActions.h>
-#include <cxmodel/include/IUndoRedo.h>
-
-#include <MainWindowController.h>
+#include <cxinv/assertion.h>
+#include <cxmodel/Disc.h>
+#include <cxmodel/IConnectXGameActions.h>
+#include <cxmodel/IUndoRedo.h>
+#include <cxgui/MainWindowController.h>
 
 cxgui::MainWindowController::MainWindowController(cxmodel::IConnectXGameActions& p_modelAsGameActions,
                                                   cxmodel::IUndoRedo& p_modelAsUndoRedo)

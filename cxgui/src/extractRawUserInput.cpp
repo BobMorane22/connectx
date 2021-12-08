@@ -23,7 +23,7 @@
 
 #include <stdexcept>
 
-#include <extractRawUserInput.h>
+#include <cxgui/extractRawUserInput.h>
 
 namespace
 {

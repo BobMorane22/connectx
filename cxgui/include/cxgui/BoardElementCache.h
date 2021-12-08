@@ -26,7 +26,7 @@
 
 #include <vector>
 
-#include <cxmodel/include/ChipColor.h>
+#include <cxmodel/ChipColor.h>
 
 namespace Gdk
 {

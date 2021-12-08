@@ -21,14 +21,12 @@
  *
  *************************************************************************************************/
 
-#include <cxinv/include/assertion.h>
-#include <cxmodel/include/GameResolutionStrategyFactory.h>
-#include <cxmodel/include/IConnectXGameInformation.h>
-
-#include <TieGameResolutionDialogPresenter.h>
-#include <WinGameResolutionDialogPresenter.h>
-
-#include "GameResolutionDialogPresenterFactory.h"
+#include <cxinv/assertion.h>
+#include <cxmodel/GameResolutionStrategyFactory.h>
+#include <cxmodel/IConnectXGameInformation.h>
+#include <cxgui/TieGameResolutionDialogPresenter.h>
+#include <cxgui/WinGameResolutionDialogPresenter.h>
+#include <cxgui/GameResolutionDialogPresenterFactory.h>
 
 namespace
 {

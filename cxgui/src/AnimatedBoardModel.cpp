@@ -21,11 +21,10 @@
  *
  *************************************************************************************************/
 
-#include <cxinv/include/assertion.h>
-#include <cxmath/include/math.h>
-
-#include "AnimatedBoardModel.h"
-#include "AnimatedBoardPresenter.h"
+#include <cxinv/assertion.h>
+#include <cxmath/math.h>
+#include <cxgui/AnimatedBoardModel.h>
+#include <cxgui/AnimatedBoardPresenter.h>
 
 namespace
 {

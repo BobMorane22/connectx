@@ -26,8 +26,8 @@
 
 #include <cstddef>
 
-#include <cxmodel/include/common.h>
-#include <cxmodel/include/ChipColor.h>
+#include <cxmodel/common.h>
+#include <cxmodel/ChipColor.h>
 
 namespace cxgui
 {

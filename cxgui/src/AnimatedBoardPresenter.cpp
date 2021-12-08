@@ -21,7 +21,7 @@
  *
  *************************************************************************************************/
 
- #include "AnimatedBoardPresenter.h"
+#include <cxgui/AnimatedBoardPresenter.h>
 
 cxgui::AnimatedBoardPresenter::AnimatedBoardPresenter(const IGameViewPresenter& p_presenter)
 : m_gameVewPresenter{p_presenter}

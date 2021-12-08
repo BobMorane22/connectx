@@ -24,8 +24,8 @@
 #ifndef BOARDANIMATIONNOTIFICATIONCONTEXT_H_6D195C5E_A7B3_4F4F_9BCA_8E42F897BCA4
 #define BOARDANIMATIONNOTIFICATIONCONTEXT_H_6D195C5E_A7B3_4F4F_9BCA_8E42F897BCA4
 
-#include <cxmodel/include/IObserver.h>
-#include <cxmodel/include/Subject.h>
+#include <cxmodel/IObserver.h>
+#include <cxmodel/Subject.h>
 
 namespace cxgui
 {

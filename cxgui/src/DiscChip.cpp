@@ -21,7 +21,7 @@
  *
  *************************************************************************************************/
 
-#include "DiscChip.h"
+#include <cxgui/DiscChip.h>
 
 cxgui::DiscChip::DiscChip(const cxmodel::ChipColor& p_fillColor, const cxmodel::ChipColor& p_backgroundColor, int p_dimension)
 : Chip{p_fillColor, p_backgroundColor, p_dimension, p_dimension}

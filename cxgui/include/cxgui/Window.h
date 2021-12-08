@@ -24,8 +24,8 @@
 #ifndef WINDOW_H_861FC628_597C_407E_8206_E67F71000A55
 #define WINDOW_H_861FC628_597C_407E_8206_E67F71000A55
 
-#include <cxinv/include/assertion.h>
-#include <cxmodel/include/OS.h>
+#include <cxinv/assertion.h>
+#include <cxmodel/OS.h>
 
 #include <glibmm/fileutils.h>
 #include <gtkmm/grid.h>

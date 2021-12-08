@@ -23,7 +23,7 @@
 
 #include <string>
 
-#include <MenuItem.h>
+#include <cxgui/MenuItem.h>
 
 std::string cxgui::MakeLabel(MenuItem p_menuItem)
 {

@@ -27,25 +27,24 @@
 #include <gtkmm/statusbar.h>
 #include <gtkmm/stock.h>
 
-#include <cxinv/include/assertion.h>
-#include <cxmodel/include/IConnectXGameActions.h>
-#include <cxmodel/include/IConnectXGameInformation.h>
-#include <cxmodel/include/IVersioning.h>
-#include <cxmodel/include/GameResolutionStrategyFactory.h>
-
-#include <About.h>
-#include <AboutWindowPresenter.h>
-#include <GameResolutionDialog.h>
-#include <GameResolutionDialogController.h>
-#include <GameResolutionDialogPresenterFactory.h>
-#include <GameView.h>
-#include <IMainWindowController.h>
-#include <IMainWindowPresenter.h>
-#include <MainWindow.h>
-#include <NewGameView.h>
-#include <StatusBar.h>
-#include <StatusBarPresenter.h>
-#include <GameResolutionDialogController.h>
+#include <cxinv/assertion.h>
+#include <cxmodel/IConnectXGameActions.h>
+#include <cxmodel/IConnectXGameInformation.h>
+#include <cxmodel/IVersioning.h>
+#include <cxmodel/GameResolutionStrategyFactory.h>
+#include <cxgui/About.h>
+#include <cxgui/AboutWindowPresenter.h>
+#include <cxgui/GameResolutionDialog.h>
+#include <cxgui/GameResolutionDialogController.h>
+#include <cxgui/GameResolutionDialogPresenterFactory.h>
+#include <cxgui/GameView.h>
+#include <cxgui/IMainWindowController.h>
+#include <cxgui/IMainWindowPresenter.h>
+#include <cxgui/MainWindow.h>
+#include <cxgui/NewGameView.h>
+#include <cxgui/StatusBar.h>
+#include <cxgui/StatusBarPresenter.h>
+#include <cxgui/GameResolutionDialogController.h>
 
 cxgui::MainWindow::MainWindow(Gtk::Application& p_gtkApplication,
                               cxmodel::ModelSubject& p_model,

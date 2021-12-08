@@ -26,11 +26,10 @@
 
 #include <gtkmm/messagedialog.h>
 
-#include <cxinv/include/assertion.h>
-#include <cxmodel/include/NewGameInformation.h>
-
-#include <extractRawUserInput.h>
-#include <NewGameView.h>
+#include <cxinv/assertion.h>
+#include <cxmodel/NewGameInformation.h>
+#include <cxgui/extractRawUserInput.h>
+#include <cxgui/NewGameView.h>
 
 namespace
 {

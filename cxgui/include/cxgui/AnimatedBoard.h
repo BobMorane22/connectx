@@ -26,7 +26,7 @@
 
 #include <gtkmm/drawingarea.h>
 
-#include <cxmath/include/math.h>
+#include <cxmath/math.h>
 
 #include "BoardAnimation.h"
 #include "BoardAnimationNotificationContext.h"

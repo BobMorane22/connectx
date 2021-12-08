@@ -21,11 +21,10 @@
  *
  *************************************************************************************************/
 
-#include <cxmodel/include/IConnectXGameActions.h>
+#include <cxmodel/IConnectXGameActions.h>
+#include <cxgui/GameResolutionDialogController.h>
 
-#include <GameResolutionDialogController.h>
-
-cxgui::GameResolutionDialogController::WinGameResolutionDialogController(cxmodel::IConnectXGameActions& p_modelAsActions)
+cxgui::GameResolutionDialogController::GameResolutionDialogController(cxmodel::IConnectXGameActions& p_modelAsActions)
 : m_modelAsActions{p_modelAsActions}
 {
 }

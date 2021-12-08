@@ -21,13 +21,11 @@
  *
  *************************************************************************************************/
 
-#include <cxinv/include/assertion.h>
-
-#include "GameViewKeyHandlerStrategyFactory.h"
-
-#include "GameViewDownKeyHandlerStrategy.h"
-#include "GameViewLeftKeyHandlerStrategy.h"
-#include "GameViewRightKeyHandlerStrategy.h"
+#include <cxinv/assertion.h>
+#include <cxgui/GameViewKeyHandlerStrategyFactory.h>
+#include <cxgui/GameViewDownKeyHandlerStrategy.h>
+#include <cxgui/GameViewLeftKeyHandlerStrategy.h>
+#include <cxgui/GameViewRightKeyHandlerStrategy.h>
 
 std::unique_ptr<cxgui::IGameViewKeyHandlerStrategy> cxgui::GameViewKeyHandlerStrategyFactory::Create(GdkEventKey* p_event)
 {

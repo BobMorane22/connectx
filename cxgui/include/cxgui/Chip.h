@@ -26,7 +26,7 @@
 
 #include <gtkmm/drawingarea.h>
 
-#include <cxmodel/include/ChipColor.h>
+#include <cxmodel/ChipColor.h>
 
 namespace cxgui
 {

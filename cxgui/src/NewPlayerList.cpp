@@ -24,10 +24,9 @@
 #include <gtkmm/entry.h>
 #include <gtkmm/grid.h>
 
-#include <cxinv/include/assertion.h>
-#include <cxgui/include/ColorComboBox.h>
-
-#include <NewPlayerList.h>
+#include <cxinv/assertion.h>
+#include <cxgui/ColorComboBox.h>
+#include <cxgui/NewPlayerList.h>
 
 namespace cxgui
 {

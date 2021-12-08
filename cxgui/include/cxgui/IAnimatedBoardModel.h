@@ -24,11 +24,11 @@
 #ifndef IANIMATEDBOARDMODEL_H_01D250F8_D2F7_42FE_9D3F_762B6B5D1F37
 #define IANIMATEDBOARDMODEL_H_01D250F8_D2F7_42FE_9D3F_762B6B5D1F37
 
-#include <cxmath/include/Position.h>
-#include <cxmodel/include/ChipColor.h>
-#include <cxmodel/include/common.h>
-#include <cxgui/include/Dimensions.h>
-#include <cxgui/include/ScalingRatios.h>
+#include <cxmath/Position.h>
+#include <cxmodel/ChipColor.h>
+#include <cxmodel/common.h>
+#include <cxgui/Dimensions.h>
+#include <cxgui/ScalingRatios.h>
 
 namespace cxgui
 {

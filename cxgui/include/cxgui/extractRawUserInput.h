@@ -24,7 +24,7 @@
 #ifndef EXTRACTRAWUSERINPUT_H_E59E21D1_FC74_469C_9360_9ECC7EE8D51F
 #define EXTRACTRAWUSERINPUT_H_E59E21D1_FC74_469C_9360_9ECC7EE8D51F
 
-#include <cxmodel/include/Status.h>
+#include <cxmodel/Status.h>
 
 namespace cxgui
 {
