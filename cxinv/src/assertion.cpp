@@ -21,7 +21,7 @@
  *
  *************************************************************************************************/
 
-#include <assertion.h>
+#include <cxinv/assertion.h>
 
 #ifndef NDEBUG
 #include <iostream>
