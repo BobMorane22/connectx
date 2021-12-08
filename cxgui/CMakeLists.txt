@@ -56,7 +56,6 @@ add_library(${TARGET_NAME}
   src/StatusBar.cpp
   src/StatusBarPresenter.cpp
   src/TieGameResolutionDialogPresenter.cpp
-  src/WinGameResolutionDialogController.cpp
   src/WinGameResolutionDialogPresenter.cpp
 )
 
