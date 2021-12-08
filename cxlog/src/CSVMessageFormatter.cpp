@@ -21,9 +21,8 @@
  *
  *************************************************************************************************/
 
-#include <cxinv/include/assertion.h>
-
-#include <CSVMessageFormatter.h>
+#include <cxinv/assertion.h>
+#include <cxlog/CSVMessageFormatter.h>
 
 namespace
 {

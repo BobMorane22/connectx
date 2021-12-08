@@ -21,9 +21,8 @@
  *
  *************************************************************************************************/
 
-#include <cxinv/include/assertion.h>
-
-#include <FileLogTarget.h>
+#include <cxinv/assertion.h>
+#include <cxlog/FileLogTarget.h>
 
 cxlog::FileLogTarget::FileLogTarget(const std::string& p_logFileName)
 {

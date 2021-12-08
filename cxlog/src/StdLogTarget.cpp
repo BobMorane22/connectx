@@ -21,9 +21,8 @@
  *
  *************************************************************************************************/
 
-#include <cxinv/include/assertion.h>
-
-#include <StdLogTarget.h>
+#include <cxinv/assertion.h>
+#include <cxlog/StdLogTarget.h>
 
 void cxlog::StdLogTarget::Log(const std::string& p_message)
 {

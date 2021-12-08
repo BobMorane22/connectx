@@ -21,9 +21,8 @@
  *
  *************************************************************************************************/
 
-#include <cxinv/include/assertion.h>
-
-#include <StringStreamLogTarget.h>
+#include <cxinv/assertion.h>
+#include <cxlog/StringStreamLogTarget.h>
 
 cxlog::StringStreamLogTarget::StringStreamLogTarget(std::ostringstream& p_stringStream)
  : m_stringStream{p_stringStream}

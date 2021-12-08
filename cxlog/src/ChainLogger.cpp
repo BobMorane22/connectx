@@ -21,7 +21,7 @@
  *
  *************************************************************************************************/
 
-#include <ChainLogger.h>
+#include <cxlog/ChainLogger.h>
 
 void cxlog::ChainLogger::SetSucessor(std::unique_ptr<ILogger>&& p_sucessor)
 {

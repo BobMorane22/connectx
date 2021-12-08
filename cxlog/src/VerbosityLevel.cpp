@@ -21,7 +21,7 @@
  *
  *************************************************************************************************/
 
-#include <VerbosityLevel.h>
+#include <cxlog/VerbosityLevel.h>
 
 bool cxlog::operator<(VerbosityLevel p_first, VerbosityLevel p_second)
 {

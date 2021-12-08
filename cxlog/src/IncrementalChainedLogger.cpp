@@ -21,9 +21,8 @@
  *
  *************************************************************************************************/
 
-#include <cxinv/include/assertion.h>
-
-#include <IncrementalChainedLogger.h>
+#include <cxinv/assertion.h>
+#include <cxlog/IncrementalChainedLogger.h>
 
 cxlog::IncrementalChainedLogger::IncrementalChainedLogger(std::unique_ptr<IMessageFormatter>&& p_msgFormatter,
                                                           std::unique_ptr<ILogTarget>&&        p_logTarget,

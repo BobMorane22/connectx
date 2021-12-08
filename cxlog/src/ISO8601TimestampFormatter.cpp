@@ -25,9 +25,8 @@
 #include <iomanip>
 #include <sstream>
 
-#include <cxinv/include/assertion.h>
-
-#include <ISO8601TimestampFormatter.h>
+#include <cxinv/assertion.h>
+#include <cxlog/ISO8601TimestampFormatter.h>
 
 using namespace std::chrono;
 

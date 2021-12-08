@@ -21,7 +21,7 @@
  *
  *************************************************************************************************/
 
-#include <Logger.h>
+#include <cxlog/Logger.h>
 
 void cxlog::Logger::SetVerbosityLevel(const cxlog::VerbosityLevel p_verbosityLevel)
 {
