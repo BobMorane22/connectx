@@ -24,9 +24,8 @@
 #include <cstdlib>
 #include <iostream>
 
-#include <cxinv/include/assertion.h>
-
-#include <CmdArgInvalidStrategy.h>
+#include <cxinv/assertion.h>
+#include <cxexec/CmdArgInvalidStrategy.h>
 
 cx::CmdArgInvalidStrategy::CmdArgInvalidStrategy(const std::string& p_invalidArg)
  : m_invalidArg{p_invalidArg}

@@ -24,7 +24,7 @@
 #include <cstdlib>
 #include <iostream>
 
-#include <CmdArgVersionStrategy.h>
+#include <cxexec/CmdArgVersionStrategy.h>
 
 namespace
 {

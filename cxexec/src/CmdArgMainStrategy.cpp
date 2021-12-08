@@ -23,11 +23,10 @@
 
 #include <cstdlib>
 
-#include <cxinv/include/assertion.h>
-#include <cxmodel/include/IConnectXGameActions.h>
-#include <cxmodel/include/IUndoRedo.h>
-
-#include <CmdArgMainStrategy.h>
+#include <cxinv/assertion.h>
+#include <cxmodel/IConnectXGameActions.h>
+#include <cxmodel/IUndoRedo.h>
+#include <cxexec/CmdArgMainStrategy.h>
 
 cx::CmdArgMainStrategy::CmdArgMainStrategy(int argc,
                                            char *argv[],

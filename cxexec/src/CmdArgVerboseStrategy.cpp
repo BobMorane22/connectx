@@ -23,15 +23,14 @@
 
 #include <type_traits>
 
-#include <cxinv/include/assertion.h>
-#include <cxlog/include/CSVMessageFormatter.h>
-#include <cxlog/include/StdLogTarget.h>
-#include <cxlog/include/IChainLogging.h>
-#include <cxlog/include/IncrementalChainedLogger.h>
-#include <cxlog/include/ISO8601TimestampFormatter.h>
-
-#include <CmdArgMainStrategy.h>
-#include <CmdArgVerboseStrategy.h>
+#include <cxinv/assertion.h>
+#include <cxlog/CSVMessageFormatter.h>
+#include <cxlog/StdLogTarget.h>
+#include <cxlog/IChainLogging.h>
+#include <cxlog/IncrementalChainedLogger.h>
+#include <cxlog/ISO8601TimestampFormatter.h>
+#include <cxexec/CmdArgMainStrategy.h>
+#include <cxexec/CmdArgVerboseStrategy.h>
 
 /******************************************************************************************//**
  * @brief Creates a logger for the standard output.

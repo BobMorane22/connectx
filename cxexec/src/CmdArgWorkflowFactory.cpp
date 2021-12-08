@@ -25,17 +25,15 @@
 #include <memory>
 #include <vector>
 
-#include <cxinv/include/assertion.h>
-#include <cxlog/include/ILogger.h>
-
-#include <CmdArgWorkflowFactory.h>
-
-#include <CmdArgHelpStrategy.h>
-#include <CmdArgInvalidStrategy.h>
-#include <CmdArgMainStrategy.h>
-#include <CmdArgNoStrategy.h>
-#include <CmdArgVerboseStrategy.h>
-#include <CmdArgVersionStrategy.h>
+#include <cxinv/assertion.h>
+#include <cxlog/ILogger.h>
+#include <cxexec/CmdArgWorkflowFactory.h>
+#include <cxexec/CmdArgHelpStrategy.h>
+#include <cxexec/CmdArgInvalidStrategy.h>
+#include <cxexec/CmdArgMainStrategy.h>
+#include <cxexec/CmdArgNoStrategy.h>
+#include <cxexec/CmdArgVerboseStrategy.h>
+#include <cxexec/CmdArgVersionStrategy.h>
 
 namespace
 {

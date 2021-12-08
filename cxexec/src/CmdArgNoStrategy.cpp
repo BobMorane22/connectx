@@ -23,7 +23,7 @@
 
 #include <cstdlib>
 
-#include "CmdArgNoStrategy.h"
+#include <cxexec/CmdArgNoStrategy.h>
 
 int cx::CmdArgNoStrategy::Handle()
 {

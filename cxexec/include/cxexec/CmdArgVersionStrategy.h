@@ -24,8 +24,8 @@
 #ifndef CMDARGVERSIONSTRATEGY_H_5A1B3137_4CCC_43BC_B86B_5CFD2649C858
 #define CMDARGVERSIONSTRATEGY_H_5A1B3137_4CCC_43BC_B86B_5CFD2649C858
 
-#include "../../cxmodel/include/IVersioning.h"
-#include "ICmdArgWorkflowStrategy.h"
+#include <cxmodel/IVersioning.h>
+#include <cxexec/ICmdArgWorkflowStrategy.h>
 
 namespace cx
 {

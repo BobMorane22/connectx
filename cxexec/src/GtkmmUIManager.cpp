@@ -21,12 +21,11 @@
  *
  *************************************************************************************************/
 
-#include <cxgui/include/MainWindow.h>
-#include <cxgui/include/MainWindowController.h>
-#include <cxgui/include/MainWindowPresenter.h>
-#include <cxinv/include/assertion.h>
-
-#include <GtkmmUIManager.h>
+#include <cxinv/assertion.h>
+#include <cxgui/MainWindow.h>
+#include <cxgui/MainWindowController.h>
+#include <cxgui/MainWindowPresenter.h>
+#include <cxexec/GtkmmUIManager.h>
 
 cx::GtkmmUIManager::GtkmmUIManager(int argc,
                                    char *argv[],

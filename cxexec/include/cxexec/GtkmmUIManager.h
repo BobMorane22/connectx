@@ -28,11 +28,11 @@
 
 #include <gtkmm/application.h>
 
-#include <cxmodel/include/ModelNotificationContext.h>
+#include <cxmodel/ModelNotificationContext.h>
 
-#include <cxgui/include/IWindow.h>
-#include <cxgui/include/IMainWindowController.h>
-#include <cxgui/include/IMainWindowPresenter.h>
+#include <cxgui/IWindow.h>
+#include <cxgui/IMainWindowController.h>
+#include <cxgui/IMainWindowPresenter.h>
 
 #include "IUIManager.h"
 

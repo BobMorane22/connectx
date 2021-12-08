@@ -23,12 +23,11 @@
 
 #include <memory>
 
-#include <cxinv/include/assertion.h>
-#include <cxlog/include/IChainLogging.h>
-
-#include <Application.h>
-#include <CmdArgWorkflowFactory.h>
-#include <CmdArgNoStrategy.h>
+#include <cxinv/assertion.h>
+#include <cxlog/IChainLogging.h>
+#include <cxexec/Application.h>
+#include <cxexec/CmdArgWorkflowFactory.h>
+#include <cxexec/CmdArgNoStrategy.h>
 
 cx::Application::Application(int argc,
                              char *argv[],
