@@ -23,14 +23,14 @@
 
 #include <memory>
 
-#include <cxinv/include/assertion.h>
-#include <cxlog/include/CSVMessageFormatter.h>
-#include <cxlog/include/FileLogTarget.h>
-#include <cxlog/include/IncrementalChainedLogger.h>
-#include <cxlog/include/ISO8601TimestampFormatter.h>
-#include <cxmodel/include/CommandStack.h>
-#include <cxmodel/include/Model.h>
-#include <cxexec/include/Application.h>
+#include <cxinv/assertion.h>
+#include <cxlog/CSVMessageFormatter.h>
+#include <cxlog/FileLogTarget.h>
+#include <cxlog/IncrementalChainedLogger.h>
+#include <cxlog/ISO8601TimestampFormatter.h>
+#include <cxmodel/CommandStack.h>
+#include <cxmodel/Model.h>
+#include <cxexec/Application.h>
 
 constexpr size_t CMD_STACK_SIZE = 200;
 
