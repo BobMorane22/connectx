@@ -1,134 +1,98 @@
-# Created by https://www.gitignore.io/api/c++,eclipse
-# Edit at https://www.gitignore.io/?templates=c++,eclipse
+# =================================================================================================
+#   This file is part of Connect X.
+#
+#   Connect X is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   Connect X is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with Connect X. If not, see <https://www.gnu.org/licenses/>.
+#
+# =================================================================================================
+# =================================================================================================
+# @file .gitignore
+# @date 2019
+#
+# Initially created with the help of gitignore.io.
+#
+# =================================================================================================
 
-### C++ ###
-# Prerequisites
+# -------------------------------------------------------------------------------------------------
+# C++ 
+# -------------------------------------------------------------------------------------------------
+
+## Prerequisites
 *.d
 
-# Compiled Object files
+## Compiled Object files
 *.slo
 *.lo
 *.o
 *.obj
 
-# Precompiled Headers
+## Precompiled Headers
 *.gch
 *.pch
 
-# Compiled Dynamic libraries
+## Compiled Dynamic libraries
 *.so
 *.dylib
 *.dll
 
-# Fortran module files
+## Fortran module files
 *.mod
 *.smod
 
-# Compiled Static libraries
+## Compiled Static libraries
 *.lai
 *.la
 *.a
 *.lib
 
-# Executables
+## Executables
 *.exe
 *.out
 *.app
 
 
-### Eclipse ###
-.metadata
-bin/
-tmp/
-*.tmp
-*.bak
-*.swp
-*~.nib
-local.properties
-.settings/
-.loadpath
-.recommenders
+# -------------------------------------------------------------------------------------------------
+# Vim
+# -------------------------------------------------------------------------------------------------
 
-# External tool builders
-.externalToolBuilders/
-
-# Locally stored "Eclipse launch configurations"
-*.launch
-
-# PyDev specific (Python IDE for Eclipse)
-*.pydevproject
-
-# CDT-specific (C/C++ Development Tooling)
-.cproject
-
-# CDT- autotools
-.autotools
-
-# Java annotation processor (APT)
-.factorypath
-
-# PDT-specific (PHP Development Tools)
-.buildpath
-
-# sbteclipse plugin
-.target
-
-# Tern plugin
-.tern-project
-
-# TeXlipse plugin
-.texlipse
-
-# STS (Spring Tool Suite)
-.springBeans
-
-# Code Recommenders
-.recommenders/
-
-# Annotation Processing
-.apt_generated/
-
-# Scala IDE specific (Scala & Java development for Eclipse)
-.cache-main
-.scala_dependencies
-.worksheet
-
-
-### Eclipse Patch ###
-
-# Eclipse Core
-.project
-
-# JDT-specific (Eclipse Java Development Tools)
-.classpath
-
-# Annotation Processing
-.apt_generated
-
-.sts4-cache/
-
-# End of https://www.gitignore.io/api/c++,eclipse
-
-
-### Vim/Ctags ###
-tags
 Session.vim
 .vimrc
+*.swp
 
 
-### CMake ###
+# -------------------------------------------------------------------------------------------------
+# Ctags
+# -------------------------------------------------------------------------------------------------
+tags
 
-# build directory
+
+# -------------------------------------------------------------------------------------------------
+# CMake
+# -------------------------------------------------------------------------------------------------
+
+## build directory
 build/release
 build/debug
 
 
-### Connect X ###
+# -------------------------------------------------------------------------------------------------
+# Connect X
+# -------------------------------------------------------------------------------------------------
 
-# Main executable
+## Main executable
 connectx/connectx
 
-# Unit tests executables
+## Unit tests executables
 cxinv/test/cxinvtests
 cxmath/test/cxmathtests
 cxlog/test/cxlogtests
@@ -137,7 +101,7 @@ cxgui/test/cxguitests
 cxexec/test/cxexectests
 cxunit/test/cxunittests
 
-# Coverage
+## Coverage
 coverage/report
 coverage/*.html
 coverage/*.css
@@ -146,6 +110,6 @@ coverage/*.info
 *.gcda
 *.gcno
 
-# Log files
+## Log files
 *.log
 valgrind-out.txt
