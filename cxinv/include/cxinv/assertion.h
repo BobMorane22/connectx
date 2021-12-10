@@ -160,7 +160,6 @@ bool HandleAssert(const AssertLabel  p_label,
 
 #endif // NDEBUG
 
-
 #ifndef NDEBUG
 /*********************************************************************************************//**
  * @brief Standard assertion MACRO (no message attached)
@@ -239,33 +238,80 @@ bool HandleAssert(const AssertLabel  p_label,
 
 #ifndef NDEBUG
 /*********************************************************************************************//**
- * @brief Standard precondition MACRO.
+ * @brief Standard assertion MACRO (no message attached), inline version.
  *
  * Asserts that @c p_condition is @c true. If you @c #define the @c ABORT_ON_ERROR flag, this
- * MACRO will also abort on a @c false condition.
+ * MACRO will also abort on a false condition. When using this inline version, the checked
+ * condition is also included in release builds, stripped of the assertion mechanism. This
+ * is useful in `if` statements, for example.
  *
  * @param p_condition The condition to assert.
  *
+ *************************************************************************************************/
+#define INL_ASSERT(p_condition) cxinv::HandleAssert(cxinv::AssertLabel::ASSERTION, \
+                                                    (p_condition),                 \
+                                                    #p_condition,                  \
+                                                    __FILE__,                      \
+                                                    __FUNCTION__,                  \
+                                                    __LINE__,                      \
+                                                    nullptr                        \
+                                                    )
+#else
+#define INL_ASSERT(p_condition) (p_condition)
+#endif // NDEBUG
+
+#ifndef NDEBUG
+/*********************************************************************************************//**
+ * @brief Standard precondition MACRO.
+ *
+ * Asserts that @c p_preCondition is @c true. If you @c #define the @c ABORT_ON_ERROR flag, this
+ * MACRO will also abort on a @c false condition.
+ *
+ * @param p_preCondition The condition to assert.
+ *
  ************************************************************************************************/
 #define PRECONDITION(p_preCondition) cxinv::HandleAssert(cxinv::AssertLabel::PRECONDITION, \
-                                                           ( p_preCondition ),             \
-                                                           #p_preCondition,                \
-                                                           __FILE__,                       \
-                                                           __FUNCTION__,                   \
-                                                           __LINE__                        \
-                                                           )
+                                                         ( p_preCondition ),               \
+                                                         #p_preCondition,                  \
+                                                         __FILE__,                         \
+                                                         __FUNCTION__,                     \
+                                                         __LINE__                          \
+                                                         )
 #else
 #define PRECONDITION(p_preCondition) ((void)0)
 #endif // NDEBUG
 
 #ifndef NDEBUG
 /*********************************************************************************************//**
+ * @brief Standard precondition MACRO, inline version.
+ *
+ * Asserts that @c p_preCondition is @c true. If you @c #define the @c ABORT_ON_ERROR flag,
+ * this MACRO will also abort on a false condition. When using this inline version, the checked
+ * condition is also included in release builds, stripped of the assertion mechanism. This
+ * is useful in `if` statements, for example.
+ *
+ * @param p_preCondition The condition to assert.
+ *
+ *************************************************************************************************/
+#define INL_PRECONDITION(p_preCondition) cxinv::HandleAssert(cxinv::AssertLabel::PRECONDITION, \
+                                                             ( p_preCondition ),               \
+                                                             #p_preCondition,                  \
+                                                             __FILE__,                         \
+                                                             __FUNCTION__,                     \
+                                                             __LINE__                          \
+                                                             )
+#else
+#define INL_PRECONDITION(p_condition) (p_condition)
+#endif // NDEBUG
+
+#ifndef NDEBUG
+/*********************************************************************************************//**
  * @brief Standard postcondition MACRO.
  *
- * Asserts that @c p_condition is @c true. If you @c #define the @c ABORT_ON_ERROR flag, this
+ * Asserts that @c p_postCondition is @c true. If you @c #define the @c ABORT_ON_ERROR flag, this
  * MACRO will also abort on a @c false condition.
  *
- * @param p_condition The condition to assert.
+ * @param p_postCondition The condition to assert.
  *
  ************************************************************************************************/
 #define POSTCONDITION(p_postCondition) cxinv::HandleAssert(cxinv::AssertLabel::POSTCONDITION, \
@@ -283,10 +329,10 @@ bool HandleAssert(const AssertLabel  p_label,
 /*********************************************************************************************//**
  * @brief Standard invariant MACRO.
  *
- * Asserts that @c p_condition is @c true. If you @c #define the @c ABORT_ON_ERROR flag, this
+ * Asserts that @c p_invariant is @c true. If you @c #define the @c ABORT_ON_ERROR flag, this
  * MACRO will also abort on a @c false condition.
  *
- * @param p_condition The condition to assert.
+ * @param p_invariant The condition to assert.
  *
  ************************************************************************************************/
 #define INVARIANT(p_invariant) cxinv::HandleAssert(cxinv::AssertLabel::INVARIANT, \
@@ -315,7 +361,7 @@ bool HandleAssert(const AssertLabel  p_label,
  *
  *************************************************************************************************/
 #define IF_PRECONDITION_NOT_MET_DO(p_precondition, p_action)             \
-    IF_CONDITION_NOT_MET_DO_IMPL(PRECONDITION, p_precondition, p_action) \
+    IF_CONDITION_NOT_MET_DO_IMPL(INL_PRECONDITION, p_precondition, p_action) \
 
 /**********************************************************************************************//**
  * @brief Performs an action is some condition is not met.
@@ -325,6 +371,6 @@ bool HandleAssert(const AssertLabel  p_label,
  *
  *************************************************************************************************/
 #define IF_CONDITION_NOT_MET_DO(p_condition, p_action)          \
-    IF_CONDITION_NOT_MET_DO_IMPL(ASSERT, p_condition, p_action) \
+    IF_CONDITION_NOT_MET_DO_IMPL(INL_ASSERT, p_condition, p_action) \
 
 #endif // ASSERTION_H_0470D299_880C_415F_BEE0_57ED14327B58
