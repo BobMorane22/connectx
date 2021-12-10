@@ -1,4 +1,3 @@
-
 # Created by https://www.gitignore.io/api/c++,eclipse
 # Edit at https://www.gitignore.io/?templates=c++,eclipse
 
@@ -35,6 +34,7 @@
 *.exe
 *.out
 *.app
+
 
 ### Eclipse ###
 .metadata
@@ -93,7 +93,9 @@ local.properties
 .scala_dependencies
 .worksheet
 
+
 ### Eclipse Patch ###
+
 # Eclipse Core
 .project
 
@@ -107,10 +109,19 @@ local.properties
 
 # End of https://www.gitignore.io/api/c++,eclipse
 
+
 ### Vim/Ctags ###
 tags
 Session.vim
 .vimrc
+
+
+### CMake ###
+
+# build directory
+build/release
+build/debug
+
 
 ### Connect X ###
 
