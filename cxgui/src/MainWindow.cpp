@@ -121,7 +121,7 @@ int cxgui::MainWindow::Show()
 
 void cxgui::MainWindow::Update(cxmodel::ModelNotificationContext p_context, cxmodel::ModelSubject* p_subject)
 {
-    if(PRECONDITION(p_subject))
+    if(INL_PRECONDITION(p_subject))
     {
         switch(p_context)
         {
@@ -188,7 +188,7 @@ void cxgui::MainWindow::UpdateCreateNewGame()
 
 void cxgui::MainWindow::UpdateChipDropped(cxmodel::ModelNotificationContext p_context)
 {
-    if(ASSERT(m_gameView))
+    if(INL_ASSERT(m_gameView))
     {
         m_gameView->Update(p_context);
     }
@@ -196,7 +196,7 @@ void cxgui::MainWindow::UpdateChipDropped(cxmodel::ModelNotificationContext p_co
 
 void cxgui::MainWindow::UpdateChipMoved(cxmodel::ModelNotificationContext p_context)
 {
-    if(ASSERT(m_gameView))
+    if(INL_ASSERT(m_gameView))
     {
         m_gameView->Update(p_context);
     }

@@ -80,7 +80,7 @@ cxmodel::TieGameResolutionStrategy::TieGameResolutionStrategy(const IBoard& p_bo
  *************************************************************************************************/
 bool cxmodel::TieGameResolutionStrategy::Handle(const Player& p_activePlayer) const
 {
-    if(!PRECONDITION(std::find(m_players.cbegin(), m_players.cend(), p_activePlayer) != m_players.cend()))
+    if(!INL_PRECONDITION(std::find(m_players.cbegin(), m_players.cend(), p_activePlayer) != m_players.cend()))
     {
         return false;
     }

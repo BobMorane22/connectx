@@ -80,7 +80,7 @@ cxgui::MainWindowPresenter::MainWindowPresenter(const cxmodel::IConnectXLimits& 
 
 void cxgui::MainWindowPresenter::Update(cxmodel::ModelNotificationContext p_context, cxmodel::ModelSubject* p_subject)
 {
-    if(PRECONDITION(p_subject))
+    if(INL_PRECONDITION(p_subject))
     {
         m_canRequestNewGame = false;
         m_canCurrentGameBeReinitialized = false;

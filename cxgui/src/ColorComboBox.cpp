@@ -62,11 +62,11 @@ cxgui::Color cxgui::ColorComboBox::GetCurrentSelection() const
 
     Gtk::TreeModel::iterator iter = get_active();
 
-    if(ASSERT(iter))
+    if(INL_ASSERT(iter))
     {
         Gtk::TreeModel::Row row = *iter;
 
-        if(ASSERT(row))
+        if(INL_ASSERT(row))
         {
             // Get the data for the selected row, using our knowledge of the tree model:
             const Gdk::Color color = row[m_records.m_color];
@@ -89,20 +89,14 @@ void cxgui::ColorComboBox::SetCurrentSelection(const cxgui::Color& p_color)
 
     Gtk::TreeModel::Children rows = m_treeModel->children();
 
-    const int oldRowNumber = get_active_row_number();
-    int newRowNumber = oldRowNumber;
-
     for(auto row = rows.begin(); row != rows.end(); ++rows)
     {
         if((*row)[m_records.m_color] == newColor)
         {
             set_active(row);
-            newRowNumber = get_active_row_number();
             break;
         }
     }
-
-    POSTCONDITION(oldRowNumber != newRowNumber);
 }
 
 void cxgui::ColorComboBox::AddElement(const cxgui::Color& p_color, bool p_setActive)

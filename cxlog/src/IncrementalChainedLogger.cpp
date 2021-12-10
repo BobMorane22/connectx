@@ -69,7 +69,7 @@ void cxlog::IncrementalChainedLogger::Log(const VerbosityLevel p_verbosityLevel,
     // Create well formatted message:
     const std::string msg{m_msgFormatter->FormatMessage(p_verbosityLevel, p_fileName, p_functionName, p_lineNumber, p_message)};
 
-    if(!ASSERT(m_logTarget))
+    if(!INL_ASSERT(m_logTarget))
     {
         // Release formatter, no logging will be done after all:
         m_msgFormatter.reset(nullptr);

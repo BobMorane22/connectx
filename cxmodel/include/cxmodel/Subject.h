@@ -166,8 +166,6 @@ void cxmodel::Subject<T>::Attach(cxmodel::IObserver<T>* const p_newObserver)
 {
     PRECONDITION(p_newObserver);
 
-    const std::size_t oldSize = m_observers.size();
-
     if(p_newObserver)
     {
         const bool alreadyRegistered = std::any_of(m_observers.cbegin(),
@@ -184,10 +182,6 @@ void cxmodel::Subject<T>::Attach(cxmodel::IObserver<T>* const p_newObserver)
             m_observers.push_back(p_newObserver);
         }
     }
-
-    const std::size_t newSize = m_observers.size();
-
-    POSTCONDITION(newSize - oldSize == 1);
 
     CheckInvariants();
 }

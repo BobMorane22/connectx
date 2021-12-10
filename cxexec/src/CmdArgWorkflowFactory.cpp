@@ -101,7 +101,6 @@ std::unique_ptr<cx::ICmdArgWorkflowStrategy> cx::CmdArgWorkflowFactory::Create(i
         {
             const auto helpIt = std::find(arguments.cbegin(), arguments.cend(), HELP_ARG);
             const auto versionIt = std::find(arguments.cbegin(), arguments.cend(), VERSION_ARG);
-            const auto verboseIt = std::find(arguments.cbegin(), arguments.cend(), VERBOSE_ARG);
 
             if(helpIt != arguments.cend() || versionIt != arguments.cend())
             {
@@ -124,7 +123,7 @@ std::unique_ptr<cx::ICmdArgWorkflowStrategy> cx::CmdArgWorkflowFactory::Create(i
             }
             else
             {
-                ASSERT_MSG(verboseIt != arguments.cend(), "There must be at least one argument.");
+                ASSERT_MSG(std::find(arguments.cbegin(), arguments.cend(), VERBOSE_ARG) != arguments.cend(), "There must be at least one argument.");
 
                 strategy = std::make_unique<CmdArgVerboseStrategy>(argc,
                                                                    argv,

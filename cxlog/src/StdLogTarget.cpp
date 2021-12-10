@@ -28,7 +28,7 @@ void cxlog::StdLogTarget::Log(const std::string& p_message)
 {
     ASSERT_MSG(StdStream().good(), "Standard stream is in a bad state.");
 
-    if(ASSERT(&StdStream()))
+    if(INL_ASSERT(&StdStream()))
     {
         StdStream() << p_message;
     }

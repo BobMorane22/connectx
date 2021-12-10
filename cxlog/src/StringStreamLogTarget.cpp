@@ -31,7 +31,7 @@ cxlog::StringStreamLogTarget::StringStreamLogTarget(std::ostringstream& p_string
 
 void cxlog::StringStreamLogTarget::Log(const std::string& p_message)
 {
-    if(ASSERT(StringStream().good()))
+    if(INL_ASSERT(StringStream().good()))
     {
         StringStream() << p_message;
 

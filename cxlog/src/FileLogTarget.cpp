@@ -33,7 +33,7 @@ cxlog::FileLogTarget::FileLogTarget(const std::string& p_logFileName)
 
 void cxlog::FileLogTarget::Log(const std::string& p_message)
 {
-    if(ASSERT(FileStream().good()))
+    if(INL_ASSERT(FileStream().good()))
     {
         FileStream() << p_message;
     }

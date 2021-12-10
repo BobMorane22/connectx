@@ -38,7 +38,7 @@ std::string cxgui::WinGameResolutionDialogPresenter::GetTitle() const
 
 std::string cxgui::WinGameResolutionDialogPresenter::GetResolutionMessage() const
 {
-    if(ASSERT(m_modelAsInformation.IsWon()))
+    if(INL_ASSERT(m_modelAsInformation.IsWon()))
     {
         return "Congratulations to " + m_modelAsInformation.GetActivePlayer().GetName() + "!";
     }

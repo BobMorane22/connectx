@@ -188,7 +188,7 @@ void cxgui::GameView::SetLayout()
     m_viewLayout.attach(m_title, 0, 0, TOTAL_WIDTH, 1);
     m_viewLayout.attach(m_playersInfoLayout, 0, 1, TOTAL_WIDTH, 1);
 
-    if(ASSERT(m_board))
+    if(INL_ASSERT(m_board))
     {
         m_viewLayout.attach(*m_board, 0, 4, TOTAL_WIDTH, 1);
     }
@@ -196,14 +196,14 @@ void cxgui::GameView::SetLayout()
     // Players info layout:
     m_playersInfoLayout.attach(m_activePlayerLabel, 0, 0, 1, 1);
     m_playersInfoLayout.attach(m_activePlayerName, 1, 0, 1, 1);
-    if(ASSERT(m_activePlayerChip))
+    if(INL_ASSERT(m_activePlayerChip))
     {
         m_playersInfoLayout.attach(*m_activePlayerChip, 2, 0, 1, 1);
     }
 
     m_playersInfoLayout.attach(m_nextPlayerLabel, 0, 1, 1, 1);
     m_playersInfoLayout.attach(m_nextPlayerName, 1, 1, 1, 1);
-    if(ASSERT(m_nextPlayerChip))
+    if(INL_ASSERT(m_nextPlayerChip))
     {
         m_playersInfoLayout.attach(*m_nextPlayerChip, 2, 1, 1, 1);
     }
@@ -241,7 +241,7 @@ void cxgui::GameView::ConfigureWidgets()
     m_activePlayerLabel.set_markup("<b>" + m_activePlayerLabel.get_text() + "</b>");
     m_activePlayerName.set_halign(Gtk::Align::ALIGN_START);
     m_activePlayerName.set_hexpand(true);
-    if(ASSERT(m_activePlayerChip))
+    if(INL_ASSERT(m_activePlayerChip))
     {
         m_activePlayerChip->set_hexpand(true);
         m_activePlayerChip->set_vexpand(false);
@@ -254,7 +254,7 @@ void cxgui::GameView::ConfigureWidgets()
     m_nextPlayerLabel.set_markup("<b>" + m_nextPlayerLabel.get_text() + "</b>");
     m_nextPlayerName.set_halign(Gtk::Align::ALIGN_START);
     m_nextPlayerName.set_hexpand(true);
-    if(ASSERT(m_nextPlayerChip))
+    if(INL_ASSERT(m_nextPlayerChip))
     {
         m_nextPlayerChip->set_hexpand(true);
         m_nextPlayerChip->set_vexpand(false);
@@ -289,7 +289,7 @@ bool cxgui::GameView::OnKeyPressed(GdkEventKey* p_event)
 
 void cxgui::GameView::EnableKeyHandlers()
 {
-    if(ASSERT(m_parent))
+    if(INL_ASSERT(m_parent))
     {
         m_parent->add_events(Gdk::KEY_PRESS_MASK);
         m_keysPressedConnection = m_parent->signal_key_press_event().connect([this](GdkEventKey* p_event){return OnKeyPressed(p_event);}, false);
@@ -298,7 +298,7 @@ void cxgui::GameView::EnableKeyHandlers()
 
 void cxgui::GameView::DisableKeyHandlers()
 {
-    if(ASSERT(m_parent))
+    if(INL_ASSERT(m_parent))
     {
         m_keysPressedConnection.disconnect();
         m_parent->add_events(m_parent->get_events() & ~Gdk::KEY_PRESS_MASK);

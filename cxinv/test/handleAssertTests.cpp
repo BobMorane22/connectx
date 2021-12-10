@@ -235,7 +235,7 @@ TEST(HandleAssertTest, /*DISABLED_*/HandleAssert_UniquePtrAssertCheckForNullptr_
 
     std::unique_ptr<A> uPtr = std::make_unique<A>();
 
-    if(ASSERT(uPtr))
+    if(INL_ASSERT(uPtr))
     {
         ASSERT_TRUE(true);
     }
@@ -251,7 +251,7 @@ TEST(HandleAssertTest, /*DISABLED_*/HandleAssert_SharedPtrAssertCheckForNullptr_
 
     std::shared_ptr<A> sPtr = std::make_shared<A>();
 
-    if(ASSERT(sPtr))
+    if(INL_ASSERT(sPtr))
     {
         ASSERT_TRUE(true);
     }

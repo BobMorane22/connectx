@@ -46,8 +46,8 @@ cxmodel::WinGameResolutionStrategy::WinGameResolutionStrategy(const cxmodel::IBo
  , m_players{p_players}
  , m_takenPositions{p_takenPositions}
 {
-    if(PRECONDITION(p_inARowValue >= 2u) &&
-       PRECONDITION(p_inARowValue <= std::numeric_limits<size_t>::max()))
+    if(INL_PRECONDITION(p_inARowValue >= 2u) &&
+       INL_PRECONDITION(p_inARowValue <= std::numeric_limits<size_t>::max()))
     {
         m_inARowValue = p_inARowValue;
     }

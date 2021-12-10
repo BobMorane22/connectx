@@ -102,15 +102,12 @@ void cxmodel::CommandDropChip::Execute()
 
 void cxmodel::CommandDropChip::Undo()
 {
-    const size_t takenPositionsInitialSize = m_takenPositions.size();
-
     // Put playersInfo back:
     m_playersInfo = m_previousPlayerInformation;
     
     // Erase the dropped position from the taken positions:
     m_takenPositions.erase(std::remove(m_takenPositions.begin(), m_takenPositions.end(), m_previousDropPosition),
                            m_takenPositions.end());
-    ASSERT(m_takenPositions.size() == takenPositionsInitialSize - 1u);
 
     // Reset the chip in the board:
     m_board.ResetChip(m_previousDropPosition);
