@@ -26,7 +26,7 @@
 
 #include <gtest/gtest.h>
 
-#include <math.h>
+#include <cxmath/math.h>
 
 namespace
 {

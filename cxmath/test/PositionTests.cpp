@@ -23,7 +23,7 @@
 
 #include <gtest/gtest.h>
 
-#include <Position.h>
+#include <cxmath/Position.h>
 
 TEST(Position, /*DISABLED_*/DefaultConstructor_ValidPosition_IsOrigin)
 {
