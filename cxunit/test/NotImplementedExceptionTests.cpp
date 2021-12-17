@@ -23,7 +23,7 @@
 
 #include <gtest/gtest.h>
 
-#include <NotImplementedException.h>
+#include <cxunit/NotImplementedException.h>
 
 class NotImplemented
 {

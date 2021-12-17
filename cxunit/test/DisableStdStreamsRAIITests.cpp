@@ -23,7 +23,7 @@
 
 #include <gtest/gtest.h>
 
-#include <DisableStdStreamsRAII.h>
+#include <cxunit/DisableStdStreamsRAII.h>
 
 // This test adds output to the console. In this case, it
 // is fine since this is exactly what is tested.

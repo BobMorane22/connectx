@@ -28,7 +28,7 @@
 
 #include <gtest/gtest.h>
 
-#include <StdStreamRedirector.h>
+#include <cxunit/StdStreamRedirector.h>
 
 class StdStreamWriter : public ::testing::Test
 {

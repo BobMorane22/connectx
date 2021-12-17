@@ -21,7 +21,7 @@
  *
  *************************************************************************************************/
 
-#include <NotImplementedException.h>
+#include <cxunit/NotImplementedException.h>
 
 
 cxunit::NotImplementedException::NotImplementedException()

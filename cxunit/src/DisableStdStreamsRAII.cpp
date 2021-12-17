@@ -21,7 +21,7 @@
  *
  *************************************************************************************************/
 
-#include "DisableStdStreamsRAII.h"
+#include <cxunit/DisableStdStreamsRAII.h>
 
 #include <iostream>
 
