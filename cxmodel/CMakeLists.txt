@@ -53,3 +53,6 @@ target_link_libraries(${TARGET_NAME}
   PRIVATE cxlog
   PRIVATE cxmath
 )
+
+# Unit tests:
+add_subdirectory(test)

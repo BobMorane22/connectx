@@ -48,3 +48,6 @@ target_link_libraries(${TARGET_NAME}
   PRIVATE cxgui
   PRIVATE ${GTKMM_LIBRARIES}
 )
+
+# Unit tests:
+add_subdirectory(test)

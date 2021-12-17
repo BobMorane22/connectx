@@ -37,3 +37,6 @@ target_include_directories(${TARGET_NAME}
 target_link_libraries(${TARGET_NAME}
   PRIVATE cxinv
 )
+
+# Unit tests:
+add_subdirectory(test)

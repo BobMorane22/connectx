@@ -70,3 +70,6 @@ target_link_libraries(${TARGET_NAME}
   PRIVATE cxmodel
   PRIVATE ${GTKMM_LIBRARIES}
 )
+
+# Unit tests:
+add_subdirectory(test)

@@ -32,3 +32,6 @@ add_library(${TARGET_NAME}
 target_include_directories(${TARGET_NAME}
   PUBLIC "${CMAKE_CURRENT_LIST_DIR}/include"
 )
+
+# Unit tests:
+add_subdirectory(test)

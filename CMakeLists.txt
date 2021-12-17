@@ -25,7 +25,7 @@
 
 cmake_minimum_required(VERSION 3.20)
 
-project(foo VERSION 0.1 LANGUAGES CXX)
+project(connectx VERSION 0.32 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -40,13 +40,22 @@ add_compile_options(
   -Werror
 )
 
+# Append the 'cmake' directory to the list of directories looked into when a module
+# is searched for:
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
+
 # Modules:
 include(GNUInstallDirs)
+include(Testing)
 
+find_package(GTest)
 find_package(PkgConfig)
 pkg_check_modules(GTKMM REQUIRED gtkmm-3.0>=3.24)
 
+enable_testing()
+
 # Libraries, in build order:
+add_subdirectory(cxunit)
 add_subdirectory(cxinv)
 add_subdirectory(cxlog)
 add_subdirectory(cxmath)
