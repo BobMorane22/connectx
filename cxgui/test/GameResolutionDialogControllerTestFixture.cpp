@@ -21,7 +21,7 @@
  *
  *************************************************************************************************/
 
-#include <GameResolutionDialogController.h>
+#include <cxgui/GameResolutionDialogController.h>
 
 #include "GameResolutionDialogControllerTestFixture.h"
 

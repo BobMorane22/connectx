@@ -23,12 +23,11 @@
 
 #include <gtest/gtest.h>
 
-#include <cxunit/include/DisableStdStreamsRAII.h>
-#include <cxmodel/include/Disc.h>
-#include <cxmodel/include/IConnectXGameInformation.h>
-#include <cxmodel/include/Player.h>
-
-#include <WinGameResolutionDialogPresenter.h>
+#include <cxunit/DisableStdStreamsRAII.h>
+#include <cxmodel/Disc.h>
+#include <cxmodel/IConnectXGameInformation.h>
+#include <cxmodel/Player.h>
+#include <cxgui/WinGameResolutionDialogPresenter.h>
 
 namespace
 {

@@ -28,9 +28,9 @@
 
 #include <gtest/gtest.h>
 
-#include <cxmodel/include/IConnectXGameActions.h>
-#include <cxmodel/include/IUndoRedo.h>
-#include <cxgui/include/IMainWindowController.h>
+#include <cxmodel/IConnectXGameActions.h>
+#include <cxmodel/IUndoRedo.h>
+#include <cxgui/IMainWindowController.h>
 
 class MainWindowControllerTestFixture : public testing::Test
 {

@@ -27,13 +27,13 @@
 #include <exception>
 #include <memory>
 
-#include <cxmodel/include/IConnectXGameActions.h>
-#include <cxmodel/include/IConnectXGameInformation.h>
-#include <cxmodel/include/IConnectXLimits.h>
-#include <cxmodel/include/IUndoRedo.h>
-#include <cxmodel/include/IVersioning.h>
-#include <cxmodel/include/ModelNotificationContext.h>
-#include <cxgui/include/IMainWindowPresenter.h>
+#include <cxmodel/IConnectXGameActions.h>
+#include <cxmodel/IConnectXGameInformation.h>
+#include <cxmodel/IConnectXLimits.h>
+#include <cxmodel/IUndoRedo.h>
+#include <cxmodel/IVersioning.h>
+#include <cxmodel/ModelNotificationContext.h>
+#include <cxgui/IMainWindowPresenter.h>
 
 class MainWindowPresenterTestFixture : public testing::Test
 {

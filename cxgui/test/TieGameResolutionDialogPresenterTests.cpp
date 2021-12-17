@@ -23,7 +23,7 @@
 
 #include <gtest/gtest.h>
 
-#include <TieGameResolutionDialogPresenter.h>
+#include <cxgui/TieGameResolutionDialogPresenter.h>
 
 TEST(TieGameResolutionDialogPresenter, GetTitle_ValidPresented_TitleReturned)
 {

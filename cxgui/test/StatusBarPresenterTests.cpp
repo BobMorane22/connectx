@@ -23,7 +23,7 @@
 
 #include <gtest/gtest.h>
 
-#include <StatusBarPresenter.h>
+#include <cxgui/StatusBarPresenter.h>
 
 /*********************************************************************************************//**
  * @brief Concrete subject only used to call the Update method with valid parameters.

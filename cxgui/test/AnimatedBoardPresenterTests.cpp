@@ -25,9 +25,8 @@
 
 #include <gtest/gtest.h>
 
-#include <cxunit/include/NotImplementedException.h>
-
-#include <AnimatedBoardPresenter.h>
+#include <cxunit/NotImplementedException.h>
+#include <cxgui/AnimatedBoardPresenter.h>
 
 namespace
 {

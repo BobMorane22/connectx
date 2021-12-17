@@ -23,7 +23,7 @@
 
 #include <gtest/gtest.h>
 
-#include <ScalingRatios.h>
+#include <cxgui/ScalingRatios.h>
 
 namespace
 {

@@ -26,13 +26,11 @@
 
 #include <gtest/gtest.h>
 
-#include <cxunit/include/NotImplementedException.h>
-
-#include <cxmodel/include/IConnectXGameInformation.h>
-#include <cxmodel/include/IConnectXLimits.h>
-#include <cxmodel/include/IUndoRedo.h>
-
-#include <cxgui/include/IMainWindowPresenter.h>
+#include <cxunit/NotImplementedException.h>
+#include <cxmodel/IConnectXGameInformation.h>
+#include <cxmodel/IConnectXLimits.h>
+#include <cxmodel/IUndoRedo.h>
+#include <cxgui/IMainWindowPresenter.h>
 
 /*********************************************************************************************//**
  * @brief Configurable `MainWindowPresenter` test fixture.

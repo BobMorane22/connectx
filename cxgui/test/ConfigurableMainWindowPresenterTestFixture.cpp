@@ -23,8 +23,8 @@
 
 #include <exception>
 
-#include <cxmodel/include/IUndoRedo.h>
-#include <cxgui/include/MainWindowPresenter.h>
+#include <cxmodel/IUndoRedo.h>
+#include <cxgui/MainWindowPresenter.h>
 
 #include "BasicConnectXGameInformationModelMock.h"
 #include "BasicConnectXLimitsModelMock.h"

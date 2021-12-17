@@ -28,10 +28,9 @@
 
 #include <gtest/gtest.h>
 
-#include <cxmodel/include/IVersioning.h>
-#include <cxmodel/include/ModelNotificationContext.h>
-
-#include <IAboutWindowPresenter.h>
+#include <cxmodel/IVersioning.h>
+#include <cxmodel/ModelNotificationContext.h>
+#include <cxgui/IAboutWindowPresenter.h>
 
 
 class AboutWindowPresenterTestFixture : public testing::Test

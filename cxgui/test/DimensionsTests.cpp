@@ -23,7 +23,7 @@
 
 #include <gtest/gtest.h>
 
-#include <Dimensions.h>
+#include <cxgui/Dimensions.h>
 
 TEST(Dimensions, /*DISABLED*/EqualToOperator_TwoSameDimensions_ReturnsTrue)
 {

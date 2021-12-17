@@ -26,9 +26,8 @@
 
 #include <gtest/gtest.h>
 
-#include <cxmodel/include/IConnectXGameActions.h>
-
-#include <IGameResolutionDialogController.h>
+#include <cxmodel/IConnectXGameActions.h>
+#include <cxgui/IGameResolutionDialogController.h>
 
 class GameResolutionDialogControllerTestFixture : public testing::Test
 {

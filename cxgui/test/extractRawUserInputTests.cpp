@@ -23,7 +23,7 @@
 
 #include <gtest/gtest.h>
 
-#include <extractRawUserInput.h>
+#include <cxgui/extractRawUserInput.h>
 
 TEST(ExtractRawUserInput, ExtractRawUserInputUL_ValidInput_ReturnsSuccess)
 {

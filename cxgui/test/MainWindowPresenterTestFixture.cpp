@@ -23,7 +23,7 @@
 
 #include <gtest/gtest.h>
 
-#include <cxgui/include/MainWindowPresenter.h>
+#include <cxgui/MainWindowPresenter.h>
 
 #include "MainWindowPresenterTestFixture.h"
 

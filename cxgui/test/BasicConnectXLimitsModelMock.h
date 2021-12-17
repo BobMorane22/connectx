@@ -24,7 +24,7 @@
 #ifndef BASICCONNECTXLIMITSMODELMOCK_H_FCA3D94F_8883_4D02_B82F_0CB27F9AF498
 #define BASICCONNECTXLIMITSMODELMOCK_H_FCA3D94F_8883_4D02_B82F_0CB27F9AF498
 
-#include <cxmodel/include/IConnectXLimits.h>
+#include <cxmodel/IConnectXLimits.h>
 
 /*********************************************************************************************//**
  * @brief A basic `IConnectXLimits` compatible model mock.

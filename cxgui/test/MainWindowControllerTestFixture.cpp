@@ -21,9 +21,9 @@
  *
  *************************************************************************************************/
 
-#include <cxunit/include/NotImplementedException.h>
+#include <cxunit/NotImplementedException.h>
+#include <cxgui/MainWindowController.h>
 
-#include "MainWindowController.h"
 #include "MainWindowControllerTestFixture.h"
 
 MainWindowControllerTestFixture::MainWindowControllerTestFixture()

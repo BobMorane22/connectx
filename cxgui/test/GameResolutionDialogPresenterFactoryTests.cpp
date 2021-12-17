@@ -23,12 +23,11 @@
 
 #include <gtest/gtest.h>
 
-#include <cxmodel/include/IConnectXGameInformation.h>
-#include <cxmodel/include/GameResolutionStrategyFactory.h>
-
-#include <GameResolutionDialogPresenterFactory.h>
-#include <TieGameResolutionDialogPresenter.h>
-#include <WinGameResolutionDialogPresenter.h>
+#include <cxmodel/IConnectXGameInformation.h>
+#include <cxmodel/GameResolutionStrategyFactory.h>
+#include <cxgui/GameResolutionDialogPresenterFactory.h>
+#include <cxgui/TieGameResolutionDialogPresenter.h>
+#include <cxgui/WinGameResolutionDialogPresenter.h>
 
 namespace
 {

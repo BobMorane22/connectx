@@ -24,8 +24,8 @@
 #ifndef BASICCONNECTXGAMEINFORMATIONMODELMOCK_H_F117935F_A182_4F97_B8A8_39B023B42263
 #define BASICCONNECTXGAMEINFORMATIONMODELMOCK_H_F117935F_A182_4F97_B8A8_39B023B42263
 
-#include <cxmodel/include/IConnectXGameInformation.h>
-#include <cxunit/include/NotImplementedException.h>
+#include <cxmodel/IConnectXGameInformation.h>
+#include <cxunit/NotImplementedException.h>
 
 /*********************************************************************************************//**
  * @brief A basic `IConnectXGameInformation` compatible model mock.

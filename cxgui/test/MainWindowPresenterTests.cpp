@@ -25,8 +25,8 @@
 
 #include <gtest/gtest.h>
 
-#include <cxmodel/include/Disc.h>
-#include <cxmodel/include/NewGameInformation.h>
+#include <cxmodel/Disc.h>
+#include <cxmodel/NewGameInformation.h>
 
 #include "BasicConnectXGameInformationModelMock.h"
 #include "BasicConnectXLimitsModelMock.h"

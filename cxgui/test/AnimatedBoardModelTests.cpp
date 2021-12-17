@@ -26,11 +26,10 @@
 
 #include <gtest/gtest.h>
 
-#include <cxunit/include/StdStreamRedirector.h>
-#include <cxmath/include/math.h>
-
-#include <AnimatedBoardModel.h>
-#include <IAnimatedBoardPresenter.h>
+#include <cxunit/StdStreamRedirector.h>
+#include <cxmath/math.h>
+#include <cxgui/AnimatedBoardModel.h>
+#include <cxgui/IAnimatedBoardPresenter.h>
 
 namespace
 {

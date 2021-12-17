@@ -21,7 +21,7 @@
  *
  *************************************************************************************************/
 
-#include <cxgui/include/AboutWindowPresenter.h>
+#include <cxgui/AboutWindowPresenter.h>
 
 #include "AboutWindowPresenterTestFixture.h"
 

@@ -23,7 +23,7 @@
 
 #include <gtest/gtest.h>
 
-#include <MenuItem.h>
+#include <cxgui/MenuItem.h>
 
 TEST(MenuItem, /*DISABLED_*/MakeLabel_Game_GameLabelReturned)
 {
