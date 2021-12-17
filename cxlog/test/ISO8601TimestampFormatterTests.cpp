@@ -25,7 +25,7 @@
 
 #include <gtest/gtest.h>
 
-#include <ISO8601TimestampFormatter.h>
+#include <cxlog/ISO8601TimestampFormatter.h>
 
 TEST(ISO8601TimestampFormatter, /*DISABLED_*/FormatTimestamp_Seconds_ReturnsCorrectFormattedTimestamp)
 {

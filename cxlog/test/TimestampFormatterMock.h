@@ -24,7 +24,7 @@
 #ifndef TIMESTAMPFORMATTERMOCK_H_E4AAF62B_2F24_4EC0_8FA1_45C40EF31747
 #define TIMESTAMPFORMATTERMOCK_H_E4AAF62B_2F24_4EC0_8FA1_45C40EF31747
 
-#include <cxlog/include/ITimestampFormatter.h>
+#include <cxlog/ITimestampFormatter.h>
 
 class TimestampFormatterMock : public cxlog::ITimestampFormatter
 {

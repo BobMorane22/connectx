@@ -23,7 +23,7 @@
 
 #include <gtest/gtest.h>
 
-#include <cxlog/include/CSVMessageFormatter.h>
+#include <cxlog/CSVMessageFormatter.h>
 
 #include "CSVLoggerUtil.h"
 #include "TimestampFormatterMock.h"

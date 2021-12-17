@@ -23,9 +23,9 @@
 
 #include <gtest/gtest.h>
 
-#include <cxlog/include/CSVMessageFormatter.h>
-#include <cxlog/include/IncrementalChainedLogger.h>
-#include <cxlog/include/StringStreamLogTarget.h>
+#include <cxlog/CSVMessageFormatter.h>
+#include <cxlog/IncrementalChainedLogger.h>
+#include <cxlog/StringStreamLogTarget.h>
 
 #include "CSVLoggerUtil.h"
 

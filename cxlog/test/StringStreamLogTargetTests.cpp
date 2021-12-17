@@ -23,7 +23,7 @@
 
 #include <gtest/gtest.h>
 
-#include <cxlog/include/StringStreamLogTarget.h>
+#include <cxlog/StringStreamLogTarget.h>
 
 #include "CSVLoggerUtil.h"
 

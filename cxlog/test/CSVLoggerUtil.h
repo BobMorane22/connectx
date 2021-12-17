@@ -27,7 +27,7 @@
 #include <memory.h>
 #include <sstream>
 
-#include <cxlog/include/ChainLogger.h>
+#include <cxlog/ChainLogger.h>
 
 const std::string BASIC_STRING_TO_LOG{"CSV logger test"};
 

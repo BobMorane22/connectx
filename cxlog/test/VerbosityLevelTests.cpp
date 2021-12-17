@@ -23,7 +23,7 @@
 
 #include <gtest/gtest.h>
 
-#include <VerbosityLevel.h>
+#include <cxlog/VerbosityLevel.h>
 
 TEST(VerbosityLevel, /*DISABLED_*/LessThanOperator_IsLessThan_ReturnsTrue)
 {

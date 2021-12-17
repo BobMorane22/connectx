@@ -21,11 +21,11 @@
  *
  *************************************************************************************************/
 
-#include <cxlog/include/CSVMessageFormatter.h>
-#include <cxlog/include/IMessageFormatter.h>
-#include <cxlog/include/IncrementalChainedLogger.h>
-#include <cxlog/include/IncrementalLogger.h>
-#include <cxlog/include/StringStreamLogTarget.h>
+#include <cxlog/CSVMessageFormatter.h>
+#include <cxlog/IMessageFormatter.h>
+#include <cxlog/IncrementalChainedLogger.h>
+#include <cxlog/IncrementalLogger.h>
+#include <cxlog/StringStreamLogTarget.h>
 
 #include "CSVLoggerUtil.h"
 #include "TimestampFormatterMock.h"

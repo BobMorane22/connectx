@@ -23,9 +23,8 @@
 
 #include <gtest/gtest.h>
 
-#include <StdLogTarget.h>
-
-#include <cxunit/include/DisableStdStreamsRAII.h>
+#include <cxunit/DisableStdStreamsRAII.h>
+#include <cxlog/StdLogTarget.h>
 
 TEST(StdLogTarget, /*DISABLED_*/Log_SomeString_StringLoggedToStdout)
 {
