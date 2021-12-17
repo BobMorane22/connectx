@@ -23,9 +23,8 @@
 
 #include <gtest/gtest.h>
 
-#include <cxunit/include/StdStreamRedirector.h>
-
-#include <Status.h>
+#include <cxunit/StdStreamRedirector.h>
+#include <cxmodel/Status.h>
 
 TEST(Status, MakeSuccess_ValidContext_SuccessReturned)
 {

@@ -23,7 +23,7 @@
 
 #include <gtest/gtest.h>
 
-#include <NewGameInformation.h>
+#include <cxmodel/NewGameInformation.h>
 
 namespace
 {

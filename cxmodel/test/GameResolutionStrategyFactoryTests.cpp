@@ -25,12 +25,11 @@
 
 #include <gtest/gtest.h>
 
-#include <cxunit/include/DisableStdStreamsRAII.h>
-
-#include <Disc.h>
-#include <GameResolutionStrategyFactory.h>
-#include <WinGameResolutionStrategy.h>
-#include <TieGameResolutionStrategy.h>
+#include <cxunit/DisableStdStreamsRAII.h>
+#include <cxmodel/Disc.h>
+#include <cxmodel/GameResolutionStrategyFactory.h>
+#include <cxmodel/WinGameResolutionStrategy.h>
+#include <cxmodel/TieGameResolutionStrategy.h>
 
 namespace
 {

@@ -21,7 +21,7 @@
  *
  *************************************************************************************************/
 
-#include <ConcreteSubjectMock.h>
+#include "ConcreteSubjectMock.h"
 
 ConcreteSubjectMock::ConcreteSubjectMock(int p_data)
  : m_data{p_data}

@@ -21,7 +21,7 @@
  *
  *************************************************************************************************/
 
-#include <cxlog/include/ILogger.h>
+#include <cxlog/ILogger.h>
 
 class LoggerMock : public cxlog::ILogger
 {

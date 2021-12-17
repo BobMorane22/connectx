@@ -24,7 +24,7 @@
 #ifndef COMMANDTIMESTHREEMOCK_H_B453A60A_CF4C_4C17_AB96_D3E37FF11020
 #define COMMANDTIMESTHREEMOCK_H_B453A60A_CF4C_4C17_AB96_D3E37FF11020
 
-#include <ICommand.h>
+#include <cxmodel/ICommand.h>
 
 class CommandTimesThreeMock : public cxmodel::ICommand
 {

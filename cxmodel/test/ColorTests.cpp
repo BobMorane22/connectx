@@ -23,7 +23,7 @@
 
 #include <gtest/gtest.h>
 
-#include <Color.h>
+#include <cxmodel/Color.h>
 
 namespace
 {

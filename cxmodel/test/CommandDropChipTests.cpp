@@ -25,12 +25,11 @@
 
 #include <gtest/gtest.h>
 
-#include <cxunit/include/DisableStdStreamsRAII.h>
-
-#include <Board.h>
-#include <CommandDropChip.h>
-#include <Disc.h>
-#include <IConnectXLimits.h>
+#include <cxunit/DisableStdStreamsRAII.h>
+#include <cxmodel/Board.h>
+#include <cxmodel/CommandDropChip.h>
+#include <cxmodel/Disc.h>
+#include <cxmodel/IConnectXLimits.h>
 
 static const cxmodel::Disc NO_CHIP{cxmodel::MakeTransparent()};
 

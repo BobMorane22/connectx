@@ -25,7 +25,7 @@
 
 #include <gtest/gtest.h>
 
-#include <Disc.h>
+#include <cxmodel/Disc.h>
 
 TEST(Disc, /*DISABLED_*/Constructor_RedColor_RedColorReturned)
 {

@@ -23,9 +23,8 @@
 
 #include <gtest/gtest.h>
 
-#include <cxunit/include/StdStreamRedirector.h>
-
-#include <CommandStack.h>
+#include <cxunit/StdStreamRedirector.h>
+#include <cxmodel/CommandStack.h>
 
 class CommandStackTestFixture : public testing::Test
 {

@@ -23,8 +23,8 @@
 
 #include <gtest/gtest.h>
 
-#include <Board.h>
-#include <CommandCreateNewGame.h>
+#include <cxmodel/Board.h>
+#include <cxmodel/CommandCreateNewGame.h>
 
 class CommandCreateNewGameTestFixture : public ::testing::Test
 {

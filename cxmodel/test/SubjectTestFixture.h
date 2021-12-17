@@ -26,10 +26,10 @@
 
 #include <gtest/gtest.h>
 
-#include <cxunit/include/StdStreamRedirector.h>
+#include <cxunit/StdStreamRedirector.h>
 
-#include <ConcreteObserverMock.h>
-#include <ConcreteSubjectMock.h>
+#include "ConcreteObserverMock.h"
+#include "ConcreteSubjectMock.h"
 
 class SubjectTestFixture : public testing::Test
 {

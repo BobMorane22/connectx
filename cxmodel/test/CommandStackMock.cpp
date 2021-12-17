@@ -23,7 +23,7 @@
 
 #include <gtest/gtest.h>
 
-#include <cxunit/include/NotImplementedException.h>
+#include <cxunit/NotImplementedException.h>
 
 #include "CommandStackMock.h"
 

@@ -24,7 +24,7 @@
 #ifndef CONCRETEOBSERVERMOCK_H_E0703323_22B8_40E1_8225_57CD5FDCFF45
 #define CONCRETEOBSERVERMOCK_H_E0703323_22B8_40E1_8225_57CD5FDCFF45
 
-#include <ModelNotificationContext.h>
+#include <cxmodel/ModelNotificationContext.h>
 
 class ConcreteObserverMock : public cxmodel::IModelObserver
 {

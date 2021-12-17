@@ -25,7 +25,7 @@
 
 #include <gtest/gtest.h>
 
-#include <StrongType.h>
+#include <cxmodel/StrongType.h>
 
 using StrongInt = cxstd::StrongType<int, struct StrongIntTag>;
 using StrongString = cxstd::StrongType<std::string, struct StrongStringTag>;

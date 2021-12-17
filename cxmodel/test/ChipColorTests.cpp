@@ -23,7 +23,7 @@
 
 #include <gtest/gtest.h>
 
-#include <ChipColor.h>
+#include <cxmodel/ChipColor.h>
 
 TEST(ChipColor, /*DISABLED_*/MakeFromHSLA_RedFromHSLA_RedReturned)
 {

@@ -26,11 +26,10 @@
 
 #include <gtest/gtest.h>
 
-#include <cxunit/include/StdStreamRedirector.h>
-#include <cxlog/include/ILogger.h>
-
-#include <CommandStack.h>
-#include <Model.h>
+#include <cxunit/StdStreamRedirector.h>
+#include <cxlog/ILogger.h>
+#include <cxmodel/CommandStack.h>
+#include <cxmodel/Model.h>
 
 /*********************************************************************************************//**
  * @brief Fixture for the cxmodel::Model class.

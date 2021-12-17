@@ -24,7 +24,7 @@
 #ifndef COMMANDADDTWOMOCK_H_7E93C167_1F7F_49B3_9B53_A03CBED755AC
 #define COMMANDADDTWOMOCK_H_7E93C167_1F7F_49B3_9B53_A03CBED755AC
 
-#include <ICommand.h>
+#include <cxmodel/ICommand.h>
 
 class CommandAddTwoMock : public cxmodel::ICommand
 {

@@ -23,8 +23,8 @@
 
 #include <gtest/gtest.h>
 
-#include <Disc.h>
-#include <Player.h>
+#include <cxmodel/Disc.h>
+#include <cxmodel/Player.h>
 
 TEST(Player, /*DISABLED_*/Constructor_ValidInformation_ValidPlayerConstructed)
 {

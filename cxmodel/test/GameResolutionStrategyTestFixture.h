@@ -26,8 +26,8 @@
 
 #include <gtest/gtest.h>
 
-#include <IConnectXLimits.h>
-#include <Player.h>
+#include <cxmodel/IConnectXLimits.h>
+#include <cxmodel/Player.h>
 
 /*************************************************************************************************
  * @brief Fixture for testing game resolution strategies.

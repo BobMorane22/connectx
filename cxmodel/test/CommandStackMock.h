@@ -21,7 +21,7 @@
  *
  *************************************************************************************************/
 
-#include <ICommandStack.h>
+#include <cxmodel/ICommandStack.h>
 
 #ifndef COMMANDSTACKMOCK_H_1C1D7FE3_9103_4716_9765_AF876798E1CB
 #define COMMANDSTACKMOCK_H_1C1D7FE3_9103_4716_9765_AF876798E1CB

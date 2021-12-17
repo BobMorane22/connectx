@@ -21,7 +21,7 @@
  *
  *************************************************************************************************/
 
-#include <ModelNotificationContext.h>
+#include <cxmodel/ModelNotificationContext.h>
 
 /*********************************************************************************************//**
  * @brief Make sure a notification has been sent by the model.

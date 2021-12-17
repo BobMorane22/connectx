@@ -23,7 +23,7 @@
 
 #include <gtest/gtest.h> 
 
-#include <IBoard.h>
+#include <cxmodel/IBoard.h>
 
 TEST(Position, OperatorEqual_TwoSamePositions_ReturnsTrue)
 {

@@ -25,8 +25,8 @@
 
 #include <cxinv/assertion.h>
 
-#include <ConcreteObserverMock.h>
-#include <ConcreteSubjectMock.h>
+#include "ConcreteObserverMock.h"
+#include "ConcreteSubjectMock.h"
 
 ConcreteObserverMock::ConcreteObserverMock()
  : m_data{0}

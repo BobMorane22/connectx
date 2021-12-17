@@ -25,17 +25,17 @@
 
 #include <gtest/gtest.h>
 
-#include <CommandStack.h>
-#include <Disc.h>
-#include <IObserver.h>
-#include <Model.h>
+#include <cxmodel/CommandStack.h>
+#include <cxmodel/Disc.h>
+#include <cxmodel/IObserver.h>
+#include <cxmodel/Model.h>
 
 #include "CommandStackMock.h"
 #include "LoggerMock.h"
 #include "ModelTestFixture.h"
 #include "ModelTestHelpers.h"
 
-TEST_F(ModelTestFixture, /*DISABLED_*/Update_ValidModel_CalledOnUndoChipDrop)
+TEST_F(ModelTestFixture, /*DISABLED*/_Update_ValidModel_CalledOnUndoChipDrop)
 {
     CreateNewGame(6u, 7u, ModelTestFixture::NbPlayers::TWO, ModelTestFixture::InARowValue::FOUR);
 

@@ -25,11 +25,10 @@
 #include <sstream>
 #include <string>
 
-#include <Board.h>
-#include <Disc.h>
-
-#include <cxmodel/include/TieGameResolutionStrategy.h>
-#include <cxmodel/include/WinGameResolutionStrategy.h>
+#include <cxmodel/Board.h>
+#include <cxmodel/Disc.h>
+#include <cxmodel/TieGameResolutionStrategy.h>
+#include <cxmodel/WinGameResolutionStrategy.h>
 
 #include "GameResolutionStrategyTestFixture.h"
 

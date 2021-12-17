@@ -191,11 +191,6 @@ void cxmodel::Subject<T>::Detatch(cxmodel::IObserver<T>* const p_oldObserver)
 {
     PRECONDITION(p_oldObserver);
 
-    const std::size_t oldSize = m_observers.size();
-    PRECONDITION(oldSize > 0);
-
-    std::size_t newSize = m_observers.size();
-
     if(p_oldObserver)
     {
         const auto position = std::find(m_observers.cbegin(),
@@ -207,12 +202,8 @@ void cxmodel::Subject<T>::Detatch(cxmodel::IObserver<T>* const p_oldObserver)
         if(position != m_observers.end())
         {
             m_observers.erase(position);
-            newSize = m_observers.size();
         }
     }
-
-
-    POSTCONDITION(oldSize - newSize == 1);
 
     CheckInvariants();
 }

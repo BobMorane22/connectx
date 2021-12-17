@@ -23,11 +23,11 @@
 
 #include <gtest/gtest.h>
 
-#include <cxunit/include/StdStreamRedirector.h>
+#include <cxunit/StdStreamRedirector.h>
 
-#include <Board.h>
-#include <Disc.h>
-#include <IConnectXLimits.h>
+#include <cxmodel/Board.h>
+#include <cxmodel/Disc.h>
+#include <cxmodel/IConnectXLimits.h>
 
 class BoardTestFixture: public::testing::Test
 {

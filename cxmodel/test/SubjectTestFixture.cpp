@@ -21,7 +21,7 @@
  *
  *************************************************************************************************/
 
-#include <SubjectTestFixture.h>
+#include "SubjectTestFixture.h"
 
 SubjectTestFixture::SubjectTestFixture()
  : m_subject{0}

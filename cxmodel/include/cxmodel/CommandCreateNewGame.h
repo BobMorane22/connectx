@@ -27,11 +27,10 @@
 #include <vector>
 
 #include <cxlog/ILogger.h>
-
-#include "IBoard.h"
-#include "ICommand.h"
-#include "NewGameInformation.h"
-#include "Player.h"
+#include <cxmodel/IBoard.h>
+#include <cxmodel/ICommand.h>
+#include <cxmodel/NewGameInformation.h>
+#include <cxmodel/Player.h>
 
 namespace cxmodel
 {
