@@ -26,16 +26,15 @@
 
 #include <gtest/gtest.h>
 
-#include <cxlog/include/IncrementalLogger.h>
-#include <cxlog/include/ISO8601TimestampFormatter.h>
-#include <cxlog/include/CSVMessageFormatter.h>
-#include <cxlog/include/StdLogTarget.h>
-
-#include <CmdArgHelpStrategy.h>
-#include <CmdArgInvalidStrategy.h>
-#include <CmdArgNoStrategy.h>
-#include <CmdArgVerboseStrategy.h>
-#include <CmdArgVersionStrategy.h>
+#include <cxlog/IncrementalLogger.h>
+#include <cxlog/ISO8601TimestampFormatter.h>
+#include <cxlog/CSVMessageFormatter.h>
+#include <cxlog/StdLogTarget.h>
+#include <cxexec/CmdArgHelpStrategy.h>
+#include <cxexec/CmdArgInvalidStrategy.h>
+#include <cxexec/CmdArgNoStrategy.h>
+#include <cxexec/CmdArgVerboseStrategy.h>
+#include <cxexec/CmdArgVersionStrategy.h>
 
 #include "ApplicationTestFixture.h"
 

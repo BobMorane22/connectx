@@ -24,8 +24,8 @@
 #ifndef LOGGERMOCK_H_D51FFCF0_E2EC_411A_9612_6EB6A529B13A
 #define LOGGERMOCK_H_D51FFCF0_E2EC_411A_9612_6EB6A529B13A
 
-#include <cxlog/include/IChainLogging.h>
-#include <cxlog/include/ILogger.h>
+#include <cxlog/IChainLogging.h>
+#include <cxlog/ILogger.h>
 
 class LoggerMock : public cxlog::ILogger,
                    public cxlog::IChainLogging
