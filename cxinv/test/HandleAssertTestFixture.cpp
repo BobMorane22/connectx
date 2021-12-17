@@ -21,7 +21,9 @@
  *
  *************************************************************************************************/
 
-#include <HandleAssertTestFixture.h>
+#ifndef NDEBUG
+
+#include "HandleAssertTestFixture.h"
 
 std::string HandleAssertTestFixture::GetStdOutContents() const
 {
@@ -77,3 +79,5 @@ std::string HandleAssertTestFixture::MakeExpectedMessage(cxinv::AssertLabel p_la
 
     return stream.str();
 }
+
+#endif // NDEBUG

@@ -21,11 +21,13 @@
  *
  *************************************************************************************************/
 
+#ifndef NDEBUG
+
 #include <gtest/gtest.h>
 
-#include <assertion.h>
+#include <cxinv/assertion.h>
 
-#include <HandleAssertTestFixture.h>
+#include "HandleAssertTestFixture.h"
 
 TEST_F(HandleAssertTestFixture, /*DISABLED_*/HandleAssert_TrueCondition_ReturnsTrue)
 {
@@ -260,3 +262,5 @@ TEST(HandleAssertTest, /*DISABLED_*/HandleAssert_SharedPtrAssertCheckForNullptr_
         ASSERT_TRUE(false);
     }
 }
+
+#endif // NDEBUG

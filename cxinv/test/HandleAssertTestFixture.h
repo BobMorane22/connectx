@@ -24,11 +24,12 @@
 #ifndef HANDLEASSERTTESTFIXTURE_H_86DDB7C1_6022_4421_8477_EBDA35EC90EC
 #define HANDLEASSERTTESTFIXTURE_H_86DDB7C1_6022_4421_8477_EBDA35EC90EC
 
+#ifndef NDEBUG
+
 #include <gtest/gtest.h>
 
-#include <cxunit/include/DisableStdStreamsRAII.h>
-
-#include <assertion.h>
+#include <cxunit/DisableStdStreamsRAII.h>
+#include <cxinv/assertion.h>
 
 /*********************************************************************************************//**
  * @brief Test fixture for the class @c cxinv::HandleAssert function.
@@ -61,5 +62,7 @@ private:
     cxunit::DisableStdStreamsRAII m_disableStreamsRAII;
 
 };
+
+#endif // NDEBUG
 
 #endif // HANDLEASSERTTESTFIXTURE_H_86DDB7C1_6022_4421_8477_EBDA35EC90EC
