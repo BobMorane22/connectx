@@ -106,9 +106,7 @@ TEST(GameResolutionStrategyFactory, Make_InARowTooSmall_AssertsAndNoStrategyRetu
     ASSERT_TRUE(strategy);
     ASSERT_FALSE(dynamic_cast<cxmodel::WinGameResolutionStrategy*>(strategy.get()));
     ASSERT_FALSE(dynamic_cast<cxmodel::TieGameResolutionStrategy*>(strategy.get()));
-
-    const std::string errorStream = streamDisabler.GetStdErrContents();
-    ASSERT_TRUE(errorStream.find("Precondition") != std::string::npos);
+    ASSERT_PRECONDITION_FAILED(streamDisabler);
 }
 
 TEST(GameResolutionStrategyFactory, Make_InARowTooBig_AssertsAndNoStrategyReturned)
@@ -124,13 +122,11 @@ TEST(GameResolutionStrategyFactory, Make_InARowTooBig_AssertsAndNoStrategyReturn
     std::vector<cxmodel::IBoard::Position> positions;
 
     // We create the strategy:
-    auto strategy = cxmodel::GameResolutionStrategyFactory::Make(board, std::numeric_limits<int>::max() + 1u, players, positions, cxmodel::GameResolution::WIN);
+    auto strategy = cxmodel::GameResolutionStrategyFactory::Make(board, std::numeric_limits<size_t>::max() + 1u, players, positions, cxmodel::GameResolution::WIN);
     ASSERT_TRUE(strategy);
     ASSERT_FALSE(dynamic_cast<cxmodel::WinGameResolutionStrategy*>(strategy.get()));
     ASSERT_FALSE(dynamic_cast<cxmodel::TieGameResolutionStrategy*>(strategy.get()));
-
-    const std::string errorStream = streamDisabler.GetStdErrContents();
-    ASSERT_TRUE(errorStream.find("Precondition") != std::string::npos);
+    ASSERT_PRECONDITION_FAILED(streamDisabler);
 }
 
 TEST(GameResolutionStrategyFactory, Make_NotEnoughPlayers_AssertsAndNoStrategyReturned)
@@ -149,7 +145,5 @@ TEST(GameResolutionStrategyFactory, Make_NotEnoughPlayers_AssertsAndNoStrategyRe
     ASSERT_TRUE(strategy);
     ASSERT_FALSE(dynamic_cast<cxmodel::WinGameResolutionStrategy*>(strategy.get()));
     ASSERT_FALSE(dynamic_cast<cxmodel::TieGameResolutionStrategy*>(strategy.get()));
-
-    const std::string errorStream = streamDisabler.GetStdErrContents();
-    ASSERT_TRUE(errorStream.find("Precondition") != std::string::npos);
+    ASSERT_PRECONDITION_FAILED(streamDisabler);
 }

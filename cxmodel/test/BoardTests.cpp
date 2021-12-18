@@ -320,15 +320,9 @@ TEST_F(BoardTestFixtureStdErrStreamRedirector, /*DISABLED_*/GetChip_InputPositio
 
     // Wrong height position:
     ASSERT_EQ(board->GetChip({board->GetNbRows(), 0}), RED_CHIP);
-
-    const std::string assertionMessageRows = GetStdErrContents();
-    ASSERT_FALSE(assertionMessageRows.empty());
-    const std::string assertToken = "Precondition";
-    ASSERT_TRUE(assertionMessageRows.find(assertToken) != std::string::npos);
+    ASSERT_PRECONDITION_FAILED(*this);
 
     // Wrong column position:
     ASSERT_EQ(board->GetChip({0, board->GetNbColumns()}), RED_CHIP);
-    const std::string assertionMessageColumns = GetStdErrContents();
-    ASSERT_FALSE(assertionMessageColumns.empty());
-    ASSERT_TRUE(assertionMessageColumns.find(assertToken) != std::string::npos);
+    ASSERT_PRECONDITION_FAILED(*this);
 }

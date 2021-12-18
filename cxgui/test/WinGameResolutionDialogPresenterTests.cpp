@@ -103,8 +103,7 @@ TEST(WinGameResolutionDialogPresenter, GetResolutionMessage_GameNotWon_NoMessage
     ASSERT_EQ("", streamDisabler.GetStdErrContents());
     ASSERT_EQ("", presenter.GetResolutionMessage());
 
-    const std::string stdErrContents = streamDisabler.GetStdErrContents();
-    ASSERT_TRUE(stdErrContents.find("Assertion") != std::string::npos);
+    ASSERT_ASSERTION_FAILED(streamDisabler);
 }
 
 TEST(WinGameResolutionDialogPresenter, GetStartNewGameButtonText_ValidModel_StartNewGameButtonTextReturned)

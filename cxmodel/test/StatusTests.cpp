@@ -74,9 +74,7 @@ TEST(Status, GetMessage_Success_Asserts)
     const auto status = cxmodel::MakeSuccess();
     const std::string message = status.GetMessage();
 
-    const std::string streamContents = streamDisabler.GetStdErrContents();
-
-    ASSERT_TRUE(streamContents.find("Precondition") != std::string::npos);
+    ASSERT_PRECONDITION_FAILED(streamDisabler);
 }
 
 TEST(Status, MakeError_WithoutErrorMessage_Asserts)
@@ -85,9 +83,7 @@ TEST(Status, MakeError_WithoutErrorMessage_Asserts)
 
     const auto status = cxmodel::MakeError("");
 
-    const std::string streamContents = streamDisabler.GetStdErrContents();
-
-    ASSERT_TRUE(streamContents.find("Precondition") != std::string::npos);
+    ASSERT_PRECONDITION_FAILED(streamDisabler);
 }
 
 TEST(Status, OnError_WithSuccess_DoesNotReturn)

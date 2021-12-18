@@ -24,6 +24,8 @@
 #ifndef DISABLESTDSTREAMSRAII_H_96B3CE7F_EAD5_42AF_9745_53ADE74A7697
 #define DISABLESTDSTREAMSRAII_H_96B3CE7F_EAD5_42AF_9745_53ADE74A7697
 
+#include <gtest/gtest.h>
+
 #include <sstream>
 
 namespace cxunit
@@ -64,6 +66,78 @@ private:
     std::streambuf *m_stdErrBufferContents;
 
 };
+
+/*************************************************************************************************
+ * @brief Test assertions occured.
+ *
+ * Assertions types are defined in cxinv. In release, this does nothing.
+ *
+ * @param p_streamRedirector
+ *      A stream redirector. This class must implement the `GetStdErrContents` method. As
+ *      defined in `cxunit::DisableStdStreamsRAII`.
+ * @param p_assertionKeyword
+ *      The string differentiating assertion types in the standard error stream.
+ *
+ * @see cxinv/assertion.h.
+ *
+ ************************************************************************************************/
+#ifndef NDEBUG
+#define ASSERT_ASSERTION_FAILED_IMPL(p_streamRedirector, p_assertionKeyword)         \
+    {                                                                                \
+        const std::string streamContents = (p_streamRedirector).GetStdErrContents(); \
+        ASSERT_TRUE(streamContents.find(p_assertionKeyword) != std::string::npos);   \
+    }                                                                      
+#else
+#define ASSERT_ASSERTION_FAILED_IMPL(p_streamRedirector, p_assertionKeyword) ASSERT_TRUE(true);
+#endif
+
+/*********************************************************************************************//**
+ * @brief Test an assertion failed.
+ *
+ * In release, this does nothing.
+ *
+ * @param p_streamRedirector
+ *      A stream redirector. This class must implement the `GetStdErrContents` method. As
+ *      defined in `cxunit::DisableStdStreamsRAII`.
+ *
+ ************************************************************************************************/
+#define ASSERT_ASSERTION_FAILED(p_streamRedirector) ASSERT_ASSERTION_FAILED_IMPL(p_streamRedirector, "Assertion")
+
+/*********************************************************************************************//**
+ * @brief Test a precondition failed.
+ *
+ * In release, this does nothing.
+ *
+ * @param p_streamRedirector
+ *      A stream redirector. This class must implement the `GetStdErrContents` method. As
+ *      defined in `cxunit::DisableStdStreamsRAII`.
+ *
+ ************************************************************************************************/
+#define ASSERT_PRECONDITION_FAILED(p_streamRedirector) ASSERT_ASSERTION_FAILED_IMPL(p_streamRedirector, "Precondition")
+
+/*********************************************************************************************//**
+ * @brief Test a postcondition failed.
+ *
+ * In release, this does nothing.
+ *
+ * @param p_streamRedirector
+ *      A stream redirector. This class must implement the `GetStdErrContents` method. As
+ *      defined in `cxunit::DisableStdStreamsRAII`.
+ *
+ ************************************************************************************************/
+#define ASSERT_POSTCONDITION_FAILED(p_streamRedirector) ASSERT_ASSERTION_FAILED_IMPL(p_streamRedirector, "Postcondition")
+
+/*********************************************************************************************//**
+ * @brief Test an invariant failed.
+ *
+ * In release, this does nothing.
+ *
+ * @param p_streamRedirector
+ *      A stream redirector. This class must implement the `GetStdErrContents` method. As
+ *      defined in `cxunit::DisableStdStreamsRAII`.
+ *
+ ************************************************************************************************/
+#define ASSERT_INVARIANT_FAILED(p_streamRedirector) ASSERT_ASSERTION_FAILED_IMPL(p_streamRedirector, "Invariant")
 
 } // cxunit
 

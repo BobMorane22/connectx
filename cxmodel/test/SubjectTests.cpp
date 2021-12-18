@@ -59,7 +59,7 @@ TEST_F(SubjectTestFixtureStdErrStreamRedirector, /*DISABLED_*/Attach_NullObserve
 
     m_subject.Attach(nullptr);
 
-    ASSERT_TRUE(GetStdErrContents().find("Precondition") != std::string::npos);
+    ASSERT_PRECONDITION_FAILED(*this);
 }
 
 TEST_F(SubjectTestFixtureStdErrStreamRedirector, /*DISABLED_*/Attach_SameObserverTwice_PreconditionFail)
@@ -69,7 +69,7 @@ TEST_F(SubjectTestFixtureStdErrStreamRedirector, /*DISABLED_*/Attach_SameObserve
     m_subject.Attach(&m_observer1);
     m_subject.Attach(&m_observer1);
 
-    ASSERT_TRUE(GetStdErrContents().find("Precondition") != std::string::npos);
+    ASSERT_PRECONDITION_FAILED(*this);
 }
 
 TEST_F(SubjectTestFixture, /*DISABLED_*/Detach_AttachedObserver_NoLongerUpdates)
@@ -95,7 +95,7 @@ TEST_F(SubjectTestFixtureStdErrStreamRedirector, /*DISABLED_*/Detach_NullObserve
     m_subject.Attach(&m_observer1);
     m_subject.Detatch(nullptr);
 
-    ASSERT_TRUE(GetStdErrContents().find("Precondition") != std::string::npos);
+    ASSERT_PRECONDITION_FAILED(*this);
 }
 
 TEST_F(SubjectTestFixtureStdErrStreamRedirector, /*DISABLED_*/Detach_UnknownObserver_PreconditionFail)
@@ -105,7 +105,7 @@ TEST_F(SubjectTestFixtureStdErrStreamRedirector, /*DISABLED_*/Detach_UnknownObse
     m_subject.Attach(&m_observer1);
     m_subject.Detatch(&m_observer2);
 
-    ASSERT_TRUE(GetStdErrContents().find("Precondition") != std::string::npos);
+    ASSERT_PRECONDITION_FAILED(*this);
 }
 
 TEST_F(SubjectTestFixtureStdErrStreamRedirector, /*DISABLED_*/Detach_NoObserverListed_PreconditionFail)
@@ -114,7 +114,7 @@ TEST_F(SubjectTestFixtureStdErrStreamRedirector, /*DISABLED_*/Detach_NoObserverL
 
     m_subject.Detatch(&m_observer1);
 
-    ASSERT_TRUE(GetStdErrContents().find("Precondition") != std::string::npos);
+    ASSERT_PRECONDITION_FAILED(*this);
 }
 
 TEST_F(SubjectTestFixture, /*DISABLED_*/DetachAll_TwoObservers_NoLongerUpdate)

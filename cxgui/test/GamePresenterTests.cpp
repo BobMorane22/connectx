@@ -68,5 +68,4 @@ TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetBoardWidth_GamePresenterN
 TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetBoardHeight_GamePresenterNoUpdate_MinimumReturned)
 {
     ASSERT_EQ(GetGameViewPresenter().GetGameViewBoardHeight(), GetLimitsModel().GetMinimumGridHeight());
-
 }

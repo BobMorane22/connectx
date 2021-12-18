@@ -222,10 +222,7 @@ TEST_F(AnimationModelTestFixtureStdErrStreamRedirector, /*DISABLED_*/Update_Inva
                                   });
 
     ASSERT_TRUE(whatChanged == NONE);
-
-    // There should be an assertion:
-    const std::string streamContents = GetStdErrContents();
-    ASSERT_TRUE(streamContents.find("Precondition") != std::string::npos);
+    ASSERT_PRECONDITION_FAILED(*this);
 }
 
 TEST_F(AnimationModelTestFixtureStdErrStreamRedirector, /*DISABLED_*/Update_InvalidWidgetWidth_NothingUpdatedAndAsserts)
@@ -239,10 +236,7 @@ TEST_F(AnimationModelTestFixtureStdErrStreamRedirector, /*DISABLED_*/Update_Inva
                                   });
 
     ASSERT_TRUE(whatChanged == NONE);
-
-    // There should be an assertion:
-    const std::string streamContents = GetStdErrContents();
-    ASSERT_TRUE(streamContents.find("Precondition") != std::string::npos);
+    ASSERT_PRECONDITION_FAILED(*this);
 }
 
 TEST_F(AnimationModelTestFixture, /*DISABLED_*/Resize_ValidAndHorizontal_ResizingOccured)
@@ -304,10 +298,7 @@ TEST_F(AnimationModelTestFixtureStdErrStreamRedirector, /*DISABLED_*/Resize_Inva
                                   });
 
     ASSERT_TRUE(whatChanged == NONE);
-
-    // There should be an assertion:
-    const std::string streamContents = GetStdErrContents();
-    ASSERT_TRUE(streamContents.find("Precondition") != std::string::npos);
+    ASSERT_PRECONDITION_FAILED(*this);
 }
 
 TEST_F(AnimationModelTestFixtureStdErrStreamRedirector, /*DISABLED_*/Resize_InvalidVerticalRatio_DoesNotResizeAndAsserts)
@@ -323,10 +314,7 @@ TEST_F(AnimationModelTestFixtureStdErrStreamRedirector, /*DISABLED_*/Resize_Inva
                                   });
 
     ASSERT_TRUE(whatChanged == NONE);
-
-    // There should be an assertion:
-    const std::string streamContents = GetStdErrContents();
-    ASSERT_TRUE(streamContents.find("Precondition") != std::string::npos);
+    ASSERT_PRECONDITION_FAILED(*this);
 }
 
 TEST_F(AnimationModelTestFixture, /*DISABLED_*/AddChipDisplacement_HorizontalDisplacement_ChipMovedHorizontally)
