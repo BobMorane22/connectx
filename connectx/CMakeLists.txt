@@ -37,3 +37,8 @@ target_link_libraries(${TARGET_NAME}
   PRIVATE cxgui
   PRIVATE cxexec
 )
+
+install(
+  TARGETS ${TARGET_NAME}
+  DESTINATION ${CMAKE_INSTALL_BINDIR}
+)

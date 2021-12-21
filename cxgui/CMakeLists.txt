@@ -71,5 +71,11 @@ target_link_libraries(${TARGET_NAME}
   PRIVATE ${GTKMM_LIBRARIES}
 )
 
+# Configuration files:
+configure_file("${CMAKE_CURRENT_SOURCE_DIR}/include/${TARGET_NAME}/ressources.h.in" "${TARGET_NAME}/generated/ressources.h")
+target_include_directories(${TARGET_NAME}
+  PUBLIC ${CMAKE_CURRENT_BINARY_DIR}
+)
+
 # Unit tests:
 add_subdirectory(test)

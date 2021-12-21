@@ -16,55 +16,18 @@
 #
 #************************************************************************************************/
 #*************************************************************************************************
-# Top level CMake configuration file for Connect X.
+# CMake configuration file for the Connect X icons.
 #
 # @file CMakeLists.txt
 # @date 2021
 #
 #************************************************************************************************/
 
-cmake_minimum_required(VERSION 3.20)
-
-project(connectx VERSION 0.32 LANGUAGES CXX)
-
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_EXTENSIONS OFF)
-
-add_compile_options(
-  -Wall
-  -Wextra
-  -Wshadow
-  -Wpedantic
-  -pedantic-errors
-  -Werror
+set(ICONS
+  cxicon16.png
 )
 
-# Append the 'cmake' directory to the list of directories looked into when a module
-# is searched for:
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
-
-# Modules:
-include(GNUInstallDirs)
-include(Testing)
-
-find_package(GTest)
-find_package(PkgConfig)
-pkg_check_modules(GTKMM REQUIRED gtkmm-3.0>=3.24)
-
-enable_testing()
-
-# Libraries, in build order:
-add_subdirectory(cxunit)
-add_subdirectory(cxinv)
-add_subdirectory(cxlog)
-add_subdirectory(cxmath)
-add_subdirectory(cxmodel)
-add_subdirectory(cxgui)
-add_subdirectory(cxexec)
-
-# Main Connect X executable:
-add_subdirectory(connectx)
-
-# Data items
-add_subdirectory(data)
+install(
+  FILES ${ICONS}
+  DESTINATION ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATADIR}/${PROJECT_NAME}/icons
+)

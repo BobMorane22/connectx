@@ -24,13 +24,14 @@
 #ifndef WINDOW_H_861FC628_597C_407E_8206_E67F71000A55
 #define WINDOW_H_861FC628_597C_407E_8206_E67F71000A55
 
-#include <cxinv/assertion.h>
-#include <cxmodel/OS.h>
-
 #include <glibmm/fileutils.h>
 #include <gtkmm/grid.h>
 
+#include <cxinv/assertion.h>
+#include <cxgui/generated/ressources.h>
+
 #include "IWindow.h"
+
 
 namespace cxgui
 {
@@ -81,7 +82,7 @@ protected:
     {
         try
         {
-            m_window.set_icon_from_file(cxmodel::GetCurrentExecutablePath(true) + "/icons/cxicon16.png");
+            m_window.set_icon_from_file(cxgui::RESSOURCE_ICONS_PATH + std::string{"/cxicon16.png"});
         }
         catch(const Glib::FileError& p_exception)
         {
