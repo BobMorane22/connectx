@@ -32,6 +32,8 @@
 #include <cxmodel/Model.h>
 #include <cxexec/Application.h>
 
+#include <generated/ressources.h>
+
 constexpr size_t CMD_STACK_SIZE = 200;
 
 /******************************************************************************************//**
@@ -47,7 +49,7 @@ constexpr size_t CMD_STACK_SIZE = 200;
 std::unique_ptr<cxlog::ILogger> CreateFileLogger(cxlog::VerbosityLevel p_verbosity)
 {
     std::unique_ptr<cxlog::ITimestampFormatter> timestampFormatter = std::make_unique<cxlog::ISO8601TimestampFormatter>(cxlog::TimePrecision::MILLISECONDS);
-    std::unique_ptr<cxlog::ILogTarget> logTarget = std::make_unique<cxlog::FileLogTarget>("connectx.log");
+    std::unique_ptr<cxlog::ILogTarget> logTarget = std::make_unique<cxlog::FileLogTarget>(LOG_TARGET_PATH + std::string{"/connectx.log"});
     std::unique_ptr<cxlog::IMessageFormatter> formatter = std::make_unique<cxlog::CSVMessageFormatter>(std::move(timestampFormatter));
     std::unique_ptr<cxlog::ILogger> logger = std::make_unique<cxlog::IncrementalChainedLogger>(std::move(formatter), std::move(logTarget), true);
 

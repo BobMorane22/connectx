@@ -38,6 +38,12 @@ target_link_libraries(${TARGET_NAME}
   PRIVATE cxexec
 )
 
+# Configuration files:
+configure_file("${CMAKE_CURRENT_SOURCE_DIR}/ressources.h.in" "generated/ressources.h")
+target_include_directories(${TARGET_NAME}
+  PUBLIC ${CMAKE_CURRENT_BINARY_DIR}
+)
+
 install(
   TARGETS ${TARGET_NAME}
   DESTINATION ${CMAKE_INSTALL_BINDIR}
