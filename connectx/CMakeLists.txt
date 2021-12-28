@@ -44,6 +44,8 @@ target_include_directories(${TARGET_NAME}
   PUBLIC ${CMAKE_CURRENT_BINARY_DIR}
 )
 
+create_directory_at(INSTALLATION "$ENV{HOME}/.connectx")
+
 install(
   TARGETS ${TARGET_NAME}
   DESTINATION ${CMAKE_INSTALL_BINDIR}

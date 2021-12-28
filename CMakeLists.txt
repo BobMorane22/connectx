@@ -46,6 +46,7 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 
 # Modules:
 include(GNUInstallDirs)
+include(Utilities)
 include(Testing)
 
 find_package(GTest)
