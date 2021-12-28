@@ -16,60 +16,31 @@
 #
 #************************************************************************************************/
 #*************************************************************************************************
-# Top level CMake configuration file for Connect X.
+# CMake configuration file for user help.
 #
 # @file CMakeLists.txt
 # @date 2021
 #
 #************************************************************************************************/
 
-cmake_minimum_required(VERSION 3.20)
+set(HELP_ID ${PROJECT_NAME})
 
-project(connectx VERSION 0.32 LANGUAGES CXX)
-
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_EXTENSIONS OFF)
-
-add_compile_options(
-  -Wall
-  -Wextra
-  -Wshadow
-  -Wpedantic
-  -pedantic-errors
-  -Werror
+set(HELP_FILES
+  cmd-arg.page
+  game.page
+  getting-started.page
+  index.page
+  keyboard_shortcuts.page
+  license.page
+  new-game.page
 )
 
-# Append the 'cmake' directory to the list of directories looked into when a module
-# is searched for:
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
+set(HELP_MEDIA
+  connectx.png
+)
 
-# Modules:
-include(Documentation)
-include(GNUInstallDirs)
-include(Testing)
-include(Utilities)
-
-find_package(GTest)
-find_package(PkgConfig)
-pkg_check_modules(GTKMM REQUIRED gtkmm-3.0>=3.24)
-
-enable_testing()
-
-# Libraries, in build order:
-add_subdirectory(cxunit)
-add_subdirectory(cxinv)
-add_subdirectory(cxlog)
-add_subdirectory(cxmath)
-add_subdirectory(cxmodel)
-add_subdirectory(cxgui)
-add_subdirectory(cxexec)
-
-# Main Connect X executable:
-add_subdirectory(connectx)
-
-# Data items
-add_subdirectory(data)
-
-# User help
-add_subdirectory(help)
+install_user_help(
+  ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATADIR}/help/C/${HELP_ID}
+  PAGE ${HELP_FILES}
+  MEDIA ${HELP_MEDIA}
+)
