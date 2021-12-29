@@ -31,17 +31,15 @@
 #include <cxmodel/CommandDropChip.h>
 #include <cxmodel/CommandStack.h>
 #include <cxmodel/Disc.h>
+#include <cxmodel/GameResolutionStrategyFactory.h>
 #include <cxmodel/Model.h>
 #include <cxmodel/ModelNotificationContext.h>
-#include <cxmodel/GameResolutionStrategyFactory.h>
+#include <cxmodel/version.h>
 
 namespace
 {
 
 static constexpr char NAME[] = "Connect X";
-
-static constexpr unsigned int MAJOR_VERSION_NB = 0u;
-static constexpr unsigned int MINOR_VERSION_NB = 32u;
 
 static constexpr size_t GRID_MIN_HEIGHT = 6u;
 static constexpr size_t GRID_MAX_HEIGHT = 64u;
@@ -98,7 +96,7 @@ std::string cxmodel::Model::GetVersionNumber() const
 {
     std::stringstream stream;
 
-    stream << "v" << MAJOR_VERSION_NB << "." << MINOR_VERSION_NB;
+    stream << "v" << cxmodel::GetVersionMajor() << "." << cxmodel::GetVersionMinor();
 
     return stream.str();
 }

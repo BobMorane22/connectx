@@ -44,6 +44,13 @@ add_library(${TARGET_NAME}
   src/WinGameResolutionStragegy.cpp
 )
 
+
+# Inspired by the technique presented in the book "Professional CMake : A Practical Guide",
+# version 1.0.0 by Craig Scott. See "Source Code Access to Version Details" in Chapter 19.
+configure_file(src/version.cpp.in version.cpp @ONLY)
+add_library(version STATIC ${CMAKE_CURRENT_BINARY_DIR}/version.cpp)
+target_include_directories(version PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/include")
+
 target_include_directories(${TARGET_NAME}
   PUBLIC "${CMAKE_CURRENT_LIST_DIR}/include"
 )
@@ -52,6 +59,7 @@ target_link_libraries(${TARGET_NAME}
   PRIVATE cxinv
   PRIVATE cxlog
   PRIVATE cxmath
+  PRIVATE version
 )
 
 # Unit tests:
