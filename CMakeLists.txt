@@ -49,6 +49,10 @@ include(Documentation)
 include(GNUInstallDirs)
 include(Testing)
 include(Utilities)
+if(CMAKE_BUILD_TYPE MATCHES Debug)
+    include(CodeCoverage)
+    append_coverage_compiler_flags()
+endif()
 
 find_package(GTest)
 find_package(PkgConfig)
@@ -73,3 +77,12 @@ add_subdirectory(data)
 
 # User help
 add_subdirectory(help)
+
+# Code coverage:
+if(CMAKE_BUILD_TYPE MATCHES Debug)
+    setup_target_for_coverage_lcov(
+        NAME coverage
+        EXECUTABLE ctest
+        EXCLUDE "cx*/test/*"
+    )
+endif()
