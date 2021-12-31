@@ -9,7 +9,7 @@
 #
 # will generate the following files under the `doc` directory:
 #
-#     doc
+#     changelogs
 #     ├── ...
 #     └── vX-Y
 #         ├── user
@@ -36,9 +36,9 @@ CHANGELOGDIR="v${MAJOR}-${MINOR}"
 set -e
 
 # 1. Check preconditions:
-if [[ -d "./doc/${CHANGELOGDIR}" ]]
+if [[ -d "./changelogs/${CHANGELOGDIR}" ]]
 then
-    echo "Directory ``./doc/${CHANGELOGDIR}`` already exists. Aborting."
+    echo "Directory ``./changelogs/${CHANGELOGDIR}`` already exists. Aborting."
     exit 1
 else
     echo "Generating changelogs for ${CHANGELOGDIR}..."
@@ -46,8 +46,8 @@ fi
 
 
 # 2. Generate the necessary files and directories:
-USERDIR=./doc/${CHANGELOGDIR}/user
-DEVDIR=./doc/${CHANGELOGDIR}/dev
+USERDIR=./changelogs/${CHANGELOGDIR}/user
+DEVDIR=./changelogs/${CHANGELOGDIR}/dev
 
 mkdir -p ${USERDIR}
 echo "User directory changelog created successfully"
