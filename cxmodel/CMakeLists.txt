@@ -37,7 +37,6 @@ add_library(${TARGET_NAME}
   src/IChip.cpp
   src/Model.cpp
   src/NewGameInformation.cpp
-  src/OS.cpp
   src/Player.cpp
   src/Status.cpp
   src/TieGameResolutionStrategy.cpp
