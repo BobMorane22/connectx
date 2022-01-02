@@ -28,23 +28,23 @@ ERROR_PRECONDITION=1
 ERROR_UNKNOWN_TARGET=2
 ERROR_CLEANING=3
 ERROR_BUILDING=4
-ERROR_ARCHIVING=5
-ERROR_CREATING_ARCHIVE_LOCATION_DIRECTORY=6
-ERROR_MOVING_ARCHIVE=7
+ERROR_INSTALLING=5
+ERROR_ARCHIVING=6
+ERROR_CREATING_ARCHIVE_LOCATION_DIRECTORY=7
+ERROR_MOVING_ARCHIVE=8
 
 MESSAGE_MAP[SUCCESS]="Successfully distributed Connect X"
 MESSAGE_MAP[ERROR_PRECONDITION]="Precondition violation"
 MESSAGE_MAP[ERROR_UNKNOWN_TARGET]="Unknown target"
 MESSAGE_MAP[ERROR_CLEANING]="Unable to clean"
 MESSAGE_MAP[ERROR_BUILDING]="Unable to build"
+MESSAGE_MAP[ERROR_INSTALLING]="Unable to install"
 MESSAGE_MAP[ERROR_ARCHIVING]="Unable to archive"
 MESSAGE_MAP[ERROR_CREATING_ARCHIVE_LOCATION_DIRECTORY]="Unable to create the archive location directory"
 MESSAGE_MAP[ERROR_MOVING_ARCHIVE]="Unable to move archive to its location directory"
 
 # Paths:
-ROOT="./connectx"
-EXEC="${ROOT}/connectx"
-ICONS="${ROOT}/icons"
+ROOT="./build"
 
 #---------------------------------------------------------------------------------------------------
 # Distributes Connect X according to a specific arg.
@@ -68,31 +68,55 @@ function Distribute(){
     else
         # There are three phases that are nedded to distribute the Connect X executable:
         #
-        #  1. Building Connect X.
-        #  2. Making the appropriate archive.
-        #  3. Moving the archive to the archive location.
+        #  1. Cleanup the build directory.
+        #  2. Generating the build system.
+        #  3. Building and installing Connect X.
+        #  4. Making the appropriate archive.
+        #  5. Moving the archive to the archive location.
         #
 
-        # 1. Building Connect X:
-        local target
+        # 1. Cleaning up the build directory:
+        rm -rfd build/release/*
+        rm -rfd build/debug/*
+        mkdir -p build/distribute
+
+        # 2. Generating the build system:
         if [[ $arg == ${RELEASE} ]]; then
-            target="NDEBUG=1"
+            mkdir -p build/release
+            mkdir -p build/distribute/release
+            cd build/release
+            cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=../distribute/release ../..
+            cd ../..
         elif [[ $arg == ${DEBUG} ]]; then
-            target="NDEBUG=0"
+            mkdir -p build/debug
+            mkdir -p build/distribute/debug
+            cd build/debug
+            cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX=../distribute/debug ../..
+            cd ../..
         else
             return ${ERROR_UNKNOWN_TARGET}
         fi
 
-        make clean || return ${ERROR_CLEANING}
-        make -j8 ${target} || return ${ERROR_BUILDING}
+        # 3. Building and installing Connect X:
+        if [[ $arg == ${RELEASE} ]]; then
+            cd build/release
+        elif [[ $arg == ${DEBUG} ]]; then
+            cd build/debug
+        else
+            return ${ERROR_UNKNOWN_TARGET}
+        fi
 
-        # 2. Making the appropriate archive:
+        make -j8 || return ${ERROR_BUILDING}
+        make install || return ${ERROR_INSTALLING}
+        cd ../..
+
+        # 4. Making the appropriate archive:
         archive=connectx_${arg}.tar.gz
-        tar -czvf ${ROOT}/${archive} ${EXEC} ${ICONS} || return ${ERROR_ARCHIVING}
+        tar -czvf ${ROOT}/distribute/${archive} ${ROOT}/distribute/${arg} || return ${ERROR_ARCHIVING}
 
-        # 3. Moving the archive to the archive location.
-        mkdir -p ${ROOT}/${VERSION} || return ${ERROR_CREATING_ARCHIVE_LOCATION_DIRECTORY}
-        mv ${ROOT}/${archive} ${ROOT}/${VERSION}/${archive} || return ${ERROR_MOVING_ARCHIVE}
+        # 5. Moving the archive to the archive location.
+        mkdir -p ${ROOT}/distribute/${VERSION} || return ${ERROR_CREATING_ARCHIVE_LOCATION_DIRECTORY}
+        mv ${ROOT}/distribute/${archive} ${ROOT}/distribute/${VERSION}/${archive} || return ${ERROR_MOVING_ARCHIVE}
     fi
 
     return ${SUCCESS}
