@@ -83,33 +83,12 @@ tags
 ## build directory
 build/release
 build/debug
+build/distribute
 
 
 # -------------------------------------------------------------------------------------------------
-# Connect X
+# Valgrind
 # -------------------------------------------------------------------------------------------------
-
-## Main executable
-connectx/connectx
-
-## Unit tests executables
-cxinv/test/cxinvtests
-cxmath/test/cxmathtests
-cxlog/test/cxlogtests
-cxmodel/test/cxmodeltests
-cxgui/test/cxguitests
-cxexec/test/cxexectests
-cxunit/test/cxunittests
-
-## Coverage
-coverage/report
-coverage/*.html
-coverage/*.css
-coverage/*.gcov
-coverage/*.info
-*.gcda
-*.gcno
 
 ## Log files
-*.log
 valgrind-out.txt
