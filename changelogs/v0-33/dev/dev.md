@@ -4,15 +4,21 @@
 
 In this iteration:
 
-1. Short description of new feature
-2. Another short description
+1. The `tools/script/distribute.sh` script has been ported to CMake.
 
 
-## Feature 1
+## How to distribute Connect X
 
-Description for feature 1 here...
+The script works are before as far as calling on the command
+prompt is concerned:
 
+```bash
+./tools/script/distribute.sh vX.Y
+```
 
-## Feature 2
-
-Description for feature 2 here...
+This will launch the distribution process. The archives will
+now be located under `build/distribute/vX.Y`. The archived
+builds are relocatable, so you can run them from anywhere.
+If you want to access the documentation however, you will
+have to update the `XDG_DATA_DIRS` environement variable, as
+described [here](../user/user.md).
