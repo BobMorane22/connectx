@@ -24,7 +24,7 @@
 #ifndef RADIUS_H_0CA889EE_C37D_424C_B589_723A9EAAFBF7
 #define RADIUS_H_0CA889EE_C37D_424C_B589_723A9EAAFBF7
 
-#include <cxmodel/StrongType.h>
+#include <cxstd/StrongType.h>
 
 namespace cxmath
 {

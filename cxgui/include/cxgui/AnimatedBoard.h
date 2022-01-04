@@ -114,15 +114,15 @@ private:
 
     // Left move animation:
     bool m_animateMoveLeft = false;
-    double m_totalMoveLeftDisplacement = 0.0;
+    cxmath::Width m_totalMoveLeftDisplacement{0.0};
 
     // Right move animation:
     bool m_animateMoveRight = false;
-    double m_totalMoveRightDisplacement = 0.0;
+    cxmath::Width m_totalMoveRightDisplacement{0.0};
 
     // Down move animation:
-    bool m_animateMoveDown = false;           // Flag indicating if a "move down" animation is ongoing.
-    double m_totalMoveDownDisplacement = 0.0; // Sum of down displacement deltas in the context of a single animation (i.e. one chip only).
+    bool m_animateMoveDown = false;                  // Flag indicating if a "move down" animation is ongoing.
+    cxmath::Height m_totalMoveDownDisplacement{0.0}; // Sum of down displacement deltas in the context of a single animation (i.e. one chip only).
 
     // Last frame information:
     double m_lastFrameHeight = 0.0; // Height of the animation for last frame.

@@ -55,6 +55,7 @@ target_include_directories(${TARGET_NAME}
 )
 
 target_link_libraries(${TARGET_NAME}
+  PRIVATE cxstd
   PRIVATE cxinv
   PRIVATE cxlog
   PRIVATE cxmath

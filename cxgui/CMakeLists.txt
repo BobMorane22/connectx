@@ -35,7 +35,6 @@ add_library(${TARGET_NAME}
   src/Chip.cpp
   src/ColorComboBox.cpp
   src/ContextRestoreRAII.cpp
-  src/Dimensions.cpp
   src/DiscChip.cpp
   src/extractRawUserInput.cpp
   src/GameResolutionDialogController.cpp
@@ -65,6 +64,7 @@ target_include_directories(${TARGET_NAME}
 )
 
 target_link_libraries(${TARGET_NAME}
+  PRIVATE cxstd
   PRIVATE cxinv
   PRIVATE cxmath
   PRIVATE cxmodel

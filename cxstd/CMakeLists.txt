@@ -16,46 +16,23 @@
 #
 #************************************************************************************************/
 #*************************************************************************************************
-# CMake configuration file for the cxgui unit test executable.
+# CMake configuration file for the cxstd library.
 #
 # @file CMakeLists.txt
-# @date 2021
+# @date 2022
 #
 #************************************************************************************************/
 
-set(SOURCE_FILES
-  AboutWindowPresenterTestFixture.cpp
-  AboutWindowPresenterTests.cpp
-  AnimatedBoardModelTests.cpp
-  AnimatedBoardPresenterTests.cpp
-  ConfigurableMainWindowPresenterTestFixture.cpp
-  extractRawUserInputTests.cpp
-  GamePresenterTests.cpp
-  GameResolutionDialogControllerTestFixture.cpp
-  GameResolutionDialogControllerTests.cpp
-  GameResolutionDialogPresenterFactoryTests.cpp
-  MainWindowControllerTestFixture.cpp
-  MainWindowControllerTests.cpp
-  MainWindowPresenterTestFixture.cpp
-  MainWindowPresenterTests.cpp
-  MenuItemTests.cpp
-  NewGamePresenterTests.cpp
-  ScalingRatiosTests.cpp
-  StatusBarPresenterTests.cpp
-  TieGameResolutionDialogPresenterTests.cpp
-  WinGameResolutionDialogPresenterTests.cpp
+set(TARGET_NAME cxstd)
+
+# Header-only library:
+add_library(${TARGET_NAME}
+  INTERFACE
 )
 
-set(LIBRARIES
-  cxunit
-  cxstd
-  cxinv
-  cxmath
-  cxmodel
+target_include_directories(${TARGET_NAME}
+  INTERFACE "${CMAKE_CURRENT_LIST_DIR}/include"
 )
 
-add_lib_unit_test(
-  cxgui
-  SOURCES ${SOURCE_FILES}
-  LIBS ${LIBRARIES}
-)
+# Unit tests:
+add_subdirectory(test)

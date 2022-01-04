@@ -369,7 +369,7 @@ void cxgui::AnimatedBoardModel::ComputeChipVerticalPosition(const cxmath::Radius
     }
 }
 
-void cxgui::AnimatedBoardModel::Update(const Dimensions& p_widgetDimensions, bool p_isChipMovingHorizontally)
+void cxgui::AnimatedBoardModel::Update(const cxmath::Dimensions& p_widgetDimensions, bool p_isChipMovingHorizontally)
 {
     IF_PRECONDITION_NOT_MET_DO((p_widgetDimensions.m_height.Get() > 0.0 && p_widgetDimensions.m_width.Get() > 0.0), return;);
 
@@ -378,9 +378,9 @@ void cxgui::AnimatedBoardModel::Update(const Dimensions& p_widgetDimensions, boo
     m_widgetDimensions = p_widgetDimensions;
 
     // Cell dimensions:
-    const Height cellHeight = Height(m_widgetDimensions.m_height.Get() / (m_presenter.GetBoardHeight() + 1.0));
-    const Width cellWidth = Width(m_widgetDimensions.m_width.Get() / m_presenter.GetBoardWidth());
-    m_cellDimensions = Dimensions(cellHeight, cellWidth);
+    const cxmath::Height cellHeight = cxmath::Height(m_widgetDimensions.m_height.Get() / (m_presenter.GetBoardHeight() + 1.0));
+    const cxmath::Width cellWidth = cxmath::Width(m_widgetDimensions.m_width.Get() / m_presenter.GetBoardWidth());
+    m_cellDimensions = cxmath::Dimensions{cellHeight, cellWidth};
     const double smallestDimensionSize = std::min(m_widgetDimensions.m_height.Get(), m_widgetDimensions.m_width.Get());
     m_cellLineWidth = smallestDimensionSize * LINE_WIDTH_SCALING_FACTOR;
 
@@ -411,10 +411,10 @@ void cxgui::AnimatedBoardModel::Resize(const cxgui::ScalingRatios& p_scalingRati
     m_chipPosition.m_y *= p_scalingRatios.m_verticalRatio.Get();
 }
 
-void cxgui::AnimatedBoardModel::AddChipDisplacement(double p_horizontal, double p_vertical)
+void cxgui::AnimatedBoardModel::AddChipDisplacement(const cxmath::Width& p_horizontal, const cxmath::Height& p_vertical)
 {
-    m_chipPosition.m_x += p_horizontal;
-    m_chipPosition.m_y += p_vertical;
+    m_chipPosition.m_x += p_horizontal.Get();
+    m_chipPosition.m_y += p_vertical.Get();
 }
 
 void cxgui::AnimatedBoardModel::ResetChipPositions()
@@ -438,12 +438,12 @@ cxgui::AnimationSpeed cxgui::AnimatedBoardModel::GetAnimationSpeed() const
     return m_animationSpeed;
 }
 
-const cxgui::Dimensions& cxgui::AnimatedBoardModel::GetAnimatedAreaDimensions() const
+const cxmath::Dimensions& cxgui::AnimatedBoardModel::GetAnimatedAreaDimensions() const
 {
     return m_widgetDimensions;
 }
 
-const cxgui::Dimensions& cxgui::AnimatedBoardModel::GetCellDimensions() const
+const cxmath::Dimensions& cxgui::AnimatedBoardModel::GetCellDimensions() const
 {
     return m_cellDimensions;
 }

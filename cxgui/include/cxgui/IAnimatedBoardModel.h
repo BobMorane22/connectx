@@ -24,11 +24,11 @@
 #ifndef IANIMATEDBOARDMODEL_H_01D250F8_D2F7_42FE_9D3F_762B6B5D1F37
 #define IANIMATEDBOARDMODEL_H_01D250F8_D2F7_42FE_9D3F_762B6B5D1F37
 
+#include <cxmath/Dimensions.h>
 #include <cxmath/Position.h>
 #include <cxmath/Radius.h>
 #include <cxmodel/ChipColor.h>
 #include <cxmodel/common.h>
-#include <cxgui/Dimensions.h>
 #include <cxgui/ScalingRatios.h>
 
 namespace cxgui
@@ -92,7 +92,7 @@ public:
      *      Indicates if the chip is currently moving left of right.
      *
      *********************************************************************************************/
-    virtual void Update(const Dimensions& p_widgetDimensions, bool p_isChipMovingHorizontally) = 0;
+    virtual void Update(const cxmath::Dimensions& p_widgetDimensions, bool p_isChipMovingHorizontally) = 0;
 
     /******************************************************************************************//**
      * @brief Resizes the current animation according to horizontal and vertical ratios.
@@ -114,7 +114,7 @@ public:
      *      A vertical displacement (in pixels).
      *
      *********************************************************************************************/
-     virtual void AddChipDisplacement(double p_horizontal, double p_vertical) = 0;
+     virtual void AddChipDisplacement(const cxmath::Width& p_horizontal, const cxmath::Height& p_vertical) = 0;
      
     /******************************************************************************************//**
      * @brief Resets all chip positions.
@@ -157,7 +157,7 @@ public:
      * @return The dimensions of the animated widget.
      *
      *********************************************************************************************/
-    [[nodiscard]] virtual const Dimensions& GetAnimatedAreaDimensions() const = 0;
+    [[nodiscard]] virtual const cxmath::Dimensions& GetAnimatedAreaDimensions() const = 0;
 
     /******************************************************************************************//**
      * @brief Gets the dimensions for a single cell.
@@ -170,7 +170,7 @@ public:
      * @return Dimensions for a single cell.
      *
      *********************************************************************************************/
-    [[nodiscard]] virtual const Dimensions& GetCellDimensions() const = 0;
+    [[nodiscard]] virtual const cxmath::Dimensions& GetCellDimensions() const = 0;
 
     /******************************************************************************************//**
      * @brief Gets the radius of a chip.

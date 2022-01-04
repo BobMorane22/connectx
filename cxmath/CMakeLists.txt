@@ -26,6 +26,7 @@
 set(TARGET_NAME cxmath)
 
 add_library(${TARGET_NAME}
+  src/Dimensions.cpp
   src/math.cpp
   src/Position.cpp
 )
@@ -35,6 +36,7 @@ target_include_directories(${TARGET_NAME}
 )
 
 target_link_libraries(${TARGET_NAME}
+  PRIVATE cxstd
   PRIVATE cxinv
 )
 

@@ -24,11 +24,18 @@
 #************************************************************************************************/
 
 set(SOURCE_FILES
+  DimensionsTests.cpp
   mathTests.cpp
   PositionTests.cpp
+)
+
+set(LIBRARIES
+  cxunit
+  cxstd
 )
 
 add_lib_unit_test(
   cxmath
   SOURCES ${SOURCE_FILES}
+  LIBS ${LIBRARIES}
 )

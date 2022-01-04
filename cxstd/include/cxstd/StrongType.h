@@ -222,6 +222,19 @@ struct Addable
 
         return *lhs;
     }
+
+    /**************************************************************************************//**
+     * @brief Compute the additive inverse.
+     *
+     * @return The additive inverse.
+     *
+     *****************************************************************************************/
+    CRTP operator-() const
+    {
+        const CRTP* const thisInstance = static_cast<const CRTP*>(this);
+
+        return CRTP{-thisInstance->Get()};
+    }
 };
 
 /******************************************************************************************//**

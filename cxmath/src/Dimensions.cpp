@@ -21,15 +21,15 @@
  *
  *************************************************************************************************/
 
-#include <cxgui/Dimensions.h>
+#include <cxmath/Dimensions.h>
 
-bool cxgui::operator==(const cxgui::Dimensions& p_lhs, const cxgui::Dimensions& p_rhs)
+bool cxmath::operator==(const cxmath::Dimensions& p_lhs, const cxmath::Dimensions& p_rhs)
 {
     return (p_lhs.m_height.Get() == p_rhs.m_height.Get()) &&
            (p_lhs.m_width.Get() == p_rhs.m_width.Get());
 }
 
-bool cxgui::operator!=(const cxgui::Dimensions& p_lhs, const cxgui::Dimensions& p_rhs)
+bool cxmath::operator!=(const cxmath::Dimensions& p_lhs, const cxmath::Dimensions& p_rhs)
 {
     return !(p_lhs == p_rhs);
 }

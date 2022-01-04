@@ -62,6 +62,7 @@ enable_testing()
 
 # Libraries, in build order:
 add_subdirectory(cxunit)
+add_subdirectory(cxstd)
 add_subdirectory(cxinv)
 add_subdirectory(cxlog)
 add_subdirectory(cxmath)

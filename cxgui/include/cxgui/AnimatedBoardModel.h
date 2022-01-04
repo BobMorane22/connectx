@@ -59,16 +59,16 @@ public:
      *************************************************************************************************/
     AnimatedBoardModel(const cxgui::IAnimatedBoardPresenter& p_presenter, const cxgui::AnimationSpeed& p_animationSpeed);
 
-    void Update(const Dimensions& p_widgetDimensions, bool p_isChipMovingHorizontally) override;
+    void Update(const cxmath::Dimensions& p_widgetDimensions, bool p_isChipMovingHorizontally) override;
     void Resize(const cxgui::ScalingRatios& p_scalingRatios) override;
-    void AddChipDisplacement(double p_horizontal, double p_vertical) override;
+    void AddChipDisplacement(const cxmath::Width& p_horizontal, const cxmath::Height& p_vertical) override;
     void ResetChipPositions() override;
     void UpdateCurrentColumn(const cxmodel::Column& p_newCurrentColumn) override;
 
     [[nodiscard]] FPS GetFPS() const override;
     [[nodiscard]] AnimationSpeed GetAnimationSpeed() const override;
-    [[nodiscard]] const Dimensions& GetAnimatedAreaDimensions() const override;
-    [[nodiscard]] const Dimensions& GetCellDimensions() const override;
+    [[nodiscard]] const cxmath::Dimensions& GetAnimatedAreaDimensions() const override;
+    [[nodiscard]] const cxmath::Dimensions& GetCellDimensions() const override;
     [[nodiscard]] cxmath::Radius GetChipRadius() const override;
     [[nodiscard]] const cxmath::Position& GetChipPosition() const override;
     [[nodiscard]] double GetHorizontalMargin() const override;
@@ -89,8 +89,8 @@ private:
 
     cxgui::AnimationSpeed m_animationSpeed;
 
-    Dimensions m_widgetDimensions{Height{0}, Width{0}};
-    Dimensions m_cellDimensions{Height{0}, Width{0}};
+    cxmath::Dimensions m_widgetDimensions{cxmath::Height{0.0}, cxmath::Width{0.0}};
+    cxmath::Dimensions m_cellDimensions{cxmath::Height{0.0}, cxmath::Width{0.0}};
 
     cxmath::Radius m_chipRadius{0.0};
 

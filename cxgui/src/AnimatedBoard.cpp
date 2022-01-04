@@ -126,9 +126,9 @@ void cxgui::AnimatedBoard::PerformChipAnimation(BoardAnimation p_animation)
             const double nbFramesPerChip = fps / speed;
 
             const double oneAnimationWidth = m_animationModel->GetAnimatedAreaDimensions().m_width.Get() / m_presenter->GetBoardWidth();
-            const double delta = oneAnimationWidth / nbFramesPerChip;
+            const cxmath::Width delta{oneAnimationWidth / nbFramesPerChip};
 
-            if(m_totalMoveLeftDisplacement >= oneAnimationWidth || std::abs(m_totalMoveLeftDisplacement - oneAnimationWidth) <= 1e-6)
+            if(m_totalMoveLeftDisplacement.Get() >= oneAnimationWidth || std::abs(m_totalMoveLeftDisplacement.Get() - oneAnimationWidth) <= 1e-6)
             {
                 if(m_animationModel->GetCurrentColumn() <= cxmodel::Column{0u})
                 {
@@ -140,7 +140,7 @@ void cxgui::AnimatedBoard::PerformChipAnimation(BoardAnimation p_animation)
                 }
 
                 // End animation:
-                m_totalMoveLeftDisplacement = 0.0;
+                m_totalMoveLeftDisplacement = cxmath::Width{0.0};
                 m_animateMoveLeft = false;
                 m_presenter->Sync();
                 Notify(cxgui::BoardAnimationNotificationContext::POST_ANIMATE_MOVE_LEFT_ONE_COLUMN);
@@ -148,7 +148,7 @@ void cxgui::AnimatedBoard::PerformChipAnimation(BoardAnimation p_animation)
             }
             else
             {
-                m_animationModel->AddChipDisplacement(-delta, 0.0);
+                m_animationModel->AddChipDisplacement(-delta, cxmath::Height{0.0});
                 m_totalMoveLeftDisplacement += delta;
             }
 
@@ -159,9 +159,9 @@ void cxgui::AnimatedBoard::PerformChipAnimation(BoardAnimation p_animation)
             const double nbFramesPerChip = fps / speed;
 
             const double oneAnimationWidth = m_animationModel->GetAnimatedAreaDimensions().m_width.Get() / m_presenter->GetBoardWidth();
-            const double delta = oneAnimationWidth / nbFramesPerChip;
+            const cxmath::Width delta{oneAnimationWidth / nbFramesPerChip};
 
-            if(m_totalMoveRightDisplacement >= oneAnimationWidth || std::abs(m_totalMoveRightDisplacement - oneAnimationWidth) <= 1e-6)
+            if(m_totalMoveRightDisplacement.Get() >= oneAnimationWidth || std::abs(m_totalMoveRightDisplacement.Get() - oneAnimationWidth) <= 1e-6)
             {
                 if(m_animationModel->GetCurrentColumn() >= cxmodel::Column{m_presenter->GetBoardWidth() - 1u})
                 {
@@ -173,7 +173,7 @@ void cxgui::AnimatedBoard::PerformChipAnimation(BoardAnimation p_animation)
                 }
 
                 // End animation:
-                m_totalMoveRightDisplacement = 0.0;
+                m_totalMoveRightDisplacement = cxmath::Width{0.0};
                 m_animateMoveRight = false;
                 m_presenter->Sync();
                 Notify(cxgui::BoardAnimationNotificationContext::POST_ANIMATE_MOVE_RIGHT_ONE_COLUMN);
@@ -181,7 +181,7 @@ void cxgui::AnimatedBoard::PerformChipAnimation(BoardAnimation p_animation)
             }
             else
             {
-                m_animationModel->AddChipDisplacement(delta, 0.0);
+                m_animationModel->AddChipDisplacement(delta, cxmath::Height{0.0});
                 m_totalMoveRightDisplacement += delta;
             }
 
@@ -195,12 +195,12 @@ void cxgui::AnimatedBoard::PerformChipAnimation(BoardAnimation p_animation)
             // Since the falling distance may vary, the number of frames needed for the
             // animation has to be adjusted to make sure the speed is constant for the user:
             const double relativeFPS = fps * (oneAnimationHeight / (m_animationModel->GetAnimatedAreaDimensions().m_height.Get() - cellHeight));
-            const double delta = oneAnimationHeight / std::ceil(relativeFPS / speed);
+            const cxmath::Height delta{oneAnimationHeight / std::ceil(relativeFPS / speed)};
 
-            if(m_totalMoveDownDisplacement >= oneAnimationHeight || std::abs(m_totalMoveDownDisplacement - oneAnimationHeight) <= 1e-6)
+            if(m_totalMoveDownDisplacement.Get() >= oneAnimationHeight || std::abs(m_totalMoveDownDisplacement.Get() - oneAnimationHeight) <= 1e-6)
             {
                 // End animation:
-                m_totalMoveDownDisplacement = 0.0;
+                m_totalMoveDownDisplacement = cxmath::Height{0.0};
                 m_animateMoveDown = false;
 
                 // Reinitialize chip:
@@ -214,7 +214,7 @@ void cxgui::AnimatedBoard::PerformChipAnimation(BoardAnimation p_animation)
             }
             else
             {
-                m_animationModel->AddChipDisplacement(0.0, delta);
+                m_animationModel->AddChipDisplacement(cxmath::Width{0.0}, delta);
                 m_totalMoveDownDisplacement += delta;
             }
 
@@ -286,7 +286,7 @@ bool cxgui::AnimatedBoard::on_draw(const Cairo::RefPtr<Cairo::Context>& p_contex
     m_lastFrameHeight = static_cast<double>(allocation.get_height());
     m_lastFrameWidth = static_cast<double>(allocation.get_width());
 
-    m_animationModel->Update({Height{m_lastFrameHeight}, Width{m_lastFrameWidth}}, m_animateMoveLeft || m_animateMoveRight);
+    m_animationModel->Update({cxmath::Height{m_lastFrameHeight}, cxmath::Width{m_lastFrameWidth}}, m_animateMoveLeft || m_animateMoveRight);
 
     auto buffer = Cairo::ImageSurface::create(Cairo::Format::FORMAT_ARGB32,
                                               m_animationModel->GetAnimatedAreaDimensions().m_width.Get(),
@@ -332,7 +332,7 @@ bool cxgui::AnimatedBoard::on_draw(const Cairo::RefPtr<Cairo::Context>& p_contex
 // current column. Especially helpful on larger boards.
 void cxgui::AnimatedBoard::DrawActiveColumnHighlight(const Cairo::RefPtr<Cairo::Context>& p_context)
 {
-    const Dimensions cellDimensions = m_animationModel->GetCellDimensions();
+    const cxmath::Dimensions cellDimensions = m_animationModel->GetCellDimensions();
     const double cellWidth = cellDimensions.m_width.Get();
     const double cellHeight = cellDimensions.m_height.Get();
 
@@ -355,7 +355,7 @@ void cxgui::AnimatedBoard::DrawActiveColumnHighlight(const Cairo::RefPtr<Cairo::
 // these elements together make the board.
 void cxgui::AnimatedBoard::DrawBoardElement(const Cairo::RefPtr<Cairo::Context>& p_context, size_t p_row, size_t p_column)
 {
-    const Dimensions cellDimensions = m_animationModel->GetCellDimensions();
+    const cxmath::Dimensions cellDimensions = m_animationModel->GetCellDimensions();
     const double cellWidth = cellDimensions.m_width.Get();
     const double cellHeight = cellDimensions.m_height.Get();
     const double radius = m_animationModel->GetChipRadius().Get() + m_animationModel->GetLineWidth(cxgui::Feature::CHIP);
@@ -433,7 +433,7 @@ void cxgui::AnimatedBoard::DrawBoardElement(const Cairo::RefPtr<Cairo::Context>&
 bool cxgui::AnimatedBoard::Redraw()
 {
     const double chipHorizontalPosition = m_animationModel->GetChipPosition().m_x;
-    const cxgui::Dimensions cellDimensions = m_animationModel->GetCellDimensions();
+    const cxmath::Dimensions cellDimensions = m_animationModel->GetCellDimensions();
     const double cellWidth = cellDimensions.m_width.Get();
     const double fps = static_cast<double>(m_animationModel->GetFPS().Get());
     const double speed = static_cast<double>(m_animationModel->GetAnimationSpeed().Get());
@@ -508,8 +508,8 @@ bool cxgui::AnimatedBoard::OnResize(double p_newHeight, double p_newWidth)
     {
         const cxgui::ScalingRatios ratios{cxgui::HorizontalScalingRatio{p_newWidth / m_lastFrameWidth}};
         m_animationModel->Resize(ratios);
-        m_totalMoveLeftDisplacement *= ratios.m_horizontalRatio.Get();
-        m_totalMoveRightDisplacement *= ratios.m_horizontalRatio.Get();
+        m_totalMoveLeftDisplacement.Get() *= ratios.m_horizontalRatio.Get();
+        m_totalMoveRightDisplacement.Get() *= ratios.m_horizontalRatio.Get();
     }
 
     return cxgui::STOP_EVENT_PROPAGATION;

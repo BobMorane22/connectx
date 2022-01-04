@@ -16,46 +16,19 @@
 #
 #************************************************************************************************/
 #*************************************************************************************************
-# CMake configuration file for the cxgui unit test executable.
+# CMake configuration file for the cxstd library unit tests executable.
 #
 # @file CMakeLists.txt
-# @date 2021
+# @date 2022
 #
 #************************************************************************************************/
 
 set(SOURCE_FILES
-  AboutWindowPresenterTestFixture.cpp
-  AboutWindowPresenterTests.cpp
-  AnimatedBoardModelTests.cpp
-  AnimatedBoardPresenterTests.cpp
-  ConfigurableMainWindowPresenterTestFixture.cpp
-  extractRawUserInputTests.cpp
-  GamePresenterTests.cpp
-  GameResolutionDialogControllerTestFixture.cpp
-  GameResolutionDialogControllerTests.cpp
-  GameResolutionDialogPresenterFactoryTests.cpp
-  MainWindowControllerTestFixture.cpp
-  MainWindowControllerTests.cpp
-  MainWindowPresenterTestFixture.cpp
-  MainWindowPresenterTests.cpp
-  MenuItemTests.cpp
-  NewGamePresenterTests.cpp
-  ScalingRatiosTests.cpp
-  StatusBarPresenterTests.cpp
-  TieGameResolutionDialogPresenterTests.cpp
-  WinGameResolutionDialogPresenterTests.cpp
-)
-
-set(LIBRARIES
-  cxunit
-  cxstd
-  cxinv
-  cxmath
-  cxmodel
+  StrongTypeTests.cpp
 )
 
 add_lib_unit_test(
-  cxgui
+  cxstd
   SOURCES ${SOURCE_FILES}
   LIBS ${LIBRARIES}
 )

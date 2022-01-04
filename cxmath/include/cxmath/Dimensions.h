@@ -24,16 +24,21 @@
 #ifndef DIMENSIONS_H_DED7FF0E_07A9_4626_B744_8A3EAAC92B7B
 #define DIMENSIONS_H_DED7FF0E_07A9_4626_B744_8A3EAAC92B7B
 
-#include <cxmodel/StrongType.h>
+#include <cxstd/StrongType.h>
 
-namespace cxgui
+namespace cxmath
 {
 
-using Height = cxstd::StrongType<double, struct HeightTag>;
-using Width = cxstd::StrongType<double, struct WidthTag>;
+using Height = cxstd::StrongType<double, struct HeightTag,
+                                 cxstd::EqualityComparable,
+                                 cxstd::Addable>;
+
+using Width = cxstd::StrongType<double, struct WidthTag,
+                                cxstd::EqualityComparable,
+                                cxstd::Addable>;
 
 /**********************************************************************************************//**
- * @brief 2D dimensions (in pixels) for widgets.
+ * @brief 2D dimensions.
  *
  *************************************************************************************************/
 struct Dimensions
@@ -57,7 +62,7 @@ struct Dimensions
  *      The right-hand value to use for the comparison.
  *
  *************************************************************************************************/
-bool operator==(const cxgui::Dimensions& p_lhs, const cxgui::Dimensions& p_rhs);
+bool operator==(const cxmath::Dimensions& p_lhs, const cxmath::Dimensions& p_rhs);
 
 /**********************************************************************************************//**
  * @brief Not equal-to operator.
@@ -68,8 +73,8 @@ bool operator==(const cxgui::Dimensions& p_lhs, const cxgui::Dimensions& p_rhs);
  *      The right-hand value to use for the comparison.
  *
  *************************************************************************************************/
-bool operator!=(const cxgui::Dimensions& p_lhs, const cxgui::Dimensions& p_rhs);
+bool operator!=(const cxmath::Dimensions& p_lhs, const cxmath::Dimensions& p_rhs);
 
-} // namespace cxgui
+} // namespace cxmath
 
 #endif // DIMENSIONS_H_DED7FF0E_07A9_4626_B744_8A3EAAC92B7B
