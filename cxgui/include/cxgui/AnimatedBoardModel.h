@@ -69,7 +69,7 @@ public:
     [[nodiscard]] AnimationSpeed GetAnimationSpeed() const override;
     [[nodiscard]] const Dimensions& GetAnimatedAreaDimensions() const override;
     [[nodiscard]] const Dimensions& GetCellDimensions() const override;
-    [[nodiscard]] double GetChipRadius() const override;
+    [[nodiscard]] cxmath::Radius GetChipRadius() const override;
     [[nodiscard]] const cxmath::Position& GetChipPosition() const override;
     [[nodiscard]] double GetHorizontalMargin() const override;
     [[nodiscard]] const cxmath::Position& GetMirrorChipPosition() const override;
@@ -80,10 +80,10 @@ public:
 private:
 
     template<BoardAnimation A>
-    [[nodiscard]] bool ComputeChipPosition(double p_windowWidth, double p_halfChipSize, double p_horizontalMargin);
-    [[nodiscard]] bool ComputeChipLeftPosition(double p_windowWidth, double p_halfChipSize, double p_horizontalMargin);
-    [[nodiscard]] bool ComputeChipRightPosition(double p_windowWidth, double p_halfChipSize, double p_horizontalMargin);
-    void ComputeChipVerticalPosition(const double p_halfChipSize, double p_height);
+    [[nodiscard]] bool ComputeChipPosition(double p_windowWidth, const cxmath::Radius& p_discRadius, double p_horizontalMargin);
+    [[nodiscard]] bool ComputeChipLeftPosition(double p_windowWidth, const cxmath::Radius& p_discRadius, double p_horizontalMargin);
+    [[nodiscard]] bool ComputeChipRightPosition(double p_windowWidth, const cxmath::Radius& p_discRadius, double p_horizontalMargin);
+    void ComputeChipVerticalPosition(const cxmath::Radius& p_discRadius, double p_height);
 
     const cxgui::IAnimatedBoardPresenter& m_presenter;
 
@@ -92,7 +92,7 @@ private:
     Dimensions m_widgetDimensions{Height{0}, Width{0}};
     Dimensions m_cellDimensions{Height{0}, Width{0}};
 
-    double m_chipRadius = 0.0;
+    cxmath::Radius m_chipRadius{0.0};
 
     bool m_isChipMovingHorizontally = false;
     cxmath::Position m_chipPosition{0.0, 0.0};

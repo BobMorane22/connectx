@@ -25,6 +25,7 @@
 #define IANIMATEDBOARDMODEL_H_01D250F8_D2F7_42FE_9D3F_762B6B5D1F37
 
 #include <cxmath/Position.h>
+#include <cxmath/Radius.h>
 #include <cxmodel/ChipColor.h>
 #include <cxmodel/common.h>
 #include <cxgui/Dimensions.h>
@@ -177,7 +178,7 @@ public:
      * @return The radius of the chip.
      *
      *********************************************************************************************/
-    [[nodiscard]] virtual double GetChipRadius() const = 0;
+    [[nodiscard]] virtual cxmath::Radius GetChipRadius() const = 0;
 
     /******************************************************************************************//**
      * @brief Gets the main chip current position.

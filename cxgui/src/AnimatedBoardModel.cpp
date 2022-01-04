@@ -58,7 +58,7 @@ constexpr double LINE_WIDTH_SCALING_FACTOR = 0.005;
  * @param p_windowWidth
  *      The width of the window.
  *
- * @param p_halfChipSize
+ * @param p_discRadius
  *      The width of a half chip (the radius and half the chip's line width's width). In Cairo,
  *      only half of the line width is actually included in the chip's path. The other half
  *      crosses the path's boundary.
@@ -69,22 +69,22 @@ constexpr double LINE_WIDTH_SCALING_FACTOR = 0.005;
 template<cxgui::BoardAnimation A>
 bool HasChipCrossedOver(double p_currentHorizontalPosition,
                         double p_windowWidth,
-                        double p_halfChipSize);
+                        const cxmath::Radius& p_discRadius);
 
 template<>
 bool HasChipCrossedOver<cxgui::BoardAnimation::MOVE_CHIP_LEFT_ONE_COLUMN>(double p_currentHorizontalPosition,
                                                                           [[maybe_unused]]double p_windowWidth,
-                                                                          double p_halfChipSize)
+                                                                          const cxmath::Radius& p_discRadius)
 {
-    return p_currentHorizontalPosition < p_halfChipSize;
+    return p_currentHorizontalPosition < p_discRadius.Get();
 }
 
 template<>
 bool HasChipCrossedOver<cxgui::BoardAnimation::MOVE_CHIP_RIGHT_ONE_COLUMN>(double p_currentHorizontalPosition,
                                                                            double p_windowWidth,
-                                                                           double p_halfChipSize)
+                                                                           const cxmath::Radius& p_discRadius)
 {
-    return p_currentHorizontalPosition > p_windowWidth - p_halfChipSize;
+    return p_currentHorizontalPosition > p_windowWidth - p_discRadius.Get();
 }
 
 /**************************************************************************************************
@@ -117,7 +117,7 @@ bool HasChipCrossedOver<cxgui::BoardAnimation::MOVE_CHIP_RIGHT_ONE_COLUMN>(doubl
  * @param p_windowWidth
  *      The width of the window.
  *
- * @param p_halfChipSize
+ * @param p_discRadius
  *      The width of a half chip (the radius and half the chip's line width's width). In Cairo,
  *      only half of the line width is actually included in the chip's path. The other half
  *      crosses the path's boundary.
@@ -133,25 +133,25 @@ bool HasChipCrossedOver<cxgui::BoardAnimation::MOVE_CHIP_RIGHT_ONE_COLUMN>(doubl
 template<cxgui::BoardAnimation A>
 bool HasChipCompletelyCrossedOver(double p_currentHorizontalPosition,
                                   double p_windowWidth,
-                                  double p_halfChipSize,
+                                  const cxmath::Radius& p_discRadius,
                                   double p_horizontalMargin);
 
 template<>
 bool HasChipCompletelyCrossedOver<cxgui::BoardAnimation::MOVE_CHIP_LEFT_ONE_COLUMN>(double p_currentHorizontalPosition,
                                                                                     [[maybe_unused]] double p_windowWidth,
-                                                                                    double p_halfChipSize,
+                                                                                    const cxmath::Radius& p_discRadius,
                                                                                     double p_horizontalMargin)
 {
-    return cxmath::AreLogicallyEqual(-p_currentHorizontalPosition, p_halfChipSize + p_horizontalMargin); 
+    return cxmath::AreLogicallyEqual(-p_currentHorizontalPosition, p_discRadius.Get() + p_horizontalMargin); 
 }
 
 template<>
 bool HasChipCompletelyCrossedOver<cxgui::BoardAnimation::MOVE_CHIP_RIGHT_ONE_COLUMN>(double p_currentHorizontalPosition,
                                                                                      double p_windowWidth,
-                                                                                     double p_halfChipSize,
+                                                                                     const cxmath::Radius& p_discRadius,
                                                                                      double p_horizontalMargin)
 {
-    return cxmath::AreLogicallyEqual(p_currentHorizontalPosition, p_windowWidth + p_halfChipSize + p_horizontalMargin);
+    return cxmath::AreLogicallyEqual(p_currentHorizontalPosition, p_windowWidth + p_discRadius.Get() + p_horizontalMargin);
 }
 
 /**************************************************************************************************
@@ -163,7 +163,7 @@ bool HasChipCompletelyCrossedOver<cxgui::BoardAnimation::MOVE_CHIP_RIGHT_ONE_COL
  * @param p_windowWidth
  *      The width of the window.
  *
- * @param p_halfChipSize
+ * @param p_discRadius
  *      The width of a half chip (the radius and half the chip's line width's width). In Cairo,
  *      only half of the line width is actually included in the chip's path. The other half
  *      crosses the path's boundary.
@@ -177,25 +177,25 @@ bool HasChipCompletelyCrossedOver<cxgui::BoardAnimation::MOVE_CHIP_RIGHT_ONE_COL
 template<cxgui::BoardAnimation A>
 void ComputeChipPositionForOtherSide(double& p_currentHorizontalPosition,
                                      double p_windowWidth,
-                                     double p_halfChipSize,
+                                     const cxmath::Radius& p_discRadius,
                                      double p_horizontalMargin);
 
 template<>
 void ComputeChipPositionForOtherSide<cxgui::BoardAnimation::MOVE_CHIP_LEFT_ONE_COLUMN>(double& p_currentHorizontalPosition,
                                                                                        double p_windowWidth,
-                                                                                       double p_halfChipSize,
+                                                                                       const cxmath::Radius& p_discRadius,
                                                                                        double p_horizontalMargin)
 {
-    p_currentHorizontalPosition = p_windowWidth - p_halfChipSize - p_horizontalMargin;
+    p_currentHorizontalPosition = p_windowWidth - p_discRadius.Get() - p_horizontalMargin;
 }
 
 template<>
 void ComputeChipPositionForOtherSide<cxgui::BoardAnimation::MOVE_CHIP_RIGHT_ONE_COLUMN>(double& p_currentHorizontalPosition,
                                                                                         [[maybe_unused]] double p_windowWidth,
-                                                                                        double p_halfChipSize,
+                                                                                        const cxmath::Radius& p_discRadius,
                                                                                         double p_horizontalMargin)
 {
-    p_currentHorizontalPosition = p_halfChipSize + p_horizontalMargin;
+    p_currentHorizontalPosition = p_discRadius.Get() + p_horizontalMargin;
 }
 
 /**************************************************************************************************
@@ -207,7 +207,7 @@ void ComputeChipPositionForOtherSide<cxgui::BoardAnimation::MOVE_CHIP_RIGHT_ONE_
  * @param p_windowWidth
  *      The width of the window.
  *
- * @param p_halfChipSize
+ * @param p_discRadius
  *      The width of a half chip (the radius and half the chip's line width's width). In Cairo,
  *      only half of the line width is actually included in the chip's path. The other half
  *      crosses the path's boundary.
@@ -221,25 +221,25 @@ void ComputeChipPositionForOtherSide<cxgui::BoardAnimation::MOVE_CHIP_RIGHT_ONE_
 template<cxgui::BoardAnimation A>
 void ClampChipPositionToCurrentSide(double& p_currentHorizontalPosition,
                                     double p_windowWidth,
-                                    double p_halfChipSize,
+                                    const cxmath::Radius& p_discRadius,
                                     double p_horizontalMargin);
 
 template<>
 void ClampChipPositionToCurrentSide<cxgui::BoardAnimation::MOVE_CHIP_LEFT_ONE_COLUMN>(double& p_currentHorizontalPosition,
                                                                                       [[maybe_unused]] double p_windowWidth,
-                                                                                      double p_halfChipSize,
+                                                                                      const cxmath::Radius& p_discRadius,
                                                                                       double p_horizontalMargin)
 {
-    p_currentHorizontalPosition = p_halfChipSize + p_horizontalMargin;
+    p_currentHorizontalPosition = p_discRadius.Get() + p_horizontalMargin;
 }
 
 template<>
 void ClampChipPositionToCurrentSide<cxgui::BoardAnimation::MOVE_CHIP_RIGHT_ONE_COLUMN>(double& p_currentHorizontalPosition,
                                                                                        double p_windowWidth,
-                                                                                       double p_halfChipSize,
+                                                                                       const cxmath::Radius& p_discRadius,
                                                                                        double p_horizontalMargin)
 {
-    p_currentHorizontalPosition = p_windowWidth - p_halfChipSize - p_horizontalMargin;
+    p_currentHorizontalPosition = p_windowWidth - p_discRadius.Get() - p_horizontalMargin;
 }
 
 /**************************************************************************************************
@@ -314,27 +314,27 @@ cxgui::AnimatedBoardModel::AnimatedBoardModel(const cxgui::IAnimatedBoardPresent
 // Compute the current chip's position. If needed, the current mirror chip position is also
 // computed. Refer to the subfunction documentation for more details.
 template<cxgui::BoardAnimation A>
-bool cxgui::AnimatedBoardModel::ComputeChipPosition(double p_windowWidth, double p_halfChipSize, double p_horizontalMargin)
+bool cxgui::AnimatedBoardModel::ComputeChipPosition(double p_windowWidth, const cxmath::Radius& p_discRadius, double p_horizontalMargin)
 {
     bool isMirrorChipNeeded = false;
 
     if(!m_isChipMovingHorizontally)
     {
-        if(HasChipCompletelyCrossedOver<A>(m_chipPosition.m_x, p_windowWidth, p_halfChipSize, p_horizontalMargin))
+        if(HasChipCompletelyCrossedOver<A>(m_chipPosition.m_x, p_windowWidth, p_discRadius, p_horizontalMargin))
         {
             // At this point, the chip has completely crossed over to the right,
             // so we update its horizontal location:
-            ComputeChipPositionForOtherSide<A>(m_chipPosition.m_x, p_windowWidth, p_halfChipSize, p_horizontalMargin);
+            ComputeChipPositionForOtherSide<A>(m_chipPosition.m_x, p_windowWidth, p_discRadius, p_horizontalMargin);
         }
-        else if(HasChipCrossedOver<A>(m_chipPosition.m_x, p_windowWidth, p_halfChipSize))
+        else if(HasChipCrossedOver<A>(m_chipPosition.m_x, p_windowWidth, p_discRadius))
         {
             // Otherwise, since it is not moving anymore and located completely
             // to the right, we make sure it is completely visible (we do not
             // want half a chip lost in the right edge):
-            ClampChipPositionToCurrentSide<A>(m_chipPosition.m_x, p_windowWidth, p_halfChipSize, p_horizontalMargin);
+            ClampChipPositionToCurrentSide<A>(m_chipPosition.m_x, p_windowWidth, p_discRadius, p_horizontalMargin);
         }
     }
-    else if(HasChipCrossedOver<A>(m_chipPosition.m_x, p_windowWidth, p_halfChipSize))
+    else if(HasChipCrossedOver<A>(m_chipPosition.m_x, p_windowWidth, p_discRadius))
     {
         // The chip has gone over the edge on the left, so an extra chip, the mirror
         // chip, will be needed on the far right side for the animation to be smooth.
@@ -346,26 +346,26 @@ bool cxgui::AnimatedBoardModel::ComputeChipPosition(double p_windowWidth, double
     return isMirrorChipNeeded;
 }
 
-bool cxgui::AnimatedBoardModel::ComputeChipLeftPosition(double p_windowWidth, double p_halfChipSize, double p_horizontalMargin)
+bool cxgui::AnimatedBoardModel::ComputeChipLeftPosition(double p_windowWidth, const cxmath::Radius& p_discRadius, double p_horizontalMargin)
 {
-    return ComputeChipPosition<cxgui::BoardAnimation::MOVE_CHIP_LEFT_ONE_COLUMN>(p_windowWidth, p_halfChipSize, p_horizontalMargin);
+    return ComputeChipPosition<cxgui::BoardAnimation::MOVE_CHIP_LEFT_ONE_COLUMN>(p_windowWidth, p_discRadius, p_horizontalMargin);
 }
 
-bool cxgui::AnimatedBoardModel::ComputeChipRightPosition(double p_windowWidth, double p_halfChipSize, double p_horizontalMargin)
+bool cxgui::AnimatedBoardModel::ComputeChipRightPosition(double p_windowWidth, const cxmath::Radius& p_discRadius, double p_horizontalMargin)
 {
-    return ComputeChipPosition<cxgui::BoardAnimation::MOVE_CHIP_RIGHT_ONE_COLUMN>(p_windowWidth, p_halfChipSize, p_horizontalMargin);
+    return ComputeChipPosition<cxgui::BoardAnimation::MOVE_CHIP_RIGHT_ONE_COLUMN>(p_windowWidth, p_discRadius, p_horizontalMargin);
 }
 
-void cxgui::AnimatedBoardModel::ComputeChipVerticalPosition(const double p_halfChipSize, double p_height)
+void cxgui::AnimatedBoardModel::ComputeChipVerticalPosition(const cxmath::Radius& p_discRadius, double p_height)
 {
-    if(m_chipPosition.m_y < p_halfChipSize)
+    if(m_chipPosition.m_y < p_discRadius.Get())
     {
-        m_chipPosition.m_y = p_halfChipSize;
+        m_chipPosition.m_y = p_discRadius.Get();
     }
 
-    if(m_chipPosition.m_y > p_height - p_halfChipSize)
+    if(m_chipPosition.m_y > p_height - p_discRadius.Get())
     {
-        m_chipPosition.m_y = p_height - p_halfChipSize;
+        m_chipPosition.m_y = p_height - p_discRadius.Get();
     }
 }
 
@@ -386,11 +386,11 @@ void cxgui::AnimatedBoardModel::Update(const Dimensions& p_widgetDimensions, boo
 
     // Chip radius:
     const double maximumNbChips = std::max(m_presenter.GetBoardHeight() + 1, m_presenter.GetBoardWidth());
-    m_chipRadius = (smallestDimensionSize / (maximumNbChips * 2.0));
-    m_chipLineWidth = m_chipRadius * LINE_WIDTH_SCALING_FACTOR;
+    m_chipRadius = cxmath::Radius{static_cast<double>((smallestDimensionSize / (maximumNbChips * 2.0)))};
+    m_chipLineWidth = m_chipRadius.Get() * LINE_WIDTH_SCALING_FACTOR;
 
     // Chips positions (central and mirror):
-    m_horizontalMargin = (cellWidth.Get() - (2.0 * m_chipRadius)) / 2.0;
+    m_horizontalMargin = (cellWidth.Get() - (2.0 * m_chipRadius.Get())) / 2.0;
 
     m_isChipMovingHorizontally = p_isChipMovingHorizontally;
     const bool mirrorToTheLeft = ComputeChipLeftPosition(m_widgetDimensions.m_width.Get(), m_chipRadius, m_horizontalMargin);
@@ -448,7 +448,7 @@ const cxgui::Dimensions& cxgui::AnimatedBoardModel::GetCellDimensions() const
     return m_cellDimensions;
 }
 
-double cxgui::AnimatedBoardModel::GetChipRadius() const
+cxmath::Radius cxgui::AnimatedBoardModel::GetChipRadius() const
 {
     return m_chipRadius;
 }

@@ -300,14 +300,14 @@ bool cxgui::AnimatedBoard::on_draw(const Cairo::RefPtr<Cairo::Context>& p_contex
     const cxmodel::ChipColor chipColor = m_presenter->GetActivePlayerChipColor();
     DrawChip(bufferContext,
              m_animationModel->GetChipPosition(),
-             m_animationModel->GetChipRadius() + m_animationModel->GetLineWidth(cxgui::Feature::CHIP),
+             m_animationModel->GetChipRadius().Get() + m_animationModel->GetLineWidth(cxgui::Feature::CHIP),
              chipColor);
 
     if(m_animationModel->IsMirrorChipNeeded())
     {
         DrawChip(bufferContext,
                  m_animationModel->GetMirrorChipPosition(),
-                 m_animationModel->GetChipRadius() + m_animationModel->GetLineWidth(cxgui::Feature::CHIP),
+                 m_animationModel->GetChipRadius().Get() + m_animationModel->GetLineWidth(cxgui::Feature::CHIP),
                  chipColor);
     }
 
@@ -358,7 +358,7 @@ void cxgui::AnimatedBoard::DrawBoardElement(const Cairo::RefPtr<Cairo::Context>&
     const Dimensions cellDimensions = m_animationModel->GetCellDimensions();
     const double cellWidth = cellDimensions.m_width.Get();
     const double cellHeight = cellDimensions.m_height.Get();
-    const double radius = m_animationModel->GetChipRadius() + m_animationModel->GetLineWidth(cxgui::Feature::CHIP);
+    const double radius = m_animationModel->GetChipRadius().Get() + m_animationModel->GetLineWidth(cxgui::Feature::CHIP);
 
     const IGameViewPresenter::ChipColors& chipColors = m_presenter->GetBoardChipColors();
     const cxmodel::ChipColor chipColor = chipColors[p_row][p_column];

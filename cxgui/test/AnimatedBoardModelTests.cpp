@@ -63,7 +63,7 @@ NotSynced Validate(cxgui::IAnimatedBoardModel& p_model, const ModelOperations& p
     const cxgui::AnimationSpeed speedBefore              = p_model.GetAnimationSpeed();
     const cxgui::Dimensions animatedAreaDimensionsBefore = p_model.GetAnimatedAreaDimensions();
     const cxgui::Dimensions cellDimensionsBefore         = p_model.GetCellDimensions();
-    const double chipRadiusBefore                        = p_model.GetChipRadius();
+    const cxmath::Radius chipRadiusBefore                = p_model.GetChipRadius();
     const cxmath::Position chipPositionBefore            = p_model.GetChipPosition();
     const double horizontalMarginBefore                  = p_model.GetHorizontalMargin();
     const cxmath::Position mirrorChipPositionBefore      = p_model.GetMirrorChipPosition();
@@ -81,7 +81,7 @@ NotSynced Validate(cxgui::IAnimatedBoardModel& p_model, const ModelOperations& p
     const cxgui::AnimationSpeed speedAfter              = p_model.GetAnimationSpeed();
     const cxgui::Dimensions animatedAreaDimensionsAfter = p_model.GetAnimatedAreaDimensions();
     const cxgui::Dimensions cellDimensionsAfter         = p_model.GetCellDimensions();
-    const double chipRadiusAfter                        = p_model.GetChipRadius();
+    const cxmath::Radius chipRadiusAfter                = p_model.GetChipRadius();
     const cxmath::Position chipPositionAfter            = p_model.GetChipPosition();
     const double horizontalMarginAfter                  = p_model.GetHorizontalMargin();
     const cxmath::Position mirrorChipPositionAfter      = p_model.GetMirrorChipPosition();
@@ -109,22 +109,43 @@ NotSynced Validate(cxgui::IAnimatedBoardModel& p_model, const ModelOperations& p
     return syncResult;
 }
 
-std::string Debug(double p_value)
+// Printers (used for better readibility in unit test reports):
+template<typename T>
+void PrintType([[maybe_unused]] std::ostream& p_stream, [[maybe_unused]] const T& p_value)
+{
+    FAIL() << "Printer not defined for this type";
+}
+
+template<typename T>
+std::string Debug(const T& p_value)
 {
     std::ostringstream ss;
     ss.precision(std::numeric_limits<double>::max_digits10);
-    return "DEBUG - Actual value : " + std::to_string(p_value);
+    ss << "DEBUG - Actual value : ";
+    PrintType(ss, p_value);
+
     return ss.str();
 }
 
-std::string Debug(const cxmath::Position& p_value)
+template<>
+void PrintType<double>(std::ostream& p_stream, const double& p_value)
 {
-    std::ostringstream ss;
-    ss.precision(std::numeric_limits<double>::max_digits10);
-    ss << "DEBUG - Actual value : ("  << p_value.m_x << ", " << p_value.m_y << ")";
-    return ss.str();
+    p_stream << std::to_string(p_value);
 }
 
+template<>
+void PrintType<cxmath::Position>(std::ostream& p_stream, const cxmath::Position& p_value)
+{
+    p_stream << "("  << p_value.m_x << ", " << p_value.m_y << ")";
+}
+
+template<>
+void PrintType<cxmath::Radius>(std::ostream& p_stream, const cxmath::Radius& p_value)
+{
+    p_stream << std::to_string(p_value.Get());
+}
+
+// Mocks:
 class AnimatedBoardPresenterMock : public cxgui::IAnimatedBoardPresenter
 {
 
@@ -453,13 +474,13 @@ TEST_F(AnimationModelTestFixture, /*DISABLED_*/GetChipRadius_ValidModel_ChipRadi
 {
     cxgui::IAnimatedBoardModel& model = GetModel();
 
-    const double chipRadiusBeforeUpdate = model.GetChipRadius();
-    ASSERT_TRUE(chipRadiusBeforeUpdate == 0.0);
+    const cxmath::Radius chipRadiusBeforeUpdate = model.GetChipRadius();
+    ASSERT_TRUE(chipRadiusBeforeUpdate == cxmath::Radius{0.0});
 
     model.Update({cxgui::Height{100}, cxgui::Width{150}}, true);
 
-    const double chipRadiusAfterUpdate = model.GetChipRadius();
-    ASSERT_TRUE(cxmath::AreLogicallyEqual(chipRadiusAfterUpdate, 7.1428571428571432)) << Debug(chipRadiusAfterUpdate);
+    const cxmath::Radius chipRadiusAfterUpdate = model.GetChipRadius();
+    ASSERT_TRUE(cxmath::AreLogicallyEqual(chipRadiusAfterUpdate.Get(), 7.1428571428571432)) << Debug(chipRadiusAfterUpdate);
 }
 
 TEST_F(AnimationModelTestFixture, /*DISABLED_*/GetChipPosition_CrossedToTheLeftChipIsMoving_ReturnsPosition)
