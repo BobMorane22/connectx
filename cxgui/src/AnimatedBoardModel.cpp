@@ -382,19 +382,19 @@ void cxgui::AnimatedBoardModel::Update(const cxmath::Dimensions& p_widgetDimensi
     const cxmath::Width cellWidth = cxmath::Width(m_widgetDimensions.m_width.Get() / m_presenter.GetBoardWidth());
     m_cellDimensions = cxmath::Dimensions{cellHeight, cellWidth};
     const double smallestDimensionSize = std::min(m_widgetDimensions.m_height.Get(), m_widgetDimensions.m_width.Get());
-    m_cellLineWidth = smallestDimensionSize * LINE_WIDTH_SCALING_FACTOR;
+    m_cellLineWidth = cxmath::Width{smallestDimensionSize * LINE_WIDTH_SCALING_FACTOR};
 
     // Chip radius:
     const double maximumNbChips = std::max(m_presenter.GetBoardHeight() + 1, m_presenter.GetBoardWidth());
     m_chipRadius = cxmath::Radius{static_cast<double>((smallestDimensionSize / (maximumNbChips * 2.0)))};
-    m_chipLineWidth = m_chipRadius.Get() * LINE_WIDTH_SCALING_FACTOR;
+    m_chipLineWidth = cxmath::Width{m_chipRadius.Get() * LINE_WIDTH_SCALING_FACTOR};
 
     // Chips positions (central and mirror):
-    m_horizontalMargin = (cellWidth.Get() - (2.0 * m_chipRadius.Get())) / 2.0;
+    m_horizontalMargin = cxmath::Width{(cellWidth.Get() - (2.0 * m_chipRadius.Get())) / 2.0};
 
     m_isChipMovingHorizontally = p_isChipMovingHorizontally;
-    const bool mirrorToTheLeft = ComputeChipLeftPosition(m_widgetDimensions.m_width.Get(), m_chipRadius, m_horizontalMargin);
-    const bool mirrorToTheRight = ComputeChipRightPosition(m_widgetDimensions.m_width.Get(), m_chipRadius, m_horizontalMargin);
+    const bool mirrorToTheLeft = ComputeChipLeftPosition(m_widgetDimensions.m_width.Get(), m_chipRadius, m_horizontalMargin.Get());
+    const bool mirrorToTheRight = ComputeChipRightPosition(m_widgetDimensions.m_width.Get(), m_chipRadius, m_horizontalMargin.Get());
     ComputeChipVerticalPosition(m_chipRadius, m_widgetDimensions.m_height.Get());
     m_mirrorChipPosition.m_y = m_chipPosition.m_y;
 
@@ -458,7 +458,7 @@ const cxmath::Position& cxgui::AnimatedBoardModel::GetChipPosition() const
     return m_chipPosition;
 }
 
-double cxgui::AnimatedBoardModel::GetHorizontalMargin() const
+cxmath::Width cxgui::AnimatedBoardModel::GetHorizontalMargin() const
 {
     return m_horizontalMargin;
 }
@@ -473,7 +473,7 @@ bool cxgui::AnimatedBoardModel::IsMirrorChipNeeded() const
     return m_isMirrorChipNeeded;
 }
 
-double cxgui::AnimatedBoardModel::GetLineWidth(Feature p_feature) const
+cxmath::Width cxgui::AnimatedBoardModel::GetLineWidth(Feature p_feature) const
 {
     switch(p_feature)
     {
@@ -485,7 +485,7 @@ double cxgui::AnimatedBoardModel::GetLineWidth(Feature p_feature) const
 
         default:
             ASSERT_ERROR_MSG("Unknown feature type.");
-            return 0.0;
+            return cxmath::Width{0.0};
     }
 }
 

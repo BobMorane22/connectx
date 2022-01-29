@@ -197,7 +197,7 @@ public:
      * @return The horizontal margin.
      *
      *********************************************************************************************/
-    [[nodiscard]] virtual double GetHorizontalMargin() const = 0;
+    [[nodiscard]] virtual cxmath::Width GetHorizontalMargin() const = 0;
 
     /******************************************************************************************//**
      * @brief Gets the mirror chip's current position.
@@ -223,7 +223,7 @@ public:
      * @return The current line width value.
      *
      *********************************************************************************************/
-    [[nodiscard]] virtual double GetLineWidth(Feature p_feature) const = 0;
+    [[nodiscard]] virtual cxmath::Width GetLineWidth(Feature p_feature) const = 0;
 
     /******************************************************************************************//**
      * @brief Gets the current column.

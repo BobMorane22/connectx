@@ -65,11 +65,11 @@ NotSynced Validate(cxgui::IAnimatedBoardModel& p_model, const ModelOperations& p
     const cxmath::Dimensions cellDimensionsBefore         = p_model.GetCellDimensions();
     const cxmath::Radius chipRadiusBefore                 = p_model.GetChipRadius();
     const cxmath::Position chipPositionBefore             = p_model.GetChipPosition();
-    const double horizontalMarginBefore                   = p_model.GetHorizontalMargin();
+    const cxmath::Width horizontalMarginBefore            = p_model.GetHorizontalMargin();
     const cxmath::Position mirrorChipPositionBefore       = p_model.GetMirrorChipPosition();
     const bool mirrorNeededBefore                         = p_model.IsMirrorChipNeeded();
-    const double cellLineWidthBefore                      = p_model.GetLineWidth(cxgui::Feature::CELL);
-    const double chipLineWidthBefore                      = p_model.GetLineWidth(cxgui::Feature::CHIP);
+    const cxmath::Width cellLineWidthBefore               = p_model.GetLineWidth(cxgui::Feature::CELL);
+    const cxmath::Width chipLineWidthBefore               = p_model.GetLineWidth(cxgui::Feature::CHIP);
     const cxmodel::Column currentColumnBefore             = p_model.GetCurrentColumn();
 
     // Operation(s) performed on the model:
@@ -83,11 +83,11 @@ NotSynced Validate(cxgui::IAnimatedBoardModel& p_model, const ModelOperations& p
     const cxmath::Dimensions cellDimensionsAfter         = p_model.GetCellDimensions();
     const cxmath::Radius chipRadiusAfter                 = p_model.GetChipRadius();
     const cxmath::Position chipPositionAfter             = p_model.GetChipPosition();
-    const double horizontalMarginAfter                   = p_model.GetHorizontalMargin();
+    const cxmath::Width horizontalMarginAfter            = p_model.GetHorizontalMargin();
     const cxmath::Position mirrorChipPositionAfter       = p_model.GetMirrorChipPosition();
     const bool mirrorNeededAfter                         = p_model.IsMirrorChipNeeded();
-    const double cellLineWidthAfter                      = p_model.GetLineWidth(cxgui::Feature::CELL);
-    const double chipLineWidthAfter                      = p_model.GetLineWidth(cxgui::Feature::CHIP);
+    const cxmath::Width cellLineWidthAfter               = p_model.GetLineWidth(cxgui::Feature::CELL);
+    const cxmath::Width chipLineWidthAfter               = p_model.GetLineWidth(cxgui::Feature::CHIP);
     const cxmodel::Column currentColumnAfter             = p_model.GetCurrentColumn();
 
     // Comparing the two:
@@ -125,12 +125,6 @@ std::string Debug(const T& p_value)
     PrintType(ss, p_value);
 
     return ss.str();
-}
-
-template<>
-void PrintType<double>(std::ostream& p_stream, const double& p_value)
-{
-    p_stream << std::to_string(p_value);
 }
 
 template<>
@@ -658,39 +652,39 @@ TEST_F(AnimationModelTestFixture, /*DISABLED_*/GetHorizontalMargin_ValidModel_Ma
 {
     cxgui::IAnimatedBoardModel& model = GetModel();
 
-    const double horizontalMarginBeforeUpdate = model.GetHorizontalMargin();
-    ASSERT_TRUE(horizontalMarginBeforeUpdate == 0.0);
+    const cxmath::Width horizontalMarginBeforeUpdate = model.GetHorizontalMargin();
+    ASSERT_TRUE(horizontalMarginBeforeUpdate == cxmath::Width{0.0});
 
     model.Update({cxmath::Height{100}, cxmath::Width{150}}, true);
 
-    const double horizontalMarginAfterUpdate = model.GetHorizontalMargin();
-    ASSERT_TRUE(cxmath::AreLogicallyEqual(horizontalMarginAfterUpdate, 3.571429)) << Debug(horizontalMarginAfterUpdate);
+    const cxmath::Width horizontalMarginAfterUpdate = model.GetHorizontalMargin();
+    ASSERT_TRUE(cxmath::AreLogicallyEqual(horizontalMarginAfterUpdate.Get(), 3.571429)) << Debug(horizontalMarginAfterUpdate);
 }
 
 TEST_F(AnimationModelTestFixture, /*DISABLED_*/GetHorizontalMargin_ValidModelWidthEqualsHeight_ZeroMarginReturned)
 {
     cxgui::IAnimatedBoardModel& model = GetModel();
 
-    const double horizontalMarginBeforeUpdate = model.GetHorizontalMargin();
-    ASSERT_TRUE(horizontalMarginBeforeUpdate == 0.0);
+    const cxmath::Width horizontalMarginBeforeUpdate = model.GetHorizontalMargin();
+    ASSERT_TRUE(horizontalMarginBeforeUpdate == cxmath::Width{0.0});
 
     model.Update({cxmath::Height{150}, cxmath::Width{150}}, true);
 
-    const double horizontalMarginAfterUpdate = model.GetHorizontalMargin();
+    const cxmath::Width horizontalMarginAfterUpdate = model.GetHorizontalMargin();
 
     // There is no margin since both dimensions are the same!
-    ASSERT_TRUE(horizontalMarginAfterUpdate == 0.0) << Debug(horizontalMarginAfterUpdate);
+    ASSERT_TRUE(horizontalMarginAfterUpdate.Get() == 0.0) << Debug(horizontalMarginAfterUpdate);
 }
 
 TEST_F(AnimationModelTestFixture, /*DISABLED_*/GetCellLineWidth_ValidModel_CellLineWidthReturned)
 {
     cxgui::IAnimatedBoardModel& model = GetModel();
 
-    const double lineWidthBeforeUpdate = model.GetLineWidth(cxgui::Feature::CELL);
-    ASSERT_TRUE(lineWidthBeforeUpdate == 0.0);
+    const cxmath::Width lineWidthBeforeUpdate = model.GetLineWidth(cxgui::Feature::CELL);
+    ASSERT_TRUE(lineWidthBeforeUpdate == cxmath::Width{0.0});
 
     model.Update({cxmath::Height{100}, cxmath::Width{150}}, true);
 
-    const double lineWidthAfterUpdate = model.GetLineWidth(cxgui::Feature::CELL);
-    ASSERT_TRUE(cxmath::AreLogicallyEqual(lineWidthAfterUpdate, 0.5));
+    const cxmath::Width lineWidthAfterUpdate = model.GetLineWidth(cxgui::Feature::CELL);
+    ASSERT_TRUE(cxmath::AreLogicallyEqual(lineWidthAfterUpdate.Get(), 0.5));
 }

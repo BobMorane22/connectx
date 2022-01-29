@@ -100,7 +100,9 @@ cxgui::AnimatedBoard::AnimatedBoard(const IGameViewPresenter& p_presenter, const
     signal_configure_event().connect([this](GdkEventConfigure* p_event){
         IF_CONDITION_NOT_MET_DO(p_event, return STOP_EVENT_PROPAGATION;);
 
-        return OnResize(static_cast<double>(p_event->height), static_cast<double>(p_event->width));
+        const cxmath::Height newHeight{static_cast<double>(p_event->height)};
+        const cxmath::Width newWidth{static_cast<double>(p_event->width)};
+        return OnResize({newHeight, newWidth});
     });
 
     POSTCONDITION(m_presenter);
@@ -190,7 +192,7 @@ void cxgui::AnimatedBoard::PerformChipAnimation(BoardAnimation p_animation)
         case cxgui::BoardAnimation::DROP_CHIP:
         {
             const double cellHeight = m_animationModel->GetCellDimensions().m_height.Get();
-            const double oneAnimationHeight = (GetDropPosition(m_animationModel->GetCurrentColumn().Get()) + 1.0) * cellHeight;
+            const double oneAnimationHeight = (GetDropPosition(m_animationModel->GetCurrentColumn()) + cxmodel::Row{1}).Get() * cellHeight;
 
             // Since the falling distance may vary, the number of frames needed for the
             // animation has to be adjusted to make sure the speed is constant for the user:
@@ -283,10 +285,10 @@ bool cxgui::AnimatedBoard::on_draw(const Cairo::RefPtr<Cairo::Context>& p_contex
     // Get window dimensions. We keep track of previous frame dimensions to allow
     // calculating a scaling factor in the case of a resize:
     const Gtk::Allocation allocation = get_allocation();
-    m_lastFrameHeight = static_cast<double>(allocation.get_height());
-    m_lastFrameWidth = static_cast<double>(allocation.get_width());
+    m_lastFrameDimensions.m_height = cxmath::Height{static_cast<double>(allocation.get_height())};
+    m_lastFrameDimensions.m_width = cxmath::Width{static_cast<double>(allocation.get_width())};
 
-    m_animationModel->Update({cxmath::Height{m_lastFrameHeight}, cxmath::Width{m_lastFrameWidth}}, m_animateMoveLeft || m_animateMoveRight);
+    m_animationModel->Update(m_lastFrameDimensions, m_animateMoveLeft || m_animateMoveRight);
 
     auto buffer = Cairo::ImageSurface::create(Cairo::Format::FORMAT_ARGB32,
                                               m_animationModel->GetAnimatedAreaDimensions().m_width.Get(),
@@ -300,14 +302,14 @@ bool cxgui::AnimatedBoard::on_draw(const Cairo::RefPtr<Cairo::Context>& p_contex
     const cxmodel::ChipColor chipColor = m_presenter->GetActivePlayerChipColor();
     DrawChip(bufferContext,
              m_animationModel->GetChipPosition(),
-             m_animationModel->GetChipRadius().Get() + m_animationModel->GetLineWidth(cxgui::Feature::CHIP),
+             m_animationModel->GetChipRadius().Get() + m_animationModel->GetLineWidth(cxgui::Feature::CHIP).Get(),
              chipColor);
 
     if(m_animationModel->IsMirrorChipNeeded())
     {
         DrawChip(bufferContext,
                  m_animationModel->GetMirrorChipPosition(),
-                 m_animationModel->GetChipRadius().Get() + m_animationModel->GetLineWidth(cxgui::Feature::CHIP),
+                 m_animationModel->GetChipRadius().Get() + m_animationModel->GetLineWidth(cxgui::Feature::CHIP).Get(),
                  chipColor);
     }
 
@@ -317,7 +319,7 @@ bool cxgui::AnimatedBoard::on_draw(const Cairo::RefPtr<Cairo::Context>& p_contex
     {
         for(size_t column = 0u; column < m_presenter->GetBoardWidth(); ++column)
         {
-            DrawBoardElement(bufferContext, row, column);
+            DrawBoardElement(bufferContext, cxmodel::Row{row}, cxmodel::Column{column});
         }
     }
 
@@ -353,22 +355,22 @@ void cxgui::AnimatedBoard::DrawActiveColumnHighlight(const Cairo::RefPtr<Cairo::
 
 // See `on_draw()`. Basically draws a chip and the rectangular space around it (which has the board color). All
 // these elements together make the board.
-void cxgui::AnimatedBoard::DrawBoardElement(const Cairo::RefPtr<Cairo::Context>& p_context, size_t p_row, size_t p_column)
+void cxgui::AnimatedBoard::DrawBoardElement(const Cairo::RefPtr<Cairo::Context>& p_context, const cxmodel::Row& p_row, const cxmodel::Column& p_column)
 {
     const cxmath::Dimensions cellDimensions = m_animationModel->GetCellDimensions();
     const double cellWidth = cellDimensions.m_width.Get();
     const double cellHeight = cellDimensions.m_height.Get();
-    const double radius = m_animationModel->GetChipRadius().Get() + m_animationModel->GetLineWidth(cxgui::Feature::CHIP);
+    const double radius = m_animationModel->GetChipRadius().Get() + m_animationModel->GetLineWidth(cxgui::Feature::CHIP).Get();
 
     const IGameViewPresenter::ChipColors& chipColors = m_presenter->GetBoardChipColors();
-    const cxmodel::ChipColor chipColor = chipColors[p_row][p_column];
+    const cxmodel::ChipColor chipColor = chipColors[p_row.Get()][p_column.Get()];
     if(m_boardElementsCache.HasElement(chipColor))
     {
         // Paint that part to the canvas:
         Gdk::Cairo::set_source_pixbuf(p_context,
                                       m_boardElementsCache.Get(chipColor),
-                                      p_column * cellWidth,
-                                      (p_row + 1) * cellHeight);
+                                      p_column.Get() * cellWidth,
+                                      (p_row.Get() + 1) * cellHeight);
         p_context->paint();
 
         return;
@@ -376,8 +378,8 @@ void cxgui::AnimatedBoard::DrawBoardElement(const Cairo::RefPtr<Cairo::Context>&
 
     // Add a little extra to cover everything...
     auto buffer = Cairo::ImageSurface::create(Cairo::Format::FORMAT_ARGB32,
-                                              cellWidth + m_animationModel->GetLineWidth(cxgui::Feature::CELL),
-                                              cellHeight + m_animationModel->GetLineWidth(cxgui::Feature::CELL));
+                                              cellWidth + m_animationModel->GetLineWidth(cxgui::Feature::CELL).Get(),
+                                              cellHeight + m_animationModel->GetLineWidth(cxgui::Feature::CELL).Get());
     const auto bufferContext = Cairo::Context::create(buffer);
     {
         cxgui::ContextRestoreRAII contextRestoreRAII{bufferContext};
@@ -413,14 +415,14 @@ void cxgui::AnimatedBoard::DrawBoardElement(const Cairo::RefPtr<Cairo::Context>&
     const Glib::RefPtr<Gdk::Pixbuf> boardElement = Gdk::Pixbuf::create(buffer,
                                                                        0,
                                                                        0,
-                                                                       cellWidth + m_animationModel->GetLineWidth(cxgui::Feature::CELL),
-                                                                       cellHeight + m_animationModel->GetLineWidth(cxgui::Feature::CELL));
+                                                                       cellWidth + m_animationModel->GetLineWidth(cxgui::Feature::CELL).Get(),
+                                                                       cellHeight + m_animationModel->GetLineWidth(cxgui::Feature::CELL).Get());
     m_boardElementsCache.Add(chipColor, boardElement);
 
     // Paint that part to the canvas:
     p_context->set_source(buffer,
-                          p_column * cellWidth,
-                          (p_row + 1) * cellHeight);
+                          p_column.Get() * cellWidth,
+                          (p_row.Get() + 1) * cellHeight);
     p_context->paint();
 }
 
@@ -484,29 +486,29 @@ bool cxgui::AnimatedBoard::Redraw()
 
 // Called when the window is resized. Positions are updated to fit the
 // new ratio.
-bool cxgui::AnimatedBoard::OnResize(double p_newHeight, double p_newWidth)
+bool cxgui::AnimatedBoard::OnResize(const cxmath::Dimensions& p_newDimensions)
 {
     // Handling initial values to avoid division by zero:
-    if(m_lastFrameHeight == 0.0)
+    if(m_lastFrameDimensions.m_height == cxmath::Height{0.0})
     {
         return cxgui::STOP_EVENT_PROPAGATION;
     }
 
-    if(m_lastFrameWidth == 0.0)
+    if(m_lastFrameDimensions.m_width == cxmath::Width{0.0})
     {
         return cxgui::STOP_EVENT_PROPAGATION;
     }
 
     // Now the real work:
-    if(!cxmath::AreLogicallyEqual(p_newHeight, m_lastFrameHeight))
+    if(!cxmath::AreLogicallyEqual(p_newDimensions.m_height.Get(), m_lastFrameDimensions.m_height.Get()))
     {
-        const cxgui::ScalingRatios ratios{cxgui::VerticalScalingRatio{p_newHeight / m_lastFrameHeight}};
+        const cxgui::ScalingRatios ratios{cxgui::VerticalScalingRatio{p_newDimensions.m_height.Get() / m_lastFrameDimensions.m_height.Get()}};
         m_animationModel->Resize(ratios);
     }
 
-    if(!cxmath::AreLogicallyEqual(p_newWidth, m_lastFrameWidth))
+    if(!cxmath::AreLogicallyEqual(p_newDimensions.m_width.Get(), m_lastFrameDimensions.m_width.Get()))
     {
-        const cxgui::ScalingRatios ratios{cxgui::HorizontalScalingRatio{p_newWidth / m_lastFrameWidth}};
+        const cxgui::ScalingRatios ratios{cxgui::HorizontalScalingRatio{p_newDimensions.m_width.Get() / m_lastFrameDimensions.m_width.Get()}};
         m_animationModel->Resize(ratios);
         m_totalMoveLeftDisplacement.Get() *= ratios.m_horizontalRatio.Get();
         m_totalMoveRightDisplacement.Get() *= ratios.m_horizontalRatio.Get();
@@ -576,19 +578,19 @@ void cxgui::AnimatedBoard::Update(cxgui::BoardAnimationNotificationContext p_con
     }
 }
 
-int cxgui::AnimatedBoard::GetDropPosition(int p_column) const
+cxmodel::Row cxgui::AnimatedBoard::GetDropPosition(const cxmodel::Column& p_column) const
 {
     const IGameViewPresenter::ChipColors& chipColors = m_presenter->GetBoardChipColors();
 
     for(int row = m_presenter->GetBoardHeight() - 1; row >= 0; --row)
     {
-        if(chipColors[row][p_column] == cxmodel::MakeTransparent())
+        if(chipColors[row][p_column.Get()] == cxmodel::MakeTransparent())
         {
-            return row;
+            return cxmodel::Row{static_cast<size_t>(row)};
         }
     }
 
-    return 0;
+    return cxmodel::Row{0};
 }
 
 // Computes the best chip dimension so that the game view, when the board is present with all

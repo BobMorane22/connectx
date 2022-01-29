@@ -71,10 +71,10 @@ public:
     [[nodiscard]] const cxmath::Dimensions& GetCellDimensions() const override;
     [[nodiscard]] cxmath::Radius GetChipRadius() const override;
     [[nodiscard]] const cxmath::Position& GetChipPosition() const override;
-    [[nodiscard]] double GetHorizontalMargin() const override;
+    [[nodiscard]] cxmath::Width GetHorizontalMargin() const override;
     [[nodiscard]] const cxmath::Position& GetMirrorChipPosition() const override;
     [[nodiscard]] bool IsMirrorChipNeeded() const override;
-    [[nodiscard]] double GetLineWidth(Feature p_feature) const override;
+    [[nodiscard]] cxmath::Width GetLineWidth(Feature p_feature) const override;
     [[nodiscard]] const cxmodel::Column& GetCurrentColumn() const override;
 
 private:
@@ -99,10 +99,10 @@ private:
     cxmath::Position m_mirrorChipPosition{0.0, 0.0};
     bool m_isMirrorChipNeeded = false;
 
-    double m_horizontalMargin = 0.0;
+    cxmath::Width m_horizontalMargin{0.0};
 
-    double m_chipLineWidth = 0.0;
-    double m_cellLineWidth = 0.0;
+    cxmath::Width m_chipLineWidth{0.0};
+    cxmath::Width m_cellLineWidth{0.0};
 
     cxmodel::Column m_currentColumn{0u};
 };

@@ -96,15 +96,15 @@ private:
 
     bool on_draw(const Cairo::RefPtr<Cairo::Context>& p_context) override;
     void DrawActiveColumnHighlight(const Cairo::RefPtr<Cairo::Context>& p_context);
-    void DrawBoardElement(const Cairo::RefPtr<Cairo::Context>& p_context, size_t p_row, size_t p_column);
+    void DrawBoardElement(const Cairo::RefPtr<Cairo::Context>& p_context, const cxmodel::Row& p_row, const cxmodel::Column& p_column);
 
     bool Redraw();
 
-    bool OnResize(double p_newHeight, double p_newWidth);
+    bool OnResize(const cxmath::Dimensions& p_newDimensions);
 
     void Update(cxgui::BoardAnimationNotificationContext p_context, BoardAnimationSubject* p_subject) override;
 
-    [[nodiscard]] int GetDropPosition(int p_column) const;
+    [[nodiscard]] cxmodel::Row GetDropPosition(const cxmodel::Column& p_column) const;
     [[nodiscard]] int ComputeMinimumChipDimension(size_t p_nbRows, size_t p_nbColumns) const;
 
     std::unique_ptr<IAnimatedBoardPresenter> m_presenter; // A Game View presenter cache.
@@ -125,8 +125,7 @@ private:
     cxmath::Height m_totalMoveDownDisplacement{0.0}; // Sum of down displacement deltas in the context of a single animation (i.e. one chip only).
 
     // Last frame information:
-    double m_lastFrameHeight = 0.0; // Height of the animation for last frame.
-    double m_lastFrameWidth = 0.0;  // Width of the animation for last frame.
+    cxmath::Dimensions m_lastFrameDimensions{cxmath::Height{0.0}, cxmath::Width{0.0}};
 
     // Performance:
     BoardElementCache m_boardElementsCache;
