@@ -411,7 +411,7 @@ void cxgui::AnimatedBoardModel::Resize(const cxgui::ScalingRatios& p_scalingRati
     m_chipPosition.m_y *= p_scalingRatios.m_verticalRatio.Get();
 }
 
-void cxgui::AnimatedBoardModel::AddChipDisplacement(const cxmath::Width& p_horizontal, const cxmath::Height& p_vertical)
+void cxgui::AnimatedBoardModel::AddChipDisplacement(const cxmath::Height& p_vertical, const cxmath::Width& p_horizontal)
 {
     m_chipPosition.m_x += p_horizontal.Get();
     m_chipPosition.m_y += p_vertical.Get();

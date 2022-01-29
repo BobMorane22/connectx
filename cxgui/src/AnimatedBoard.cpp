@@ -150,7 +150,7 @@ void cxgui::AnimatedBoard::PerformChipAnimation(BoardAnimation p_animation)
             }
             else
             {
-                m_animationModel->AddChipDisplacement(-delta, cxmath::Height{0.0});
+                m_animationModel->AddChipDisplacement(cxmath::Height{0.0}, -delta);
                 m_totalMoveLeftDisplacement += delta;
             }
 
@@ -183,7 +183,7 @@ void cxgui::AnimatedBoard::PerformChipAnimation(BoardAnimation p_animation)
             }
             else
             {
-                m_animationModel->AddChipDisplacement(delta, cxmath::Height{0.0});
+                m_animationModel->AddChipDisplacement(cxmath::Height{0.0}, delta);
                 m_totalMoveRightDisplacement += delta;
             }
 
@@ -216,7 +216,7 @@ void cxgui::AnimatedBoard::PerformChipAnimation(BoardAnimation p_animation)
             }
             else
             {
-                m_animationModel->AddChipDisplacement(cxmath::Width{0.0}, delta);
+                m_animationModel->AddChipDisplacement(delta, cxmath::Width{0.0});
                 m_totalMoveDownDisplacement += delta;
             }
 

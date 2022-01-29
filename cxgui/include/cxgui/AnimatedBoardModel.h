@@ -61,7 +61,7 @@ public:
 
     void Update(const cxmath::Dimensions& p_widgetDimensions, bool p_isChipMovingHorizontally) override;
     void Resize(const cxgui::ScalingRatios& p_scalingRatios) override;
-    void AddChipDisplacement(const cxmath::Width& p_horizontal, const cxmath::Height& p_vertical) override;
+    void AddChipDisplacement(const cxmath::Height& p_vertical, const cxmath::Width& p_horizontal) override;
     void ResetChipPositions() override;
     void UpdateCurrentColumn(const cxmodel::Column& p_newCurrentColumn) override;
 

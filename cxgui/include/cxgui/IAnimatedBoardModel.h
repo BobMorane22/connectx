@@ -106,15 +106,15 @@ public:
     virtual void Resize(const ScalingRatios& p_scalingRatios) = 0;
 
     /******************************************************************************************//**
-     * @brief Adds horizontal and vertical displacements to the main chip.
+     * @brief Adds vertical and horizontal displacements to the main chip.
      *
-     * @param p_horizontal
-     *      An horizontal displacement (in pixels).
      * @param p_vertical
      *      A vertical displacement (in pixels).
+     * @param p_horizontal
+     *      An horizontal displacement (in pixels).
      *
      *********************************************************************************************/
-     virtual void AddChipDisplacement(const cxmath::Width& p_horizontal, const cxmath::Height& p_vertical) = 0;
+     virtual void AddChipDisplacement(const cxmath::Height& p_vertical, const cxmath::Width& p_horizontal) = 0;
      
     /******************************************************************************************//**
      * @brief Resets all chip positions.
