@@ -147,8 +147,8 @@ public:
 
     // cxgui::IAnimatedBoardPresenter:
     void Sync() override {FAIL();}
-    [[nodiscard]] size_t GetBoardHeight() const override {return 6u;}
-    [[nodiscard]] size_t GetBoardWidth() const override {return 7u;}
+    [[nodiscard]] cxmodel::Height GetBoardHeight() const override {return cxmodel::Height{6u};}
+    [[nodiscard]] cxmodel::Width GetBoardWidth() const override {return cxmodel::Width{7u};}
     [[nodiscard]] cxmodel::ChipColor GetActivePlayerChipColor() const override {return cxmodel::MakeRed();}
     [[nodiscard]] const cxgui::IGameViewPresenter::ChipColors& GetBoardChipColors() const override {return m_chipColors;}
 

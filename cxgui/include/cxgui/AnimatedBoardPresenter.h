@@ -56,8 +56,8 @@ public:
 
     // cxgui::IAnimatedBoardPresenter:
     void Sync() override;
-    [[nodiscard]] size_t GetBoardHeight() const override;
-    [[nodiscard]] size_t GetBoardWidth() const override;
+    [[nodiscard]] cxmodel::Height GetBoardHeight() const override;
+    [[nodiscard]] cxmodel::Width GetBoardWidth() const override;
     [[nodiscard]] cxmodel::ChipColor GetActivePlayerChipColor() const override;
     [[nodiscard]] const IGameViewPresenter::ChipColors& GetBoardChipColors() const override;
 
@@ -66,8 +66,8 @@ private:
     // Cache the old information, needed by the animation logic.
     struct Cache
     {
-        size_t m_boardHeight = 0u;
-        size_t m_boardWidth = 0u;
+        cxmodel::Height m_boardHeight{0u};
+        cxmodel::Width m_boardWidth{0u};
         cxmodel::ChipColor m_activePlayerChipColor = cxmodel::MakeTransparent();
         IGameViewPresenter::ChipColors m_boardColors;
     };

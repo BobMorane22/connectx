@@ -127,8 +127,8 @@ TEST_F(AnimatedBoardPresenterTestFixture, Sync_NoChangeToModel_SyncDoesNothing)
     auto presenter = GetPresenter();
 
     // We take a copy of what is returned before...
-    const size_t boardHeightBefore = presenter.GetBoardHeight();
-    const size_t boardWidthBefore = presenter.GetBoardWidth();
+    const cxmodel::Height boardHeightBefore = presenter.GetBoardHeight();
+    const cxmodel::Width boardWidthBefore = presenter.GetBoardWidth();
     const cxmodel::ChipColor activePlayerChipColorBefore = presenter.GetActivePlayerChipColor();
     const cxgui::IGameViewPresenter::ChipColors boardColorsBefore = presenter.GetBoardChipColors();
 
@@ -136,8 +136,8 @@ TEST_F(AnimatedBoardPresenterTestFixture, Sync_NoChangeToModel_SyncDoesNothing)
     presenter.Sync();
 
     // We take a copy of what is returned after the sync:
-    const size_t boardHeightAfter = presenter.GetBoardHeight();
-    const size_t boardWidthAfter = presenter.GetBoardWidth();
+    const cxmodel::Height boardHeightAfter = presenter.GetBoardHeight();
+    const cxmodel::Width boardWidthAfter = presenter.GetBoardWidth();
     const cxmodel::ChipColor activePlayerChipColorAfter = presenter.GetActivePlayerChipColor();
     const cxgui::IGameViewPresenter::ChipColors boardColorsAfter = presenter.GetBoardChipColors();
 
@@ -145,9 +145,9 @@ TEST_F(AnimatedBoardPresenterTestFixture, Sync_NoChangeToModel_SyncDoesNothing)
     ASSERT_TRUE(boardHeightBefore == boardHeightAfter);
     ASSERT_TRUE(boardWidthBefore == boardWidthAfter);
     ASSERT_TRUE(activePlayerChipColorBefore == activePlayerChipColorAfter);
-    for(size_t row = 0u; row < boardHeightBefore; ++row)
+    for(size_t row = 0u; row < boardHeightBefore.Get(); ++row)
     {
-        for(size_t column = 0u; column < boardWidthBefore; ++column)
+        for(size_t column = 0u; column < boardWidthBefore.Get(); ++column)
         {
             ASSERT_TRUE(boardColorsBefore[row][column] == boardColorsAfter[row][column]);
         }
@@ -159,8 +159,8 @@ TEST_F(AnimatedBoardPresenterTestFixture, Sync_ChangesToModel_Syncs)
     auto presenter = GetPresenter();
 
     // We take a copy of what is returned before...
-    const size_t boardHeightBefore = presenter.GetBoardHeight();
-    const size_t boardWidthBefore = presenter.GetBoardWidth();
+    const cxmodel::Height boardHeightBefore = presenter.GetBoardHeight();
+    const cxmodel::Width boardWidthBefore = presenter.GetBoardWidth();
     const cxmodel::ChipColor activePlayerChipColorBefore = presenter.GetActivePlayerChipColor();
     const cxgui::IGameViewPresenter::ChipColors boardColorsBefore = presenter.GetBoardChipColors();
 
@@ -169,8 +169,8 @@ TEST_F(AnimatedBoardPresenterTestFixture, Sync_ChangesToModel_Syncs)
     presenter.Sync();
 
     // We take a copy of what is returned after the sync:
-    const size_t boardHeightAfter = presenter.GetBoardHeight();
-    const size_t boardWidthAfter = presenter.GetBoardWidth();
+    const cxmodel::Height boardHeightAfter = presenter.GetBoardHeight();
+    const cxmodel::Width boardWidthAfter = presenter.GetBoardWidth();
     const cxmodel::ChipColor activePlayerChipColorAfter = presenter.GetActivePlayerChipColor();
     const cxgui::IGameViewPresenter::ChipColors boardColorsAfter = presenter.GetBoardChipColors();
 
@@ -178,9 +178,9 @@ TEST_F(AnimatedBoardPresenterTestFixture, Sync_ChangesToModel_Syncs)
     ASSERT_TRUE(boardHeightBefore != boardHeightAfter);
     ASSERT_TRUE(boardWidthBefore != boardWidthAfter);
     ASSERT_TRUE(activePlayerChipColorBefore != activePlayerChipColorAfter);
-    for(size_t row = 0u; row < boardHeightBefore; ++row)
+    for(size_t row = 0u; row < boardHeightBefore.Get(); ++row)
     {
-        for(size_t column = 0u; column < boardWidthBefore; ++column)
+        for(size_t column = 0u; column < boardWidthBefore.Get(); ++column)
         {
             ASSERT_TRUE(boardColorsBefore[row][column] != boardColorsAfter[row][column]);
         }
@@ -189,12 +189,12 @@ TEST_F(AnimatedBoardPresenterTestFixture, Sync_ChangesToModel_Syncs)
 
 TEST_F(AnimatedBoardPresenterTestFixture, GetBoardHeight)
 {
-    ASSERT_TRUE(GetPresenter().GetBoardHeight() == 6u);
+    ASSERT_TRUE(GetPresenter().GetBoardHeight() == cxmodel::Height{6u});
 }
 
 TEST_F(AnimatedBoardPresenterTestFixture, GetBoardWidth)
 {
-    ASSERT_TRUE(GetPresenter().GetBoardWidth() == 7u);
+    ASSERT_TRUE(GetPresenter().GetBoardWidth() == cxmodel::Width{7u});
 }
 
 TEST_F(AnimatedBoardPresenterTestFixture, GetActivePlayerChipColor)
@@ -205,9 +205,9 @@ TEST_F(AnimatedBoardPresenterTestFixture, GetActivePlayerChipColor)
 TEST_F(AnimatedBoardPresenterTestFixture, GetBoardChipColors)
 {
     const auto& boardColors = GetPresenter().GetBoardChipColors();
-    for(size_t row = 0u; row < GetPresenter().GetBoardHeight(); ++row)
+    for(size_t row = 0u; row < GetPresenter().GetBoardHeight().Get(); ++row)
     {
-        for(size_t column = 0u; column < GetPresenter().GetBoardWidth(); ++column)
+        for(size_t column = 0u; column < GetPresenter().GetBoardWidth().Get(); ++column)
         {
             ASSERT_TRUE(boardColors[row][column] == cxmodel::MakeRed());
         }

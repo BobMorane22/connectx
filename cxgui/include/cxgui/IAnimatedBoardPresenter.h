@@ -24,6 +24,7 @@
 #ifndef IANIMATEDBOARDPRESENTER_H_A2048E6E_9B10_4BE6_93E7_CD07D492BE33
 #define IANIMATEDBOARDPRESENTER_H_A2048E6E_9B10_4BE6_93E7_CD07D492BE33
 
+#include <cxmodel/common.h>
 #include <cxgui/IGameViewPresenter.h>
 
 namespace cxgui
@@ -52,7 +53,7 @@ public:
      * @return The cached board height.
      *
      *********************************************************************************************/
-    [[nodiscard]] virtual size_t GetBoardHeight() const = 0;
+    [[nodiscard]] virtual cxmodel::Height GetBoardHeight() const = 0;
 
     /******************************************************************************************//**
      * @brief Retreive the cached board width.
@@ -60,7 +61,7 @@ public:
      * @return The cached board width.
      *
      *********************************************************************************************/
-    [[nodiscard]] virtual size_t GetBoardWidth() const = 0;
+    [[nodiscard]] virtual cxmodel::Width GetBoardWidth() const = 0;
 
     /******************************************************************************************//**
      * @brief Retreive the cached active player chip color.

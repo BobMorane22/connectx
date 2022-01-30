@@ -378,14 +378,14 @@ void cxgui::AnimatedBoardModel::Update(const cxmath::Dimensions& p_widgetDimensi
     m_widgetDimensions = p_widgetDimensions;
 
     // Cell dimensions:
-    const cxmath::Height cellHeight = cxmath::Height(m_widgetDimensions.m_height.Get() / (m_presenter.GetBoardHeight() + 1.0));
-    const cxmath::Width cellWidth = cxmath::Width(m_widgetDimensions.m_width.Get() / m_presenter.GetBoardWidth());
+    const cxmath::Height cellHeight = cxmath::Height(m_widgetDimensions.m_height.Get() / (m_presenter.GetBoardHeight().Get() + 1.0));
+    const cxmath::Width cellWidth = cxmath::Width(m_widgetDimensions.m_width.Get() / m_presenter.GetBoardWidth().Get());
     m_cellDimensions = cxmath::Dimensions{cellHeight, cellWidth};
     const double smallestDimensionSize = std::min(m_widgetDimensions.m_height.Get(), m_widgetDimensions.m_width.Get());
     m_cellLineWidth = cxmath::Width{smallestDimensionSize * LINE_WIDTH_SCALING_FACTOR};
 
     // Chip radius:
-    const double maximumNbChips = std::max(m_presenter.GetBoardHeight() + 1, m_presenter.GetBoardWidth());
+    const double maximumNbChips = std::max(m_presenter.GetBoardHeight().Get() + 1, m_presenter.GetBoardWidth().Get());
     m_chipRadius = cxmath::Radius{static_cast<double>((smallestDimensionSize / (maximumNbChips * 2.0)))};
     m_chipLineWidth = cxmath::Width{m_chipRadius.Get() * LINE_WIDTH_SCALING_FACTOR};
 

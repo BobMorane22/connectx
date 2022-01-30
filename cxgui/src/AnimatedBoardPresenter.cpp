@@ -31,18 +31,18 @@ cxgui::AnimatedBoardPresenter::AnimatedBoardPresenter(const IGameViewPresenter& 
 
 void cxgui::AnimatedBoardPresenter::Sync()
 {
-    m_cache.m_boardHeight = m_gameVewPresenter.GetGameViewBoardHeight();
-    m_cache.m_boardWidth = m_gameVewPresenter.GetGameViewBoardWidth();
+    m_cache.m_boardHeight = cxmodel::Height{m_gameVewPresenter.GetGameViewBoardHeight()};
+    m_cache.m_boardWidth = cxmodel::Width{m_gameVewPresenter.GetGameViewBoardWidth()};
     m_cache.m_activePlayerChipColor = m_gameVewPresenter.GetGameViewActivePlayerChipColor();
     m_cache.m_boardColors = m_gameVewPresenter.GetGameViewChipColors();
 }
 
-size_t cxgui::AnimatedBoardPresenter::GetBoardHeight() const
+cxmodel::Height cxgui::AnimatedBoardPresenter::GetBoardHeight() const
 {
     return m_cache.m_boardHeight;
 }
 
-size_t cxgui::AnimatedBoardPresenter::GetBoardWidth() const
+cxmodel::Width cxgui::AnimatedBoardPresenter::GetBoardWidth() const
 {
     return m_cache.m_boardWidth;
 }

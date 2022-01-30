@@ -85,10 +85,10 @@ cxgui::AnimatedBoard::AnimatedBoard(const IGameViewPresenter& p_presenter, const
     m_animationModel = std::make_unique<cxgui::AnimatedBoardModel>(*m_presenter, p_speed);
 
     // Customize width and height according to window dimension.
-    const int nbRows = m_presenter->GetBoardHeight();
-    const int nbColumns = m_presenter->GetBoardWidth();
-    const int chipDimension = ComputeMinimumChipDimension(nbRows, nbColumns);
-    set_size_request(nbColumns * chipDimension, nbRows * chipDimension);
+    const cxmodel::Height nbRows = m_presenter->GetBoardHeight();
+    const cxmodel::Width nbColumns = m_presenter->GetBoardWidth();
+    const int chipDimension = ComputeMinimumChipDimension(nbRows.Get(), nbColumns.Get());
+    set_size_request(nbColumns.Get() * chipDimension, nbRows.Get() * chipDimension);
 
     set_vexpand(true);
     set_hexpand(true);
@@ -127,14 +127,15 @@ void cxgui::AnimatedBoard::PerformChipAnimation(BoardAnimation p_animation)
         {
             const double nbFramesPerChip = fps / speed;
 
-            const double oneAnimationWidth = m_animationModel->GetAnimatedAreaDimensions().m_width.Get() / m_presenter->GetBoardWidth();
+            const double oneAnimationWidth = m_animationModel->GetAnimatedAreaDimensions().m_width.Get() / m_presenter->GetBoardWidth().Get();
             const cxmath::Width delta{oneAnimationWidth / nbFramesPerChip};
 
             if(m_totalMoveLeftDisplacement.Get() >= oneAnimationWidth || std::abs(m_totalMoveLeftDisplacement.Get() - oneAnimationWidth) <= 1e-6)
             {
                 if(m_animationModel->GetCurrentColumn() <= cxmodel::Column{0u})
                 {
-                    m_animationModel->UpdateCurrentColumn(cxmodel::Column{m_presenter->GetBoardWidth() - 1u});
+                    const cxmodel::Column currentColumn{m_presenter->GetBoardWidth().Get() - 1u};
+                    m_animationModel->UpdateCurrentColumn(currentColumn);
                 }
                 else
                 {
@@ -160,12 +161,12 @@ void cxgui::AnimatedBoard::PerformChipAnimation(BoardAnimation p_animation)
         {
             const double nbFramesPerChip = fps / speed;
 
-            const double oneAnimationWidth = m_animationModel->GetAnimatedAreaDimensions().m_width.Get() / m_presenter->GetBoardWidth();
+            const double oneAnimationWidth = m_animationModel->GetAnimatedAreaDimensions().m_width.Get() / m_presenter->GetBoardWidth().Get();
             const cxmath::Width delta{oneAnimationWidth / nbFramesPerChip};
 
             if(m_totalMoveRightDisplacement.Get() >= oneAnimationWidth || std::abs(m_totalMoveRightDisplacement.Get() - oneAnimationWidth) <= 1e-6)
             {
-                if(m_animationModel->GetCurrentColumn() >= cxmodel::Column{m_presenter->GetBoardWidth() - 1u})
+                if(m_animationModel->GetCurrentColumn() >= cxmodel::Column{m_presenter->GetBoardWidth().Get() - 1u})
                 {
                     m_animationModel->UpdateCurrentColumn(cxmodel::Column{0u});
                 }
@@ -315,9 +316,9 @@ bool cxgui::AnimatedBoard::on_draw(const Cairo::RefPtr<Cairo::Context>& p_contex
 
     // Draw the game board:
     m_boardElementsCache.Clear();
-    for(size_t row = 0u; row < m_presenter->GetBoardHeight(); ++row)
+    for(size_t row = 0u; row < m_presenter->GetBoardHeight().Get(); ++row)
     {
-        for(size_t column = 0u; column < m_presenter->GetBoardWidth(); ++column)
+        for(size_t column = 0u; column < m_presenter->GetBoardWidth().Get(); ++column)
         {
             DrawBoardElement(bufferContext, cxmodel::Row{row}, cxmodel::Column{column});
         }
@@ -582,7 +583,7 @@ cxmodel::Row cxgui::AnimatedBoard::GetDropPosition(const cxmodel::Column& p_colu
 {
     const IGameViewPresenter::ChipColors& chipColors = m_presenter->GetBoardChipColors();
 
-    for(int row = m_presenter->GetBoardHeight() - 1; row >= 0; --row)
+    for(int row = m_presenter->GetBoardHeight().Get() - 1; row >= 0; --row)
     {
         if(chipColors[row][p_column.Get()] == cxmodel::MakeTransparent())
         {

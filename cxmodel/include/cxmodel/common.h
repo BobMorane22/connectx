@@ -33,16 +33,30 @@ namespace cxmodel
 
 /** Represents a row in the game board. */
 using Row = cxstd::StrongType<size_t, struct RowTag,
-              cxstd::EqualityComparable,
-              cxstd::Comparable,
-              cxstd::Addable
+                              cxstd::EqualityComparable,
+                              cxstd::Comparable,
+                              cxstd::Addable
+>;
+
+/** Represents the height of the game board, in terms of the number of column. */
+using Height = cxstd::StrongType<size_t, struct BoardHeightTag,
+                                 cxstd::EqualityComparable,
+                                 cxstd::Comparable,
+                                 cxstd::Addable
 >;
 
 /** Represents a column in the game board. */
 using Column = cxstd::StrongType<size_t, struct ColumnTag,
-                 cxstd::EqualityComparable,
-                 cxstd::Comparable,
-                 cxstd::Addable
+                                 cxstd::EqualityComparable,
+                                 cxstd::Comparable,
+                                 cxstd::Addable
+>;
+
+/** Represents the width of the game board, in terms of the number of column. */
+using Width = cxstd::StrongType<size_t, struct BoardWidthTag,
+                                cxstd::EqualityComparable,
+                                cxstd::Comparable,
+                                cxstd::Addable
 >;
 
 } // namespace cxmodel
