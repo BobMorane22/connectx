@@ -28,6 +28,7 @@ set(SOURCE_FILES
   AboutWindowPresenterTests.cpp
   AnimatedBoardModelTests.cpp
   AnimatedBoardPresenterTests.cpp
+  AnimationInformationsTests.cpp
   ConfigurableMainWindowPresenterTestFixture.cpp
   extractRawUserInputTests.cpp
   GamePresenterTests.cpp

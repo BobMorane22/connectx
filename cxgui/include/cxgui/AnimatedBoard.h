@@ -28,6 +28,7 @@
 
 #include <cxmath/math.h>
 
+#include "AnimationInformation.h"
 #include "BoardAnimation.h"
 #include "BoardAnimationNotificationContext.h"
 #include "BoardElementCache.h"
@@ -107,27 +108,19 @@ private:
     [[nodiscard]] cxmodel::Row GetDropPosition(const cxmodel::Column& p_column) const;
     [[nodiscard]] int ComputeMinimumChipDimension(size_t p_nbRows, size_t p_nbColumns) const;
 
-    std::unique_ptr<IAnimatedBoardPresenter> m_presenter; // A Game View presenter cache.
+    // A Game View presenter cache.
+    std::unique_ptr<IAnimatedBoardPresenter> m_presenter;
     std::unique_ptr<IAnimatedBoardModel> m_animationModel;
 
-    sigc::connection m_timer; // Clock (ticks m_FPS times per second).
+    // Clock (ticks m_FPS times per second).
+    sigc::connection m_timer;
 
-    // Left move animation:
-    bool m_animateMoveLeft = false;
-    cxmath::Width m_totalMoveLeftDisplacement{0.0};
+    AnimationInformations<cxmath::Width> m_moveLeftAnimationInfo;
+    AnimationInformations<cxmath::Width> m_moveRightAnimationInfo;
+    AnimationInformations<cxmath::Height> m_dropAnimationInfo;
 
-    // Right move animation:
-    bool m_animateMoveRight = false;
-    cxmath::Width m_totalMoveRightDisplacement{0.0};
-
-    // Down move animation:
-    bool m_animateMoveDown = false;                  // Flag indicating if a "move down" animation is ongoing.
-    cxmath::Height m_totalMoveDownDisplacement{0.0}; // Sum of down displacement deltas in the context of a single animation (i.e. one chip only).
-
-    // Last frame information:
     cxmath::Dimensions m_lastFrameDimensions{cxmath::Height{0.0}, cxmath::Width{0.0}};
 
-    // Performance:
     BoardElementCache m_boardElementsCache;
 };
 

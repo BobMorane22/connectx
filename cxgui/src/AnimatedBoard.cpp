@@ -130,7 +130,7 @@ void cxgui::AnimatedBoard::PerformChipAnimation(BoardAnimation p_animation)
             const double oneAnimationWidth = m_animationModel->GetAnimatedAreaDimensions().m_width.Get() / m_presenter->GetBoardWidth().Get();
             const cxmath::Width delta{oneAnimationWidth / nbFramesPerChip};
 
-            if(m_totalMoveLeftDisplacement.Get() >= oneAnimationWidth || std::abs(m_totalMoveLeftDisplacement.Get() - oneAnimationWidth) <= 1e-6)
+            if(m_moveLeftAnimationInfo.m_currentDisplacement.Get() >= oneAnimationWidth || std::abs(m_moveLeftAnimationInfo.m_currentDisplacement.Get() - oneAnimationWidth) <= 1e-6)
             {
                 if(m_animationModel->GetCurrentColumn() <= cxmodel::Column{0u})
                 {
@@ -143,16 +143,14 @@ void cxgui::AnimatedBoard::PerformChipAnimation(BoardAnimation p_animation)
                 }
 
                 // End animation:
-                m_totalMoveLeftDisplacement = cxmath::Width{0.0};
-                m_animateMoveLeft = false;
-                m_presenter->Sync();
+                m_moveLeftAnimationInfo.Reset();
                 Notify(cxgui::BoardAnimationNotificationContext::POST_ANIMATE_MOVE_LEFT_ONE_COLUMN);
                 return;
             }
             else
             {
                 m_animationModel->AddChipDisplacement(cxmath::Height{0.0}, -delta);
-                m_totalMoveLeftDisplacement += delta;
+                m_moveLeftAnimationInfo.m_currentDisplacement += delta;
             }
 
             break;
@@ -164,7 +162,7 @@ void cxgui::AnimatedBoard::PerformChipAnimation(BoardAnimation p_animation)
             const double oneAnimationWidth = m_animationModel->GetAnimatedAreaDimensions().m_width.Get() / m_presenter->GetBoardWidth().Get();
             const cxmath::Width delta{oneAnimationWidth / nbFramesPerChip};
 
-            if(m_totalMoveRightDisplacement.Get() >= oneAnimationWidth || std::abs(m_totalMoveRightDisplacement.Get() - oneAnimationWidth) <= 1e-6)
+            if(m_moveRightAnimationInfo.m_currentDisplacement.Get() >= oneAnimationWidth || std::abs(m_moveRightAnimationInfo.m_currentDisplacement.Get() - oneAnimationWidth) <= 1e-6)
             {
                 if(m_animationModel->GetCurrentColumn() >= cxmodel::Column{m_presenter->GetBoardWidth().Get() - 1u})
                 {
@@ -176,8 +174,7 @@ void cxgui::AnimatedBoard::PerformChipAnimation(BoardAnimation p_animation)
                 }
 
                 // End animation:
-                m_totalMoveRightDisplacement = cxmath::Width{0.0};
-                m_animateMoveRight = false;
+                m_moveRightAnimationInfo.Reset();
                 m_presenter->Sync();
                 Notify(cxgui::BoardAnimationNotificationContext::POST_ANIMATE_MOVE_RIGHT_ONE_COLUMN);
                 return;
@@ -185,7 +182,7 @@ void cxgui::AnimatedBoard::PerformChipAnimation(BoardAnimation p_animation)
             else
             {
                 m_animationModel->AddChipDisplacement(cxmath::Height{0.0}, delta);
-                m_totalMoveRightDisplacement += delta;
+                m_moveRightAnimationInfo.m_currentDisplacement += delta;
             }
 
             break;
@@ -200,11 +197,10 @@ void cxgui::AnimatedBoard::PerformChipAnimation(BoardAnimation p_animation)
             const double relativeFPS = fps * (oneAnimationHeight / (m_animationModel->GetAnimatedAreaDimensions().m_height.Get() - cellHeight));
             const cxmath::Height delta{oneAnimationHeight / std::ceil(relativeFPS / speed)};
 
-            if(m_totalMoveDownDisplacement.Get() >= oneAnimationHeight || std::abs(m_totalMoveDownDisplacement.Get() - oneAnimationHeight) <= 1e-6)
+            if(m_dropAnimationInfo.m_currentDisplacement.Get() >= oneAnimationHeight || std::abs(m_dropAnimationInfo.m_currentDisplacement.Get() - oneAnimationHeight) <= 1e-6)
             {
                 // End animation:
-                m_totalMoveDownDisplacement = cxmath::Height{0.0};
-                m_animateMoveDown = false;
+                m_dropAnimationInfo.Reset();
 
                 // Reinitialize chip:
                 m_animationModel->ResetChipPositions();
@@ -218,7 +214,7 @@ void cxgui::AnimatedBoard::PerformChipAnimation(BoardAnimation p_animation)
             else
             {
                 m_animationModel->AddChipDisplacement(delta, cxmath::Width{0.0});
-                m_totalMoveDownDisplacement += delta;
+                m_dropAnimationInfo.m_currentDisplacement += delta;
             }
 
             break;
@@ -289,7 +285,7 @@ bool cxgui::AnimatedBoard::on_draw(const Cairo::RefPtr<Cairo::Context>& p_contex
     m_lastFrameDimensions.m_height = cxmath::Height{static_cast<double>(allocation.get_height())};
     m_lastFrameDimensions.m_width = cxmath::Width{static_cast<double>(allocation.get_width())};
 
-    m_animationModel->Update(m_lastFrameDimensions, m_animateMoveLeft || m_animateMoveRight);
+    m_animationModel->Update(m_lastFrameDimensions, m_moveLeftAnimationInfo.m_isAnimating || m_moveRightAnimationInfo.m_isAnimating);
 
     auto buffer = Cairo::ImageSurface::create(Cairo::Format::FORMAT_ARGB32,
                                               m_animationModel->GetAnimatedAreaDimensions().m_width.Get(),
@@ -442,7 +438,7 @@ bool cxgui::AnimatedBoard::Redraw()
     const double speed = static_cast<double>(m_animationModel->GetAnimationSpeed().Get());
 
     // Schedule a redraw on the next frame:
-    if(m_animateMoveLeft)
+    if(m_moveLeftAnimationInfo.m_isAnimating)
     {
         const double nbFramesPerChip = fps / speed;
         const double delta = cellWidth / nbFramesPerChip;
@@ -459,7 +455,7 @@ bool cxgui::AnimatedBoard::Redraw()
 
         PerformChipAnimation(cxgui::BoardAnimation::MOVE_CHIP_LEFT_ONE_COLUMN);
     }
-    if(m_animateMoveRight)
+    if(m_moveRightAnimationInfo.m_isAnimating)
     {
         const double nbFramesPerChip = fps / speed;
         const double delta = cellWidth / nbFramesPerChip;
@@ -476,7 +472,7 @@ bool cxgui::AnimatedBoard::Redraw()
 
         PerformChipAnimation(cxgui::BoardAnimation::MOVE_CHIP_RIGHT_ONE_COLUMN);
     }
-    if(m_animateMoveDown)
+    if(m_dropAnimationInfo.m_isAnimating)
     {
         queue_draw();
         PerformChipAnimation(cxgui::BoardAnimation::DROP_CHIP);
@@ -511,8 +507,8 @@ bool cxgui::AnimatedBoard::OnResize(const cxmath::Dimensions& p_newDimensions)
     {
         const cxgui::ScalingRatios ratios{cxgui::HorizontalScalingRatio{p_newDimensions.m_width.Get() / m_lastFrameDimensions.m_width.Get()}};
         m_animationModel->Resize(ratios);
-        m_totalMoveLeftDisplacement.Get() *= ratios.m_horizontalRatio.Get();
-        m_totalMoveRightDisplacement.Get() *= ratios.m_horizontalRatio.Get();
+        m_moveLeftAnimationInfo.m_currentDisplacement.Get() *= ratios.m_horizontalRatio.Get();
+        m_moveRightAnimationInfo.m_currentDisplacement.Get() *= ratios.m_horizontalRatio.Get();
     }
 
     return cxgui::STOP_EVENT_PROPAGATION;
@@ -527,19 +523,19 @@ void cxgui::AnimatedBoard::Update(cxgui::BoardAnimationNotificationContext p_con
     {
         case cxgui::BoardAnimationNotificationContext::ANIMATE_MOVE_LEFT_ONE_COLUMN:
         {
-            m_animateMoveLeft = true;
+            m_moveLeftAnimationInfo.Start();
             PerformChipAnimation(cxgui::BoardAnimation::MOVE_CHIP_LEFT_ONE_COLUMN);
             break;
         }
         case cxgui::BoardAnimationNotificationContext::ANIMATE_MOVE_RIGHT_ONE_COLUMN:
         {
-            m_animateMoveRight = true;
+            m_moveRightAnimationInfo.Start();
             PerformChipAnimation(cxgui::BoardAnimation::MOVE_CHIP_RIGHT_ONE_COLUMN);
             break;
         }
         case cxgui::BoardAnimationNotificationContext::ANIMATE_MOVE_DROP_CHIP:
         {
-            m_animateMoveDown = true;
+            m_dropAnimationInfo.Start();
             PerformChipAnimation(cxgui::BoardAnimation::DROP_CHIP);
             break;
         }
