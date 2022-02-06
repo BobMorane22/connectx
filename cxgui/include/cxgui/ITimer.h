@@ -66,7 +66,11 @@ public:
      *
      * The timer must be stopped and started again for the new callback to take effect.
      *
-     * @param p_callback The callback to be executed at every tick of the timer.
+     * @param p_callback
+     *      The callback to be executed at every tick of the timer.
+     *
+     * @pre
+     *      The callback function is valid.
      *
      *************************************************************************************************/
     virtual void SetCallback(Callback&& p_callback) = 0;
@@ -76,7 +80,11 @@ public:
      *
      * The timer must be stopped and started again for the new period to take effect.
      *
-     * @param p_period The period of time (in ms) in between each timer tick.
+     * @param p_period
+     *      The period of time (in ms) in between each timer tick.
+     *
+     * @pre
+     *      The period is greater than 0.
      *
      *************************************************************************************************/
     virtual void SetPeriod(Period&& p_period) = 0;

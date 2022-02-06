@@ -50,6 +50,16 @@ public:
      * Starts the underlying time with the speficied callback and period. The timer will
      * run for the lifetime of this RAII.
      *
+     * @param p_callback
+     *      The callback to be executed at every tick of the timer.
+     * @param p_period
+     *      The period of time (in ms) in between each timer tick.
+     *
+     * @pre
+     *      The callback function is valid.
+     * @pre
+     *      The period is greater than 0 ms.
+     *
      *************************************************************************************************/
     AnimatedBoardTimerRAII(ITimer::Callback&& p_callback, Period&& p_period);
 
