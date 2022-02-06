@@ -31,6 +31,7 @@ add_library(${TARGET_NAME}
   src/AnimatedBoard.cpp
   src/AnimatedBoardModel.cpp
   src/AnimatedBoardPresenter.cpp
+  src/AnimatedBoardTimerRAII.cpp
   src/BoardElementCache.cpp
   src/Chip.cpp
   src/ColorComboBox.cpp

@@ -28,6 +28,7 @@
 
 #include <cxmath/math.h>
 
+#include "AnimatedBoardTimerRAII.h"
 #include "AnimationInformation.h"
 #include "BoardAnimation.h"
 #include "BoardAnimationNotificationContext.h"
@@ -85,7 +86,7 @@ public:
      * @brief Destructor.
      *
      *********************************************************************************************/
-    ~AnimatedBoard();
+    ~AnimatedBoard() = default;
 
     // cxgui::IBoardInformation:
     [[nodiscard]] const cxmodel::Column& GetCurrentColumn() const override;
@@ -113,7 +114,7 @@ private:
     std::unique_ptr<IAnimatedBoardModel> m_animationModel;
 
     // Clock (ticks m_FPS times per second).
-    sigc::connection m_timer;
+    std::unique_ptr<AnimatedBoardTimerRAII> m_timer;
 
     AnimationInformations<cxmath::Width> m_moveLeftAnimationInfo;
     AnimationInformations<cxmath::Width> m_moveRightAnimationInfo;

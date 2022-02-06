@@ -33,6 +33,7 @@
 #include <cxgui/DiscChip.h>
 #include <cxgui/GameView.h>
 #include <cxgui/GameViewKeyHandlerStrategyFactory.h>
+#include <cxgui/IAnimatedBoardPresenter.h>
 
 namespace
 {

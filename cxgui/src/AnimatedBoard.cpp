@@ -27,14 +27,13 @@
 
 #include <gdkmm/display.h>
 #include <gdkmm/general.h>
-#include <glibmm/main.h>
 
 #include <cxinv/assertion.h>
 #include <cxmodel/Color.h>
 #include <cxmodel/Disc.h>
+#include <cxgui/AnimatedBoard.h>
 #include <cxgui/AnimatedBoardModel.h>
 #include <cxgui/AnimatedBoardPresenter.h>
-#include <cxgui/AnimatedBoard.h>
 #include <cxgui/common.h>
 #include <cxgui/ContextRestoreRAII.h>
 #include <cxgui/IGameViewPresenter.h>
@@ -93,8 +92,9 @@ cxgui::AnimatedBoard::AnimatedBoard(const IGameViewPresenter& p_presenter, const
     set_vexpand(true);
     set_hexpand(true);
 
-    // In time, make proper RAII:
-    m_timer = Glib::signal_timeout().connect([this](){return Redraw();}, 1000.0/m_animationModel->GetFPS().Get());
+    m_timer = std::make_unique<AnimatedBoardTimerRAII>(
+       [this](){return Redraw();},
+       Period{1000.0/m_animationModel->GetFPS().Get()});
 
     // Resize events:
     signal_configure_event().connect([this](GdkEventConfigure* p_event){
@@ -107,11 +107,6 @@ cxgui::AnimatedBoard::AnimatedBoard(const IGameViewPresenter& p_presenter, const
 
     POSTCONDITION(m_presenter);
     POSTCONDITION(m_animationModel);
-}
-
-cxgui::AnimatedBoard::~AnimatedBoard()
-{
-    m_timer.disconnect();
 }
 
 // Performs an "frame increment". This is called on every tick (m_FPS times/sec) and

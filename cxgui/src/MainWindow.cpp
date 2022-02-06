@@ -38,6 +38,7 @@
 #include <cxgui/GameResolutionDialogController.h>
 #include <cxgui/GameResolutionDialogPresenterFactory.h>
 #include <cxgui/GameView.h>
+#include <cxgui/IAnimatedBoardPresenter.h>
 #include <cxgui/IMainWindowController.h>
 #include <cxgui/IMainWindowPresenter.h>
 #include <cxgui/MainWindow.h>
