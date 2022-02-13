@@ -89,7 +89,7 @@ public:
  *
  *************************************************************************************************/
 std::unique_ptr<IFrameAnimationStrategy> CreateFrameAnimationStrategy(IAnimatedBoardModel& p_animationModel,
-                                                                      const IAnimatedBoardPresenter& p_presenter,
+                                                                      IAnimatedBoardPresenter& p_presenter,
                                                                       const BoardAnimation p_animation);
 
 } // namespace cxgui

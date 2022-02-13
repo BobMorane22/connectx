@@ -120,46 +120,21 @@ void cxgui::AnimatedBoard::PerformChipAnimation(BoardAnimation p_animation)
     switch(p_animation)
     {
         case cxgui::BoardAnimation::MOVE_CHIP_LEFT_ONE_COLUMN:
+        case cxgui::BoardAnimation::MOVE_CHIP_RIGHT_ONE_COLUMN:
         {
+            AnimationInformations<cxmath::Width>* horizontalAnimationInfo = &m_moveRightAnimationInfo;
+            if(p_animation == cxgui::BoardAnimation::MOVE_CHIP_LEFT_ONE_COLUMN)
+            {
+                horizontalAnimationInfo = &m_moveLeftAnimationInfo;
+            }
+
             auto strategy = CreateFrameAnimationStrategy(*m_animationModel, *m_presenter, p_animation);
             IF_CONDITION_NOT_MET_DO(strategy, return;);
 
-            const auto res = strategy->PerformAnimation(m_moveLeftAnimationInfo, m_dropAnimationInfo);
+            const auto res = strategy->PerformAnimation(*horizontalAnimationInfo, m_dropAnimationInfo);
             if(res)
             {
                 Notify(*res);
-            }
-
-            break;
-        }
-        case cxgui::BoardAnimation::MOVE_CHIP_RIGHT_ONE_COLUMN:
-        {
-            const double nbFramesPerChip = fps / speed;
-
-            const double oneAnimationWidth = m_animationModel->GetAnimatedAreaDimensions().m_width.Get() / m_presenter->GetBoardWidth().Get();
-            const cxmath::Width delta{oneAnimationWidth / nbFramesPerChip};
-
-            if(m_moveRightAnimationInfo.m_currentDisplacement.Get() >= oneAnimationWidth || std::abs(m_moveRightAnimationInfo.m_currentDisplacement.Get() - oneAnimationWidth) <= 1e-6)
-            {
-                if(m_animationModel->GetCurrentColumn() >= cxmodel::Column{m_presenter->GetBoardWidth().Get() - 1u})
-                {
-                    m_animationModel->UpdateCurrentColumn(cxmodel::Column{0u});
-                }
-                else
-                {
-                    m_animationModel->UpdateCurrentColumn(m_animationModel->GetCurrentColumn() + cxmodel::Column{1u});
-                }
-
-                // End animation:
-                m_moveRightAnimationInfo.Reset();
-                m_presenter->Sync();
-                Notify(cxgui::BoardAnimationNotificationContext::POST_ANIMATE_MOVE_RIGHT_ONE_COLUMN);
-                return;
-            }
-            else
-            {
-                m_animationModel->AddChipDisplacement(cxmath::Height{0.0}, delta);
-                m_moveRightAnimationInfo.m_currentDisplacement += delta;
             }
 
             break;

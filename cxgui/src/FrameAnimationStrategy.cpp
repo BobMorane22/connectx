@@ -83,7 +83,7 @@ private:
 };
 
 std::optional<cxgui::BoardAnimationNotificationContext> MoveChipLeftOneColumnFrameAnimationStrategy::MoveChipLeftOneColumnFrameAnimationStrategy::PerformAnimation(cxgui::AnimationInformations<cxmath::Width>& p_horizontalAnimationInfo,
-                                                                                                                                                                          [[maybe_unused]] cxgui::AnimationInformations<cxmath::Height>& p_verticalAnimationInfo)
+                                                                                                                                                                   [[maybe_unused]] cxgui::AnimationInformations<cxmath::Height>& p_verticalAnimationInfo)
 {
     const double fps = static_cast<double>(m_animationModel.GetFPS().Get());
     const double speed = static_cast<double>(m_animationModel.GetAnimationSpeed().Get());
@@ -117,6 +117,66 @@ std::optional<cxgui::BoardAnimationNotificationContext> MoveChipLeftOneColumnFra
     return std::nullopt;
 }
 
+/**************************************************************************************************
+ * Move chip right one column strategy.
+ *
+ *************************************************************************************************/
+class MoveChipRightOneColumnFrameAnimationStrategy : public IFrameAnimationStrategy
+{
+
+public:
+
+    MoveChipRightOneColumnFrameAnimationStrategy(IAnimatedBoardModel& p_animationModel,
+                                                 IAnimatedBoardPresenter& p_presenter)
+    : m_animationModel{p_animationModel}
+    , m_presenter{p_presenter}
+    {
+    }
+
+    std::optional<BoardAnimationNotificationContext> PerformAnimation(AnimationInformations<cxmath::Width>& p_horizontalAnimationInfo,
+                                                                      AnimationInformations<cxmath::Height>& p_verticalAnimationInfo) override;
+
+private:
+
+    IAnimatedBoardModel& m_animationModel;
+    IAnimatedBoardPresenter& m_presenter;
+};
+
+std::optional<cxgui::BoardAnimationNotificationContext> MoveChipRightOneColumnFrameAnimationStrategy::MoveChipRightOneColumnFrameAnimationStrategy::PerformAnimation(cxgui::AnimationInformations<cxmath::Width>& p_horizontalAnimationInfo,
+                                                                                                                                                                    [[maybe_unused]] cxgui::AnimationInformations<cxmath::Height>& p_verticalAnimationInfo)
+{
+    const double fps = static_cast<double>(m_animationModel.GetFPS().Get());
+    const double speed = static_cast<double>(m_animationModel.GetAnimationSpeed().Get());
+    const double nbFramesPerChip = fps / speed;
+
+    const double oneAnimationWidth = m_animationModel.GetAnimatedAreaDimensions().m_width.Get() / m_presenter.GetBoardWidth().Get();
+    const cxmath::Width delta{oneAnimationWidth / nbFramesPerChip};
+
+    if(p_horizontalAnimationInfo.m_currentDisplacement.Get() >= oneAnimationWidth || std::abs(p_horizontalAnimationInfo.m_currentDisplacement.Get() - oneAnimationWidth) <= 1e-6)
+    {
+        if(m_animationModel.GetCurrentColumn() >= cxmodel::Column{m_presenter.GetBoardWidth().Get() - 1u})
+        {
+            m_animationModel.UpdateCurrentColumn(cxmodel::Column{0u});
+        }
+        else
+        {
+            m_animationModel.UpdateCurrentColumn(m_animationModel.GetCurrentColumn() + cxmodel::Column{1u});
+        }
+
+        // End animation:
+        p_horizontalAnimationInfo.Reset();
+        m_presenter.Sync();
+        return cxgui::BoardAnimationNotificationContext::POST_ANIMATE_MOVE_RIGHT_ONE_COLUMN;
+    }
+    else
+    {
+        m_animationModel.AddChipDisplacement(cxmath::Height{0.0}, delta);
+        p_horizontalAnimationInfo.m_currentDisplacement += delta;
+    }
+
+    return std::nullopt;
+}
+
 } // unamed namespace
 
 
@@ -125,13 +185,16 @@ std::optional<cxgui::BoardAnimationNotificationContext> MoveChipLeftOneColumnFra
  *
  *************************************************************************************************/
 std::unique_ptr<IFrameAnimationStrategy> cxgui::CreateFrameAnimationStrategy(IAnimatedBoardModel& p_animationModel,
-                                                                             const IAnimatedBoardPresenter& p_presenter,
+                                                                             IAnimatedBoardPresenter& p_presenter,
                                                                              const BoardAnimation p_animation)
 {
     switch(p_animation)
     {
         case cxgui::BoardAnimation::MOVE_CHIP_LEFT_ONE_COLUMN:
             return std::make_unique<MoveChipLeftOneColumnFrameAnimationStrategy>(p_animationModel, p_presenter);
+
+        case cxgui::BoardAnimation::MOVE_CHIP_RIGHT_ONE_COLUMN:
+            return std::make_unique<MoveChipRightOneColumnFrameAnimationStrategy>(p_animationModel, p_presenter);
 
         default:
             return std::make_unique<NoFrameAnimationStrategy>();
