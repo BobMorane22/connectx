@@ -36,6 +36,7 @@
 #include <cxgui/AnimatedBoardPresenter.h>
 #include <cxgui/common.h>
 #include <cxgui/ContextRestoreRAII.h>
+#include <cxgui/FrameAnimationStrategy.h>
 #include <cxgui/IGameViewPresenter.h>
 #include <cxgui/pathHelpers.h>
 
@@ -120,32 +121,13 @@ void cxgui::AnimatedBoard::PerformChipAnimation(BoardAnimation p_animation)
     {
         case cxgui::BoardAnimation::MOVE_CHIP_LEFT_ONE_COLUMN:
         {
-            const double nbFramesPerChip = fps / speed;
+            auto strategy = CreateFrameAnimationStrategy(*m_animationModel, *m_presenter, p_animation);
+            IF_CONDITION_NOT_MET_DO(strategy, return;);
 
-            const double oneAnimationWidth = m_animationModel->GetAnimatedAreaDimensions().m_width.Get() / m_presenter->GetBoardWidth().Get();
-            const cxmath::Width delta{oneAnimationWidth / nbFramesPerChip};
-
-            if(m_moveLeftAnimationInfo.m_currentDisplacement.Get() >= oneAnimationWidth || std::abs(m_moveLeftAnimationInfo.m_currentDisplacement.Get() - oneAnimationWidth) <= 1e-6)
+            const auto res = strategy->PerformAnimation(m_moveLeftAnimationInfo, m_dropAnimationInfo);
+            if(res)
             {
-                if(m_animationModel->GetCurrentColumn() <= cxmodel::Column{0u})
-                {
-                    const cxmodel::Column currentColumn{m_presenter->GetBoardWidth().Get() - 1u};
-                    m_animationModel->UpdateCurrentColumn(currentColumn);
-                }
-                else
-                {
-                    m_animationModel->UpdateCurrentColumn(m_animationModel->GetCurrentColumn() - cxmodel::Column{1u});
-                }
-
-                // End animation:
-                m_moveLeftAnimationInfo.Reset();
-                Notify(cxgui::BoardAnimationNotificationContext::POST_ANIMATE_MOVE_LEFT_ONE_COLUMN);
-                return;
-            }
-            else
-            {
-                m_animationModel->AddChipDisplacement(cxmath::Height{0.0}, -delta);
-                m_moveLeftAnimationInfo.m_currentDisplacement += delta;
+                Notify(*res);
             }
 
             break;
