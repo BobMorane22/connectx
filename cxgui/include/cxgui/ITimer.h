@@ -84,7 +84,7 @@ public:
      *      The period of time (in ms) in between each timer tick.
      *
      * @pre
-     *      The period is greater than 0.
+     *      The period is greater than 0 ms.
      *
      *************************************************************************************************/
     virtual void SetPeriod(Period&& p_period) = 0;
