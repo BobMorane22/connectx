@@ -21,8 +21,11 @@
  *
  *************************************************************************************************/
 
+#include <cmath>
+
 #include <cxinv/assertion.h>
 #include <cxgui/BoardAnimation.h>
+#include <cxmodel/Color.h>
 #include <cxgui/BoardAnimationNotificationContext.h>
 #include <cxgui/FrameAnimationStrategy.h>
 #include <cxgui/IAnimatedBoardModel.h>
@@ -177,6 +180,84 @@ std::optional<cxgui::BoardAnimationNotificationContext> MoveChipRightOneColumnFr
     return std::nullopt;
 }
 
+/**************************************************************************************************
+ * Drop chip strategy.
+ *
+ *************************************************************************************************/
+class DropChipFrameAnimationStrategy : public IFrameAnimationStrategy
+{
+
+public:
+
+    DropChipFrameAnimationStrategy(IAnimatedBoardModel& p_animationModel,
+                                   IAnimatedBoardPresenter& p_presenter)
+    : m_animationModel{p_animationModel}
+    , m_presenter{p_presenter}
+    {
+    }
+
+    std::optional<BoardAnimationNotificationContext> PerformAnimation(AnimationInformations<cxmath::Width>& p_horizontalAnimationInfo,
+                                                                      AnimationInformations<cxmath::Height>& p_verticalAnimationInfo) override;
+
+private:
+
+    cxmodel::Row GetDropPosition(const cxmodel::Column& p_column) const;
+
+    IAnimatedBoardModel& m_animationModel;
+    IAnimatedBoardPresenter& m_presenter;
+};
+
+cxmodel::Row DropChipFrameAnimationStrategy::GetDropPosition(const cxmodel::Column& p_column) const
+{
+    const IGameViewPresenter::ChipColors& chipColors = m_presenter.GetBoardChipColors();
+
+    for(int row = m_presenter.GetBoardHeight().Get() - 1; row >= 0; --row)
+    {
+        if(chipColors[row][p_column.Get()] == cxmodel::MakeTransparent())
+        {
+            return cxmodel::Row{static_cast<size_t>(row)};
+        }
+    }
+
+    return cxmodel::Row{0};
+}
+
+std::optional<cxgui::BoardAnimationNotificationContext> DropChipFrameAnimationStrategy::DropChipFrameAnimationStrategy::PerformAnimation([[maybe_unused]] cxgui::AnimationInformations<cxmath::Width>& p_horizontalAnimationInfo,
+                                                                                                                                         cxgui::AnimationInformations<cxmath::Height>& p_verticalAnimationInfo)
+{
+    const double fps = static_cast<double>(m_animationModel.GetFPS().Get());
+    const double speed = static_cast<double>(m_animationModel.GetAnimationSpeed().Get());
+
+    const double cellHeight = m_animationModel.GetCellDimensions().m_height.Get();
+    const double oneAnimationHeight = (GetDropPosition(m_animationModel.GetCurrentColumn()) + cxmodel::Row{1}).Get() * cellHeight;
+
+    // Since the falling distance may vary, the number of frames needed for the
+    // animation has to be adjusted to make sure the speed is constant for the user:
+    const double relativeFPS = fps * (oneAnimationHeight / (m_animationModel.GetAnimatedAreaDimensions().m_height.Get() - cellHeight));
+    const cxmath::Height delta{oneAnimationHeight / std::ceil(relativeFPS / speed)};
+
+    if(p_verticalAnimationInfo.m_currentDisplacement.Get() >= oneAnimationHeight || std::abs(p_verticalAnimationInfo.m_currentDisplacement.Get() - oneAnimationHeight) <= 1e-6)
+    {
+        // End animation:
+        p_verticalAnimationInfo.Reset();
+
+        // Reinitialize chip:
+        m_animationModel.ResetChipPositions();
+        m_animationModel.UpdateCurrentColumn(cxmodel::Column{0u});
+
+        m_presenter.Sync();
+
+        return cxgui::BoardAnimationNotificationContext::POST_ANIMATE_DROP_CHIP;
+    }
+    else
+    {
+        m_animationModel.AddChipDisplacement(delta, cxmath::Width{0.0});
+        p_verticalAnimationInfo.m_currentDisplacement += delta;
+    }
+
+    return std::nullopt;
+}
+
 } // unamed namespace
 
 
@@ -195,6 +276,9 @@ std::unique_ptr<IFrameAnimationStrategy> cxgui::CreateFrameAnimationStrategy(IAn
 
         case cxgui::BoardAnimation::MOVE_CHIP_RIGHT_ONE_COLUMN:
             return std::make_unique<MoveChipRightOneColumnFrameAnimationStrategy>(p_animationModel, p_presenter);
+
+        case cxgui::BoardAnimation::DROP_CHIP:
+            return std::make_unique<DropChipFrameAnimationStrategy>(p_animationModel, p_presenter);
 
         default:
             return std::make_unique<NoFrameAnimationStrategy>();

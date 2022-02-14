@@ -21,15 +21,10 @@
  *
  *************************************************************************************************/
 
-#include <algorithm>
-#include <chrono>
-#include <cmath>
-
 #include <gdkmm/display.h>
 #include <gdkmm/general.h>
 
 #include <cxinv/assertion.h>
-#include <cxmodel/Color.h>
 #include <cxmodel/Disc.h>
 #include <cxgui/AnimatedBoard.h>
 #include <cxgui/AnimatedBoardModel.h>
@@ -114,13 +109,11 @@ cxgui::AnimatedBoard::AnimatedBoard(const IGameViewPresenter& p_presenter, const
 // keeps track of all displacements. It also notifies when the animation completes.
 void cxgui::AnimatedBoard::PerformChipAnimation(BoardAnimation p_animation)
 {
-    const double fps = static_cast<double>(m_animationModel->GetFPS().Get());
-    const double speed = static_cast<double>(m_animationModel->GetAnimationSpeed().Get());
-
     switch(p_animation)
     {
         case cxgui::BoardAnimation::MOVE_CHIP_LEFT_ONE_COLUMN:
         case cxgui::BoardAnimation::MOVE_CHIP_RIGHT_ONE_COLUMN:
+        case cxgui::BoardAnimation::DROP_CHIP:
         {
             AnimationInformations<cxmath::Width>* horizontalAnimationInfo = &m_moveRightAnimationInfo;
             if(p_animation == cxgui::BoardAnimation::MOVE_CHIP_LEFT_ONE_COLUMN)
@@ -135,38 +128,6 @@ void cxgui::AnimatedBoard::PerformChipAnimation(BoardAnimation p_animation)
             if(res)
             {
                 Notify(*res);
-            }
-
-            break;
-        }
-        case cxgui::BoardAnimation::DROP_CHIP:
-        {
-            const double cellHeight = m_animationModel->GetCellDimensions().m_height.Get();
-            const double oneAnimationHeight = (GetDropPosition(m_animationModel->GetCurrentColumn()) + cxmodel::Row{1}).Get() * cellHeight;
-
-            // Since the falling distance may vary, the number of frames needed for the
-            // animation has to be adjusted to make sure the speed is constant for the user:
-            const double relativeFPS = fps * (oneAnimationHeight / (m_animationModel->GetAnimatedAreaDimensions().m_height.Get() - cellHeight));
-            const cxmath::Height delta{oneAnimationHeight / std::ceil(relativeFPS / speed)};
-
-            if(m_dropAnimationInfo.m_currentDisplacement.Get() >= oneAnimationHeight || std::abs(m_dropAnimationInfo.m_currentDisplacement.Get() - oneAnimationHeight) <= 1e-6)
-            {
-                // End animation:
-                m_dropAnimationInfo.Reset();
-
-                // Reinitialize chip:
-                m_animationModel->ResetChipPositions();
-                m_animationModel->UpdateCurrentColumn(cxmodel::Column{0u});
-
-                m_presenter->Sync();
-
-                Notify(cxgui::BoardAnimationNotificationContext::POST_ANIMATE_DROP_CHIP);
-                return;
-            }
-            else
-            {
-                m_animationModel->AddChipDisplacement(delta, cxmath::Width{0.0});
-                m_dropAnimationInfo.m_currentDisplacement += delta;
             }
 
             break;
@@ -525,21 +486,6 @@ void cxgui::AnimatedBoard::Update(cxgui::BoardAnimationNotificationContext p_con
             ASSERT_ERROR_MSG("Unsupported notification context");
         }
     }
-}
-
-cxmodel::Row cxgui::AnimatedBoard::GetDropPosition(const cxmodel::Column& p_column) const
-{
-    const IGameViewPresenter::ChipColors& chipColors = m_presenter->GetBoardChipColors();
-
-    for(int row = m_presenter->GetBoardHeight().Get() - 1; row >= 0; --row)
-    {
-        if(chipColors[row][p_column.Get()] == cxmodel::MakeTransparent())
-        {
-            return cxmodel::Row{static_cast<size_t>(row)};
-        }
-    }
-
-    return cxmodel::Row{0};
 }
 
 // Computes the best chip dimension so that the game view, when the board is present with all

@@ -106,7 +106,6 @@ private:
 
     void Update(cxgui::BoardAnimationNotificationContext p_context, BoardAnimationSubject* p_subject) override;
 
-    [[nodiscard]] cxmodel::Row GetDropPosition(const cxmodel::Column& p_column) const;
     [[nodiscard]] int ComputeMinimumChipDimension(size_t p_nbRows, size_t p_nbColumns) const;
 
     // A Game View presenter cache.
