@@ -114,6 +114,8 @@ void cxgui::AnimatedBoard::PerformChipAnimation(BoardAnimation p_animation)
         case cxgui::BoardAnimation::MOVE_CHIP_LEFT_ONE_COLUMN:
         case cxgui::BoardAnimation::MOVE_CHIP_RIGHT_ONE_COLUMN:
         case cxgui::BoardAnimation::DROP_CHIP:
+        case cxgui::BoardAnimation::UNDO_DROP_CHIP:
+        case cxgui::BoardAnimation::REDO_DROP_CHIP:
         {
             AnimationInformations<cxmath::Width>* horizontalAnimationInfo = &m_moveRightAnimationInfo;
             if(p_animation == cxgui::BoardAnimation::MOVE_CHIP_LEFT_ONE_COLUMN)
@@ -130,28 +132,6 @@ void cxgui::AnimatedBoard::PerformChipAnimation(BoardAnimation p_animation)
                 Notify(*res);
             }
 
-            break;
-        }
-        case cxgui::BoardAnimation::UNDO_DROP_CHIP:
-        {
-            // Reinitialize chip:
-            m_animationModel->ResetChipPositions();
-            m_animationModel->UpdateCurrentColumn(cxmodel::Column{0u});
-
-            m_presenter->Sync();
-
-            Notify(cxgui::BoardAnimationNotificationContext::POST_ANIMATE_UNDO_DROP_CHIP);
-            break;
-        }
-        case cxgui::BoardAnimation::REDO_DROP_CHIP:
-        {
-            // Reinitialize chip:
-            m_animationModel->ResetChipPositions();
-            m_animationModel->UpdateCurrentColumn(cxmodel::Column{0u});
-
-            m_presenter->Sync();
-
-            Notify(cxgui::BoardAnimationNotificationContext::POST_ANIMATE_REDO_DROP_CHIP);
             break;
         }
         case cxgui::BoardAnimation::REINITIALIZE:
