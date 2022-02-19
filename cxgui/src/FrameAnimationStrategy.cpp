@@ -336,6 +336,45 @@ std::optional<cxgui::BoardAnimationNotificationContext> RedoDropChipFrameAnimati
     return cxgui::BoardAnimationNotificationContext::POST_ANIMATE_REDO_DROP_CHIP;
 }
 
+/**************************************************************************************************
+ * Reinitialize strategy.
+ *
+ *************************************************************************************************/
+class ReinitializeFrameAnimationStrategy : public IFrameAnimationStrategy
+{
+
+public:
+
+    ReinitializeFrameAnimationStrategy(IAnimatedBoardModel& p_animationModel,
+                                       IAnimatedBoardPresenter& p_presenter)
+    : m_animationModel{p_animationModel}
+    , m_presenter{p_presenter}
+    {
+    }
+
+    std::optional<BoardAnimationNotificationContext> PerformAnimation(AnimationInformations<cxmath::Width>& p_horizontalAnimationInfo,
+                                                                      AnimationInformations<cxmath::Height>& p_verticalAnimationInfo) override;
+
+private:
+
+    cxmodel::Row GetDropPosition(const cxmodel::Column& p_column) const;
+
+    IAnimatedBoardModel& m_animationModel;
+    IAnimatedBoardPresenter& m_presenter;
+};
+
+std::optional<cxgui::BoardAnimationNotificationContext> ReinitializeFrameAnimationStrategy::ReinitializeFrameAnimationStrategy::PerformAnimation([[maybe_unused]] cxgui::AnimationInformations<cxmath::Width>& p_horizontalAnimationInfo,
+                                                                                                                                                 [[maybe_unused]] cxgui::AnimationInformations<cxmath::Height>& p_verticalAnimationInfo)
+{
+    // Reinitialize chip:
+    m_animationModel.ResetChipPositions();
+    m_animationModel.UpdateCurrentColumn(cxmodel::Column{0u});
+    
+    m_presenter.Sync();
+    
+    return cxgui::BoardAnimationNotificationContext::POST_ANIMATE_REINITIALIZE_BOARD;
+}
+
 } // unamed namespace
 
 
@@ -363,6 +402,9 @@ std::unique_ptr<IFrameAnimationStrategy> cxgui::CreateFrameAnimationStrategy(IAn
 
         case cxgui::BoardAnimation::REDO_DROP_CHIP:
             return std::make_unique<RedoDropChipFrameAnimationStrategy>(p_animationModel, p_presenter);
+
+        case cxgui::BoardAnimation::REINITIALIZE:
+            return std::make_unique<ReinitializeFrameAnimationStrategy>(p_animationModel, p_presenter);
 
         default:
             return std::make_unique<NoFrameAnimationStrategy>();

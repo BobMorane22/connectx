@@ -109,47 +109,24 @@ cxgui::AnimatedBoard::AnimatedBoard(const IGameViewPresenter& p_presenter, const
 // keeps track of all displacements. It also notifies when the animation completes.
 void cxgui::AnimatedBoard::PerformChipAnimation(BoardAnimation p_animation)
 {
-    switch(p_animation)
+    AnimationInformations<cxmath::Width>* horizontalAnimationInfo = &m_moveRightAnimationInfo;
+    if(p_animation == cxgui::BoardAnimation::MOVE_CHIP_LEFT_ONE_COLUMN)
     {
-        case cxgui::BoardAnimation::MOVE_CHIP_LEFT_ONE_COLUMN:
-        case cxgui::BoardAnimation::MOVE_CHIP_RIGHT_ONE_COLUMN:
-        case cxgui::BoardAnimation::DROP_CHIP:
-        case cxgui::BoardAnimation::UNDO_DROP_CHIP:
-        case cxgui::BoardAnimation::REDO_DROP_CHIP:
-        {
-            AnimationInformations<cxmath::Width>* horizontalAnimationInfo = &m_moveRightAnimationInfo;
-            if(p_animation == cxgui::BoardAnimation::MOVE_CHIP_LEFT_ONE_COLUMN)
-            {
-                horizontalAnimationInfo = &m_moveLeftAnimationInfo;
-            }
+        horizontalAnimationInfo = &m_moveLeftAnimationInfo;
+    }
 
-            auto strategy = CreateFrameAnimationStrategy(*m_animationModel, *m_presenter, p_animation);
-            IF_CONDITION_NOT_MET_DO(strategy, return;);
-
-            const auto res = strategy->PerformAnimation(*horizontalAnimationInfo, m_dropAnimationInfo);
-            if(res)
-            {
-                Notify(*res);
-            }
-
-            break;
-        }
-        case cxgui::BoardAnimation::REINITIALIZE:
-        {
-            // Reinitialize chip:
-            m_animationModel->ResetChipPositions();
-            m_animationModel->UpdateCurrentColumn(cxmodel::Column{0u});
-
-            m_boardElementsCache.Clear();
-            m_presenter->Sync();
-
-            Notify(cxgui::BoardAnimationNotificationContext::POST_ANIMATE_REINITIALIZE_BOARD);
-            break;
-        }
-        default:
-        {
-            ASSERT_ERROR_MSG("Unsupported move.");
-        }
+    if(p_animation == cxgui::BoardAnimation::REINITIALIZE)
+    {
+        m_boardElementsCache.Clear();
+    }
+    
+    auto strategy = CreateFrameAnimationStrategy(*m_animationModel, *m_presenter, p_animation);
+    IF_CONDITION_NOT_MET_DO(strategy, return;);
+    
+    const auto res = strategy->PerformAnimation(*horizontalAnimationInfo, m_dropAnimationInfo);
+    if(res)
+    {
+        Notify(*res);
     }
 }
 
