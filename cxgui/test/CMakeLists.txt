@@ -31,6 +31,7 @@ set(SOURCE_FILES
   AnimationInformationsTests.cpp
   ConfigurableMainWindowPresenterTestFixture.cpp
   extractRawUserInputTests.cpp
+  FrameAnimationStrategyTests.cpp
   GamePresenterTests.cpp
   GameResolutionDialogControllerTestFixture.cpp
   GameResolutionDialogControllerTests.cpp
