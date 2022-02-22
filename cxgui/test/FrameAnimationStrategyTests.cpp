@@ -25,6 +25,7 @@
 
 #include <memory>
 
+#include <cxunit/StdStreamRedirector.h>
 #include <cxgui/BoardAnimation.h>
 #include <cxgui/FrameAnimationStrategy.h>
 #include <cxgui/IAnimatedBoardPresenter.h>
@@ -110,6 +111,8 @@ private:
     std::unique_ptr<AnimatedBoardPresenterMock> m_presenter;
 
 };
+
+ADD_STREAM_REDIRECTORS(FrameAnimationTestFixture);
 
 void FrameAnimationTestFixture::AnimatedBoardModelMock::Update(const cxmath::Dimensions& /*p_widgetDimensions*/, bool /*p_isChipMovingHorizontally*/)
 {
@@ -271,11 +274,12 @@ TEST_F(FrameAnimationTestFixture, /*DISABLED_*/CreateFrameAnimationStrategy_Vali
     ASSERT_TRUE(strategy);
 }
 
-TEST_F(FrameAnimationTestFixture, /*DISABLED_*/CreateFrameAnimationStrategy_InvalidBoardAnimations_ValidNullObjectReturned)
+TEST_F(FrameAnimationTestFixtureStdErrStreamRedirector, /*DISABLED_*/CreateFrameAnimationStrategy_InvalidBoardAnimations_ValidNullObjectReturnedAndAsserts)
 {
     constexpr cxgui::BoardAnimation invalidBoardAnimation = static_cast<cxgui::BoardAnimation>(-1);
     auto strategy = cxgui::CreateFrameAnimationStrategy(ModelGet(), PresenterGet(), invalidBoardAnimation);
 
+    ASSERT_ASSERTION_FAILED(*this);
     ASSERT_TRUE(strategy);
 }
 
