@@ -604,6 +604,58 @@ TEST_F(FrameAnimationTestFixture, /*DISABLED_*/CreateFrameAnimationStrategy_Move
  * Unit tests for the "Undo drop chip" strategy.
  *
  *************************************************************************************************/
+TEST_F(FrameAnimationTestFixture, /*DISABLED_*/CreateFrameAnimationStrategy_UndoDropChip_AnimationInfoUpdated)
+{
+    // We create the strategy:
+    auto strategy = cxgui::CreateFrameAnimationStrategy(GetModel(),
+                                                        GetPresenter(),
+                                                        cxgui::BoardAnimation::UNDO_DROP_CHIP);
+    ASSERT_TRUE(strategy);
+
+    // We set up initial conditions:
+    auto [unusedH, unusedW] = MakeAnimationInformations(cxmath::Height{0.0}, cxmath::Width{0.0});
+    ConfigureModelAndPresenter(cxmodel::Height{6u}, cxmodel::Width{7u}, cxmodel::Column{4u});
+
+    ASSERT_TRUE(GetModel().GetCurrentColumn() == cxmodel::Column{4u});
+    ASSERT_TRUE((GetModel().GetChipPosition() == cxmath::Position{0.0, 0.0}));
+
+    // We run the strategy:
+    const auto notification = strategy->PerformAnimation(unusedW, unusedH);
+    ASSERT_TRUE(notification == cxgui::BoardAnimationNotificationContext::POST_ANIMATE_UNDO_DROP_CHIP);
+
+    // We check the column was reset:
+    ASSERT_TRUE(GetModel().GetCurrentColumn() == cxmodel::Column{0u});
+
+    // We check the chip location has not been updated:
+    ASSERT_DOUBLE_EQ(GetModel().GetChipPosition().m_x, 0.0);
+    ASSERT_DOUBLE_EQ(GetModel().GetChipPosition().m_y, 0.0);
+}
+
+TEST_F(FrameAnimationTestFixture, /*DISABLED_*/CreateFrameAnimationStrategy_UndoDropChip_AppropriateMethodsCalled)
+{
+    // We create the strategy:
+    auto strategy = cxgui::CreateFrameAnimationStrategy(GetModel(),
+                                                        GetPresenter(),
+                                                        cxgui::BoardAnimation::UNDO_DROP_CHIP);
+    ASSERT_TRUE(strategy);
+
+    // We set up initial conditions:
+    auto [unusedH, unusedW] = MakeAnimationInformations(cxmath::Height{0.0}, cxmath::Width{0.0});
+    ConfigureModelAndPresenter(cxmodel::Height{6u}, cxmodel::Width{7u}, cxmodel::Column{4u});
+
+    // We run the strategy:
+    const auto notification = strategy->PerformAnimation(unusedW, unusedH);
+    ASSERT_TRUE(notification == cxgui::BoardAnimationNotificationContext::POST_ANIMATE_UNDO_DROP_CHIP);
+
+    // We check what model and presenter methods were called:
+    ASSERT_FALSE(WasUpdateCalledOnModel());
+    ASSERT_FALSE(WasResizeCalledOnModel());
+    ASSERT_FALSE(WasAddChipDisplacementCalledOnModel());
+    ASSERT_TRUE(WasResetChipPositionsCalledOnModel());
+    ASSERT_TRUE(WasUpdateCurrentColumnCalledOnModel());
+
+    ASSERT_TRUE(WasSyncCalledOnPresenter());
+}
 
 /**************************************************************************************************
  * Unit tests for the "Redo drop chip" strategy.
