@@ -405,13 +405,47 @@ TEST_F(FrameAnimationTestFixture, /*DISABLED_*/CreateFrameAnimationStrategy_Vali
     ASSERT_TRUE(strategy);
 }
 
-TEST_F(FrameAnimationTestFixtureStdErrStreamRedirector, /*DISABLED_*/CreateFrameAnimationStrategy_InvalidBoardAnimations_ValidNullObjectReturnedAndAsserts)
+/**************************************************************************************************
+ * Unit tests for the null strategy object.
+ *
+ *************************************************************************************************/
+TEST_F(FrameAnimationTestFixtureStdErrStreamRedirector, /*DISABLED_*/CreateFrameAnimationStrategy_InvalidBoardAnimation_ValidNullObjectReturnedAndAsserts)
 {
     constexpr cxgui::BoardAnimation invalidBoardAnimation = static_cast<cxgui::BoardAnimation>(-1);
     auto strategy = cxgui::CreateFrameAnimationStrategy(GetModel(), GetPresenter(), invalidBoardAnimation);
 
     ASSERT_ASSERTION_FAILED(*this);
     ASSERT_TRUE(strategy);
+}
+
+TEST_F(FrameAnimationTestFixture, /*DISABLED_*/CreateFrameAnimationStrategy_InvalidBoardAnimation_NothingUpdated)
+{
+    // We create the strategy:
+    constexpr cxgui::BoardAnimation invalidBoardAnimation = static_cast<cxgui::BoardAnimation>(-1);
+    auto strategy = cxgui::CreateFrameAnimationStrategy(GetModel(), GetPresenter(), invalidBoardAnimation);
+    ASSERT_TRUE(strategy);
+
+    // We set up initial conditions:
+    auto [unused, widthInfo] = MakeAnimationInformations(cxmath::Height{0.0}, cxmath::Width{0.0});
+    ConfigureModelAndPresenter(cxmodel::Height{6u}, cxmodel::Width{7u}, cxmodel::Column{4u});
+
+    ASSERT_TRUE(GetModel().GetCurrentColumn() == cxmodel::Column{4u});
+    ASSERT_TRUE((GetModel().GetChipPosition() == cxmath::Position{0.0, 0.0}));
+    ASSERT_TRUE(widthInfo.m_currentDisplacement.Get() == 0.0);
+
+    // We run the strategy:
+    const auto notification = strategy->PerformAnimation(widthInfo, unused);
+    ASSERT_TRUE(notification == std::nullopt);
+
+    // We check the column was not updated, since the animation is not completed:
+    ASSERT_TRUE(GetModel().GetCurrentColumn() == cxmodel::Column{4u});
+
+    // We check the chip location has not been updated:
+    ASSERT_DOUBLE_EQ(GetModel().GetChipPosition().m_x, 0.0);
+    ASSERT_DOUBLE_EQ(GetModel().GetChipPosition().m_y, 0.0);
+
+    // We check how the width animation information was not updated:
+    ASSERT_DOUBLE_EQ(widthInfo.m_currentDisplacement.Get(), 0.0);
 }
 
 /**************************************************************************************************
