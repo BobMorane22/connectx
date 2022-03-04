@@ -209,17 +209,19 @@ private:
 
 cxmodel::Row DropChipFrameAnimationStrategy::GetDropPosition(const cxmodel::Column& p_column) const
 {
+    cxmodel::Row dropRow{0u};
     const IGameViewPresenter::ChipColors& chipColors = m_presenter.GetBoardChipColors();
 
     for(int row = m_presenter.GetBoardHeight().Get() - 1; row >= 0; --row)
     {
         if(chipColors[row][p_column.Get()] == cxmodel::MakeTransparent())
         {
-            return cxmodel::Row{static_cast<size_t>(row)};
+            dropRow = cxmodel::Row{static_cast<size_t>(row)};
+            break;
         }
     }
 
-    return cxmodel::Row{0};
+    return dropRow;
 }
 
 std::optional<cxgui::BoardAnimationNotificationContext> DropChipFrameAnimationStrategy::DropChipFrameAnimationStrategy::PerformAnimation([[maybe_unused]] cxgui::AnimationInformations<cxmath::Width>& p_horizontalAnimationInfo,

@@ -21,21 +21,6 @@
  *
  *************************************************************************************************/
 
-// Refactorings to complete:
-//
-//  1. Add a templated AreLogicallyEqual version. Consider using ULPs instead
-//     of an hardcoded threshold. When done, define it for every usage of
-//     ASSERT_DOUBLE_EQ in this file.
-//
-//  2. Trouver un moyen afin que ce genre de code:
-//
-//      ASSERT_TRUE((GetModel().GetChipPosition() == cxmath::Position{0.0, 0.0}));
-//
-//     puisse être réécrit sans redondance, comme ceci:
-//
-//      ASSERT_TRUE((GetModel().GetChipPosition() == {0.0, 0.0});
-//
-
 #include <gtest/gtest.h>
 
 #include <memory>
@@ -61,6 +46,7 @@ public:
     void SetFPSOnModel(const cxgui::FPS& p_fps);
     void SetAnimationSpeedOnModel(const cxgui::AnimationSpeed& p_animationSpeed);
     void SetCurrentColumnOnModel(const cxmodel::Column& p_currentColumn);
+    void SetCellDimensionsOnModel(const cxmath::Dimensions& p_cellDimensions);
 
     [[nodiscard]] bool WasUpdateCalledOnModel() const {return m_model->WasUpdateCalled();}
     [[nodiscard]] bool WasResizeCalledOnModel() const {return m_model->WasResizeCalled();}
@@ -72,6 +58,7 @@ public:
     cxgui::IAnimatedBoardPresenter& GetPresenter();
 
     void SetBoardDimensionsOnPresenter(const cxmodel::Height& p_nbRows, const cxmodel::Width& p_nbColumns);
+    void AddChipsToColumnOnPresenter(const cxmodel::Column& p_column, size_t p_nbOfChipsToAdd);
 
     [[nodiscard]] bool WasSyncCalledOnPresenter() const {return m_presenter->WasSyncCalled();}
 
@@ -110,6 +97,8 @@ private:
         void SetAnimatedAreaDimensions(const cxmath::Dimensions& p_widgetDimensions);
         void SetFPS(const cxgui::FPS& p_fps);
         void SetAnimationSpeed(const cxgui::AnimationSpeed& p_animationSpeed);
+        void SetCurrentColumn(const cxmodel::Column& p_currentColumn);
+        void SetCellDimensions(const cxmath::Dimensions& p_cellDimensions);
 
         [[nodiscard]] bool WasUpdateCalled() const {return m_updateCalled;}
         [[nodiscard]] bool WasResizeCalled() const {return m_resizeCalled;}
@@ -130,7 +119,7 @@ private:
         cxgui::AnimationSpeed m_animationSpeed{3u};
         cxmath::Position m_currentChipPosition;
 
-        cxmath::Dimensions m_dimension{cxmath::Height{0.0}, cxmath::Width{0.0}};
+        cxmath::Dimensions m_cellDimensions{cxmath::Height{0.0}, cxmath::Width{0.0}};
         cxmodel::Column m_currentColumn{0u};
     };
 
@@ -138,6 +127,8 @@ private:
     {
 
     public:
+
+        AnimatedBoardPresenterMock();
 
         // cxgui::IAnimatedBoardPresenter:
         void Sync() override;
@@ -148,10 +139,13 @@ private:
 
         // Testing:
         void SetBoardDimensions(const cxmodel::Height& p_nbRows, const cxmodel::Width& p_nbColumns);
+        void AddChipsToColumn(const cxmodel::Column& p_column, size_t p_nbOfChipsToAdd);
 
         [[nodiscard]] bool WasSyncCalled() const {return m_syncCalled;}
 
     private:
+
+        void ResetBoard();
 
         bool m_syncCalled = false;
 
@@ -215,7 +209,7 @@ const cxmath::Dimensions& FrameAnimationTestFixture::AnimatedBoardModelMock::Get
 
 const cxmath::Dimensions& FrameAnimationTestFixture::AnimatedBoardModelMock::GetCellDimensions() const
 {
-    return m_dimension;
+    return m_cellDimensions;
 }
 
 cxmath::Radius FrameAnimationTestFixture::AnimatedBoardModelMock::GetChipRadius() const
@@ -268,6 +262,21 @@ void FrameAnimationTestFixture::AnimatedBoardModelMock::SetAnimationSpeed(const 
     m_animationSpeed = p_animationSpeed;
 }
 
+void FrameAnimationTestFixture::AnimatedBoardModelMock::SetCurrentColumn(const cxmodel::Column& p_currentColumn)
+{
+    m_currentColumn = p_currentColumn;
+}
+
+void FrameAnimationTestFixture::AnimatedBoardModelMock::SetCellDimensions(const cxmath::Dimensions& p_cellDimensions)
+{
+    m_cellDimensions = p_cellDimensions;
+}
+
+FrameAnimationTestFixture::AnimatedBoardPresenterMock::AnimatedBoardPresenterMock()
+{
+    ResetBoard();
+}
+
 void FrameAnimationTestFixture::AnimatedBoardPresenterMock::Sync()
 {
     m_syncCalled = true;
@@ -297,6 +306,38 @@ void FrameAnimationTestFixture::AnimatedBoardPresenterMock::SetBoardDimensions(c
 {
     m_boardHeight = p_nbRows;
     m_boardWidth = p_nbColumns;
+
+    ResetBoard();
+}
+
+void FrameAnimationTestFixture::AnimatedBoardPresenterMock::AddChipsToColumn(const cxmodel::Column& p_column, size_t p_nbOfChipsToAdd)
+{
+    size_t chipsDropped = 0u;
+    for(int row = m_boardHeight.Get() - 1; row >= 0; --row)
+    {
+        if(chipsDropped < p_nbOfChipsToAdd)
+        {
+            m_chipColors[row][p_column.Get()] = cxmodel::MakeRed();
+            ++chipsDropped;
+        }
+        else
+        {
+            return;
+        }
+    }
+}
+
+void FrameAnimationTestFixture::AnimatedBoardPresenterMock::ResetBoard()
+{
+    for(size_t row = 0u; row < m_boardHeight.Get(); ++row)
+    {
+        m_chipColors.push_back(std::vector<cxmodel::ChipColor>());
+
+        for(size_t column = 0u; column < m_boardWidth.Get(); ++column)
+        {
+            m_chipColors[row].push_back(cxmodel::MakeTransparent());
+        }
+    }
 }
 
 FrameAnimationTestFixture::FrameAnimationTestFixture()
@@ -331,7 +372,12 @@ void FrameAnimationTestFixture::SetAnimationSpeedOnModel(const cxgui::AnimationS
 
 void FrameAnimationTestFixture::SetCurrentColumnOnModel(const cxmodel::Column& p_currentColumn)
 {
-    m_model->UpdateCurrentColumn(p_currentColumn);
+    m_model->SetCurrentColumn(p_currentColumn);
+}
+
+void FrameAnimationTestFixture::SetCellDimensionsOnModel(const cxmath::Dimensions& p_cellDimensions)
+{
+    m_model->SetCellDimensions(p_cellDimensions);
 }
 
 cxgui::IAnimatedBoardPresenter& FrameAnimationTestFixture::GetPresenter()
@@ -343,6 +389,13 @@ cxgui::IAnimatedBoardPresenter& FrameAnimationTestFixture::GetPresenter()
 void FrameAnimationTestFixture::SetBoardDimensionsOnPresenter(const cxmodel::Height& p_nbRows, const cxmodel::Width& p_nbColumns)
 {
     m_presenter->SetBoardDimensions(p_nbRows, p_nbColumns);
+}
+
+void FrameAnimationTestFixture::AddChipsToColumnOnPresenter(const cxmodel::Column& p_column, size_t p_nbOfChipsToAdd)
+{
+    EXPECT_TRUE(p_column.Get() < m_presenter->GetBoardWidth().Get());
+
+    m_presenter->AddChipsToColumn(p_column, p_nbOfChipsToAdd);
 }
 
 FrameAnimationTestFixture::BothAnimationInformations FrameAnimationTestFixture::MakeAnimationInformations(const cxmath::Height& p_verticalCurrentDisplacement, const cxmath::Width& p_horizontalCurrentDisplacement)
@@ -365,8 +418,11 @@ void FrameAnimationTestFixture::ConfigureModelAndPresenter(const cxmodel::Height
 
     SetBoardDimensionsOnPresenter(p_boardHeight, p_boardWidth);
 
-    const double widgetHeight = (p_boardHeight.Get() + 1u) * 10.0;
-    const double widgetWidth = (p_boardWidth.Get()) * 10.0;
+    const cxmath::Dimensions cellDimensions{cxmath::Height{10.0}, cxmath::Width{10.0}};
+    SetCellDimensionsOnModel(cellDimensions);
+
+    const double widgetHeight = (p_boardHeight.Get() + 1u) * cellDimensions.m_height.Get();
+    const double widgetWidth = (p_boardWidth.Get()) * cellDimensions.m_width.Get();
     SetAnimatedAreaDimensionsOnModel({cxmath::Height{widgetHeight}, cxmath::Width{widgetWidth}});
 }
 
@@ -418,7 +474,7 @@ TEST_F(FrameAnimationTestFixtureStdErrStreamRedirector, /*DISABLED_*/CreateFrame
     ASSERT_TRUE(strategy);
 }
 
-TEST_F(FrameAnimationTestFixture, /*DISABLED_*/CreateFrameAnimationStrategy_InvalidBoardAnimation_NothingUpdated)
+TEST_F(FrameAnimationTestFixtureStdErrStreamRedirector, /*DISABLED_*/CreateFrameAnimationStrategy_InvalidBoardAnimation_NothingUpdated)
 {
     // We create the strategy:
     constexpr cxgui::BoardAnimation invalidBoardAnimation = static_cast<cxgui::BoardAnimation>(-1);
@@ -504,7 +560,7 @@ TEST_F(FrameAnimationTestFixture, /*DISABLED_*/CreateFrameAnimationStrategy_Move
     ASSERT_FALSE(WasResizeCalledOnModel());
     ASSERT_TRUE(WasAddChipDisplacementCalledOnModel());
     ASSERT_FALSE(WasResetChipPositionsCalledOnModel());
-    ASSERT_TRUE(WasUpdateCurrentColumnCalledOnModel());
+    ASSERT_FALSE(WasUpdateCurrentColumnCalledOnModel());
 
     ASSERT_FALSE(WasSyncCalledOnPresenter());
 }
@@ -679,7 +735,7 @@ TEST_F(FrameAnimationTestFixture, /*DISABLED_*/CreateFrameAnimationStrategy_Move
     ASSERT_FALSE(WasResizeCalledOnModel());
     ASSERT_TRUE(WasAddChipDisplacementCalledOnModel());
     ASSERT_FALSE(WasResetChipPositionsCalledOnModel());
-    ASSERT_TRUE(WasUpdateCurrentColumnCalledOnModel());
+    ASSERT_FALSE(WasUpdateCurrentColumnCalledOnModel());
 
     ASSERT_FALSE(WasSyncCalledOnPresenter());
 }
@@ -802,6 +858,192 @@ TEST_F(FrameAnimationTestFixture, /*DISABLED_*/CreateFrameAnimationStrategy_Move
  * Unit tests for the "Drop chip" strategy.
  *
  *************************************************************************************************/
+struct DropChipStartAnimationData
+{
+    size_t m_nbOfChipsInBoard;
+    double m_currentDisplacement;
+
+    DropChipStartAnimationData(size_t p_nbOfChipsInBoard, double p_currentDisplacement)
+    : m_nbOfChipsInBoard{p_nbOfChipsInBoard}
+    , m_currentDisplacement{p_currentDisplacement}
+    {}
+};
+
+class FrameAnimationTestFixtureForDropChipStartAnimation : public FrameAnimationTestFixture,
+                                                           public testing::WithParamInterface<DropChipStartAnimationData>
+{
+};
+
+std::vector<DropChipStartAnimationData> MakeDropChipStartAnimationData()
+{
+    return
+        {
+            {0u, 7.5},
+            {1u, 7.1428571428571432},
+            {2u, 6.666666666666667},
+            {3u, 7.5},
+            {4u, 6.666666666666667},
+            {5u, 5.0},
+        };
+}
+
+INSTANTIATE_TEST_SUITE_P(DropChipStartAnimation,
+                         FrameAnimationTestFixtureForDropChipStartAnimation,
+                         testing::ValuesIn(MakeDropChipStartAnimationData()));
+
+TEST_P(FrameAnimationTestFixtureForDropChipStartAnimation, /*DISABLED_*/CreateFrameAnimationStrategy_DropChipAnimationStartWithChipsIn_AnimationInfoUpdatedAndNotificationReturned)
+{
+    // We create the strategy:
+    auto strategy = cxgui::CreateFrameAnimationStrategy(GetModel(),
+                                                        GetPresenter(),
+                                                        cxgui::BoardAnimation::DROP_CHIP);
+    ASSERT_TRUE(strategy);
+
+    // We set up initial conditions:
+    auto [heightInfo, unusedW] = MakeAnimationInformations(cxmath::Height{0.0}, cxmath::Width{0.0});
+    ConfigureModelAndPresenter(cxmodel::Height{6u}, cxmodel::Width{7u}, cxmodel::Column{4u});
+
+    // We add three chips to the board:
+    AddChipsToColumnOnPresenter(cxmodel::Column{4u}, GetParam().m_nbOfChipsInBoard);
+
+    ASSERT_TRUE(GetModel().GetCurrentColumn() == cxmodel::Column{4u});
+    ASSERT_TRUE((GetModel().GetChipPosition() == cxmath::Position{0.0, 0.0}));
+    ASSERT_TRUE(heightInfo.m_currentDisplacement.Get() == 0.0);
+
+    // We run the strategy:
+    const auto notification = strategy->PerformAnimation(unusedW, heightInfo);
+    ASSERT_TRUE(notification == std::nullopt);
+
+    // We check the column was not updated, since the animation is not completed:
+    ASSERT_TRUE(GetModel().GetCurrentColumn() == cxmodel::Column{4u});
+
+    // We check the chip location has been updated appropriately:
+    ASSERT_DOUBLE_EQ(GetModel().GetChipPosition().m_x, 0.0);
+    ASSERT_DOUBLE_EQ(GetModel().GetChipPosition().m_y, GetParam().m_currentDisplacement);
+
+    // We check how the width animation information was updated:
+    ASSERT_DOUBLE_EQ(heightInfo.m_currentDisplacement.Get(), GetParam().m_currentDisplacement);
+}
+
+TEST_F(FrameAnimationTestFixture, /*DISABLED_*/CreateFrameAnimationStrategy_DropChipAnimationStart_AppropriateMethodsCalled)
+{
+    // We create the strategy:
+    auto strategy = cxgui::CreateFrameAnimationStrategy(GetModel(),
+                                                        GetPresenter(),
+                                                        cxgui::BoardAnimation::DROP_CHIP);
+    ASSERT_TRUE(strategy);
+
+    // We set up initial conditions:
+    auto [heightInfo, unusedW] = MakeAnimationInformations(cxmath::Height{0.0}, cxmath::Width{0.0});
+    ConfigureModelAndPresenter(cxmodel::Height{6u}, cxmodel::Width{7u}, cxmodel::Column{4u});
+
+    // We run the strategy:
+    const auto notification = strategy->PerformAnimation(unusedW, heightInfo);
+    ASSERT_TRUE(notification == std::nullopt);
+
+    // We check what model and presenter methods were called:
+    ASSERT_FALSE(WasUpdateCalledOnModel());
+    ASSERT_FALSE(WasResizeCalledOnModel());
+    ASSERT_TRUE(WasAddChipDisplacementCalledOnModel());
+    ASSERT_FALSE(WasResetChipPositionsCalledOnModel());
+    ASSERT_FALSE(WasUpdateCurrentColumnCalledOnModel());
+
+    ASSERT_FALSE(WasSyncCalledOnPresenter());
+}
+
+struct DropChipEndAnimationData
+{
+    size_t m_nbOfChipsInBoard;
+    double m_animationFullHeight;
+
+    DropChipEndAnimationData(size_t p_nbOfChipsInBoard, double p_animationFullHeight)
+    : m_nbOfChipsInBoard{p_nbOfChipsInBoard}
+    , m_animationFullHeight{p_animationFullHeight}
+    {}
+};
+
+class FrameAnimationTestFixtureForDropChipEndAnimation : public FrameAnimationTestFixture,
+                                                         public testing::WithParamInterface<DropChipEndAnimationData>
+{
+};
+
+std::vector<DropChipEndAnimationData> MakeDropChipEndAnimationData()
+{
+    return
+        {
+            {0u, 60.0},
+            {1u, 50.0},
+            {2u, 40.0}, 
+            {3u, 30.0},
+            {4u, 20.0},
+            {5u, 10.0},
+        };
+}
+
+INSTANTIATE_TEST_SUITE_P(DropChipEndAnimation,
+                         FrameAnimationTestFixtureForDropChipEndAnimation,
+                         testing::ValuesIn(MakeDropChipEndAnimationData()));
+
+
+TEST_P(FrameAnimationTestFixtureForDropChipEndAnimation, /*DISABLED_*/CreateFrameAnimationStrategy_DropChipAnimationEnd_AnimationInfoUpdatedAndNotificationReturned)
+{
+    // We create the strategy:
+    auto strategy = cxgui::CreateFrameAnimationStrategy(GetModel(),
+                                                        GetPresenter(),
+                                                        cxgui::BoardAnimation::DROP_CHIP);
+    ASSERT_TRUE(strategy);
+
+    // We set up initial conditions:
+    auto [heightInfo, unusedW] = MakeAnimationInformations(cxmath::Height{GetParam().m_animationFullHeight}, cxmath::Width{0.0});
+    ConfigureModelAndPresenter(cxmodel::Height{6u}, cxmodel::Width{7u}, cxmodel::Column{4u});
+
+    // We add three chips to the board:
+    AddChipsToColumnOnPresenter(cxmodel::Column{4u}, GetParam().m_nbOfChipsInBoard);
+
+    ASSERT_TRUE(GetModel().GetCurrentColumn() == cxmodel::Column{4u});
+    ASSERT_TRUE((GetModel().GetChipPosition() == cxmath::Position{0.0, 0.0}));
+    ASSERT_TRUE(heightInfo.m_currentDisplacement.Get() == GetParam().m_animationFullHeight);
+
+    // We run the strategy:
+    const auto notification = strategy->PerformAnimation(unusedW, heightInfo);
+    ASSERT_TRUE(notification == cxgui::BoardAnimationNotificationContext::POST_ANIMATE_DROP_CHIP);
+
+    // We check the column was not updated, since the animation is not completed:
+    ASSERT_TRUE(GetModel().GetCurrentColumn() == cxmodel::Column{0u});
+
+    // We check the chip location has been updated appropriately:
+    ASSERT_DOUBLE_EQ(GetModel().GetChipPosition().m_x, 0.0);
+    ASSERT_DOUBLE_EQ(GetModel().GetChipPosition().m_y, 0.0);
+
+    // We check how the width animation information was updated:
+    ASSERT_DOUBLE_EQ(heightInfo.m_currentDisplacement.Get(), 0.0);
+}
+
+TEST_F(FrameAnimationTestFixture, /*DISABLED_*/CreateFrameAnimationStrategy_DropChipAnimationEnd_AppropriateMethodsCalled)
+{
+    // We create the strategy:
+    auto strategy = cxgui::CreateFrameAnimationStrategy(GetModel(),
+                                                        GetPresenter(),
+                                                        cxgui::BoardAnimation::DROP_CHIP);
+    ASSERT_TRUE(strategy);
+
+    // We set up initial conditions:
+    auto [heightInfo, unusedW] = MakeAnimationInformations(cxmath::Height{60.0}, cxmath::Width{0.0});
+    ConfigureModelAndPresenter(cxmodel::Height{6u}, cxmodel::Width{7u}, cxmodel::Column{4u});
+
+    // We run the strategy:
+    const auto notification = strategy->PerformAnimation(unusedW, heightInfo);
+    ASSERT_TRUE(notification == cxgui::BoardAnimationNotificationContext::POST_ANIMATE_DROP_CHIP);
+
+    // We check what model and presenter methods were called:
+    ASSERT_FALSE(WasUpdateCalledOnModel());
+    ASSERT_FALSE(WasResizeCalledOnModel());
+    ASSERT_FALSE(WasAddChipDisplacementCalledOnModel());
+    ASSERT_TRUE(WasResetChipPositionsCalledOnModel());
+    ASSERT_TRUE(WasUpdateCurrentColumnCalledOnModel());
+
+    ASSERT_TRUE(WasSyncCalledOnPresenter());
+}
 
 /**************************************************************************************************
  * Unit tests for the "Undo drop chip" strategy.
