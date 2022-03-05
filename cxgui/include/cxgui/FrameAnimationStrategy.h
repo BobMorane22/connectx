@@ -66,14 +66,15 @@ public:
     /******************************************************************************************//**
      * @brief Updates the frame according to a specific animation.
      *
-     * @param p_horizontalAnimationInfo The horizontal animation information.
      * @param p_verticalAnimationInfo   The vertical animation information.
+     * @param p_horizontalAnimationInfo The horizontal animation information.
      *
      * @return An optional notification to be handled by the caller.
      *
      *********************************************************************************************/
-    virtual std::optional<cxgui::BoardAnimationNotificationContext> PerformAnimation(cxgui::AnimationInformations<cxmath::Width>& p_horizontalAnimationInfo,
-                                                                                     cxgui::AnimationInformations<cxmath::Height>& p_verticalAnimationInfo) = 0;
+    virtual std::optional<cxgui::BoardAnimationNotificationContext> PerformAnimation(cxgui::AnimationInformations<cxmath::Height>& p_verticalAnimationInfo,
+                                                                                     cxgui::AnimationInformations<cxmath::Width>& p_horizontalAnimationInfo) = 0;
+
 
 };
 

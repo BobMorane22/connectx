@@ -230,7 +230,7 @@ TEST_F(FrameAnimationTestFixtureStdErrStreamRedirector, /*DISABLED_*/CreateFrame
     ASSERT_TRUE(widthInfo.m_currentDisplacement.Get() == 0.0);
 
     // We run the strategy:
-    const auto notification = strategy->PerformAnimation(widthInfo, unused);
+    const auto notification = strategy->PerformAnimation(unused, widthInfo);
     ASSERT_TRUE(notification == std::nullopt);
 
     // We check the column was not updated, since the animation is not completed:
@@ -265,7 +265,7 @@ TEST_F(FrameAnimationTestFixture, /*DISABLED_*/CreateFrameAnimationStrategy_Move
     ASSERT_TRUE(widthInfo.m_currentDisplacement.Get() == 0.0);
 
     // We run the strategy:
-    const auto notification = strategy->PerformAnimation(widthInfo, unused);
+    const auto notification = strategy->PerformAnimation(unused, widthInfo);
     ASSERT_TRUE(notification == std::nullopt);
 
     // We check the column was not updated, since the animation is not completed:
@@ -292,7 +292,7 @@ TEST_F(FrameAnimationTestFixture, /*DISABLED_*/CreateFrameAnimationStrategy_Move
     ConfigureModelAndPresenter(cxmodel::Height{6u}, cxmodel::Width{7u}, cxmodel::Column{4u});
 
     // We run the strategy:
-    const auto notification = strategy->PerformAnimation(widthInfo, unused);
+    const auto notification = strategy->PerformAnimation(unused, widthInfo);
     ASSERT_TRUE(notification == std::nullopt);
 
     // We check what model and presenter methods were called:
@@ -322,7 +322,7 @@ TEST_F(FrameAnimationTestFixture, /*DISABLED_*/CreateFrameAnimationStrategy_Move
     ASSERT_TRUE(widthInfo.m_currentDisplacement.Get() == 10.0);
 
     // We run the strategy:
-    const auto notification = strategy->PerformAnimation(widthInfo, unused);
+    const auto notification = strategy->PerformAnimation(unused, widthInfo);
     ASSERT_TRUE(notification == cxgui::BoardAnimationNotificationContext::POST_ANIMATE_MOVE_LEFT_ONE_COLUMN);
 
     // We check the column was updated:
@@ -349,7 +349,7 @@ TEST_F(FrameAnimationTestFixture, /*DISABLED_*/CreateFrameAnimationStrategy_Move
     ConfigureModelAndPresenter(cxmodel::Height{6u}, cxmodel::Width{7u}, cxmodel::Column{4u});
 
     // We run the strategy:
-    const auto notification = strategy->PerformAnimation(widthInfo, unused);
+    const auto notification = strategy->PerformAnimation(unused, widthInfo);
     ASSERT_TRUE(notification == cxgui::BoardAnimationNotificationContext::POST_ANIMATE_MOVE_LEFT_ONE_COLUMN);
 
     // We check what model and presenter methods were called:
@@ -379,7 +379,7 @@ TEST_F(FrameAnimationTestFixture, /*DISABLED_*/CreateFrameAnimationStrategy_Move
     ASSERT_TRUE(widthInfo.m_currentDisplacement.Get() == 10.0);
 
     // We run the strategy:
-    const auto notification = strategy->PerformAnimation(widthInfo, unused);
+    const auto notification = strategy->PerformAnimation(unused, widthInfo);
     ASSERT_TRUE(notification == cxgui::BoardAnimationNotificationContext::POST_ANIMATE_MOVE_LEFT_ONE_COLUMN);
 
     // We check the column was updated:
@@ -406,7 +406,7 @@ TEST_F(FrameAnimationTestFixture, /*DISABLED_*/CreateFrameAnimationStrategy_Move
     ConfigureModelAndPresenter(cxmodel::Height{6u}, cxmodel::Width{7u}, cxmodel::Column{0u});
 
     // We run the strategy:
-    const auto notification = strategy->PerformAnimation(widthInfo, unused);
+    const auto notification = strategy->PerformAnimation(unused, widthInfo);
     ASSERT_TRUE(notification == cxgui::BoardAnimationNotificationContext::POST_ANIMATE_MOVE_LEFT_ONE_COLUMN);
 
     // We check what model and presenter methods were called:
@@ -440,7 +440,7 @@ TEST_F(FrameAnimationTestFixture, /*DISABLED_*/CreateFrameAnimationStrategy_Move
     ASSERT_TRUE(widthInfo.m_currentDisplacement.Get() == 0.0);
 
     // We run the strategy:
-    const auto notification = strategy->PerformAnimation(widthInfo, unused);
+    const auto notification = strategy->PerformAnimation(unused, widthInfo);
     ASSERT_TRUE(notification == std::nullopt);
 
     // We check the column was not updated, since the animation is not completed:
@@ -467,7 +467,7 @@ TEST_F(FrameAnimationTestFixture, /*DISABLED_*/CreateFrameAnimationStrategy_Move
     ConfigureModelAndPresenter(cxmodel::Height{6u}, cxmodel::Width{7u}, cxmodel::Column{4u});
 
     // We run the strategy:
-    const auto notification = strategy->PerformAnimation(widthInfo, unused);
+    const auto notification = strategy->PerformAnimation(unused, widthInfo);
     ASSERT_TRUE(notification == std::nullopt);
 
     // We check what model and presenter methods were called:
@@ -497,7 +497,7 @@ TEST_F(FrameAnimationTestFixture, /*DISABLED_*/CreateFrameAnimationStrategy_Move
     ASSERT_TRUE(widthInfo.m_currentDisplacement.Get() == 10.0);
 
     // We run the strategy:
-    const auto notification = strategy->PerformAnimation(widthInfo, unused);
+    const auto notification = strategy->PerformAnimation(unused, widthInfo);
     ASSERT_TRUE(notification == cxgui::BoardAnimationNotificationContext::POST_ANIMATE_MOVE_RIGHT_ONE_COLUMN);
 
     // We check the column was updated:
@@ -524,7 +524,7 @@ TEST_F(FrameAnimationTestFixture, /*DISABLED_*/CreateFrameAnimationStrategy_Move
     ConfigureModelAndPresenter(cxmodel::Height{6u}, cxmodel::Width{7u}, cxmodel::Column{4u});
 
     // We run the strategy:
-    const auto notification = strategy->PerformAnimation(widthInfo, unused);
+    const auto notification = strategy->PerformAnimation(unused, widthInfo);
     ASSERT_TRUE(notification == cxgui::BoardAnimationNotificationContext::POST_ANIMATE_MOVE_RIGHT_ONE_COLUMN);
 
     // We check what model and presenter methods were called:
@@ -554,7 +554,7 @@ TEST_F(FrameAnimationTestFixture, /*DISABLED_*/CreateFrameAnimationStrategy_Move
     ASSERT_TRUE(widthInfo.m_currentDisplacement.Get() == 10.0);
 
     // We run the strategy:
-    const auto notification = strategy->PerformAnimation(widthInfo, unused);
+    const auto notification = strategy->PerformAnimation(unused, widthInfo);
     ASSERT_TRUE(notification == cxgui::BoardAnimationNotificationContext::POST_ANIMATE_MOVE_RIGHT_ONE_COLUMN);
 
     // We check the column was updated:
@@ -581,7 +581,7 @@ TEST_F(FrameAnimationTestFixture, /*DISABLED_*/CreateFrameAnimationStrategy_Move
     ConfigureModelAndPresenter(cxmodel::Height{6u}, cxmodel::Width{7u}, cxmodel::Column{6u});
 
     // We run the strategy:
-    const auto notification = strategy->PerformAnimation(widthInfo, unused);
+    const auto notification = strategy->PerformAnimation(unused, widthInfo);
     ASSERT_TRUE(notification == cxgui::BoardAnimationNotificationContext::POST_ANIMATE_MOVE_RIGHT_ONE_COLUMN);
 
     // We check what model and presenter methods were called:
@@ -651,7 +651,7 @@ TEST_P(FrameAnimationTestFixtureForDropChipStartAnimation, /*DISABLED_*/CreateFr
     ASSERT_TRUE(heightInfo.m_currentDisplacement.Get() == 0.0);
 
     // We run the strategy:
-    const auto notification = strategy->PerformAnimation(unusedW, heightInfo);
+    const auto notification = strategy->PerformAnimation(heightInfo, unusedW);
     ASSERT_TRUE(notification == std::nullopt);
 
     // We check the column was not updated, since the animation is not completed:
@@ -678,7 +678,7 @@ TEST_F(FrameAnimationTestFixture, /*DISABLED_*/CreateFrameAnimationStrategy_Drop
     ConfigureModelAndPresenter(cxmodel::Height{6u}, cxmodel::Width{7u}, cxmodel::Column{4u});
 
     // We run the strategy:
-    const auto notification = strategy->PerformAnimation(unusedW, heightInfo);
+    const auto notification = strategy->PerformAnimation(heightInfo, unusedW);
     ASSERT_TRUE(notification == std::nullopt);
 
     // We check what model and presenter methods were called:
@@ -745,7 +745,7 @@ TEST_P(FrameAnimationTestFixtureForDropChipEndAnimation, /*DISABLED_*/CreateFram
     ASSERT_TRUE(heightInfo.m_currentDisplacement.Get() == GetParam().m_animationFullHeight);
 
     // We run the strategy:
-    const auto notification = strategy->PerformAnimation(unusedW, heightInfo);
+    const auto notification = strategy->PerformAnimation(heightInfo, unusedW);
     ASSERT_TRUE(notification == cxgui::BoardAnimationNotificationContext::POST_ANIMATE_DROP_CHIP);
 
     // We check the column was not updated, since the animation is not completed:
@@ -772,7 +772,7 @@ TEST_F(FrameAnimationTestFixture, /*DISABLED_*/CreateFrameAnimationStrategy_Drop
     ConfigureModelAndPresenter(cxmodel::Height{6u}, cxmodel::Width{7u}, cxmodel::Column{4u});
 
     // We run the strategy:
-    const auto notification = strategy->PerformAnimation(unusedW, heightInfo);
+    const auto notification = strategy->PerformAnimation(heightInfo, unusedW);
     ASSERT_TRUE(notification == cxgui::BoardAnimationNotificationContext::POST_ANIMATE_DROP_CHIP);
 
     // We check what model and presenter methods were called:
@@ -805,7 +805,7 @@ TEST_F(FrameAnimationTestFixture, /*DISABLED_*/CreateFrameAnimationStrategy_Undo
     ASSERT_TRUE((GetModel().GetChipPosition() == cxmath::Position{0.0, 0.0}));
 
     // We run the strategy:
-    const auto notification = strategy->PerformAnimation(unusedW, unusedH);
+    const auto notification = strategy->PerformAnimation(unusedH, unusedW);
     ASSERT_TRUE(notification == cxgui::BoardAnimationNotificationContext::POST_ANIMATE_UNDO_DROP_CHIP);
 
     // We check the column was reset:
@@ -829,7 +829,7 @@ TEST_F(FrameAnimationTestFixture, /*DISABLED_*/CreateFrameAnimationStrategy_Undo
     ConfigureModelAndPresenter(cxmodel::Height{6u}, cxmodel::Width{7u}, cxmodel::Column{4u});
 
     // We run the strategy:
-    const auto notification = strategy->PerformAnimation(unusedW, unusedH);
+    const auto notification = strategy->PerformAnimation(unusedH, unusedW);
     ASSERT_TRUE(notification == cxgui::BoardAnimationNotificationContext::POST_ANIMATE_UNDO_DROP_CHIP);
 
     // We check what model and presenter methods were called:
@@ -862,7 +862,7 @@ TEST_F(FrameAnimationTestFixture, /*DISABLED_*/CreateFrameAnimationStrategy_Redo
     ASSERT_TRUE((GetModel().GetChipPosition() == cxmath::Position{0.0, 0.0}));
 
     // We run the strategy:
-    const auto notification = strategy->PerformAnimation(unusedW, unusedH);
+    const auto notification = strategy->PerformAnimation(unusedH, unusedW);
     ASSERT_TRUE(notification == cxgui::BoardAnimationNotificationContext::POST_ANIMATE_REDO_DROP_CHIP);
 
     // We check the column was reset:
@@ -886,7 +886,7 @@ TEST_F(FrameAnimationTestFixture, /*DISABLED_*/CreateFrameAnimationStrategy_Redo
     ConfigureModelAndPresenter(cxmodel::Height{6u}, cxmodel::Width{7u}, cxmodel::Column{4u});
 
     // We run the strategy:
-    const auto notification = strategy->PerformAnimation(unusedW, unusedH);
+    const auto notification = strategy->PerformAnimation(unusedH, unusedW);
     ASSERT_TRUE(notification == cxgui::BoardAnimationNotificationContext::POST_ANIMATE_REDO_DROP_CHIP);
 
     // We check what model and presenter methods were called:
@@ -919,7 +919,7 @@ TEST_F(FrameAnimationTestFixture, /*DISABLED_*/CreateFrameAnimationStrategy_Resi
     ASSERT_TRUE((GetModel().GetChipPosition() == cxmath::Position{0.0, 0.0}));
 
     // We run the strategy:
-    const auto notification = strategy->PerformAnimation(unusedW, unusedH);
+    const auto notification = strategy->PerformAnimation(unusedH, unusedW);
     ASSERT_TRUE(notification == cxgui::BoardAnimationNotificationContext::POST_ANIMATE_REINITIALIZE_BOARD);
 
     // We check the column was reset:
@@ -943,7 +943,7 @@ TEST_F(FrameAnimationTestFixture, /*DISABLED_*/CreateFrameAnimationStrategy_Rein
     ConfigureModelAndPresenter(cxmodel::Height{6u}, cxmodel::Width{7u}, cxmodel::Column{4u});
 
     // We run the strategy:
-    const auto notification = strategy->PerformAnimation(unusedW, unusedH);
+    const auto notification = strategy->PerformAnimation(unusedH, unusedW);
     ASSERT_TRUE(notification == cxgui::BoardAnimationNotificationContext::POST_ANIMATE_REINITIALIZE_BOARD);
 
     // We check what model and presenter methods were called:

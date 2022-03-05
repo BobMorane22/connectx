@@ -123,7 +123,7 @@ void cxgui::AnimatedBoard::PerformChipAnimation(BoardAnimation p_animation)
     auto strategy = CreateFrameAnimationStrategy(*m_animationModel, *m_presenter, p_animation);
     IF_CONDITION_NOT_MET_DO(strategy, return;);
     
-    const auto res = strategy->PerformAnimation(*horizontalAnimationInfo, m_dropAnimationInfo);
+    const auto res = strategy->PerformAnimation(m_dropAnimationInfo, *horizontalAnimationInfo);
     if(res)
     {
         Notify(*res);
