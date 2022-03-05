@@ -26,7 +26,9 @@
 set(SOURCE_FILES
   AboutWindowPresenterTestFixture.cpp
   AboutWindowPresenterTests.cpp
+  AnimatedBoardModelMock.cpp
   AnimatedBoardModelTests.cpp
+  AnimatedBoardPresenterMock.cpp
   AnimatedBoardPresenterTests.cpp
   AnimationInformationsTests.cpp
   ConfigurableMainWindowPresenterTestFixture.cpp
