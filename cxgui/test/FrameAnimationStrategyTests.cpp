@@ -40,6 +40,10 @@ class FrameAnimationTestFixture : public ::testing::Test
 
 public:
 
+    static constexpr std::optional<cxgui::BoardAnimationNotificationContext> NO_NOTIFICATION = std::nullopt;
+
+public:
+
     FrameAnimationTestFixture();
 
     // Animation model:
@@ -70,6 +74,17 @@ public:
 
     BothAnimationInformations MakeAnimationInformations(const cxmath::Height& p_verticalCurrentDisplacement, const cxmath::Width& p_horizontalCurrentDisplacement);
     void ConfigureModelAndPresenter(const cxmodel::Height& p_boardHeight, const cxmodel::Width& p_boardWidth, const cxmodel::Column& p_currantColumn);
+
+    void FrameAnimationComputationsValidate(cxgui::BoardAnimation p_boardAnimation,
+                                            const cxmath::Position& p_initialChipPosition,
+                                            const cxmath::Height& p_initialVerticalDisplacement,
+                                            const cxmath::Width& p_initialHorizontalDisplacement,
+                                            const cxmodel::Column& p_initialColumn,
+                                            const std::optional<cxgui::BoardAnimationNotificationContext>& p_notification,
+                                            const cxmodel::Column& p_finalColumn,
+                                            const cxmath::Position& p_finalChipPosition,
+                                            const cxmath::Height& p_finalVerticalDisplacement,
+                                            const cxmath::Width& p_finalHorizontalDisplacement);
 
 private:
 
@@ -166,6 +181,42 @@ void FrameAnimationTestFixture::ConfigureModelAndPresenter(const cxmodel::Height
     SetAnimatedAreaDimensionsOnModel({cxmath::Height{widgetHeight}, cxmath::Width{widgetWidth}});
 }
 
+void FrameAnimationTestFixture::FrameAnimationComputationsValidate(cxgui::BoardAnimation p_boardAnimation,
+                                                                   const cxmath::Position& p_initialChipPosition,
+                                                                   const cxmath::Height& p_initialVerticalDisplacement,
+                                                                   const cxmath::Width& p_initialHorizontalDisplacement,
+                                                                   const cxmodel::Column& p_initialColumn,
+                                                                   const std::optional<cxgui::BoardAnimationNotificationContext>& p_notification,
+                                                                   const cxmodel::Column& p_finalColumn,
+                                                                   const cxmath::Position& p_finalChipPosition,
+                                                                   const cxmath::Height& p_finalVerticalDisplacement,
+                                                                   const cxmath::Width& p_finalHorizontalDisplacement)
+{
+    // We create the strategy:
+    auto strategy = cxgui::CreateFrameAnimationStrategy(GetModel(), GetPresenter(), p_boardAnimation);
+    ASSERT_TRUE(strategy);
+
+    // We set up and check initial conditions:
+    auto [heightInfo, widthInfo] = MakeAnimationInformations(p_initialVerticalDisplacement, p_initialHorizontalDisplacement);
+    ConfigureModelAndPresenter(cxmodel::Height{6u}, cxmodel::Width{7u}, p_initialColumn);
+
+    ASSERT_TRUE(GetModel().GetCurrentColumn() == p_initialColumn);
+    ASSERT_TRUE(GetModel().GetChipPosition() == p_initialChipPosition);
+    ASSERT_TRUE(heightInfo.m_currentDisplacement.Get() == p_initialVerticalDisplacement.Get());
+    ASSERT_TRUE(widthInfo.m_currentDisplacement.Get() == p_initialHorizontalDisplacement.Get());
+
+    // We run the strategy:
+    const auto notification = strategy->PerformAnimation(heightInfo, widthInfo);
+    ASSERT_TRUE(notification == p_notification);
+
+    // We check post conditions:
+    ASSERT_TRUE(GetModel().GetCurrentColumn() == p_finalColumn);
+    ASSERT_DOUBLE_EQ(GetModel().GetChipPosition().m_x, p_finalChipPosition.m_x);
+    ASSERT_DOUBLE_EQ(GetModel().GetChipPosition().m_y, p_finalChipPosition.m_y);
+    ASSERT_DOUBLE_EQ(heightInfo.m_currentDisplacement.Get(), p_finalVerticalDisplacement.Get());
+    ASSERT_DOUBLE_EQ(widthInfo.m_currentDisplacement.Get(), p_finalHorizontalDisplacement.Get());
+}
+
 /**************************************************************************************************
  * Unit tests for the factory method.
  *
@@ -216,32 +267,18 @@ TEST_F(FrameAnimationTestFixtureStdErrStreamRedirector, /*DISABLED_*/CreateFrame
 
 TEST_F(FrameAnimationTestFixtureStdErrStreamRedirector, /*DISABLED_*/CreateFrameAnimationStrategy_InvalidBoardAnimation_NothingUpdated)
 {
-    // We create the strategy:
     constexpr cxgui::BoardAnimation invalidBoardAnimation = static_cast<cxgui::BoardAnimation>(-1);
-    auto strategy = cxgui::CreateFrameAnimationStrategy(GetModel(), GetPresenter(), invalidBoardAnimation);
-    ASSERT_TRUE(strategy);
 
-    // We set up initial conditions:
-    auto [unused, widthInfo] = MakeAnimationInformations(cxmath::Height{0.0}, cxmath::Width{0.0});
-    ConfigureModelAndPresenter(cxmodel::Height{6u}, cxmodel::Width{7u}, cxmodel::Column{4u});
-
-    ASSERT_TRUE(GetModel().GetCurrentColumn() == cxmodel::Column{4u});
-    ASSERT_TRUE((GetModel().GetChipPosition() == cxmath::Position{0.0, 0.0}));
-    ASSERT_TRUE(widthInfo.m_currentDisplacement.Get() == 0.0);
-
-    // We run the strategy:
-    const auto notification = strategy->PerformAnimation(unused, widthInfo);
-    ASSERT_TRUE(notification == std::nullopt);
-
-    // We check the column was not updated, since the animation is not completed:
-    ASSERT_TRUE(GetModel().GetCurrentColumn() == cxmodel::Column{4u});
-
-    // We check the chip location has not been updated:
-    ASSERT_DOUBLE_EQ(GetModel().GetChipPosition().m_x, 0.0);
-    ASSERT_DOUBLE_EQ(GetModel().GetChipPosition().m_y, 0.0);
-
-    // We check how the width animation information was not updated:
-    ASSERT_DOUBLE_EQ(widthInfo.m_currentDisplacement.Get(), 0.0);
+    FrameAnimationComputationsValidate(invalidBoardAnimation,        /* The performed animation. */
+                                       cxmath::Position{0.0, 0.0},   /* The initial chip position. */
+                                       cxmath::Height{0.0},          /* The initial vertical displacement. */
+                                       cxmath::Width{0.0},           /* The initial horizontal displacement. */
+                                       cxmodel::Column{4u},          /* The initial column on which the chip is located. */
+                                       NO_NOTIFICATION,              /* The notification expected. */
+                                       cxmodel::Column{4u},          /* The final column on which the disc is located. */
+                                       cxmath::Position{0.0, 0.0},   /* The final chip position. */
+                                       cxmath::Height{0.0},          /* The final vertical displacement. */
+                                       cxmath::Width{0.0});          /* The final horizontal displacement. */
 }
 
 /**************************************************************************************************
@@ -250,50 +287,16 @@ TEST_F(FrameAnimationTestFixtureStdErrStreamRedirector, /*DISABLED_*/CreateFrame
  *************************************************************************************************/
 TEST_F(FrameAnimationTestFixture, /*DISABLED_*/CreateFrameAnimationStrategy_MoveLeftOneColumnAnimationStart_AnimationInfoUpdated)
 {
-    // We create the strategy:
-    auto strategy = cxgui::CreateFrameAnimationStrategy(GetModel(),
-                                                        GetPresenter(),
-                                                        cxgui::BoardAnimation::MOVE_CHIP_LEFT_ONE_COLUMN);
-    ASSERT_TRUE(strategy);
-
-    // We set up initial conditions:
-    auto [unused, widthInfo] = MakeAnimationInformations(cxmath::Height{0.0}, cxmath::Width{0.0});
-    ConfigureModelAndPresenter(cxmodel::Height{6u}, cxmodel::Width{7u}, cxmodel::Column{4u});
-
-    ASSERT_TRUE(GetModel().GetCurrentColumn() == cxmodel::Column{4u});
-    ASSERT_TRUE((GetModel().GetChipPosition() == cxmath::Position{0.0, 0.0}));
-    ASSERT_TRUE(widthInfo.m_currentDisplacement.Get() == 0.0);
-
-    // We run the strategy:
-    const auto notification = strategy->PerformAnimation(unused, widthInfo);
-    ASSERT_TRUE(notification == std::nullopt);
-
-    // We check the column was not updated, since the animation is not completed:
-    ASSERT_TRUE(GetModel().GetCurrentColumn() == cxmodel::Column{4u});
-
-    // We check the chip location has been updated appropriately:
-    ASSERT_DOUBLE_EQ(GetModel().GetChipPosition().m_x, -1.25);
-    ASSERT_DOUBLE_EQ(GetModel().GetChipPosition().m_y, 0.0);
-
-    // We check how the width animation information was updated:
-    ASSERT_DOUBLE_EQ(widthInfo.m_currentDisplacement.Get(), 1.25);
-}
-
-TEST_F(FrameAnimationTestFixture, /*DISABLED_*/CreateFrameAnimationStrategy_MoveLeftOneColumnAnimationStart_AppropriateMethodsCalled)
-{
-    // We create the strategy:
-    auto strategy = cxgui::CreateFrameAnimationStrategy(GetModel(),
-                                                        GetPresenter(),
-                                                        cxgui::BoardAnimation::MOVE_CHIP_LEFT_ONE_COLUMN);
-    ASSERT_TRUE(strategy);
-
-    // We set up initial conditions:
-    auto [unused, widthInfo] = MakeAnimationInformations(cxmath::Height{0.0}, cxmath::Width{0.0});
-    ConfigureModelAndPresenter(cxmodel::Height{6u}, cxmodel::Width{7u}, cxmodel::Column{4u});
-
-    // We run the strategy:
-    const auto notification = strategy->PerformAnimation(unused, widthInfo);
-    ASSERT_TRUE(notification == std::nullopt);
+    FrameAnimationComputationsValidate(cxgui::BoardAnimation::MOVE_CHIP_LEFT_ONE_COLUMN, /* The performed animation. */
+                                       cxmath::Position{0.0, 0.0},                       /* The initial chip position. */
+                                       cxmath::Height{0.0},                              /* The initial vertical displacement. */
+                                       cxmath::Width{0.0},                               /* The initial horizontal displacement. */
+                                       cxmodel::Column{4u},                              /* The initial column on which the chip is located. */
+                                       NO_NOTIFICATION,                                  /* The notification expected. */
+                                       cxmodel::Column{4u},                              /* The final column on which the disc is located. */
+                                       cxmath::Position{-1.25, 0.0},                     /* The final chip position. */
+                                       cxmath::Height{0.0},                              /* The final vertical displacement. */
+                                       cxmath::Width{1.25});                             /* The final horizontal displacement. */
 
     // We check what model and presenter methods were called:
     ASSERT_FALSE(WasUpdateCalledOnModel());
@@ -307,50 +310,16 @@ TEST_F(FrameAnimationTestFixture, /*DISABLED_*/CreateFrameAnimationStrategy_Move
 
 TEST_F(FrameAnimationTestFixture, /*DISABLED_*/CreateFrameAnimationStrategy_MoveLeftOneColumnAnimationEnd_AnimationInfoUpdatedAndNotificationReturned)
 {
-    // We create the strategy:
-    auto strategy = cxgui::CreateFrameAnimationStrategy(GetModel(),
-                                                        GetPresenter(),
-                                                        cxgui::BoardAnimation::MOVE_CHIP_LEFT_ONE_COLUMN);
-    ASSERT_TRUE(strategy);
-
-    // We set up initial conditions:
-    auto [unused, widthInfo] = MakeAnimationInformations(cxmath::Height{0.0}, cxmath::Width{10.0});
-    ConfigureModelAndPresenter(cxmodel::Height{6u}, cxmodel::Width{7u}, cxmodel::Column{4u});
-
-    ASSERT_TRUE(GetModel().GetCurrentColumn() == cxmodel::Column{4u});
-    ASSERT_TRUE((GetModel().GetChipPosition() == cxmath::Position{0.0, 0.0}));
-    ASSERT_TRUE(widthInfo.m_currentDisplacement.Get() == 10.0);
-
-    // We run the strategy:
-    const auto notification = strategy->PerformAnimation(unused, widthInfo);
-    ASSERT_TRUE(notification == cxgui::BoardAnimationNotificationContext::POST_ANIMATE_MOVE_LEFT_ONE_COLUMN);
-
-    // We check the column was updated:
-    ASSERT_TRUE(GetModel().GetCurrentColumn() == cxmodel::Column{3u});
-
-    // We check the chip location has not been updated:
-    ASSERT_DOUBLE_EQ(GetModel().GetChipPosition().m_x, 0.0);
-    ASSERT_DOUBLE_EQ(GetModel().GetChipPosition().m_y, 0.0);
-
-    // We check the width animation information was reset:
-    ASSERT_DOUBLE_EQ(widthInfo.m_currentDisplacement.Get(), 0.0);
-}
-
-TEST_F(FrameAnimationTestFixture, /*DISABLED_*/CreateFrameAnimationStrategy_MoveLeftOneColumnAnimationEnd_AppropriateMethodsCalled)
-{
-    // We create the strategy:
-    auto strategy = cxgui::CreateFrameAnimationStrategy(GetModel(),
-                                                        GetPresenter(),
-                                                        cxgui::BoardAnimation::MOVE_CHIP_LEFT_ONE_COLUMN);
-    ASSERT_TRUE(strategy);
-
-    // We set up initial conditions:
-    auto [unused, widthInfo] = MakeAnimationInformations(cxmath::Height{0.0}, cxmath::Width{10.0});
-    ConfigureModelAndPresenter(cxmodel::Height{6u}, cxmodel::Width{7u}, cxmodel::Column{4u});
-
-    // We run the strategy:
-    const auto notification = strategy->PerformAnimation(unused, widthInfo);
-    ASSERT_TRUE(notification == cxgui::BoardAnimationNotificationContext::POST_ANIMATE_MOVE_LEFT_ONE_COLUMN);
+    FrameAnimationComputationsValidate(cxgui::BoardAnimation::MOVE_CHIP_LEFT_ONE_COLUMN,                            /* The performed animation. */
+                                       cxmath::Position{0.0, 0.0},                                                  /* The initial chip position. */
+                                       cxmath::Height{0.0},                                                         /* The initial vertical displacement. */
+                                       cxmath::Width{10.0},                                                         /* The initial horizontal displacement. */
+                                       cxmodel::Column{4u},                                                         /* The initial column on which the chip is located. */
+                                       cxgui::BoardAnimationNotificationContext::POST_ANIMATE_MOVE_LEFT_ONE_COLUMN, /* The notification expected. */
+                                       cxmodel::Column{3u},                                                         /* The final column on which the disc is located. */
+                                       cxmath::Position{0.0, 0.0},                                                  /* The final chip position. */
+                                       cxmath::Height{0.0},                                                         /* The final vertical displacement. */
+                                       cxmath::Width{0.0});                                                         /* The final horizontal displacement. */
 
     // We check what model and presenter methods were called:
     ASSERT_FALSE(WasUpdateCalledOnModel());
@@ -364,50 +333,16 @@ TEST_F(FrameAnimationTestFixture, /*DISABLED_*/CreateFrameAnimationStrategy_Move
 
 TEST_F(FrameAnimationTestFixture, /*DISABLED_*/CreateFrameAnimationStrategy_MoveLeftOneColumnAnimationEndFarLeft_AnimationInfoUpdatedAndNotificationReturned)
 {
-    // We create the strategy:
-    auto strategy = cxgui::CreateFrameAnimationStrategy(GetModel(),
-                                                        GetPresenter(),
-                                                        cxgui::BoardAnimation::MOVE_CHIP_LEFT_ONE_COLUMN);
-    ASSERT_TRUE(strategy);
-
-    // We set up initial conditions:
-    auto [unused, widthInfo] = MakeAnimationInformations(cxmath::Height{0.0}, cxmath::Width{10.0});
-    ConfigureModelAndPresenter(cxmodel::Height{6u}, cxmodel::Width{7u}, cxmodel::Column{0u});
-
-    ASSERT_TRUE(GetModel().GetCurrentColumn() == cxmodel::Column{0u});
-    ASSERT_TRUE((GetModel().GetChipPosition() == cxmath::Position{0.0, 0.0}));
-    ASSERT_TRUE(widthInfo.m_currentDisplacement.Get() == 10.0);
-
-    // We run the strategy:
-    const auto notification = strategy->PerformAnimation(unused, widthInfo);
-    ASSERT_TRUE(notification == cxgui::BoardAnimationNotificationContext::POST_ANIMATE_MOVE_LEFT_ONE_COLUMN);
-
-    // We check the column was updated:
-    ASSERT_TRUE(GetModel().GetCurrentColumn() == cxmodel::Column{6u});
-
-    // We check the chip location has not been updated:
-    ASSERT_DOUBLE_EQ(GetModel().GetChipPosition().m_x, 0.0);
-    ASSERT_DOUBLE_EQ(GetModel().GetChipPosition().m_y, 0.0);
-
-    // We check the width animation information was reset:
-    ASSERT_DOUBLE_EQ(widthInfo.m_currentDisplacement.Get(), 0.0);
-}
-
-TEST_F(FrameAnimationTestFixture, /*DISABLED_*/CreateFrameAnimationStrategy_MoveLeftOneColumnAnimationEndFarLeft_AppropriateMethodsCalled)
-{
-    // We create the strategy:
-    auto strategy = cxgui::CreateFrameAnimationStrategy(GetModel(),
-                                                        GetPresenter(),
-                                                        cxgui::BoardAnimation::MOVE_CHIP_LEFT_ONE_COLUMN);
-    ASSERT_TRUE(strategy);
-
-    // We set up initial conditions:
-    auto [unused, widthInfo] = MakeAnimationInformations(cxmath::Height{0.0}, cxmath::Width{10.0});
-    ConfigureModelAndPresenter(cxmodel::Height{6u}, cxmodel::Width{7u}, cxmodel::Column{0u});
-
-    // We run the strategy:
-    const auto notification = strategy->PerformAnimation(unused, widthInfo);
-    ASSERT_TRUE(notification == cxgui::BoardAnimationNotificationContext::POST_ANIMATE_MOVE_LEFT_ONE_COLUMN);
+    FrameAnimationComputationsValidate(cxgui::BoardAnimation::MOVE_CHIP_LEFT_ONE_COLUMN,                            /* The performed animation. */
+                                       cxmath::Position{0.0, 0.0},                                                  /* The initial chip position. */
+                                       cxmath::Height{0.0},                                                         /* The initial vertical displacement. */
+                                       cxmath::Width{10.0},                                                         /* The initial horizontal displacement. */
+                                       cxmodel::Column{0u},                                                         /* The initial column on which the chip is located. */
+                                       cxgui::BoardAnimationNotificationContext::POST_ANIMATE_MOVE_LEFT_ONE_COLUMN, /* The notification expected. */
+                                       cxmodel::Column{6u},                                                         /* The final column on which the disc is located. */
+                                       cxmath::Position{0.0, 0.0},                                                  /* The final chip position. */
+                                       cxmath::Height{0.0},                                                         /* The final vertical displacement. */
+                                       cxmath::Width{0.0});                                                         /* The final horizontal displacement. */
 
     // We check what model and presenter methods were called:
     ASSERT_FALSE(WasUpdateCalledOnModel());
@@ -425,50 +360,16 @@ TEST_F(FrameAnimationTestFixture, /*DISABLED_*/CreateFrameAnimationStrategy_Move
  *************************************************************************************************/
 TEST_F(FrameAnimationTestFixture, /*DISABLED_*/CreateFrameAnimationStrategy_MoveRightOneColumnAnimationStart_AnimationInfoUpdated)
 {
-    // We create the strategy:
-    auto strategy = cxgui::CreateFrameAnimationStrategy(GetModel(),
-                                                        GetPresenter(),
-                                                        cxgui::BoardAnimation::MOVE_CHIP_RIGHT_ONE_COLUMN);
-    ASSERT_TRUE(strategy);
-
-    // We set up initial conditions:
-    auto [unused, widthInfo] = MakeAnimationInformations(cxmath::Height{0.0}, cxmath::Width{0.0});
-    ConfigureModelAndPresenter(cxmodel::Height{6u}, cxmodel::Width{7u}, cxmodel::Column{4u});
-
-    ASSERT_TRUE(GetModel().GetCurrentColumn() == cxmodel::Column{4u});
-    ASSERT_TRUE((GetModel().GetChipPosition() == cxmath::Position{0.0, 0.0}));
-    ASSERT_TRUE(widthInfo.m_currentDisplacement.Get() == 0.0);
-
-    // We run the strategy:
-    const auto notification = strategy->PerformAnimation(unused, widthInfo);
-    ASSERT_TRUE(notification == std::nullopt);
-
-    // We check the column was not updated, since the animation is not completed:
-    ASSERT_TRUE(GetModel().GetCurrentColumn() == cxmodel::Column{4u});
-
-    // We check the chip location has been updated appropriately:
-    ASSERT_DOUBLE_EQ(GetModel().GetChipPosition().m_x, 1.25);
-    ASSERT_DOUBLE_EQ(GetModel().GetChipPosition().m_y, 0.0);
-
-    // We check how the width animation information was updated:
-    ASSERT_DOUBLE_EQ(widthInfo.m_currentDisplacement.Get(), 1.25);
-}
-
-TEST_F(FrameAnimationTestFixture, /*DISABLED_*/CreateFrameAnimationStrategy_MoveRightOneColumnAnimationStart_AppropriateMethodsCalled)
-{
-    // We create the strategy:
-    auto strategy = cxgui::CreateFrameAnimationStrategy(GetModel(),
-                                                        GetPresenter(),
-                                                        cxgui::BoardAnimation::MOVE_CHIP_RIGHT_ONE_COLUMN);
-    ASSERT_TRUE(strategy);
-
-    // We set up initial conditions:
-    auto [unused, widthInfo] = MakeAnimationInformations(cxmath::Height{0.0}, cxmath::Width{0.0});
-    ConfigureModelAndPresenter(cxmodel::Height{6u}, cxmodel::Width{7u}, cxmodel::Column{4u});
-
-    // We run the strategy:
-    const auto notification = strategy->PerformAnimation(unused, widthInfo);
-    ASSERT_TRUE(notification == std::nullopt);
+    FrameAnimationComputationsValidate(cxgui::BoardAnimation::MOVE_CHIP_RIGHT_ONE_COLUMN, /* The performed animation. */
+                                       cxmath::Position{0.0, 0.0},                        /* The initial chip position. */
+                                       cxmath::Height{0.0},                               /* The initial vertical displacement. */
+                                       cxmath::Width{0.0},                                /* The initial horizontal displacement. */
+                                       cxmodel::Column{4u},                               /* The initial column on which the chip is located. */
+                                       NO_NOTIFICATION,                                   /* The notification expected. */
+                                       cxmodel::Column{4u},                               /* The final column on which the disc is located. */
+                                       cxmath::Position{1.25, 0.0},                       /* The final chip position. */
+                                       cxmath::Height{0.0},                               /* The final vertical displacement. */
+                                       cxmath::Width{1.25});                              /* The final horizontal displacement. */
 
     // We check what model and presenter methods were called:
     ASSERT_FALSE(WasUpdateCalledOnModel());
@@ -482,50 +383,16 @@ TEST_F(FrameAnimationTestFixture, /*DISABLED_*/CreateFrameAnimationStrategy_Move
 
 TEST_F(FrameAnimationTestFixture, /*DISABLED_*/CreateFrameAnimationStrategy_MoveRightOneColumnAnimationEnd_AnimationInfoUpdatedAndNotificationReturned)
 {
-    // We create the strategy:
-    auto strategy = cxgui::CreateFrameAnimationStrategy(GetModel(),
-                                                        GetPresenter(),
-                                                        cxgui::BoardAnimation::MOVE_CHIP_RIGHT_ONE_COLUMN);
-    ASSERT_TRUE(strategy);
-
-    // We set up initial conditions:
-    auto [unused, widthInfo] = MakeAnimationInformations(cxmath::Height{0.0}, cxmath::Width{10.0});
-    ConfigureModelAndPresenter(cxmodel::Height{6u}, cxmodel::Width{7u}, cxmodel::Column{4u});
-
-    ASSERT_TRUE(GetModel().GetCurrentColumn() == cxmodel::Column{4u});
-    ASSERT_TRUE((GetModel().GetChipPosition() == cxmath::Position{0.0, 0.0}));
-    ASSERT_TRUE(widthInfo.m_currentDisplacement.Get() == 10.0);
-
-    // We run the strategy:
-    const auto notification = strategy->PerformAnimation(unused, widthInfo);
-    ASSERT_TRUE(notification == cxgui::BoardAnimationNotificationContext::POST_ANIMATE_MOVE_RIGHT_ONE_COLUMN);
-
-    // We check the column was updated:
-    ASSERT_TRUE(GetModel().GetCurrentColumn() == cxmodel::Column{5u});
-
-    // We check the chip location has not been updated:
-    ASSERT_DOUBLE_EQ(GetModel().GetChipPosition().m_x, 0.0);
-    ASSERT_DOUBLE_EQ(GetModel().GetChipPosition().m_y, 0.0);
-
-    // We check the width animation information was reset:
-    ASSERT_DOUBLE_EQ(widthInfo.m_currentDisplacement.Get(), 0.0);
-}
-
-TEST_F(FrameAnimationTestFixture, /*DISABLED_*/CreateFrameAnimationStrategy_MoveRightOneColumnAnimationEnd_AppropriateMethodsCalled)
-{
-    // We create the strategy:
-    auto strategy = cxgui::CreateFrameAnimationStrategy(GetModel(),
-                                                        GetPresenter(),
-                                                        cxgui::BoardAnimation::MOVE_CHIP_RIGHT_ONE_COLUMN);
-    ASSERT_TRUE(strategy);
-
-    // We set up initial conditions:
-    auto [unused, widthInfo] = MakeAnimationInformations(cxmath::Height{0.0}, cxmath::Width{10.0});
-    ConfigureModelAndPresenter(cxmodel::Height{6u}, cxmodel::Width{7u}, cxmodel::Column{4u});
-
-    // We run the strategy:
-    const auto notification = strategy->PerformAnimation(unused, widthInfo);
-    ASSERT_TRUE(notification == cxgui::BoardAnimationNotificationContext::POST_ANIMATE_MOVE_RIGHT_ONE_COLUMN);
+    FrameAnimationComputationsValidate(cxgui::BoardAnimation::MOVE_CHIP_RIGHT_ONE_COLUMN,                            /* The performed animation. */
+                                       cxmath::Position{0.0, 0.0},                                                   /* The initial chip position. */
+                                       cxmath::Height{0.0},                                                          /* The initial vertical displacement. */
+                                       cxmath::Width{10.0},                                                           /* The initial horizontal displacement. */
+                                       cxmodel::Column{4u},                                                          /* The initial column on which the chip is located. */
+                                       cxgui::BoardAnimationNotificationContext::POST_ANIMATE_MOVE_RIGHT_ONE_COLUMN, /* The notification expected. */
+                                       cxmodel::Column{5u},                                                          /* The final column on which the disc is located. */
+                                       cxmath::Position{0.0, 0.0},                                                  /* The final chip position. */
+                                       cxmath::Height{0.0},                                                          /* The final vertical displacement. */
+                                       cxmath::Width{0.0});                                                         /* The final horizontal displacement. */
 
     // We check what model and presenter methods were called:
     ASSERT_FALSE(WasUpdateCalledOnModel());
@@ -539,50 +406,16 @@ TEST_F(FrameAnimationTestFixture, /*DISABLED_*/CreateFrameAnimationStrategy_Move
 
 TEST_F(FrameAnimationTestFixture, /*DISABLED_*/CreateFrameAnimationStrategy_MoveRightOneColumnAnimationEndFarLeft_AnimationInfoUpdatedAndNotificationReturned)
 {
-    // We create the strategy:
-    auto strategy = cxgui::CreateFrameAnimationStrategy(GetModel(),
-                                                        GetPresenter(),
-                                                        cxgui::BoardAnimation::MOVE_CHIP_RIGHT_ONE_COLUMN);
-    ASSERT_TRUE(strategy);
-
-    // We set up initial conditions:
-    auto [unused, widthInfo] = MakeAnimationInformations(cxmath::Height{0.0}, cxmath::Width{10.0});
-    ConfigureModelAndPresenter(cxmodel::Height{6u}, cxmodel::Width{7u}, cxmodel::Column{6u});
-
-    ASSERT_TRUE(GetModel().GetCurrentColumn() == cxmodel::Column{6u});
-    ASSERT_TRUE((GetModel().GetChipPosition() == cxmath::Position{0.0, 0.0}));
-    ASSERT_TRUE(widthInfo.m_currentDisplacement.Get() == 10.0);
-
-    // We run the strategy:
-    const auto notification = strategy->PerformAnimation(unused, widthInfo);
-    ASSERT_TRUE(notification == cxgui::BoardAnimationNotificationContext::POST_ANIMATE_MOVE_RIGHT_ONE_COLUMN);
-
-    // We check the column was updated:
-    ASSERT_TRUE(GetModel().GetCurrentColumn() == cxmodel::Column{0u});
-
-    // We check the chip location has not been updated:
-    ASSERT_DOUBLE_EQ(GetModel().GetChipPosition().m_x, 0.0);
-    ASSERT_DOUBLE_EQ(GetModel().GetChipPosition().m_y, 0.0);
-
-    // We check the width animation information was reset:
-    ASSERT_DOUBLE_EQ(widthInfo.m_currentDisplacement.Get(), 0.0);
-}
-
-TEST_F(FrameAnimationTestFixture, /*DISABLED_*/CreateFrameAnimationStrategy_MoveRightOneColumnAnimationEndFarLeft_AppropriateMethodsCalled)
-{
-    // We create the strategy:
-    auto strategy = cxgui::CreateFrameAnimationStrategy(GetModel(),
-                                                        GetPresenter(),
-                                                        cxgui::BoardAnimation::MOVE_CHIP_RIGHT_ONE_COLUMN);
-    ASSERT_TRUE(strategy);
-
-    // We set up initial conditions:
-    auto [unused, widthInfo] = MakeAnimationInformations(cxmath::Height{0.0}, cxmath::Width{10.0});
-    ConfigureModelAndPresenter(cxmodel::Height{6u}, cxmodel::Width{7u}, cxmodel::Column{6u});
-
-    // We run the strategy:
-    const auto notification = strategy->PerformAnimation(unused, widthInfo);
-    ASSERT_TRUE(notification == cxgui::BoardAnimationNotificationContext::POST_ANIMATE_MOVE_RIGHT_ONE_COLUMN);
+    FrameAnimationComputationsValidate(cxgui::BoardAnimation::MOVE_CHIP_RIGHT_ONE_COLUMN,                            /* The performed animation. */
+                                       cxmath::Position{0.0, 0.0},                                                   /* The initial chip position. */
+                                       cxmath::Height{0.0},                                                          /* The initial vertical displacement. */
+                                       cxmath::Width{10.0},                                                          /* The initial horizontal displacement. */
+                                       cxmodel::Column{6u},                                                          /* The initial column on which the chip is located. */
+                                       cxgui::BoardAnimationNotificationContext::POST_ANIMATE_MOVE_RIGHT_ONE_COLUMN, /* The notification expected. */
+                                       cxmodel::Column{0u},                                                          /* The final column on which the disc is located. */
+                                       cxmath::Position{0.0, 0.0},                                                   /* The final chip position. */
+                                       cxmath::Height{0.0},                                                          /* The final vertical displacement. */
+                                       cxmath::Width{0.0});                                                          /* The final horizontal displacement. */
 
     // We check what model and presenter methods were called:
     ASSERT_FALSE(WasUpdateCalledOnModel());
@@ -633,53 +466,18 @@ INSTANTIATE_TEST_SUITE_P(DropChipStartAnimation,
 
 TEST_P(FrameAnimationTestFixtureForDropChipStartAnimation, /*DISABLED_*/CreateFrameAnimationStrategy_DropChipAnimationStartWithChipsIn_AnimationInfoUpdatedAndNotificationReturned)
 {
-    // We create the strategy:
-    auto strategy = cxgui::CreateFrameAnimationStrategy(GetModel(),
-                                                        GetPresenter(),
-                                                        cxgui::BoardAnimation::DROP_CHIP);
-    ASSERT_TRUE(strategy);
-
-    // We set up initial conditions:
-    auto [heightInfo, unusedW] = MakeAnimationInformations(cxmath::Height{0.0}, cxmath::Width{0.0});
-    ConfigureModelAndPresenter(cxmodel::Height{6u}, cxmodel::Width{7u}, cxmodel::Column{4u});
-
-    // We add three chips to the board:
     AddChipsToColumnOnPresenter(cxmodel::Column{4u}, GetParam().m_nbOfChipsInBoard);
 
-    ASSERT_TRUE(GetModel().GetCurrentColumn() == cxmodel::Column{4u});
-    ASSERT_TRUE((GetModel().GetChipPosition() == cxmath::Position{0.0, 0.0}));
-    ASSERT_TRUE(heightInfo.m_currentDisplacement.Get() == 0.0);
-
-    // We run the strategy:
-    const auto notification = strategy->PerformAnimation(heightInfo, unusedW);
-    ASSERT_TRUE(notification == std::nullopt);
-
-    // We check the column was not updated, since the animation is not completed:
-    ASSERT_TRUE(GetModel().GetCurrentColumn() == cxmodel::Column{4u});
-
-    // We check the chip location has been updated appropriately:
-    ASSERT_DOUBLE_EQ(GetModel().GetChipPosition().m_x, 0.0);
-    ASSERT_DOUBLE_EQ(GetModel().GetChipPosition().m_y, GetParam().m_currentDisplacement);
-
-    // We check how the width animation information was updated:
-    ASSERT_DOUBLE_EQ(heightInfo.m_currentDisplacement.Get(), GetParam().m_currentDisplacement);
-}
-
-TEST_F(FrameAnimationTestFixture, /*DISABLED_*/CreateFrameAnimationStrategy_DropChipAnimationStart_AppropriateMethodsCalled)
-{
-    // We create the strategy:
-    auto strategy = cxgui::CreateFrameAnimationStrategy(GetModel(),
-                                                        GetPresenter(),
-                                                        cxgui::BoardAnimation::DROP_CHIP);
-    ASSERT_TRUE(strategy);
-
-    // We set up initial conditions:
-    auto [heightInfo, unusedW] = MakeAnimationInformations(cxmath::Height{0.0}, cxmath::Width{0.0});
-    ConfigureModelAndPresenter(cxmodel::Height{6u}, cxmodel::Width{7u}, cxmodel::Column{4u});
-
-    // We run the strategy:
-    const auto notification = strategy->PerformAnimation(heightInfo, unusedW);
-    ASSERT_TRUE(notification == std::nullopt);
+    FrameAnimationComputationsValidate(cxgui::BoardAnimation::DROP_CHIP,                        /* The performed animation. */
+                                       cxmath::Position{0.0, 0.0},                              /* The initial chip position. */
+                                       cxmath::Height{0.0},                                     /* The initial vertical displacement. */
+                                       cxmath::Width{0.0},                                      /* The initial horizontal displacement. */
+                                       cxmodel::Column{4u},                                     /* The initial column on which the chip is located. */
+                                       NO_NOTIFICATION,                                         /* The notification expected. */
+                                       cxmodel::Column{4u},                                     /* The final column on which the disc is located. */
+                                       cxmath::Position{0.0, GetParam().m_currentDisplacement}, /* The final chip position. */
+                                       cxmath::Height{GetParam().m_currentDisplacement},        /* The final vertical displacement. */
+                                       cxmath::Width{0.0});                                     /* The final horizontal displacement. */
 
     // We check what model and presenter methods were called:
     ASSERT_FALSE(WasUpdateCalledOnModel());
@@ -727,53 +525,18 @@ INSTANTIATE_TEST_SUITE_P(DropChipEndAnimation,
 
 TEST_P(FrameAnimationTestFixtureForDropChipEndAnimation, /*DISABLED_*/CreateFrameAnimationStrategy_DropChipAnimationEnd_AnimationInfoUpdatedAndNotificationReturned)
 {
-    // We create the strategy:
-    auto strategy = cxgui::CreateFrameAnimationStrategy(GetModel(),
-                                                        GetPresenter(),
-                                                        cxgui::BoardAnimation::DROP_CHIP);
-    ASSERT_TRUE(strategy);
-
-    // We set up initial conditions:
-    auto [heightInfo, unusedW] = MakeAnimationInformations(cxmath::Height{GetParam().m_animationFullHeight}, cxmath::Width{0.0});
-    ConfigureModelAndPresenter(cxmodel::Height{6u}, cxmodel::Width{7u}, cxmodel::Column{4u});
-
-    // We add three chips to the board:
     AddChipsToColumnOnPresenter(cxmodel::Column{4u}, GetParam().m_nbOfChipsInBoard);
 
-    ASSERT_TRUE(GetModel().GetCurrentColumn() == cxmodel::Column{4u});
-    ASSERT_TRUE((GetModel().GetChipPosition() == cxmath::Position{0.0, 0.0}));
-    ASSERT_TRUE(heightInfo.m_currentDisplacement.Get() == GetParam().m_animationFullHeight);
-
-    // We run the strategy:
-    const auto notification = strategy->PerformAnimation(heightInfo, unusedW);
-    ASSERT_TRUE(notification == cxgui::BoardAnimationNotificationContext::POST_ANIMATE_DROP_CHIP);
-
-    // We check the column was not updated, since the animation is not completed:
-    ASSERT_TRUE(GetModel().GetCurrentColumn() == cxmodel::Column{0u});
-
-    // We check the chip location has been updated appropriately:
-    ASSERT_DOUBLE_EQ(GetModel().GetChipPosition().m_x, 0.0);
-    ASSERT_DOUBLE_EQ(GetModel().GetChipPosition().m_y, 0.0);
-
-    // We check how the width animation information was updated:
-    ASSERT_DOUBLE_EQ(heightInfo.m_currentDisplacement.Get(), 0.0);
-}
-
-TEST_F(FrameAnimationTestFixture, /*DISABLED_*/CreateFrameAnimationStrategy_DropChipAnimationEnd_AppropriateMethodsCalled)
-{
-    // We create the strategy:
-    auto strategy = cxgui::CreateFrameAnimationStrategy(GetModel(),
-                                                        GetPresenter(),
-                                                        cxgui::BoardAnimation::DROP_CHIP);
-    ASSERT_TRUE(strategy);
-
-    // We set up initial conditions:
-    auto [heightInfo, unusedW] = MakeAnimationInformations(cxmath::Height{60.0}, cxmath::Width{0.0});
-    ConfigureModelAndPresenter(cxmodel::Height{6u}, cxmodel::Width{7u}, cxmodel::Column{4u});
-
-    // We run the strategy:
-    const auto notification = strategy->PerformAnimation(heightInfo, unusedW);
-    ASSERT_TRUE(notification == cxgui::BoardAnimationNotificationContext::POST_ANIMATE_DROP_CHIP);
+    FrameAnimationComputationsValidate(cxgui::BoardAnimation::DROP_CHIP,                                 /* The performed animation. */
+                                       cxmath::Position{0.0, 0.0},                                       /* The initial chip position. */
+                                       cxmath::Height{GetParam().m_animationFullHeight},                 /* The initial vertical displacement. */
+                                       cxmath::Width{0.0},                                               /* The initial horizontal displacement. */
+                                       cxmodel::Column{4u},                                              /* The initial column on which the chip is located. */
+                                       cxgui::BoardAnimationNotificationContext::POST_ANIMATE_DROP_CHIP, /* The notification expected. */
+                                       cxmodel::Column{0u},                                              /* The final column on which the disc is located. */
+                                       cxmath::Position{0.0, 0.0},                                       /* The final chip position. */
+                                       cxmath::Height{0.0},                                              /* The final vertical displacement. */
+                                       cxmath::Width{0.0});                                              /* The final horizontal displacement. */
 
     // We check what model and presenter methods were called:
     ASSERT_FALSE(WasUpdateCalledOnModel());
@@ -791,48 +554,17 @@ TEST_F(FrameAnimationTestFixture, /*DISABLED_*/CreateFrameAnimationStrategy_Drop
  *************************************************************************************************/
 TEST_F(FrameAnimationTestFixture, /*DISABLED_*/CreateFrameAnimationStrategy_UndoDropChip_AnimationInfoUpdated)
 {
-    // We create the strategy:
-    auto strategy = cxgui::CreateFrameAnimationStrategy(GetModel(),
-                                                        GetPresenter(),
-                                                        cxgui::BoardAnimation::UNDO_DROP_CHIP);
-    ASSERT_TRUE(strategy);
+    FrameAnimationComputationsValidate(cxgui::BoardAnimation::UNDO_DROP_CHIP,                                 /* The performed animation. */
+                                       cxmath::Position{0.0, 0.0},                                            /* The initial chip position. */
+                                       cxmath::Height{0.0},                                                   /* The initial vertical displacement. */
+                                       cxmath::Width{0.0},                                                    /* The initial horizontal displacement. */
+                                       cxmodel::Column{4u},                                                   /* The initial column on which the chip is located. */
+                                       cxgui::BoardAnimationNotificationContext::POST_ANIMATE_UNDO_DROP_CHIP, /* The notification expected. */
+                                       cxmodel::Column{0u},                                                   /* The final column on which the disc is located. */
+                                       cxmath::Position{0.0, 0.0},                                            /* The final chip position. */
+                                       cxmath::Height{0.0},                                                   /* The final vertical displacement. */
+                                       cxmath::Width{0.0});                                                   /* The final horizontal displacement. */
 
-    // We set up initial conditions:
-    auto [unusedH, unusedW] = MakeAnimationInformations(cxmath::Height{0.0}, cxmath::Width{0.0});
-    ConfigureModelAndPresenter(cxmodel::Height{6u}, cxmodel::Width{7u}, cxmodel::Column{4u});
-
-    ASSERT_TRUE(GetModel().GetCurrentColumn() == cxmodel::Column{4u});
-    ASSERT_TRUE((GetModel().GetChipPosition() == cxmath::Position{0.0, 0.0}));
-
-    // We run the strategy:
-    const auto notification = strategy->PerformAnimation(unusedH, unusedW);
-    ASSERT_TRUE(notification == cxgui::BoardAnimationNotificationContext::POST_ANIMATE_UNDO_DROP_CHIP);
-
-    // We check the column was reset:
-    ASSERT_TRUE(GetModel().GetCurrentColumn() == cxmodel::Column{0u});
-
-    // We check the chip location has not been updated:
-    ASSERT_DOUBLE_EQ(GetModel().GetChipPosition().m_x, 0.0);
-    ASSERT_DOUBLE_EQ(GetModel().GetChipPosition().m_y, 0.0);
-}
-
-TEST_F(FrameAnimationTestFixture, /*DISABLED_*/CreateFrameAnimationStrategy_UndoDropChip_AppropriateMethodsCalled)
-{
-    // We create the strategy:
-    auto strategy = cxgui::CreateFrameAnimationStrategy(GetModel(),
-                                                        GetPresenter(),
-                                                        cxgui::BoardAnimation::UNDO_DROP_CHIP);
-    ASSERT_TRUE(strategy);
-
-    // We set up initial conditions:
-    auto [unusedH, unusedW] = MakeAnimationInformations(cxmath::Height{0.0}, cxmath::Width{0.0});
-    ConfigureModelAndPresenter(cxmodel::Height{6u}, cxmodel::Width{7u}, cxmodel::Column{4u});
-
-    // We run the strategy:
-    const auto notification = strategy->PerformAnimation(unusedH, unusedW);
-    ASSERT_TRUE(notification == cxgui::BoardAnimationNotificationContext::POST_ANIMATE_UNDO_DROP_CHIP);
-
-    // We check what model and presenter methods were called:
     ASSERT_FALSE(WasUpdateCalledOnModel());
     ASSERT_FALSE(WasResizeCalledOnModel());
     ASSERT_FALSE(WasAddChipDisplacementCalledOnModel());
@@ -848,48 +580,17 @@ TEST_F(FrameAnimationTestFixture, /*DISABLED_*/CreateFrameAnimationStrategy_Undo
  *************************************************************************************************/
 TEST_F(FrameAnimationTestFixture, /*DISABLED_*/CreateFrameAnimationStrategy_RedoDropChip_AnimationInfoUpdated)
 {
-    // We create the strategy:
-    auto strategy = cxgui::CreateFrameAnimationStrategy(GetModel(),
-                                                        GetPresenter(),
-                                                        cxgui::BoardAnimation::REDO_DROP_CHIP);
-    ASSERT_TRUE(strategy);
+    FrameAnimationComputationsValidate(cxgui::BoardAnimation::REDO_DROP_CHIP,                                 /* The performed animation. */
+                                       cxmath::Position{0.0, 0.0},                                            /* The initial chip position. */
+                                       cxmath::Height{0.0},                                                   /* The initial vertical displacement. */
+                                       cxmath::Width{0.0},                                                    /* The initial horizontal displacement. */
+                                       cxmodel::Column{4u},                                                   /* The initial column on which the chip is located. */
+                                       cxgui::BoardAnimationNotificationContext::POST_ANIMATE_REDO_DROP_CHIP, /* The notification expected. */
+                                       cxmodel::Column{0u},                                                   /* The final column on which the disc is located. */
+                                       cxmath::Position{0.0, 0.0},                                            /* The final chip position. */
+                                       cxmath::Height{0.0},                                                   /* The final vertical displacement. */
+                                       cxmath::Width{0.0});                                                   /* The final horizontal displacement. */
 
-    // We set up initial conditions:
-    auto [unusedH, unusedW] = MakeAnimationInformations(cxmath::Height{0.0}, cxmath::Width{0.0});
-    ConfigureModelAndPresenter(cxmodel::Height{6u}, cxmodel::Width{7u}, cxmodel::Column{4u});
-
-    ASSERT_TRUE(GetModel().GetCurrentColumn() == cxmodel::Column{4u});
-    ASSERT_TRUE((GetModel().GetChipPosition() == cxmath::Position{0.0, 0.0}));
-
-    // We run the strategy:
-    const auto notification = strategy->PerformAnimation(unusedH, unusedW);
-    ASSERT_TRUE(notification == cxgui::BoardAnimationNotificationContext::POST_ANIMATE_REDO_DROP_CHIP);
-
-    // We check the column was reset:
-    ASSERT_TRUE(GetModel().GetCurrentColumn() == cxmodel::Column{0u});
-
-    // We check the chip location has not been updated:
-    ASSERT_DOUBLE_EQ(GetModel().GetChipPosition().m_x, 0.0);
-    ASSERT_DOUBLE_EQ(GetModel().GetChipPosition().m_y, 0.0);
-}
-
-TEST_F(FrameAnimationTestFixture, /*DISABLED_*/CreateFrameAnimationStrategy_RedoDropChip_AppropriateMethodsCalled)
-{
-    // We create the strategy:
-    auto strategy = cxgui::CreateFrameAnimationStrategy(GetModel(),
-                                                        GetPresenter(),
-                                                        cxgui::BoardAnimation::REDO_DROP_CHIP);
-    ASSERT_TRUE(strategy);
-
-    // We set up initial conditions:
-    auto [unusedH, unusedW] = MakeAnimationInformations(cxmath::Height{0.0}, cxmath::Width{0.0});
-    ConfigureModelAndPresenter(cxmodel::Height{6u}, cxmodel::Width{7u}, cxmodel::Column{4u});
-
-    // We run the strategy:
-    const auto notification = strategy->PerformAnimation(unusedH, unusedW);
-    ASSERT_TRUE(notification == cxgui::BoardAnimationNotificationContext::POST_ANIMATE_REDO_DROP_CHIP);
-
-    // We check what model and presenter methods were called:
     ASSERT_FALSE(WasUpdateCalledOnModel());
     ASSERT_FALSE(WasResizeCalledOnModel());
     ASSERT_FALSE(WasAddChipDisplacementCalledOnModel());
@@ -905,48 +606,17 @@ TEST_F(FrameAnimationTestFixture, /*DISABLED_*/CreateFrameAnimationStrategy_Redo
  *************************************************************************************************/
 TEST_F(FrameAnimationTestFixture, /*DISABLED_*/CreateFrameAnimationStrategy_Resize_AnimationInfoUpdated)
 {
-    // We create the strategy:
-    auto strategy = cxgui::CreateFrameAnimationStrategy(GetModel(),
-                                                        GetPresenter(),
-                                                        cxgui::BoardAnimation::REINITIALIZE);
-    ASSERT_TRUE(strategy);
+    FrameAnimationComputationsValidate(cxgui::BoardAnimation::REINITIALIZE,                                       /* The performed animation. */
+                                       cxmath::Position{0.0, 0.0},                                                /* The initial chip position. */
+                                       cxmath::Height{0.0},                                                       /* The initial vertical displacement. */
+                                       cxmath::Width{0.0},                                                        /* The initial horizontal displacement. */
+                                       cxmodel::Column{4u},                                                       /* The initial column on which the chip is located. */
+                                       cxgui::BoardAnimationNotificationContext::POST_ANIMATE_REINITIALIZE_BOARD, /* The notification expected. */
+                                       cxmodel::Column{0u},                                                       /* The final column on which the disc is located. */
+                                       cxmath::Position{0.0, 0.0},                                                /* The final chip position. */
+                                       cxmath::Height{0.0},                                                       /* The final vertical displacement. */
+                                       cxmath::Width{0.0});                                                       /* The final horizontal displacement. */
 
-    // We set up initial conditions:
-    auto [unusedH, unusedW] = MakeAnimationInformations(cxmath::Height{0.0}, cxmath::Width{0.0});
-    ConfigureModelAndPresenter(cxmodel::Height{6u}, cxmodel::Width{7u}, cxmodel::Column{4u});
-
-    ASSERT_TRUE(GetModel().GetCurrentColumn() == cxmodel::Column{4u});
-    ASSERT_TRUE((GetModel().GetChipPosition() == cxmath::Position{0.0, 0.0}));
-
-    // We run the strategy:
-    const auto notification = strategy->PerformAnimation(unusedH, unusedW);
-    ASSERT_TRUE(notification == cxgui::BoardAnimationNotificationContext::POST_ANIMATE_REINITIALIZE_BOARD);
-
-    // We check the column was reset:
-    ASSERT_TRUE(GetModel().GetCurrentColumn() == cxmodel::Column{0u});
-
-    // We check the chip location has not been updated:
-    ASSERT_DOUBLE_EQ(GetModel().GetChipPosition().m_x, 0.0);
-    ASSERT_DOUBLE_EQ(GetModel().GetChipPosition().m_y, 0.0);
-}
-
-TEST_F(FrameAnimationTestFixture, /*DISABLED_*/CreateFrameAnimationStrategy_Reinitialize_AppropriateMethodsCalled)
-{
-    // We create the strategy:
-    auto strategy = cxgui::CreateFrameAnimationStrategy(GetModel(),
-                                                        GetPresenter(),
-                                                        cxgui::BoardAnimation::REINITIALIZE);
-    ASSERT_TRUE(strategy);
-
-    // We set up initial conditions:
-    auto [unusedH, unusedW] = MakeAnimationInformations(cxmath::Height{0.0}, cxmath::Width{0.0});
-    ConfigureModelAndPresenter(cxmodel::Height{6u}, cxmodel::Width{7u}, cxmodel::Column{4u});
-
-    // We run the strategy:
-    const auto notification = strategy->PerformAnimation(unusedH, unusedW);
-    ASSERT_TRUE(notification == cxgui::BoardAnimationNotificationContext::POST_ANIMATE_REINITIALIZE_BOARD);
-
-    // We check what model and presenter methods were called:
     ASSERT_FALSE(WasUpdateCalledOnModel());
     ASSERT_FALSE(WasResizeCalledOnModel());
     ASSERT_FALSE(WasAddChipDisplacementCalledOnModel());
