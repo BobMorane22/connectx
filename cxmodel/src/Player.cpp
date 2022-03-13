@@ -25,7 +25,7 @@
 #include <cxmodel/Disc.h>
 #include <cxmodel/Player.h>
 
-cxmodel::Player::Player(const std::string p_name, const cxmodel::ChipColor& p_chipColor)
+cxmodel::Player::Player(const std::string& p_name, const cxmodel::ChipColor& p_chipColor)
  : m_name{p_name}
  , m_chip{std::make_unique<cxmodel::Disc>(p_chipColor)}
 {

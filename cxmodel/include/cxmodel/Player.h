@@ -25,9 +25,9 @@
 #define PLAYER_H_DAB68678_E251_4176_8E82_D3D8339D47B2
 
 #include <memory>
-#include <string>
 
 #include "IChip.h"
+#include "IPlayer.h"
 
 namespace cxmodel
 {
@@ -36,7 +36,7 @@ namespace cxmodel
  * @brief This class represent a Connect X player.
  *
  ************************************************************************************************/
-class Player final
+class Player : public IPlayer
 {
 
 public:
@@ -50,7 +50,7 @@ public:
      * @param p_chipColor The player's chip color.
      *
      ********************************************************************************************/
-    Player(const std::string p_name, const ChipColor& p_chipColor);
+    Player(const std::string& p_name, const ChipColor& p_chipColor);
 
     /******************************************************************************************//**
      * @brief Copy constructor.
@@ -68,21 +68,9 @@ public:
      ********************************************************************************************/
     Player& operator=(const Player& p_player);
 
-    /******************************************************************************************//**
-     * @brief Player name accessor.
-     *
-     * @return The player's name.
-     *
-     ********************************************************************************************/
-    std::string GetName() const;
-
-    /******************************************************************************************//**
-     * @brief Player chip accessor.
-     *
-     * @return The player's chip.
-     *
-     ********************************************************************************************/
-    const IChip& GetChip() const;
+    // cxmodel::IPlayer:
+    [[nodiscard]] std::string GetName() const override;
+    [[nodiscard]] const IChip& GetChip() const override;
 
 private:
 
