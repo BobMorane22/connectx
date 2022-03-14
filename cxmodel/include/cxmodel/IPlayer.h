@@ -59,6 +59,14 @@ public:
      *
      ********************************************************************************************/
     [[nodiscard]] virtual const IChip& GetChip() const = 0;
+
+    /******************************************************************************************//**
+     * @brief Indicates if the player is managed by Connect X.
+     *
+     * @return `true` if the player is managed by Connect X, `false` otherwise.
+     *
+     ********************************************************************************************/
+    [[nodiscard]] virtual bool IsManaged() const = 0;
 };
 
 } // namespace cxmodel

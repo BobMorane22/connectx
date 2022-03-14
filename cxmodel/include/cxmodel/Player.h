@@ -71,6 +71,7 @@ public:
     // cxmodel::IPlayer:
     [[nodiscard]] std::string GetName() const override;
     [[nodiscard]] const IChip& GetChip() const override;
+    [[nodiscard]] bool IsManaged() const override;
 
 private:
 
@@ -89,7 +90,7 @@ private:
  *         players can share the same name.
  *
  ********************************************************************************************/
-bool operator==(const Player& p_lhs, const Player& p_rhs);
+bool operator==(const IPlayer& p_lhs, const IPlayer& p_rhs);
 
 /******************************************************************************************//**
  * @brief Not-equal-to operator.
@@ -100,7 +101,7 @@ bool operator==(const Player& p_lhs, const Player& p_rhs);
  * @return `true` if the player DO NOT share the same disc, `false`otherwise.
  *
  ********************************************************************************************/
-bool operator!=(const Player& p_lhs, const Player& p_rhs);
+bool operator!=(const IPlayer& p_lhs, const IPlayer& p_rhs);
 
 } // namespace cxmodel
 

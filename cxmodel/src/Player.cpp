@@ -71,12 +71,17 @@ const cxmodel::IChip& cxmodel::Player::GetChip() const
     return *m_chip;
 }
 
-bool cxmodel::operator==(const cxmodel::Player& p_lhs, const cxmodel::Player& p_rhs)
+bool cxmodel::Player::IsManaged() const
+{
+    return false;
+}
+
+bool cxmodel::operator==(const cxmodel::IPlayer& p_lhs, const cxmodel::IPlayer& p_rhs)
 {
     return p_lhs.GetChip() == p_rhs.GetChip();
 }
 
-bool cxmodel::operator!=(const cxmodel::Player& p_lhs, const cxmodel::Player& p_rhs)
+bool cxmodel::operator!=(const cxmodel::IPlayer& p_lhs, const cxmodel::IPlayer& p_rhs)
 {
     return !(p_lhs == p_rhs);
 }
