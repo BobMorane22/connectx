@@ -59,9 +59,9 @@ TEST(GameResolutionStrategyFactory, Make_WinGameResolution_WinStrategyReturned)
 {
     // Setup:
     BoardMock board;
-    std::vector<cxmodel::Player> players{
-        {"First", cxmodel::MakeRed()},
-        {"Second", cxmodel::MakeBlue()}
+    std::vector<std::shared_ptr<cxmodel::IPlayer>> players{
+        cxmodel::CreatePlayer("First", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN),
+        cxmodel::CreatePlayer("Second", cxmodel::MakeBlue(), cxmodel::PlayerType::HUMAN)
     };
     std::vector<cxmodel::IBoard::Position> positions;
 
@@ -76,9 +76,9 @@ TEST(GameResolutionStrategyFactory, Make_TieGameResolution_TieStrategyReturned)
 {
     // Setup:
     BoardMock board;
-    std::vector<cxmodel::Player> players{
-        {"First", cxmodel::MakeRed()},
-        {"Second", cxmodel::MakeBlue()}
+    std::vector<std::shared_ptr<cxmodel::IPlayer>> players{
+        cxmodel::CreatePlayer("First", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN),
+        cxmodel::CreatePlayer("Second", cxmodel::MakeBlue(), cxmodel::PlayerType::HUMAN)
     };
     std::vector<cxmodel::IBoard::Position> positions;
 
@@ -95,9 +95,9 @@ TEST(GameResolutionStrategyFactory, Make_InARowTooSmall_AssertsAndNoStrategyRetu
 
     // Setup:
     BoardMock board;
-    std::vector<cxmodel::Player> players{
-        {"First", cxmodel::MakeRed()},
-        {"Second", cxmodel::MakeBlue()}
+    std::vector<std::shared_ptr<cxmodel::IPlayer>> players{
+        cxmodel::CreatePlayer("First", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN),
+        cxmodel::CreatePlayer("Second", cxmodel::MakeBlue(), cxmodel::PlayerType::HUMAN)
     };
     std::vector<cxmodel::IBoard::Position> positions;
 
@@ -115,9 +115,9 @@ TEST(GameResolutionStrategyFactory, Make_InARowTooBig_AssertsAndNoStrategyReturn
 
     // Setup:
     BoardMock board;
-    std::vector<cxmodel::Player> players{
-        {"First", cxmodel::MakeRed()},
-        {"Second", cxmodel::MakeBlue()}
+    std::vector<std::shared_ptr<cxmodel::IPlayer>> players{
+        cxmodel::CreatePlayer("First", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN),
+        cxmodel::CreatePlayer("Second", cxmodel::MakeBlue(), cxmodel::PlayerType::HUMAN)
     };
     std::vector<cxmodel::IBoard::Position> positions;
 
@@ -135,8 +135,8 @@ TEST(GameResolutionStrategyFactory, Make_NotEnoughPlayers_AssertsAndNoStrategyRe
 
     // Setup:
     BoardMock board;
-    std::vector<cxmodel::Player> players{
-        {"First", cxmodel::MakeRed()},
+    std::vector<std::shared_ptr<cxmodel::IPlayer>> players{
+        cxmodel::CreatePlayer("First", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN),
     };
     std::vector<cxmodel::IBoard::Position> positions;
 

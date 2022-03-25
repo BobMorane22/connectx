@@ -69,8 +69,8 @@ TEST_F(CommandDropChipTestFixture, /*DISABLED_*/Execute_EmptyRowAndTwoPlayers_Al
 
     cxmodel::PlayerInformation playerInfo{
         {
-            {"John Doe", cxmodel::MakeRed()},
-            {"Jane Doe", cxmodel::MakeBlue()}
+            cxmodel::CreatePlayer("John Doe", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN),
+            cxmodel::CreatePlayer("Jane Doe", cxmodel::MakeBlue(), cxmodel::PlayerType::HUMAN)
         },
         0u,
         1u
@@ -78,7 +78,7 @@ TEST_F(CommandDropChipTestFixture, /*DISABLED_*/Execute_EmptyRowAndTwoPlayers_Al
 
     cxmodel::Disc droppedDisc{cxmodel::MakeRed()};
 
-    ASSERT_TRUE(droppedDisc == playerInfo.m_players[playerInfo.m_activePlayerIndex].GetChip());
+    ASSERT_TRUE(droppedDisc == playerInfo.m_players[playerInfo.m_activePlayerIndex]->GetChip());
 
     std::vector<cxmodel::IBoard::Position> takenPositions;
     ASSERT_TRUE(takenPositions.empty());
@@ -108,9 +108,9 @@ TEST_F(CommandDropChipTestFixture, /*DISABLED_*/Execute_EmptyRowAndThreePlayers_
 
     cxmodel::PlayerInformation playerInfo{
         {
-            {"John Doe", cxmodel::MakeRed()},
-            {"Jane Doe", cxmodel::MakeBlue()},
-            {"Stacy Cooper", cxmodel::MakeYellow()}
+            cxmodel::CreatePlayer("John Doe", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN),
+            cxmodel::CreatePlayer("Jane Doe", cxmodel::MakeBlue(), cxmodel::PlayerType::HUMAN),
+            cxmodel::CreatePlayer("Stacy Cooper", cxmodel::MakeYellow(), cxmodel::PlayerType::HUMAN)
         },
         0u,
         1u
@@ -118,7 +118,7 @@ TEST_F(CommandDropChipTestFixture, /*DISABLED_*/Execute_EmptyRowAndThreePlayers_
 
     cxmodel::Disc droppedDisc{cxmodel::MakeRed()};
 
-    ASSERT_TRUE(droppedDisc == playerInfo.m_players[playerInfo.m_activePlayerIndex].GetChip());
+    ASSERT_TRUE(droppedDisc == playerInfo.m_players[playerInfo.m_activePlayerIndex]->GetChip());
 
     std::vector<cxmodel::IBoard::Position> takenPositions;
     ASSERT_TRUE(takenPositions.empty());
@@ -153,8 +153,8 @@ TEST_F(CommandDropChipTestFixture, /*DISABLED_*/Execute_RowNotFull_AllDataUpdate
 
     cxmodel::PlayerInformation playerInfo{
         {
-            {"John Doe", cxmodel::MakeRed()},
-            {"Jane Doe", cxmodel::MakeBlue()},
+            cxmodel::CreatePlayer("John Doe", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN),
+            cxmodel::CreatePlayer("Jane Doe", cxmodel::MakeBlue(), cxmodel::PlayerType::HUMAN),
         },
         1u,
         0u
@@ -162,7 +162,7 @@ TEST_F(CommandDropChipTestFixture, /*DISABLED_*/Execute_RowNotFull_AllDataUpdate
 
     cxmodel::Disc droppedDisc{cxmodel::MakeBlue()};
 
-    ASSERT_TRUE(droppedDisc == playerInfo.m_players[playerInfo.m_activePlayerIndex].GetChip());
+    ASSERT_TRUE(droppedDisc == playerInfo.m_players[playerInfo.m_activePlayerIndex]->GetChip());
 
     std::vector<cxmodel::IBoard::Position> takenPositions;
     ASSERT_TRUE(takenPositions.empty());
@@ -202,8 +202,8 @@ TEST_F(CommandDropChipTestFixture, /*DISABLED_*/Execute_RowFull_NoDataUpdated)
 
     cxmodel::PlayerInformation playerInfo{
         {
-            {"John Doe", cxmodel::MakeRed()},
-            {"Jane Doe", cxmodel::MakeBlue()}
+            cxmodel::CreatePlayer("John Doe", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN),
+            cxmodel::CreatePlayer("Jane Doe", cxmodel::MakeBlue(), cxmodel::PlayerType::HUMAN),
         },
         0u,
         1u
@@ -211,7 +211,7 @@ TEST_F(CommandDropChipTestFixture, /*DISABLED_*/Execute_RowFull_NoDataUpdated)
 
     cxmodel::Disc droppedDisc{cxmodel::MakeRed()};
 
-    ASSERT_TRUE(droppedDisc == playerInfo.m_players[playerInfo.m_activePlayerIndex].GetChip());
+    ASSERT_TRUE(droppedDisc == playerInfo.m_players[playerInfo.m_activePlayerIndex]->GetChip());
 
     std::vector<cxmodel::IBoard::Position> takenPositions;
     ASSERT_TRUE(takenPositions.empty());

@@ -24,12 +24,31 @@
 #ifndef IPLAYER_H_551C158B_76C1_424D_B20B_11D25D37A7EB
 #define IPLAYER_H_551C158B_76C1_424D_B20B_11D25D37A7EB
 
+#include <memory>
 #include <string>
+
+#include <cxmodel/ChipColor.h>
 
 namespace cxmodel
 {
 
 class IChip;
+class IPlayer;
+
+}
+
+namespace cxmodel
+{
+
+/**********************************************************************************************//**
+ * Different player types.
+ *
+ *************************************************************************************************/
+enum class PlayerType
+{
+    HUMAN,
+    BOT,
+};
 
 /*********************************************************************************************//**
  * @brief This class represent a Connect X player.
@@ -68,6 +87,51 @@ public:
      ********************************************************************************************/
     [[nodiscard]] virtual bool IsManaged() const = 0;
 };
+
+/**********************************************************************************************//**
+ * Factory for creating players.
+ *
+ * @param p_name
+ *      The name of the player.
+ * @param p_chipColor
+ *      The chip color associated with the player.
+ * @param p_type
+ *      The type of player.
+ *
+ * @pre The name must not be empty.
+ * @pre The chip color must not be transparent.
+ * @post A valid player is created.
+ *
+ * @return The player. If creation failed (for example, if preconditions are not met), an
+ *         null player object is returned.
+ *
+ *************************************************************************************************/
+[[nodiscard]] std::unique_ptr<cxmodel::IPlayer> CreatePlayer(const std::string& p_name,
+                                                             const ChipColor& p_chipColor,
+                                                             PlayerType p_type);
+
+/**********************************************************************************************//**
+ * @brief Equal-to operator.
+ *
+ * @param p_lhs The left hand side player.
+ * @param p_rhs The right hand side player.
+ *
+ * @return `true` if the player share the same disc, `false`otherwise. Note that two different
+ *         players can share the same name.
+ *
+ *************************************************************************************************/
+bool operator==(const IPlayer& p_lhs, const IPlayer& p_rhs);
+
+/**********************************************************************************************//**
+ * @brief Not-equal-to operator.
+ *
+ * @param p_lhs The left hand side player.
+ * @param p_rhs The right hand side player.
+ *
+ * @return `true` if the player DO NOT share the same disc, `false`otherwise.
+ *
+ ************************************************************************************************/
+bool operator!=(const IPlayer& p_lhs, const IPlayer& p_rhs);
 
 } // namespace cxmodel
 

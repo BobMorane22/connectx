@@ -24,114 +24,83 @@
 #include <gtest/gtest.h>
 
 #include <cxmodel/Disc.h>
-#include <cxmodel/Player.h>
-
-TEST(Player, /*DISABLED_*/Constructor_ValidInformation_ValidPlayerConstructed)
-{
-    const cxmodel::Player player{"John Doe", cxmodel::MakeRed()};
-
-    ASSERT_EQ(player.GetName(), "John Doe");
-
-    const cxmodel::Disc disc{cxmodel::MakeRed()};
-    ASSERT_EQ(player.GetChip(), disc);
-}
-
-TEST(Player, /*DISABLED_*/CopyConstructor_ValidSourcePlayer_ValidPlayerConstructed)
-{
-    const cxmodel::Player lhs{"John Doe", cxmodel::MakeRed()};
-    const cxmodel::Player rhs(lhs);
-
-    ASSERT_EQ(lhs, rhs);
-}
-
-TEST(Player, /*DISABLED_*/CopyAssignmentOperator_ValidSourcePlayer_ValidPlayerAssigned)
-{
-    cxmodel::Player lhs{"John Doe", cxmodel::MakeRed()};
-    const cxmodel::Player rhs{"Jane Doe", cxmodel::MakeBlue()};
-
-    lhs = rhs;
-
-    ASSERT_EQ(lhs.GetName(), "Jane Doe");
-
-    const cxmodel::Disc disc{cxmodel::MakeBlue()};
-    ASSERT_EQ(lhs.GetChip(), disc);
-}
+#include <cxmodel/IPlayer.h>
 
 TEST(Player, /*DISABLED_*/GetName_ValidName_NameReturned)
 {
-    const cxmodel::Player player{"John Doe", cxmodel::MakeRed()};
+    const auto player = cxmodel::CreatePlayer("John Doe", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN);
 
-    ASSERT_EQ(player.GetName(), "John Doe");
+    ASSERT_EQ(player->GetName(), "John Doe");
 }
 
 TEST(Player, /*DISABLED_*/GetChip_ValidChip_ChipReturned)
 {
-    const cxmodel::Player player{"John Doe", cxmodel::MakeRed()};
+    const auto player = cxmodel::CreatePlayer("John Doe", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN);
     const cxmodel::Disc disc{cxmodel::MakeRed()};
 
-    ASSERT_EQ(player.GetChip(), disc);
+    ASSERT_EQ(player->GetChip(), disc);
 }
 
 TEST(Player, /*DISABLED_*/EqualToOperator_TwoSameNamesAndColors_TrueReturned)
 {
-    const cxmodel::Player lhs{"John Doe", cxmodel::MakeRed()};
-    const cxmodel::Player rhs{"John Doe", cxmodel::MakeRed()};
+    const auto lhs = cxmodel::CreatePlayer("John Doe", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN);
+    const auto rhs = cxmodel::CreatePlayer("John Doe", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN);
 
-    ASSERT_TRUE(lhs == rhs);
+    ASSERT_TRUE(*lhs == *rhs);
 }
 
 TEST(Player, /*DISABLED_*/EqualToOperator_TwoDifferentNamesButSameColors_TrueReturned)
 {
-    const cxmodel::Player lhs{"John Doe", cxmodel::MakeRed()};
-    const cxmodel::Player rhs{"Jane Doe", cxmodel::MakeRed()};
+    const auto lhs = cxmodel::CreatePlayer("John Doe", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN);
+    const auto rhs = cxmodel::CreatePlayer("Jane Doe", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN);
 
-    ASSERT_TRUE(lhs == rhs);
+    ASSERT_TRUE(*lhs == *rhs);
 }
 
 TEST(Player, /*DISABLED_*/EqualToOperator_TwoDifferentNamesAndColors_FalseReturned)
 {
-    const cxmodel::Player lhs{"John Doe", cxmodel::MakeRed()};
-    const cxmodel::Player rhs{"Jane Doe", cxmodel::MakeBlue()};
+    const auto lhs = cxmodel::CreatePlayer("John Doe", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN);
+    const auto rhs = cxmodel::CreatePlayer("Jane Doe", cxmodel::MakeBlue(), cxmodel::PlayerType::HUMAN);
 
-    ASSERT_FALSE(lhs == rhs);
+    ASSERT_FALSE(*lhs == *rhs);
 }
 
 TEST(Player, /*DISABLED_*/EqualToOperator_TwoSameNamesButDifferentColors_FalseReturned)
 {
-    const cxmodel::Player lhs{"John Doe", cxmodel::MakeRed()};
-    const cxmodel::Player rhs{"John Doe", cxmodel::MakeBlue()};
+    const auto lhs = cxmodel::CreatePlayer("John Doe", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN);
+    const auto rhs = cxmodel::CreatePlayer("John Doe", cxmodel::MakeBlue(), cxmodel::PlayerType::HUMAN);
 
-    ASSERT_FALSE(lhs == rhs);
+    ASSERT_FALSE(*lhs == *rhs);
 }
 
 TEST(Player, /*DISABLED_*/NotEqualToOperator_TwoSameNamesAndColors_FalseReturned)
 {
-    const cxmodel::Player lhs{"John Doe", cxmodel::MakeRed()};
-    const cxmodel::Player rhs{"John Doe", cxmodel::MakeRed()};
+    const auto lhs = cxmodel::CreatePlayer("John Doe", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN);
+    const auto rhs = cxmodel::CreatePlayer("John Doe", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN);
 
-    ASSERT_FALSE(lhs != rhs);
+    ASSERT_FALSE(*lhs != *rhs);
 }
 
 TEST(Player, /*DISABLED_*/NotEqualToOperator_TwoDifferentNamesButSameColors_FalseReturned)
 {
-    const cxmodel::Player lhs{"John Doe", cxmodel::MakeRed()};
-    const cxmodel::Player rhs{"Jane Doe", cxmodel::MakeRed()};
+    const auto lhs = cxmodel::CreatePlayer("John Doe", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN);
+    const auto rhs = cxmodel::CreatePlayer("Jane Doe", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN);
 
-    ASSERT_FALSE(lhs != rhs);
+    ASSERT_FALSE(*lhs != *rhs);
 }
 
 TEST(Player, /*DISABLED_*/NotEqualToOperator_TwoDifferentNamesAndColors_TrueReturned)
 {
-    const cxmodel::Player lhs{"John Doe", cxmodel::MakeRed()};
-    const cxmodel::Player rhs{"Jane Doe", cxmodel::MakeBlue()};
+    const auto lhs = cxmodel::CreatePlayer("John Doe", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN);
+    const auto rhs = cxmodel::CreatePlayer("Jane Doe", cxmodel::MakeBlue(), cxmodel::PlayerType::HUMAN);
 
-    ASSERT_TRUE(lhs != rhs);
+    ASSERT_TRUE(*lhs != *rhs);
 }
 
 TEST(Player, /*DISABLED_*/NotEqualToOperator_TwoSameNamesButDifferentColors_TrueReturned)
 {
-    const cxmodel::Player lhs{"John Doe", cxmodel::MakeRed()};
-    const cxmodel::Player rhs{"John Doe", cxmodel::MakeBlue()};
+    const auto lhs = cxmodel::CreatePlayer("John Doe", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN);
+    const auto rhs = cxmodel::CreatePlayer("John Doe", cxmodel::MakeBlue(), cxmodel::PlayerType::HUMAN);
 
-    ASSERT_TRUE(lhs != rhs);
+    ASSERT_TRUE(*lhs != *rhs);
 }

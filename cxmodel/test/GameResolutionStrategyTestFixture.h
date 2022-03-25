@@ -27,7 +27,7 @@
 #include <gtest/gtest.h>
 
 #include <cxmodel/IConnectXLimits.h>
-#include <cxmodel/Player.h>
+#include <cxmodel/IPlayer.h>
 
 /*************************************************************************************************
  * @brief Fixture for testing game resolution strategies.
@@ -73,7 +73,7 @@ public:
      * @return `true` if the game is valid, `false` otherwise.
      *
      ************************************************************************************************/
-    [[nodiscard]] bool ValidateGame(const std::vector<cxmodel::Player>& p_playerList,
+    [[nodiscard]] bool ValidateGame(const std::vector<std::shared_ptr<cxmodel::IPlayer>>& p_playerList,
                                     const size_t p_inARowValue,
                                     const std::string& p_asciiGame);
 

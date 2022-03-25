@@ -30,7 +30,7 @@
 #include <cxmodel/IBoard.h>
 #include <cxmodel/ICommand.h>
 #include <cxmodel/NewGameInformation.h>
-#include <cxmodel/Player.h>
+#include <cxmodel/IPlayer.h>
 
 namespace cxmodel
 {
@@ -57,7 +57,7 @@ public:
      ********************************************************************************************/
     CommandCreateNewGame(const IConnectXLimits& p_modelAsLimits,
                          std::unique_ptr<IBoard>& p_board,
-                         std::vector<Player>& p_players,
+                         std::vector<std::shared_ptr<IPlayer>>& p_players,
                          size_t& p_inARowValue,
                          NewGameInformation p_newGameInformation);
 
@@ -69,7 +69,7 @@ private:
     const IConnectXLimits& m_modelAsLimits;
 
     std::unique_ptr<IBoard>& m_board;
-    std::vector<Player>& m_modelPlayers;
+    std::vector<std::shared_ptr<IPlayer>>& m_modelPlayers;
     size_t& m_inARowValue;
 
     NewGameInformation m_newGameInformation;

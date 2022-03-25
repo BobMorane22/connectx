@@ -21,6 +21,7 @@
  *
  *************************************************************************************************/
 
+#include <cxmodel/IChip.h>
 #include <cxunit/NotImplementedException.h>
 #include <cxgui/MainWindowController.h>
 
@@ -96,7 +97,7 @@ cxgui::INewGameViewController& MainWindowControllerTestFixture::GetNewGameViewCo
     return *m_controller;
 }
 
-void MainWindowControllerTestFixture::MainWindowControllerMockModel::CreateNewGame(const cxmodel::NewGameInformation& /*p_gameInformation*/)
+void MainWindowControllerTestFixture::MainWindowControllerMockModel::CreateNewGame(cxmodel::NewGameInformation /*p_gameInformation*/)
 {
     m_outer.m_newGameCreated = true;
 }

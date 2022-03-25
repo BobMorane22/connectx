@@ -32,17 +32,18 @@ namespace
 
 constexpr size_t SEVEN_IN_A_ROW = 7u;
 
-std::vector<cxmodel::Player> CreatePlayersList()
+std::vector<std::shared_ptr<cxmodel::IPlayer>> CreatePlayersList()
 {
     using namespace cxmodel;
+
     return {
-        {"Player 1", MakeRed()},
-        {"Player 2", MakeBlue()},
-        {"Player 3", MakeYellow()},
-        {"Player 4", MakeGreen()},
-        {"Player 5", ChipColor::MakePredefined(ChipColor::Predefined::AQUA)},
-        {"Player 6", ChipColor::MakePredefined(ChipColor::Predefined::LIME)},
-        {"Player 7", ChipColor::MakePredefined(ChipColor::Predefined::GRAY)},
+        cxmodel::CreatePlayer("Player 1", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN),
+        cxmodel::CreatePlayer("Player 2", cxmodel::MakeBlue(), cxmodel::PlayerType::HUMAN),
+        cxmodel::CreatePlayer("Player 3", cxmodel::MakeYellow(), cxmodel::PlayerType::HUMAN),
+        cxmodel::CreatePlayer("Player 4", cxmodel::MakeGreen(), cxmodel::PlayerType::HUMAN),
+        cxmodel::CreatePlayer("Player 5", ChipColor::MakePredefined(ChipColor::Predefined::AQUA), cxmodel::PlayerType::HUMAN),
+        cxmodel::CreatePlayer("Player 6", ChipColor::MakePredefined(ChipColor::Predefined::LIME), cxmodel::PlayerType::HUMAN),
+        cxmodel::CreatePlayer("Player 7", ChipColor::MakePredefined(ChipColor::Predefined::GRAY), cxmodel::PlayerType::HUMAN),
     };
 }
 

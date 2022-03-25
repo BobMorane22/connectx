@@ -24,6 +24,8 @@
 #ifndef MAINWINDOWCONTROLLER_H_2377676C_13C5_4D43_8AFA_0C90ABC44C5C
 #define MAINWINDOWCONTROLLER_H_2377676C_13C5_4D43_8AFA_0C90ABC44C5C
 
+#include <cxmodel/IChip.h>
+
 #include "IMainWindowController.h"
 
 namespace cxmodel

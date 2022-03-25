@@ -32,21 +32,18 @@ namespace
 
 constexpr char FIRST_PLAYER_NAME[] = "John Doe";
 constexpr cxmodel::ChipColor FIRST_PLAYER_CHIP_COLOR = cxmodel::MakeRed();
-static const cxmodel::Player FIRST_PLAYER{FIRST_PLAYER_NAME, FIRST_PLAYER_CHIP_COLOR};
 
 constexpr char SECOND_PLAYER_NAME[] = "Mary Foo";
 constexpr cxmodel::ChipColor SECOND_PLAYER_CHIP_COLOR = cxmodel::MakeBlue();
-static const cxmodel::Player SECOND_PLAYER{SECOND_PLAYER_NAME, SECOND_PLAYER_CHIP_COLOR};
 
 constexpr char THIRD_PLAYER_NAME[] = "Donald Foo-Bar";
 constexpr cxmodel::ChipColor THIRD_PLAYER_CHIP_COLOR = cxmodel::MakeYellow();
-static const cxmodel::Player THRID_PLAYER{THIRD_PLAYER_NAME, THIRD_PLAYER_CHIP_COLOR};
 
-std::array<cxmodel::Player, 3u> PLAYERS
+std::array<std::shared_ptr<cxmodel::IPlayer>, 3u> PLAYERS
 {
-    FIRST_PLAYER,
-    SECOND_PLAYER,
-    THRID_PLAYER
+    cxmodel::CreatePlayer(FIRST_PLAYER_NAME, FIRST_PLAYER_CHIP_COLOR, cxmodel::PlayerType::HUMAN),
+    cxmodel::CreatePlayer(SECOND_PLAYER_NAME, SECOND_PLAYER_CHIP_COLOR, cxmodel::PlayerType::HUMAN),
+    cxmodel::CreatePlayer(THIRD_PLAYER_NAME, THIRD_PLAYER_CHIP_COLOR, cxmodel::PlayerType::HUMAN),
 };
 
 // Gets the underlying enum value:
@@ -122,23 +119,23 @@ void ModelTestFixture::CreateNewGame(size_t p_boardHeight,
     EXPECT_TRUE(nbOfPlayers <= PLAYERS.size());
     for(size_t index = 0u; index < nbOfPlayers; ++index)
     {
-        newGameInfo.AddPlayer(PLAYERS[index]);
+        newGameInfo.m_players.push_back(PLAYERS[index]);
     }
 
     // We create a new game:
-    m_model->CreateNewGame(newGameInfo);
+    m_model->CreateNewGame(std::move(newGameInfo));
 }
 
-const cxmodel::Player& ModelTestFixture::GetPlayer(size_t p_playerIndex) const
+const cxmodel::IPlayer& ModelTestFixture::GetPlayer(size_t p_playerIndex) const
 {
     try
     {
-        return PLAYERS.at(p_playerIndex);
+        return *PLAYERS.at(p_playerIndex);
     }
     catch(...)
     {
         EXPECT_TRUE(false);
-        return PLAYERS.at(0u);
+        return *PLAYERS.at(0u);
     }
 }
 
@@ -152,6 +149,6 @@ void ModelTestFixture::DropChips(size_t p_nbOfDrops)
     for(size_t index = 0u; index < p_nbOfDrops; ++index)
     {
         const size_t column = index % m_nbOfPlayersInCurrentGame;
-        m_model->DropChip(PLAYERS[column].GetChip(), column);
+        m_model->DropChip(PLAYERS[column]->GetChip(), column);
     }
 }

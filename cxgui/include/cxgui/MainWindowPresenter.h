@@ -26,7 +26,7 @@
 
 #include <string>
 
-#include <cxmodel/Player.h>
+#include <cxmodel/IPlayer.h>
 
 #include "IMainWindowPresenter.h"
 
@@ -141,8 +141,8 @@ private:
     size_t m_currentBoardWidth;
     size_t m_currentBoardHeight;
 
-    cxmodel::Player m_activePlayer;
-    cxmodel::Player m_nextPlayer;
+    std::unique_ptr<cxmodel::IPlayer> m_activePlayer;
+    std::unique_ptr<cxmodel::IPlayer> m_nextPlayer;
 
     std::vector<std::vector<cxmodel::ChipColor>> m_chipColors;
 };

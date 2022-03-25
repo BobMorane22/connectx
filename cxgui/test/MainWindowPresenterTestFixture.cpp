@@ -98,7 +98,7 @@ void MainWindowPresenterTestFixture::MainWindowPresenterModelMock::SendNotificat
     Notify(p_context);
 }
 
-void MainWindowPresenterTestFixture::MainWindowPresenterModelMock::CreateNewGame(const cxmodel::NewGameInformation& p_gameInformation)
+void MainWindowPresenterTestFixture::MainWindowPresenterModelMock::CreateNewGame(cxmodel::NewGameInformation p_gameInformation)
 {
     (void)p_gameInformation;
 
@@ -129,7 +129,7 @@ const cxmodel::IChip& MainWindowPresenterTestFixture::MainWindowPresenterModelMo
     EXPECT_TRUE(p_row < GetCurrentGridHeight());
     EXPECT_TRUE(p_column < GetCurrentGridWidth());
 
-    return m_ACTIVE_PLAYER.GetChip();
+    return m_ACTIVE_PLAYER->GetChip();
 }
 
 void MainWindowPresenterTestFixture::MainWindowPresenterModelMock::EndCurrentGame()

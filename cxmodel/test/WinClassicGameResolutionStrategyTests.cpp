@@ -30,11 +30,11 @@ using ClassicTwoPlayersGameTestFixture = GameResolutionStrategyTestFixture;
 namespace
 {
 
-std::vector<cxmodel::Player> CreatePlayersList()
+std::vector<std::shared_ptr<cxmodel::IPlayer>> CreatePlayersList()
 {
     return {
-        {"Player 1", cxmodel::MakeRed()},
-        {"Player 2", cxmodel::MakeBlue()}
+        cxmodel::CreatePlayer("Player 1", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN),
+        cxmodel::CreatePlayer("Player 2", cxmodel::MakeBlue(), cxmodel::PlayerType::HUMAN),
     };
 }
 

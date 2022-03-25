@@ -96,8 +96,8 @@ public:
         Notify(cxmodel::ModelNotificationContext::UNDO_CHIP_DROPPED);
     }
 
-    const cxmodel::Player& GetActivePlayer() const override {return m_activePlayer;}
-    const cxmodel::Player& GetNextPlayer() const override {return m_nextPlayer;}
+    const cxmodel::IPlayer& GetActivePlayer() const override {return *m_activePlayer;}
+    const cxmodel::IPlayer& GetNextPlayer() const override {return *m_nextPlayer;}
     const cxmodel::IChip& GetChip(size_t p_row, size_t p_column) const override
     {
         EXPECT_TRUE(p_row < GetCurrentGridHeight());
@@ -108,8 +108,8 @@ public:
 
 private:
 
-    cxmodel::Player m_activePlayer{"John Doe", cxmodel::MakeRed()};
-    cxmodel::Player m_nextPlayer{"Jane Doe", cxmodel::MakeGreen()};
+    std::unique_ptr<cxmodel::IPlayer> m_activePlayer = cxmodel::CreatePlayer("John Doe", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN);
+    std::unique_ptr<cxmodel::IPlayer> m_nextPlayer = cxmodel::CreatePlayer("Jane Doe", cxmodel::MakeGreen(), cxmodel::PlayerType::HUMAN);
     std::vector<std::vector<cxmodel::Disc>> m_board;
 };
 

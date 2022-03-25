@@ -30,13 +30,13 @@ using HeightBySevenFourPlayersGameTestFixture = GameResolutionStrategyTestFixtur
 namespace
 {
 
-std::vector<cxmodel::Player> CreatePlayersList()
+std::vector<std::shared_ptr<cxmodel::IPlayer>> CreatePlayersList()
 {
     return {
-        {"Player 1", cxmodel::MakeRed()},
-        {"Player 2", cxmodel::MakeBlue()},
-        {"Player 3", cxmodel::MakeYellow()},
-        {"Player 4", cxmodel::MakeGreen()}
+        cxmodel::CreatePlayer("Player 1", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN),
+        cxmodel::CreatePlayer("Player 2", cxmodel::MakeBlue(), cxmodel::PlayerType::HUMAN),
+        cxmodel::CreatePlayer("Player 3", cxmodel::MakeYellow(), cxmodel::PlayerType::HUMAN),
+        cxmodel::CreatePlayer("Player 4", cxmodel::MakeGreen(), cxmodel::PlayerType::HUMAN),
     };
 }
 

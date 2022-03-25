@@ -283,10 +283,10 @@ void cxgui::NewGameView::OnStart()
     gameInformation.m_gridWidth = boardWidth;
     for(size_t index = 0; index < m_playerList.GetSize(); ++index)
     {
-        gameInformation.AddPlayer({playerNames[index], chipColors[index]});
+        gameInformation.m_players.push_back(cxmodel::CreatePlayer(playerNames[index], chipColors[index], cxmodel::PlayerType::HUMAN));
     }
 
-    m_controller.OnStart(gameInformation);
+    m_controller.OnStart(std::move(gameInformation));
 }
 
 void cxgui::NewGameView::OnAddPlayer()

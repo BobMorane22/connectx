@@ -24,7 +24,11 @@
 #ifndef IGAMEINFORMATION_H_9970E71B_B32B_4B39_8363_50B66B9CE1C3
 #define IGAMEINFORMATION_H_9970E71B_B32B_4B39_8363_50B66B9CE1C3
 
-#include "Player.h"
+namespace cxmodel
+{
+    class IChip;
+    class IPlayer;
+}
 
 namespace cxmodel
 {
@@ -77,7 +81,7 @@ public:
      * @return The active player.
      *
      ********************************************************************************************/
-    virtual const Player& GetActivePlayer() const = 0;
+    virtual const IPlayer& GetActivePlayer() const = 0;
 
     /******************************************************************************************//**
      * @brief Gets the next player (the one who's turn is the next).
@@ -85,7 +89,7 @@ public:
      * @return The next player.
      *
      ********************************************************************************************/
-    virtual const Player& GetNextPlayer() const = 0;
+    virtual const IPlayer& GetNextPlayer() const = 0;
 
     /******************************************************************************************//**
      * @brief Gets the chip at some specific location on the board. If the location does not

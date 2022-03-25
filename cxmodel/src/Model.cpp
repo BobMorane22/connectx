@@ -32,6 +32,7 @@
 #include <cxmodel/CommandStack.h>
 #include <cxmodel/Disc.h>
 #include <cxmodel/GameResolutionStrategyFactory.h>
+#include <cxmodel/IPlayer.h>
 #include <cxmodel/Model.h>
 #include <cxmodel/ModelNotificationContext.h>
 #include <cxmodel/version.h>
@@ -39,22 +40,32 @@
 namespace
 {
 
-static constexpr char NAME[] = "Connect X";
+constexpr char NAME[] = "Connect X";
 
-static constexpr size_t GRID_MIN_HEIGHT = 6u;
-static constexpr size_t GRID_MAX_HEIGHT = 64u;
-static constexpr size_t GRID_MIN_WIDTH = 7u;
-static constexpr size_t GRID_MAX_WIDTH = 64u;
+constexpr size_t GRID_MIN_HEIGHT = 6u;
+constexpr size_t GRID_MAX_HEIGHT = 64u;
+constexpr size_t GRID_MIN_WIDTH = 7u;
+constexpr size_t GRID_MAX_WIDTH = 64u;
 
-static constexpr size_t IN_A_ROW_MIN = 3u;
-static constexpr size_t IN_A_ROW_MAX = 8u;
+constexpr size_t IN_A_ROW_MIN = 3u;
+constexpr size_t IN_A_ROW_MAX = 8u;
 
-static constexpr size_t NUMBER_OF_PLAYERS_MIN = 2u;
-static constexpr size_t NUMBER_OF_PLAYERS_MAX = 10u;
+constexpr size_t NUMBER_OF_PLAYERS_MIN = 2u;
+constexpr size_t NUMBER_OF_PLAYERS_MAX = 10u;
 
-static const cxmodel::Player ACTIVE_PLAYER{"Woops (active)!", {0, 0, 0, 0}};
-static const cxmodel::Player NEXT_PLAYER {"Woops! (next)", {0, 0, 0, 0}};
-static const cxmodel::Disc NO_DISC{cxmodel::MakeTransparent()};
+const cxmodel::Disc NO_DISC{cxmodel::MakeTransparent()};
+
+const cxmodel::IPlayer& GetDefaultActivePlayer()
+{
+    static auto player = CreatePlayer("Woops (active)!", {0, 0, 0, 0}, cxmodel::PlayerType::HUMAN);
+    return *player;
+}
+
+const cxmodel::IPlayer& GetDefaultNextPlayer()
+{
+    static auto player = CreatePlayer("Woops (next)!", {0, 0, 0, 0}, cxmodel::PlayerType::HUMAN);
+    return *player;
+}
 
 } // namespace
 
@@ -141,12 +152,12 @@ size_t cxmodel::Model::GetMaximumNumberOfPlayers() const
     return NUMBER_OF_PLAYERS_MAX;
 }
 
-void cxmodel::Model::CreateNewGame(const NewGameInformation& p_gameInformation)
+void cxmodel::Model::CreateNewGame(NewGameInformation p_gameInformation)
 {
     PRECONDITION(p_gameInformation.m_gridWidth > 0);
     PRECONDITION(p_gameInformation.m_gridHeight > 0);
     PRECONDITION(p_gameInformation.m_inARowValue > 1);
-    PRECONDITION(p_gameInformation.GetNewPlayers().size() > 1);
+    PRECONDITION(p_gameInformation.m_players.size() > 1);
 
     //PRECONDITION(std::all_of(p_gameInformation.GetNewPlayers().cbegin(),
     //                         p_gameInformation.GetNewPlayers().cend(),
@@ -155,9 +166,11 @@ void cxmodel::Model::CreateNewGame(const NewGameInformation& p_gameInformation)
     //                            return !p_player.GetName().empty();
     //                         }));
 
-    std::unique_ptr<ICommand> command = std::make_unique<CommandCreateNewGame>(*this, m_board, m_playersInfo.m_players, m_inARowValue, p_gameInformation);
+    std::unique_ptr<ICommand> command = std::make_unique<CommandCreateNewGame>(*this, m_board, m_playersInfo.m_players, m_inARowValue, std::move(p_gameInformation));
     IF_CONDITION_NOT_MET_DO(command, return;);
     command->Execute();
+
+    // WARNING: p_gameInformation has been moved from. Do not use anymore.
 
     IF_CONDITION_NOT_MET_DO(m_board, return;);
 
@@ -191,10 +204,10 @@ void cxmodel::Model::DropChip(const cxmodel::IChip& p_chip, size_t p_column)
     const size_t activePlayerIndexBefore = m_playersInfo.m_activePlayerIndex;
     const size_t nextPlayerIndexBefore = m_playersInfo.m_nextPlayerIndex;
 
-    const Player& activePlayer = m_playersInfo.m_players[m_playersInfo.m_activePlayerIndex];
-    if(!INL_PRECONDITION(activePlayer.GetChip() == p_chip))
+    const auto activePlayer = m_playersInfo.m_players[m_playersInfo.m_activePlayerIndex];
+    if(!INL_PRECONDITION(activePlayer->GetChip() == p_chip))
     {
-        const IChip& activePlayerChip = activePlayer.GetChip();
+        const IChip& activePlayerChip = activePlayer->GetChip();
         std::ostringstream logStream;
         logStream << "Active player's color: (" << activePlayerChip.GetColor().R() << ", "
                                                 << activePlayerChip.GetColor().G() << ", "
@@ -223,12 +236,12 @@ void cxmodel::Model::DropChip(const cxmodel::IChip& p_chip, size_t p_column)
 
         std::ostringstream stream;
         const IBoard::Position& droppedPosition = m_takenPositions.back();
-        stream << activePlayer.GetName() << "'s chip dropped at (" << droppedPosition.m_row << ", " << droppedPosition.m_column << ")";
+        stream << activePlayer->GetName() << "'s chip dropped at (" << droppedPosition.m_row << ", " << droppedPosition.m_column << ")";
         m_logger.Log(cxlog::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__, stream.str());
     }
     else
     {
-        m_logger.Log(cxlog::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__, "Chip drop failed for " + activePlayer.GetName());
+        m_logger.Log(cxlog::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__, "Chip drop failed for " + activePlayer->GetName());
         Notify(ModelNotificationContext::CHIP_DROPPED_FAILED);
     }
 
@@ -364,18 +377,18 @@ size_t cxmodel::Model::GetCurrentInARowValue() const
     return m_inARowValue;
 }
 
-const cxmodel::Player& cxmodel::Model::GetActivePlayer() const
+const cxmodel::IPlayer& cxmodel::Model::GetActivePlayer() const
 {
-    IF_CONDITION_NOT_MET_DO(m_playersInfo.m_players.size() >= 2, return ACTIVE_PLAYER;);
+    IF_CONDITION_NOT_MET_DO(m_playersInfo.m_players.size() >= 2, return GetDefaultActivePlayer(););
 
-    return m_playersInfo.m_players[m_playersInfo.m_activePlayerIndex];
+    return *m_playersInfo.m_players[m_playersInfo.m_activePlayerIndex];
 }
 
-const cxmodel::Player& cxmodel::Model::GetNextPlayer() const
+const cxmodel::IPlayer& cxmodel::Model::GetNextPlayer() const
 {
-    IF_CONDITION_NOT_MET_DO(m_playersInfo.m_players.size() >= 2, return NEXT_PLAYER;);
+    IF_CONDITION_NOT_MET_DO(m_playersInfo.m_players.size() >= 2, return GetDefaultNextPlayer(););
 
-    return m_playersInfo.m_players[m_playersInfo.m_nextPlayerIndex];
+    return *m_playersInfo.m_players[m_playersInfo.m_nextPlayerIndex];
 }
 
 const cxmodel::IChip& cxmodel::Model::GetChip(size_t p_row, size_t p_column) const

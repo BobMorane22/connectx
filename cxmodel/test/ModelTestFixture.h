@@ -133,7 +133,7 @@ public:
      *     | 3      | Donald Foo-Bar | Yellow     |
      *
      * Also note that when this method is called and the model limits are respected, the
-     * ModelNotificationContext::CREATE_NEW_GAME is emitted.
+     * ModelNotificationContext::CREATE_NEW_GAME notification is emitted.
      *
      ********************************************************************************************/
     void CreateNewGame(size_t p_boardHeight,
@@ -151,7 +151,7 @@ public:
      * @return The player at the specified index.
      *
      ********************************************************************************************/
-    const cxmodel::Player& GetPlayer(size_t p_playerIndex) const;
+    const cxmodel::IPlayer& GetPlayer(size_t p_playerIndex) const;
 
     /******************************************************************************************//**
      * @brief Drops the specified number of chips in alternate rows.

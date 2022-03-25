@@ -35,8 +35,6 @@
 namespace
 {
 
-const cxmodel::Player NO_PLAYER = {"--", cxmodel::MakeTransparent()};
-
 std::string MakeValueOutOfLimitsWarningDialog(const std::string& p_valueName, size_t p_lower, size_t p_upper)
 {
     std::ostringstream oss;
@@ -73,9 +71,9 @@ cxgui::MainWindowPresenter::MainWindowPresenter(const cxmodel::IConnectXLimits& 
  , m_canCurrentGameBeReinitialized{false}
  , m_currentBoardWidth{p_modealAsLimits.GetMinimumGridWidth()}
  , m_currentBoardHeight{p_modealAsLimits.GetMinimumGridHeight()}
- , m_activePlayer{NO_PLAYER}
- , m_nextPlayer{NO_PLAYER}
 {
+    m_activePlayer = cxmodel::CreatePlayer("--", cxmodel::MakeTransparent(), cxmodel::PlayerType::HUMAN);
+    m_nextPlayer = cxmodel::CreatePlayer("--", cxmodel::MakeTransparent(), cxmodel::PlayerType::HUMAN);
 }
 
 void cxgui::MainWindowPresenter::Update(cxmodel::ModelNotificationContext p_context, cxmodel::ModelSubject* p_subject)
@@ -383,14 +381,14 @@ std::string cxgui::MainWindowPresenter::GetGameViewTitle() const
 
 cxmodel::ChipColor cxgui::MainWindowPresenter::GetGameViewActivePlayerChipColor() const
 {
-    const cxmodel::IChip& activePlayerChip = m_activePlayer.GetChip();
+    const cxmodel::IChip& activePlayerChip = m_activePlayer->GetChip();
 
     return activePlayerChip.GetColor();
 }
 
 cxmodel::ChipColor cxgui::MainWindowPresenter::GetGameViewNextPlayerChipColor() const
 {
-    const cxmodel::IChip& nextPlayerChip = m_nextPlayer.GetChip();
+    const cxmodel::IChip& nextPlayerChip = m_nextPlayer->GetChip();
 
     return nextPlayerChip.GetColor();
 }
@@ -407,12 +405,12 @@ std::string cxgui::MainWindowPresenter::GetGameViewNextPlayerLabelText() const
 
 std::string cxgui::MainWindowPresenter::GetGameViewActivePlayerName() const
 {
-    return m_activePlayer.GetName();
+    return m_activePlayer->GetName();
 }
 
 std::string cxgui::MainWindowPresenter::GetGameViewNextPlayerName() const
 {
-    return m_nextPlayer.GetName();
+    return m_nextPlayer->GetName();
 }
 
 size_t cxgui::MainWindowPresenter::GetGameViewBoardWidth() const
@@ -437,8 +435,13 @@ void cxgui::MainWindowPresenter::UpdateCreateNewGame()
     m_currentBoardWidth = m_modelAsGameInformation.GetCurrentGridWidth();
     m_currentBoardHeight = m_modelAsGameInformation.GetCurrentGridHeight();
 
-    m_activePlayer = m_modelAsGameInformation.GetActivePlayer();
-    m_nextPlayer = m_modelAsGameInformation.GetNextPlayer();
+    m_activePlayer = cxmodel::CreatePlayer(m_modelAsGameInformation.GetActivePlayer().GetName(),
+                                           m_modelAsGameInformation.GetActivePlayer().GetChip().GetColor(),
+                                           cxmodel::PlayerType::HUMAN);
+
+    m_nextPlayer = cxmodel::CreatePlayer(m_modelAsGameInformation.GetNextPlayer().GetName(),
+                                         m_modelAsGameInformation.GetNextPlayer().GetChip().GetColor(),
+                                         cxmodel::PlayerType::HUMAN);
 
     // Reserve the board color memory:
     for(size_t row = 0u; row < m_currentBoardHeight; ++row)
@@ -450,9 +453,13 @@ void cxgui::MainWindowPresenter::UpdateCreateNewGame()
 void cxgui::MainWindowPresenter::UpdateChipDropped()
 {
     // Update players information:
-    m_activePlayer = m_modelAsGameInformation.GetActivePlayer();
-    m_nextPlayer = m_modelAsGameInformation.GetNextPlayer();
+    m_activePlayer = cxmodel::CreatePlayer(m_modelAsGameInformation.GetActivePlayer().GetName(),
+                                           m_modelAsGameInformation.GetActivePlayer().GetChip().GetColor(),
+                                           cxmodel::PlayerType::HUMAN);
 
+    m_nextPlayer = cxmodel::CreatePlayer(m_modelAsGameInformation.GetNextPlayer().GetName(),
+                                         m_modelAsGameInformation.GetNextPlayer().GetChip().GetColor(),
+                                         cxmodel::PlayerType::HUMAN);
     // Update board information:
     for(size_t row = 0u; row < m_currentBoardHeight; ++row)
     {

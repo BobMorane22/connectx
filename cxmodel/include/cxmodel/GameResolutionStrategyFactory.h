@@ -29,7 +29,7 @@
 
 #include "IBoard.h"
 #include "IGameResolutionStrategy.h"
-#include "Player.h"
+#include "IPlayer.h"
 
 namespace cxmodel
 {
@@ -68,7 +68,7 @@ public:
      ********************************************************************************************/
     static std::unique_ptr<cxmodel::IGameResolutionStrategy> Make(const IBoard& p_board,
                                                                   size_t p_inARowValue,
-                                                                  const std::vector<Player>& p_players,
+                                                                  const std::vector<std::shared_ptr<IPlayer>>& p_players,
                                                                   const std::vector<IBoard::Position>& p_takenPositions,
                                                                   GameResolution p_resolution);
 

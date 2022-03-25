@@ -38,9 +38,9 @@ cxgui::MainWindowController::MainWindowController(cxmodel::IConnectXGameActions&
 {
 }
 
-void cxgui::MainWindowController::OnStart(const cxmodel::NewGameInformation p_gameInformation)
+void cxgui::MainWindowController::OnStart(cxmodel::NewGameInformation p_gameInformation)
 {
-    m_modelAsGameActions.CreateNewGame(p_gameInformation);
+    m_modelAsGameActions.CreateNewGame(std::move(p_gameInformation));
 }
 
 void cxgui::MainWindowController::OnDown(const cxmodel::ChipColor& p_chipColor, size_t p_column)

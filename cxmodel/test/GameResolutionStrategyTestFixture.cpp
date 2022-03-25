@@ -308,7 +308,7 @@ void DropChipInternal(size_t p_column,
  *     does not.
  *
  ********************************************************************************************/
-bool ValidateGameInternal(const std::vector<cxmodel::Player>& p_players,
+bool ValidateGameInternal(const std::vector<std::shared_ptr<cxmodel::IPlayer>>& p_players,
                           const size_t p_inARowValue,
                           const BoardConfigurationData& p_boardData,
                           const cxmodel::IConnectXLimits& p_model)
@@ -336,25 +336,25 @@ bool ValidateGameInternal(const std::vector<cxmodel::Player>& p_players,
     bool winLocated = false;
     for(const auto& move : p_boardData.m_moves)
     {
-        DropChipInternal(move.m_column, p_players[index].GetChip(), board, takenPositions);
+        DropChipInternal(move.m_column, p_players[index]->GetChip(), board, takenPositions);
 
         // After the drop, the next player becomes the active player:
         index = (index + 1u) % p_players.size();
 
         if(move.m_isWon)
         {
-            if(!winStrategy.Handle(p_players[index]))
+            if(!winStrategy.Handle(*p_players[index]))
             {
-                winStrategy.Handle(p_players[index]);
+                winStrategy.Handle(*p_players[index]);
                 ADD_FAILURE() << "Expected win at turn " << move.m_turn << ", but no win detected." << std::endl;
                 return false;
             }
 
             winLocated = true;
 
-            if(!winLocated && tieStrategy.Handle(p_players[index]))
+            if(!winLocated && tieStrategy.Handle(*p_players[index]))
             {
-                tieStrategy.Handle(p_players[index]);
+                tieStrategy.Handle(*p_players[index]);
                 ADD_FAILURE() << "Unexpected tie at turn " << move.m_turn << ", but a win was expected." << std::endl;
                 return false;
             }
@@ -364,16 +364,16 @@ bool ValidateGameInternal(const std::vector<cxmodel::Player>& p_players,
 
         if(move.m_isTied)
         {
-            if(winStrategy.Handle(p_players[index]))
+            if(winStrategy.Handle(*p_players[index]))
             {
-                winStrategy.Handle(p_players[index]);
+                winStrategy.Handle(*p_players[index]);
                 ADD_FAILURE() << "Unexpected win at turn " << move.m_turn << ", but a tie was expected." << std::endl;
                 return false;
             }
 
-            if(!tieStrategy.Handle(p_players[index]))
+            if(!tieStrategy.Handle(*p_players[index]))
             {
-                tieStrategy.Handle(p_players[index]);
+                tieStrategy.Handle(*p_players[index]);
                 ADD_FAILURE() << "Expected tie at turn " << move.m_turn << ", but no tie detected." << std::endl;
                 return false;
             }
@@ -381,16 +381,16 @@ bool ValidateGameInternal(const std::vector<cxmodel::Player>& p_players,
             continue;
         }
 
-        if(winStrategy.Handle(p_players[index]))
+        if(winStrategy.Handle(*p_players[index]))
         {
-            winStrategy.Handle(p_players[index]);
+            winStrategy.Handle(*p_players[index]);
             ADD_FAILURE() << "Unexpected win at turn " << move.m_turn << std::endl;
             return false;
         }
 
-        if(tieStrategy.Handle(p_players[index]))
+        if(tieStrategy.Handle(*p_players[index]))
         {
-            tieStrategy.Handle(p_players[index]);
+            tieStrategy.Handle(*p_players[index]);
             ADD_FAILURE() << "Unexpected tie at turn " << move.m_turn << std::endl;
             return false;
         }
@@ -401,7 +401,7 @@ bool ValidateGameInternal(const std::vector<cxmodel::Player>& p_players,
 
 } // namespace
 
-bool GameResolutionStrategyTestFixture::ValidateGame(const std::vector<cxmodel::Player>& p_playerList,
+bool GameResolutionStrategyTestFixture::ValidateGame(const std::vector<std::shared_ptr<cxmodel::IPlayer>>& p_playerList,
                                                      const size_t p_inARowValue,
                                                      const std::string& p_asciiGame)
 {

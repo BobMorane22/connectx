@@ -40,14 +40,14 @@ public:
     size_t GetCurrentGridHeight() const override {return 6u;}
     size_t GetCurrentGridWidth() const override {return 7u;}
     size_t GetCurrentInARowValue() const override {return 4u;}
-    const cxmodel::Player& GetActivePlayer() const override {return m_player;}
-    const cxmodel::Player& GetNextPlayer() const override {return m_player;}
+    const cxmodel::IPlayer& GetActivePlayer() const override {return *m_player;}
+    const cxmodel::IPlayer& GetNextPlayer() const override {return *m_player;}
     const cxmodel::IChip& GetChip(size_t p_row, size_t p_column) const override
     {
         (void)p_row;
         (void)p_column;
 
-        return m_player.GetChip();
+        return m_player->GetChip();
     }
 
     bool IsWon() const override {return true;}
@@ -55,7 +55,7 @@ public:
 
 private:
 
-    const cxmodel::Player m_player{"Dummy", cxmodel::MakeRed()};
+    const std::unique_ptr<cxmodel::IPlayer> m_player = cxmodel::CreatePlayer( "Dummy", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN);
 
 };
 

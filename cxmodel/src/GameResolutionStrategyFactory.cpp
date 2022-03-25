@@ -36,7 +36,7 @@ class NoGameResolutionStrategy final : public cxmodel::IGameResolutionStrategy
 
 public:
 
-    bool Handle(const cxmodel::Player& /*p_activePlayer*/) const override    // LCOV_EXCL_LINE
+    bool Handle(const cxmodel::IPlayer& /*p_activePlayer*/) const override   // LCOV_EXCL_LINE
     {
         return false;                                                        // LCOV_EXCL_LINE
     }
@@ -47,7 +47,7 @@ public:
 
 std::unique_ptr<cxmodel::IGameResolutionStrategy> cxmodel::GameResolutionStrategyFactory::Make(const IBoard& p_board,
                                                                                                size_t p_inARowValue,
-                                                                                               const std::vector<Player>& p_players,
+                                                                                               const std::vector<std::shared_ptr<IPlayer>>& p_players,
                                                                                                const std::vector<IBoard::Position>& p_takenPositions,
                                                                                                GameResolution p_resolution)
 {

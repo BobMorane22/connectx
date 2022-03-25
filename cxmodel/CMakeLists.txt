@@ -35,9 +35,9 @@ add_library(${TARGET_NAME}
   src/GameResolutionStrategyFactory.cpp
   src/IBoard.cpp
   src/IChip.cpp
+  src/IPlayer.cpp
   src/Model.cpp
   src/NewGameInformation.cpp
-  src/Player.cpp
   src/Status.cpp
   src/TieGameResolutionStrategy.cpp
   src/WinGameResolutionStragegy.cpp

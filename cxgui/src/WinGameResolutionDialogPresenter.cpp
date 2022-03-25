@@ -23,6 +23,7 @@
 
 #include <cxinv/assertion.h>
 #include <cxmodel/IConnectXGameInformation.h>
+#include <cxmodel/IPlayer.h>
 #include <cxgui/WinGameResolutionDialogPresenter.h>
 
 cxgui::WinGameResolutionDialogPresenter::WinGameResolutionDialogPresenter(const cxmodel::IConnectXGameInformation& p_modelAsInformation)

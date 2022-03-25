@@ -50,7 +50,7 @@ GameResolutionDialogControllerTestFixture::GameResolutionDialogControllerMockMod
 {
 }
 
-void GameResolutionDialogControllerTestFixture::GameResolutionDialogControllerMockModel::CreateNewGame(const cxmodel::NewGameInformation& /*p_gameInformation*/)
+void GameResolutionDialogControllerTestFixture::GameResolutionDialogControllerMockModel::CreateNewGame(cxmodel::NewGameInformation /*p_gameInformation*/)
 {
     // Nothing to do...
 }

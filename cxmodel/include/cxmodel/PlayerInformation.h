@@ -28,12 +28,12 @@
 
 #include <cxinv/assertion.h>
 
-#include "Player.h"
+#include "IPlayer.h"
 
 namespace cxmodel
 {
 
-using PlayersList = std::vector<Player>;
+using PlayersList = std::vector<std::shared_ptr<IPlayer>>;
 
 /*********************************************************************************************//**
  * @brief Data structure to hold all player related information.
@@ -51,10 +51,10 @@ struct PlayerInformation final
      * @param p_nextPlayerIndex   The next player's index in the list.
      *
      ********************************************************************************************/
-    PlayerInformation(const PlayersList& p_players,
+    PlayerInformation(PlayersList p_players,
                       size_t p_activePlayerIndex,
                       size_t p_nextPlayerIndex)
-    : m_players{p_players}
+    : m_players{std::move(p_players)}
     , m_activePlayerIndex{p_activePlayerIndex}
     , m_nextPlayerIndex{p_nextPlayerIndex}
     {

@@ -41,8 +41,8 @@ public:
     size_t GetCurrentGridHeight() const override {return 6u;}
     size_t GetCurrentGridWidth() const override {return 7u;}
     size_t GetCurrentInARowValue() const override {return 4u;}
-    const cxmodel::Player& GetActivePlayer() const override {throw cxunit::NotImplementedException();}
-    const cxmodel::Player& GetNextPlayer() const override {throw cxunit::NotImplementedException();}
+    const cxmodel::IPlayer& GetActivePlayer() const override {throw cxunit::NotImplementedException();}
+    const cxmodel::IPlayer& GetNextPlayer() const override {throw cxunit::NotImplementedException();}
     const cxmodel::IChip& GetChip(size_t /*p_row*/, size_t /*p_column*/) const override {throw cxunit::NotImplementedException();}
     bool IsWon() const override {return false;}
     bool IsTie() const override {return false;}

@@ -27,7 +27,7 @@
 #include <string>
 #include <vector>
 
-#include "Player.h"
+#include "IPlayer.h"
 
 namespace cxmodel
 {
@@ -35,49 +35,53 @@ namespace cxmodel
 /*********************************************************************************************//**
  * @brief Information describing a new Connect X game.
  *
- * This contains all the necessary information to create a new Connect X game.
+ * This contains all the necessary information to create a new Connect X game. The class is
+ * designed to take ownership of the data.
  *
  ************************************************************************************************/
-class NewGameInformation
+struct NewGameInformation final
 {
+    using Players = std::vector<std::shared_ptr<IPlayer>>;
 
-public:
-
-    /******************************************************************************************//**
-     * @brief Add a new player to the game.
-     *
-     * @param p_newPlayer The new player's information.
-     *
-     * @return The updated number of players registered in the game.
-     *
-     ********************************************************************************************/
-    std::size_t AddPlayer(const Player& p_newPlayer);
+    // Copying:
+    NewGameInformation(const NewGameInformation&) = delete;
+    NewGameInformation& operator=(const NewGameInformation&) = delete;
 
     /******************************************************************************************//**
-     * @brief New players accessor.
-     *
-     * @return A list of registered players informations.
+     * @brief Default constructor.
      *
      ********************************************************************************************/
-    std::vector<Player> GetNewPlayers() const;
+    NewGameInformation() = default;
 
     /******************************************************************************************//**
-     * @brief Number of new players accessor.
+     * @brief Move constructor.
      *
-     * @return The number of new players registered.
+     * @param p_other The game information to take ownership of.
      *
      ********************************************************************************************/
-    size_t GetNbOfNewPlayers() const;
+    NewGameInformation(NewGameInformation&& p_other);
 
-public:
+    /******************************************************************************************//**
+     * @brief Move assignement operator.
+     *
+     * @param p_other The game information to take ownership of.
+     *
+     * @return The assigned new game information.
+     *
+     ********************************************************************************************/
+    NewGameInformation& operator=(NewGameInformation&& p_other);
 
-    size_t m_gridWidth;
+    /******************************************************************************************//**
+     * @brief Destructor.
+     *
+     ********************************************************************************************/
+    ~NewGameInformation() = default;
+
     size_t m_gridHeight;
+    size_t m_gridWidth;
     size_t m_inARowValue;
 
-private:
-
-    std::vector<Player> m_playersInformation;
+    Players m_players;
 };
 
 /*********************************************************************************************//**

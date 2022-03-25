@@ -22,10 +22,12 @@
  *************************************************************************************************/
 
 #include <algorithm>
+#include <memory>
 
 #include <cxinv/assertion.h>
 #include <cxmodel/Disc.h>
 #include <cxmodel/IBoard.h>
+#include <cxmodel/IPlayer.h>
 #include <cxmodel/WinGameResolutionStrategy.h>
 
 namespace
@@ -39,7 +41,7 @@ const cxmodel::Disc NO_CHIP = cxmodel::Disc::MakeTransparentDisc();
 //       because in some calculations, negative values are used which cause overflow.
 cxmodel::WinGameResolutionStrategy::WinGameResolutionStrategy(const cxmodel::IBoard& p_board,
                                                               const size_t p_inARowValue,
-                                                              const std::vector<Player>& p_players,
+                                                              const std::vector<std::shared_ptr<IPlayer>>& p_players,
                                                               const std::vector<IBoard::Position>& p_takenPositions)
  : m_board{p_board}
  , m_inARowValue{-1}
@@ -56,7 +58,7 @@ cxmodel::WinGameResolutionStrategy::WinGameResolutionStrategy(const cxmodel::IBo
     PRECONDITION(p_takenPositions.size() < m_board.GetNbPositions());
 }
 
-bool cxmodel::WinGameResolutionStrategy::Handle(const Player& /*p_activePlayer*/) const
+bool cxmodel::WinGameResolutionStrategy::Handle(const IPlayer& /*p_activePlayer*/) const
 {
     if(m_inARowValue == -1)
     {

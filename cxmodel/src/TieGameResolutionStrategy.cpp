@@ -25,7 +25,8 @@
 
 #include <cxinv/assertion.h>
 #include <cxmodel/Disc.h>
-#include <cxmodel/Player.h>
+#include <cxmodel/IBoard.h>
+#include <cxmodel/IPlayer.h>
 #include <cxmodel/TieGameResolutionStrategy.h>
 
 namespace
@@ -51,7 +52,7 @@ const cxmodel::Disc NO_CHIP = cxmodel::Disc::MakeTransparentDisc();
  *************************************************************************************************/
 cxmodel::TieGameResolutionStrategy::TieGameResolutionStrategy(const IBoard& p_board,
                                                               size_t p_inARowValue,
-                                                              const std::vector<Player>& p_players,
+                                                              const std::vector<std::shared_ptr<IPlayer>>& p_players,
                                                               const std::vector<IBoard::Position>& p_takenPositions)
 : m_board{p_board}
 , m_inARowValue(p_inARowValue) , m_players{p_players}
@@ -78,9 +79,15 @@ cxmodel::TieGameResolutionStrategy::TieGameResolutionStrategy(const IBoard& p_bo
  *      `true` if a tie is detected, `false` otherwise.
  *
  *************************************************************************************************/
-bool cxmodel::TieGameResolutionStrategy::Handle(const Player& p_activePlayer) const
+bool cxmodel::TieGameResolutionStrategy::Handle(const IPlayer& p_activePlayer) const
 {
-    if(!INL_PRECONDITION(std::find(m_players.cbegin(), m_players.cend(), p_activePlayer) != m_players.cend()))
+    if(!INL_PRECONDITION(std::find_if(m_players.cbegin(),
+                                      m_players.cend(),
+                                      [&p_activePlayer](const std::shared_ptr<IPlayer>& p_player)
+                                      {
+                                          return *p_player == p_activePlayer;
+
+                                      }) != m_players.cend()))
     {
         return false;
     }
@@ -103,7 +110,7 @@ bool cxmodel::TieGameResolutionStrategy::Handle(const Player& p_activePlayer) co
  *      `true` if a tie is detected, `false` otherwise.
  *
  *************************************************************************************************/
-bool cxmodel::TieGameResolutionStrategy::IsDraw(const Player& p_activePlayer) const
+bool cxmodel::TieGameResolutionStrategy::IsDraw(const IPlayer& p_activePlayer) const
 {
     if(m_takenPositions.size() == m_board.GetNbPositions())
     {
@@ -116,21 +123,21 @@ bool cxmodel::TieGameResolutionStrategy::IsDraw(const Player& p_activePlayer) co
 
     for(const auto& player : m_players)
     {
-        validPlaysAreStillAvailable |= CanPlayerWinHorizontal(player);
+        validPlaysAreStillAvailable |= CanPlayerWinHorizontal(*player);
 
         if(!validPlaysAreStillAvailable)
         {
-            validPlaysAreStillAvailable |= CanPlayerWinVertical(player, p_activePlayer);
+            validPlaysAreStillAvailable |= CanPlayerWinVertical(*player, p_activePlayer);
         }
 
         if(!validPlaysAreStillAvailable)
         {
-            validPlaysAreStillAvailable |= CanPlayerWinDiagonalUpward(player);
+            validPlaysAreStillAvailable |= CanPlayerWinDiagonalUpward(*player);
         }
 
         if(!validPlaysAreStillAvailable)
         {
-            validPlaysAreStillAvailable |= CanPlayerWinDiagonalDownward(player);
+            validPlaysAreStillAvailable |= CanPlayerWinDiagonalDownward(*player);
         }
     }
 
@@ -151,7 +158,7 @@ bool cxmodel::TieGameResolutionStrategy::IsDraw(const Player& p_activePlayer) co
  *      The number of remaining moves for the player.
  *
  *************************************************************************************************/
-int cxmodel::TieGameResolutionStrategy::GetNbOfRemainingMoves(const Player& p_player, const int p_nbOfCompletedMoves) const
+int cxmodel::TieGameResolutionStrategy::GetNbOfRemainingMoves(const IPlayer& p_player, const int p_nbOfCompletedMoves) const
 {
     const int nbMovesLeft = m_board.GetNbPositions() - p_nbOfCompletedMoves;
     const int remainingMovesQuotient = nbMovesLeft / static_cast<int>(m_players.size());
@@ -164,7 +171,12 @@ int cxmodel::TieGameResolutionStrategy::GetNbOfRemainingMoves(const Player& p_pl
     {
         // Some players have more moves left than others. We find position of
         // p_player in the player list:
-        const auto playerPosition = std::find(m_players.begin(), m_players.end(), p_player);
+        const auto playerPosition = std::find_if(m_players.cbegin(),
+                                                 m_players.cend(),
+                                                 [&p_player](const std::shared_ptr<IPlayer>& p_listPlayer)
+                                                 {
+                                                     return p_player == *p_listPlayer;
+                                                 });
 
         // Check all such players and see if one matches the player is there. In other
         // words, we check if p_player has some extra moves left:
@@ -209,7 +221,7 @@ int cxmodel::TieGameResolutionStrategy::GetNbOfRemainingMoves(const Player& p_pl
  *      The number of remaining moves for the player.
  *
  *************************************************************************************************/
-int cxmodel::TieGameResolutionStrategy::GetNbOfRemainingMoves(const Player& p_player) const
+int cxmodel::TieGameResolutionStrategy::GetNbOfRemainingMoves(const IPlayer& p_player) const
 {
     return GetNbOfRemainingMoves(p_player, m_takenPositions.size());
 }
@@ -231,7 +243,7 @@ int cxmodel::TieGameResolutionStrategy::GetNbOfRemainingMoves(const Player& p_pl
  *      is ambiguous, see note above).
  *
  *************************************************************************************************/
-int cxmodel::TieGameResolutionStrategy::GetMaxVerticalPositionForPlayerInColumn(const Player& p_player, const int p_column) const
+int cxmodel::TieGameResolutionStrategy::GetMaxVerticalPositionForPlayerInColumn(const IPlayer& p_player, const int p_column) const
 {
     PRECONDITION(p_column >= 0);
 
@@ -268,7 +280,7 @@ int cxmodel::TieGameResolutionStrategy::GetMaxVerticalPositionForPlayerInColumn(
  *      The number of completed moves since the last move of the specified player.
  *
  *************************************************************************************************/
-int cxmodel::TieGameResolutionStrategy::GetNbOfMovesSinceLastPlay(const Player& p_player, const Player& p_activePlayer) const
+int cxmodel::TieGameResolutionStrategy::GetNbOfMovesSinceLastPlay(const IPlayer& p_player, const IPlayer& p_activePlayer) const
 {
     int positionCurrent = 0;
 
@@ -311,7 +323,7 @@ int cxmodel::TieGameResolutionStrategy::GetNbOfMovesSinceLastPlay(const Player& 
  *      `true` if the player is found in the given column, `false` otherwise.
  *
  *************************************************************************************************/
-bool cxmodel::TieGameResolutionStrategy::IsPlayerPresentInColumn(const Player& p_player, int p_column) const
+bool cxmodel::TieGameResolutionStrategy::IsPlayerPresentInColumn(const IPlayer& p_player, int p_column) const
 {
     PRECONDITION(p_column >= 0);
 
@@ -359,7 +371,7 @@ bool cxmodel::TieGameResolutionStrategy::IsPlayerPresentInColumn(const Player& p
  *      The speficied player's turn.
  *
  *************************************************************************************************/
-int cxmodel::TieGameResolutionStrategy::GetPlayerTurn(const Player& p_player, const Player& p_activePlayer) const
+int cxmodel::TieGameResolutionStrategy::GetPlayerTurn(const IPlayer& p_player, const IPlayer& p_activePlayer) const
 {
     int playerTurn = 0;
 
@@ -371,7 +383,7 @@ int cxmodel::TieGameResolutionStrategy::GetPlayerTurn(const Player& p_player, co
     {
         for(int position = 0; position < static_cast<int>(m_players.size()); ++position)
         {
-            if(m_players[position] == p_player)
+            if(*m_players[position] == p_player)
             {
                 break;
             }
@@ -440,7 +452,7 @@ size_t cxmodel::TieGameResolutionStrategy::GetNbAvailableFreeMovesInColumn(size_
  *      `true` if the specified player can still win horizontally, `false` otherwise.
  *
  *************************************************************************************************/
-bool cxmodel::TieGameResolutionStrategy::CanPlayerWinHorizontal(const Player& p_player) const
+bool cxmodel::TieGameResolutionStrategy::CanPlayerWinHorizontal(const IPlayer& p_player) const
 {
     bool canPlayerWin = false;
 
@@ -565,7 +577,7 @@ bool cxmodel::TieGameResolutionStrategy::CanPlayerWinHorizontal(const Player& p_
  *      `true` if the specified player can still win vertically, `false` otherwise.
  *
  *************************************************************************************************/
-bool cxmodel::TieGameResolutionStrategy::CanPlayerWinVertical(const Player& p_player, const Player& p_activePlayer) const
+bool cxmodel::TieGameResolutionStrategy::CanPlayerWinVertical(const IPlayer& p_player, const IPlayer& p_activePlayer) const
 {
     bool canPlayerWin = false;
 
@@ -589,8 +601,8 @@ bool cxmodel::TieGameResolutionStrategy::CanPlayerWinVertical(const Player& p_pl
     {
         if(playerTurn != inspectedPlayerTurn)
         {
-            const int nbOfTurnsRemainingFromLastMove = m_takenPositions.size() - GetNbOfMovesSinceLastPlay(m_players[playerTurn], p_activePlayer);
-            nbOfRemainingMovesOtherPlayers += GetNbOfRemainingMoves(m_players[playerTurn], nbOfTurnsRemainingFromLastMove);
+            const int nbOfTurnsRemainingFromLastMove = m_takenPositions.size() - GetNbOfMovesSinceLastPlay(*m_players[playerTurn], p_activePlayer);
+            nbOfRemainingMovesOtherPlayers += GetNbOfRemainingMoves(*m_players[playerTurn], nbOfTurnsRemainingFromLastMove);
         }
     }
 
@@ -662,7 +674,7 @@ bool cxmodel::TieGameResolutionStrategy::CanPlayerWinVertical(const Player& p_pl
  *      `true` if the specified player can still win diagonally (ascending), `false` otherwise.
  *
  *************************************************************************************************/
-bool cxmodel::TieGameResolutionStrategy::CanPlayerWinDiagonalUpward(const Player& p_player) const
+bool cxmodel::TieGameResolutionStrategy::CanPlayerWinDiagonalUpward(const IPlayer& p_player) const
 {
     bool canPlayerWin = false;
 
@@ -725,7 +737,7 @@ bool cxmodel::TieGameResolutionStrategy::CanPlayerWinDiagonalUpward(const Player
  *      `true` if the specified player can still win diagonally (descending), `false` otherwise.
  *
  *************************************************************************************************/
-bool cxmodel::TieGameResolutionStrategy::CanPlayerWinDiagonalDownward(const Player& p_player) const
+bool cxmodel::TieGameResolutionStrategy::CanPlayerWinDiagonalDownward(const IPlayer& p_player) const
 {
     bool canPlayerWin = false;
 

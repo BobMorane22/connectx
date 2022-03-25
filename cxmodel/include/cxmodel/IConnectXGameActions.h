@@ -52,7 +52,7 @@ public:
      * @param p_gameInformation The necessary information to create a game.
      *
      ********************************************************************************************/
-    virtual void CreateNewGame(const NewGameInformation& p_gameInformation) = 0;
+    virtual void CreateNewGame(NewGameInformation p_gameInformation) = 0;
 
     /******************************************************************************************//**
      * @brief Drops a chip in the game board.

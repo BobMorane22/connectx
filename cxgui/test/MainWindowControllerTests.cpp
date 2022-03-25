@@ -31,10 +31,10 @@ TEST_F(MainWindowControllerTestFixture, /*DISABLED_*/OnStart_ValidGame_CreateNew
     newGameInformation.m_inARowValue = 4;
     newGameInformation.m_gridWidth = 7;
     newGameInformation.m_gridHeight = 6;
-    newGameInformation.AddPlayer({"John Doe", cxmodel::MakeRed()});
-    newGameInformation.AddPlayer({"Jane Doe", cxmodel::MakeBlue()});
+    newGameInformation.m_players.push_back(cxmodel::CreatePlayer("John Doe", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN));
+    newGameInformation.m_players.push_back(cxmodel::CreatePlayer("Jane Doe", cxmodel::MakeBlue(), cxmodel::PlayerType::HUMAN));
 
-    GetController().OnStart(newGameInformation);
+    GetController().OnStart(std::move(newGameInformation));
 
     ASSERT_TRUE(GetNewGameCreated());
 }

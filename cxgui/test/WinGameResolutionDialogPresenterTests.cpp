@@ -26,7 +26,7 @@
 #include <cxunit/DisableStdStreamsRAII.h>
 #include <cxmodel/Disc.h>
 #include <cxmodel/IConnectXGameInformation.h>
-#include <cxmodel/Player.h>
+#include <cxmodel/IPlayer.h>
 #include <cxgui/WinGameResolutionDialogPresenter.h>
 
 namespace
@@ -38,14 +38,14 @@ class ModelMock : public cxmodel::IConnectXGameInformation
 public:
 
     void SetIsWon(bool p_isWon){m_isWon = p_isWon;}
-    void SetActivePlayer(const cxmodel::Player& p_activePlayer){m_activePlayer = p_activePlayer;}
+    void SetActivePlayer(std::unique_ptr<cxmodel::IPlayer> p_activePlayer){m_activePlayer = std::move(p_activePlayer);}
 
     // IConnectXGameInformation:
     size_t GetCurrentGridHeight() const override {return 6u;}
     size_t GetCurrentGridWidth() const override {return 7u;}
     size_t GetCurrentInARowValue() const override {return 4u;}
-    const cxmodel::Player& GetActivePlayer() const override {return m_activePlayer;}
-    const cxmodel::Player& GetNextPlayer() const override {return m_nextPlayer;}
+    const cxmodel::IPlayer& GetActivePlayer() const override {return *m_activePlayer;}
+    const cxmodel::IPlayer& GetNextPlayer() const override {return *m_nextPlayer;}
     const cxmodel::IChip& GetChip(size_t p_row, size_t p_column) const override
     {
         (void)p_row;
@@ -61,8 +61,8 @@ private:
 
 
     bool m_isWon = false;
-    cxmodel::Player m_activePlayer{"No player!", cxmodel::MakeTransparent()};
-    cxmodel::Player m_nextPlayer{"No player!", cxmodel::MakeTransparent()};
+    std::unique_ptr<cxmodel::IPlayer> m_activePlayer = cxmodel::CreatePlayer("No player!", cxmodel::MakeTransparent(), cxmodel::PlayerType::HUMAN);
+    std::unique_ptr<cxmodel::IPlayer> m_nextPlayer = cxmodel::CreatePlayer("No player!", cxmodel::MakeTransparent(), cxmodel::PlayerType::HUMAN);
 
     const cxmodel::Disc m_disc{cxmodel::MakeTransparent()};
 };
@@ -82,7 +82,7 @@ TEST(WinGameResolutionDialogPresenter, GetResolutionMessage_GameWon_GameWonResol
     ModelMock model;
 
     model.SetIsWon(true);
-    model.SetActivePlayer({"John Doe", cxmodel::MakeRed()});
+    model.SetActivePlayer(cxmodel::CreatePlayer("John Doe", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN));
 
     cxgui::WinGameResolutionDialogPresenter presenter{model};
 
@@ -96,7 +96,7 @@ TEST(WinGameResolutionDialogPresenter, GetResolutionMessage_GameNotWon_NoMessage
     ModelMock model;
 
     model.SetIsWon(false);
-    model.SetActivePlayer({"John Doe", cxmodel::MakeRed()});
+    model.SetActivePlayer(cxmodel::CreatePlayer("John Doe", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN));
 
     cxgui::WinGameResolutionDialogPresenter presenter{model};
 

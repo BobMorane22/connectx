@@ -26,7 +26,7 @@
 
 namespace cxmodel
 {
-    class Player;
+    class IPlayer;
 }
 
 namespace cxmodel
@@ -60,7 +60,7 @@ public:
      * @return `true` if the game is resolved, `false` if it goes on.
      *
      ********************************************************************************************/
-    virtual bool Handle(const cxmodel::Player& p_activePlayer) const = 0;
+    virtual bool Handle(const cxmodel::IPlayer& p_activePlayer) const = 0;
 
 };
 

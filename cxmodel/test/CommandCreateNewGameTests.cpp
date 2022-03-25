@@ -56,56 +56,57 @@ private:
 
 TEST_F(CommandCreateNewGameTestFixture, /*DISABLED_*/Execute_ValidNewGame_NewGameCreated)
 {
-    std::vector<cxmodel::Player> modelPlayers;
+    std::vector<std::shared_ptr<cxmodel::IPlayer>> modelPlayers;
     std::unique_ptr<cxmodel::IBoard> board;
     size_t modelInARowValue = 0u;
 
     cxmodel::NewGameInformation newGameInformation;
 
-    newGameInformation.m_inARowValue = 4;
-    newGameInformation.m_gridWidth = 7;
-    newGameInformation.m_gridHeight = 6;
+    newGameInformation.m_gridHeight = 6u;
+    newGameInformation.m_gridWidth = 7u;
+    newGameInformation.m_inARowValue = 4u;
+    newGameInformation.m_players.emplace_back(cxmodel::CreatePlayer("John Doe", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN));
+    newGameInformation.m_players.emplace_back(cxmodel::CreatePlayer("Jane Doe", cxmodel::MakeBlue(), cxmodel::PlayerType::HUMAN));
 
-    newGameInformation.AddPlayer({"John Doe", cxmodel::MakeRed()});
-    newGameInformation.AddPlayer({"Jane Doe", cxmodel::MakeBlue()});
-
-    cxmodel::CommandCreateNewGame cmd{ModelAsLimitsGet(), board, modelPlayers, modelInARowValue, newGameInformation};
+    cxmodel::CommandCreateNewGame cmd{ModelAsLimitsGet(), board, modelPlayers, modelInARowValue, std::move(newGameInformation)};
     cmd.Execute();
 
-    ASSERT_EQ(modelPlayers.size(), newGameInformation.GetNbOfNewPlayers());
-    ASSERT_EQ(modelPlayers, newGameInformation.GetNewPlayers());
+    ASSERT_EQ(modelPlayers.size(), 2u);
+    ASSERT_EQ(*modelPlayers[0], *cxmodel::CreatePlayer("John Doe", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN));
+    ASSERT_EQ(*modelPlayers[1], *cxmodel::CreatePlayer("Jane Doe", cxmodel::MakeBlue(), cxmodel::PlayerType::HUMAN));
 
     ASSERT_TRUE(board);
-    ASSERT_EQ(board->GetNbColumns(), newGameInformation.m_gridWidth);
-    ASSERT_EQ(board->GetNbRows(), newGameInformation.m_gridHeight);
-    ASSERT_EQ(modelInARowValue, newGameInformation.m_inARowValue);
+    ASSERT_EQ(board->GetNbRows(), 6u);
+    ASSERT_EQ(board->GetNbColumns(), 7u);
+    ASSERT_EQ(modelInARowValue, 4u);
 }
 
 TEST_F(CommandCreateNewGameTestFixture, /*DISABLED_*/Undo_ValidNewGame_HasNoEffect)
 {
-    std::vector<cxmodel::Player> modelPlayers;
+    std::vector<std::shared_ptr<cxmodel::IPlayer>> modelPlayers;
     std::unique_ptr<cxmodel::IBoard> board;
     size_t modelInARowValue = 0u;
 
     cxmodel::NewGameInformation newGameInformation;
 
-    newGameInformation.m_inARowValue = 4;
-    newGameInformation.m_gridWidth = 7;
-    newGameInformation.m_gridHeight = 6;
-    newGameInformation.AddPlayer({"John Doe", cxmodel::MakeRed()});
-    newGameInformation.AddPlayer({"Jane Doe", cxmodel::MakeBlue()});
+    newGameInformation.m_gridHeight = 6u;
+    newGameInformation.m_gridWidth = 7u;
+    newGameInformation.m_inARowValue = 4u;
+    newGameInformation.m_players.emplace_back(cxmodel::CreatePlayer("John Doe", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN));
+    newGameInformation.m_players.emplace_back(cxmodel::CreatePlayer("Jane Doe", cxmodel::MakeBlue(), cxmodel::PlayerType::HUMAN));
 
-    cxmodel::CommandCreateNewGame cmd{ModelAsLimitsGet(), board, modelPlayers, modelInARowValue, newGameInformation};
+    cxmodel::CommandCreateNewGame cmd{ModelAsLimitsGet(), board, modelPlayers, modelInARowValue, std::move(newGameInformation)};
     cmd.Execute();
 
     // For now, undoing should have no effect:
     cmd.Undo();
 
-    ASSERT_EQ(modelPlayers.size(), newGameInformation.GetNbOfNewPlayers());
-    ASSERT_EQ(modelPlayers, newGameInformation.GetNewPlayers());
+    ASSERT_EQ(modelPlayers.size(), 2u);
+    ASSERT_EQ(*modelPlayers[0], *cxmodel::CreatePlayer("John Doe", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN));
+    ASSERT_EQ(*modelPlayers[1], *cxmodel::CreatePlayer("Jane Doe", cxmodel::MakeBlue(), cxmodel::PlayerType::HUMAN));
 
     ASSERT_TRUE(board);
-    ASSERT_EQ(board->GetNbColumns(), newGameInformation.m_gridWidth);
-    ASSERT_EQ(board->GetNbRows(), newGameInformation.m_gridHeight);
-    ASSERT_EQ(modelInARowValue, newGameInformation.m_inARowValue);
+    ASSERT_EQ(board->GetNbRows(), 6u);
+    ASSERT_EQ(board->GetNbColumns(), 7u);
+    ASSERT_EQ(modelInARowValue, 4u);
 }

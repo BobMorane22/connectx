@@ -123,8 +123,8 @@ public:
     size_t GetCurrentGridHeight() const override;
     size_t GetCurrentGridWidth() const override;
     size_t GetCurrentInARowValue() const override;
-    const Player& GetActivePlayer() const override;
-    const Player& GetNextPlayer() const override;
+    const IPlayer& GetActivePlayer() const override;
+    const IPlayer& GetNextPlayer() const override;
     const IChip& GetChip(size_t p_row, size_t p_column) const override;
     bool IsWon() const override;
     bool IsTie() const override;
@@ -133,7 +133,7 @@ public:
 
 ///@{ @name IConnectXGameActions
 
-    void CreateNewGame(const NewGameInformation& p_gameInformation) override;
+    void CreateNewGame(NewGameInformation p_gameInformation) override;
     void DropChip(const cxmodel::IChip& p_chip, size_t p_column) override;
     void MoveLeft() override;
     void MoveRight() override;

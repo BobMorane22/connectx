@@ -75,7 +75,7 @@ cxmodel::IVersioning& ApplicationTestFixture::GetVersionningModel()
     return *m_model;
 }
 
-void ApplicationTestFixture::ModelApplicationMock::CreateNewGame(const cxmodel::NewGameInformation& /*p_gameInformation*/)
+void ApplicationTestFixture::ModelApplicationMock::CreateNewGame(cxmodel::NewGameInformation /*p_gameInformation*/)
 {
     // Not used...
 }
@@ -102,7 +102,7 @@ const cxmodel::IChip& ApplicationTestFixture::ModelApplicationMock::GetChip(size
     EXPECT_TRUE(p_row < GetCurrentGridHeight());
     EXPECT_TRUE(p_column < GetCurrentGridWidth());
 
-    return m_ACTIVE_PLAYER.GetChip();
+    return m_ACTIVE_PLAYER->GetChip();
 }
 
 void ApplicationTestFixture::ModelApplicationMock::EndCurrentGame()

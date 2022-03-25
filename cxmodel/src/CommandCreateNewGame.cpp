@@ -30,25 +30,24 @@
 
 cxmodel::CommandCreateNewGame::CommandCreateNewGame(const IConnectXLimits& p_modelAsLimits,
                                                     std::unique_ptr<IBoard>& p_board,
-                                                    std::vector<Player>& p_players,
+                                                    std::vector<std::shared_ptr<IPlayer>>& p_players,
                                                     size_t& p_inARowValue,
                                                     NewGameInformation p_newGameInformation)
  : m_modelAsLimits{p_modelAsLimits}
  , m_board{p_board}
  , m_modelPlayers{p_players}
  , m_inARowValue{p_inARowValue}
- , m_newGameInformation{p_newGameInformation}
+ , m_newGameInformation{std::move(p_newGameInformation)}
 {
-    // Nothing to do...
+    INVARIANT(m_newGameInformation.m_players.size() >= 2);
 }
 
 void cxmodel::CommandCreateNewGame::Execute()
 {
+    PRECONDITION(m_newGameInformation.m_players.size() >= 2);
+
     // Players:
-    m_modelPlayers.clear();
-    ASSERT(m_newGameInformation.GetNbOfNewPlayers() >= 2);
-    const auto& players = m_newGameInformation.GetNewPlayers();
-    std::copy(players.cbegin(), players.cend(), std::back_inserter(m_modelPlayers));
+    m_modelPlayers = std::move(m_newGameInformation.m_players);
 
     // Board:
     m_board = std::make_unique<cxmodel::Board>(m_newGameInformation.m_gridHeight, m_newGameInformation.m_gridWidth, m_modelAsLimits);
@@ -59,5 +58,5 @@ void cxmodel::CommandCreateNewGame::Execute()
 
 void cxmodel::CommandCreateNewGame::Undo()
 {
-    // Nothing to do...
+    ASSERT_ERROR_MSG("Not implemented. Should not be called.");
 }

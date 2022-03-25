@@ -26,9 +26,15 @@
 
 #include <vector>
 
-#include "IBoard.h"
-#include "Player.h"
 #include "IGameResolutionStrategy.h"
+
+namespace cxmodel
+{
+
+class IBoard;
+class IPlayer;
+
+}
 
 namespace cxmodel
 {
@@ -59,17 +65,17 @@ public:
      ********************************************************************************************/
     WinGameResolutionStrategy(const cxmodel::IBoard& p_board,
                               const size_t p_inARowValue,
-                              const std::vector<Player>& p_players,
+                              const std::vector<std::shared_ptr<IPlayer>>& p_players,
                               const std::vector<IBoard::Position>& p_takenPositions);
 
     // cxmodel::IGameResolutionStrategy:
-    bool Handle(const Player& p_activePlayer) const override;
+    bool Handle(const IPlayer& p_activePlayer) const override;
 
 private:
 
     const cxmodel::IBoard& m_board;
     int m_inARowValue;
-    const std::vector<Player>& m_players;
+    const std::vector<std::shared_ptr<IPlayer>>& m_players;
     const std::vector<IBoard::Position>& m_takenPositions;
 
     enum class GridValidationType
