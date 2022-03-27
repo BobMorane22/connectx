@@ -196,7 +196,6 @@ constexpr Color<Channel> Color<Channel>::MakePredefined(Color::Predefined p_colo
         case Color::Predefined::YELLOW:   return Color(MAX, MAX, 0u );
 
         default:
-            // Assert
             return {};
     }
 }

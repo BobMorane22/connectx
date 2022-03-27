@@ -130,6 +130,19 @@ TYPED_TEST(ColorTypedTestFixture, /*DISABLED_*/MakePredefined_AllPredefined_Corr
     ASSERT_EQ(ColorTypedTestFixture<TypeParam>::MakePredefined(Color<TypeParam>::Predefined::YELLOW),  Color<TypeParam>(MAX, MAX, 0, MAX));
 }
 
+TYPED_TEST(ColorTypedTestFixture, /*DISABLED_*/MakePredefined_InvalidPredefined_DefaultReturned)
+{
+    using namespace cxmodel;
+
+    const typename Color<TypeParam>::Predefined invalid = static_cast<typename Color<TypeParam>::Predefined>(std::numeric_limits<TypeParam>::max());
+    const Color<TypeParam> invalidColor = ColorTypedTestFixture<TypeParam>::MakePredefined(invalid);
+
+    ASSERT_EQ(invalidColor.R(), 0u);
+    ASSERT_EQ(invalidColor.G(), 0u);
+    ASSERT_EQ(invalidColor.B(), 0u);
+    ASSERT_EQ(invalidColor.A(), 0u);
+}
+
 TYPED_TEST(ColorTypedTestFixture, /*DISABLED_*/EqualityOperator_TwoSameColors_ReturnsTrue)
 {
     using namespace cxmodel;
