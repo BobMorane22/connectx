@@ -477,3 +477,9 @@ void cxmodel::Model::CheckInvariants()
 {
     INVARIANT(m_cmdStack);
 }
+
+size_t cxmodel::Model::ComputeNextDropColumn(DropColumnComputation p_algorithm) const
+{
+    (void)p_algorithm;
+    return 0u;
+}

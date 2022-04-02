@@ -31,6 +31,7 @@
 
 #include "IBoard.h"
 #include "ICommandStack.h"
+#include "IConnectXAI.h"
 #include "IConnectXGameActions.h"
 #include "IConnectXGameInformation.h"
 #include "IConnectXLimits.h"
@@ -58,7 +59,8 @@ class Model : public cxlog::ILogger,
               public IUndoRedo,
               public IConnectXLimits,
               public IConnectXGameInformation,
-              public IConnectXGameActions
+              public IConnectXGameActions,
+              public IConnectXAI
 {
 
 public:
@@ -139,6 +141,12 @@ public:
     void MoveRight() override;
     void EndCurrentGame() override;
     void ReinitializeCurrentGame() override;
+
+///@}
+
+///@{ @name IConnectXAI
+
+    [[nodiscard]] size_t ComputeNextDropColumn(DropColumnComputation p_algorithm) const override;
 
 ///@}
 
