@@ -60,6 +60,45 @@ cxmodel::NewGameInformation MakeNewGameInformation(size_t p_gridHeight,
 
 } // namespace
 
+TEST(NewGameInformation, /*DISABLED*/MoveConstructor_OtherWithStdMove_OtherMoved)
+{
+    cxmodel::NewGameInformation movedFrom;
+
+    movedFrom.m_gridHeight = 6u;
+    movedFrom.m_gridWidth = 7u;
+    movedFrom.m_inARowValue = 4u;
+    movedFrom.m_players.push_back(cxmodel::CreatePlayer("John", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN));
+    movedFrom.m_players.push_back(cxmodel::CreatePlayer("Doe", cxmodel::MakeBlue(), cxmodel::PlayerType::HUMAN));
+
+    cxmodel::NewGameInformation movedTo{std::move(movedFrom)};
+
+    ASSERT_TRUE(movedTo.m_gridHeight == 6u);
+    ASSERT_TRUE(movedTo.m_gridWidth == 7u);
+    ASSERT_TRUE(movedTo.m_inARowValue == 4u);
+
+    ASSERT_TRUE(movedTo.m_players.size() == 2u);
+}
+
+TEST(NewGameInformation, /*DISABLED*/MoveAssignmentOperator_OtherWithStdMove_OtherMoved)
+{
+    cxmodel::NewGameInformation movedFrom;
+
+    movedFrom.m_gridHeight = 6u;
+    movedFrom.m_gridWidth = 7u;
+    movedFrom.m_inARowValue = 4u;
+    movedFrom.m_players.push_back(cxmodel::CreatePlayer("John", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN));
+    movedFrom.m_players.push_back(cxmodel::CreatePlayer("Doe", cxmodel::MakeBlue(), cxmodel::PlayerType::HUMAN));
+
+    cxmodel::NewGameInformation movedTo;
+    movedTo = std::move(movedFrom);
+
+    ASSERT_TRUE(movedTo.m_gridHeight == 6u);
+    ASSERT_TRUE(movedTo.m_gridWidth == 7u);
+    ASSERT_TRUE(movedTo.m_inARowValue == 4u);
+
+    ASSERT_TRUE(movedTo.m_players.size() == 2u);
+}
+
 TEST(NewGameInformation, /*DISABLED_*/OperatorEqual_TwoSameInformations_ReturnsTrue)
 {
     const PlayerCreationInfo player1{"John Doe", cxmodel::MakeRed()};

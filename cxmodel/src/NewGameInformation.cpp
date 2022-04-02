@@ -35,7 +35,11 @@ cxmodel::NewGameInformation::NewGameInformation(NewGameInformation&& p_other)
 
 cxmodel::NewGameInformation& cxmodel::NewGameInformation::operator=(NewGameInformation&& p_other)
 {
-    *this = NewGameInformation(std::move(p_other));
+    m_gridHeight = p_other.m_gridHeight;
+    m_gridWidth = p_other.m_gridWidth;
+    m_inARowValue = p_other.m_inARowValue;
+
+    m_players = std::move(p_other.m_players);
 
     return *this;
 }

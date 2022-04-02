@@ -40,12 +40,12 @@ set(SOURCE_FILES
   GameResolutionStrategyFactoryTests.cpp
   GameResolutionStrategyTestFixture.cpp
   IBoardTests.cpp
+  IPlayerTests.cpp
   LoggerMock.cpp
   ModelTestFixture.cpp
   ModelTestHelpers.cpp
   ModelTests.cpp
   NewGameInformationTests.cpp
-  PlayerTests.cpp
   StatusTests.cpp
   SubjectTestFixture.cpp
   SubjectTests.cpp

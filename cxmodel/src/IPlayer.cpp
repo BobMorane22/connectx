@@ -194,7 +194,7 @@ public:
 
 bool cxmodel::operator==(const cxmodel::IPlayer& p_lhs, const cxmodel::IPlayer& p_rhs)
 {
-    return p_lhs.GetChip() == p_rhs.GetChip();
+    return (p_lhs.GetChip() == p_rhs.GetChip()) && (p_lhs.IsManaged() == p_rhs.IsManaged());
 }
 
 bool cxmodel::operator!=(const cxmodel::IPlayer& p_lhs, const cxmodel::IPlayer& p_rhs)

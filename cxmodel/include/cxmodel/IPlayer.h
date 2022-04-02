@@ -116,8 +116,8 @@ public:
  * @param p_lhs The left hand side player.
  * @param p_rhs The right hand side player.
  *
- * @return `true` if the player share the same disc, `false`otherwise. Note that two different
- *         players can share the same name.
+ * @return `true` if the player share the same disc and are both of the same type, `false`
+ *         otherwise. Note that two different players can share the same name.
  *
  *************************************************************************************************/
 bool operator==(const IPlayer& p_lhs, const IPlayer& p_rhs);
@@ -128,7 +128,7 @@ bool operator==(const IPlayer& p_lhs, const IPlayer& p_rhs);
  * @param p_lhs The left hand side player.
  * @param p_rhs The right hand side player.
  *
- * @return `true` if the player DO NOT share the same disc, `false`otherwise.
+ * @return `true` if the player DO NOT share the same disc or the same type, `false`otherwise.
  *
  ************************************************************************************************/
 bool operator!=(const IPlayer& p_lhs, const IPlayer& p_rhs);
