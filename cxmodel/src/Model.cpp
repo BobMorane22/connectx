@@ -32,6 +32,7 @@
 #include <cxmodel/CommandStack.h>
 #include <cxmodel/Disc.h>
 #include <cxmodel/GameResolutionStrategyFactory.h>
+#include <cxmodel/INextDropColumnComputationStrategy.h>
 #include <cxmodel/IPlayer.h>
 #include <cxmodel/Model.h>
 #include <cxmodel/ModelNotificationContext.h>
@@ -480,6 +481,8 @@ void cxmodel::Model::CheckInvariants()
 
 size_t cxmodel::Model::ComputeNextDropColumn(DropColumnComputation p_algorithm) const
 {
-    (void)p_algorithm;
-    return 0u;
+    auto strategy = NextDropColumnComputationStrategyCreate(p_algorithm);
+    IF_CONDITION_NOT_MET_DO(strategy, return 0u;);
+
+    return strategy->Compute();
 }

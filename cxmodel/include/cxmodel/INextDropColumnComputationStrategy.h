@@ -16,30 +16,34 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file IConnectXAI.h
+ * @file INextDropColumnComputationStrategy.h
  * @date 2022
  *
  *************************************************************************************************/
 
-#ifndef ICONNECTXAI_H_362BB63A_6179_4ADE_BE2B_42ACD69F9888
-#define ICONNECTXAI_H_362BB63A_6179_4ADE_BE2B_42ACD69F9888
+#ifndef INEXTDROPCOLUMNCOMPUTATIONSTRATEGY_H_7F40031F_E940_4D58_B90F_3D8888274306
+#define INEXTDROPCOLUMNCOMPUTATIONSTRATEGY_H_7F40031F_E940_4D58_B90F_3D8888274306
 
-namespace cxmodel
-{
-
-enum class DropColumnComputation;
-
-}
-
+#include <cstddef>
+#include <memory>
 
 namespace cxmodel
 {
 
 /**********************************************************************************************//**
- * @brief Interface to implement Connect X AI specific computations.
+ * @brief Drop column Computation algorithms.
  *
  *************************************************************************************************/
-class IConnectXAI
+enum class DropColumnComputation
+{
+    RANDOM, ///< Computes a random available column.
+};
+
+/**********************************************************************************************//**
+ * @brief Strategy for computing a next possible drop column.
+ *
+ *************************************************************************************************/
+class INextDropColumnComputationStrategy
 {
 
 public:
@@ -48,22 +52,23 @@ public:
      * @brief Destructor.
      *
      *********************************************************************************************/
-    virtual ~IConnectXAI() = default;
+    virtual ~INextDropColumnComputationStrategy() = default;
 
     /******************************************************************************************//**
-     * @brief Automatically computes the next best drop colum.
+     * @brief Computes a next available drop column.
      *
-     * This computation is usually used to get a drop location for managed players.
-     *
-     * @param p_algorithm The algorithm to use for computation.
-     *
-     * @return An available drop column.
+     * @return The computed column.
      *
      *********************************************************************************************/
-    [[nodiscard]] virtual size_t ComputeNextDropColumn(DropColumnComputation p_algorithm) const = 0;
-
+    [[nodiscard]] virtual size_t Compute() const = 0;
 };
+
+/**********************************************************************************************//**
+ * @brief 
+ *
+ *************************************************************************************************/
+[[nodiscard]] std::unique_ptr<INextDropColumnComputationStrategy> NextDropColumnComputationStrategyCreate(DropColumnComputation p_algorithm);
 
 } // namespace cxmodel
 
-#endif // ICONNECTXAI_H_362BB63A_6179_4ADE_BE2B_42ACD69F9888
+#endif // INEXTDROPCOLUMNCOMPUTATIONSTRATEGY_H_7F40031F_E940_4D58_B90F_3D8888274306

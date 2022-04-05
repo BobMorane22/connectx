@@ -35,6 +35,7 @@ add_library(${TARGET_NAME}
   src/GameResolutionStrategyFactory.cpp
   src/IBoard.cpp
   src/IChip.cpp
+  src/INextDropColumnComputationStrategy.cpp
   src/IPlayer.cpp
   src/Model.cpp
   src/NewGameInformation.cpp
