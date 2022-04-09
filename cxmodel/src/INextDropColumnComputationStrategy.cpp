@@ -21,7 +21,11 @@
  *
  *************************************************************************************************/
 
+#include <algorithm>
+#include <random>
+
 #include <cxinv/assertion.h>
+#include <cxmodel/IBoard.h>
 #include <cxmodel/INextDropColumnComputationStrategy.h>
 
 /**************************************************************************************************
@@ -39,7 +43,7 @@ public:
      * @return The computed column.
      *
      *********************************************************************************************/
-    [[nodiscard]] size_t Compute() const override
+    [[nodiscard]] size_t Compute(const cxmodel::IBoard& /*p_board*/) const override
     {
         return 0u;
     }
@@ -65,15 +69,44 @@ public:
     /**********************************************************************************************
      * @brief Computes a next available drop column.
      *
+     * @param p_board The game board.
+     *
      * @return The computed column.
      *
      *********************************************************************************************/
-    [[nodiscard]] size_t Compute() const override;
+    [[nodiscard]] size_t Compute(const cxmodel::IBoard& p_board) const override;
 };
 
-size_t RandomNextDropColumnComputationStrategy::Compute() const
+size_t RandomNextDropColumnComputationStrategy::Compute(const cxmodel::IBoard& p_board) const
 {
-    return 0u;
+    // List all the available column indexes:
+    std::vector<size_t> allColumnIndexes;
+    for(size_t column = 0u; column < p_board.GetNbColumns(); ++column)
+    {
+        allColumnIndexes.push_back(column);
+    }
+
+    // Filter to get only the remaining columns:
+    std::vector<size_t> availableColumnIndexes;
+    std::copy_if(allColumnIndexes.cbegin(),
+                 allColumnIndexes.cend(),
+                 std::back_inserter(availableColumnIndexes),
+                 [&p_board](size_t p_index)
+                 {
+                     return !p_board.IsColumnFull(p_index);
+                 });
+
+    IF_CONDITION_NOT_MET_DO(availableColumnIndexes.size() > 0u, return 0u;);
+
+    // From this set of available column indexes, pick one at random:
+    std::random_device randomDevice;
+    std::mt19937 randomNumberGenerator(randomDevice());
+    std::uniform_int_distribution<size_t> distribution(0u, availableColumnIndexes.size() - 1u);
+
+    const size_t columnIndex = distribution(randomNumberGenerator);
+    IF_CONDITION_NOT_MET_DO(columnIndex < availableColumnIndexes.size(), return 0u;);
+
+    return availableColumnIndexes[columnIndex];
 }
 
 std::unique_ptr<cxmodel::INextDropColumnComputationStrategy> cxmodel::NextDropColumnComputationStrategyCreate(DropColumnComputation p_algorithm)

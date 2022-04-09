@@ -484,5 +484,5 @@ size_t cxmodel::Model::ComputeNextDropColumn(DropColumnComputation p_algorithm) 
     auto strategy = NextDropColumnComputationStrategyCreate(p_algorithm);
     IF_CONDITION_NOT_MET_DO(strategy, return 0u;);
 
-    return strategy->Compute();
+    return strategy->Compute(*m_board);
 }

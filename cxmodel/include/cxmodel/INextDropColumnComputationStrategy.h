@@ -29,6 +29,11 @@
 
 namespace cxmodel
 {
+    class IBoard;
+}
+
+namespace cxmodel
+{
 
 /**********************************************************************************************//**
  * @brief Drop column Computation algorithms.
@@ -57,14 +62,20 @@ public:
     /******************************************************************************************//**
      * @brief Computes a next available drop column.
      *
+     * @param p_board The game board.
+     *
      * @return The computed column.
      *
      *********************************************************************************************/
-    [[nodiscard]] virtual size_t Compute() const = 0;
+    [[nodiscard]] virtual size_t Compute(const cxmodel::IBoard& p_board) const = 0;
 };
 
 /**********************************************************************************************//**
- * @brief 
+ * @brief Creates a new drop column computation strategy.
+ *
+ * @param p_algorithm The computation algorithm used.
+ *
+ * @return The associated strategy.
  *
  *************************************************************************************************/
 [[nodiscard]] std::unique_ptr<INextDropColumnComputationStrategy> NextDropColumnComputationStrategyCreate(DropColumnComputation p_algorithm);
