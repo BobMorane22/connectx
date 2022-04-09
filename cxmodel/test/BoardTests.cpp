@@ -27,7 +27,8 @@
 
 #include <cxmodel/Board.h>
 #include <cxmodel/Disc.h>
-#include <cxmodel/IConnectXLimits.h>
+
+#include "ConnectXLimitsModelMock.h"
 
 class BoardTestFixture: public::testing::Test
 {
@@ -53,22 +54,7 @@ public:
 
 private:
 
-    class ModelMock : public cxmodel::IConnectXLimits
-    {
-
-    public:
-
-        size_t GetMinimumGridHeight() const override {return 6u;};
-        size_t GetMinimumGridWidth() const override {return 7u;};
-        size_t GetMinimumInARowValue() const override {return 3u;};
-        size_t GetMaximumGridHeight() const override {return 64u;};
-        size_t GetMaximumGridWidth() const override {return 64u;};
-        size_t GetMaximumInARowValue() const override {return 8u;};
-        size_t GetMinimumNumberOfPlayers() const override {return 2u;};
-        size_t GetMaximumNumberOfPlayers() const override {return 10u;};
-    };
-
-    ModelMock m_model;
+    ConnectXLimitsModelMock m_model;
 };
 
 ADD_STREAM_REDIRECTORS(BoardTestFixture);

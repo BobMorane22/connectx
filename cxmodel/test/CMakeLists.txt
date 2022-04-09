@@ -40,6 +40,7 @@ set(SOURCE_FILES
   GameResolutionStrategyFactoryTests.cpp
   GameResolutionStrategyTestFixture.cpp
   IBoardTests.cpp
+  INextDropColumnComputationStrategyTests.cpp
   IPlayerTests.cpp
   LoggerMock.cpp
   ModelTestFixture.cpp
