@@ -92,12 +92,19 @@ TEST(INextDropColumnComputationStrategy, /*DISABLED_*/NextDropColumnComputationS
     // Create an invalid algorithm:
     cxmodel::DropColumnComputation invalid = static_cast<cxmodel::DropColumnComputation>(-1);
 
-    cxunit::DisableStdStreamsRAII streamDisabler;
+    std::unique_ptr<cxmodel::INextDropColumnComputationStrategy> strategy;
+    {
+        cxunit::DisableStdStreamsRAII streamDisabler;
+        strategy = cxmodel::NextDropColumnComputationStrategyCreate(invalid);
+        ASSERT_ASSERTION_FAILED(streamDisabler);
+    }
 
-    const auto strategy = cxmodel::NextDropColumnComputationStrategyCreate(invalid);
-
-    ASSERT_ASSERTION_FAILED(streamDisabler);
     ASSERT_TRUE(strategy);
+
+    // Call "Compute" on it:
+    ConnectXLimitsModelMock modelMock;
+    cxmodel::Board unused{6u, 7u, modelMock};
+    ASSERT_TRUE(strategy->Compute(unused) == 0u);
 }
 
 // ************************************************************************************************
