@@ -53,6 +53,7 @@ add_library(${TARGET_NAME}
   src/MenuItem.cpp
   src/NewGameView.cpp
   src/NewPlayerList.cpp
+  src/OnOffSwitch.cpp
   src/pathHelpers.cpp
   src/StatusBar.cpp
   src/StatusBarPresenter.cpp
