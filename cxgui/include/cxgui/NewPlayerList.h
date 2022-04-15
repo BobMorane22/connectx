@@ -29,6 +29,7 @@
 
 #include <cxmodel/ChipColor.h>
 
+#include <gtkmm/grid.h>
 #include <gtkmm/listbox.h>
 
 namespace cxgui
@@ -210,6 +211,32 @@ public:
     void Clear();
 
 private:
+
+    class NewPlayerTitleRow : public Gtk::Grid//Gtk::ListBoxRow
+    {
+
+    public:
+
+        NewPlayerTitleRow();
+
+        void SetIsBotTitleWidth(int p_newWidth);
+        void SetPlayerNameTitleWidth(int p_newWidth);
+        void SetDiscColorTitleWidth(int p_newWidth);
+    
+    private:
+
+        Gtk::Label m_isBotTitle{"Bot"};
+        Gtk::Label m_playerNameTitle{"Name"};
+        Gtk::Label m_discColorTitle{"Disc"};
+    };
+
+public:
+    int m_firstColumnWidth = 0u;
+    int m_secondColumnWidth = 0u;
+    int m_thirdColumnWidth = 0u;
+    private:
+
+    NewPlayerTitleRow m_titleRow;
 
     const cxgui::NewPlayerRow* GetRow(const std::size_t p_index) const;
     cxgui::NewPlayerRow* GetRow(const std::size_t p_index);

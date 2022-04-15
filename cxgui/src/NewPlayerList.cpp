@@ -20,6 +20,7 @@
  * @date 2020
  *
  *************************************************************************************************/
+#include <iostream>
 
 #include <gtkmm/entry.h>
 #include <gtkmm/grid.h>
@@ -44,6 +45,7 @@ namespace cxgui
  * The informations needed are:
  *
  * <ul>
+ *   <li> The player's type       </li>
  *   <li> The player's name       </li>
  *   <li> The player's disc color </li>
  * </ul>
@@ -114,6 +116,15 @@ public:
      *
      **********************************************************************************************/
     [[nodiscard]] cxmodel::PlayerType GetPlayerType() const;
+
+    void RetreiveDimensions(NewPlayersList& parent_)
+    {
+
+        auto* casted = dynamic_cast<cxgui::OnOffSwitch*>(m_typeSwitch.get());
+        parent_.m_firstColumnWidth = casted->GetUnderlying().get_width();
+        parent_.m_secondColumnWidth = m_playerName.get_width();
+        parent_.m_thirdColumnWidth = m_playerDiscColor.get_width();
+    }
 
 private:
 
@@ -257,11 +268,58 @@ bool cxgui::operator!=(const NewPlayerRow& p_lhs, const NewPlayerRow& p_rhs)
     return !(p_lhs == p_rhs);
 }
 
+cxgui::NewPlayersList::NewPlayerTitleRow::NewPlayerTitleRow()
+{
+    m_isBotTitle.set_valign(Gtk::Align::ALIGN_CENTER);
+    m_isBotTitle.set_halign(Gtk::Align::ALIGN_CENTER);
+    m_isBotTitle.set_margin_end(cxgui::CONTROL_BOTTOM_MARGIN);
+
+    m_playerNameTitle.set_hexpand(true);
+    m_discColorTitle.set_hexpand(true);
+
+    attach(m_isBotTitle, 0, 0, 1, 1);
+    attach(m_playerNameTitle, 1, 0, 1, 1);
+    attach(m_discColorTitle, 2, 0, 1, 1);
+}
+
+void cxgui::NewPlayersList::NewPlayerTitleRow::SetIsBotTitleWidth(int p_newWidth)
+{
+    m_isBotTitle.set_size_request(p_newWidth);
+}
+
+void cxgui::NewPlayersList::NewPlayerTitleRow::SetPlayerNameTitleWidth(int p_newWidth)
+{
+    m_playerNameTitle.set_size_request(p_newWidth);
+}
+
+void cxgui::NewPlayersList::NewPlayerTitleRow::SetDiscColorTitleWidth(int p_newWidth)
+{
+    m_discColorTitle.set_size_request(p_newWidth);
+}
+
 cxgui::NewPlayersList::NewPlayersList()
 {
     // We use Gtk::manage here to let Gtkmm deal with the children deletions:
     add(*Gtk::manage(new NewPlayerRow("-- Player 1 --", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN)));
     add(*Gtk::manage(new NewPlayerRow("-- Player 2 --", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN)));
+
+    set_header_func([this](Gtk::ListBoxRow* row, Gtk::ListBoxRow* /*before*/)
+                    {
+                        if(row->get_index() == 0)
+                        {
+                            row->set_header(m_titleRow);
+                            m_titleRow.show_all();
+
+                            m_titleRow.signal_realize().connect([this]()
+                                                                {
+                                                                    cxgui::NewPlayerRow* topRow = GetRow(0u);
+                                                                    topRow->RetreiveDimensions(*this);
+                                                                    m_titleRow.SetIsBotTitleWidth(m_firstColumnWidth);
+                                                                    m_titleRow.SetPlayerNameTitleWidth(m_secondColumnWidth);
+                                                                    m_titleRow.SetDiscColorTitleWidth(m_thirdColumnWidth);
+                                                                });
+                        }
+                    });
 }
 
 cxgui::NewPlayersList::~NewPlayersList() = default;
