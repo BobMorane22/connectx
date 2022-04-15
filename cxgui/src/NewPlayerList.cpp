@@ -46,7 +46,6 @@ class NewPlayerTitleRow : public Gtk::Grid
 
 // TG-243:
 // 2. Get the titles from the presenter.
-// 3. Nest inside the CPP? Can I simply forward declare?
 
 public:
 
@@ -144,22 +143,28 @@ public:
      **********************************************************************************************/
     [[nodiscard]] cxmodel::PlayerType GetPlayerType() const;
 
+private:
+
+    // This friendship is needed because the list has to be able to ask its top
+    // row to compute the dimensions of its child widgets. These dimensions are
+    // later used to resize the column titles appropriately, so that their dimensions
+    // match the colum contents.
+    friend NewPlayersList;
+
+    void CheckInvariants() const;
+
     // TG-243
-    // 1. Remove from public interface.
     // 2. Remove inlining.
     // 3. Remove casting. Should a 'GetWidth' method be added to the interface?
     // 4. Add error handling.
     void RetreiveDimensions(NewPlayersList& parent_)
     {
         auto* casted = dynamic_cast<cxgui::OnOffSwitch*>(m_typeSwitch.get());
-        parent_.m_firstColumnWidth = casted->GetUnderlying().get_width();
-        parent_.m_secondColumnWidth = m_playerName.get_width();
-        parent_.m_thirdColumnWidth = m_playerDiscColor.get_width();
+        parent_.m_columnWidths.m_first = casted->GetUnderlying().get_width();
+        parent_.m_columnWidths.m_second = m_playerName.get_width();
+        parent_.m_columnWidths.m_third = m_playerDiscColor.get_width();
     }
 
-private:
-
-    void CheckInvariants() const;
 
     Gtk::Grid m_layout;
     std::unique_ptr<cxgui::IOnOffSwitch> m_typeSwitch; 
@@ -351,9 +356,9 @@ cxgui::NewPlayersList::NewPlayersList()
                                                                 {
                                                                     cxgui::NewPlayerRow* topRow = GetRow(0u);
                                                                     topRow->RetreiveDimensions(*this);
-                                                                    m_titleRow->SetIsBotTitleWidth(m_firstColumnWidth);
-                                                                    m_titleRow->SetPlayerNameTitleWidth(m_secondColumnWidth);
-                                                                    m_titleRow->SetDiscColorTitleWidth(m_thirdColumnWidth);
+                                                                    m_titleRow->SetIsBotTitleWidth(m_columnWidths.m_first);
+                                                                    m_titleRow->SetPlayerNameTitleWidth(m_columnWidths.m_second);
+                                                                    m_titleRow->SetDiscColorTitleWidth(m_columnWidths.m_third);
                                                                 });
                         }
                     });

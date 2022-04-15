@@ -214,14 +214,19 @@ public:
 
 private:
 
-// TG-243 Make private as far as the application is concerned.
-public:
+    // This friendship is needed because the top row needs to make its child widgets'
+    // dimensions available to the list so they can be passed on the the list titles.
+    // Otherwise, it is impossible for the list titles to fit with the column contents.
+    friend NewPlayerRow;
 
-    int m_firstColumnWidth = 0u;
-    int m_secondColumnWidth = 0u;
-    int m_thirdColumnWidth = 0u;
+    struct ColumnWidth
+    {
+        int m_first = 0u;
+        int m_second = 0u;
+        int m_third = 0u;
+    };
 
-private:
+    ColumnWidth m_columnWidths;
 
     std::unique_ptr<NewPlayerTitleRow> m_titleRow;
 
