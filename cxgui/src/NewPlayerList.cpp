@@ -25,7 +25,11 @@
 #include <gtkmm/grid.h>
 
 #include <cxinv/assertion.h>
+#include <cxmodel/IPlayer.h>
 #include <cxgui/ColorComboBox.h>
+#include <cxgui/common.h>
+#include <cxgui/OnOffState.h>
+#include <cxgui/OnOffSwitch.h>
 #include <cxgui/NewPlayerList.h>
 
 namespace cxgui
@@ -62,9 +66,12 @@ public:
      *
      * @param p_playerName       The name of the player.
      * @param p_playerDiscColor  The color chosen by or for the player's disc.
+     * @param p_type             A flag indicating if the player is human, or managed.
      *
      **********************************************************************************************/
-    NewPlayerRow(const std::string& p_playerName, const cxmodel::ChipColor& p_playerDiscColor);
+    NewPlayerRow(const std::string& p_playerName,
+                 const cxmodel::ChipColor& p_playerDiscColor,
+                 cxmodel::PlayerType p_type);
 
     /*******************************************************************************************//**
      * @brief Default destructor.
@@ -77,9 +84,12 @@ public:
      *
      * @param p_playerNewName       The new name of the player.
      * @param p_playerNewDiscColor  The new color chosen by or for the player's disc.
+     * @param p_newType             The new flag indicating if the player is human, or managed.
      *
      **********************************************************************************************/
-    void Update(const std::string& p_playerNewName, const cxmodel::ChipColor& p_playerNewDiscColor);
+    void Update(const std::string& p_playerNewName,
+                const cxmodel::ChipColor& p_playerNewDiscColor,
+                const cxmodel::PlayerType p_newType);
 
     /*******************************************************************************************//**
      * @brief  Accessor for the player's name.
@@ -97,11 +107,20 @@ public:
      **********************************************************************************************/
     cxmodel::ChipColor GetPlayerDiscColor() const;
 
+    /*******************************************************************************************//**
+     * @brief Accessor for the player type (human or bot).
+     *
+     * @return The player's actual type.
+     *
+     **********************************************************************************************/
+    [[nodiscard]] cxmodel::PlayerType GetPlayerType() const;
+
 private:
 
     void CheckInvariants() const;
 
     Gtk::Grid m_layout;
+    std::unique_ptr<cxgui::IOnOffSwitch> m_typeSwitch; 
     Gtk::Entry m_playerName;
     cxgui::ColorComboBox m_playerDiscColor;
 
@@ -137,25 +156,40 @@ bool operator!=(const NewPlayerRow& p_lhs, const NewPlayerRow& p_rhs);
 
 } // namespace cxgui
 
-cxgui::NewPlayerRow::NewPlayerRow(const std::string& p_playerName, const cxmodel::ChipColor& p_playerDiscColor)
+cxgui::NewPlayerRow::NewPlayerRow(const std::string& p_playerName,
+                                  const cxmodel::ChipColor& p_playerDiscColor,
+                                  const cxmodel::PlayerType p_type) 
 {
     PRECONDITION(!p_playerName.empty());
 
     m_playerName.set_text(p_playerName);
+    m_playerName.set_margin_end(cxgui::CONTROL_BOTTOM_MARGIN);
 
     // Add color to the combo box:
     m_playerDiscColor.SetCurrentSelection(p_playerDiscColor);
 
     // Populate the row layout for the ListView:
+    auto typeSwitch = std::make_unique<cxgui::OnOffSwitch>();
+    if(p_type == cxmodel::PlayerType::BOT) 
+    {
+        typeSwitch->SetState(cxgui::OnOffState::ON);
+    }
+    else
+    {
+        typeSwitch->SetState(cxgui::OnOffState::OFF);
+    }
+
+    Gtk::Switch& underlying = typeSwitch->GetUnderlying();
+    underlying.set_valign(Gtk::Align::ALIGN_CENTER);
+    underlying.set_halign(Gtk::Align::ALIGN_CENTER);
+    underlying.set_margin_end(cxgui::CONTROL_BOTTOM_MARGIN);
+
+    m_layout.add(underlying);
+    m_typeSwitch = std::move(typeSwitch);
     m_layout.add(m_playerName);
     m_layout.add(m_playerDiscColor);
 
-    // Make sure the player name combobox scales horizontally, but not the disc
-    // color picker button:
-    m_layout.set_column_homogeneous(true);
     m_playerName.set_hexpand(true);
-
-    // Make sure columns have the same width:
     m_playerDiscColor.set_hexpand(true);
 
     add(m_layout);
@@ -165,9 +199,20 @@ cxgui::NewPlayerRow::NewPlayerRow(const std::string& p_playerName, const cxmodel
 
 cxgui::NewPlayerRow::~NewPlayerRow() = default;
 
-void cxgui::NewPlayerRow::Update(const std::string& p_playerNewName, const cxmodel::ChipColor& p_playerNewDiscColor)
+void cxgui::NewPlayerRow::Update(const std::string& p_playerNewName,
+                                 const cxmodel::ChipColor& p_playerNewDiscColor,
+                                 const cxmodel::PlayerType p_newType)
 {
     PRECONDITION(!p_playerNewName.empty());
+
+    if(p_newType == cxmodel::PlayerType::BOT) 
+    {
+        m_typeSwitch->SetState(cxgui::OnOffState::ON);
+    }
+    else
+    {
+        m_typeSwitch->SetState(cxgui::OnOffState::OFF);
+    }
 
     m_playerName.set_text(p_playerNewName);
     m_playerDiscColor.SetCurrentSelection(p_playerNewDiscColor);
@@ -185,6 +230,16 @@ cxmodel::ChipColor cxgui::NewPlayerRow::GetPlayerDiscColor() const
     return m_playerDiscColor.GetCurrentSelection();
 }
 
+cxmodel::PlayerType cxgui::NewPlayerRow::GetPlayerType() const
+{
+    if(m_typeSwitch->GetState() == cxgui::OnOffState::ON)
+    {
+        return cxmodel::PlayerType::BOT;
+    }
+
+    return cxmodel::PlayerType::HUMAN;
+}
+
 void cxgui::NewPlayerRow::CheckInvariants() const
 {
     INVARIANT(!m_playerName.get_text().empty());
@@ -193,7 +248,8 @@ void cxgui::NewPlayerRow::CheckInvariants() const
 bool cxgui::operator==(const cxgui::NewPlayerRow& p_lhs, const cxgui::NewPlayerRow& p_rhs)
 {
     return (p_lhs.GetPlayerName() == p_rhs.GetPlayerName()) &&
-           (p_lhs.GetPlayerDiscColor() == p_rhs.GetPlayerDiscColor());
+           (p_lhs.GetPlayerDiscColor() == p_rhs.GetPlayerDiscColor()) &&
+           (p_lhs.GetPlayerType() == p_rhs.GetPlayerType());
 }
 
 bool cxgui::operator!=(const NewPlayerRow& p_lhs, const NewPlayerRow& p_rhs)
@@ -204,8 +260,8 @@ bool cxgui::operator!=(const NewPlayerRow& p_lhs, const NewPlayerRow& p_rhs)
 cxgui::NewPlayersList::NewPlayersList()
 {
     // We use Gtk::manage here to let Gtkmm deal with the children deletions:
-    add(*Gtk::manage(new NewPlayerRow("-- Player 1 --", cxmodel::MakeRed())));
-    add(*Gtk::manage(new NewPlayerRow("-- Player 2 --", cxmodel::MakeRed())));
+    add(*Gtk::manage(new NewPlayerRow("-- Player 1 --", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN)));
+    add(*Gtk::manage(new NewPlayerRow("-- Player 2 --", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN)));
 }
 
 cxgui::NewPlayersList::~NewPlayersList() = default;
@@ -259,13 +315,15 @@ std::vector<std::string> cxgui::NewPlayersList::GetAllPlayerNames() const
     return names;
 }
 
-bool cxgui::NewPlayersList::AddRow(const std::string& p_playerNewName, const cxmodel::ChipColor&  p_playerNewDiscColor)
+bool cxgui::NewPlayersList::AddRow(const std::string& p_playerNewName,
+                                   const cxmodel::ChipColor& p_playerNewDiscColor,
+                                   cxmodel::PlayerType p_playerNewType)
 {
     PRECONDITION(!p_playerNewName.empty());
 
     const std::size_t sizeBefore{GetSize()};
 
-    add(*Gtk::manage(new NewPlayerRow(p_playerNewName, p_playerNewDiscColor)));
+    add(*Gtk::manage(new NewPlayerRow(p_playerNewName, p_playerNewDiscColor, p_playerNewType)));
 
     const std::size_t sizeAfter{GetSize()};
 
@@ -285,11 +343,13 @@ bool cxgui::NewPlayersList::RemoveRow(const std::size_t p_index)
     return RemoveManaged(specificRow);
 }
 
-bool cxgui::NewPlayersList::RemoveRow(const std::string& p_playerName, const cxmodel::ChipColor&  p_playerDiscColor)
+bool cxgui::NewPlayersList::RemoveRow(const std::string& p_playerName,
+                                      const cxmodel::ChipColor& p_playerDiscColor,
+                                      cxmodel::PlayerType p_playerType)
 {
     PRECONDITION(!p_playerName.empty());
 
-    const cxgui::NewPlayerRow rowToRemoveData{p_playerName, p_playerDiscColor};
+    const cxgui::NewPlayerRow rowToRemoveData{p_playerName, p_playerDiscColor, p_playerType};
     cxgui::NewPlayerRow*      rowToRemoveAddress{nullptr};
 
     std::vector<cxgui::NewPlayerRow*> allRows = GetRows();
@@ -314,7 +374,8 @@ bool cxgui::NewPlayersList::RemoveRow(const std::string& p_playerName, const cxm
 
 bool cxgui::NewPlayersList::UpdateRow(const std::size_t p_index,
                                       const std::string& p_playerNewName,
-                                      const cxmodel::ChipColor& p_playerNewDiscColor)
+                                      const cxmodel::ChipColor& p_playerNewDiscColor,
+                                      const cxmodel::PlayerType p_playerNewType)
 {
     PRECONDITION(p_index < GetSize());
     PRECONDITION(!p_playerNewName.empty());
@@ -323,7 +384,7 @@ bool cxgui::NewPlayersList::UpdateRow(const std::size_t p_index,
     cxgui::NewPlayerRow* rowToUpdate{GetRow(p_index)};
     IF_CONDITION_NOT_MET_DO(rowToUpdate, return false;);
 
-    rowToUpdate->Update(p_playerNewName, p_playerNewDiscColor);
+    rowToUpdate->Update(p_playerNewName, p_playerNewDiscColor, p_playerNewType);
 
     return true;
 }

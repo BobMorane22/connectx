@@ -130,6 +130,7 @@ public:
      *
      * @param p_playerNewName      The player's name.
      * @param p_playerNewDiscColor The player's disc color.
+     * @param p_playerNewType      The player's new type (human or bot).
      *
      * @pre The player name is not an empty string.
      *
@@ -138,7 +139,9 @@ public:
      * @see cxutil::ReturnCode
      *
      **********************************************************************************************/
-    bool AddRow(const std::string& p_playerNewName, const cxmodel::ChipColor& p_playerNewDiscColor);
+    bool AddRow(const std::string& p_playerNewName,
+                const cxmodel::ChipColor& p_playerNewDiscColor,
+                cxmodel::PlayerType p_playerNewType);
 
     /*******************************************************************************************//**
      * @brief Removes a row from the list by its index.
@@ -162,13 +165,16 @@ public:
      *
      * @param p_playerName      The player's name.
      * @param p_playerDiscColor The player's disc color.
+     * @param p_playerType      The player's type (human or bot).
      *
      * @pre The player name is not an empty string.
      *
      * @return `true` if the specified row was successfully removed, `false` otherwise.
      *
      **********************************************************************************************/
-    bool RemoveRow(const std::string& p_playerName, const cxmodel::ChipColor& p_playerDiscColor);
+    bool RemoveRow(const std::string& p_playerName,
+                   const cxmodel::ChipColor& p_playerDiscColor,
+                   cxmodel::PlayerType p_playerType);
 
     /*******************************************************************************************//**
      * @brief Updates a row from its index.
@@ -179,6 +185,7 @@ public:
      * @param p_index                 The row index.
      * @param p_newPlayerNewName      The player name.
      * @param p_newPlayerNewDiscColor The player disc color.
+     * @param p_newPlayerType         The player type (human or bot).
      *
      * @pre The row index is at most the number of players in the list, minus one (zero-based).
      * @pre The player name is not an empty string.
@@ -188,7 +195,8 @@ public:
      **********************************************************************************************/
     bool UpdateRow(const std::size_t p_index,
                    const std::string& p_newPlayerNewName,
-                   const cxmodel::ChipColor& p_newPlayerNewDiscColor);
+                   const cxmodel::ChipColor& p_newPlayerNewDiscColor,
+                   cxmodel::PlayerType p_newPlayerType);
 
     /*******************************************************************************************//**
      * @brief Clears the list content.
