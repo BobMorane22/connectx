@@ -29,12 +29,14 @@
 
 #include <cxmodel/ChipColor.h>
 
-#include <gtkmm/grid.h>
 #include <gtkmm/listbox.h>
 
 namespace cxgui
 {
+
 class NewPlayerRow;
+class NewPlayerTitleRow;
+
 }
 
 namespace cxgui
@@ -212,34 +214,19 @@ public:
 
 private:
 
-    class NewPlayerTitleRow : public Gtk::Grid//Gtk::ListBoxRow
-    {
-
-    public:
-
-        NewPlayerTitleRow();
-
-        void SetIsBotTitleWidth(int p_newWidth);
-        void SetPlayerNameTitleWidth(int p_newWidth);
-        void SetDiscColorTitleWidth(int p_newWidth);
-    
-    private:
-
-        Gtk::Label m_isBotTitle{"Bot"};
-        Gtk::Label m_playerNameTitle{"Name"};
-        Gtk::Label m_discColorTitle{"Disc"};
-    };
-
+// TG-243 Make private as far as the application is concerned.
 public:
+
     int m_firstColumnWidth = 0u;
     int m_secondColumnWidth = 0u;
     int m_thirdColumnWidth = 0u;
-    private:
 
-    NewPlayerTitleRow m_titleRow;
+private:
 
-    const cxgui::NewPlayerRow* GetRow(const std::size_t p_index) const;
-    cxgui::NewPlayerRow* GetRow(const std::size_t p_index);
+    std::unique_ptr<NewPlayerTitleRow> m_titleRow;
+
+    const cxgui::NewPlayerRow* GetRow(const size_t p_index) const;
+    cxgui::NewPlayerRow* GetRow(const size_t p_index);
 
     std::vector<const cxgui::NewPlayerRow*> GetRows() const;
     std::vector<cxgui::NewPlayerRow*> GetRows();

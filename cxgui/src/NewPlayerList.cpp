@@ -20,7 +20,6 @@
  * @date 2020
  *
  *************************************************************************************************/
-#include <iostream>
 
 #include <gtkmm/entry.h>
 #include <gtkmm/grid.h>
@@ -35,6 +34,34 @@
 
 namespace cxgui
 {
+
+/***********************************************************************************************//**
+ * @class NewPlayerTitleRow
+ *
+ * @brief Title row for the new players list.
+ *
+ **************************************************************************************************/
+class NewPlayerTitleRow : public Gtk::Grid
+{
+
+// TG-243:
+// 2. Get the titles from the presenter.
+// 3. Nest inside the CPP? Can I simply forward declare?
+
+public:
+
+    NewPlayerTitleRow();
+
+    void SetIsBotTitleWidth(int p_newWidth);
+    void SetPlayerNameTitleWidth(int p_newWidth);
+    void SetDiscColorTitleWidth(int p_newWidth);
+
+private:
+
+    Gtk::Label m_isBotTitle{"Bot"};
+    Gtk::Label m_playerNameTitle{"Name"};
+    Gtk::Label m_discColorTitle{"Disc"};
+};
 
 /***********************************************************************************************//**
  * @class NewPlayerRow
@@ -117,9 +144,13 @@ public:
      **********************************************************************************************/
     [[nodiscard]] cxmodel::PlayerType GetPlayerType() const;
 
+    // TG-243
+    // 1. Remove from public interface.
+    // 2. Remove inlining.
+    // 3. Remove casting. Should a 'GetWidth' method be added to the interface?
+    // 4. Add error handling.
     void RetreiveDimensions(NewPlayersList& parent_)
     {
-
         auto* casted = dynamic_cast<cxgui::OnOffSwitch*>(m_typeSwitch.get());
         parent_.m_firstColumnWidth = casted->GetUnderlying().get_width();
         parent_.m_secondColumnWidth = m_playerName.get_width();
@@ -166,6 +197,35 @@ bool operator==(const NewPlayerRow& p_lhs, const NewPlayerRow& p_rhs);
 bool operator!=(const NewPlayerRow& p_lhs, const NewPlayerRow& p_rhs);
 
 } // namespace cxgui
+
+cxgui::NewPlayerTitleRow::NewPlayerTitleRow()
+{
+    m_isBotTitle.set_valign(Gtk::Align::ALIGN_CENTER);
+    m_isBotTitle.set_halign(Gtk::Align::ALIGN_CENTER);
+    m_isBotTitle.set_margin_end(cxgui::CONTROL_BOTTOM_MARGIN);
+
+    m_playerNameTitle.set_hexpand(true);
+    m_discColorTitle.set_hexpand(true);
+
+    attach(m_isBotTitle, 0, 0, 1, 1);
+    attach(m_playerNameTitle, 1, 0, 1, 1);
+    attach(m_discColorTitle, 2, 0, 1, 1);
+}
+
+void cxgui::NewPlayerTitleRow::SetIsBotTitleWidth(int p_newWidth)
+{
+    m_isBotTitle.set_size_request(p_newWidth);
+}
+
+void cxgui::NewPlayerTitleRow::SetPlayerNameTitleWidth(int p_newWidth)
+{
+    m_playerNameTitle.set_size_request(p_newWidth);
+}
+
+void cxgui::NewPlayerTitleRow::SetDiscColorTitleWidth(int p_newWidth)
+{
+    m_discColorTitle.set_size_request(p_newWidth);
+}
 
 cxgui::NewPlayerRow::NewPlayerRow(const std::string& p_playerName,
                                   const cxmodel::ChipColor& p_playerDiscColor,
@@ -268,55 +328,32 @@ bool cxgui::operator!=(const NewPlayerRow& p_lhs, const NewPlayerRow& p_rhs)
     return !(p_lhs == p_rhs);
 }
 
-cxgui::NewPlayersList::NewPlayerTitleRow::NewPlayerTitleRow()
-{
-    m_isBotTitle.set_valign(Gtk::Align::ALIGN_CENTER);
-    m_isBotTitle.set_halign(Gtk::Align::ALIGN_CENTER);
-    m_isBotTitle.set_margin_end(cxgui::CONTROL_BOTTOM_MARGIN);
-
-    m_playerNameTitle.set_hexpand(true);
-    m_discColorTitle.set_hexpand(true);
-
-    attach(m_isBotTitle, 0, 0, 1, 1);
-    attach(m_playerNameTitle, 1, 0, 1, 1);
-    attach(m_discColorTitle, 2, 0, 1, 1);
-}
-
-void cxgui::NewPlayersList::NewPlayerTitleRow::SetIsBotTitleWidth(int p_newWidth)
-{
-    m_isBotTitle.set_size_request(p_newWidth);
-}
-
-void cxgui::NewPlayersList::NewPlayerTitleRow::SetPlayerNameTitleWidth(int p_newWidth)
-{
-    m_playerNameTitle.set_size_request(p_newWidth);
-}
-
-void cxgui::NewPlayersList::NewPlayerTitleRow::SetDiscColorTitleWidth(int p_newWidth)
-{
-    m_discColorTitle.set_size_request(p_newWidth);
-}
-
 cxgui::NewPlayersList::NewPlayersList()
 {
-    // We use Gtk::manage here to let Gtkmm deal with the children deletions:
+    m_titleRow = std::make_unique<NewPlayerTitleRow>();
+    ASSERT(m_titleRow);
+
     add(*Gtk::manage(new NewPlayerRow("-- Player 1 --", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN)));
     add(*Gtk::manage(new NewPlayerRow("-- Player 2 --", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN)));
 
+    // TG-243
+    // 1. Make into private methods.
+    // 2. Add error handling (nullptr).
+    // 3. Document for me from the future!
     set_header_func([this](Gtk::ListBoxRow* row, Gtk::ListBoxRow* /*before*/)
                     {
                         if(row->get_index() == 0)
                         {
-                            row->set_header(m_titleRow);
-                            m_titleRow.show_all();
+                            row->set_header(*m_titleRow);
+                            m_titleRow->show_all();
 
-                            m_titleRow.signal_realize().connect([this]()
+                            m_titleRow->signal_realize().connect([this]()
                                                                 {
                                                                     cxgui::NewPlayerRow* topRow = GetRow(0u);
                                                                     topRow->RetreiveDimensions(*this);
-                                                                    m_titleRow.SetIsBotTitleWidth(m_firstColumnWidth);
-                                                                    m_titleRow.SetPlayerNameTitleWidth(m_secondColumnWidth);
-                                                                    m_titleRow.SetDiscColorTitleWidth(m_thirdColumnWidth);
+                                                                    m_titleRow->SetIsBotTitleWidth(m_firstColumnWidth);
+                                                                    m_titleRow->SetPlayerNameTitleWidth(m_secondColumnWidth);
+                                                                    m_titleRow->SetDiscColorTitleWidth(m_thirdColumnWidth);
                                                                 });
                         }
                     });
