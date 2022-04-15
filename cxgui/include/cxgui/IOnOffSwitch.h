@@ -24,6 +24,8 @@
 #ifndef IONOFFSWITCH_H_19A0A6E4_FA1D_4E24_B071_BB06B97181AC
 #define IONOFFSWITCH_H_19A0A6E4_FA1D_4E24_B071_BB06B97181AC
 
+#include <cxgui/IWidget.h>
+
 namespace cxgui
 {
     enum class OnOffState;
@@ -39,7 +41,7 @@ namespace cxgui
  * are not possible.
  *
  *************************************************************************************************/
-class IOnOffSwitch
+class IOnOffSwitch : public cxgui::IWidget
 {
 
 public:
@@ -65,6 +67,10 @@ public:
      *
      *************************************************************************************************/
     virtual void SetState(OnOffState p_newState) = 0;
+
+    // cxgui::IWidget:
+    [[nodiscard]] size_t GetWidth() const = 0;
+    [[nodiscard]] size_t GetHeight() const = 0;
 
 };
 

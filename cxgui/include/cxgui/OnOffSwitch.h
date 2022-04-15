@@ -40,9 +40,11 @@ class OnOffSwitch : public cxgui::IOnOffSwitch
 
 public:
 
-    // public cxgui::IOnOffSwitch:
+    // cxgui::IOnOffSwitch:
     [[nodiscard]] OnOffState GetState() const override;
     void SetState(OnOffState p_newState) override;
+    [[nodiscard]] size_t GetWidth() const override;
+    [[nodiscard]] size_t GetHeight() const override;
 
     /******************************************************************************************//**
      * @brief Get the underlying Gtkmm widget instance.

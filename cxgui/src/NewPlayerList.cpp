@@ -152,19 +152,7 @@ private:
     friend NewPlayersList;
 
     void CheckInvariants() const;
-
-    // TG-243
-    // 2. Remove inlining.
-    // 3. Remove casting. Should a 'GetWidth' method be added to the interface?
-    // 4. Add error handling.
-    void RetreiveDimensions(NewPlayersList& parent_)
-    {
-        auto* casted = dynamic_cast<cxgui::OnOffSwitch*>(m_typeSwitch.get());
-        parent_.m_columnWidths.m_first = casted->GetUnderlying().get_width();
-        parent_.m_columnWidths.m_second = m_playerName.get_width();
-        parent_.m_columnWidths.m_third = m_playerDiscColor.get_width();
-    }
-
+    void RetreiveColumnDimensions(NewPlayersList& parent_) const;
 
     Gtk::Grid m_layout;
     std::unique_ptr<cxgui::IOnOffSwitch> m_typeSwitch; 
@@ -321,6 +309,13 @@ void cxgui::NewPlayerRow::CheckInvariants() const
     INVARIANT(!m_playerName.get_text().empty());
 }
 
+void cxgui::NewPlayerRow::RetreiveColumnDimensions(NewPlayersList& parent_) const
+{
+    parent_.m_columnWidths.m_first = m_typeSwitch->GetWidth();
+    parent_.m_columnWidths.m_second = m_playerName.get_width();
+    parent_.m_columnWidths.m_third = m_playerDiscColor.get_width();
+}
+
 bool cxgui::operator==(const cxgui::NewPlayerRow& p_lhs, const cxgui::NewPlayerRow& p_rhs)
 {
     return (p_lhs.GetPlayerName() == p_rhs.GetPlayerName()) &&
@@ -355,7 +350,7 @@ cxgui::NewPlayersList::NewPlayersList()
                             m_titleRow->signal_realize().connect([this]()
                                                                 {
                                                                     cxgui::NewPlayerRow* topRow = GetRow(0u);
-                                                                    topRow->RetreiveDimensions(*this);
+                                                                    topRow->RetreiveColumnDimensions(*this);
                                                                     m_titleRow->SetIsBotTitleWidth(m_columnWidths.m_first);
                                                                     m_titleRow->SetPlayerNameTitleWidth(m_columnWidths.m_second);
                                                                     m_titleRow->SetDiscColorTitleWidth(m_columnWidths.m_third);

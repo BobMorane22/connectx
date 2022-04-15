@@ -16,47 +16,33 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file OnOffSwitch.cpp
+ * @file IWidget.h
  * @date 2022
  *
  *************************************************************************************************/
 
-#include <cxinv/assertion.h>
-#include <cxgui/OnOffState.h>
-#include <cxgui/OnOffSwitch.h>
+#ifndef IWIDGET_H_845C70A7_65F2_4B7C_8446_A11ED3BC31E8
+#define IWIDGET_H_845C70A7_65F2_4B7C_8446_A11ED3BC31E8
 
-cxgui::OnOffState cxgui::OnOffSwitch::GetState() const
+namespace cxgui
 {
-    if(m_underlying.get_active())
-    {
-        return OnOffState::ON;
-    }
 
-    return OnOffState::OFF;
-}
-
-void cxgui::OnOffSwitch::SetState(cxgui::OnOffState p_newState)
+/**********************************************************************************************//**
+ * @brief Interface aggrating services common to all widgets.
+ *
+ *************************************************************************************************/
+class IWidget
 {
-    if(p_newState == OnOffState::ON)
-    {
-        m_underlying.set_active(true);
-    }
 
-    m_underlying.set_active(false);
-}
+public:
 
-size_t cxgui::OnOffSwitch::GetWidth() const
-{
-    const int width = m_underlying.get_width();
-    IF_CONDITION_NOT_MET_DO(width >= 0, return 0u;);
+    ~IWidget() = default;
 
-    return width;
-}
+    [[nodiscard]] virtual size_t GetWidth() const = 0;
+    [[nodiscard]] virtual size_t GetHeight() const = 0;
 
-size_t cxgui::OnOffSwitch::GetHeight() const
-{
-    const int height = m_underlying.get_height();
-    IF_CONDITION_NOT_MET_DO(height >= 0, return 0u;);
+};
 
-    return height;
-}
+} // namespace cxgui
+
+#endif // IWIDGET_H_845C70A7_65F2_4B7C_8446_A11ED3BC31E8
