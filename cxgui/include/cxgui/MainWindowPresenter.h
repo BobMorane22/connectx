@@ -74,6 +74,7 @@ public:
     std::string GetNewGameViewPlayersSectionTitle() const override;
     std::string GetNewGameViewNameColumnHeaderText() const override;
     std::string GetNewGameViewDiscColumnHeaderText() const override;
+    std::string GetNewGameViewIsManagedColumnHeaderText() const override;
 
     std::string GetNewGameViewRemovePlayerButtonText() const override;
     bool CanRemoveAnotherPlayer(std::size_t p_currentNumberOfPlayers) const override;

@@ -28,6 +28,7 @@
 #include <cxmodel/IPlayer.h>
 #include <cxgui/ColorComboBox.h>
 #include <cxgui/common.h>
+#include <cxgui/INewGameViewPresenter.h>
 #include <cxgui/OnOffState.h>
 #include <cxgui/OnOffSwitch.h>
 #include <cxgui/NewPlayerList.h>
@@ -49,7 +50,7 @@ class NewPlayerTitleRow : public Gtk::Grid
 
 public:
 
-    NewPlayerTitleRow();
+    NewPlayerTitleRow(const INewGameViewPresenter& p_presenter);
 
     void SetIsBotTitleWidth(int p_newWidth);
     void SetPlayerNameTitleWidth(int p_newWidth);
@@ -57,9 +58,9 @@ public:
 
 private:
 
-    Gtk::Label m_isBotTitle{"Bot"};
-    Gtk::Label m_playerNameTitle{"Name"};
-    Gtk::Label m_discColorTitle{"Disc"};
+    Gtk::Label m_isBotTitle;
+    Gtk::Label m_playerNameTitle;
+    Gtk::Label m_discColorTitle;
 };
 
 /***********************************************************************************************//**
@@ -191,7 +192,10 @@ bool operator!=(const NewPlayerRow& p_lhs, const NewPlayerRow& p_rhs);
 
 } // namespace cxgui
 
-cxgui::NewPlayerTitleRow::NewPlayerTitleRow()
+cxgui::NewPlayerTitleRow::NewPlayerTitleRow(const INewGameViewPresenter& p_presenter)
+: m_isBotTitle{p_presenter.GetNewGameViewIsManagedColumnHeaderText()}
+, m_playerNameTitle{p_presenter.GetNewGameViewNameColumnHeaderText()}
+, m_discColorTitle{p_presenter.GetNewGameViewDiscColumnHeaderText()}
 {
     m_isBotTitle.set_valign(Gtk::Align::ALIGN_CENTER);
     m_isBotTitle.set_halign(Gtk::Align::ALIGN_CENTER);
@@ -328,9 +332,9 @@ bool cxgui::operator!=(const NewPlayerRow& p_lhs, const NewPlayerRow& p_rhs)
     return !(p_lhs == p_rhs);
 }
 
-cxgui::NewPlayersList::NewPlayersList()
+cxgui::NewPlayersList::NewPlayersList(const INewGameViewPresenter& p_presenter)
 {
-    m_titleRow = std::make_unique<NewPlayerTitleRow>();
+    m_titleRow = std::make_unique<NewPlayerTitleRow>(p_presenter);
     ASSERT(m_titleRow);
 
     add(*Gtk::manage(new NewPlayerRow("-- Player 1 --", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN)));
@@ -556,11 +560,14 @@ std::vector<cxgui::NewPlayerRow*> cxgui::NewPlayersList::GetRows()
 // the widget contents may vary. However, each row of a cxgui::NewPlayersList
 // will contain the same widgets, and we want to simulate column headers.
 //
-// To do this, we add a header to the first row only and resize it on the realize
+// If the Gtk::ListBoxRow cannot have column headers, it can have row headers,
+// that is, each row can have its own header. We exploit this feature and
+// add a header to the first row only. We then resize it on the realize
 // signal. At this point, the row widgets' sizes have been allocated and we
 // can retreive them to update the header to fit them.
 void cxgui::NewPlayersList::AddColumnHeaders()
 {
+    // Each row of 
     set_header_func([this](Gtk::ListBoxRow* p_row, Gtk::ListBoxRow* /*p_before*/)
                     {
                         IF_PRECONDITION_NOT_MET_DO(p_row != nullptr, return;);

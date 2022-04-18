@@ -119,6 +119,14 @@ public:
     virtual std::string GetNewGameViewDiscColumnHeaderText() const = 0;
 
     /******************************************************************************************//**
+     * @brief Player management column header text accessor.
+     *
+     * @return The player management column header text.
+     *
+     ********************************************************************************************/
+    virtual std::string GetNewGameViewIsManagedColumnHeaderText() const = 0;
+
+    /******************************************************************************************//**
      * @brief Remove player button text accessor.
      *
      * @return Remove player button text.

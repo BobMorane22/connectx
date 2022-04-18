@@ -70,6 +70,11 @@ TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetDiscColumnHeaderText_NewG
     ASSERT_EQ(GetNewGameViewPresenter().GetNewGameViewDiscColumnHeaderText(), "Disc");
 }
 
+TEST_F(MainWindowPresenterTestFixture, /*DISABLED*/GetIsManagedColumnHeaderText_NewGamePresenter_IsManagedColumnTextReturned)
+{
+    ASSERT_EQ(GetNewGameViewPresenter().GetNewGameViewIsManagedColumnHeaderText(), "Bot");
+}
+
 TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetNewGameViewRemovePlayerButtonText_NewGamePresenter_ButtonTextReturned)
 {
     ASSERT_EQ(GetNewGameViewPresenter().GetNewGameViewRemovePlayerButtonText(), "Remove player");

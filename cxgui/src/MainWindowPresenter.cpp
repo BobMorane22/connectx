@@ -215,6 +215,11 @@ std::string cxgui::MainWindowPresenter::GetNewGameViewDiscColumnHeaderText() con
     return "Disc";
 }
 
+std::string cxgui::MainWindowPresenter::GetNewGameViewIsManagedColumnHeaderText() const
+{
+    return "Bot";
+}
+
 std::string cxgui::MainWindowPresenter::GetNewGameViewRemovePlayerButtonText() const
 {
     return "Remove player";

@@ -34,6 +34,7 @@
 namespace cxgui
 {
 
+class INewGameViewPresenter;
 class NewPlayerRow;
 class NewPlayerTitleRow;
 
@@ -63,7 +64,7 @@ public:
      * configuration, and is equivalent to the classic Connect 4 requirements.
      *
      **********************************************************************************************/
-    NewPlayersList();
+    NewPlayersList(const INewGameViewPresenter& p_presenter);
 
     /*******************************************************************************************//**
      * @brief Default destructor.

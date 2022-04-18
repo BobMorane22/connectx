@@ -57,6 +57,7 @@ cxgui::NewGameView::NewGameView(INewGameViewPresenter& p_presenter,
  , m_mainLayout{p_mainLayout}
  , m_viewLeft{p_viewLeft}
  , m_viewTop{p_viewTop}
+ , m_playerList{p_presenter}
 {
     SetLayout();
     PopulateWidgets();
