@@ -191,8 +191,6 @@ void cxgui::NewGameView::ConfigureWidgets()
     m_title.set_margin_bottom(SECTION_BOTTOM_MARGIN);
 
     // Player list:
-    //m_nameRowTitle.set_margin_bottom(CONTROL_BOTTOM_MARGIN);
-    //m_discRowTitle.set_margin_bottom(CONTROL_BOTTOM_MARGIN);
     m_playerList.set_margin_bottom(CONTROL_BOTTOM_MARGIN);
 
     // Add/Remove player buttons:
