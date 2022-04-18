@@ -91,8 +91,6 @@ private:
     Gtk::Entry m_gridHeightEntry;
 
     Gtk::Label m_playersSectionTitle;
-    Gtk::Label m_nameRowTitle;
-    Gtk::Label m_discRowTitle;
     cxgui::NewPlayersList m_playerList;
 
     Gtk::Button m_removePlayerButton;

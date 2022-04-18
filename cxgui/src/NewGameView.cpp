@@ -117,9 +117,7 @@ void cxgui::NewGameView::SetLayout()
     m_viewLayout.attach(m_gridHeightEntry, 1, 5, 1, 1);
 
     m_viewLayout.attach(m_playersSectionTitle, 0, 6, TOTAL_WIDTH, 1);
-    m_viewLayout.attach(m_nameRowTitle, 0, 7, 1, 1);
-    m_viewLayout.attach(m_discRowTitle, 1, 7, 1, 1);
-    m_viewLayout.attach(m_playerList, 0, 8, TOTAL_WIDTH, 1);
+    m_viewLayout.attach(m_playerList, 0, 7, TOTAL_WIDTH, 1);
 
     m_viewLayout.attach(m_removePlayerButton, 0, 9, 1, 1);
     m_viewLayout.attach(m_addPlayerButton, 1, 9, 1, 1);
@@ -139,8 +137,6 @@ void cxgui::NewGameView::PopulateWidgets()
     m_gridHeightLabel.set_text(m_presenter.GetNewGameViewHeightLabelText());
 
     m_playersSectionTitle.set_text(m_presenter.GetNewGameViewPlayersSectionTitle());
-    m_nameRowTitle.set_text(m_presenter.GetNewGameViewNameColumnHeaderText());
-    m_discRowTitle.set_text(m_presenter.GetNewGameViewDiscColumnHeaderText());
 
     m_removePlayerButton.set_label(m_presenter.GetNewGameViewRemovePlayerButtonText());
     m_addPlayerButton.set_label(m_presenter.GetNewGameViewAddPlayerButtonText());
@@ -195,8 +191,8 @@ void cxgui::NewGameView::ConfigureWidgets()
     m_title.set_margin_bottom(SECTION_BOTTOM_MARGIN);
 
     // Player list:
-    m_nameRowTitle.set_margin_bottom(CONTROL_BOTTOM_MARGIN);
-    m_discRowTitle.set_margin_bottom(CONTROL_BOTTOM_MARGIN);
+    //m_nameRowTitle.set_margin_bottom(CONTROL_BOTTOM_MARGIN);
+    //m_discRowTitle.set_margin_bottom(CONTROL_BOTTOM_MARGIN);
     m_playerList.set_margin_bottom(CONTROL_BOTTOM_MARGIN);
 
     // Add/Remove player buttons:
