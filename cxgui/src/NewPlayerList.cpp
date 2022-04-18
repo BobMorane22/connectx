@@ -336,27 +336,7 @@ cxgui::NewPlayersList::NewPlayersList()
     add(*Gtk::manage(new NewPlayerRow("-- Player 1 --", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN)));
     add(*Gtk::manage(new NewPlayerRow("-- Player 2 --", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN)));
 
-    // TG-243
-    // 1. Make into private methods.
-    // 2. Add error handling (nullptr).
-    // 3. Document for me from the future!
-    set_header_func([this](Gtk::ListBoxRow* row, Gtk::ListBoxRow* /*before*/)
-                    {
-                        if(row->get_index() == 0)
-                        {
-                            row->set_header(*m_titleRow);
-                            m_titleRow->show_all();
-
-                            m_titleRow->signal_realize().connect([this]()
-                                                                {
-                                                                    cxgui::NewPlayerRow* topRow = GetRow(0u);
-                                                                    topRow->RetreiveColumnDimensions(*this);
-                                                                    m_titleRow->SetIsBotTitleWidth(m_columnWidths.m_first);
-                                                                    m_titleRow->SetPlayerNameTitleWidth(m_columnWidths.m_second);
-                                                                    m_titleRow->SetDiscColorTitleWidth(m_columnWidths.m_third);
-                                                                });
-                        }
-                    });
+    AddColumnHeaders();
 }
 
 cxgui::NewPlayersList::~NewPlayersList() = default;
@@ -570,6 +550,44 @@ std::vector<cxgui::NewPlayerRow*> cxgui::NewPlayersList::GetRows()
                                }));
 
     return specificRows;
+}
+
+// The Gtk::ListBoxRow widget does not have column headers, since on each row,
+// the widget contents may vary. However, each row of a cxgui::NewPlayersList
+// will contain the same widgets, and we want to simulate column headers.
+//
+// To do this, we add a header to the first row only and resize it on the realize
+// signal. At this point, the row widgets' sizes have been allocated and we
+// can retreive them to update the header to fit them.
+void cxgui::NewPlayersList::AddColumnHeaders()
+{
+    set_header_func([this](Gtk::ListBoxRow* p_row, Gtk::ListBoxRow* /*p_before*/)
+                    {
+                        IF_PRECONDITION_NOT_MET_DO(p_row != nullptr, return;);
+
+                        if(p_row->get_index() == 0u)
+                        {
+                            p_row->set_header(*m_titleRow);
+                            m_titleRow->show_all();
+
+                            m_titleRow->signal_realize().connect([this](){FitColumnHeaders();});
+                        }
+                    });
+}
+
+// Fit the dimensions of the header widgets with the contents of the column
+// widgets. This should only be called on the first row, since we do not
+// want headers of other rows.
+void cxgui::NewPlayersList::FitColumnHeaders()
+{
+    cxgui::NewPlayerRow* topRow = GetRow(0u);
+    IF_CONDITION_NOT_MET_DO(topRow != nullptr, return;);
+
+    topRow->RetreiveColumnDimensions(*this);
+
+    m_titleRow->SetIsBotTitleWidth(m_columnWidths.m_first);
+    m_titleRow->SetPlayerNameTitleWidth(m_columnWidths.m_second);
+    m_titleRow->SetDiscColorTitleWidth(m_columnWidths.m_third);
 }
 
 bool cxgui::NewPlayersList::RemoveManaged(cxgui::NewPlayerRow* p_row)

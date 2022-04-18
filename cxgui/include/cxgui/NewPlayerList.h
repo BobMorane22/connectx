@@ -236,6 +236,9 @@ private:
     std::vector<const cxgui::NewPlayerRow*> GetRows() const;
     std::vector<cxgui::NewPlayerRow*> GetRows();
 
+    void AddColumnHeaders();
+    void FitColumnHeaders();
+
     bool RemoveManaged(cxgui::NewPlayerRow* p_row);
 
 };
