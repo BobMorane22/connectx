@@ -81,7 +81,7 @@ public:
      * @return The size of the list.
      *
      **********************************************************************************************/
-    std::size_t GetSize() const;
+    [[nodiscard]] std::size_t GetSize() const;
 
     /*******************************************************************************************//**
      * @brief Accesses a specific row's player disc color.
@@ -95,7 +95,7 @@ public:
      * @return The row's player disc color.
      *
      **********************************************************************************************/
-    cxmodel::ChipColor GetRowPlayerDiscColor(const std::size_t p_index) const;
+    [[nodiscard]] cxmodel::ChipColor GetRowPlayerDiscColor(const std::size_t p_index) const;
 
     /*******************************************************************************************//**
      * @brief Accesses a specific row's player name.
@@ -109,7 +109,7 @@ public:
      * @return The row's player name.
      *
      **********************************************************************************************/
-    std::string GetPlayerNameAtRow(const std::size_t p_index) const;
+    [[nodiscard]] std::string GetPlayerNameAtRow(const std::size_t p_index) const;
 
     /*******************************************************************************************//**
      * @brief Accesses all player disc colors in the list.
@@ -117,7 +117,7 @@ public:
      * @return An @c std::vector containing all the player disc colors in the list.
      *
      **********************************************************************************************/
-    std::vector<cxmodel::ChipColor> GetAllColors() const;
+    [[nodiscard]] std::vector<cxmodel::ChipColor> GetAllColors() const;
 
     /*******************************************************************************************//**
      * @brief Accesses all player names in the list.
@@ -125,7 +125,7 @@ public:
      * @return An @c std::vector containing all the player names in the list.
      *
      **********************************************************************************************/
-    std::vector<std::string> GetAllPlayerNames() const;
+    [[nodiscard]] std::vector<std::string> GetAllPlayerNames() const;
 
     /*******************************************************************************************//**
      * @brief Adds a row to the list.
@@ -143,9 +143,9 @@ public:
      * @see cxutil::ReturnCode
      *
      **********************************************************************************************/
-    bool AddRow(const std::string& p_playerNewName,
-                const cxmodel::ChipColor& p_playerNewDiscColor,
-                cxmodel::PlayerType p_playerNewType);
+    [[nodiscard]] bool AddRow(const std::string& p_playerNewName,
+                              const cxmodel::ChipColor& p_playerNewDiscColor,
+                              cxmodel::PlayerType p_playerNewType);
 
     /*******************************************************************************************//**
      * @brief Removes a row from the list by its index.
@@ -158,7 +158,7 @@ public:
      * @return `true` if the specified row was successfully removed, `false` otherwise.
      *
      **********************************************************************************************/
-    bool RemoveRow(const std::size_t p_index);
+    [[nodiscard]] bool RemoveRow(const std::size_t p_index);
 
     /*******************************************************************************************//**
      * @brief Removes a row from the list.
@@ -176,9 +176,9 @@ public:
      * @return `true` if the specified row was successfully removed, `false` otherwise.
      *
      **********************************************************************************************/
-    bool RemoveRow(const std::string& p_playerName,
-                   const cxmodel::ChipColor& p_playerDiscColor,
-                   cxmodel::PlayerType p_playerType);
+    [[nodiscard]] bool RemoveRow(const std::string& p_playerName,
+                                 const cxmodel::ChipColor& p_playerDiscColor,
+                                 cxmodel::PlayerType p_playerType);
 
     /*******************************************************************************************//**
      * @brief Updates a row from its index.
@@ -197,10 +197,10 @@ public:
      * @return `true` if the specified row was successfully updated, `false` otherwise.
      *
      **********************************************************************************************/
-    bool UpdateRow(const std::size_t p_index,
-                   const std::string& p_newPlayerNewName,
-                   const cxmodel::ChipColor& p_newPlayerNewDiscColor,
-                   cxmodel::PlayerType p_newPlayerType);
+    [[nodiscard]] bool UpdateRow(const std::size_t p_index,
+                                 const std::string& p_newPlayerNewName,
+                                 const cxmodel::ChipColor& p_newPlayerNewDiscColor,
+                                 cxmodel::PlayerType p_newPlayerType);
 
     /*******************************************************************************************//**
      * @brief Clears the list content.

@@ -292,7 +292,7 @@ void cxgui::NewGameView::OnAddPlayer()
         std::ostringstream os;
         os << "-- Player " << nbNext << " --";
 
-        m_playerList.AddRow(os.str(), cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN);
+        IF_CONDITION_NOT_MET_DO(m_playerList.AddRow(os.str(), cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN), return;);
         m_playerList.show_all();
     }
 
@@ -304,7 +304,7 @@ void cxgui::NewGameView::OnRemovePlayer()
 {
     if(m_presenter.CanRemoveAnotherPlayer(m_playerList.GetSize()))
     {
-        m_playerList.RemoveRow(m_playerList.GetSize() - 1);
+        IF_CONDITION_NOT_MET_DO(m_playerList.RemoveRow(m_playerList.GetSize() - 1), return;);
 
         // At this point, the rwo is removed. If we don't act though, the extra
         // space left by the removed row will still be displayed on the screen,

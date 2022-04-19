@@ -45,9 +45,6 @@ namespace cxgui
 class NewPlayerTitleRow : public Gtk::Grid
 {
 
-// TG-243:
-// 2. Get the titles from the presenter.
-
 public:
 
     NewPlayerTitleRow(const INewGameViewPresenter& p_presenter);
@@ -126,7 +123,7 @@ public:
      * @return The player's actual name as a string.
      *
      **********************************************************************************************/
-    std::string GetPlayerName() const;
+    [[nodiscard]] std::string GetPlayerName() const;
 
     /*******************************************************************************************//**
      * @brief Accessor for the player's disc color.
@@ -134,7 +131,7 @@ public:
      * @return The player's actual disc color.
      *
      **********************************************************************************************/
-    cxmodel::ChipColor GetPlayerDiscColor() const;
+    [[nodiscard]] cxmodel::ChipColor GetPlayerDiscColor() const;
 
     /*******************************************************************************************//**
      * @brief Accessor for the player type (human or bot).
@@ -174,7 +171,7 @@ private:
  * @return @c true if both objects are considered equal @c false otherwise.
  *
  **************************************************************************************************/
-bool operator==(const NewPlayerRow& p_lhs, const NewPlayerRow& p_rhs);
+[[nodiscard]] bool operator==(const NewPlayerRow& p_lhs, const NewPlayerRow& p_rhs);
 
 /***********************************************************************************************//**
  * @brief Non-equality operator.
@@ -188,7 +185,7 @@ bool operator==(const NewPlayerRow& p_lhs, const NewPlayerRow& p_rhs);
  * @return @return @c true if both objects are considered NOT equal @c false otherwise.
  *
  **************************************************************************************************/
-bool operator!=(const NewPlayerRow& p_lhs, const NewPlayerRow& p_rhs);
+[[nodiscard]] bool operator!=(const NewPlayerRow& p_lhs, const NewPlayerRow& p_rhs);
 
 } // namespace cxgui
 
