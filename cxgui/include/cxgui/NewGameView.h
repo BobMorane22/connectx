@@ -31,7 +31,7 @@
 #include "INewGameViewController.h"
 #include "INewGameViewPresenter.h"
 #include "IView.h"
-#include "NewPlayerList.h"
+#include "INewPlayersList.h"
 #include "Window.h"
 
 namespace cxgui
@@ -91,7 +91,7 @@ private:
     Gtk::Entry m_gridHeightEntry;
 
     Gtk::Label m_playersSectionTitle;
-    cxgui::NewPlayersList m_playerList;
+    std::unique_ptr<cxgui::INewPlayersList> m_playerList;
 
     Gtk::Button m_removePlayerButton;
     Gtk::Button m_addPlayerButton;

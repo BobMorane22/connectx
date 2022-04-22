@@ -24,12 +24,9 @@
 #ifndef NEWPLAYERLIST_H_FDB93AF1_A5AC_4484_9857_0B207BAE8724
 #define NEWPLAYERLIST_H_FDB93AF1_A5AC_4484_9857_0B207BAE8724
 
-#include <string>
-#include <vector>
-
-#include <cxmodel/ChipColor.h>
-
 #include <gtkmm/listbox.h>
+
+#include <cxgui/INewPlayersList.h>
 
 namespace cxgui
 {
@@ -52,7 +49,8 @@ namespace cxgui
  * @see cxgui::NewPlayerRow
  *
  **************************************************************************************************/
-class NewPlayersList final : public Gtk::ListBox
+class NewPlayersList final : public INewPlayersList,
+                             public Gtk::ListBox
 {
 
 public:
@@ -63,6 +61,8 @@ public:
      * Constructs a list of two players with different colors. This is the basic Connect X
      * configuration, and is equivalent to the classic Connect 4 requirements.
      *
+     * @param p_presenter A new game view presenter.
+     *
      **********************************************************************************************/
     NewPlayersList(const INewGameViewPresenter& p_presenter);
 
@@ -70,148 +70,28 @@ public:
      * @brief Default destructor.
      *
      **********************************************************************************************/
-    virtual ~NewPlayersList();
+    ~NewPlayersList() override;
 
-    /*******************************************************************************************//**
-     * @brief Accesses the size of the list.
-     *
-     * The size of the list is the number of players (visually, the number of rows) contained
-     * in the widget.
-     *
-     * @return The size of the list.
-     *
-     **********************************************************************************************/
-    [[nodiscard]] std::size_t GetSize() const;
-
-    /*******************************************************************************************//**
-     * @brief Accesses a specific row's player disc color.
-     *
-     * For a given row index, gets the specific row's player disc color.
-     *
-     * @param p_index The row index.
-     *
-     * @pre The row index is at most the number of players in the list, minus one (zero-based).
-     *
-     * @return The row's player disc color.
-     *
-     **********************************************************************************************/
-    [[nodiscard]] cxmodel::ChipColor GetRowPlayerDiscColor(const std::size_t p_index) const;
-
-    /*******************************************************************************************//**
-     * @brief Accesses a specific row's player name.
-     *
-     * For a given row index, gets the specific row's player name.
-     *
-     * @param p_index The row index.
-     *
-     * @pre The row index is at most the number of players in the list, minus one (zero-based).
-     *
-     * @return The row's player name.
-     *
-     **********************************************************************************************/
-    [[nodiscard]] std::string GetPlayerNameAtRow(const std::size_t p_index) const;
-
-    /*******************************************************************************************//**
-     * @brief Accesses all player disc colors in the list.
-     *
-     * @return An @c std::vector containing all the player disc colors in the list.
-     *
-     **********************************************************************************************/
-    [[nodiscard]] std::vector<cxmodel::ChipColor> GetAllColors() const;
-
-    /*******************************************************************************************//**
-     * @brief Accesses all player names in the list.
-     *
-     * @return An @c std::vector containing all the player names in the list.
-     *
-     **********************************************************************************************/
-    [[nodiscard]] std::vector<std::string> GetAllPlayerNames() const;
-
-    /*******************************************************************************************//**
-     * @brief Adds a row to the list.
-     *
-     * Adds a row to the list. The row is appended at the end of the list.
-     *
-     * @param p_playerNewName      The player's name.
-     * @param p_playerNewDiscColor The player's disc color.
-     * @param p_playerNewType      The player's new type (human or bot).
-     *
-     * @pre The player name is not an empty string.
-     *
-     * @return `true` if the row could be added, `false` otherwise.
-     *
-     * @see cxutil::ReturnCode
-     *
-     **********************************************************************************************/
+    // cxgui::INewPlayersList:
+    [[nodiscard]] std::size_t GetSize() const override;
+    [[nodiscard]] cxmodel::ChipColor GetRowPlayerDiscColor(const std::size_t p_index) const override;
+    [[nodiscard]] std::string GetPlayerNameAtRow(const std::size_t p_index) const override;
+    [[nodiscard]] std::vector<cxmodel::ChipColor> GetAllColors() const override;
+    [[nodiscard]] std::vector<std::string> GetAllPlayerNames() const override;
     [[nodiscard]] bool AddRow(const std::string& p_playerNewName,
                               const cxmodel::ChipColor& p_playerNewDiscColor,
-                              cxmodel::PlayerType p_playerNewType);
-
-    /*******************************************************************************************//**
-     * @brief Removes a row from the list by its index.
-     *
-     * @param p_index The row index.
-     *
-     * @pre p_index The row index is at most the number of players in the list,
-     *              minus one (zero-based).
-     *
-     * @return `true` if the specified row was successfully removed, `false` otherwise.
-     *
-     **********************************************************************************************/
-    [[nodiscard]] bool RemoveRow(const std::size_t p_index);
-
-    /*******************************************************************************************//**
-     * @brief Removes a row from the list.
-     *
-     * Removes a row from the list. The row must match a given player name and disc color.. If
-     * the player name and the disc color pair is not found, an error is returned and nothing
-     * is removed.
-     *
-     * @param p_playerName      The player's name.
-     * @param p_playerDiscColor The player's disc color.
-     * @param p_playerType      The player's type (human or bot).
-     *
-     * @pre The player name is not an empty string.
-     *
-     * @return `true` if the specified row was successfully removed, `false` otherwise.
-     *
-     **********************************************************************************************/
+                              cxmodel::PlayerType p_playerNewType) override;
+    [[nodiscard]] bool RemoveRow(const std::size_t p_index) override;
     [[nodiscard]] bool RemoveRow(const std::string& p_playerName,
                                  const cxmodel::ChipColor& p_playerDiscColor,
-                                 cxmodel::PlayerType p_playerType);
-
-    /*******************************************************************************************//**
-     * @brief Updates a row from its index.
-     *
-     * Updates row information from its index. You can update the player name and the player disc
-     * color.
-     *
-     * @param p_index                 The row index.
-     * @param p_newPlayerNewName      The player name.
-     * @param p_newPlayerNewDiscColor The player disc color.
-     * @param p_newPlayerType         The player type (human or bot).
-     *
-     * @pre The row index is at most the number of players in the list, minus one (zero-based).
-     * @pre The player name is not an empty string.
-     *
-     * @return `true` if the specified row was successfully updated, `false` otherwise.
-     *
-     **********************************************************************************************/
+                                 cxmodel::PlayerType p_playerType) override;
     [[nodiscard]] bool UpdateRow(const std::size_t p_index,
                                  const std::string& p_newPlayerNewName,
                                  const cxmodel::ChipColor& p_newPlayerNewDiscColor,
-                                 cxmodel::PlayerType p_newPlayerType);
+                                 cxmodel::PlayerType p_newPlayerType) override;
+    void Clear() override; 
 
-    /*******************************************************************************************//**
-     * @brief Clears the list content.
-     *
-     * Removes every players in the list, leaving the container empty (visually, there are
-     * no rows left).
-     *
-     * @post The list is empty (no more rows).
-     *
-     **********************************************************************************************/
-    void Clear();
+     [[nodiscard]] Gtk::Widget& GetUnderlying() override {return *this;}
 
 private:
 
