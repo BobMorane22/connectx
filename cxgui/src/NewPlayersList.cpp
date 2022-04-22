@@ -16,7 +16,7 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file NewPlayerList.cpp
+ * @file NewPlayersList.cpp
  * @date 2020
  *
  *************************************************************************************************/
@@ -31,7 +31,7 @@
 #include <cxgui/INewGameViewPresenter.h>
 #include <cxgui/OnOffState.h>
 #include <cxgui/OnOffSwitch.h>
-#include <cxgui/NewPlayerList.h>
+#include <cxgui/NewPlayersList.h>
 
 namespace cxgui
 {

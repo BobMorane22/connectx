@@ -30,7 +30,7 @@
 #include <cxmodel/NewGameInformation.h>
 #include <cxgui/extractRawUserInput.h>
 #include <cxgui/NewGameView.h>
-#include <cxgui/NewPlayerList.h>
+#include <cxgui/NewPlayersList.h>
 
 namespace
 {
@@ -59,7 +59,7 @@ cxgui::NewGameView::NewGameView(INewGameViewPresenter& p_presenter,
  , m_viewLeft{p_viewLeft}
  , m_viewTop{p_viewTop}
 {
-    m_playerList = std::make_unique<cxgui::NewPlayersList>(p_presenter);
+    m_playersList = std::make_unique<cxgui::NewPlayersList>(p_presenter);
 
     SetLayout();
     PopulateWidgets();
@@ -119,7 +119,7 @@ void cxgui::NewGameView::SetLayout()
     m_viewLayout.attach(m_gridHeightEntry, 1, 5, 1, 1);
 
     m_viewLayout.attach(m_playersSectionTitle, 0, 6, TOTAL_WIDTH, 1);
-    m_viewLayout.attach(m_playerList->GetUnderlying(), 0, 7, TOTAL_WIDTH, 1);
+    m_viewLayout.attach(m_playersList->GetUnderlying(), 0, 7, TOTAL_WIDTH, 1);
 
     m_viewLayout.attach(m_removePlayerButton, 0, 9, 1, 1);
     m_viewLayout.attach(m_addPlayerButton, 1, 9, 1, 1);
@@ -193,13 +193,13 @@ void cxgui::NewGameView::ConfigureWidgets()
     m_title.set_margin_bottom(SECTION_BOTTOM_MARGIN);
 
     // Player list:
-    m_playerList->GetUnderlying().set_margin_bottom(CONTROL_BOTTOM_MARGIN);
+    m_playersList->GetUnderlying().set_margin_bottom(CONTROL_BOTTOM_MARGIN);
 
     // Add/Remove player buttons:
     m_removePlayerButton.set_margin_bottom(CONTROL_BOTTOM_MARGIN);
     m_addPlayerButton.set_margin_bottom(CONTROL_BOTTOM_MARGIN);
-    m_removePlayerButton.set_sensitive(m_presenter.CanRemoveAnotherPlayer(m_playerList->GetSize()));
-    m_addPlayerButton.set_sensitive(m_presenter.CanAddAnotherPlayer(m_playerList->GetSize()));
+    m_removePlayerButton.set_sensitive(m_presenter.CanRemoveAnotherPlayer(m_playersList->GetSize()));
+    m_addPlayerButton.set_sensitive(m_presenter.CanAddAnotherPlayer(m_playersList->GetSize()));
 
     // Start button:
     m_startButton.set_margin_bottom(CONTROL_BOTTOM_MARGIN);
@@ -240,8 +240,8 @@ void cxgui::NewGameView::OnStart()
         return;
     }
 
-    const std::vector<std::string> playerNames = m_playerList->GetAllPlayerNames();
-    const std::vector<cxmodel::ChipColor> chipColors = m_playerList->GetAllColors();
+    const std::vector<std::string> playerNames = m_playersList->GetAllPlayerNames();
+    const std::vector<cxmodel::ChipColor> chipColors = m_playersList->GetAllColors();
 
     // Validate the input:
     const auto inARowInputStatus = m_presenter.IsInARowValueValid(inARowValue);
@@ -278,7 +278,7 @@ void cxgui::NewGameView::OnStart()
     gameInformation.m_inARowValue = inARowValue;
     gameInformation.m_gridHeight = boardHeight;
     gameInformation.m_gridWidth = boardWidth;
-    for(size_t index = 0; index < m_playerList->GetSize(); ++index)
+    for(size_t index = 0; index < m_playersList->GetSize(); ++index)
     {
         gameInformation.m_players.push_back(cxmodel::CreatePlayer(playerNames[index], chipColors[index], cxmodel::PlayerType::HUMAN));
     }
@@ -288,25 +288,25 @@ void cxgui::NewGameView::OnStart()
 
 void cxgui::NewGameView::OnAddPlayer()
 {
-    if(m_presenter.CanAddAnotherPlayer(m_playerList->GetSize()))
+    if(m_presenter.CanAddAnotherPlayer(m_playersList->GetSize()))
     {
-        const size_t nbNext = m_playerList->GetSize() + 1;
+        const size_t nbNext = m_playersList->GetSize() + 1;
         std::ostringstream os;
         os << "-- Player " << nbNext << " --";
 
-        IF_CONDITION_NOT_MET_DO(m_playerList->AddRow(os.str(), cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN), return;);
-        m_playerList->GetUnderlying().show_all();
+        IF_CONDITION_NOT_MET_DO(m_playersList->AddRow(os.str(), cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN), return;);
+        m_playersList->GetUnderlying().show_all();
     }
 
-    m_removePlayerButton.set_sensitive(m_presenter.CanRemoveAnotherPlayer(m_playerList->GetSize()));
-    m_addPlayerButton.set_sensitive(m_presenter.CanAddAnotherPlayer(m_playerList->GetSize()));
+    m_removePlayerButton.set_sensitive(m_presenter.CanRemoveAnotherPlayer(m_playersList->GetSize()));
+    m_addPlayerButton.set_sensitive(m_presenter.CanAddAnotherPlayer(m_playersList->GetSize()));
 }
 
 void cxgui::NewGameView::OnRemovePlayer()
 {
-    if(m_presenter.CanRemoveAnotherPlayer(m_playerList->GetSize()))
+    if(m_presenter.CanRemoveAnotherPlayer(m_playersList->GetSize()))
     {
-        IF_CONDITION_NOT_MET_DO(m_playerList->RemoveRow(m_playerList->GetSize() - 1), return;);
+        IF_CONDITION_NOT_MET_DO(m_playersList->RemoveRow(m_playersList->GetSize() - 1), return;);
 
         // At this point, the rwo is removed. If we don't act though, the extra
         // space left by the removed row will still be displayed on the screen,
@@ -331,6 +331,6 @@ void cxgui::NewGameView::OnRemovePlayer()
         mainWindowAsGtk->resize(mainWindowAsGtk->get_width(), naturalHeight);
     }
 
-    m_removePlayerButton.set_sensitive(m_presenter.CanRemoveAnotherPlayer(m_playerList->GetSize()));
-    m_addPlayerButton.set_sensitive(m_presenter.CanAddAnotherPlayer(m_playerList->GetSize()));
+    m_removePlayerButton.set_sensitive(m_presenter.CanRemoveAnotherPlayer(m_playersList->GetSize()));
+    m_addPlayerButton.set_sensitive(m_presenter.CanAddAnotherPlayer(m_playersList->GetSize()));
 }

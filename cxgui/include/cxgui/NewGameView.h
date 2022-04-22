@@ -91,7 +91,7 @@ private:
     Gtk::Entry m_gridHeightEntry;
 
     Gtk::Label m_playersSectionTitle;
-    std::unique_ptr<cxgui::INewPlayersList> m_playerList;
+    std::unique_ptr<cxgui::INewPlayersList> m_playersList;
 
     Gtk::Button m_removePlayerButton;
     Gtk::Button m_addPlayerButton;

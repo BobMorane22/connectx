@@ -16,13 +16,13 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file NewPlayerList.h
+ * @file NewPlayersList.h
  * @date 2020
  *
  *************************************************************************************************/
 
-#ifndef NEWPLAYERLIST_H_FDB93AF1_A5AC_4484_9857_0B207BAE8724
-#define NEWPLAYERLIST_H_FDB93AF1_A5AC_4484_9857_0B207BAE8724
+#ifndef NEWPLAYERSLIST_H_FDB93AF1_A5AC_4484_9857_0B207BAE8724
+#define NEWPLAYERSLIST_H_FDB93AF1_A5AC_4484_9857_0B207BAE8724
 
 #include <gtkmm/listbox.h>
 
@@ -126,4 +126,4 @@ private:
 
 } // namespace cxgui
 
-#endif // NEWPLAYERLIST_H_FDB93AF1_A5AC_4484_9857_0B207BAE8724
+#endif // NEWPLAYERSLIST_H_FDB93AF1_A5AC_4484_9857_0B207BAE8724
