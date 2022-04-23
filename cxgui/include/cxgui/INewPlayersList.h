@@ -112,6 +112,14 @@ public:
     [[nodiscard]] virtual std::vector<std::string> GetAllPlayerNames() const = 0;
 
     /*******************************************************************************************//**
+     * @brief Accesses all player types in the list.
+     *
+     * @return An @c std::vector containing all the player types in the list.
+     *
+     **********************************************************************************************/
+    [[nodiscard]] virtual std::vector<cxmodel::PlayerType> GetAllPlayerTypes() const = 0;
+
+    /*******************************************************************************************//**
      * @brief Adds a row to the list.
      *
      * Adds a row to the list. The row is appended at the end of the list.

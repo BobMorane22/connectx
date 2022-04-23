@@ -78,6 +78,7 @@ public:
     [[nodiscard]] std::string GetPlayerNameAtRow(const std::size_t p_index) const override;
     [[nodiscard]] std::vector<cxmodel::ChipColor> GetAllColors() const override;
     [[nodiscard]] std::vector<std::string> GetAllPlayerNames() const override;
+    [[nodiscard]] std::vector<cxmodel::PlayerType> GetAllPlayerTypes() const override;
     [[nodiscard]] bool AddRow(const std::string& p_playerNewName,
                               const cxmodel::ChipColor& p_playerNewDiscColor,
                               cxmodel::PlayerType p_playerNewType) override;

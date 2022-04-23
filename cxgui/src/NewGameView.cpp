@@ -242,6 +242,9 @@ void cxgui::NewGameView::OnStart()
 
     const std::vector<std::string> playerNames = m_playersList->GetAllPlayerNames();
     const std::vector<cxmodel::ChipColor> chipColors = m_playersList->GetAllColors();
+    const std::vector<cxmodel::PlayerType> playerTypes = m_playersList->GetAllPlayerTypes();
+    IF_CONDITION_NOT_MET_DO(playerNames.size() == chipColors.size(), return;);
+    IF_CONDITION_NOT_MET_DO(chipColors.size() == playerTypes.size(), return;);
 
     // Validate the input:
     const auto inARowInputStatus = m_presenter.IsInARowValueValid(inARowValue);
@@ -278,9 +281,9 @@ void cxgui::NewGameView::OnStart()
     gameInformation.m_inARowValue = inARowValue;
     gameInformation.m_gridHeight = boardHeight;
     gameInformation.m_gridWidth = boardWidth;
-    for(size_t index = 0; index < m_playersList->GetSize(); ++index)
+    for(size_t index = 0u; index < m_playersList->GetSize(); ++index)
     {
-        gameInformation.m_players.push_back(cxmodel::CreatePlayer(playerNames[index], chipColors[index], cxmodel::PlayerType::HUMAN));
+        gameInformation.m_players.push_back(cxmodel::CreatePlayer(playerNames[index], chipColors[index], playerTypes[index]));
     }
 
     m_controller.OnStart(std::move(gameInformation));

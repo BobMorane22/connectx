@@ -392,6 +392,18 @@ std::vector<std::string> cxgui::NewPlayersList::GetAllPlayerNames() const
     return names;
 }
 
+std::vector<cxmodel::PlayerType> cxgui::NewPlayersList::GetAllPlayerTypes() const
+{
+    std::vector<cxmodel::PlayerType> types;
+
+    for(const auto row : GetRows())
+    {
+        types.push_back(row->GetPlayerType());
+    }
+
+    return types;
+}
+
 bool cxgui::NewPlayersList::AddRow(const std::string& p_playerNewName,
                                    const cxmodel::ChipColor& p_playerNewDiscColor,
                                    cxmodel::PlayerType p_playerNewType)
