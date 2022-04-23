@@ -625,3 +625,13 @@ bool cxgui::NewPlayersList::RemoveManaged(cxgui::NewPlayerRow* p_row)
 
     return true;
 }
+
+Gtk::Widget& cxgui::NewPlayersList::GetUnderlying()
+{
+    return const_cast<Gtk::Widget&>(static_cast<const Gtk::Widget&>(*this));
+}
+
+const Gtk::Widget& cxgui::NewPlayersList::GetUnderlying() const
+{
+    return *this;
+}

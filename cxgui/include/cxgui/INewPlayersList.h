@@ -28,6 +28,7 @@
 #include <vector>
 
 #include <cxmodel/ChipColor.h>
+#include <cxgui/IGtkmmBackend.h>
 
 namespace Gtk
 {
@@ -44,7 +45,7 @@ namespace cxgui
  * they have chosen for their discs.
  *
  **************************************************************************************************/
-class INewPlayersList
+class INewPlayersList : public IGtkmmBackend<Gtk::Widget>
 {
 
 public:
@@ -53,7 +54,7 @@ public:
      * @brief Default destructor.
      *
      **********************************************************************************************/
-    virtual ~INewPlayersList() = default;
+    ~INewPlayersList() override = default;
 
     /*******************************************************************************************//**
      * @brief Accesses the size of the list.
@@ -202,7 +203,10 @@ public:
      * @return The underlying (Gtkmm) widget.
      *
      **********************************************************************************************/
-     [[nodiscard]] virtual Gtk::Widget& GetUnderlying() = 0;
+
+    // cxgui::IGtkmmBackend:
+    [[nodiscard]] Gtk::Widget& GetUnderlying() override = 0;
+    [[nodiscard]] const Gtk::Widget& GetUnderlying() const override = 0;
 
 };
 

@@ -91,7 +91,8 @@ public:
                                  cxmodel::PlayerType p_newPlayerType) override;
     void Clear() override; 
 
-     [[nodiscard]] Gtk::Widget& GetUnderlying() override {return *this;}
+    [[nodiscard]] Gtk::Widget& GetUnderlying() override;
+    [[nodiscard]] const Gtk::Widget& GetUnderlying() const override;
 
 private:
 
