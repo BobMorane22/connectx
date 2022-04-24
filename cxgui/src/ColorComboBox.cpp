@@ -90,7 +90,7 @@ void cxgui::ColorComboBox::SetCurrentSelection(const cxgui::Color& p_color)
     Gtk::TreeModel::Children rows = m_treeModel->children();
     IF_CONDITION_NOT_MET_DO(rows, return;);
 
-    for(auto row = rows.begin(); row != rows.end(); ++row)
+    for(auto row : m_treeModel->children())
     {
         IF_CONDITION_NOT_MET_DO(row, return;);
         if((*row)[m_records.m_color] == newColor)
