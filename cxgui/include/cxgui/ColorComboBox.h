@@ -71,7 +71,6 @@ private:
     void OnRenderCell(const Gtk::TreeModel::const_iterator& iter);
     void OnComboChanged();
 
-    //
     struct Record : public Gtk::TreeModel::ColumnRecord
     {
 

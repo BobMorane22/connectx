@@ -88,9 +88,11 @@ void cxgui::ColorComboBox::SetCurrentSelection(const cxgui::Color& p_color)
     newColor.set_rgb(p_color.R(), p_color.G(), p_color.B());
 
     Gtk::TreeModel::Children rows = m_treeModel->children();
+    IF_CONDITION_NOT_MET_DO(rows, return;);
 
-    for(auto row = rows.begin(); row != rows.end(); ++rows)
+    for(auto row = rows.begin(); row != rows.end(); ++row)
     {
+        IF_CONDITION_NOT_MET_DO(row, return;);
         if((*row)[m_records.m_color] == newColor)
         {
             set_active(row);

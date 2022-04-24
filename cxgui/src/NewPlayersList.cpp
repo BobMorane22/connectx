@@ -336,7 +336,7 @@ cxgui::NewPlayersList::NewPlayersList(const INewGameViewPresenter& p_presenter)
 
     // Changing the color here causes a crash... See my comment in TG-243.
     add(*Gtk::manage(new NewPlayerRow("-- Player 1 --", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN)));
-    add(*Gtk::manage(new NewPlayerRow("-- Player 2 --", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN)));
+    add(*Gtk::manage(new NewPlayerRow("-- Player 2 --", cxmodel::MakeGreen(), cxmodel::PlayerType::HUMAN)));
 
     AddColumnHeaders();
 }
