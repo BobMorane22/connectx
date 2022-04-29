@@ -134,9 +134,6 @@ public:
 
     cxmodel::Status IsInARowValueValid(size_t p_inARowValue) const override = 0;
     cxmodel::Status AreBoardDimensionsValid(size_t p_boardHeight, size_t p_boardWidth) const override = 0;
-    cxmodel::Status ArePlayersInformationValid(const std::vector<std::string>& p_playerNames,
-                                               const std::vector<cxmodel::ChipColor>& p_chipColors) const override = 0;
-
     cxmodel::Status ArePlayerNamesValid(const std::vector<std::string>& p_playerNames) const override = 0;
     cxmodel::Status ArePlayerChipColorsValid(const std::vector<cxmodel::ChipColor>& p_playerChipColors) const override = 0;
     cxmodel::Status ArePlayerTypesValid(const std::vector<cxmodel::PlayerType>& p_playerTypes) const override = 0;

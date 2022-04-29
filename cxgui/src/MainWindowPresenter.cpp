@@ -314,43 +314,6 @@ cxmodel::Status cxgui::MainWindowPresenter::AreBoardDimensionsValid(size_t p_boa
     return cxmodel::MakeSuccess();
 }
 
-cxmodel::Status cxgui::MainWindowPresenter::ArePlayersInformationValid(const std::vector<std::string>& p_playerNames,
-                                                                       const std::vector<cxmodel::ChipColor>& p_chipColors) const
-{
-    // Player names (should not be empty):
-    const bool emptyNamesExist = std::any_of(p_playerNames.cbegin(),
-                                             p_playerNames.cend(),
-                                             [](const std::string& p_name)
-                                             {
-                                                 return p_name.empty();
-                                             });
-
-   if(emptyNamesExist)
-   {
-       return cxmodel::MakeError("Player names cannot be empty.");
-   }
-
-   // Chip colors (should not have duplicates):
-   bool duplicateColorsExist = false;
-   for(const auto& color : p_chipColors)
-   {
-       const size_t count = std::count(p_chipColors.cbegin(), p_chipColors.cend(), color);
-
-       if(count > 1)
-       {
-           duplicateColorsExist = true;
-           break;
-       }
-   }
-
-   if(duplicateColorsExist)
-   {
-       return cxmodel::MakeError("Discs must have different colors.");
-   }
-
-   return cxmodel::MakeSuccess();
-}
-
 cxmodel::Status cxgui::MainWindowPresenter::ArePlayerNamesValid(const std::vector<std::string>& p_playerNames) const
 {
     if(std::any_of(p_playerNames.cbegin(),

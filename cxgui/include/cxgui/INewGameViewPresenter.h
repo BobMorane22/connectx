@@ -236,18 +236,6 @@ public:
     virtual cxmodel::Status AreBoardDimensionsValid(size_t p_boardHeight, size_t p_boardWidth) const = 0;
 
     /******************************************************************************************//**
-     * @brief Checks if the player information passed as arguments are valid.
-     *
-     * @param p_playerNames A list of player names.
-     * @param p_chipColors  A list of chip colors.
-     *
-     * @return `Success` if both player names and chip colors are valid, `Error` otherwise.
-     *
-     ********************************************************************************************/
-    virtual cxmodel::Status ArePlayersInformationValid(const std::vector<std::string>& p_playerNames,
-                                                       const std::vector<cxmodel::ChipColor>& p_chipColors) const = 0;
-
-    /******************************************************************************************//**
      * @brief Checks if the player names passed as arguments are valid.
      *
      * @param p_playerNames A list of player names.

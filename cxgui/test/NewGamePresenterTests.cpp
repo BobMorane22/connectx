@@ -204,50 +204,6 @@ TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetBoardDimensionsInvalidInp
     ASSERT_EQ(status.GetMessage(), oss.str());
 }
 
-TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetPlayersInformationInvalidInputMessage_AnEmptyName_InvalidPlayerMessageReturned)
-{
-    const std::vector<std::string> playerNames
-    {
-        "John Doe",
-        std::string(),
-        "Igor Lopez"
-    };
-
-    const std::vector<cxmodel::ChipColor> chipColors
-    {
-        cxmodel::MakeRed(),
-        cxmodel::MakeBlue(),
-        cxmodel::MakeYellow()
-    };
-
-    auto& presenter = GetNewGameViewPresenter();
-    const auto status = presenter.ArePlayersInformationValid(playerNames, chipColors);
-
-    ASSERT_EQ(status.GetMessage(), "Player names cannot be empty.");
-}
-
-TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetPlayersInformationInvalidInputMessage_TwoIdenticalChipColors_InvalidChipColorsMessageReturned)
-{
-    const std::vector<std::string> playerNames
-    {
-        "John Doe",
-        "Jane Doe",
-        "Igor Lopez"
-    };
-
-    const std::vector<cxmodel::ChipColor> chipColors
-    {
-        cxmodel::MakeRed(),
-        cxmodel::MakeRed(),
-        cxmodel::MakeYellow()
-    };
-
-    auto& presenter = GetNewGameViewPresenter();
-    const auto status = presenter.ArePlayersInformationValid(playerNames, chipColors);
-
-    ASSERT_EQ(status.GetMessage(), "Discs must have different colors.");
-}
-
 TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/IsInARowValueValid_InValidRange_ReturnsSuccess)
 {
     const auto statusMin = GetNewGameViewPresenter().IsInARowValueValid(GetNewGameViewPresenter().GetNewGameViewMinInARowValue());
@@ -355,6 +311,7 @@ TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/ArePlayerNamesValid_AnEmptyP
 
     const auto status = GetNewGameViewPresenter().ArePlayerNamesValid(playerNames);
     ASSERT_FALSE(status.IsSuccess());
+    ASSERT_TRUE(status.GetMessage() == "Player names cannot be empty.");
 }
 
 TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/ArePlayerChipColorsValid_AllDifferentColors_ReturnsSuccess)
@@ -381,6 +338,7 @@ TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/ArePlayerChipColorsValid_Two
 
     const auto status = GetNewGameViewPresenter().ArePlayerChipColorsValid(chipColors);
     ASSERT_FALSE(status.IsSuccess());
+    ASSERT_TRUE(status.GetMessage() == "Discs must have different colors.");
 }
 
 TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/ArePlayerTypesValid_AllHumans_ReturnsSuccess)
@@ -420,6 +378,7 @@ TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/ArePlayerTypesValid_NoHuman_
 
     const auto status = GetNewGameViewPresenter().ArePlayerTypesValid(playerTypes);
     ASSERT_FALSE(status.IsSuccess());
+    ASSERT_TRUE(status.GetMessage() == "At least one player must not be a bot.");
 }
 
 TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/IsNewGameWinnable_TooManyPlayersForTheBoard_ReturnsError)
