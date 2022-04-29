@@ -95,6 +95,10 @@ public:
     cxmodel::Status AreBoardDimensionsValid(size_t p_boardHeight, size_t p_boardWidth) const override;
     cxmodel::Status ArePlayersInformationValid(const std::vector<std::string>& p_playerNames,
                                                const std::vector<cxmodel::ChipColor>& p_chipColors) const override;
+    cxmodel::Status ArePlayerNamesValid(const std::vector<std::string>& p_playerNames) const override;
+    cxmodel::Status ArePlayerChipColorsValid(const std::vector<cxmodel::ChipColor>& p_playerChipColors) const override;
+    cxmodel::Status ArePlayerTypesValid(const std::vector<cxmodel::PlayerType>& p_playerTypes) const override;
+
     cxmodel::Status IsNewGameWinnable(size_t p_inARowValue,
                                       size_t p_nbOfPlayers,
                                       size_t p_boardHeight,

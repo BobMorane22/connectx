@@ -240,12 +240,6 @@ void cxgui::NewGameView::OnStart()
         return;
     }
 
-    const std::vector<std::string> playerNames = m_playersList->GetAllPlayerNames();
-    const std::vector<cxmodel::ChipColor> chipColors = m_playersList->GetAllColors();
-    const std::vector<cxmodel::PlayerType> playerTypes = m_playersList->GetAllPlayerTypes();
-    IF_CONDITION_NOT_MET_DO(playerNames.size() == chipColors.size(), return;);
-    IF_CONDITION_NOT_MET_DO(chipColors.size() == playerTypes.size(), return;);
-
     // Validate the input:
     const auto inARowInputStatus = m_presenter.IsInARowValueValid(inARowValue);
     if(!inARowInputStatus.IsSuccess())
@@ -261,10 +255,30 @@ void cxgui::NewGameView::OnStart()
         return;
     }
 
-    const auto playerInfoInputStatus = m_presenter.ArePlayersInformationValid(playerNames, chipColors);
-    if(!playerInfoInputStatus.IsSuccess())
+    const std::vector<std::string> playerNames = m_playersList->GetAllPlayerNames();
+    const std::vector<cxmodel::ChipColor> playerChipColors = m_playersList->GetAllColors();
+    const std::vector<cxmodel::PlayerType> playerTypes = m_playersList->GetAllPlayerTypes();
+    IF_CONDITION_NOT_MET_DO(playerNames.size() == playerChipColors.size(), return;);
+    IF_CONDITION_NOT_MET_DO(playerTypes.size() == playerTypes.size(), return;);
+
+    const auto playerNamesInputStatus = m_presenter.ArePlayerNamesValid(playerNames);
+    if(!playerNamesInputStatus.IsSuccess())
     {
-        DisplayWarningDialog(*parent, playerInfoInputStatus.GetMessage());
+        DisplayWarningDialog(*parent, playerNamesInputStatus.GetMessage());
+        return;
+    }
+
+    const auto playerChipColorsInputStatus = m_presenter.ArePlayerChipColorsValid(playerChipColors);
+    if(!playerChipColorsInputStatus.IsSuccess())
+    {
+        DisplayWarningDialog(*parent, playerChipColorsInputStatus.GetMessage());
+        return;
+    }
+
+    const auto playerTypesInputStatus = m_presenter.ArePlayerTypesValid(playerTypes);
+    if(!playerTypesInputStatus.IsSuccess())
+    {
+        DisplayWarningDialog(*parent, playerTypesInputStatus.GetMessage());
         return;
     }
 
@@ -283,7 +297,7 @@ void cxgui::NewGameView::OnStart()
     gameInformation.m_gridWidth = boardWidth;
     for(size_t index = 0u; index < m_playersList->GetSize(); ++index)
     {
-        gameInformation.m_players.push_back(cxmodel::CreatePlayer(playerNames[index], chipColors[index], playerTypes[index]));
+        gameInformation.m_players.push_back(cxmodel::CreatePlayer(playerNames[index], playerChipColors[index], playerTypes[index]));
     }
 
     m_controller.OnStart(std::move(gameInformation));

@@ -318,7 +318,7 @@ TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/AreBoardDimensionsValid_Widt
     ASSERT_FALSE(status.IsSuccess());
 }
 
-TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/ArePlayersInformationValid_NonEmptyPlayerNamesAndAllDifferentChipColors_ReturnsSuccess)
+TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/ArePlayerNamesValid_NonEmptyAndDifferentPlayerNames_ReturnsSuccess)
 {
     const std::vector<std::string> playerNames
     {
@@ -327,18 +327,11 @@ TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/ArePlayersInformationValid_N
         "Igor Lopez"
     };
 
-    const std::vector<cxmodel::ChipColor> chipColors
-    {
-        cxmodel::MakeRed(),
-        cxmodel::MakeBlue(),
-        cxmodel::MakeYellow()
-    };
-
-    const auto status = GetNewGameViewPresenter().ArePlayersInformationValid(playerNames, chipColors);
+    const auto status = GetNewGameViewPresenter().ArePlayerNamesValid(playerNames);
     ASSERT_TRUE(status.IsSuccess());
 }
 
-TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/ArePlayersInformationValid_AllSamePlayerNamesAndAllDifferentChipColors_ReturnsSuccess)
+TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/ArePlayerNamesValid_AllSamePlayerNames_ReturnsSuccess)
 {
     const std::vector<std::string> playerNames
     {
@@ -347,18 +340,11 @@ TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/ArePlayersInformationValid_A
         "John Doe"
     };
 
-    const std::vector<cxmodel::ChipColor> chipColors
-    {
-        cxmodel::MakeRed(),
-        cxmodel::MakeBlue(),
-        cxmodel::MakeYellow()
-    };
-
-    const auto status = GetNewGameViewPresenter().ArePlayersInformationValid(playerNames, chipColors);
+    const auto status = GetNewGameViewPresenter().ArePlayerNamesValid(playerNames);
     ASSERT_TRUE(status.IsSuccess());
 }
 
-TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/ArePlayersInformationValid_AnEmptyPlayerNameAndAllDifferentChipColors_ReturnsError)
+TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/ArePlayerNamesValid_AnEmptyPlayerName_ReturnsError)
 {
     const std::vector<std::string> playerNames
     {
@@ -367,6 +353,12 @@ TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/ArePlayersInformationValid_A
         "Igor Lopez"
     };
 
+    const auto status = GetNewGameViewPresenter().ArePlayerNamesValid(playerNames);
+    ASSERT_FALSE(status.IsSuccess());
+}
+
+TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/ArePlayerChipColorsValid_AllDifferentColors_ReturnsSuccess)
+{
     const std::vector<cxmodel::ChipColor> chipColors
     {
         cxmodel::MakeRed(),
@@ -374,27 +366,59 @@ TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/ArePlayersInformationValid_A
         cxmodel::MakeYellow()
     };
 
-    const auto status = GetNewGameViewPresenter().ArePlayersInformationValid(playerNames, chipColors);
-    ASSERT_FALSE(status.IsSuccess());
+    const auto status = GetNewGameViewPresenter().ArePlayerChipColorsValid(chipColors);
+    ASSERT_TRUE(status.IsSuccess());
 }
 
-TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/ArePlayersInformationValid_NonEmptyPlayerNamesAndTwoSameChipColors_ReturnsError)
+TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/ArePlayerChipColorsValid_TwoSameColors_ReturnsError)
 {
-    const std::vector<std::string> playerNames
-    {
-        "John Doe",
-        "Jane Doe",
-        "Igor Lopez"
-    };
-
     const std::vector<cxmodel::ChipColor> chipColors
     {
         cxmodel::MakeRed(),
-        cxmodel::MakeRed(),
+        cxmodel::MakeYellow(),
         cxmodel::MakeYellow()
     };
 
-    const auto status = GetNewGameViewPresenter().ArePlayersInformationValid(playerNames, chipColors);
+    const auto status = GetNewGameViewPresenter().ArePlayerChipColorsValid(chipColors);
+    ASSERT_FALSE(status.IsSuccess());
+}
+
+TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/ArePlayerTypesValid_AllHumans_ReturnsSuccess)
+{
+    const std::vector<cxmodel::PlayerType> playerTypes
+    {
+        cxmodel::PlayerType::HUMAN,
+        cxmodel::PlayerType::HUMAN,
+        cxmodel::PlayerType::HUMAN
+    };
+
+    const auto status = GetNewGameViewPresenter().ArePlayerTypesValid(playerTypes);
+    ASSERT_TRUE(status.IsSuccess());
+}
+
+TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/ArePlayerTypesValid_OneHuman_ReturnsSuccess)
+{
+    const std::vector<cxmodel::PlayerType> playerTypes
+    {
+        cxmodel::PlayerType::BOT,
+        cxmodel::PlayerType::HUMAN,
+        cxmodel::PlayerType::BOT
+    };
+
+    const auto status = GetNewGameViewPresenter().ArePlayerTypesValid(playerTypes);
+    ASSERT_TRUE(status.IsSuccess());
+}
+
+TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/ArePlayerTypesValid_NoHuman_ReturnsError)
+{
+    const std::vector<cxmodel::PlayerType> playerTypes
+    {
+        cxmodel::PlayerType::BOT,
+        cxmodel::PlayerType::BOT,
+        cxmodel::PlayerType::BOT
+    };
+
+    const auto status = GetNewGameViewPresenter().ArePlayerTypesValid(playerTypes);
     ASSERT_FALSE(status.IsSuccess());
 }
 

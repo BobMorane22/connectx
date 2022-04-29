@@ -351,6 +351,59 @@ cxmodel::Status cxgui::MainWindowPresenter::ArePlayersInformationValid(const std
    return cxmodel::MakeSuccess();
 }
 
+cxmodel::Status cxgui::MainWindowPresenter::ArePlayerNamesValid(const std::vector<std::string>& p_playerNames) const
+{
+    if(std::any_of(p_playerNames.cbegin(),
+                   p_playerNames.cend(),
+                   [](const std::string& p_name)
+                   {
+                       return p_name.empty();
+                   }))
+              {
+                  return cxmodel::MakeError("Player names cannot be empty.");
+              }
+
+    return cxmodel::MakeSuccess();
+}
+
+cxmodel::Status cxgui::MainWindowPresenter::ArePlayerChipColorsValid(const std::vector<cxmodel::ChipColor>& p_playerChipColors) const
+{
+   // Chip colors (should not have duplicates):
+   bool duplicateColorsExist = false;
+   for(const auto& color : p_playerChipColors)
+   {
+       const size_t count = std::count(p_playerChipColors.cbegin(), p_playerChipColors.cend(), color);
+
+       if(count > 1)
+       {
+           duplicateColorsExist = true;
+           break;
+       }
+   }
+
+   if(duplicateColorsExist)
+   {
+       return cxmodel::MakeError("Discs must have different colors.");
+   }
+
+   return cxmodel::MakeSuccess();
+}
+
+cxmodel::Status cxgui::MainWindowPresenter::ArePlayerTypesValid(const std::vector<cxmodel::PlayerType>& p_playerTypes) const
+{
+    if(std::any_of(p_playerTypes.cbegin(),
+                   p_playerTypes.cend(),
+                   [](cxmodel::PlayerType p_type)
+                   {
+                       return p_type == cxmodel::PlayerType::HUMAN;
+                   }))
+              {
+                  return cxmodel::MakeSuccess();
+              }
+
+    return cxmodel::MakeError("At least one player must not be a bot.");
+}
+
 cxmodel::Status cxgui::MainWindowPresenter::IsNewGameWinnable(size_t p_inARowValue,
                                                               size_t p_nbOfPlayers,
                                                               size_t p_boardHeight,

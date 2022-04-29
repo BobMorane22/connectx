@@ -248,6 +248,36 @@ public:
                                                        const std::vector<cxmodel::ChipColor>& p_chipColors) const = 0;
 
     /******************************************************************************************//**
+     * @brief Checks if the player names passed as arguments are valid.
+     *
+     * @param p_playerNames A list of player names.
+     *
+     * @return `Success` if the list of player names is valid, `Error` otherwise.
+     *
+     ********************************************************************************************/
+    virtual cxmodel::Status ArePlayerNamesValid(const std::vector<std::string>& p_playerNames) const = 0;
+
+    /******************************************************************************************//**
+     * @brief Checks if the player chip colors passed as arguments are valid.
+     *
+     * @param p_playerChipColors A list of player chip colors.
+     *
+     * @return `Success` if the list of player chip colors is valid, `Error` otherwise.
+     *
+     ********************************************************************************************/
+    virtual cxmodel::Status ArePlayerChipColorsValid(const std::vector<cxmodel::ChipColor>& p_playerChipColors) const = 0;
+
+    /******************************************************************************************//**
+     * @brief Checks if the player types passed as arguments are valid.
+     *
+     * @param p_playerChipColors A list of player types.
+     *
+     * @return `Success` if the list of player types is valid, `Error` otherwise.
+     *
+     ********************************************************************************************/
+    virtual cxmodel::Status ArePlayerTypesValid(const std::vector<cxmodel::PlayerType>& p_playerTypes) const = 0;
+
+    /******************************************************************************************//**
      * @brief Checks if the new game created by the user is winnable (i.e. do the parameters
      *        make it possible for the game to be winnable).
      *
