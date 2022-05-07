@@ -327,18 +327,21 @@ bool cxgui::AnimatedBoard::Redraw()
     }
     if(m_moveRightAnimationInfo.m_isAnimating)
     {
-        const double nbFramesPerChip = fps / speed;
-        const double delta = cellWidth / nbFramesPerChip;
-
-        if(chipHorizontalPosition > m_animationModel->GetAnimatedAreaDimensions().m_width.Get() - cellWidth / 2.0)
-        {
-            // Because of the mirror chip, redraw the whole screen.
-            queue_draw();
-        }
-        else
-        {
-            queue_draw_area(chipHorizontalPosition - cellWidth / 2.0 - delta, 0.0, cellWidth + 3 * delta, m_animationModel->GetAnimatedAreaDimensions().m_height.Get());
-        }
+        queue_draw();
+        // Original code:
+        //
+        //const double nbFramesPerChip = fps / speed;
+        //const double delta = cellWidth / nbFramesPerChip;
+        //
+        //if(chipHorizontalPosition > m_animationModel->GetAnimatedAreaDimensions().m_width.Get() - cellWidth / 2.0)
+        //{
+        //    // Because of the mirror chip, redraw the whole screen.
+        //    queue_draw();
+        //}
+        //else
+        //{
+        //    queue_draw_area(chipHorizontalPosition - cellWidth / 2.0 - delta, 0.0, cellWidth + 3 * delta, m_animationModel->GetAnimatedAreaDimensions().m_height.Get());
+        //}
 
         PerformChipAnimation(cxgui::BoardAnimation::MOVE_CHIP_RIGHT_ONE_COLUMN);
     }

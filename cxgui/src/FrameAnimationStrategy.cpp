@@ -124,6 +124,62 @@ std::optional<cxgui::BoardAnimationNotificationContext> MoveChipLeftOneColumnFra
  * Move chip right one column strategy.
  *
  *************************************************************************************************/
+//class MoveChipRightOneColumnFrameAnimationStrategy : public IFrameAnimationStrategy
+//{
+//
+//public:
+//
+//    MoveChipRightOneColumnFrameAnimationStrategy(IAnimatedBoardModel& p_animationModel,
+//                                                 IAnimatedBoardPresenter& p_presenter)
+//    : m_animationModel{p_animationModel}
+//    , m_presenter{p_presenter}
+//    {
+//    }
+//
+//    std::optional<cxgui::BoardAnimationNotificationContext> PerformAnimation(cxgui::AnimationInformations<cxmath::Height>& p_verticalAnimationInfo,
+//                                                                             cxgui::AnimationInformations<cxmath::Width>& p_horizontalAnimationInfo) override;
+//
+//private:
+//
+//    IAnimatedBoardModel& m_animationModel;
+//    IAnimatedBoardPresenter& m_presenter;
+//};
+//
+//std::optional<cxgui::BoardAnimationNotificationContext> MoveChipRightOneColumnFrameAnimationStrategy::MoveChipRightOneColumnFrameAnimationStrategy::PerformAnimation(cxgui::AnimationInformations<cxmath::Height>& /*p_verticalAnimationInfo*/,
+//                                                                                                                                                                     cxgui::AnimationInformations<cxmath::Width>& p_horizontalAnimationInfo)
+//{
+//    const double fps = static_cast<double>(m_animationModel.GetFPS().Get());
+//    const double speed = static_cast<double>(m_animationModel.GetAnimationSpeed().Get());
+//    const double nbFramesPerChip = fps / speed;
+//
+//    const double oneAnimationWidth = m_animationModel.GetAnimatedAreaDimensions().m_width.Get() / m_presenter.GetBoardWidth().Get();
+//    const cxmath::Width delta{oneAnimationWidth / nbFramesPerChip};
+//
+//    if(p_horizontalAnimationInfo.m_currentDisplacement.Get() >= oneAnimationWidth || std::abs(p_horizontalAnimationInfo.m_currentDisplacement.Get() - oneAnimationWidth) <= 1e-6)
+//    {
+//        if(m_animationModel.GetCurrentColumn() >= cxmodel::Column{m_presenter.GetBoardWidth().Get() - 1u})
+//        {
+//            m_animationModel.UpdateCurrentColumn(cxmodel::Column{0u});
+//        }
+//        else
+//        {
+//            m_animationModel.UpdateCurrentColumn(m_animationModel.GetCurrentColumn() + cxmodel::Column{1u});
+//        }
+//
+//        // End animation:
+//        p_horizontalAnimationInfo.Reset();
+//        m_presenter.Sync();
+//        return cxgui::BoardAnimationNotificationContext::POST_ANIMATE_MOVE_RIGHT_ONE_COLUMN;
+//    }
+//    else
+//    {
+//        m_animationModel.AddChipDisplacement(cxmath::Height{0.0}, delta);
+//        p_horizontalAnimationInfo.m_currentDisplacement += delta;
+//    }
+//
+//    return std::nullopt;
+//}
+
 class MoveChipRightOneColumnFrameAnimationStrategy : public IFrameAnimationStrategy
 {
 
@@ -148,23 +204,22 @@ private:
 std::optional<cxgui::BoardAnimationNotificationContext> MoveChipRightOneColumnFrameAnimationStrategy::MoveChipRightOneColumnFrameAnimationStrategy::PerformAnimation(cxgui::AnimationInformations<cxmath::Height>& /*p_verticalAnimationInfo*/,
                                                                                                                                                                      cxgui::AnimationInformations<cxmath::Width>& p_horizontalAnimationInfo)
 {
-    const double fps = static_cast<double>(m_animationModel.GetFPS().Get());
-    const double speed = static_cast<double>(m_animationModel.GetAnimationSpeed().Get());
-    const double nbFramesPerChip = fps / speed;
+    // Simulates the drop column computed by the model for the bot...
+    const cxmodel::Column target{4u};
 
-    const double oneAnimationWidth = m_animationModel.GetAnimatedAreaDimensions().m_width.Get() / m_presenter.GetBoardWidth().Get();
-    const cxmath::Width delta{oneAnimationWidth / nbFramesPerChip};
+    // The animation time is modulated by the number of columns the chip has to travel. The
+    // animation time can be as small as 0.5s (1 column to traval) and up to 1.5s (64 columns
+    // to travel).
+    const double fps = static_cast<double>(m_animationModel.GetFPS().Get());
+    const double timeSlice = 1.5 / 63.0;
+    const double totalAnimationTimeInSec = 0.5 + ((target.Get() - 1u) * timeSlice);
+    const double totalNbOfFrames = totalAnimationTimeInSec * fps;
+
+    const double oneAnimationWidth = (m_animationModel.GetAnimatedAreaDimensions().m_width.Get() / m_presenter.GetBoardWidth().Get()) * target.Get();
 
     if(p_horizontalAnimationInfo.m_currentDisplacement.Get() >= oneAnimationWidth || std::abs(p_horizontalAnimationInfo.m_currentDisplacement.Get() - oneAnimationWidth) <= 1e-6)
     {
-        if(m_animationModel.GetCurrentColumn() >= cxmodel::Column{m_presenter.GetBoardWidth().Get() - 1u})
-        {
-            m_animationModel.UpdateCurrentColumn(cxmodel::Column{0u});
-        }
-        else
-        {
-            m_animationModel.UpdateCurrentColumn(m_animationModel.GetCurrentColumn() + cxmodel::Column{1u});
-        }
+        m_animationModel.UpdateCurrentColumn(target);
 
         // End animation:
         p_horizontalAnimationInfo.Reset();
@@ -173,6 +228,17 @@ std::optional<cxgui::BoardAnimationNotificationContext> MoveChipRightOneColumnFr
     }
     else
     {
+        // Since the added delta can be significant (the animation is pretty wide), there are
+        // times where the last delta added makes the displacement increase significantly more
+        // than the computed animation width. Visually, this translated into a misaligned chip
+        // on the board. To address this, we make an adjustement on the last delta to make
+        // sure it does not exceed the computed animation width.
+        cxmath::Width delta{oneAnimationWidth / totalNbOfFrames};
+        if(p_horizontalAnimationInfo.m_currentDisplacement.Get() + delta.Get() > oneAnimationWidth)
+        {
+            delta -= p_horizontalAnimationInfo.m_currentDisplacement + delta - cxmath::Width{oneAnimationWidth};
+        }
+
         m_animationModel.AddChipDisplacement(cxmath::Height{0.0}, delta);
         p_horizontalAnimationInfo.m_currentDisplacement += delta;
     }
