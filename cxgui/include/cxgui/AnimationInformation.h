@@ -24,6 +24,9 @@
 #ifndef ANIMATIONINFORMATION_H_DB49E138_EC0C_4907_8C76_6E11A5CED74D
 #define ANIMATIONINFORMATION_H_DB49E138_EC0C_4907_8C76_6E11A5CED74D
 
+#include <optional>
+
+#include "BoardAnimation.h"
 #include "IAnimatedBoardModel.h"
 
 namespace cxgui
@@ -42,10 +45,13 @@ struct AnimationInformations
     /******************************************************************************************//**
      * @brief Starts the animation.
      *
+     * @param p_animation The animation to start.
+     *
      *********************************************************************************************/
-    void Start()
+    void Start(BoardAnimation p_animation)
     {
         m_isAnimating = true;
+        m_animation = p_animation;
     };
 
     /******************************************************************************************//**
@@ -55,6 +61,7 @@ struct AnimationInformations
     void Stop()
     {
         m_isAnimating = false;
+        m_animation.reset();
     };
 
     /******************************************************************************************//**
@@ -73,8 +80,14 @@ struct AnimationInformations
     // Indicates if the animation is currently running.
     bool m_isAnimating = false;
 
+    // The animation currently running (if any).
+    std::optional<BoardAnimation> m_animation;
+
     // Indicates the displacement actually covered by the animation.
     T m_currentDisplacement = T{0.0};
+
+    // Indicates the current animation, if any:
+    std::optional<cxgui::BoardAnimation> m_currentAnimation = std::nullopt;
 
 };
 

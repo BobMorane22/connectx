@@ -325,26 +325,35 @@ bool cxgui::AnimatedBoard::Redraw()
 
         PerformChipAnimation(cxgui::BoardAnimation::MOVE_CHIP_LEFT_ONE_COLUMN);
     }
+
     if(m_moveRightAnimationInfo.m_isAnimating)
     {
-        queue_draw();
-        // Original code:
-        //
-        //const double nbFramesPerChip = fps / speed;
-        //const double delta = cellWidth / nbFramesPerChip;
-        //
-        //if(chipHorizontalPosition > m_animationModel->GetAnimatedAreaDimensions().m_width.Get() - cellWidth / 2.0)
-        //{
-        //    // Because of the mirror chip, redraw the whole screen.
-        //    queue_draw();
-        //}
-        //else
-        //{
-        //    queue_draw_area(chipHorizontalPosition - cellWidth / 2.0 - delta, 0.0, cellWidth + 3 * delta, m_animationModel->GetAnimatedAreaDimensions().m_height.Get());
-        //}
+        IF_CONDITION_NOT_MET_DO(m_moveRightAnimationInfo.m_animation.has_value(), return true;);
 
-        PerformChipAnimation(cxgui::BoardAnimation::MOVE_CHIP_RIGHT_ONE_COLUMN);
+        if(m_moveRightAnimationInfo.m_animation == cxgui::BoardAnimation::MOVE_CHIP_RIGHT_ONE_COLUMN)
+        {
+            const double nbFramesPerChip = fps / speed;
+            const double delta = cellWidth / nbFramesPerChip;
+            
+            if(chipHorizontalPosition > m_animationModel->GetAnimatedAreaDimensions().m_width.Get() - cellWidth / 2.0)
+            {
+                // Because of the mirror chip, redraw the whole screen.
+                queue_draw();
+            }
+            else
+            {
+                queue_draw_area(chipHorizontalPosition - cellWidth / 2.0 - delta, 0.0, cellWidth + 3 * delta, m_animationModel->GetAnimatedAreaDimensions().m_height.Get());
+            }
+        }
+        else if(m_moveLeftAnimationInfo.m_animation == cxgui::BoardAnimation::MOVE_CHIP_RIGHT_ONE_COLUMN)
+        {
+            // Could be optimized...
+            queue_draw();
+        }
+
+        PerformChipAnimation(*m_moveRightAnimationInfo.m_animation);
     }
+
     if(m_dropAnimationInfo.m_isAnimating)
     {
         queue_draw();
@@ -396,20 +405,23 @@ void cxgui::AnimatedBoard::Update(cxgui::BoardAnimationNotificationContext p_con
     {
         case cxgui::BoardAnimationNotificationContext::ANIMATE_MOVE_LEFT_ONE_COLUMN:
         {
-            m_moveLeftAnimationInfo.Start();
-            PerformChipAnimation(cxgui::BoardAnimation::MOVE_CHIP_LEFT_ONE_COLUMN);
+            const auto animation = cxgui::BoardAnimation::MOVE_CHIP_LEFT_ONE_COLUMN;
+            m_moveLeftAnimationInfo.Start(animation);
+            PerformChipAnimation(animation);
             break;
         }
         case cxgui::BoardAnimationNotificationContext::ANIMATE_MOVE_RIGHT_ONE_COLUMN:
         {
-            m_moveRightAnimationInfo.Start();
-            PerformChipAnimation(cxgui::BoardAnimation::MOVE_CHIP_RIGHT_ONE_COLUMN);
+            const auto animation = cxgui::BoardAnimation::MOVE_CHIP_RIGHT_ONE_COLUMN;
+            m_moveRightAnimationInfo.Start(animation);
+            PerformChipAnimation(animation);
             break;
         }
         case cxgui::BoardAnimationNotificationContext::ANIMATE_MOVE_DROP_CHIP:
         {
-            m_dropAnimationInfo.Start();
-            PerformChipAnimation(cxgui::BoardAnimation::DROP_CHIP);
+            const auto animation = cxgui::BoardAnimation::DROP_CHIP;
+            m_dropAnimationInfo.Start(animation);
+            PerformChipAnimation(animation);
             break;
         }
         case cxgui::BoardAnimationNotificationContext::ANIMATE_UNDO_DROP_CHIP:

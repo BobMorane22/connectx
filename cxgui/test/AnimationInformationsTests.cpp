@@ -32,6 +32,7 @@ TEST(AnimationInformations, Constructor_Default_DefaultAnimationInformationsCrea
     const cxgui::AnimationInformations<DisplacementType> info;
 
     ASSERT_TRUE(info.m_isAnimating == false);
+    ASSERT_TRUE(info.m_animation == std::nullopt);
     ASSERT_TRUE(info.m_currentDisplacement == 0.0);
 }
 
@@ -39,11 +40,13 @@ TEST(AnimationInformations, Start_NotAnimating_IsAnimatingIsTrue)
 {
     cxgui::AnimationInformations<DisplacementType> info;
     info.m_isAnimating = false;
+    info.m_animation = std::nullopt;
     info.m_currentDisplacement = 0.0;
 
-    info.Start();
+    info.Start(cxgui::BoardAnimation::MOVE_CHIP_LEFT_ONE_COLUMN);
 
     ASSERT_TRUE(info.m_isAnimating == true);
+    ASSERT_TRUE(info.m_animation == cxgui::BoardAnimation::MOVE_CHIP_LEFT_ONE_COLUMN);
     ASSERT_TRUE(info.m_currentDisplacement == 0.0);
 }
 
@@ -51,11 +54,13 @@ TEST(AnimationInformations, Stop_Animating_IsAnimatingIsFalse)
 {
     cxgui::AnimationInformations<DisplacementType> info;
     info.m_isAnimating = true;
+    info.m_animation = cxgui::BoardAnimation::MOVE_CHIP_LEFT_ONE_COLUMN;
     info.m_currentDisplacement = 50.0;
 
     info.Stop();
 
     ASSERT_TRUE(info.m_isAnimating == false);
+    ASSERT_TRUE(info.m_animation == std::nullopt);
     ASSERT_TRUE(info.m_currentDisplacement == 50.0);
 }
 
@@ -63,10 +68,12 @@ TEST(AnimationInformations, Reset_IsAnimatingAndHasDisplacement_DefaultIsBack)
 {
     cxgui::AnimationInformations<DisplacementType> info;
     info.m_isAnimating = true;
+    info.m_animation = cxgui::BoardAnimation::MOVE_CHIP_LEFT_ONE_COLUMN;
     info.m_currentDisplacement = 50.0;
 
     info.Reset();
 
     ASSERT_TRUE(info.m_isAnimating == false);
+    ASSERT_TRUE(info.m_animation == std::nullopt);
     ASSERT_TRUE(info.m_currentDisplacement == 0.0);
 }
