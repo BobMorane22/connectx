@@ -155,6 +155,7 @@ void cxgui::GameView::Update(cxgui::BoardAnimationNotificationContext p_context,
     {
         case cxgui::BoardAnimationNotificationContext::ANIMATE_MOVE_LEFT_ONE_COLUMN:
         case cxgui::BoardAnimationNotificationContext::ANIMATE_MOVE_RIGHT_ONE_COLUMN:
+        case cxgui::BoardAnimationNotificationContext::ANIMATE_MOVE_RIGHT_TO_TARGET:
         case cxgui::BoardAnimationNotificationContext::ANIMATE_MOVE_DROP_CHIP:
         case cxgui::BoardAnimationNotificationContext::ANIMATE_UNDO_DROP_CHIP:
         case cxgui::BoardAnimationNotificationContext::ANIMATE_REDO_DROP_CHIP:
@@ -165,6 +166,7 @@ void cxgui::GameView::Update(cxgui::BoardAnimationNotificationContext p_context,
 
         case cxgui::BoardAnimationNotificationContext::POST_ANIMATE_MOVE_LEFT_ONE_COLUMN:
         case cxgui::BoardAnimationNotificationContext::POST_ANIMATE_MOVE_RIGHT_ONE_COLUMN:
+        case cxgui::BoardAnimationNotificationContext::POST_ANIMATE_MOVE_RIGHT_TO_TARGET:
         case cxgui::BoardAnimationNotificationContext::POST_ANIMATE_DROP_CHIP:
         case cxgui::BoardAnimationNotificationContext::POST_ANIMATE_UNDO_DROP_CHIP:
         case cxgui::BoardAnimationNotificationContext::POST_ANIMATE_REDO_DROP_CHIP:

@@ -228,7 +228,7 @@ std::optional<cxgui::BoardAnimationNotificationContext> MoveChipRightToTargetFra
         // End animation:
         p_horizontalAnimationInfo.Reset();
         m_presenter.Sync();
-        return cxgui::BoardAnimationNotificationContext::POST_ANIMATE_MOVE_RIGHT_ONE_COLUMN;
+        return cxgui::BoardAnimationNotificationContext::POST_ANIMATE_MOVE_RIGHT_TO_TARGET;
     }
     else
     {
@@ -464,6 +464,9 @@ std::unique_ptr<IFrameAnimationStrategy> cxgui::CreateFrameAnimationStrategy(IAn
             return std::make_unique<MoveChipLeftOneColumnFrameAnimationStrategy>(p_animationModel, p_presenter);
 
         case cxgui::BoardAnimation::MOVE_CHIP_RIGHT_ONE_COLUMN:
+            return std::make_unique<MoveChipRightOneColumnFrameAnimationStrategy>(p_animationModel, p_presenter);
+
+        case cxgui::BoardAnimation::MOVE_CHIP_RIGHT_TO_TARGET:
             return std::make_unique<MoveChipRightToTargetFrameAnimationStrategy>(p_animationModel, p_presenter);
 
         case cxgui::BoardAnimation::DROP_CHIP:
