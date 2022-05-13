@@ -43,10 +43,7 @@ add_library(${TARGET_NAME}
   src/GameResolutionDialog.cpp
   src/GameResolutionDialogPresenterFactory.cpp
   src/GameView.cpp
-  src/GameViewDownKeyHandlerStrategy.cpp
   src/GameViewKeyHandlerStrategyFactory.cpp
-  src/GameViewLeftKeyHandlerStrategy.cpp
-  src/GameViewRightKeyHandlerStrategy.cpp
   src/MainWindowController.cpp
   src/MainWindow.cpp
   src/MainWindowPresenter.cpp

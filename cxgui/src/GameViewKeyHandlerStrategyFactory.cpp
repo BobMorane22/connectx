@@ -23,9 +23,64 @@
 
 #include <cxinv/assertion.h>
 #include <cxgui/GameViewKeyHandlerStrategyFactory.h>
-#include <cxgui/GameViewDownKeyHandlerStrategy.h>
-#include <cxgui/GameViewLeftKeyHandlerStrategy.h>
-#include <cxgui/GameViewRightKeyHandlerStrategy.h>
+#include <cxgui/IBoardInformation.h>
+#include <cxgui/IGameViewController.h>
+
+namespace cxgui
+{
+
+class GameViewDownKeyHandlerStrategy : public cxgui::IGameViewKeyHandlerStrategy
+{
+
+public:
+
+    bool Handle(IGameViewController& p_controller, IBoardInformation& p_gameBoard) override;
+
+};
+
+bool GameViewDownKeyHandlerStrategy::Handle(IGameViewController& p_controller, IBoardInformation& p_gameBoard)
+{
+    const cxmodel::ChipColor chipColor = p_gameBoard.GetCurrentChipColor();
+    IF_CONDITION_NOT_MET_DO(chipColor != cxmodel::MakeTransparent(), return false;);
+
+    p_controller.OnDown(chipColor, p_gameBoard.GetCurrentColumn().Get());
+
+    return true;
+}
+
+class GameViewLeftKeyHandlerStrategy : public cxgui::IGameViewKeyHandlerStrategy
+{
+
+public:
+
+    bool Handle(IGameViewController& p_controller, IBoardInformation& p_gameBoard) override;
+
+};
+
+bool GameViewLeftKeyHandlerStrategy::Handle(IGameViewController& p_controller, IBoardInformation& /*p_gameBoard*/)
+{
+    p_controller.OnMoveLeft();
+
+    return true;
+}
+
+class GameViewRightKeyHandlerStrategy : public cxgui::IGameViewKeyHandlerStrategy
+{
+
+public:
+
+    bool Handle(IGameViewController& p_controller, IBoardInformation& p_gameBoard) override;
+
+};
+
+bool GameViewRightKeyHandlerStrategy::Handle(IGameViewController& p_controller, IBoardInformation& /*p_gameBoard*/)
+{
+    p_controller.OnMoveRight();
+
+    return true;
+}
+
+} // namespace cxgui
 
 std::unique_ptr<cxgui::IGameViewKeyHandlerStrategy> cxgui::GameViewKeyHandlerStrategyFactory::Create(GdkEventKey* p_event)
 {
