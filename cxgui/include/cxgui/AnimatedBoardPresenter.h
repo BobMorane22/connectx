@@ -60,6 +60,7 @@ public:
     [[nodiscard]] cxmodel::Width GetBoardWidth() const override;
     [[nodiscard]] cxmodel::ChipColor GetActivePlayerChipColor() const override;
     [[nodiscard]] const IGameViewPresenter::ChipColors& GetBoardChipColors() const override;
+    [[nodiscard]] cxmodel::Column GetBotTarget() const override;
 
 private:
 

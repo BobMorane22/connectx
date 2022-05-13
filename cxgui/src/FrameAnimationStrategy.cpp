@@ -209,7 +209,7 @@ std::optional<cxgui::BoardAnimationNotificationContext> MoveChipRightToTargetFra
                                                                                                                                                                    cxgui::AnimationInformations<cxmath::Width>& p_horizontalAnimationInfo)
 {
     // Simulates the drop column computed by the model for the bot...
-    const cxmodel::Column target{5u};
+    const cxmodel::Column target{m_presenter.GetBotTarget()};
 
     // The animation time is modulated by the number of columns the chip has to travel. The
     // animation time can be as small as 0.5s (1 column to traval) and up to 2s (64 columns

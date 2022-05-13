@@ -39,9 +39,11 @@ public:
     [[nodiscard]] cxmodel::Width GetBoardWidth() const override;
     [[nodiscard]] cxmodel::ChipColor GetActivePlayerChipColor() const override;
     [[nodiscard]] const cxgui::IGameViewPresenter::ChipColors& GetBoardChipColors() const override;
+    [[nodiscard]] cxmodel::Column GetBotTarget() const override;
 
     // Testing:
     void SetBoardDimensions(const cxmodel::Height& p_nbRows, const cxmodel::Width& p_nbColumns);
+    void SetLastBotTarget(const cxmodel::Column& p_lastBotTarget);
     void AddChipsToColumn(const cxmodel::Column& p_column, size_t p_nbOfChipsToAdd);
 
     [[nodiscard]] bool WasSyncCalled() const {return m_syncCalled;}
@@ -56,6 +58,8 @@ private:
     cxmodel::Width m_boardWidth{7u};
 
     cxgui::IGameViewPresenter::ChipColors m_chipColors;
+
+    cxmodel::Column m_lastBotTarget{5u};
 };
 
 #endif // ANIMATEDBOARDPRESENTERMOCK_H_0BBB4EA4_6CE8_46F8_8FBF_62E30E5DEDE0

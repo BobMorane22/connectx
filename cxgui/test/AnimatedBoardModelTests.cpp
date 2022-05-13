@@ -151,6 +151,7 @@ public:
     [[nodiscard]] cxmodel::Width GetBoardWidth() const override {return cxmodel::Width{7u};}
     [[nodiscard]] cxmodel::ChipColor GetActivePlayerChipColor() const override {return cxmodel::MakeRed();}
     [[nodiscard]] const cxgui::IGameViewPresenter::ChipColors& GetBoardChipColors() const override {return m_chipColors;}
+    [[nodiscard]] cxmodel::Column GetBotTarget() const {return cxmodel::Column{5u};}
 
     // Configuration:
 

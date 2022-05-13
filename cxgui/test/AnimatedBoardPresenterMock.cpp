@@ -53,12 +53,22 @@ const cxgui::IGameViewPresenter::ChipColors& AnimatedBoardPresenterMock::GetBoar
     return m_chipColors;
 }
 
+cxmodel::Column AnimatedBoardPresenterMock::GetBotTarget() const
+{
+    return m_lastBotTarget;
+}
+
 void AnimatedBoardPresenterMock::SetBoardDimensions(const cxmodel::Height& p_nbRows, const cxmodel::Width& p_nbColumns)
 {
     m_boardHeight = p_nbRows;
     m_boardWidth = p_nbColumns;
 
     ResetBoard();
+}
+
+void AnimatedBoardPresenterMock::SetLastBotTarget(const cxmodel::Column& p_lastBotTarget)
+{
+    m_lastBotTarget = p_lastBotTarget;
 }
 
 void AnimatedBoardPresenterMock::AddChipsToColumn(const cxmodel::Column& p_column, size_t p_nbOfChipsToAdd)

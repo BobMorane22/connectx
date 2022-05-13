@@ -79,6 +79,14 @@ public:
      *********************************************************************************************/
     [[nodiscard]] virtual const IGameViewPresenter::ChipColors& GetBoardChipColors() const = 0;
 
+    /******************************************************************************************//**
+     * @brief Retreive the last computed bot target column.
+     * 
+     * @return The last computed bot target column.
+     *
+     *********************************************************************************************/
+    [[nodiscard]] virtual cxmodel::Column GetBotTarget() const = 0;
+
 };
 
 } // namespace cxgui

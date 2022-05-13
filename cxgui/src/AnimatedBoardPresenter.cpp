@@ -56,3 +56,9 @@ const cxgui::IGameViewPresenter::ChipColors& cxgui::AnimatedBoardPresenter::GetB
 {
     return m_cache.m_boardColors;
 }
+
+cxmodel::Column cxgui::AnimatedBoardPresenter::GetBotTarget() const
+{
+    // TG-262 : link to the model...
+    return cxmodel::Column{5u};
+}
