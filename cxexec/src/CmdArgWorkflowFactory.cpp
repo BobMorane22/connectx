@@ -34,6 +34,7 @@
 #include <cxexec/CmdArgNoStrategy.h>
 #include <cxexec/CmdArgVerboseStrategy.h>
 #include <cxexec/CmdArgVersionStrategy.h>
+#include <cxexec/ModelReferences.h>
 
 namespace
 {
@@ -45,15 +46,7 @@ const std::string VERBOSE_ARG = "--verbose";
 } // namespace cx
 
 
-std::unique_ptr<cx::ICmdArgWorkflowStrategy> cx::CmdArgWorkflowFactory::Create(int argc,
-                                                                               char *argv[],
-                                                                               cxmodel::ModelSubject& p_modelAsSubject,
-                                                                               cxmodel::IConnectXGameActions& p_modelAsGameActions,
-                                                                               cxmodel::IConnectXGameInformation& p_modelAsGameInformation,
-                                                                               cxmodel::IConnectXLimits& p_modelAsLimits,
-                                                                               cxmodel::IVersioning& p_modelAsVersionning,
-                                                                               cxmodel::IUndoRedo& p_modelAsUndoRedo,
-                                                                               cxlog::ILogger& p_logger)
+std::unique_ptr<cx::ICmdArgWorkflowStrategy> cx::CmdArgWorkflowFactory::Create(int argc, char *argv[], cx::ModelReferences& p_model, cxlog::ILogger& p_logger)
 {
     std::unique_ptr<cx::ICmdArgWorkflowStrategy> strategy = std::make_unique<CmdArgNoStrategy>();
 
@@ -63,14 +56,7 @@ std::unique_ptr<cx::ICmdArgWorkflowStrategy> cx::CmdArgWorkflowFactory::Create(i
     }
     else if(argc == 1)
     {
-        strategy = std::make_unique<CmdArgMainStrategy>(argc,
-                                                        argv,
-                                                        p_modelAsSubject,
-                                                        p_modelAsGameActions,
-                                                        p_modelAsGameInformation,
-                                                        p_modelAsLimits,
-                                                        p_modelAsUndoRedo);
-
+        strategy = std::make_unique<CmdArgMainStrategy>(argc, argv, p_model);
     }
     else
     {
@@ -114,7 +100,7 @@ std::unique_ptr<cx::ICmdArgWorkflowStrategy> cx::CmdArgWorkflowFactory::Create(i
                 }
                 else if(helpPos > versionPos)
                 {
-                    strategy = std::make_unique<CmdArgVersionStrategy>(p_modelAsVersionning);
+                    strategy = std::make_unique<CmdArgVersionStrategy>(p_model.m_asVersionning);
                 }
                 else
                 {
@@ -125,15 +111,7 @@ std::unique_ptr<cx::ICmdArgWorkflowStrategy> cx::CmdArgWorkflowFactory::Create(i
             {
                 ASSERT_MSG(std::find(arguments.cbegin(), arguments.cend(), VERBOSE_ARG) != arguments.cend(), "There must be at least one argument.");
 
-                strategy = std::make_unique<CmdArgVerboseStrategy>(argc,
-                                                                   argv,
-                                                                   p_modelAsSubject,
-                                                                   p_modelAsGameActions,
-                                                                   p_modelAsGameInformation,
-                                                                   p_modelAsLimits,
-                                                                   p_modelAsVersionning,
-                                                                   p_modelAsUndoRedo,
-                                                                   &p_logger);
+                strategy = std::make_unique<CmdArgVerboseStrategy>(argc, argv, p_model, &p_logger);
             }
         }
     }

@@ -27,12 +27,15 @@
 #include <gtest/gtest.h>
 
 #include <cxunit/StdStreamRedirector.h>
+
 #include <cxmodel/IConnectXGameActions.h>
 #include <cxmodel/IConnectXGameInformation.h>
 #include <cxmodel/IConnectXLimits.h>
 #include <cxmodel/IUndoRedo.h>
 #include <cxmodel/IVersioning.h>
+
 #include <cxmodel/ModelNotificationContext.h>
+#include <cxexec/ModelReferences.h>
 
 #include "LoggerMock.h"
 
@@ -49,12 +52,15 @@ public:
     ApplicationTestFixture();
 
     cxlog::ILogger& GetLogger();
+
     cxmodel::ModelSubject& GetSubjectModel();
     cxmodel::IConnectXGameActions& GetGameActionsModel();
     cxmodel::IConnectXGameInformation& GetGameInformationModel();
     cxmodel::IConnectXLimits& GetLimitsModel();
     cxmodel::IUndoRedo& GetUndoRedoModel();
     cxmodel::IVersioning& GetVersionningModel();
+
+    cx::ModelReferences GetModelReferences();
 
 private:
 

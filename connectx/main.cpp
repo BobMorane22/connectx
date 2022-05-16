@@ -31,6 +31,7 @@
 #include <cxmodel/CommandStack.h>
 #include <cxmodel/Model.h>
 #include <cxexec/Application.h>
+#include <cxexec/ModelReferences.h>
 
 #include <generated/ressources.h>
 
@@ -62,6 +63,37 @@ std::unique_ptr<cxlog::ILogger> CreateFileLogger(cxlog::VerbosityLevel p_verbosi
     return logger;
 }
 
+/******************************************************************************************//**
+ * @brief Encapsulates all abstract references to the concrete model.
+ *
+ * @param p_model The concrete model we need to reference.
+ *
+ * @return All abstract references to the model, packaged.
+ *
+ ********************************************************************************************/
+cx::ModelReferences ModelReferencesCreate(cxmodel::Model& p_model)
+{
+    return cx::ModelReferences{p_model, p_model, p_model, p_model, p_model, p_model};
+}
+
+/******************************************************************************************//**
+ * @brief Start of the program in hosted environment (that is, with an operating system).
+ *
+ * @param argc
+ *      Non-negative value representing the number of arguments passed to the program
+ *      from the environment in which the program is run.
+ *
+ * @param argv
+ *      Pointer to the first element of an array of argc + 1 pointers, of which the last
+ *      one is null and the previous ones, if any, point to null-terminated multibyte
+ *      strings that represent the arguments passed to the program from the execution
+ *      environment. If argv[0] is not a null pointer (or, equivalently, if argc > 0), it
+ *      points to a string that represents the name used to invoke the program, or to an
+ *      empty string.
+ *
+ * @return Exit status. EXIT_SUCCESS(0) for success.
+ *
+ ********************************************************************************************/
 int main(int argc, char *argv[])
 {
     int result = EXIT_FAILURE;
@@ -69,29 +101,13 @@ int main(int argc, char *argv[])
     try
     {
         std::unique_ptr<cxlog::ILogger> logger = CreateFileLogger(cxlog::VerbosityLevel::DEBUG);
-
-        if(!logger)
-        {
-            return EXIT_FAILURE;
-        }
+        IF_CONDITION_NOT_MET_DO(logger, return EXIT_FAILURE;);
 
         cxmodel::Model concreteModel{std::make_unique<cxmodel::CommandStack>(CMD_STACK_SIZE), *logger};
-        cxmodel::ModelSubject& modelAsSubject = concreteModel;
-        cxmodel::IConnectXGameActions& modelAsGameActions = concreteModel;
-        cxmodel::IConnectXGameInformation& modelAsGameInformation = concreteModel;
-        cxmodel::IConnectXLimits& modelAsLimits = concreteModel;
-        cxmodel::IVersioning& modelAsVersionning = concreteModel;
-        cxmodel::IUndoRedo& modelAsUndoRedo = concreteModel;
+        cx::ModelReferences modelReferences = ModelReferencesCreate(concreteModel);
 
-        std::unique_ptr<cx::IApplication> app = std::make_unique<cx::Application>(argc,
-                                                                                  argv,
-                                                                                  modelAsSubject,
-                                                                                  modelAsGameActions,
-                                                                                  modelAsGameInformation,
-                                                                                  modelAsLimits,
-                                                                                  modelAsVersionning,
-                                                                                  modelAsUndoRedo,
-                                                                                  *logger);
+        std::unique_ptr<cx::IApplication> app = std::make_unique<cx::Application>(argc, argv, modelReferences, *logger);
+        IF_CONDITION_NOT_MET_DO(app, return EXIT_FAILURE;);
 
         result = app->Run();
     }

@@ -36,12 +36,9 @@
 
 #include "IUIManager.h"
 
-namespace cxmodel
+namespace cx
 {
-    class IConnectXGameActions;
-    class IConnectXGameInformation;
-    class IConnectXLimits;
-    class IUndoRedo;
+    class ModelReferences;
 }
 
 namespace cx
@@ -61,25 +58,20 @@ public:
     /******************************************************************************************//**
      * @brief Constructor.
      *
-     * @pre The argument count is at least 1.
-     * @pre The argument list is not @c nullptr.
+     * @param argc
+     *      Command line argument count.
+     * @param argv
+     *      A C-style array of arguments.
+     * @param p_model
+     *      References to a Connect X compatible model.
      *
-     * @param argc                     Command line argument count.
-     * @param argv                     A C-style array of arguments.
-     * @param p_modelAsSubject         The Connect X compatible model (Subject).
-     * @param p_modelAsGameActions     The Connect X compatible model (Game actions).
-     * @param p_modelAsGameInformation The Connect C compatible model (Game information).
-     * @param p_modelAsLimits          The Connect X compatible model (Limits).
-     * @param p_modelAsUndoRedo        The Connect X compatible model (Undo/Redo).
+     * @pre
+     *      The argument count is at least 1.
+     * @pre
+     *      The argument list is not @c nullptr.
      *
      ********************************************************************************************/
-    GtkmmUIManager(int argc,
-                   char *argv[],
-                   cxmodel::ModelSubject& p_modelAsSubject,
-                   cxmodel::IConnectXGameActions& p_modelAsGameActions,
-                   cxmodel::IConnectXGameInformation& p_modelAsGameInformation,
-                   cxmodel::IConnectXLimits& p_modelAsLimits,
-                   cxmodel::IUndoRedo& p_modelAsUndoRedo);
+    GtkmmUIManager(int argc, char *argv[], cx::ModelReferences& p_model);
 
     int Manage() override;
 

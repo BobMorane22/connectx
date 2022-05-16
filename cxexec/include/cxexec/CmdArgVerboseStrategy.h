@@ -28,13 +28,9 @@
 
 #include "ICmdArgWorkflowStrategy.h"
 
-namespace cxmodel
+namespace cx
 {
-    class IConnectXGameActions;
-    class IConnectXGameInformation;
-    class IConnectXLimits;
-    class IUndoRedo;
-    class IVersioning;
+    class ModelReferences;
 }
 
 namespace cxlog
@@ -57,26 +53,17 @@ public:
     /******************************************************************************************//**
      * @brief Constructor.
      *
-     * @param argc                     Command line argument count.
-     * @param argv                     A C-style array of arguments.
-     * @param p_modelAsSubject         The Connect X compatible model (Subject).
-     * @param p_modelAsGameActions     The Connect X compatible model (Game actions).
-     * @param p_modelAsGameInformation The Connect X compatible model (Game information).
-     * @param p_modelAsLimits          The Connect X compatible model (Limits).
-     * @param p_modelAsVersionning     The Connect X compatible model (Versionning).
-       @param p_modelAsUndoRedo        The Connect X compatible model (Undo/redo).
-     * @param p_logger                 A chain logger.
+     * @param argc
+     *      Command line argument count.
+     * @param argv
+     *      A C-style array of arguments.
+     * @param p_model
+     *      References to a Connect X compatible model.
+     * @param p_logger
+     *      A chain logger.
      *
      ********************************************************************************************/
-    CmdArgVerboseStrategy(int argc,
-                          char *argv[],
-                          cxmodel::ModelSubject& p_modelAsSubject,
-                          cxmodel::IConnectXGameActions& p_modelAsGameActions,
-                          cxmodel::IConnectXGameInformation& p_modelAsGameInformation,
-                          cxmodel::IConnectXLimits& p_modelAsLimits,
-                          cxmodel::IVersioning& p_modelAsVersionning,
-                          cxmodel::IUndoRedo& p_modelAsUndoRedo,
-                          cxlog::ILogger* p_logger);
+    CmdArgVerboseStrategy(int argc, char *argv[], cx::ModelReferences& p_model, cxlog::ILogger* p_logger);
 
     int Handle() override;
 
@@ -85,12 +72,7 @@ private:
 
     int m_argc;
     char **m_argv;
-    cxmodel::ModelSubject& m_modelAsSubject;
-    cxmodel::IConnectXGameActions& m_modelAsGameActions;
-    cxmodel::IConnectXGameInformation& m_modelAsGameInformation;
-    cxmodel::IConnectXLimits& m_modelAsLimits;
-    cxmodel::IVersioning& m_modelAsVersionning;
-    cxmodel::IUndoRedo& m_modelAsUndoRedo;
+    cx::ModelReferences& m_model;
     cxlog::ILogger* m_logger;
 
 };

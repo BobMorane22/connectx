@@ -35,15 +35,8 @@ TEST_F(ApplicationTestFixtureStdErrStreamRedirector, /*DISABLED_*/Run_BadArgumen
     const int argc = 0;
     const char *argv[] = {"connectx"};
 
-    std::unique_ptr<cx::IApplication> app = std::make_unique<cx::Application>(argc,
-                                                                              (char**)argv,
-                                                                              GetSubjectModel(),
-                                                                              GetGameActionsModel(),
-                                                                              GetGameInformationModel(),
-                                                                              GetLimitsModel(),
-                                                                              GetVersionningModel(),
-                                                                              GetUndoRedoModel(),
-                                                                              GetLogger());
+    auto modelRefs = GetModelReferences();
+    auto app = std::make_unique<cx::Application>(argc, (char**)argv, modelRefs, GetLogger());
 
     EXPECT_EQ(app->Run(), EXIT_FAILURE);
 }
@@ -53,15 +46,9 @@ TEST_F(ApplicationTestFixtureStdErrStreamRedirector, /*DISABLED_*/Run_BadArgumen
     const int argc = 2;
     const char *argv[] = {"connectx", "--bad"};
 
-    std::unique_ptr<cx::IApplication> app = std::make_unique<cx::Application>(argc,
-                                                                              (char**)argv,
-                                                                              GetSubjectModel(),
-                                                                              GetGameActionsModel(),
-                                                                              GetGameInformationModel(),
-                                                                              GetLimitsModel(),
-                                                                              GetVersionningModel(),
-                                                                              GetUndoRedoModel(),
-                                                                              GetLogger());
+    auto modelRefs = GetModelReferences();
+    auto app = std::make_unique<cx::Application>(argc, (char**)argv, modelRefs, GetLogger());
+
     EXPECT_EQ(app->Run(), EXIT_FAILURE);
 }
 
@@ -70,15 +57,9 @@ TEST_F(ApplicationTestFixtureStdOutStreamRedirector, /*DISABLED_*/Run_Help_ExitS
     const int argc = 2;
     const char *argv[] = {"connectx", "--help"};
 
-    std::unique_ptr<cx::IApplication> app = std::make_unique<cx::Application>(argc,
-                                                                              (char**)argv,
-                                                                              GetSubjectModel(),
-                                                                              GetGameActionsModel(),
-                                                                              GetGameInformationModel(),
-                                                                              GetLimitsModel(),
-                                                                              GetVersionningModel(),
-                                                                              GetUndoRedoModel(),
-                                                                              GetLogger());
+    auto modelRefs = GetModelReferences();
+    auto app = std::make_unique<cx::Application>(argc, (char**)argv, modelRefs, GetLogger());
+
     EXPECT_EQ(app->Run(), EXIT_SUCCESS);
 }
 
@@ -87,15 +68,9 @@ TEST_F(ApplicationTestFixtureStdOutStreamRedirector, /*DISABLED_*/Run_Version_Ex
     const int argc = 2;
     const char *argv[] = {"connectx", "--version"};
 
-    std::unique_ptr<cx::IApplication> app = std::make_unique<cx::Application>(argc,
-                                                                              (char**)argv,
-                                                                              GetSubjectModel(),
-                                                                              GetGameActionsModel(),
-                                                                              GetGameInformationModel(),
-                                                                              GetLimitsModel(),
-                                                                              GetVersionningModel(),
-                                                                              GetUndoRedoModel(),
-                                                                              GetLogger());
+    auto modelRefs = GetModelReferences();
+    auto app = std::make_unique<cx::Application>(argc, (char**)argv, modelRefs, GetLogger());
+                                                                              
     EXPECT_EQ(app->Run(), EXIT_SUCCESS);
 }
 
@@ -104,15 +79,9 @@ TEST_F(ApplicationTestFixtureStdOutStreamRedirector, /*DISABLED_*/Run_HelpAndVer
     const int argc = 3;
     const char *argv[] = {"connectx", "--help", "--version"};
 
-    std::unique_ptr<cx::IApplication> app = std::make_unique<cx::Application>(argc,
-                                                                              (char**)argv,
-                                                                              GetSubjectModel(),
-                                                                              GetGameActionsModel(),
-                                                                              GetGameInformationModel(),
-                                                                              GetLimitsModel(),
-                                                                              GetVersionningModel(),
-                                                                              GetUndoRedoModel(),
-                                                                              GetLogger());
+    auto modelRefs = GetModelReferences();
+    auto app = std::make_unique<cx::Application>(argc, (char**)argv, modelRefs, GetLogger());
+                                                                              
     EXPECT_EQ(app->Run(), EXIT_SUCCESS);
 }
 
@@ -121,15 +90,9 @@ TEST_F(ApplicationTestFixtureStdOutStreamRedirector, /*DISABLED_*/Run_VersionAnd
     const int argc = 3;
     const char *argv[] = {"connectx", "--version", "--help"};
 
-    std::unique_ptr<cx::IApplication> app = std::make_unique<cx::Application>(argc,
-                                                                              (char**)argv,
-                                                                              GetSubjectModel(),
-                                                                              GetGameActionsModel(),
-                                                                              GetGameInformationModel(),
-                                                                              GetLimitsModel(),
-                                                                              GetVersionningModel(),
-                                                                              GetUndoRedoModel(),
-                                                                              GetLogger());
+    auto modelRefs = GetModelReferences();
+    auto app = std::make_unique<cx::Application>(argc, (char**)argv, modelRefs, GetLogger());
+
     EXPECT_EQ(app->Run(), EXIT_SUCCESS);
 }
 
@@ -138,15 +101,9 @@ TEST_F(ApplicationTestFixtureStdOutStreamRedirector, /*DISABLED_*/Run_TwoManyVal
     const int argc = 4;
     const char *argv[] = {"connectx", "--help", "--version", "--help"};
 
-    std::unique_ptr<cx::IApplication> app = std::make_unique<cx::Application>(argc,
-                                                                              (char**)argv,
-                                                                              GetSubjectModel(),
-                                                                              GetGameActionsModel(),
-                                                                              GetGameInformationModel(),
-                                                                              GetLimitsModel(),
-                                                                              GetVersionningModel(),
-                                                                              GetUndoRedoModel(),
-                                                                              GetLogger());
+    auto modelRefs = GetModelReferences();
+    auto app = std::make_unique<cx::Application>(argc, (char**)argv, modelRefs, GetLogger());
+
     EXPECT_EQ(app->Run(), EXIT_SUCCESS);
 }
 
@@ -155,14 +112,8 @@ TEST_F(ApplicationTestFixtureStdErrStreamRedirector, /*DISABLED_*/Run_MixedArgum
     const int argc = 4;
     const char *argv[] = {"connectx", "--version", "--bad", "--help"};
 
-    std::unique_ptr<cx::IApplication> app = std::make_unique<cx::Application>(argc,
-                                                                              (char**)argv,
-                                                                              GetSubjectModel(),
-                                                                              GetGameActionsModel(),
-                                                                              GetGameInformationModel(),
-                                                                              GetLimitsModel(),
-                                                                              GetVersionningModel(),
-                                                                              GetUndoRedoModel(),
-                                                                              GetLogger());
+    auto modelRefs = GetModelReferences();
+    auto app = std::make_unique<cx::Application>(argc, (char**)argv, modelRefs, GetLogger());
+
     EXPECT_EQ(app->Run(), EXIT_FAILURE);
 }

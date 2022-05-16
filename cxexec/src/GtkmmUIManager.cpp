@@ -26,14 +26,9 @@
 #include <cxgui/MainWindowController.h>
 #include <cxgui/MainWindowPresenter.h>
 #include <cxexec/GtkmmUIManager.h>
+#include <cxexec/ModelReferences.h>
 
-cx::GtkmmUIManager::GtkmmUIManager(int argc,
-                                   char *argv[],
-                                   cxmodel::ModelSubject& p_modelAsSubject,
-                                   cxmodel::IConnectXGameActions& p_modelAsGameActions,
-                                   cxmodel::IConnectXGameInformation& p_modelAsGameInformation,
-                                   cxmodel::IConnectXLimits& p_modelAsLimits,
-                                   cxmodel::IUndoRedo& p_modelAsUndoRedo)
+cx::GtkmmUIManager::GtkmmUIManager(int argc, char *argv[], cx::ModelReferences& p_model)
 {
     PRECONDITION(argc > 0);
     PRECONDITION(argv);
@@ -43,19 +38,19 @@ cx::GtkmmUIManager::GtkmmUIManager(int argc,
     // At this point, the Gtkmm engine is initialized. This means that Gtkmm widgets can safely be
     // instantiated...
 
-    m_controller = std::make_unique<cxgui::MainWindowController>(p_modelAsGameActions, p_modelAsUndoRedo);
-    m_presenter = std::make_unique<cxgui::MainWindowPresenter>(p_modelAsLimits, p_modelAsGameInformation, p_modelAsUndoRedo);
+    m_controller = std::make_unique<cxgui::MainWindowController>(p_model.m_asGameActions, p_model.m_asUndoRedo);
+    m_presenter = std::make_unique<cxgui::MainWindowPresenter>(p_model.m_asLimits, p_model.m_asGameInformation, p_model.m_asUndoRedo);
 
     // Note: we must use the 'get' method with the 'operator*' because Gtk::RefPtr does not
     // support, like most smart pointers, accessing the underlying instance through 'operator*':
     {
-        auto mainWindow = std::make_unique<cxgui::MainWindow>(*(m_app.get()), p_modelAsSubject, *m_controller, *m_presenter);
+        auto mainWindow = std::make_unique<cxgui::MainWindow>(*(m_app.get()), p_model.m_asSubject, *m_controller, *m_presenter);
         mainWindow->Init();
 
         m_mainWindow = std::move(mainWindow);
     }
 
-    p_modelAsSubject.Attach(m_presenter.get());
+    p_model.m_asSubject.Attach(m_presenter.get());
     m_presenter->Attach(m_mainWindow.get());
 
     POSTCONDITION(m_mainWindow);

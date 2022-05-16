@@ -132,16 +132,8 @@ TEST_F(ApplicationTestFixtureStdErrStreamRedirector, Handle_VerboseStrategy_Inva
     const int argc = 2;
     const char *argv[] = {"connectx", "--verbose"};
 
-    const std::unique_ptr<cx::ICmdArgWorkflowStrategy> strategy = std::make_unique<cx::CmdArgVerboseStrategy>(argc,
-                                                                                                             (char**)argv,
-                                                                                                             GetSubjectModel(),
-                                                                                                             GetGameActionsModel(),
-                                                                                                             GetGameInformationModel(),
-                                                                                                             GetLimitsModel(),
-                                                                                                             GetVersionningModel(),
-                                                                                                             GetUndoRedoModel(),
-                                                                                                             nullptr);
-
+    auto modelRefs = GetModelReferences();
+    const auto strategy = std::make_unique<cx::CmdArgVerboseStrategy>(argc, (char**)argv, modelRefs, nullptr);
     ASSERT_TRUE(strategy);
 
     ASSERT_EQ(strategy->Handle(), EXIT_FAILURE);
@@ -159,17 +151,10 @@ TEST_F(ApplicationTestFixtureStdErrStreamRedirector, Handle_VerboseStrategy_Logg
 
     ASSERT_TRUE(logger);
 
-    const std::unique_ptr<cx::ICmdArgWorkflowStrategy> strategy = std::make_unique<cx::CmdArgVerboseStrategy>(argc,
-                                                                                                             (char**)argv,
-                                                                                                             GetSubjectModel(),
-                                                                                                             GetGameActionsModel(),
-                                                                                                             GetGameInformationModel(),
-                                                                                                             GetLimitsModel(),
-                                                                                                             GetVersionningModel(),
-                                                                                                             GetUndoRedoModel(),
-                                                                                                             logger.get());
-
+    auto modelRefs = GetModelReferences();
+    const auto strategy = std::make_unique<cx::CmdArgVerboseStrategy>(argc, (char**)argv, modelRefs, logger.get());
     ASSERT_TRUE(strategy);
+
     ASSERT_EQ(strategy->Handle(), EXIT_FAILURE);
 }
 

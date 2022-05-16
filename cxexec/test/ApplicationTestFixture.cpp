@@ -75,6 +75,22 @@ cxmodel::IVersioning& ApplicationTestFixture::GetVersionningModel()
     return *m_model;
 }
 
+cx::ModelReferences ApplicationTestFixture::GetModelReferences()
+{
+    EXPECT_TRUE(m_model);
+
+    cx::ModelReferences references{
+        *m_model,
+        *m_model,
+        *m_model,
+        *m_model,
+        *m_model,
+        *m_model
+    }; 
+
+    return references;
+}
+
 void ApplicationTestFixture::ModelApplicationMock::CreateNewGame(cxmodel::NewGameInformation /*p_gameInformation*/)
 {
     // Not used...

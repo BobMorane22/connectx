@@ -36,13 +36,9 @@ namespace cxlog
     class ILogger;
 }
 
-namespace cxmodel
+namespace cx
 {
-    class IConnectXGameActions;
-    class IConnectXGameInformation;
-    class IConnectXLimits;
-    class IUndoRedo;
-    class IVersioning;
+    struct ModelReferences;
 }
 
 namespace cx
@@ -62,31 +58,24 @@ public:
     /******************************************************************************************//**
      * @brief Constructor.
      *
-     * @pre The argument count is at least 1.
-     * @pre The argument list is not @c nullptr.
+     * @param argc
+     *      Command line argument count.
+     * @param argv
+     *      A C-style array of arguments.
+     * @param p_model
+     *      References to a Connect X compatible model.
+     * @param p_logger
+     *      A chain logger.
      *
-     * @post The command line argument workflow is not @c nullptr.
-     *
-     * @param argc                     Command line argument count.
-     * @param argv                     A C-style array of arguments.
-     * @param p_modelAsSubject         The Connect X compatible model (Subject).
-     * @param p_modelAsGameActions     The Connect X compatible model (Game actions).
-     * @param p_modelAsGameInformation The Connect X compatible model (Game information).
-     * @param p_modelAsLimits          The Connect X compatible model (Limits).
-     * @param p_modelAsVersionning     The Connect X compatible model (Versionning).
-     * @param p_modelAsUndoRedo        The Connect X compatible model (Undo/redo).
-     * @param p_logger                 A chain logger.
+     * @pre
+     *      The argument count is at least 1.
+     * @pre
+     *      The argument list is not @c nullptr.
+     * @post
+     *      The command line argument workflow is not @c nullptr.
      *
      ********************************************************************************************/
-    Application(int argc,
-                char *argv[],
-                cxmodel::ModelSubject& p_modelAsSubject,
-                cxmodel::IConnectXGameActions& p_modelAsGameActions,
-                cxmodel::IConnectXGameInformation& p_modelAsGameInformation,
-                cxmodel::IConnectXLimits& p_modelAsLimits,
-                cxmodel::IVersioning& p_modelAsVersionning,
-                cxmodel::IUndoRedo& p_modelAsUndoRedo,
-                cxlog::ILogger& p_logger);
+    Application(int argc, char *argv[], cx::ModelReferences& p_model, cxlog::ILogger& p_logger);
 
     int Run() override;
 

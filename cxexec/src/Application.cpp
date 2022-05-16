@@ -31,12 +31,7 @@
 
 cx::Application::Application(int argc,
                              char *argv[],
-                             cxmodel::ModelSubject& p_modelAsSubject,
-                             cxmodel::IConnectXGameActions& p_modelAsGameActions,
-                             cxmodel::IConnectXGameInformation& p_modelAsGameInformation,
-                             cxmodel::IConnectXLimits& p_modelAsLimits,
-                             cxmodel::IVersioning& p_modelAsVersionning,
-                             cxmodel::IUndoRedo& p_modelAsUndoRedo,
+                             cx::ModelReferences& p_model,
                              cxlog::ILogger& p_logger)
 {
     PRECONDITION(argc >= 1);
@@ -44,15 +39,7 @@ cx::Application::Application(int argc,
 
     CmdArgWorkflowFactory factory;
 
-    m_workflow = factory.Create(argc,
-                                argv,
-                                p_modelAsSubject,
-                                p_modelAsGameActions,
-                                p_modelAsGameInformation,
-                                p_modelAsLimits,
-                                p_modelAsVersionning,
-                                p_modelAsUndoRedo,
-                                p_logger);
+    m_workflow = factory.Create(argc, argv, p_model, p_logger);
 
     POSTCONDITION(m_workflow);
 }

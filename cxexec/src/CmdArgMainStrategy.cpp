@@ -24,29 +24,15 @@
 #include <cstdlib>
 
 #include <cxinv/assertion.h>
-#include <cxmodel/IConnectXGameActions.h>
-#include <cxmodel/IUndoRedo.h>
 #include <cxexec/CmdArgMainStrategy.h>
 
-cx::CmdArgMainStrategy::CmdArgMainStrategy(int argc,
-                                           char *argv[],
-                                           cxmodel::ModelSubject& p_modelAsSubject,
-                                           cxmodel::IConnectXGameActions& p_modelAsGameActions,
-                                           cxmodel::IConnectXGameInformation& p_modelAsGameInformation,
-                                           cxmodel::IConnectXLimits& p_modelAsLimits,
-                                           cxmodel::IUndoRedo& p_modelAsUndoRedo)
+cx::CmdArgMainStrategy::CmdArgMainStrategy(int argc, char *argv[], cx::ModelReferences& p_model)
 {
     PRECONDITION(argc > 0);
     PRECONDITION(argv);
 
     argc = 1;
-    m_uiMgr = std::make_unique<cx::GtkmmUIManager>(argc,
-                                                   argv,
-                                                   p_modelAsSubject,
-                                                   p_modelAsGameActions,
-                                                   p_modelAsGameInformation,
-                                                   p_modelAsLimits,
-                                                   p_modelAsUndoRedo);
+    m_uiMgr = std::make_unique<cx::GtkmmUIManager>(argc, argv, p_model);
 
     POSTCONDITION(m_uiMgr);
 }
