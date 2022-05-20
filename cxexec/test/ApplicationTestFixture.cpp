@@ -85,6 +85,7 @@ cx::ModelReferences ApplicationTestFixture::GetModelReferences()
         *m_model,
         *m_model,
         *m_model,
+        *m_model,
         *m_model
     }; 
 

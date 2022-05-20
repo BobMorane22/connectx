@@ -39,6 +39,11 @@
 
 #include "LoggerMock.h"
 
+namespace cxmodel
+{
+    enum class DropColumnComputation;
+}
+
 /*********************************************************************************************//**
  * @brief Test fixture for the class @c cx::Application
  *
@@ -69,7 +74,8 @@ private:
                                  public cxmodel::IConnectXGameInformation,
                                  public cxmodel::IConnectXLimits,
                                  public cxmodel::IUndoRedo,
-                                 public cxmodel::IVersioning
+                                 public cxmodel::IVersioning,
+                                 public cxmodel::IConnectXAI
     {
 
     public:
@@ -111,6 +117,10 @@ private:
         // IVersionning:
         std::string GetName() const override {return "Connect X";}
         std::string GetVersionNumber() const override {return "v0.0";}
+
+        // IConnectXAI:
+        [[nodiscard]] size_t ComputeNextDropColumn(cxmodel::DropColumnComputation /*p_algorithm*/) const override {return 5u;}
+
 
     private:
 

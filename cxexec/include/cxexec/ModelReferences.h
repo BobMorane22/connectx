@@ -24,7 +24,13 @@
 #ifndef MODELREFERENCES_H_B4CBAD24_EFCC_429A_8293_DAE7B2FA8D9E
 #define MODELREFERENCES_H_B4CBAD24_EFCC_429A_8293_DAE7B2FA8D9E
 
-#include <cxmodel/Model.h>
+#include <cxmodel/IConnectXAI.h>
+#include <cxmodel/IConnectXGameActions.h>
+#include <cxmodel/IConnectXGameInformation.h>
+#include <cxmodel/IConnectXLimits.h>
+#include <cxmodel/IGameResolutionStrategy.h>
+#include <cxmodel/IUndoRedo.h>
+#include <cxmodel/IVersioning.h>
 
 namespace cx
 {
@@ -46,8 +52,19 @@ public:
     *
     * A structure holding all necessary abstract references to some concrete model.
     *
-    * @param p_concreteModel
-    *      A concrete, Connect X compatible, model.
+    * @param p_asGameActions
+    *      Game action model : perform user actions on the model.
+    * @param p_asGameInformation
+    *      Game information model. Used to query informations about the current state of a game.
+    * @param p_asLimits
+    *      System limits model : query information about the system's static limits. By
+    *      static, we mean limits within each the system should always stand.
+    * @param p_asVersionning
+    *      Versionning model : query the system's version.
+    * @param p_asUndoRedo
+    *      Undo and redo model.
+    * @param p_asAi
+    *      AI model : access any AI based actions.
     *
     ********************************************************************************************/
     ModelReferences(cxmodel::ModelSubject& p_asSubject,
@@ -55,13 +72,15 @@ public:
                     cxmodel::IConnectXGameInformation& p_asGameInformation,
                     cxmodel::IConnectXLimits& p_asLimits,
                     cxmodel::IVersioning& p_asVersionning,
-                    cxmodel::IUndoRedo& p_asUndoRedo)
+                    cxmodel::IUndoRedo& p_asUndoRedo,
+                    cxmodel::IConnectXAI& p_asAi)
     : m_asSubject{p_asSubject}
     , m_asGameActions{p_asGameActions}
     , m_asGameInformation{p_asGameInformation}
     , m_asLimits{p_asLimits}
     , m_asVersionning{p_asVersionning}
     , m_asUndoRedo{p_asUndoRedo}
+    , m_asAi{p_asAi}
     {
         // Nothing to do...
     }
@@ -72,6 +91,7 @@ public:
     cxmodel::IConnectXLimits& m_asLimits;
     cxmodel::IVersioning& m_asVersionning;
     cxmodel::IUndoRedo& m_asUndoRedo;
+    cxmodel::IConnectXAI& m_asAi;
 
 };
 

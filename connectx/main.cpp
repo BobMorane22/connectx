@@ -73,7 +73,7 @@ std::unique_ptr<cxlog::ILogger> CreateFileLogger(cxlog::VerbosityLevel p_verbosi
  ********************************************************************************************/
 cx::ModelReferences ModelReferencesCreate(cxmodel::Model& p_model)
 {
-    return cx::ModelReferences{p_model, p_model, p_model, p_model, p_model, p_model};
+    return cx::ModelReferences{p_model, p_model, p_model, p_model, p_model, p_model, p_model};
 }
 
 /******************************************************************************************//**
