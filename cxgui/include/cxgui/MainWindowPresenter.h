@@ -35,6 +35,7 @@ namespace cxmodel
     class IConnectXGameInformation;
     class IConnectXLimits;
     class IUndoRedo;
+    class IConnectXAI;
 }
 
 namespace cxgui
@@ -47,7 +48,8 @@ public:
 
     MainWindowPresenter(const cxmodel::IConnectXLimits& p_modealAsLimits,
                         const cxmodel::IConnectXGameInformation& p_modelAsGameInformation,
-                        const cxmodel::IUndoRedo& p_modelAsUndoRedo);
+                        const cxmodel::IUndoRedo& p_modelAsUndoRedo,
+                        const cxmodel::IConnectXAI& p_modelAsAI);
 
 ///@{ @name Main Window
 // -----------------------------------------------------------------------------------------------
@@ -122,6 +124,9 @@ public:
 
     const ChipColors& GetGameViewChipColors() const override;
 
+    [[nodiscard]] bool IsCurrentPlayerABot() const override;
+    [[nodiscard]] size_t GetBotTarget() const override;
+
 ///@}
 
 private:
@@ -137,6 +142,7 @@ private:
     const cxmodel::IConnectXLimits& m_modelAsLimits;
     const cxmodel::IConnectXGameInformation& m_modelAsGameInformation;
     const cxmodel::IUndoRedo& m_modelAsUndoRedo;
+    const cxmodel::IConnectXAI& m_modelAsAI;
     
     bool m_canRequestNewGame;
     bool m_canCurrentGameBeReinitialized;

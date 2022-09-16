@@ -119,7 +119,8 @@ private:
         std::string GetVersionNumber() const override {return "v0.0";}
 
         // IConnectXAI:
-        [[nodiscard]] size_t ComputeNextDropColumn(cxmodel::DropColumnComputation /*p_algorithm*/) const override {return 5u;}
+        void ComputeNextDropColumn(cxmodel::DropColumnComputation /*p_algorithm*/) override {}
+        [[nodiscard]] size_t GetCurrentBotTarget() const override {return 5u;};
 
 
     private:

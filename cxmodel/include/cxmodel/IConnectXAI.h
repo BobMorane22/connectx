@@ -57,11 +57,16 @@ public:
      *
      * @param p_algorithm The algorithm to use for computation.
      *
-     * @return An available drop column.
+     *********************************************************************************************/
+    virtual void ComputeNextDropColumn(DropColumnComputation p_algorithm) = 0;
+
+    /******************************************************************************************//**
+     * @brief Gets the last computed bot target.
+     *
+     * @return The last computed bot target.
      *
      *********************************************************************************************/
-    [[nodiscard]] virtual size_t ComputeNextDropColumn(DropColumnComputation p_algorithm) const = 0;
-
+    [[nodiscard]] virtual size_t GetCurrentBotTarget() const = 0;
 };
 
 } // namespace cxmodel

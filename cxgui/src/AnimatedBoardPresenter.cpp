@@ -35,6 +35,7 @@ void cxgui::AnimatedBoardPresenter::Sync()
     m_cache.m_boardWidth = cxmodel::Width{m_gameVewPresenter.GetGameViewBoardWidth()};
     m_cache.m_activePlayerChipColor = m_gameVewPresenter.GetGameViewActivePlayerChipColor();
     m_cache.m_boardColors = m_gameVewPresenter.GetGameViewChipColors();
+    m_cache.m_botTarget = cxmodel::Column{m_gameVewPresenter.GetBotTarget()};
 }
 
 cxmodel::Height cxgui::AnimatedBoardPresenter::GetBoardHeight() const
@@ -59,6 +60,5 @@ const cxgui::IGameViewPresenter::ChipColors& cxgui::AnimatedBoardPresenter::GetB
 
 cxmodel::Column cxgui::AnimatedBoardPresenter::GetBotTarget() const
 {
-    // TG-262 : link to the model...
-    return cxmodel::Column{5u};
+    return m_cache.m_botTarget;
 }

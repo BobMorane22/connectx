@@ -345,7 +345,7 @@ bool cxgui::AnimatedBoard::Redraw()
                 queue_draw_area(chipHorizontalPosition - cellWidth / 2.0 - delta, 0.0, cellWidth + 3 * delta, m_animationModel->GetAnimatedAreaDimensions().m_height.Get());
             }
         }
-        else if(m_moveLeftAnimationInfo.m_animation == cxgui::BoardAnimation::MOVE_CHIP_RIGHT_ONE_COLUMN)
+        else if(m_moveRightAnimationInfo.m_animation == cxgui::BoardAnimation::MOVE_CHIP_RIGHT_TO_TARGET)
         {
             // Could be optimized...
             queue_draw();
@@ -413,6 +413,13 @@ void cxgui::AnimatedBoard::Update(cxgui::BoardAnimationNotificationContext p_con
         case cxgui::BoardAnimationNotificationContext::ANIMATE_MOVE_RIGHT_ONE_COLUMN:
         {
             const auto animation = cxgui::BoardAnimation::MOVE_CHIP_RIGHT_ONE_COLUMN;
+            m_moveRightAnimationInfo.Start(animation);
+            PerformChipAnimation(animation);
+            break;
+        }
+        case cxgui::BoardAnimationNotificationContext::ANIMATE_MOVE_RIGHT_TO_TARGET:
+        {
+            const auto animation = cxgui::BoardAnimation::MOVE_CHIP_RIGHT_TO_TARGET;
             m_moveRightAnimationInfo.Start(animation);
             PerformChipAnimation(animation);
             break;

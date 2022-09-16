@@ -27,6 +27,7 @@
 #include <cxinv/assertion.h>
 #include <cxmodel/Disc.h>
 #include <cxmodel/NewGameInformation.h>
+#include <cxmodel/IConnectXAI.h>
 #include <cxmodel/IConnectXGameInformation.h>
 #include <cxmodel/IConnectXLimits.h>
 #include <cxmodel/IUndoRedo.h>
@@ -63,10 +64,12 @@ std::string MakeBoardHeightValueOutOfLimitsWarningDialog(size_t p_lower, size_t 
 
 cxgui::MainWindowPresenter::MainWindowPresenter(const cxmodel::IConnectXLimits& p_modealAsLimits,
                                                 const cxmodel::IConnectXGameInformation& p_modelAsGameInformation,
-                                                const cxmodel::IUndoRedo& p_modelAsUndoRedo)
+                                                const cxmodel::IUndoRedo& p_modelAsUndoRedo,
+                                                const cxmodel::IConnectXAI& p_modelAsAI)
  : m_modelAsLimits{p_modealAsLimits}
  , m_modelAsGameInformation{p_modelAsGameInformation}
  , m_modelAsUndoRedo{p_modelAsUndoRedo}
+ , m_modelAsAI{p_modelAsAI}
  , m_canRequestNewGame{false}
  , m_canCurrentGameBeReinitialized{false}
  , m_currentBoardWidth{p_modealAsLimits.GetMinimumGridWidth()}
@@ -458,11 +461,11 @@ void cxgui::MainWindowPresenter::UpdateCreateNewGame()
 
     m_activePlayer = cxmodel::CreatePlayer(m_modelAsGameInformation.GetActivePlayer().GetName(),
                                            m_modelAsGameInformation.GetActivePlayer().GetChip().GetColor(),
-                                           cxmodel::PlayerType::HUMAN);
+                                           m_modelAsGameInformation.GetActivePlayer().IsManaged() ? cxmodel::PlayerType::BOT : cxmodel::PlayerType::HUMAN);
 
     m_nextPlayer = cxmodel::CreatePlayer(m_modelAsGameInformation.GetNextPlayer().GetName(),
                                          m_modelAsGameInformation.GetNextPlayer().GetChip().GetColor(),
-                                         cxmodel::PlayerType::HUMAN);
+                                         m_modelAsGameInformation.GetNextPlayer().IsManaged() ? cxmodel::PlayerType::BOT : cxmodel::PlayerType::HUMAN);
 
     // Reserve the board color memory:
     for(size_t row = 0u; row < m_currentBoardHeight; ++row)
@@ -476,11 +479,11 @@ void cxgui::MainWindowPresenter::UpdateChipDropped()
     // Update players information:
     m_activePlayer = cxmodel::CreatePlayer(m_modelAsGameInformation.GetActivePlayer().GetName(),
                                            m_modelAsGameInformation.GetActivePlayer().GetChip().GetColor(),
-                                           cxmodel::PlayerType::HUMAN);
+                                           m_modelAsGameInformation.GetActivePlayer().IsManaged() ? cxmodel::PlayerType::BOT : cxmodel::PlayerType::HUMAN);
 
     m_nextPlayer = cxmodel::CreatePlayer(m_modelAsGameInformation.GetNextPlayer().GetName(),
                                          m_modelAsGameInformation.GetNextPlayer().GetChip().GetColor(),
-                                         cxmodel::PlayerType::HUMAN);
+                                         m_modelAsGameInformation.GetNextPlayer().IsManaged() ? cxmodel::PlayerType::BOT : cxmodel::PlayerType::HUMAN);
     // Update board information:
     for(size_t row = 0u; row < m_currentBoardHeight; ++row)
     {
@@ -514,4 +517,14 @@ bool cxgui::MainWindowPresenter::IsBoardEmpty() const
     }
 
     return isBoardEmpty;
+}
+
+bool cxgui::MainWindowPresenter::IsCurrentPlayerABot() const
+{
+    return m_activePlayer->IsManaged();
+}
+
+size_t cxgui::MainWindowPresenter::GetBotTarget() const
+{
+    return m_modelAsAI.GetCurrentBotTarget();
 }

@@ -146,7 +146,8 @@ public:
 
 ///@{ @name IConnectXAI
 
-    [[nodiscard]] size_t ComputeNextDropColumn(DropColumnComputation p_algorithm) const override;
+    void ComputeNextDropColumn(DropColumnComputation p_algorithm) override;
+    [[nodiscard]] size_t GetCurrentBotTarget() const override;
 
 ///@}
 
@@ -164,6 +165,8 @@ private:
 
     std::unique_ptr<IGameResolutionStrategy> m_winResolutionStrategy;
     std::unique_ptr<IGameResolutionStrategy> m_tieResolutionStrategy;
+
+    size_t m_botTarget{0u};
 };
 
 } // namespace cxmodel

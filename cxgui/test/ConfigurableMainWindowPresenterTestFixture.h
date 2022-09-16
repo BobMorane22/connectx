@@ -27,6 +27,7 @@
 #include <gtest/gtest.h>
 
 #include <cxunit/NotImplementedException.h>
+#include <cxmodel/IConnectXAI.h>
 #include <cxmodel/IConnectXGameInformation.h>
 #include <cxmodel/IConnectXLimits.h>
 #include <cxmodel/IUndoRedo.h>
@@ -91,12 +92,22 @@ public:
     void SetUndoRedoModel(std::unique_ptr<cxmodel::IUndoRedo>&& p_model);
 
     /******************************************************************************************//**
+     * @brief Sets a new `IConnectXAI` compatible model.
+     *
+     * @param p_model A `IConnectXAI` compatible model.
+     *
+     * @warning When this method is called, the presenter's state is reset to its initial state.
+     *
+     ********************************************************************************************/
+    void SetAIModel(std::unique_ptr<cxmodel::IConnectXAI>&& p_model);
+
+    /******************************************************************************************//**
      * @brief Access to the underlying `IConnectXGameInformation` model.
      *
      * @return The `IConnectXGameInformation` model.
      *
      ********************************************************************************************/
-    cxmodel::IConnectXGameInformation& GetGameInformationModel();
+    [[nodiscard]] cxmodel::IConnectXGameInformation& GetGameInformationModel();
 
     /******************************************************************************************//**
      * @brief Access to the underlying `IConnectXLimits` model.
@@ -104,7 +115,15 @@ public:
      * @return The `IConnectXLimits` model.
      *
      ********************************************************************************************/
-    cxmodel::IConnectXLimits& GetLimitsModel();
+    [[nodiscard]] cxmodel::IConnectXLimits& GetLimitsModel();
+
+    /******************************************************************************************//**
+     * @brief Access to the underlying `IConnectXAI` model.
+     *
+     * @return The `IConnectXAI` model.
+     *
+     ********************************************************************************************/
+    [[nodiscard]] cxmodel::IConnectXAI& GetAIModel();
 
 private:
 
@@ -113,6 +132,7 @@ private:
     std::unique_ptr<cxmodel::IConnectXGameInformation> m_modelAsGameInformation;
     std::unique_ptr<cxmodel::IConnectXLimits> m_modelAsLimits;
     std::unique_ptr<cxmodel::IUndoRedo> m_modelAsUndoRedo;
+    std::unique_ptr<cxmodel::IConnectXAI> m_modelAsAI;
 
 };
 

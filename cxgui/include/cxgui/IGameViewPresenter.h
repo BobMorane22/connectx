@@ -131,6 +131,21 @@ public:
      ********************************************************************************************/
     virtual const ChipColors& GetGameViewChipColors() const = 0;
 
+    /******************************************************************************************//**
+     * @brief Indicates if the current player is a bot.
+     *
+     * @return `true` if the current player is a bot, `false` if he is human.
+     *
+     ********************************************************************************************/
+    [[nodiscard]] virtual bool IsCurrentPlayerABot() const = 0;
+
+    /******************************************************************************************//**
+     * @brief Retreive the last computed bot target column.
+     * 
+     * @return The last computed bot target column.
+     *
+     *********************************************************************************************/
+    [[nodiscard]] virtual size_t GetBotTarget() const = 0;
 };
 
 } // namespace cxgui

@@ -63,6 +63,8 @@ public:
     size_t GetGameViewBoardWidth() const override {return m_boardWidth;}
     size_t GetGameViewBoardHeight() const override {return m_boardHeight;}
     const ChipColors& GetGameViewChipColors() const override {return m_boardColors;}
+    [[nodiscard]] virtual bool IsCurrentPlayerABot() const {return false;};
+    [[nodiscard]] virtual size_t GetBotTarget() const {return 5u;};
 
 private:
 

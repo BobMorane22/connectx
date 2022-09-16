@@ -77,6 +77,7 @@ private:
     void UpdateRedoChipDropped();
     void UpdateChipMovedLeft();
     void UpdateChipMovedRight();
+    void UpdateChipMovedRightToTarget();
     void UpdateGameResolved();
     void UpdateGameReinitialized();
 

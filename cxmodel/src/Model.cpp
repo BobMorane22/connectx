@@ -181,6 +181,8 @@ void cxmodel::Model::CreateNewGame(NewGameInformation p_gameInformation)
     m_tieResolutionStrategy = GameResolutionStrategyFactory::Make(*m_board, m_inARowValue, m_playersInfo.m_players, m_takenPositions, GameResolution::TIE);
     IF_CONDITION_NOT_MET_DO(m_tieResolutionStrategy, return;);
 
+    ComputeNextDropColumn(DropColumnComputation::RANDOM);
+
     Notify(ModelNotificationContext::CREATE_NEW_GAME);
 
     std::ostringstream stream;
@@ -244,6 +246,9 @@ void cxmodel::Model::DropChip(const cxmodel::IChip& p_chip, size_t p_column)
     {
         m_logger.Log(cxlog::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__, "Chip drop failed for " + activePlayer->GetName());
         Notify(ModelNotificationContext::CHIP_DROPPED_FAILED);
+
+        CheckInvariants();
+        return;
     }
 
     if(IsWon())
@@ -277,6 +282,8 @@ void cxmodel::Model::DropChip(const cxmodel::IChip& p_chip, size_t p_column)
 
         return;
     }
+
+    ComputeNextDropColumn(DropColumnComputation::RANDOM);
 
     CheckInvariants();
 }
@@ -477,12 +484,24 @@ cxlog::VerbosityLevel cxmodel::Model::GetVerbosityLevel() const
 void cxmodel::Model::CheckInvariants()
 {
     INVARIANT(m_cmdStack);
+
+    if(m_board)
+    {
+        INVARIANT(m_botTarget < GetCurrentGridWidth());
+    }
 }
 
-size_t cxmodel::Model::ComputeNextDropColumn(DropColumnComputation p_algorithm) const
+void cxmodel::Model::ComputeNextDropColumn(DropColumnComputation p_algorithm)
 {
     auto strategy = NextDropColumnComputationStrategyCreate(p_algorithm);
-    IF_CONDITION_NOT_MET_DO(strategy, return 0u;);
+    IF_CONDITION_NOT_MET_DO(strategy, return;);
 
-    return strategy->Compute(*m_board);
+    m_botTarget = strategy->Compute(*m_board);
+
+    CheckInvariants();
+}
+
+size_t cxmodel::Model::GetCurrentBotTarget() const
+{
+    return m_botTarget;
 }

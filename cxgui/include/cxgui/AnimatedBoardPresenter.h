@@ -71,6 +71,7 @@ private:
         cxmodel::Width m_boardWidth{0u};
         cxmodel::ChipColor m_activePlayerChipColor = cxmodel::MakeTransparent();
         IGameViewPresenter::ChipColors m_boardColors;
+        cxmodel::Column m_botTarget{0u};
     };
 
     const IGameViewPresenter& m_gameVewPresenter;

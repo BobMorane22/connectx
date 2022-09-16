@@ -394,7 +394,8 @@ TEST_F(AnimationModelTestFixture, /*DISABLED_*/ResetChipPositions_ValidModel_Chi
     ASSERT_TRUE(!cxmath::AreLogicallyEqual(chipPositionBefore.m_x, chipPositionAfter.m_x));
     ASSERT_TRUE(!cxmath::AreLogicallyEqual(chipPositionBefore.m_y, chipPositionAfter.m_y));
 
-    ASSERT_TRUE(chipPositionAfter.m_x == 0.0);
+    const cxmath::Radius chipRadius = model.GetChipRadius();
+    ASSERT_TRUE(chipPositionAfter.m_x == chipRadius.Get());
     ASSERT_TRUE(chipPositionAfter.m_y == 0.0);
 
     const cxmath::Position mirrorChipPositionAfter = model.GetMirrorChipPosition();

@@ -27,6 +27,7 @@
 #include <exception>
 #include <memory>
 
+#include <cxmodel/IConnectXAI.h>
 #include <cxmodel/IConnectXGameActions.h>
 #include <cxmodel/IConnectXGameInformation.h>
 #include <cxmodel/IConnectXLimits.h>
@@ -60,7 +61,8 @@ private:
                                          public cxmodel::IConnectXGameActions,
                                          public cxmodel::IConnectXGameInformation,
                                          public cxmodel::IConnectXLimits,
-                                         public cxmodel::IUndoRedo
+                                         public cxmodel::IUndoRedo,
+                                         public cxmodel::IConnectXAI
     {
     public:
 
@@ -105,6 +107,11 @@ private:
         void Redo() override;
         bool CanUndo() const override {return true;}
         bool CanRedo() const override {return true;}
+
+        // IConnectXAI:
+        void ComputeNextDropColumn(cxmodel::DropColumnComputation /*p_algorithm*/) override {};
+        [[nodiscard]] size_t GetCurrentBotTarget() const override {return 5u;};
+
 
     private:
 

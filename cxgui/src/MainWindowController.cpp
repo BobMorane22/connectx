@@ -32,9 +32,9 @@
 
 cxgui::MainWindowController::MainWindowController(cxmodel::IConnectXGameActions& p_modelAsGameActions,
                                                   cxmodel::IUndoRedo& p_modelAsUndoRedo)
- : m_modelAsGameActions{p_modelAsGameActions}
- , m_modelAsUndoRedo{p_modelAsUndoRedo}
- , m_currentChip{std::make_unique<cxmodel::Disc>(cxmodel::Disc::MakeTransparentDisc())}
+: m_modelAsGameActions{p_modelAsGameActions}
+, m_modelAsUndoRedo{p_modelAsUndoRedo}
+, m_currentChip{std::make_unique<cxmodel::Disc>(cxmodel::Disc::MakeTransparentDisc())}
 {
 }
 

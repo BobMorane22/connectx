@@ -163,6 +163,9 @@ public:
 
     const ChipColors& GetGameViewChipColors() const override = 0;
 
+    [[nodiscard]] bool IsCurrentPlayerABot() const override = 0;
+    [[nodiscard]] size_t GetBotTarget() const override = 0;
+
 ///@}
 
 };

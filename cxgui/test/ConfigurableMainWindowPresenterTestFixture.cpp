@@ -53,7 +53,7 @@ ConfigurableMainWindowPresenterTestFixture::ConfigurableMainWindowPresenterTestF
     m_modelAsUndoRedo = std::make_unique<BasicUndoRedoModelMock>();
     EXPECT_TRUE(m_modelAsUndoRedo);
 
-    m_presenter = std::make_unique<cxgui::MainWindowPresenter>(*m_modelAsLimits, *m_modelAsGameInformation, *m_modelAsUndoRedo);
+    m_presenter = std::make_unique<cxgui::MainWindowPresenter>(*m_modelAsLimits, *m_modelAsGameInformation, *m_modelAsUndoRedo, *m_modelAsAI);
     EXPECT_TRUE(m_presenter);
 }
 
@@ -68,7 +68,7 @@ void ConfigurableMainWindowPresenterTestFixture::SetGameInformationModel(std::un
     EXPECT_TRUE(p_model);
     m_modelAsGameInformation = std::move(p_model);
 
-    m_presenter = std::make_unique<cxgui::MainWindowPresenter>(*m_modelAsLimits, *m_modelAsGameInformation, *m_modelAsUndoRedo);
+    m_presenter = std::make_unique<cxgui::MainWindowPresenter>(*m_modelAsLimits, *m_modelAsGameInformation, *m_modelAsUndoRedo, *m_modelAsAI);
     EXPECT_TRUE(m_presenter);
 }
 
@@ -77,7 +77,7 @@ void ConfigurableMainWindowPresenterTestFixture::SetLimitsModel(std::unique_ptr<
     EXPECT_TRUE(p_model);
     m_modelAsLimits = std::move(p_model);
 
-    m_presenter = std::make_unique<cxgui::MainWindowPresenter>(*m_modelAsLimits, *m_modelAsGameInformation, *m_modelAsUndoRedo);
+    m_presenter = std::make_unique<cxgui::MainWindowPresenter>(*m_modelAsLimits, *m_modelAsGameInformation, *m_modelAsUndoRedo, *m_modelAsAI);
     EXPECT_TRUE(m_presenter);
 }
 
@@ -86,7 +86,16 @@ void ConfigurableMainWindowPresenterTestFixture::SetUndoRedoModel(std::unique_pt
     EXPECT_TRUE(p_model);
     m_modelAsUndoRedo = std::move(p_model);
 
-    m_presenter = std::make_unique<cxgui::MainWindowPresenter>(*m_modelAsLimits, *m_modelAsGameInformation, *m_modelAsUndoRedo);
+    m_presenter = std::make_unique<cxgui::MainWindowPresenter>(*m_modelAsLimits, *m_modelAsGameInformation, *m_modelAsUndoRedo, *m_modelAsAI);
+    EXPECT_TRUE(m_presenter);
+}
+
+void ConfigurableMainWindowPresenterTestFixture::SetAIModel(std::unique_ptr<cxmodel::IConnectXAI>&& p_model)
+{
+    EXPECT_TRUE(p_model);
+    m_modelAsAI = std::move(p_model);
+
+    m_presenter = std::make_unique<cxgui::MainWindowPresenter>(*m_modelAsLimits, *m_modelAsGameInformation, *m_modelAsUndoRedo, *m_modelAsAI);
     EXPECT_TRUE(m_presenter);
 }
 
@@ -100,4 +109,10 @@ cxmodel::IConnectXLimits& ConfigurableMainWindowPresenterTestFixture::GetLimitsM
 {
     EXPECT_TRUE(m_modelAsLimits);
     return *m_modelAsLimits;
+}
+
+cxmodel::IConnectXAI& ConfigurableMainWindowPresenterTestFixture::GetAIModel()
+{
+    EXPECT_TRUE(m_modelAsAI);
+    return *m_modelAsAI;
 }

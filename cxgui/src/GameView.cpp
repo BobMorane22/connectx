@@ -21,8 +21,6 @@
  *
  *************************************************************************************************/
 
-#include <iostream>
-
 #include <gtkmm/window.h>
 
 #include <cxinv/assertion.h>
@@ -166,14 +164,28 @@ void cxgui::GameView::Update(cxgui::BoardAnimationNotificationContext p_context,
 
         case cxgui::BoardAnimationNotificationContext::POST_ANIMATE_MOVE_LEFT_ONE_COLUMN:
         case cxgui::BoardAnimationNotificationContext::POST_ANIMATE_MOVE_RIGHT_ONE_COLUMN:
-        case cxgui::BoardAnimationNotificationContext::POST_ANIMATE_MOVE_RIGHT_TO_TARGET:
         case cxgui::BoardAnimationNotificationContext::POST_ANIMATE_DROP_CHIP:
+        {
+            if(m_presenter.IsCurrentPlayerABot())
+            {
+                UpdateChipMovedRightToTarget();
+                break;
+            }
+
+            EnableKeyHandlers();
+            break;
+        }
         case cxgui::BoardAnimationNotificationContext::POST_ANIMATE_UNDO_DROP_CHIP:
         case cxgui::BoardAnimationNotificationContext::POST_ANIMATE_REDO_DROP_CHIP:
         {
             // At this point the animation is completed. We reactivate keyboard events in
             // case the user wants to request another animation:
             EnableKeyHandlers();
+            break;
+        }
+        case cxgui::BoardAnimationNotificationContext::POST_ANIMATE_MOVE_RIGHT_TO_TARGET:
+        {
+            m_controller.OnDown(m_presenter.GetGameViewActivePlayerChipColor(), m_presenter.GetBotTarget());
             break;
         }
         case cxgui::BoardAnimationNotificationContext::POST_ANIMATE_REINITIALIZE_BOARD:
@@ -347,6 +359,12 @@ void cxgui::GameView::UpdateChipMovedRight()
 {
     IF_CONDITION_NOT_MET_DO(m_board, return;);
     Notify(cxgui::BoardAnimationNotificationContext::ANIMATE_MOVE_RIGHT_ONE_COLUMN);
+}
+
+void cxgui::GameView::UpdateChipMovedRightToTarget()
+{
+    IF_CONDITION_NOT_MET_DO(m_board, return;);
+    Notify(cxgui::BoardAnimationNotificationContext::ANIMATE_MOVE_RIGHT_TO_TARGET);
 }
 
 void cxgui::GameView::UpdateGameResolved()

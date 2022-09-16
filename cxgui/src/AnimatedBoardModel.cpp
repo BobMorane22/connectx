@@ -419,7 +419,7 @@ void cxgui::AnimatedBoardModel::AddChipDisplacement(const cxmath::Height& p_vert
 
 void cxgui::AnimatedBoardModel::ResetChipPositions()
 {
-    m_chipPosition = {0.0, 0.0};
+    m_chipPosition = {m_chipRadius.Get(), 0.0};
     m_mirrorChipPosition = {0.0, 0.0};
 }
 
