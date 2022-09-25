@@ -27,6 +27,8 @@
 namespace cxgui
 {
 
+enum class EnabledState;
+
 /**********************************************************************************************//**
  * @brief Interface aggrating services common to all widgets.
  *
@@ -36,12 +38,52 @@ class IWidget
 
 public:
 
+///@{ @name Construction & destruction
+
+    /**********************************************************************************************//**
+     * @brief Destructor.
+     *
+     *************************************************************************************************/
     ~IWidget() = default;
 
+///@}
+
+///@{ @name Accessors
+
+    /**********************************************************************************************//**
+     * @brief Gets the widget's width (in device independant pixels).
+     *
+     * @return The widget's width (in device independant pixels).
+     *
+     *************************************************************************************************/
     [[nodiscard]] virtual size_t GetWidth() const = 0;
+
+    /**********************************************************************************************//**
+     * @brief Gets the widget's height (in device independant pixels).
+     *
+     * @param p_newState The widget's height (in device independant pixels).
+     *
+     *************************************************************************************************/
     [[nodiscard]] virtual size_t GetHeight() const = 0;
 
-    virtual void SetReadOnly(bool p_isReadOnly) = 0;
+///@}
+
+///@{ @name Mutators
+
+    /**********************************************************************************************//**
+     * @brief Indicates if the widget is sensible to direct user operations.
+     *
+     * A widget that is disabled is not directly modifiable by the user. For example, mouse or
+     * keyboard events will have no effect on it. The only way to modify a disabled widget is
+     * indirectly, through modifying another widget which would trigger a reaction on the disabled
+     * widget (typicaly example is a label). A widget that is enabled will repond to user events.
+     *
+     * @param p_newState The new enabled or diabled state of the widget.
+     *
+     *************************************************************************************************/
+    virtual void SetEnabled(EnabledState p_enabled) = 0;
+
+///@}
 
 };
 

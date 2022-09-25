@@ -28,6 +28,7 @@
 #include <cxmodel/IPlayer.h>
 #include <cxgui/ColorComboBox.h>
 #include <cxgui/common.h>
+#include <cxgui/EnabledState.h>
 #include <cxgui/INewGameViewPresenter.h>
 #include <cxgui/OnOffState.h>
 #include <cxgui/OnOffSwitch.h>
@@ -93,15 +94,13 @@ public:
      * @param p_playerName       The name of the player.
      * @param p_playerDiscColor  The color chosen by or for the player's disc.
      * @param p_type             A flag indicating if the player is human, or managed.
-     * @param p_isReadOnly       A flag indicating is the row can be updated by the user. `false`
-     *                           indicates the user can change the contents of the row, `true`
-     *                           indicates the row contents is fixed and cannot be changed.
+     * @param p_enabled          A flag indicating is a user can iterract with the row.
      *
      **********************************************************************************************/
     NewPlayerRow(const std::string& p_playerName,
                  const cxmodel::ChipColor& p_playerDiscColor,
                  cxmodel::PlayerType p_type,
-                 bool p_isReadOnly = false);
+                 EnabledState p_enabled = EnabledState::Enabled);
 
     /*******************************************************************************************//**
      * @brief Default destructor.
@@ -228,7 +227,7 @@ void cxgui::NewPlayerTitleRow::SetDiscColorTitleWidth(int p_newWidth)
 cxgui::NewPlayerRow::NewPlayerRow(const std::string& p_playerName,
                                   const cxmodel::ChipColor& p_playerDiscColor,
                                   const cxmodel::PlayerType p_type,
-                                  bool p_isReadOnly) 
+                                  EnabledState p_enabled) 
 {
     PRECONDITION(!p_playerName.empty());
 
@@ -254,7 +253,7 @@ cxgui::NewPlayerRow::NewPlayerRow(const std::string& p_playerName,
     underlying.set_halign(Gtk::Align::ALIGN_CENTER);
     underlying.set_margin_end(cxgui::CONTROL_BOTTOM_MARGIN);
 
-    typeSwitch->SetReadOnly(p_isReadOnly);
+    typeSwitch->SetEnabled(p_enabled);
 
     m_layout.add(underlying);
     m_typeSwitch = std::move(typeSwitch);
@@ -343,8 +342,7 @@ cxgui::NewPlayersList::NewPlayersList(const INewGameViewPresenter& p_presenter)
 
     // Since at least one player must be human, the first player is always set to human and
     // cannot be changed. This is debatable, and could be unlocked in a later relese.
-    constexpr bool MAKE_READONLY = true;
-    add(*Gtk::manage(new NewPlayerRow("-- Player 1 --", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN, MAKE_READONLY)));
+    add(*Gtk::manage(new NewPlayerRow("-- Player 1 --", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN, EnabledState::Disabled)));
     add(*Gtk::manage(new NewPlayerRow("-- Player 2 --", cxmodel::MakeGreen(), cxmodel::PlayerType::HUMAN)));
 
     AddColumnHeaders();

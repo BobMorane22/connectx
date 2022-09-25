@@ -71,7 +71,7 @@ public:
     // cxgui::IWidget:
     [[nodiscard]] size_t GetWidth() const override = 0;
     [[nodiscard]] size_t GetHeight() const override = 0;
-    void SetReadOnly(bool p_isReadOnly) override = 0;
+    void SetEnabled(EnabledState p_enabled) override = 0;
 
 };
 

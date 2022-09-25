@@ -20,7 +20,10 @@
  * @date 2022
  *
  *************************************************************************************************/ 
+
 #include <cxinv/assertion.h>
+
+#include <cxgui/EnabledState.h>
 #include <cxgui/OnOffState.h>
 #include <cxgui/OnOffSwitch.h>
 
@@ -60,7 +63,7 @@ size_t cxgui::OnOffSwitch::GetHeight() const
     return height;
 }
 
-void cxgui::OnOffSwitch::SetReadOnly(bool p_isReadOnly)
+void cxgui::OnOffSwitch::SetEnabled(EnabledState p_enabled)
 {
-    m_underlying.set_sensitive(!p_isReadOnly);
+    m_underlying.set_sensitive(p_enabled == EnabledState::Enabled ? true : false);
 }

@@ -47,7 +47,7 @@ public:
     // cxgui::IWidget
     [[nodiscard]] size_t GetWidth() const override;
     [[nodiscard]] size_t GetHeight() const override;
-    void SetReadOnly(bool p_isReadOnly) override;
+    void SetEnabled(EnabledState p_enabled) override;
 
     /******************************************************************************************//**
      * @brief Get the underlying Gtkmm widget instance.
