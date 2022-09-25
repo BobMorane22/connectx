@@ -43,8 +43,11 @@ public:
     // cxgui::IOnOffSwitch:
     [[nodiscard]] OnOffState GetState() const override;
     void SetState(OnOffState p_newState) override;
+
+    // cxgui::IWidget
     [[nodiscard]] size_t GetWidth() const override;
     [[nodiscard]] size_t GetHeight() const override;
+    void SetReadOnly(bool p_isReadOnly) override;
 
     /******************************************************************************************//**
      * @brief Get the underlying Gtkmm widget instance.

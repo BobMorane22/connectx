@@ -69,8 +69,9 @@ public:
     virtual void SetState(OnOffState p_newState) = 0;
 
     // cxgui::IWidget:
-    [[nodiscard]] size_t GetWidth() const = 0;
-    [[nodiscard]] size_t GetHeight() const = 0;
+    [[nodiscard]] size_t GetWidth() const override = 0;
+    [[nodiscard]] size_t GetHeight() const override = 0;
+    void SetReadOnly(bool p_isReadOnly) override = 0;
 
 };
 

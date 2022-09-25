@@ -93,11 +93,15 @@ public:
      * @param p_playerName       The name of the player.
      * @param p_playerDiscColor  The color chosen by or for the player's disc.
      * @param p_type             A flag indicating if the player is human, or managed.
+     * @param p_isReadOnly       A flag indicating is the row can be updated by the user. `false`
+     *                           indicates the user can change the contents of the row, `true`
+     *                           indicates the row contents is fixed and cannot be changed.
      *
      **********************************************************************************************/
     NewPlayerRow(const std::string& p_playerName,
                  const cxmodel::ChipColor& p_playerDiscColor,
-                 cxmodel::PlayerType p_type);
+                 cxmodel::PlayerType p_type,
+                 bool p_isReadOnly = false);
 
     /*******************************************************************************************//**
      * @brief Default destructor.
@@ -223,7 +227,8 @@ void cxgui::NewPlayerTitleRow::SetDiscColorTitleWidth(int p_newWidth)
 
 cxgui::NewPlayerRow::NewPlayerRow(const std::string& p_playerName,
                                   const cxmodel::ChipColor& p_playerDiscColor,
-                                  const cxmodel::PlayerType p_type) 
+                                  const cxmodel::PlayerType p_type,
+                                  bool p_isReadOnly) 
 {
     PRECONDITION(!p_playerName.empty());
 
@@ -248,6 +253,8 @@ cxgui::NewPlayerRow::NewPlayerRow(const std::string& p_playerName,
     underlying.set_valign(Gtk::Align::ALIGN_CENTER);
     underlying.set_halign(Gtk::Align::ALIGN_CENTER);
     underlying.set_margin_end(cxgui::CONTROL_BOTTOM_MARGIN);
+
+    typeSwitch->SetReadOnly(p_isReadOnly);
 
     m_layout.add(underlying);
     m_typeSwitch = std::move(typeSwitch);
@@ -334,7 +341,10 @@ cxgui::NewPlayersList::NewPlayersList(const INewGameViewPresenter& p_presenter)
     m_titleRow = std::make_unique<NewPlayerTitleRow>(p_presenter);
     ASSERT(m_titleRow);
 
-    add(*Gtk::manage(new NewPlayerRow("-- Player 1 --", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN)));
+    // Since at least one player must be human, the first player is always set to human and
+    // cannot be changed. This is debatable, and could be unlocked in a later relese.
+    constexpr bool MAKE_READONLY = true;
+    add(*Gtk::manage(new NewPlayerRow("-- Player 1 --", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN, MAKE_READONLY)));
     add(*Gtk::manage(new NewPlayerRow("-- Player 2 --", cxmodel::MakeGreen(), cxmodel::PlayerType::HUMAN)));
 
     AddColumnHeaders();

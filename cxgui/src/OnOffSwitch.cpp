@@ -19,8 +19,7 @@
  * @file OnOffSwitch.cpp
  * @date 2022
  *
- *************************************************************************************************/
-
+ *************************************************************************************************/ 
 #include <cxinv/assertion.h>
 #include <cxgui/OnOffState.h>
 #include <cxgui/OnOffSwitch.h>
@@ -59,4 +58,9 @@ size_t cxgui::OnOffSwitch::GetHeight() const
     IF_CONDITION_NOT_MET_DO(height >= 0, return 0u;);
 
     return height;
+}
+
+void cxgui::OnOffSwitch::SetReadOnly(bool p_isReadOnly)
+{
+    m_underlying.set_sensitive(!p_isReadOnly);
 }

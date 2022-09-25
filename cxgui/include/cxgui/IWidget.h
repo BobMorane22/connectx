@@ -41,6 +41,8 @@ public:
     [[nodiscard]] virtual size_t GetWidth() const = 0;
     [[nodiscard]] virtual size_t GetHeight() const = 0;
 
+    virtual void SetReadOnly(bool p_isReadOnly) = 0;
+
 };
 
 } // namespace cxgui
