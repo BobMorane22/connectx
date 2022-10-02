@@ -55,10 +55,10 @@ std::string cxgui::MakeStatusBarContextString(cxmodel::ModelNotificationContext 
         case cxmodel::ModelNotificationContext::CHIP_DROPPED_FAILED:
             return NO_MESSAGE;
 
-        case cxmodel::ModelNotificationContext::CHIP_MOVED_LEFT:
+        case cxmodel::ModelNotificationContext::CHIP_MOVED_LEFT_ONE_COLUMN:
             return NO_MESSAGE;
 
-        case cxmodel::ModelNotificationContext::CHIP_MOVED_RIGHT:
+        case cxmodel::ModelNotificationContext::CHIP_MOVED_RIGHT_ONE_COLUMN:
             return NO_MESSAGE;
 
         case cxmodel::ModelNotificationContext::UNDO_CHIP_DROPPED:

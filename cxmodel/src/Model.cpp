@@ -288,20 +288,20 @@ void cxmodel::Model::DropChip(const cxmodel::IChip& p_chip, size_t p_column)
     CheckInvariants();
 }
 
-void cxmodel::Model::MoveLeft()
+void cxmodel::Model::MoveLeftOneColumn()
 {
-    Notify(ModelNotificationContext::CHIP_MOVED_LEFT);
+    Notify(ModelNotificationContext::CHIP_MOVED_LEFT_ONE_COLUMN);
 
-    Log(cxlog::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__, "Chip moved left.");
+    Log(cxlog::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__, "Chip moved left one column.");
 
     CheckInvariants();
 }
 
-void cxmodel::Model::MoveRight()
+void cxmodel::Model::MoveRightOneColumn()
 {
-    Notify(ModelNotificationContext::CHIP_MOVED_RIGHT);
+    Notify(ModelNotificationContext::CHIP_MOVED_RIGHT_ONE_COLUMN);
 
-    Log(cxlog::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__, "Chip moved right.");
+    Log(cxlog::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__, "Chip moved right one column.");
 
     CheckInvariants();
 }

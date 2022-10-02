@@ -75,8 +75,8 @@ private:
     void UpdateChipDroppedFailed();
     void UpdateUndoChipDropped();
     void UpdateRedoChipDropped();
-    void UpdateChipMovedLeft();
-    void UpdateChipMovedRight();
+    void UpdateChipMovedLeftOneColumn();
+    void UpdateChipMovedRightOneColumn();
     void UpdateChipMovedRightToTarget();
     void UpdateGameResolved();
     void UpdateGameReinitialized();

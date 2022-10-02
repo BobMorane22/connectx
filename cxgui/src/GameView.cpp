@@ -109,14 +109,14 @@ void cxgui::GameView::Update(cxmodel::ModelNotificationContext p_context)
             UpdateChipDroppedFailed();
             break;
         }
-        case cxmodel::ModelNotificationContext::CHIP_MOVED_LEFT:
+        case cxmodel::ModelNotificationContext::CHIP_MOVED_LEFT_ONE_COLUMN:
         {
-            UpdateChipMovedLeft();
+            UpdateChipMovedLeftOneColumn();
             break;
         }
-        case cxmodel::ModelNotificationContext::CHIP_MOVED_RIGHT:
+        case cxmodel::ModelNotificationContext::CHIP_MOVED_RIGHT_ONE_COLUMN:
         {
-            UpdateChipMovedRight();
+            UpdateChipMovedRightOneColumn();
             break;
         }
         case cxmodel::ModelNotificationContext::GAME_WON:
@@ -349,13 +349,13 @@ void cxgui::GameView::UpdateChipDroppedFailed()
     EnableKeyHandlers();
 }
 
-void cxgui::GameView::UpdateChipMovedLeft()
+void cxgui::GameView::UpdateChipMovedLeftOneColumn()
 {
     IF_CONDITION_NOT_MET_DO(m_board, return;);
     Notify(cxgui::BoardAnimationNotificationContext::ANIMATE_MOVE_LEFT_ONE_COLUMN);
 }
 
-void cxgui::GameView::UpdateChipMovedRight()
+void cxgui::GameView::UpdateChipMovedRightOneColumn()
 {
     IF_CONDITION_NOT_MET_DO(m_board, return;);
     Notify(cxgui::BoardAnimationNotificationContext::ANIMATE_MOVE_RIGHT_ONE_COLUMN);

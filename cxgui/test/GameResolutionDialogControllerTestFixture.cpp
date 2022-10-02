@@ -60,12 +60,12 @@ void GameResolutionDialogControllerTestFixture::GameResolutionDialogControllerMo
     // Nothing to do...
 }
 
-void GameResolutionDialogControllerTestFixture::GameResolutionDialogControllerMockModel::MoveLeft()
+void GameResolutionDialogControllerTestFixture::GameResolutionDialogControllerMockModel::MoveLeftOneColumn()
 {
     // Nothing to do...
 }
 
-void GameResolutionDialogControllerTestFixture::GameResolutionDialogControllerMockModel::MoveRight()
+void GameResolutionDialogControllerTestFixture::GameResolutionDialogControllerMockModel::MoveRightOneColumn()
 {
     // Nothing to do...
 }

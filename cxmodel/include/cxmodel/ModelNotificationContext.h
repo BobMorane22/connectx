@@ -47,11 +47,11 @@ enum class ModelNotificationContext
     /** A chip failed to drop into the game board. Possible causes include a full column.*/
     CHIP_DROPPED_FAILED,
 
-    /** A chip was moved left in the New Disc Area.*/
-    CHIP_MOVED_LEFT,
+    /** A chip was moved left by one column in the New Disc Area.*/
+    CHIP_MOVED_LEFT_ONE_COLUMN,
 
-    /** A chip was moved right in the New Disc Area.*/
-    CHIP_MOVED_RIGHT,
+    /** A chip was moved right by one column in the New Disc Area.*/
+    CHIP_MOVED_RIGHT_ONE_COLUMN,
 
     /** The last successful disc drop was undone.*/
     UNDO_CHIP_DROPPED,

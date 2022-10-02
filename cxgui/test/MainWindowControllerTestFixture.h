@@ -41,8 +41,8 @@ public:
 
     bool GetNewGameCreated() const;
     bool GetChipDropped() const;
-    bool GetChipMovedLeft() const;
-    bool GetChipMovedRight() const;
+    bool GetChipMovedLeftOneColumn() const;
+    bool GetChipMovedRightOneColumn() const;
     bool GetCurrentGameEnded() const;
     bool GetCurrentGameReinitialized() const;
     bool GetUndoCalled() const;
@@ -68,8 +68,8 @@ private:
         // IConnectXGameActions:
         void CreateNewGame(cxmodel::NewGameInformation p_gameInformation) override;
         void DropChip(const cxmodel::IChip& p_chip, size_t p_column) override;
-        void MoveLeft() override;
-        void MoveRight() override;
+        void MoveLeftOneColumn() override;
+        void MoveRightOneColumn() override;
         void EndCurrentGame() override;
         void ReinitializeCurrentGame() override;
 
@@ -87,8 +87,8 @@ private:
 
     bool m_newGameCreated = false;
     bool m_chipDropped = false;
-    bool m_chipMovedLeft = false;
-    bool m_chipMovedRight = false;
+    bool m_chipMovedLeftOneColumn = false;
+    bool m_chipMovedRightOneColumn = false;
     bool m_currentGameEnded = false;
     bool m_currentGameReinitialized = false;
     bool m_undoCalled = false;

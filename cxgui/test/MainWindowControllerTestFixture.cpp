@@ -46,14 +46,14 @@ bool MainWindowControllerTestFixture::GetChipDropped() const
     return m_chipDropped;
 }
 
-bool MainWindowControllerTestFixture::GetChipMovedLeft() const
+bool MainWindowControllerTestFixture::GetChipMovedLeftOneColumn() const
 {
-    return m_chipMovedLeft;
+    return m_chipMovedLeftOneColumn;
 }
 
-bool MainWindowControllerTestFixture::GetChipMovedRight() const
+bool MainWindowControllerTestFixture::GetChipMovedRightOneColumn() const
 {
-    return m_chipMovedRight;
+    return m_chipMovedRightOneColumn;
 }
 
 bool MainWindowControllerTestFixture::GetCurrentGameEnded() const
@@ -107,14 +107,14 @@ void MainWindowControllerTestFixture::MainWindowControllerMockModel::DropChip(co
     m_outer.m_chipDropped = true;
 }
 
-void MainWindowControllerTestFixture::MainWindowControllerMockModel::MoveLeft()
+void MainWindowControllerTestFixture::MainWindowControllerMockModel::MoveLeftOneColumn()
 {
-    m_outer.m_chipMovedLeft = true;
+    m_outer.m_chipMovedLeftOneColumn = true;
 }
 
-void MainWindowControllerTestFixture::MainWindowControllerMockModel::MoveRight()
+void MainWindowControllerTestFixture::MainWindowControllerMockModel::MoveRightOneColumn()
 {
-    m_outer.m_chipMovedRight = true;
+    m_outer.m_chipMovedRightOneColumn = true;
 }
 
 void MainWindowControllerTestFixture::MainWindowControllerMockModel::EndCurrentGame()

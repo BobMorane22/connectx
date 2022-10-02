@@ -53,12 +53,12 @@ TEST(StatusBarPresenter, MakeStatusBarContextString_ChipDroppedFailed_NoMessage)
 
 TEST(StatusBarPresenter, MakeStatusBarContextString_ChipMovedLeft_NoMessage)
 {
-    ASSERT_EQ(cxgui::MakeStatusBarContextString(cxmodel::ModelNotificationContext::CHIP_MOVED_LEFT), "");
+    ASSERT_EQ(cxgui::MakeStatusBarContextString(cxmodel::ModelNotificationContext::CHIP_MOVED_LEFT_ONE_COLUMN), "");
 }
 
 TEST(StatusBarPresenter, MakeStatusBarContextString_ChipMovedRight_NoMessage)
 {
-    ASSERT_EQ(cxgui::MakeStatusBarContextString(cxmodel::ModelNotificationContext::CHIP_MOVED_RIGHT), "");
+    ASSERT_EQ(cxgui::MakeStatusBarContextString(cxmodel::ModelNotificationContext::CHIP_MOVED_RIGHT_ONE_COLUMN), "");
 }
 
 TEST(StatusBarPresenter, MakeStatusBarContextString_Undo_UndoStringCreated)

@@ -51,14 +51,14 @@ void cxgui::MainWindowController::OnDown(const cxmodel::ChipColor& p_chipColor, 
     m_modelAsGameActions.DropChip(*m_currentChip, p_column);
 }
 
-void cxgui::MainWindowController::OnMoveLeft()
+void cxgui::MainWindowController::OnMoveLeftOneColumn()
 {
-    m_modelAsGameActions.MoveLeft();
+    m_modelAsGameActions.MoveLeftOneColumn();
 }
 
-void cxgui::MainWindowController::OnMoveRight()
+void cxgui::MainWindowController::OnMoveRightOneColumn()
 {
-    m_modelAsGameActions.MoveRight();
+    m_modelAsGameActions.MoveRightOneColumn();
 }
 
 void cxgui::MainWindowController::OnNewGame()

@@ -114,12 +114,12 @@ void MainWindowPresenterTestFixture::MainWindowPresenterModelMock::DropChip(cons
     Notify(cxmodel::ModelNotificationContext::CHIP_DROPPED);
 }
 
-void MainWindowPresenterTestFixture::MainWindowPresenterModelMock::MoveLeft()
+void MainWindowPresenterTestFixture::MainWindowPresenterModelMock::MoveLeftOneColumn()
 {
     // Nothing to do...
 }
 
-void MainWindowPresenterTestFixture::MainWindowPresenterModelMock::MoveRight()
+void MainWindowPresenterTestFixture::MainWindowPresenterModelMock::MoveRightOneColumn()
 {
     // Nothing to do...
 }

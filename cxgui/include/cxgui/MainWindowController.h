@@ -56,8 +56,8 @@ public:
 // ------------------------------------------------------------------------------------------------
 
     void OnDown(const cxmodel::ChipColor& p_chipColor, size_t p_column) override;
-    void OnMoveLeft() override;
-    void OnMoveRight() override;
+    void OnMoveLeftOneColumn() override;
+    void OnMoveRightOneColumn() override;
     void OnNewGame() override;
     void OnReinitializeCurrentGame() override;
     void OnUndo() override;

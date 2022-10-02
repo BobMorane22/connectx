@@ -56,16 +56,16 @@ public:
     virtual void OnDown(const cxmodel::ChipColor& p_chipColor, size_t p_column) = 0;
 
     /******************************************************************************************//**
-     * @brief Handler for left move.
+     * @brief Handler for left move by one column.
      *
      ********************************************************************************************/
-    virtual void OnMoveLeft() = 0;
+    virtual void OnMoveLeftOneColumn() = 0;
 
     /******************************************************************************************//**
-     * @brief Handler for right move.
+     * @brief Handler for right move by one column.
      *
      ********************************************************************************************/
-    virtual void OnMoveRight() = 0;
+    virtual void OnMoveRightOneColumn() = 0;
 
     /******************************************************************************************//**
      * @brief Handler for a new game request.

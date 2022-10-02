@@ -132,8 +132,8 @@ void cxgui::MainWindow::Update(cxmodel::ModelNotificationContext p_context, cxmo
                 UpdateChipDropped(p_context);
                 break;
             }
-            case cxmodel::ModelNotificationContext::CHIP_MOVED_LEFT:
-            case cxmodel::ModelNotificationContext::CHIP_MOVED_RIGHT:
+            case cxmodel::ModelNotificationContext::CHIP_MOVED_LEFT_ONE_COLUMN:
+            case cxmodel::ModelNotificationContext::CHIP_MOVED_RIGHT_ONE_COLUMN:
             {
                 UpdateChipMoved(p_context);
                 break;

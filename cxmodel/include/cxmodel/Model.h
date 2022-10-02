@@ -28,7 +28,6 @@
 #include <memory>
 
 #include <cxlog/ILogger.h>
-
 #include "IBoard.h"
 #include "ICommandStack.h"
 #include "IConnectXAI.h"
@@ -137,8 +136,8 @@ public:
 
     void CreateNewGame(NewGameInformation p_gameInformation) override;
     void DropChip(const cxmodel::IChip& p_chip, size_t p_column) override;
-    void MoveLeft() override;
-    void MoveRight() override;
+    void MoveLeftOneColumn() override;
+    void MoveRightOneColumn() override;
     void EndCurrentGame() override;
     void ReinitializeCurrentGame() override;
 

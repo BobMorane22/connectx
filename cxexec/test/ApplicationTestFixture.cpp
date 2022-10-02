@@ -104,12 +104,12 @@ void ApplicationTestFixture::ModelApplicationMock::DropChip(const cxmodel::IChip
     // Not used...
 }
 
-void ApplicationTestFixture::ModelApplicationMock::MoveLeft()
+void ApplicationTestFixture::ModelApplicationMock::MoveLeftOneColumn()
 {
     // Not used...
 }
 
-void ApplicationTestFixture::ModelApplicationMock::MoveRight()
+void ApplicationTestFixture::ModelApplicationMock::MoveRightOneColumn()
 {
     // Not used...
 }

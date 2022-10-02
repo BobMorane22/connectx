@@ -48,22 +48,22 @@ TEST_F(MainWindowControllerTestFixture, /*DISABLED_*/OnDown_ValidChip_ChipDroppe
     ASSERT_TRUE(GetChipDropped());
 }
 
-TEST_F(MainWindowControllerTestFixture, /*DISABLED_*/OnMoveLeft_ValidChip_MoveLeftCalledOnModel)
+TEST_F(MainWindowControllerTestFixture, /*DISABLED_*/OnMoveLeft_ValidChip_MoveLeftOneColumnCalledOnModel)
 {
-    ASSERT_FALSE(GetChipMovedLeft());
+    ASSERT_FALSE(GetChipMovedLeftOneColumn());
 
-    GetController().OnMoveLeft();
+    GetController().OnMoveLeftOneColumn();
 
-    ASSERT_TRUE(GetChipMovedLeft());
+    ASSERT_TRUE(GetChipMovedLeftOneColumn());
 }
 
-TEST_F(MainWindowControllerTestFixture, /*DISABLED_*/OnMoveRight_ValidChip_MoveRightCalledOnModel)
+TEST_F(MainWindowControllerTestFixture, /*DISABLED_*/OnMoveRight_ValidChip_MoveRightOneColumnCalledOnModel)
 {
-    ASSERT_FALSE(GetChipMovedRight());
+    ASSERT_FALSE(GetChipMovedRightOneColumn());
 
-    GetController().OnMoveRight();
+    GetController().OnMoveRightOneColumn();
 
-    ASSERT_TRUE(GetChipMovedRight());
+    ASSERT_TRUE(GetChipMovedRightOneColumn());
 }
 
 TEST_F(MainWindowControllerTestFixture, /*DISABLED_*/OnNewGame_ValidGame_EndCurrentGameCalledOnModel)

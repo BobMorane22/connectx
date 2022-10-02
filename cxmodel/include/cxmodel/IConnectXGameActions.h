@@ -67,13 +67,13 @@ public:
      * @brief Moves the chip left one position.
      *
      ********************************************************************************************/
-    virtual void MoveLeft() = 0;
+    virtual void MoveLeftOneColumn() = 0;
 
     /******************************************************************************************//**
      * @brief Moves the chip right one position.
      *
      ********************************************************************************************/
-    virtual void MoveRight() = 0;
+    virtual void MoveRightOneColumn() = 0;
 
     /******************************************************************************************//**
      * @brief Ends the current game.

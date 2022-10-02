@@ -59,7 +59,7 @@ public:
 
 bool GameViewLeftKeyHandlerStrategy::Handle(IGameViewController& p_controller, IBoardInformation& /*p_gameBoard*/)
 {
-    p_controller.OnMoveLeft();
+    p_controller.OnMoveLeftOneColumn();
 
     return true;
 }
@@ -75,7 +75,7 @@ public:
 
 bool GameViewRightKeyHandlerStrategy::Handle(IGameViewController& p_controller, IBoardInformation& /*p_gameBoard*/)
 {
-    p_controller.OnMoveRight();
+    p_controller.OnMoveRightOneColumn();
 
     return true;
 }
