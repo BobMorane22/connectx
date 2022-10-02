@@ -395,14 +395,15 @@ TEST_F(AnimationModelTestFixture, /*DISABLED_*/ResetChipPositions_ValidModel_Chi
     ASSERT_TRUE(!cxmath::AreLogicallyEqual(chipPositionBefore.m_y, chipPositionAfter.m_y));
 
     const cxmath::Radius chipRadius = model.GetChipRadius();
-    ASSERT_TRUE(chipPositionAfter.m_x == chipRadius.Get());
+    const cxmath::Width cellMargin = model.GetHorizontalMargin();
+    ASSERT_TRUE(chipPositionAfter.m_x == cellMargin.Get() + chipRadius.Get());
     ASSERT_TRUE(chipPositionAfter.m_y == 0.0);
 
     const cxmath::Position mirrorChipPositionAfter = model.GetMirrorChipPosition();
     ASSERT_TRUE(!cxmath::AreLogicallyEqual(mirrorChipPositionBefore.m_x, mirrorChipPositionAfter.m_x));
     ASSERT_TRUE(!cxmath::AreLogicallyEqual(mirrorChipPositionBefore.m_y, mirrorChipPositionAfter.m_y));
 
-    ASSERT_TRUE(mirrorChipPositionAfter.m_x == 0.0);
+    ASSERT_TRUE(mirrorChipPositionAfter.m_x == cellMargin.Get() + chipRadius.Get());
     ASSERT_TRUE(mirrorChipPositionAfter.m_y == 0.0);
 }
 
