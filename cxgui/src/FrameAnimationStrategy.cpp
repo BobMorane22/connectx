@@ -223,11 +223,11 @@ std::optional<cxgui::BoardAnimationNotificationContext> MoveChipRightToTargetFra
 
     if(p_horizontalAnimationInfo.m_currentDisplacement.Get() >= oneAnimationWidth || std::abs(p_horizontalAnimationInfo.m_currentDisplacement.Get() - oneAnimationWidth) <= 1e-6)
     {
-        m_animationModel.UpdateCurrentColumn(target);
-
         // End animation:
         p_horizontalAnimationInfo.Reset();
+        m_animationModel.UpdateCurrentColumn(target);
         m_presenter.Sync();
+
         return cxgui::BoardAnimationNotificationContext::POST_ANIMATE_MOVE_RIGHT_TO_TARGET;
     }
     else

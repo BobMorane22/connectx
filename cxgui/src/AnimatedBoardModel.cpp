@@ -419,8 +419,10 @@ void cxgui::AnimatedBoardModel::AddChipDisplacement(const cxmath::Height& p_vert
 
 void cxgui::AnimatedBoardModel::ResetChipPositions()
 {
-    m_chipPosition = {m_chipRadius.Get(), 0.0};
-    m_mirrorChipPosition = {0.0, 0.0};
+    const double horizontalStartPosition = m_horizontalMargin.Get() + m_chipRadius.Get();
+
+    m_chipPosition = {horizontalStartPosition, 0.0};
+    m_mirrorChipPosition = {horizontalStartPosition, 0.0};
 }
 
 void cxgui::AnimatedBoardModel::UpdateCurrentColumn(const cxmodel::Column& p_newCurrentColumn)
