@@ -481,16 +481,6 @@ cxlog::VerbosityLevel cxmodel::Model::GetVerbosityLevel() const
     return m_logger.GetVerbosityLevel();
 }
 
-void cxmodel::Model::CheckInvariants()
-{
-    INVARIANT(m_cmdStack);
-
-    if(m_board)
-    {
-        INVARIANT(m_botTarget < GetCurrentGridWidth());
-    }
-}
-
 void cxmodel::Model::ComputeNextDropColumn(DropColumnComputation p_algorithm)
 {
     auto strategy = NextDropColumnComputationStrategyCreate(p_algorithm);
@@ -505,3 +495,14 @@ size_t cxmodel::Model::GetCurrentBotTarget() const
 {
     return m_botTarget;
 }
+
+void cxmodel::Model::CheckInvariants()
+{
+    INVARIANT(m_cmdStack);
+
+    if(m_board)
+    {
+        INVARIANT(m_botTarget < GetCurrentGridWidth());
+    }
+}
+

@@ -786,3 +786,17 @@ TEST_F(ModelTestFixture, /*DISABLED_*/SetVerbosityLevel_FromNoneToDebug_Verbosit
     GetModel().SetVerbosityLevel(cxlog::VerbosityLevel::DEBUG);
     ASSERT_EQ(GetModel().GetVerbosityLevel(), cxlog::VerbosityLevel::DEBUG);
 }
+
+TEST_F(ModelTestFixture, /*DISABLED_*/ComputeNextDropColumn_InitialAndValidModel_BotColumnIsZero)
+{
+    ASSERT_EQ(GetModel().GetCurrentBotTarget(), 0u);
+}
+
+TEST_F(ModelTestFixture, /*DISABLED_*/ComputeNextDropColumn_ValidModel_ValidColumnComputed)
+{
+    CreateNewGame(6u, 7u, ModelTestFixture::NbPlayers::TWO, ModelTestFixture::InARowValue::FOUR);
+
+    // Drop a chip and make sure the result is within bounds:
+    DropChips(1u);
+    ASSERT_TRUE(GetModel().GetCurrentBotTarget() < GetModel().GetCurrentGridWidth());
+}
