@@ -46,8 +46,8 @@ public:
         m_boardHeight = 8u;
         m_boardWidth = 9u;
         m_activePlayerChipColor = cxmodel::MakeBlue();
-
         FillBoardColors(cxmodel::MakeBlue());
+        m_botTarget = 5u;
     }
 
     // cxgui::IGameViewPresenter (not used):
@@ -64,7 +64,7 @@ public:
     size_t GetGameViewBoardHeight() const override {return m_boardHeight;}
     const ChipColors& GetGameViewChipColors() const override {return m_boardColors;}
     [[nodiscard]] virtual bool IsCurrentPlayerABot() const {return false;};
-    [[nodiscard]] virtual size_t GetBotTarget() const {return 5u;};
+    [[nodiscard]] virtual size_t GetBotTarget() const {return m_botTarget;};
 
 private:
 
@@ -86,6 +86,7 @@ private:
     size_t m_boardWidth = 7u;
     cxmodel::ChipColor m_activePlayerChipColor = cxmodel::MakeRed();
     IGameViewPresenter::ChipColors m_boardColors;
+    size_t m_botTarget = 0u;
 
 };
 
@@ -124,7 +125,7 @@ private:
 
 } // namespace
 
-TEST_F(AnimatedBoardPresenterTestFixture, Sync_NoChangeToModel_SyncDoesNothing)
+TEST_F(AnimatedBoardPresenterTestFixture, /*DISABLED_*/Sync_NoChangeToModel_SyncDoesNothing)
 {
     auto presenter = GetPresenter();
 
@@ -133,6 +134,7 @@ TEST_F(AnimatedBoardPresenterTestFixture, Sync_NoChangeToModel_SyncDoesNothing)
     const cxmodel::Width boardWidthBefore = presenter.GetBoardWidth();
     const cxmodel::ChipColor activePlayerChipColorBefore = presenter.GetActivePlayerChipColor();
     const cxgui::IGameViewPresenter::ChipColors boardColorsBefore = presenter.GetBoardChipColors();
+    const cxmodel::Column botTargetBefore = presenter.GetBotTarget();
 
     // No changes were made to the underlying presenter, but we sync anyway:
     presenter.Sync();
@@ -142,6 +144,7 @@ TEST_F(AnimatedBoardPresenterTestFixture, Sync_NoChangeToModel_SyncDoesNothing)
     const cxmodel::Width boardWidthAfter = presenter.GetBoardWidth();
     const cxmodel::ChipColor activePlayerChipColorAfter = presenter.GetActivePlayerChipColor();
     const cxgui::IGameViewPresenter::ChipColors boardColorsAfter = presenter.GetBoardChipColors();
+    const cxmodel::Column botTargetAfter = presenter.GetBotTarget();
 
     // Everything should match:
     ASSERT_TRUE(boardHeightBefore == boardHeightAfter);
@@ -154,9 +157,10 @@ TEST_F(AnimatedBoardPresenterTestFixture, Sync_NoChangeToModel_SyncDoesNothing)
             ASSERT_TRUE(boardColorsBefore[row][column] == boardColorsAfter[row][column]);
         }
     }
+    ASSERT_TRUE(botTargetBefore == botTargetAfter);
 }
 
-TEST_F(AnimatedBoardPresenterTestFixture, Sync_ChangesToModel_Syncs)
+TEST_F(AnimatedBoardPresenterTestFixture, /*DISABLED_*/Sync_ChangesToModel_Syncs)
 {
     auto presenter = GetPresenter();
 
@@ -165,6 +169,7 @@ TEST_F(AnimatedBoardPresenterTestFixture, Sync_ChangesToModel_Syncs)
     const cxmodel::Width boardWidthBefore = presenter.GetBoardWidth();
     const cxmodel::ChipColor activePlayerChipColorBefore = presenter.GetActivePlayerChipColor();
     const cxgui::IGameViewPresenter::ChipColors boardColorsBefore = presenter.GetBoardChipColors();
+    const cxmodel::Column botTargetBefore = presenter.GetBotTarget();
 
     // We update the underlying presenter and sync:
     GetUnderlyingPresenter().UpdateWrapedValues();
@@ -175,6 +180,7 @@ TEST_F(AnimatedBoardPresenterTestFixture, Sync_ChangesToModel_Syncs)
     const cxmodel::Width boardWidthAfter = presenter.GetBoardWidth();
     const cxmodel::ChipColor activePlayerChipColorAfter = presenter.GetActivePlayerChipColor();
     const cxgui::IGameViewPresenter::ChipColors boardColorsAfter = presenter.GetBoardChipColors();
+    const cxmodel::Column botTargetAfter = presenter.GetBotTarget();
 
     // Returned values should be updated:
     ASSERT_TRUE(boardHeightBefore != boardHeightAfter);
@@ -187,24 +193,25 @@ TEST_F(AnimatedBoardPresenterTestFixture, Sync_ChangesToModel_Syncs)
             ASSERT_TRUE(boardColorsBefore[row][column] != boardColorsAfter[row][column]);
         }
     }
+    ASSERT_TRUE(botTargetBefore != botTargetAfter);
 }
 
-TEST_F(AnimatedBoardPresenterTestFixture, GetBoardHeight)
+TEST_F(AnimatedBoardPresenterTestFixture, /*DISABLED_*/GetBoardHeight_ValidPresenter_BoardHeightReturned)
 {
     ASSERT_TRUE(GetPresenter().GetBoardHeight() == cxmodel::Height{6u});
 }
 
-TEST_F(AnimatedBoardPresenterTestFixture, GetBoardWidth)
+TEST_F(AnimatedBoardPresenterTestFixture, /*DISABLED_*/GetBoardWidth_ValidPresenter_BoardWidthReturned)
 {
     ASSERT_TRUE(GetPresenter().GetBoardWidth() == cxmodel::Width{7u});
 }
 
-TEST_F(AnimatedBoardPresenterTestFixture, GetActivePlayerChipColor)
+TEST_F(AnimatedBoardPresenterTestFixture, /*DISABLED_*/GetActivePlayerChipColor_ValidPresenter_ActivePlayerChipColorReturned)
 {
     ASSERT_TRUE(GetPresenter().GetActivePlayerChipColor() == cxmodel::MakeRed());
 }
 
-TEST_F(AnimatedBoardPresenterTestFixture, GetBoardChipColors)
+TEST_F(AnimatedBoardPresenterTestFixture, /*DISABLED_*/GetBoardChipColors_ValidPresenter_BoardChipColorsReturned)
 {
     const auto& boardColors = GetPresenter().GetBoardChipColors();
     for(size_t row = 0u; row < GetPresenter().GetBoardHeight().Get(); ++row)
@@ -214,4 +221,9 @@ TEST_F(AnimatedBoardPresenterTestFixture, GetBoardChipColors)
             ASSERT_TRUE(boardColors[row][column] == cxmodel::MakeRed());
         }
     }
+}
+
+TEST_F(AnimatedBoardPresenterTestFixture, /*DISABLED_*/GetBotTarget_ValidPresenter_BotTargetReturned)
+{
+    ASSERT_TRUE(GetPresenter().GetBotTarget() == cxmodel::Column{0u});
 }
