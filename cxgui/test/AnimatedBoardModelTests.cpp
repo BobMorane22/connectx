@@ -691,3 +691,28 @@ TEST_F(AnimationModelTestFixture, /*DISABLED_*/GetCellLineWidth_ValidModel_CellL
     const cxmath::Width lineWidthAfterUpdate = model.GetLineWidth(cxgui::Feature::CELL);
     ASSERT_TRUE(cxmath::AreLogicallyEqual(lineWidthAfterUpdate.Get(), 0.5));
 }
+
+TEST_F(AnimationModelTestFixture, /*DISABLED_*/GetChipLineWidth_ValidModel_ChipLineWidthReturned)
+{
+    cxgui::IAnimatedBoardModel& model = GetModel();
+
+    const cxmath::Width lineWidthBeforeUpdate = model.GetLineWidth(cxgui::Feature::CHIP);
+    ASSERT_TRUE(lineWidthBeforeUpdate == cxmath::Width{0.0});
+
+    model.Update({cxmath::Height{100}, cxmath::Width{150}}, true);
+
+    const cxmath::Width lineWidthAfterUpdate = model.GetLineWidth(cxgui::Feature::CHIP);
+    ASSERT_TRUE(cxmath::AreLogicallyEqual(lineWidthAfterUpdate.Get(), 0.035714285714285719));
+}
+
+TEST_F(AnimationModelTestFixtureStdErrStreamRedirector, /*DISABLED_*/GetUnknownLineWidth_ValidModel_ZeroReturnedAndAssert)
+{
+    cxgui::IAnimatedBoardModel& model = GetModel();
+
+    const cxgui::Feature invalid = static_cast<cxgui::Feature>(-1);
+
+    const cxmath::Width invalidLineWidth = model.GetLineWidth(invalid);
+    ASSERT_TRUE(invalidLineWidth == cxmath::Width{0.0});
+
+    ASSERT_ASSERTION_FAILED(*this);
+}
