@@ -470,6 +470,28 @@ TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/IsNewGamePossible_ChipDropRe
     ASSERT_TRUE(presenter.IsNewGamePossible());
 }
 
+TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/IsNewGamePossible_ChipMovedLeftOneColumnNotification_TrueReturned)
+{
+    auto& actionModel = GetActionsModel();
+    actionModel.CreateNewGame(cxmodel::NewGameInformation{});
+
+    const auto& presenter = GetPresenter();
+
+    SendNotification(cxmodel::ModelNotificationContext::CHIP_MOVED_LEFT_ONE_COLUMN);
+    ASSERT_TRUE(presenter.IsNewGamePossible());
+}
+
+TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/IsNewGamePossible_ChipMovedRightOneColumnNotification_TrueReturned)
+{
+    auto& actionModel = GetActionsModel();
+    actionModel.CreateNewGame(cxmodel::NewGameInformation{});
+
+    const auto& presenter = GetPresenter();
+
+    SendNotification(cxmodel::ModelNotificationContext::CHIP_MOVED_RIGHT_ONE_COLUMN);
+    ASSERT_TRUE(presenter.IsNewGamePossible());
+}
+
 TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/IsNewGamePossible_AllOtherNotifications_FalseReturned)
 {
     auto& actionModel = GetActionsModel();
@@ -523,6 +545,23 @@ TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/IsCurrentGameReinitializatio
 
     SendNotification(cxmodel::ModelNotificationContext::GAME_REINITIALIZED);
     ASSERT_FALSE(presenter.IsCurrentGameReinitializationPossible());
+}
+
+TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/IsCurrentPlayerABot_CurrentPlayerIsABot_ReturnsTrue)
+{
+    UpdatePlayerState(GetGameInformationModel().GetActivePlayer(), cxmodel::PlayerType::BOT);
+    ASSERT_TRUE(GetPresenter().IsCurrentPlayerABot());
+}
+
+TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/IsCurrentPlayerABot_CurrentPlayerIsNotABot_ReturnsFalse)
+{
+    UpdatePlayerState(GetGameInformationModel().GetActivePlayer(), cxmodel::PlayerType::HUMAN);
+    ASSERT_FALSE(GetPresenter().IsCurrentPlayerABot());
+}
+
+TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetBotTarget_ValidTarget_TargetReturned)
+{
+    ASSERT_TRUE(GetPresenter().GetBotTarget() == 5u);
 }
 
 TEST_F(ConfigurableMainWindowPresenterTestFixture, /*DISABLED_*/IsUndoPossible_ModelCanUndo_TrueReturned)

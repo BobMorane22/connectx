@@ -54,6 +54,8 @@ public:
     cxmodel::IConnectXLimits& GetLimitsModel();
     cxmodel::IUndoRedo& GetUndoRedoModel();
 
+    void UpdatePlayerState(const cxmodel::IPlayer& p_player, cxmodel::PlayerType p_newPlayerType);
+
 private:
 
     class MainWindowPresenterModelMock : public cxmodel::ModelSubject,
@@ -69,6 +71,7 @@ private:
         ~MainWindowPresenterModelMock() override = default;
 
         void SendNotification(cxmodel::ModelNotificationContext p_context);
+        void UpdatePlayerState(const cxmodel::IPlayer& p_player, cxmodel::PlayerType p_newPlayerType);
 
         // IVersionning:
         std::string GetName() const override {return "Connect X";}
@@ -86,8 +89,8 @@ private:
         size_t GetCurrentGridHeight() const override {return 6u;}
         size_t GetCurrentGridWidth() const override {return 7u;};
         size_t GetCurrentInARowValue() const override {return 4u;};
-        const cxmodel::IPlayer& GetActivePlayer() const override {return *m_ACTIVE_PLAYER;};
-        const cxmodel::IPlayer& GetNextPlayer() const override {return *m_NEXT_PLAYER;};
+        const cxmodel::IPlayer& GetActivePlayer() const override {return *m_activePlayer;};
+        const cxmodel::IPlayer& GetNextPlayer() const override {return *m_nextPlayer;};
         const cxmodel::IChip& GetChip(size_t p_row, size_t p_column) const override;
         bool IsWon() const override {throw std::logic_error("Not implemented!");};
         bool IsTie() const override {throw std::logic_error("Not implemented!");};
@@ -115,8 +118,8 @@ private:
 
     private:
 
-        const std::unique_ptr<cxmodel::IPlayer> m_ACTIVE_PLAYER = cxmodel::CreatePlayer("John Doe", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN);
-        const std::unique_ptr<cxmodel::IPlayer> m_NEXT_PLAYER = cxmodel::CreatePlayer("Jane Doe", cxmodel::MakeBlue(), cxmodel::PlayerType::HUMAN);
+        std::unique_ptr<cxmodel::IPlayer> m_activePlayer = cxmodel::CreatePlayer("John Doe", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN);
+        std::unique_ptr<cxmodel::IPlayer> m_nextPlayer = cxmodel::CreatePlayer("Jane Doe", cxmodel::MakeBlue(), cxmodel::PlayerType::HUMAN);
     };
 
 private:
