@@ -59,7 +59,7 @@ std::unique_ptr<cxgui::IGameResolutionDialogPresenter> cxgui::GameResolutionDial
             presenter = std::make_unique<cxgui::TieGameResolutionDialogPresenter>();
             break;
         }
-        default:
+        default:   // LCOV_EXCL_LINE
             break; // LCOV_EXCL_LINE
     }
 
