@@ -251,6 +251,8 @@ void cxmodel::Model::DropChip(const cxmodel::IChip& p_chip, size_t p_column)
         return;
     }
 
+    Notify(ModelNotificationContext::CHIP_DROPPED);
+
     if(IsWon())
     {
         // In the case of a win, we must revert the next player -> active player update, since

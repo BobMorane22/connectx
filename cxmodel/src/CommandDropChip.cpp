@@ -94,8 +94,6 @@ void cxmodel::CommandDropChip::Execute()
         return;
     }
 
-    Notify(ModelNotificationContext::CHIP_DROPPED);
-
     // At this point, all successive calls to Execute are redos:
     m_isRedo = true;
 }

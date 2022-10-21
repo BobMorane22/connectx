@@ -42,12 +42,8 @@ cxmodel::CommandStack::CommandStack(const size_t p_capacity)
 
 void cxmodel::CommandStack::Execute(std::unique_ptr<cxmodel::ICommand>&& p_newCommand)
 {
-    PRECONDITION(p_newCommand != nullptr);
-
-    if(!p_newCommand)
-    {
-        return;
-    }
+    IF_PRECONDITION_NOT_MET_DO(p_newCommand, return;);
+    p_newCommand->Execute();
 
     if(NoCommandUndoed())
     {
@@ -80,12 +76,9 @@ void cxmodel::CommandStack::Execute(std::unique_ptr<cxmodel::ICommand>&& p_newCo
         m_commands.push_back(std::move(p_newCommand));
     }
 
-    // At this point a new command was added. We execute it:
-    if(m_currentPosition < m_commands.size())
-    {
-        ++m_currentPosition;
-        m_commands.back()->Execute();
-    }
+    // At this point a new command was added:
+    ASSERT(m_currentPosition < m_commands.size());
+    ++m_currentPosition;
 
     CheckInvariants();
 }
