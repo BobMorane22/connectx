@@ -24,6 +24,7 @@
 #include <iostream>
 
 #include <cxinv/assertion.h>
+#include <cxmodel/CommandCompletionStatus.h>
 #include <cxmodel/CommandStack.h>
 
 cxmodel::CommandStack::CommandStack(const size_t p_capacity)
@@ -40,11 +41,20 @@ cxmodel::CommandStack::CommandStack(const size_t p_capacity)
     CheckInvariants();
 }
 
-void cxmodel::CommandStack::Execute(std::unique_ptr<cxmodel::ICommand>&& p_newCommand)
+cxmodel::CommandCompletionStatus cxmodel::CommandStack::Execute(std::unique_ptr<cxmodel::ICommand>&& p_newCommand)
 {
-    IF_PRECONDITION_NOT_MET_DO(p_newCommand, return;);
-    p_newCommand->Execute();
+    IF_PRECONDITION_NOT_MET_DO(p_newCommand, return CommandCompletionStatus::FAILED_UNEXPECTED;);
 
+    // We try to execute the command:
+    const auto commandExecuteResult = p_newCommand->Execute();
+    IF_CONDITION_NOT_MET_DO(commandExecuteResult < CommandCompletionStatus::FAILED_UNEXPECTED, return commandExecuteResult;);
+    if(commandExecuteResult != CommandCompletionStatus::SUCCESS)
+    {
+        return commandExecuteResult;
+    }
+
+    // At this point we know the command execution was a success, so we add it to the stack
+    // to later be undone, if ever necessary:
     if(NoCommandUndoed())
     {
         if(IsFull())
@@ -81,6 +91,8 @@ void cxmodel::CommandStack::Execute(std::unique_ptr<cxmodel::ICommand>&& p_newCo
     ++m_currentPosition;
 
     CheckInvariants();
+
+    return CommandCompletionStatus::SUCCESS;
 }
 
 void cxmodel::CommandStack::Clear()

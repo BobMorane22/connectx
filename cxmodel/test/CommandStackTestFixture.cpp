@@ -21,6 +21,8 @@
  *
  *************************************************************************************************/
 
+#include <cxmodel/ICommand.h>
+
 #include "CommandStackTestFixture.h"
 
 CommandStackTestFixture::CommandStackTestFixture()

@@ -26,7 +26,11 @@
 
 #include <memory>
 
-#include "ICommand.h"
+namespace cxmodel
+{
+    enum class CommandCompletionStatus;
+    class ICommand;
+}
 
 namespace cxmodel
 {
@@ -57,16 +61,20 @@ public:
     virtual ~ICommandStack() = default;
 
     /******************************************************************************************//**
-     * @brief Add a command to the stack and execute it.
+     * @brief Executes a command and, upon success, adds it to the stack.
      *
      * @pre @c p_newCommand is not @c nullptr
      *
-     * @param p_newCommand The command to add to the stack and execute.
+     * @param p_newCommand The command to execute and add to the stack.
      *
-     * Adds a new command to the stack (and takes ownership). The new command is then executed.
+     * Executes the command given as argument (and takes ownership). If the command execution
+     * is a success, the command is added to the stack. From there, it can later be undone and
+     * redone if necessary.
+     *
+     * @return The command completion status.
      *
      ********************************************************************************************/
-    virtual void Execute(std::unique_ptr<ICommand>&& p_newCommand) = 0;
+    [[nodiscard]] virtual CommandCompletionStatus Execute(std::unique_ptr<ICommand>&& p_newCommand) = 0;
 
     /******************************************************************************************//**
      * @brief Clear the stack.
@@ -105,7 +113,7 @@ public:
      *         @c false otherwise.
      *
      ********************************************************************************************/
-    virtual bool CanUndo() const = 0;
+    [[nodiscard]] virtual bool CanUndo() const = 0;
 
     /******************************************************************************************//**
      * @brief Check is there are commands in the stack that can be redone.
@@ -114,7 +122,7 @@ public:
      *         @c false otherwise.
      *
      ********************************************************************************************/
-    virtual bool CanRedo() const = 0;
+    [[nodiscard]] virtual bool CanRedo() const = 0;
 
     /******************************************************************************************//**
      * @brief Check is there are commands in the stack.
@@ -122,7 +130,7 @@ public:
      * @return @c true if there is at least one command in the stack and @c false otherwise.
      *
      ********************************************************************************************/
-    virtual bool IsEmpty() const = 0;
+    [[nodiscard]] virtual bool IsEmpty() const = 0;
 
     /******************************************************************************************//**
      * @brief Check if the command stack is full.
@@ -130,7 +138,7 @@ public:
      * @return @c true if the command stack is full, @c false otherwise.
      *
      ********************************************************************************************/
-    virtual bool IsFull() const = 0;
+    [[nodiscard]] virtual bool IsFull() const = 0;
 
     /******************************************************************************************//**
      * @brief Get the number of commands currently stored in the stack.
@@ -138,7 +146,7 @@ public:
      * @return The number of commands currently stored in the stack.
      *
      ********************************************************************************************/
-    virtual size_t GetNbCommands() const = 0;
+    [[nodiscard]] virtual size_t GetNbCommands() const = 0;
 
 };
 

@@ -72,7 +72,7 @@ public:
                     std::vector<IBoard::Position>& p_takenPositions);
 
     // ICommand:
-    void Execute() override;
+    [[nodiscard]] CommandCompletionStatus Execute() override;
     void Undo() override;
 
 private:

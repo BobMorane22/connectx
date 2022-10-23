@@ -26,6 +26,11 @@
 
 namespace cxmodel
 {
+    enum class CommandCompletionStatus;
+}
+
+namespace cxmodel
+{
 
 /*********************************************************************************************//**
  * @brief Interface for creating commands.
@@ -51,8 +56,10 @@ public:
      *
      * Execute the actions registered in a command.
      *
+     * @return The command completion status.
+     *
      ********************************************************************************************/
-    virtual void Execute() = 0;
+    [[nodiscard]] virtual CommandCompletionStatus Execute() = 0;
 
     /******************************************************************************************//**
      * @brief Undo a command action.

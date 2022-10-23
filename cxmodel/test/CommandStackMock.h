@@ -38,15 +38,15 @@ public:
     void SetCanRedo(bool p_canRedo);
 
     // cxmodel::ICommandStack:
-    void Execute(std::unique_ptr<cxmodel::ICommand>&& p_newCommand) override;
+    [[nodiscard]] cxmodel::CommandCompletionStatus Execute(std::unique_ptr<cxmodel::ICommand>&& p_newCommand) override;
     void Clear() override;
     void Undo() override;
     void Redo() override;
-    bool CanUndo() const override;
-    bool CanRedo() const override;
-    bool IsEmpty() const override;
-    bool IsFull() const override;
-    size_t GetNbCommands() const override;
+    [[nodiscard]] bool CanUndo() const override;
+    [[nodiscard]] bool CanRedo() const override;
+    [[nodiscard]] bool IsEmpty() const override;
+    [[nodiscard]] bool IsFull() const override;
+    [[nodiscard]] size_t GetNbCommands() const override;
 
 private:
 

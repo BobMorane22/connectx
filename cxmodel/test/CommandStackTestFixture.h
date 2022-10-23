@@ -42,3 +42,5 @@ private:
     const size_t m_STACK_SIZE;
     std::unique_ptr< cxmodel::ICommandStack > m_stack;
 };
+
+ADD_STREAM_REDIRECTORS(CommandStackTestFixture);

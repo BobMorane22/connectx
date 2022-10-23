@@ -33,8 +33,9 @@ public:
 
     CommandTimesThreeMock(double& p_data);
 
-    virtual void Execute() override;
-    virtual void Undo() override;
+    // cxmodel::ICommand:
+    [[nodiscard]] cxmodel::CommandCompletionStatus Execute() override;
+    void Undo() override;
 
 
 private:

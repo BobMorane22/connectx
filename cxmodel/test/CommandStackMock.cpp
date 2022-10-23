@@ -24,6 +24,7 @@
 #include <gtest/gtest.h>
 
 #include <cxunit/NotImplementedException.h>
+#include <cxmodel/CommandCompletionStatus.h>
 
 #include "CommandStackMock.h"
 
@@ -47,9 +48,9 @@ void CommandStackMock::SetCanRedo(bool p_canRedo)
     m_canRedo = p_canRedo;
 }
 
-void CommandStackMock::Execute(std::unique_ptr<cxmodel::ICommand>&& /*p_newCommand*/)
+cxmodel::CommandCompletionStatus CommandStackMock::Execute(std::unique_ptr<cxmodel::ICommand>&& /*p_newCommand*/)
 {
-    // Does nothing.
+    return cxmodel::CommandCompletionStatus::SUCCESS;
 }
 
 void CommandStackMock::Clear()

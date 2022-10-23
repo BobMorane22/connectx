@@ -25,6 +25,7 @@
 #include <sstream>
 
 #include <cxinv/assertion.h>
+#include <cxmodel/CommandCompletionStatus.h>
 #include <cxmodel/CommandDropChip.h>
 #include <cxmodel/IChip.h>
 #include <cxmodel/Subject.h>
@@ -65,25 +66,25 @@ cxmodel::CommandDropChip::CommandDropChip(cxmodel::IBoard& p_board,
     POSTCONDITION(m_droppedChip);
 }
 
-void cxmodel::CommandDropChip::Execute()
+cxmodel::CommandCompletionStatus cxmodel::CommandDropChip::Execute()
 {
-    IF_CONDITION_NOT_MET_DO(m_droppedChip, return;);
+    IF_CONDITION_NOT_MET_DO(m_droppedChip, return CommandCompletionStatus::FAILED_UNEXPECTED;);
 
     IBoard::Position droppedPosition;
-    IF_CONDITION_NOT_MET_DO(m_board.DropChip(m_column, *m_droppedChip, droppedPosition), return;);
+    IF_CONDITION_NOT_MET_DO(m_board.DropChip(m_column, *m_droppedChip, droppedPosition), return CommandCompletionStatus::FAILED_UNEXPECTED;);
     m_previousDropPosition = droppedPosition;
 
     // Update player information:
     UpdatePlayerIndex(m_playersInfo.m_activePlayerIndex, m_playersInfo.m_players.size());
     UpdatePlayerIndex(m_playersInfo.m_nextPlayerIndex, m_playersInfo.m_players.size());
 
-    IF_CONDITION_NOT_MET_DO(m_playersInfo.m_activePlayerIndex < m_playersInfo.m_players.size(), return;);
-    IF_CONDITION_NOT_MET_DO(m_playersInfo.m_nextPlayerIndex < m_playersInfo.m_players.size(), return;);
-    IF_CONDITION_NOT_MET_DO(m_playersInfo.m_activePlayerIndex != m_playersInfo.m_nextPlayerIndex, return;);
+    IF_CONDITION_NOT_MET_DO(m_playersInfo.m_activePlayerIndex < m_playersInfo.m_players.size(),   return CommandCompletionStatus::FAILED_UNEXPECTED;);
+    IF_CONDITION_NOT_MET_DO(m_playersInfo.m_nextPlayerIndex < m_playersInfo.m_players.size(),     return CommandCompletionStatus::FAILED_UNEXPECTED;);
+    IF_CONDITION_NOT_MET_DO(m_playersInfo.m_activePlayerIndex != m_playersInfo.m_nextPlayerIndex, return CommandCompletionStatus::FAILED_UNEXPECTED;);
 
     // Update taken positions:
     const bool isPositionFree = std::find(m_takenPositions.cbegin(), m_takenPositions.cend(), droppedPosition) == m_takenPositions.cend();
-    IF_CONDITION_NOT_MET_DO(isPositionFree, return;);
+    IF_CONDITION_NOT_MET_DO(isPositionFree, return CommandCompletionStatus::FAILED_UNEXPECTED;);
 
     m_takenPositions.push_back(droppedPosition);
 
@@ -91,11 +92,14 @@ void cxmodel::CommandDropChip::Execute()
     if(m_isRedo)
     {
         Notify(ModelNotificationContext::REDO_CHIP_DROPPED);
-        return;
+
+        return CommandCompletionStatus::SUCCESS;;
     }
 
     // At this point, all successive calls to Execute are redos:
     m_isRedo = true;
+
+    return CommandCompletionStatus::SUCCESS;;
 }
 
 void cxmodel::CommandDropChip::Undo()

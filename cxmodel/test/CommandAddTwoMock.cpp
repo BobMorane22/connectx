@@ -21,6 +21,8 @@
  *
  *************************************************************************************************/
 
+#include <cxmodel/CommandCompletionStatus.h>
+
 #include "CommandAddTwoMock.h"
 
 CommandAddTwoMock::CommandAddTwoMock(double& p_data)
@@ -28,9 +30,11 @@ CommandAddTwoMock::CommandAddTwoMock(double& p_data)
 {
 }
 
-void CommandAddTwoMock::Execute()
+cxmodel::CommandCompletionStatus CommandAddTwoMock::Execute()
 {
     m_data += 2.0;
+
+    return cxmodel::CommandCompletionStatus::SUCCESS;
 }
 
 void CommandAddTwoMock::Undo()

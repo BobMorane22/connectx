@@ -16,64 +16,44 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file CommandStack.h
- * @date 2020
+ * @file CommandStatus.h
+ * @date 2022
  *
  *************************************************************************************************/
 
-#ifndef COMMANDSTACK_H_EC172719_473B_49A4_9D9B_D99C30B208A7
-#define COMMANDSTACK_H_EC172719_473B_49A4_9D9B_D99C30B208A7
-
-#include <vector>
-
-#include <cxmodel/ICommand.h>
-
-#include "ICommandStack.h"
+#ifndef COMMANDCOMPLETIONSTATUS_H_D8E68D1D_1790_4070_AE58_CF186972A190
+#define COMMANDCOMPLETIONSTATUS_H_D8E68D1D_1790_4070_AE58_CF186972A190
 
 namespace cxmodel
 {
 
 /*********************************************************************************************//**
- * @brief A concrete command stack.
+ * @brief Command completion status.
  *
- * A basic implementation of a command stack with only the most basic facilities.
+ * Incidates with which degree of success a command was executes. The higher the value, the more
+ * critical the error (if any).
  *
  ************************************************************************************************/
-class CommandStack : public ICommandStack
+enum class CommandCompletionStatus
 {
+    /** Command completed successfully. */
+    SUCCESS,
 
-public:
+    /** Command failed in an expected way. As far as the program is concerned,
+        this failure is an accetable outcome and was predictable. This type
+        of failure should not result in a bug.*/
+    FAILED_EXPECTED,
 
-    CommandStack(const size_t p_capacity);
-
-    [[nodiscard]] CommandCompletionStatus Execute(std::unique_ptr<ICommand>&& p_newCommand) override;
-    void Clear() override;
-
-    void Undo() override;
-    void Redo() override;
-    [[nodiscard]] bool CanUndo() const override;
-    [[nodiscard]] bool CanRedo() const override;
-
-    [[nodiscard]] bool IsEmpty() const override;
-    [[nodiscard]] bool IsFull() const override;
-    [[nodiscard]] size_t GetNbCommands() const override;
-
-
-private:
-
-    [[nodiscard]] size_t GetLastCommandPosition() const;
-    [[nodiscard]] bool NoCommandUndoed() const;
-    [[nodiscard]] bool SomeCommandUndoed() const;
-
-    void CheckInvariants();
-
-    const std::size_t m_endPosition;
-    std::size_t m_currentPosition;
-    bool m_allCmdUndoed;
-
-    std::vector<std::unique_ptr<ICommand>> m_commands;
+    /** Command failed in an unexpected way. As far as the program is concerned,
+        this failure is unacceptable and is the result of an internal error which
+        could not have been predicted. Such errors include preconditions and
+        postconditions fails. This type of failure will typically result in a bug.*/
+    FAILED_UNEXPECTED,
 };
+
+static_assert(CommandCompletionStatus::SUCCESS < CommandCompletionStatus::FAILED_EXPECTED);
+static_assert(CommandCompletionStatus::FAILED_EXPECTED < CommandCompletionStatus::FAILED_UNEXPECTED);
 
 } // namespace cxmodel
 
-#endif // COMMANDSTACK_H_EC172719_473B_49A4_9D9B_D99C30B208A7
+#endif // COMMANDCOMPLETIONSTATUS_H_D8E68D1D_1790_4070_AE58_CF186972A190

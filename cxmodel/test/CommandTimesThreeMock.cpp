@@ -21,6 +21,8 @@
  *
  *************************************************************************************************/
 
+#include <cxmodel/CommandCompletionStatus.h>
+
 #include "CommandTimesThreeMock.h"
 
 CommandTimesThreeMock::CommandTimesThreeMock(double& p_data)
@@ -28,9 +30,11 @@ CommandTimesThreeMock::CommandTimesThreeMock(double& p_data)
 {
 }
 
-void CommandTimesThreeMock::Execute()
+cxmodel::CommandCompletionStatus CommandTimesThreeMock::Execute()
 {
     m_data *= 3.0;
+
+    return cxmodel::CommandCompletionStatus::SUCCESS;
 }
 
 void CommandTimesThreeMock::Undo()

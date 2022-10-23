@@ -26,6 +26,7 @@
 
 #include <cxinv/assertion.h>
 #include <cxmodel/Board.h>
+#include <cxmodel/CommandCompletionStatus.h>
 #include <cxmodel/CommandCreateNewGame.h>
 
 cxmodel::CommandCreateNewGame::CommandCreateNewGame(const IConnectXLimits& p_modelAsLimits,
@@ -42,9 +43,9 @@ cxmodel::CommandCreateNewGame::CommandCreateNewGame(const IConnectXLimits& p_mod
     INVARIANT(m_newGameInformation.m_players.size() >= 2);
 }
 
-void cxmodel::CommandCreateNewGame::Execute()
+cxmodel::CommandCompletionStatus cxmodel::CommandCreateNewGame::Execute()
 {
-    PRECONDITION(m_newGameInformation.m_players.size() >= 2);
+    IF_PRECONDITION_NOT_MET_DO(m_newGameInformation.m_players.size() >= 2, return CommandCompletionStatus::FAILED_UNEXPECTED;);
 
     // Players:
     m_modelPlayers = std::move(m_newGameInformation.m_players);
@@ -54,6 +55,8 @@ void cxmodel::CommandCreateNewGame::Execute()
 
     // In-a-row value:
     m_inARowValue = m_newGameInformation.m_inARowValue;
+
+    return CommandCompletionStatus::SUCCESS;
 }
 
 void cxmodel::CommandCreateNewGame::Undo()

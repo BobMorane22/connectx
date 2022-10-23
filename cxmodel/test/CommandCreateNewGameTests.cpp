@@ -24,6 +24,7 @@
 #include <gtest/gtest.h>
 
 #include <cxmodel/Board.h>
+#include <cxmodel/CommandCompletionStatus.h>
 #include <cxmodel/CommandCreateNewGame.h>
 
 class CommandCreateNewGameTestFixture : public ::testing::Test
@@ -69,7 +70,7 @@ TEST_F(CommandCreateNewGameTestFixture, /*DISABLED_*/Execute_ValidNewGame_NewGam
     newGameInformation.m_players.emplace_back(cxmodel::CreatePlayer("Jane Doe", cxmodel::MakeBlue(), cxmodel::PlayerType::HUMAN));
 
     cxmodel::CommandCreateNewGame cmd{ModelAsLimitsGet(), board, modelPlayers, modelInARowValue, std::move(newGameInformation)};
-    cmd.Execute();
+    ASSERT_TRUE(cmd.Execute() == cxmodel::CommandCompletionStatus::SUCCESS);
 
     ASSERT_EQ(modelPlayers.size(), 2u);
     ASSERT_EQ(*modelPlayers[0], *cxmodel::CreatePlayer("John Doe", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN));
@@ -96,7 +97,7 @@ TEST_F(CommandCreateNewGameTestFixture, /*DISABLED_*/Undo_ValidNewGame_HasNoEffe
     newGameInformation.m_players.emplace_back(cxmodel::CreatePlayer("Jane Doe", cxmodel::MakeBlue(), cxmodel::PlayerType::HUMAN));
 
     cxmodel::CommandCreateNewGame cmd{ModelAsLimitsGet(), board, modelPlayers, modelInARowValue, std::move(newGameInformation)};
-    cmd.Execute();
+    ASSERT_TRUE(cmd.Execute() == cxmodel::CommandCompletionStatus::SUCCESS);
 
     // For now, undoing should have no effect:
     cmd.Undo();

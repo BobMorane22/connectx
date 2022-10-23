@@ -61,8 +61,8 @@ public:
                          size_t& p_inARowValue,
                          NewGameInformation p_newGameInformation);
 
-    virtual void Execute() override;
-    virtual void Undo() override;
+    [[nodiscard]] CommandCompletionStatus Execute() override;
+    void Undo() override;
 
 private:
 
