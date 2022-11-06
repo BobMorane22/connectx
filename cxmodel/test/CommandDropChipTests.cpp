@@ -26,6 +26,7 @@
 #include <gtest/gtest.h>
 
 #include <cxunit/DisableStdStreamsRAII.h>
+#include <cxlog/ILogger.h>
 #include <cxmodel/Board.h>
 #include <cxmodel/CommandDropChip.h>
 #include <cxmodel/Disc.h>
@@ -38,33 +39,46 @@ class CommandDropChipTestFixture : public ::testing::Test
 
 public:
 
-    cxmodel::IConnectXLimits& ModelAsLimitsGet()
+    [[nodiscard]] cxmodel::IConnectXLimits& GetModelAsLimits()
     {
         return m_model;
+    }
+
+    [[nodiscard]] cxlog::ILogger& GetLogger()
+    {
+        return m_logger;
     }
 
 private:
 
     class ModelMock final : public cxmodel::IConnectXLimits
     {
-        size_t GetMinimumGridHeight() const override {return 6u;};
-        size_t GetMinimumGridWidth() const override {return 7u;};
-        size_t GetMinimumInARowValue() const override {return 4u;};
-        size_t GetMaximumGridHeight() const override {return 64u;};
-        size_t GetMaximumGridWidth() const override {return 64u;};
-        size_t GetMaximumInARowValue() const override {return 10u;};
-        size_t GetMinimumNumberOfPlayers() const override {return 3u;};
-        size_t GetMaximumNumberOfPlayers() const override {return 10u;};
+        size_t GetMinimumGridHeight() const override {return 6u;}
+        size_t GetMinimumGridWidth() const override {return 7u;}
+        size_t GetMinimumInARowValue() const override {return 4u;}
+        size_t GetMaximumGridHeight() const override {return 64u;}
+        size_t GetMaximumGridWidth() const override {return 64u;}
+        size_t GetMaximumInARowValue() const override {return 10u;}
+        size_t GetMinimumNumberOfPlayers() const override {return 3u;}
+        size_t GetMaximumNumberOfPlayers() const override {return 10u;}
+    };
+
+    class NoLogger final : public cxlog::ILogger
+    {
+        void Log(const cxlog::VerbosityLevel, const std::string&, const std::string&, size_t, const std::string&) override {}
+        void SetVerbosityLevel(const cxlog::VerbosityLevel) override {}
+        cxlog::VerbosityLevel GetVerbosityLevel() const override {return cxlog::VerbosityLevel::NONE;}
     };
 
     ModelMock m_model;
+    NoLogger m_logger;
 
 };
 
 TEST_F(CommandDropChipTestFixture, /*DISABLED_*/Execute_EmptyRowAndTwoPlayers_AllDataUpdated)
 {
     // Data setup:
-    cxmodel::Board board{6u, 7u, ModelAsLimitsGet()};
+    cxmodel::Board board{6u, 7u, GetModelAsLimits()};
     ASSERT_TRUE(board.GetChip({0u, 0u}) == NO_CHIP);
 
     cxmodel::PlayerInformation playerInfo{
@@ -84,11 +98,12 @@ TEST_F(CommandDropChipTestFixture, /*DISABLED_*/Execute_EmptyRowAndTwoPlayers_Al
     ASSERT_TRUE(takenPositions.empty());
 
     // The command is created and executed:
-    std::unique_ptr<cxmodel::ICommand> cmd = std::make_unique<cxmodel::CommandDropChip>(board,
-                                                                                        playerInfo,
-                                                                                        std::make_unique<cxmodel::Disc>(droppedDisc),
-                                                                                        0u,
-                                                                                        takenPositions);
+    const auto cmd = std::make_unique<cxmodel::CommandDropChip>(board,
+                                                                playerInfo,
+                                                                std::make_unique<cxmodel::Disc>(droppedDisc),
+                                                                0u,
+                                                                takenPositions,
+                                                                GetLogger());
 
     cmd->Execute();
 
@@ -103,7 +118,7 @@ TEST_F(CommandDropChipTestFixture, /*DISABLED_*/Execute_EmptyRowAndTwoPlayers_Al
 TEST_F(CommandDropChipTestFixture, /*DISABLED_*/Execute_EmptyRowAndThreePlayers_AllDataUpdated)
 {
     // Data setup:
-    cxmodel::Board board{6u, 7u, ModelAsLimitsGet()};
+    cxmodel::Board board{6u, 7u, GetModelAsLimits()};
     ASSERT_TRUE(board.GetChip({0u, 0u}) == NO_CHIP);
 
     cxmodel::PlayerInformation playerInfo{
@@ -124,11 +139,12 @@ TEST_F(CommandDropChipTestFixture, /*DISABLED_*/Execute_EmptyRowAndThreePlayers_
     ASSERT_TRUE(takenPositions.empty());
 
     // The command is created and executed:
-    std::unique_ptr<cxmodel::ICommand> cmd = std::make_unique<cxmodel::CommandDropChip>(board,
-                                                                                        playerInfo,
-                                                                                        std::make_unique<cxmodel::Disc>(droppedDisc),
-                                                                                        0u,
-                                                                                        takenPositions);
+    const auto cmd = std::make_unique<cxmodel::CommandDropChip>(board,
+                                                                playerInfo,
+                                                                std::make_unique<cxmodel::Disc>(droppedDisc),
+                                                                0u,
+                                                                takenPositions,
+                                                                GetLogger());
 
     cmd->Execute();
 
@@ -143,7 +159,7 @@ TEST_F(CommandDropChipTestFixture, /*DISABLED_*/Execute_EmptyRowAndThreePlayers_
 TEST_F(CommandDropChipTestFixture, /*DISABLED_*/Execute_RowNotFull_AllDataUpdated)
 {
     // Data setup:
-    cxmodel::Board board{6u, 7u, ModelAsLimitsGet()};
+    cxmodel::Board board{6u, 7u, GetModelAsLimits()};
     cxmodel::Disc firstDisc{cxmodel::MakeRed()};
     cxmodel::IBoard::Position dummy;
     ASSERT_TRUE(board.DropChip(5u, firstDisc, dummy));
@@ -168,11 +184,12 @@ TEST_F(CommandDropChipTestFixture, /*DISABLED_*/Execute_RowNotFull_AllDataUpdate
     ASSERT_TRUE(takenPositions.empty());
 
     // The command is created and executed:
-    std::unique_ptr<cxmodel::ICommand> cmd = std::make_unique<cxmodel::CommandDropChip>(board,
-                                                                                        playerInfo,
-                                                                                        std::make_unique<cxmodel::Disc>(droppedDisc),
-                                                                                        5u,
-                                                                                        takenPositions);
+    const auto cmd = std::make_unique<cxmodel::CommandDropChip>(board,
+                                                                playerInfo,
+                                                                std::make_unique<cxmodel::Disc>(droppedDisc),
+                                                                5u,
+                                                                takenPositions,
+                                                                GetLogger());
 
     cmd->Execute();
 
@@ -187,7 +204,7 @@ TEST_F(CommandDropChipTestFixture, /*DISABLED_*/Execute_RowNotFull_AllDataUpdate
 TEST_F(CommandDropChipTestFixture, /*DISABLED_*/Execute_RowFull_NoDataUpdated)
 {
     // Data setup:
-    cxmodel::Board board{6u, 7u, ModelAsLimitsGet()};
+    cxmodel::Board board{6u, 7u, GetModelAsLimits()};
     cxmodel::Disc firstDisc{cxmodel::MakeRed()};
     cxmodel::Disc secondDisc{cxmodel::MakeBlue()};
 
@@ -217,11 +234,12 @@ TEST_F(CommandDropChipTestFixture, /*DISABLED_*/Execute_RowFull_NoDataUpdated)
     ASSERT_TRUE(takenPositions.empty());
 
     // The command is created and executed:
-    std::unique_ptr<cxmodel::ICommand> cmd = std::make_unique<cxmodel::CommandDropChip>(board,
-                                                                                        playerInfo,
-                                                                                        std::make_unique<cxmodel::Disc>(droppedDisc),
-                                                                                        6u,
-                                                                                        takenPositions);
+    const auto cmd = std::make_unique<cxmodel::CommandDropChip>(board,
+                                                                playerInfo,
+                                                                std::make_unique<cxmodel::Disc>(droppedDisc),
+                                                                6u,
+                                                                takenPositions,
+                                                                GetLogger());
 
     {
         // In production code, the availability of a column should

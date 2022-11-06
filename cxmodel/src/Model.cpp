@@ -202,57 +202,24 @@ void cxmodel::Model::DropChip(const cxmodel::IChip& p_chip, size_t p_column)
     IF_PRECONDITION_NOT_MET_DO(m_board, return;);
     IF_PRECONDITION_NOT_MET_DO(p_column < m_board->GetNbColumns(), return;);
 
-    // Here, we take a copy of the active player's index. If it is updated after the drop,
-    // it means the drop worked and we can notify:
+    // Before executing the drop, we take a copy of these indexes for later usage:
     const size_t activePlayerIndexBefore = m_playersInfo.m_activePlayerIndex;
     const size_t nextPlayerIndexBefore = m_playersInfo.m_nextPlayerIndex;
 
-    const auto activePlayer = m_playersInfo.m_players[m_playersInfo.m_activePlayerIndex];
-    if(!INL_PRECONDITION(activePlayer->GetChip() == p_chip))
-    {
-        const IChip& activePlayerChip = activePlayer->GetChip();
-        std::ostringstream logStream;
-        logStream << "Active player's color: (" << activePlayerChip.GetColor().R() << ", "
-                                                << activePlayerChip.GetColor().G() << ", "
-                                                << activePlayerChip.GetColor().B() << ")";
-        m_logger.Log(cxlog::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__, logStream.str());
+    // We create the command and execute the drop:
+    auto command = std::make_unique<CommandDropChip>(*m_board,
+                                                     m_playersInfo,
+                                                     std::make_unique<cxmodel::Disc>(p_chip.GetColor()),
+                                                     p_column,
+                                                     m_takenPositions,
+                                                     m_logger);
+    IF_CONDITION_NOT_MET_DO(command, return;);                                                                          
+    command->Attach(this);
+    m_cmdStack->Execute(std::move(command));
 
-        logStream.str("");
-        logStream << "Dropped disc color: (" << p_chip.GetColor().R() << ", "
-                                             << p_chip.GetColor().G() << ", "
-                                             << p_chip.GetColor().B() << ")";
-        m_logger.Log(cxlog::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__, logStream.str());
-
-        return;
-    }
-
-    if(!m_board->IsColumnFull(p_column))
-    {
-        std::unique_ptr<cxmodel::CommandDropChip> command = std::make_unique<CommandDropChip>(*m_board,
-                                                                                              m_playersInfo,
-                                                                                              std::make_unique<cxmodel::Disc>(p_chip.GetColor()),
-                                                                                              p_column,
-                                                                                              m_takenPositions);
-        IF_CONDITION_NOT_MET_DO(command, return;);                                                                          
-        command->Attach(this);
-        m_cmdStack->Execute(std::move(command));
-
-        std::ostringstream stream;
-        const IBoard::Position& droppedPosition = m_takenPositions.back();
-        stream << activePlayer->GetName() << "'s chip dropped at (" << droppedPosition.m_row << ", " << droppedPosition.m_column << ")";
-        m_logger.Log(cxlog::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__, stream.str());
-    }
-    else
-    {
-        m_logger.Log(cxlog::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__, "Chip drop failed for " + activePlayer->GetName());
-        Notify(ModelNotificationContext::CHIP_DROPPED_FAILED);
-
-        CheckInvariants();
-        return;
-    }
-
-    Notify(ModelNotificationContext::CHIP_DROPPED);
-
+    // Won and tie checks come next. They are not part of the command because they never
+    // have to be rechecked once the initial drop is done. Undoing or redoing a drop can
+    // never lead to a win or a tie if the initial drop didn't.
     if(IsWon())
     {
         // In the case of a win, we must revert the next player -> active player update, since
