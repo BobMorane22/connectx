@@ -31,6 +31,7 @@ add_library(${TARGET_NAME}
   src/CommandCreateNewGame.cpp
   src/CommandDropChip.cpp
   src/CommandStack.cpp
+  src/CompositeCommand.cpp
   src/Disc.cpp
   src/GameResolutionStrategyFactory.cpp
   src/IBoard.cpp

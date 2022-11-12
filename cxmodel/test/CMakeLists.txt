@@ -34,6 +34,7 @@ set(SOURCE_FILES
   CommandStackTestFixture.cpp
   CommandStackTests.cpp
   CommandTimesThreeMock.cpp
+  CompositeCommandTests.cpp
   ConcreteObserverMock.cpp
   ConcreteSubjectMock.cpp
   DiscTests.cpp
