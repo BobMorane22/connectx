@@ -57,7 +57,6 @@ public:
 private:
 
     cxmodel::CommandCompletionStatus m_errorStatus;
-
 };
 
 // Mocks a command that returns a success.
@@ -75,7 +74,34 @@ public:
     {
         FAIL() << "Should not be called.";
     }
+};
 
+// Mocks a command that appends a string to another on undo.
+class StringAppenderCommandMock : public cxmodel::ICommand
+{
+
+public:
+
+    StringAppenderCommandMock(const std::string& p_stringToAppend, std::string& p_stringToAppendTo)
+    : m_stringToAppend{p_stringToAppend}
+    , m_stringToAppendTo{p_stringToAppendTo}
+    {
+    }
+
+    [[nodiscard]] cxmodel::CommandCompletionStatus Execute() override
+    {
+        return cxmodel::CommandCompletionStatus::SUCCESS;
+    }
+
+    void Undo() override
+    {
+        m_stringToAppendTo += m_stringToAppend;
+    }
+
+private:
+
+    std::string m_stringToAppend;
+    std::string& m_stringToAppendTo;
 };
 
 } // namespace 
@@ -189,4 +215,31 @@ TEST(CompositeCommand, Execute_CompositeCommandFails_ReturnsError)
         ASSERT_TRUE(topLevelComposite.Execute() == cxmodel::CommandCompletionStatus::FAILED_UNEXPECTED);
         ASSERT_ASSERTION_FAILED(streamDisabler);
     }
+}
+
+TEST(CompositeCommand, Undo_ValidCommand_UndoCompleted)
+{
+    double total = 0.0;
+
+    cxmodel::CompositeCommand composite;
+    composite.Add(std::make_unique<CommandAddTwoMock>(total));
+
+    ASSERT_TRUE(composite.Execute() == cxmodel::CommandCompletionStatus::SUCCESS);
+    ASSERT_TRUE(total == 2.0);
+
+    composite.Undo();
+    ASSERT_TRUE(total == 0.0);
+}
+
+TEST(CompositeCommand, Undo_ValidCommands_UndoCompletedInReverseOrder)
+{
+    std::string result;
+
+    cxmodel::CompositeCommand composite;
+    composite.Add(std::make_unique<StringAppenderCommandMock>("One", result));
+    composite.Add(std::make_unique<StringAppenderCommandMock>("Two", result));
+
+    ASSERT_TRUE(result.empty());
+    composite.Undo();
+    ASSERT_TRUE(result == "TwoOne");
 }

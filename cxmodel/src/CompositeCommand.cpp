@@ -57,8 +57,9 @@ cxmodel::CommandCompletionStatus cxmodel::CompositeCommand::Execute()
 
 void cxmodel::CompositeCommand::Undo()
 {
-    for(auto& child : m_children)
+    for(auto childIterator = m_children.rbegin(); childIterator != m_children.rend(); ++childIterator)
     {
+        auto& child = *childIterator;
         IF_CONDITION_NOT_MET_DO(child, continue;);
         child->Undo();
     }
