@@ -230,7 +230,7 @@ void cxmodel::Model::DropChip(const cxmodel::IChip& p_chip, size_t p_column)
 
         m_currentDropCommands = dropCommands.get();
 
-        IF_CONDITION_NOT_MET_DO(m_cmdStack->Execute(std::move(dropCommands)) == CommandCompletionStatus::SUCCESS, return;);
+        IF_CONDITION_NOT_MET_DO(m_cmdStack->Execute(std::move(dropCommands)) <= CommandCompletionStatus::FAILED_EXPECTED, return;);
     }
     else
     {
