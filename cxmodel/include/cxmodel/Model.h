@@ -28,6 +28,7 @@
 #include <memory>
 
 #include <cxlog/ILogger.h>
+#include "CompositeCommand.h"
 #include "IBoard.h"
 #include "ICommandStack.h"
 #include "IConnectXAI.h"
@@ -154,8 +155,10 @@ private:
 
     void CheckInvariants();
 
-    std::unique_ptr<ICommandStack> m_cmdStack;
     cxlog::ILogger& m_logger;
+
+    std::unique_ptr<ICommandStack> m_cmdStack;
+    CompositeCommand* m_currentDropCommands;
 
     std::unique_ptr<cxmodel::IBoard> m_board;
     PlayerInformation m_playersInfo;

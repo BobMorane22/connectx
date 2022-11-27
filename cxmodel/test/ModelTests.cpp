@@ -697,6 +697,153 @@ TEST_F(ModelTestFixture, /*DISABLED_*/Undo_CommandDropChip_PreviousStateRecovere
     ASSERT_TRUE(colorAt00 == colorAt00AfterUndo);
 }
 
+TEST_F(ModelTestFixture, /*DISABLED_*/Undo_CommandDropChipWithOneBot_PreviousStateRecovered)
+{
+    cxmodel::Model& model = GetModel();
+
+    // We first create a game with one human player and one bot:
+    cxmodel::NewGameInformation newGameInfo;
+    newGameInfo.m_gridWidth = 7u;
+    newGameInfo.m_gridHeight = 6u;
+    newGameInfo.m_inARowValue = 4u;
+
+    newGameInfo.m_players.push_back(cxmodel::CreatePlayer("P1", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN));
+    newGameInfo.m_players.push_back(cxmodel::CreatePlayer("P2", cxmodel::MakeBlue(), cxmodel::PlayerType::BOT));
+
+    model.CreateNewGame(std::move(newGameInfo));
+
+    const auto& cmdStack = GetInternalCommandStack();
+    ASSERT_TRUE(cmdStack.GetNbCommands() == 0u);
+
+    // Human players drops a chip, followed by the bot player:
+    ASSERT_FALSE(model.GetActivePlayer().IsManaged());
+    model.DropChip(model.GetActivePlayer().GetChip(), 1u);
+    ASSERT_TRUE(model.GetChip(0u, 1u).GetColor() == cxmodel::MakeRed());
+
+    ASSERT_TRUE(model.GetActivePlayer().IsManaged());
+    model.DropChip(model.GetActivePlayer().GetChip(), 1u);
+    ASSERT_TRUE(model.GetChip(1u, 1u).GetColor() == cxmodel::MakeBlue());
+
+    ASSERT_FALSE(model.GetActivePlayer().IsManaged());
+
+    // There should be only one command in the command stack:
+    ASSERT_TRUE(cmdStack.GetNbCommands() == 1u);
+
+    // We undo, both the human player and the bot player drops
+    // should be undone:
+    model.Undo();
+    ASSERT_TRUE(model.GetChip(0u, 1u).GetColor() == cxmodel::MakeTransparent());
+    ASSERT_TRUE(model.GetChip(1u, 1u).GetColor() == cxmodel::MakeTransparent());
+}
+
+TEST_F(ModelTestFixture, /*DISABLED_*/Undo_CommandDropChipWithTwoBots_PreviousStateRecovered)
+{
+    cxmodel::Model& model = GetModel();
+
+    // We first create a game with one human player and one bot:
+    cxmodel::NewGameInformation newGameInfo;
+    newGameInfo.m_gridWidth = 7u;
+    newGameInfo.m_gridHeight = 6u;
+    newGameInfo.m_inARowValue = 4u;
+
+    newGameInfo.m_players.push_back(cxmodel::CreatePlayer("P1", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN));
+    newGameInfo.m_players.push_back(cxmodel::CreatePlayer("P2", cxmodel::MakeBlue(), cxmodel::PlayerType::BOT));
+    newGameInfo.m_players.push_back(cxmodel::CreatePlayer("P3", cxmodel::MakeGreen(), cxmodel::PlayerType::BOT));
+
+    model.CreateNewGame(std::move(newGameInfo));
+
+    const auto& cmdStack = GetInternalCommandStack();
+    ASSERT_TRUE(cmdStack.GetNbCommands() == 0u);
+
+    // Human players drops a chip, followed by the two bot players:
+    ASSERT_FALSE(model.GetActivePlayer().IsManaged());
+    model.DropChip(model.GetActivePlayer().GetChip(), 1u);
+    ASSERT_TRUE(model.GetChip(0u, 1u).GetColor() == cxmodel::MakeRed());
+
+    ASSERT_TRUE(model.GetActivePlayer().IsManaged());
+    model.DropChip(model.GetActivePlayer().GetChip(), 1u);
+    ASSERT_TRUE(model.GetChip(1u, 1u).GetColor() == cxmodel::MakeBlue());
+
+    ASSERT_TRUE(model.GetActivePlayer().IsManaged());
+    model.DropChip(model.GetActivePlayer().GetChip(), 1u);
+    ASSERT_TRUE(model.GetChip(2u, 1u).GetColor() == cxmodel::MakeGreen());
+
+    ASSERT_FALSE(model.GetActivePlayer().IsManaged());
+
+    // There should be only one command in the command stack:
+    ASSERT_TRUE(cmdStack.GetNbCommands() == 1u);
+
+    // We undo, both the human player and the bot players drops
+    // should be undone:
+    model.Undo();
+    ASSERT_TRUE(model.GetChip(0u, 1u).GetColor() == cxmodel::MakeTransparent());
+    ASSERT_TRUE(model.GetChip(1u, 1u).GetColor() == cxmodel::MakeTransparent());
+    ASSERT_TRUE(model.GetChip(2u, 1u).GetColor() == cxmodel::MakeTransparent());
+}
+
+TEST_F(ModelTestFixture, /*DISABLED_*/Redo_CommandDropChipWithOneBot_PreviousStateRecovered)
+{
+    cxmodel::Model& model = GetModel();
+
+    // We first create a game with one human player and one bot:
+    cxmodel::NewGameInformation newGameInfo;
+    newGameInfo.m_gridWidth = 7u;
+    newGameInfo.m_gridHeight = 6u;
+    newGameInfo.m_inARowValue = 4u;
+
+    newGameInfo.m_players.push_back(cxmodel::CreatePlayer("P1", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN));
+    newGameInfo.m_players.push_back(cxmodel::CreatePlayer("P2", cxmodel::MakeBlue(), cxmodel::PlayerType::BOT));
+
+    model.CreateNewGame(std::move(newGameInfo));
+
+    const auto& cmdStack = GetInternalCommandStack();
+    ASSERT_TRUE(cmdStack.GetNbCommands() == 0u);
+
+    // Human players drops a chip, followed by the bot player:
+    model.DropChip(model.GetActivePlayer().GetChip(), 1u);
+    model.DropChip(model.GetActivePlayer().GetChip(), 1u);
+
+    // We undo, then redo, both the human player and the bot player drops:
+    model.Undo();
+    model.Redo();
+
+    ASSERT_TRUE(model.GetChip(0u, 1u).GetColor() == cxmodel::MakeRed());
+    ASSERT_TRUE(model.GetChip(1u, 1u).GetColor() == cxmodel::MakeBlue());
+}
+
+TEST_F(ModelTestFixture, /*DISABLED_*/Redo_CommandDropChipWithTwoBots_PreviousStateRecovered)
+{
+    cxmodel::Model& model = GetModel();
+
+    // We first create a game with one human player and one bot:
+    cxmodel::NewGameInformation newGameInfo;
+    newGameInfo.m_gridWidth = 7u;
+    newGameInfo.m_gridHeight = 6u;
+    newGameInfo.m_inARowValue = 4u;
+
+    newGameInfo.m_players.push_back(cxmodel::CreatePlayer("P1", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN));
+    newGameInfo.m_players.push_back(cxmodel::CreatePlayer("P2", cxmodel::MakeBlue(), cxmodel::PlayerType::BOT));
+    newGameInfo.m_players.push_back(cxmodel::CreatePlayer("P3", cxmodel::MakeGreen(), cxmodel::PlayerType::BOT));
+
+    model.CreateNewGame(std::move(newGameInfo));
+
+    const auto& cmdStack = GetInternalCommandStack();
+    ASSERT_TRUE(cmdStack.GetNbCommands() == 0u);
+
+    // Human players drops a chip, followed by the bot player:
+    model.DropChip(model.GetActivePlayer().GetChip(), 1u);
+    model.DropChip(model.GetActivePlayer().GetChip(), 1u);
+    model.DropChip(model.GetActivePlayer().GetChip(), 1u);
+
+    // We undo, then redo, both the human player and the bot players drops:
+    model.Undo();
+    model.Redo();
+
+    ASSERT_TRUE(model.GetChip(0u, 1u).GetColor() == cxmodel::MakeRed());
+    ASSERT_TRUE(model.GetChip(1u, 1u).GetColor() == cxmodel::MakeBlue());
+    ASSERT_TRUE(model.GetChip(2u, 1u).GetColor() == cxmodel::MakeGreen());
+}
+
 TEST(Model, /*DISABLED_*/Redo_RandomCommand_RedoCalledOnCommandStack)
 {
     std::unique_ptr<CommandStackMock> cmdStack = std::make_unique<CommandStackMock>();

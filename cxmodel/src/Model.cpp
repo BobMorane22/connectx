@@ -27,6 +27,7 @@
 #include <cxinv/assertion.h>
 
 #include <cxmodel/Board.h>
+#include <cxmodel/CommandCompletionStatus.h>
 #include <cxmodel/CommandCreateNewGame.h>
 #include <cxmodel/CommandDropChip.h>
 #include <cxmodel/CommandStack.h>
@@ -71,8 +72,9 @@ const cxmodel::IPlayer& GetDefaultNextPlayer()
 } // namespace
 
 cxmodel::Model::Model(std::unique_ptr<ICommandStack>&& p_cmdStack, cxlog::ILogger& p_logger)
- : m_cmdStack{std::move(p_cmdStack)}
- , m_logger{p_logger}
+ : m_logger{p_logger}
+ , m_cmdStack{std::move(p_cmdStack)}
+ , m_currentDropCommands{nullptr}
  , m_playersInfo{{}, 0u, 1u}
  , m_inARowValue{4u}
 {
@@ -215,7 +217,34 @@ void cxmodel::Model::DropChip(const cxmodel::IChip& p_chip, size_t p_column)
                                                      m_logger);
     IF_CONDITION_NOT_MET_DO(command, return;);                                                                          
     command->Attach(this);
-    m_cmdStack->Execute(std::move(command));
+
+    // We save this condition for later because once the command is executed,
+    // the next player is not the same:
+    const bool shouldResetDropCommands = !GetNextPlayer().IsManaged();
+    if(!GetActivePlayer().IsManaged())
+    {
+        auto dropCommands = std::make_unique<CompositeCommand>();
+        IF_CONDITION_NOT_MET_DO(dropCommands, return;);
+
+        dropCommands->Add(std::move(command));
+
+        m_currentDropCommands = dropCommands.get();
+
+        IF_CONDITION_NOT_MET_DO(m_cmdStack->Execute(std::move(dropCommands)) == CommandCompletionStatus::SUCCESS, return;);
+    }
+    else
+    {
+        IF_CONDITION_NOT_MET_DO(m_currentDropCommands, return;);
+
+        IF_CONDITION_NOT_MET_DO(command->Execute() == CommandCompletionStatus::SUCCESS, return;);
+        m_currentDropCommands->Add(std::move(command));
+
+        if(shouldResetDropCommands)
+        {
+            m_currentDropCommands = nullptr;
+        }
+    }
+
 
     // Won and tie checks come next. They are not part of the command because they never
     // have to be rechecked once the initial drop is done. Undoing or redoing a drop can

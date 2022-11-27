@@ -106,13 +106,13 @@ private:
 
 } // namespace 
 
-TEST(CompositeCommand, EmptyComposite_ExecuteCalled_SuccessReturned)
+TEST(CompositeCommand, /*DISABLED_*/EmptyComposite_ExecuteCalled_SuccessReturned)
 {
     cxmodel::CompositeCommand composite;
     ASSERT_TRUE(composite.Execute() == cxmodel::CommandCompletionStatus::SUCCESS);
 }
 
-TEST(CompositeCommand, Add_OneLeafCommand_CommandAdded)
+TEST(CompositeCommand, /*DISABLED_*/Add_OneLeafCommand_CommandAdded)
 {
     double total = 0.0;
 
@@ -123,7 +123,7 @@ TEST(CompositeCommand, Add_OneLeafCommand_CommandAdded)
     ASSERT_TRUE(total == 2.0);
 }
 
-TEST(CompositeCommand, Add_TwoLeafCommands_CommandsAdded)
+TEST(CompositeCommand, /*DISABLED_*/Add_TwoLeafCommands_CommandsAdded)
 {
     double total = 0.0;
 
@@ -135,7 +135,7 @@ TEST(CompositeCommand, Add_TwoLeafCommands_CommandsAdded)
     ASSERT_TRUE(total == 4.0);
 }
 
-TEST(CompositeCommand, Add_ALeafAndAComposite_CommandsAdded)
+TEST(CompositeCommand, /*DISABLED_*/Add_ALeafAndAComposite_CommandsAdded)
 {
     double total = 0.0;
 
@@ -153,7 +153,7 @@ TEST(CompositeCommand, Add_ALeafAndAComposite_CommandsAdded)
     ASSERT_TRUE(total == 6.0);
 }
 
-TEST(CompositeCommand, Add_InvalidChild_NothingAddedAndAssert)
+TEST(CompositeCommand, /*DISABLED_*/Add_InvalidChild_NothingAddedAndAssert)
 {
     cxmodel::CompositeCommand topLevelComposite;
 
@@ -165,7 +165,7 @@ TEST(CompositeCommand, Add_InvalidChild_NothingAddedAndAssert)
     }
 }
 
-TEST(CompositeCommand, Execute_LeafCommandFails_ReturnsError)
+TEST(CompositeCommand, /*DISABLED_*/Execute_LeafCommandFails_ReturnsError)
 {
     // Expected fail:
     {
@@ -185,7 +185,7 @@ TEST(CompositeCommand, Execute_LeafCommandFails_ReturnsError)
     }
 }
 
-TEST(CompositeCommand, Execute_CompositeCommandFails_ReturnsError)
+TEST(CompositeCommand, /*DISABLED_*/Execute_CompositeCommandFails_ReturnsError)
 {
     // Expected fail:
     {
@@ -217,7 +217,7 @@ TEST(CompositeCommand, Execute_CompositeCommandFails_ReturnsError)
     }
 }
 
-TEST(CompositeCommand, Undo_ValidCommand_UndoCompleted)
+TEST(CompositeCommand, /*DISABLED_*/Undo_ValidCommand_UndoCompleted)
 {
     double total = 0.0;
 
@@ -231,7 +231,7 @@ TEST(CompositeCommand, Undo_ValidCommand_UndoCompleted)
     ASSERT_TRUE(total == 0.0);
 }
 
-TEST(CompositeCommand, Undo_ValidCommands_UndoCompletedInReverseOrder)
+TEST(CompositeCommand, /*DISABLED_*/Undo_ValidCommands_UndoCompletedInReverseOrder)
 {
     std::string result;
 
