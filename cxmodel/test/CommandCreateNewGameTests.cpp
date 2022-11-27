@@ -23,6 +23,7 @@
 
 #include <gtest/gtest.h>
 
+#include <cxunit/DisableStdStreamsRAII.h>
 #include <cxmodel/Board.h>
 #include <cxmodel/CommandCompletionStatus.h>
 #include <cxmodel/CommandCreateNewGame.h>
@@ -100,7 +101,11 @@ TEST_F(CommandCreateNewGameTestFixture, /*DISABLED_*/Undo_ValidNewGame_HasNoEffe
     ASSERT_TRUE(cmd.Execute() == cxmodel::CommandCompletionStatus::SUCCESS);
 
     // For now, undoing should have no effect:
-    cmd.Undo();
+    {
+        cxunit::DisableStdStreamsRAII streamDisabler;
+        cmd.Undo();
+        ASSERT_ASSERTION_FAILED(streamDisabler);
+    }
 
     ASSERT_EQ(modelPlayers.size(), 2u);
     ASSERT_EQ(*modelPlayers[0], *cxmodel::CreatePlayer("John Doe", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN));
