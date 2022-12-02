@@ -29,13 +29,7 @@ void cxmodel::CompositeCommand::Add(std::unique_ptr<cxmodel::ICommand> p_child)
 {
     IF_PRECONDITION_NOT_MET_DO(p_child, return;);
 
-    const size_t sizeBefore = m_children.size();
-
     m_children.push_back(std::move(p_child));
-
-    const size_t sizeAfter = m_children.size();
-
-    POSTCONDITION(sizeAfter == sizeBefore + 1u);
 }
 
 cxmodel::CommandCompletionStatus cxmodel::CompositeCommand::Execute()

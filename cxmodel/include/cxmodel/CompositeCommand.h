@@ -48,7 +48,6 @@ public:
      * @brief Adds a command to the composite. The composite takes ownership of the child.
      *
      * @pre The child to add is valid.
-     * @post The child is added to the composite.
      *
      * @param p_child
      *      The child command to add to the composite.
