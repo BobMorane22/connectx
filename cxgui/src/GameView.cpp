@@ -296,6 +296,7 @@ bool cxgui::GameView::OnKeyPressed(GdkEventKey* p_event)
         // here, but should be handled by the main window (undo for example).
         // If we stop the propagation, the main window never gets the event
         // and bugs can occur:
+        EnableKeyHandlers();
         return PROPAGATE_EVENT;
     }
 
