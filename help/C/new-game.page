@@ -59,6 +59,11 @@ This is where game parameters are defined and new games created.</p>
            it can range from anywhere between 6 and 64 inclusively.</p>
     </item>
     <item>
+        <title><gui>Players/Bot</gui></title>
+        <p>Indicates if the player is a bot (i.e. controlled by the computer) or
+           not. The first player can never be a bot.</p>
+    </item>
+    <item>
         <title><gui>Players/Name</gui></title>
         <p>Default players names are automatically added, but these names
            can be modified, if wanted. Note that player names cannot be empty.</p>
