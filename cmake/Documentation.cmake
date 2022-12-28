@@ -206,6 +206,7 @@ macro(setup_doxyfile)
     "changelogs/v0-31/user"
     "changelogs/v0-32/user"
     "changelogs/v0-33/user"
+    "changelogs/v0-34/user"
   )
   set(DOXYGEN_USE_MDFILE_AS_MAINPAGE "README.md")
 
