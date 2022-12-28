@@ -33,19 +33,38 @@ namespace cxmath
  *************************************************************************************************/
 struct Position
 {
+
+    /******************************************************************************************//**
+     * @brief Default constructor.
+     *
+     * Creates a position at the origin (i.e. at (0.0, 0.0)).
+     *
+     *********************************************************************************************/
     constexpr Position()
     : m_x{0.0}
     , m_y{0.0}
     {
     }
 
+    /******************************************************************************************//**
+     * @brief Constructor.
+     *
+     * @param p_x
+     *      The `x` coordinate.
+     * @param p_y
+     *      The `y` coordinate.
+     *
+     *********************************************************************************************/
     constexpr Position(double p_x, double p_y)
     : m_x{p_x}
     , m_y{p_y}
     {
     }
 
+    /** The `x` coordinate. */
     double m_x;
+
+    /** The `y` coordinate. */
     double m_y;
 };
 
@@ -57,8 +76,11 @@ struct Position
  * @param p_rhs
  *      The right-hand value to use for the comparison.
  *
+ * @return
+ *     `true` if both position are the same, `false` otherwise.
+ *
  *************************************************************************************************/
-bool operator==(const cxmath::Position& p_lhs, const cxmath::Position& p_rhs);
+[[nodiscard]] bool operator==(const cxmath::Position& p_lhs, const cxmath::Position& p_rhs);
 
 /**********************************************************************************************//**
  * @brief Not equal-to operator.
@@ -68,8 +90,11 @@ bool operator==(const cxmath::Position& p_lhs, const cxmath::Position& p_rhs);
  * @param p_rhs
  *      The right-hand value to use for the comparison.
  *
+ * @return
+ *     `true` if both position are not the same, `false` otherwise.
+ *
  *************************************************************************************************/
-bool operator!=(const cxmath::Position& p_lhs, const cxmath::Position& p_rhs);
+[[nodiscard]] bool operator!=(const cxmath::Position& p_lhs, const cxmath::Position& p_rhs);
 
 } // namespace cxmath
 

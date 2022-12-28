@@ -49,7 +49,7 @@ public:
     /******************************************************************************************//**
      * @brief Constructor.
      * 
-     * @param The Game View presenter.
+     * @param p_presenter The Game View presenter.
      *
      *********************************************************************************************/
     explicit AnimatedBoardPresenter(const IGameViewPresenter& p_presenter);

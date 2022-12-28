@@ -47,7 +47,7 @@ public:
     /******************************************************************************************//**
      * @brief Start control handler.
      *
-     * @param The game information used to start the game.
+     * @param p_gameInformation The game information used to start the game.
      *
      * Called when the game is started.
      *

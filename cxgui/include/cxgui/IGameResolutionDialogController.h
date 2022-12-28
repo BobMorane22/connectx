@@ -28,12 +28,7 @@ namespace cxgui
 {
 
 /*********************************************************************************************//**
- * @brief DESCRIPTION
- *
- * @invariant
- * @invariant
- *
- * DESCRIPTION
+ * @brief Interface for game resolution dialog controllers.
  *
  ************************************************************************************************/
 class IGameResolutionDialogController
@@ -42,33 +37,13 @@ class IGameResolutionDialogController
 public:
 
     /******************************************************************************************//**
-     * @brief DESCRIPTION
-     *
-     * @pre
-     * @post
-     *
-     * @param
-     * @param
-     *
-     * @return
-     *
-     * DESCRIPTION
+     * @brief Destructor.
      *
      ********************************************************************************************/
     virtual ~IGameResolutionDialogController() = default;
 
     /******************************************************************************************//**
-     * @brief DESCRIPTION
-     *
-     * @pre
-     * @post
-     *
-     * @param
-     * @param
-     *
-     * @return
-     *
-     * DESCRIPTION
+     * @brief Handler when a new game is requested by the user.
      *
      ********************************************************************************************/
     virtual void OnNewGameRequested() = 0;

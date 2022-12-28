@@ -41,12 +41,29 @@ namespace cxmodel
 namespace cxgui
 {
 
+/**********************************************************************************************//**
+ * @brief Main window presenter.
+ *
+ *************************************************************************************************/
 class MainWindowPresenter : public cxgui::IMainWindowPresenter
 {
 
 public:
 
-    MainWindowPresenter(const cxmodel::IConnectXLimits& p_modealAsLimits,
+    /******************************************************************************************//**
+     * @brief Constructor.
+     *
+     * @param p_modelAsLimits
+     *      A Connect X model (model and game limits).
+     * @param p_modelAsGameInformation
+     *      A Connect X model (information about the current game).
+     * @param p_modelAsUndoRedo
+     *      A Connect X model (undo and redo).
+     * @param p_modelAsAI
+     *      A Connect X model (managed players).
+     *
+     *********************************************************************************************/
+    MainWindowPresenter(const cxmodel::IConnectXLimits& p_modelAsLimits,
                         const cxmodel::IConnectXGameInformation& p_modelAsGameInformation,
                         const cxmodel::IUndoRedo& p_modelAsUndoRedo,
                         const cxmodel::IConnectXAI& p_modelAsAI);

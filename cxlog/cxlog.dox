@@ -16,29 +16,16 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file EnabledState.h
+ * @file cxlog.dox
  * @date 2022
  *
  *************************************************************************************************/
 
-namespace cxgui
-{
-
 /**********************************************************************************************//**
- * @brief Widget enabled state.
+ * @namespace cxlog
  *
- * A widget can be enabled or disabled. A user can interract directly on an enabled widget. With
- * a disabled widget, interaction can also occur, but it has to be indirectly. On most toolkits,
- * diabled widgets are "greyed out".
+ * @brief Logging facilities.
+ *
+ * The `cxlog` namespace contains facilities for logging, mainly for debugging purposes.
  *
  *************************************************************************************************/
-enum class EnabledState
-{
-    /** The user can interract with the widget. */
-    Enabled,  
-
-    /** The user cannot interract with the widget. */
-    Disabled
-};
-
-} // namespace cxgui

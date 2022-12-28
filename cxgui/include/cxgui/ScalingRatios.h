@@ -81,7 +81,10 @@ struct ScalingRatios
      *********************************************************************************************/
     explicit constexpr ScalingRatios(VerticalScalingRatio p_verticalRatio);
 
+    /** The horizontal scaling ratio. */
     HorizontalScalingRatio m_horizontalRatio;
+
+    /** The vertical scaling ration. */
     VerticalScalingRatio m_verticalRatio;
 
 };

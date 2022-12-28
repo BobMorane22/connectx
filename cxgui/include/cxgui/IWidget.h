@@ -61,7 +61,7 @@ public:
     /**********************************************************************************************//**
      * @brief Gets the widget's height (in device independant pixels).
      *
-     * @param p_newState The widget's height (in device independant pixels).
+     * @return The widget's height (in device independant pixels).
      *
      *************************************************************************************************/
     [[nodiscard]] virtual size_t GetHeight() const = 0;
@@ -78,7 +78,7 @@ public:
      * indirectly, through modifying another widget which would trigger a reaction on the disabled
      * widget (typicaly example is a label). A widget that is enabled will repond to user events.
      *
-     * @param p_newState The new enabled or diabled state of the widget.
+     * @param p_enabled The new enabled or disabled state of the widget.
      *
      *************************************************************************************************/
     virtual void SetEnabled(EnabledState p_enabled) = 0;

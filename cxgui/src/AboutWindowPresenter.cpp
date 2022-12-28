@@ -32,37 +32,37 @@ cxgui::AboutWindowPresenter::AboutWindowPresenter(const cxmodel::IVersioning& p_
     // Nothing to do...
 }
 
-std::string cxgui::AboutWindowPresenter::AboutWindowPresenter::GetWindowTitle() const
+std::string cxgui::AboutWindowPresenter::GetWindowTitle() const
 {
     return "About";
 }
 
-std::string cxgui::AboutWindowPresenter::AboutWindowPresenter::GetApplicationName() const
+std::string cxgui::AboutWindowPresenter::GetApplicationName() const
 {
     return m_applicationName;
 }
 
-std::string cxgui::AboutWindowPresenter::AboutWindowPresenter::GetVersionNumber() const
+std::string cxgui::AboutWindowPresenter::GetVersionNumber() const
 {
     return m_versionNumber;
 }
 
-std::string cxgui::AboutWindowPresenter::AboutWindowPresenter::GetApplicationDescription() const
+std::string cxgui::AboutWindowPresenter::GetApplicationDescription() const
 {
     return "Connect X is a scalable Four-In-A-Row clone";
 }
 
-std::string cxgui::AboutWindowPresenter::AboutWindowPresenter::GetLicenseDescription() const
+std::string cxgui::AboutWindowPresenter::GetLicenseDescription() const
 {
     return "License: GNU GPL v3";
 }
 
-std::string cxgui::AboutWindowPresenter::AboutWindowPresenter::GetCopyrightNotice() const
+std::string cxgui::AboutWindowPresenter::GetCopyrightNotice() const
 {
     return "Copyright © 2020 - Éric Poirier";
 }
 
-std::string cxgui::AboutWindowPresenter::AboutWindowPresenter::GetCloseText() const
+std::string cxgui::AboutWindowPresenter::GetCloseText() const
 {
     return "Close";
 }

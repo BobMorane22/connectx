@@ -56,9 +56,13 @@ public:
     /******************************************************************************************//**
      * @brief Constructor.
      *
-     * @pre The presenter is valid.
+     * @pre
+     *     The presenter is valid.
      *
-     * @param p_presenter The window presenter.
+     * @param p_presenter
+     *     The window presenter.
+     * @param p_controller
+     *     The window presenter.
      *
      ********************************************************************************************/
     GameResolutionDialog(std::unique_ptr<IGameResolutionDialogPresenter> p_presenter,

@@ -53,7 +53,8 @@ public:
     /*******************************************************************************************//**
      * @brief Set which logger (if any) will log the message after the current logger.
      *
-     * @param p_sucessor The successor logger.
+     * @param p_sucessor
+     *      The successor logger.
      *
      **********************************************************************************************/
     virtual void SetSucessor(std::unique_ptr<ILogger>&& p_sucessor) = 0;
@@ -61,10 +62,10 @@ public:
     /*******************************************************************************************//**
      * @brief Indicates whether the current logger has a successor.
      *
-     * @return @c true if the current logger has a successor, @c false otherwise.
+     * @return `true` if the current logger has a successor, `false` otherwise.
      *
      **********************************************************************************************/
-    virtual bool HasSucessor() const = 0;
+    [[nodiscard]] virtual bool HasSucessor() const = 0;
 
 };
 

@@ -57,10 +57,10 @@ public:
     /**********************************************************************************************//**
      * @brief Constructor.
      *
-     * @oaram p_context The Cairo context to save and restore.
+     * @param p_context The Cairo context to save and restore.
      *
      *************************************************************************************************/
-    ContextRestoreRAII(const Cairo::RefPtr<Cairo::Context>& p_context);
+    explicit ContextRestoreRAII(const Cairo::RefPtr<Cairo::Context>& p_context);
 
     /**********************************************************************************************//**
      * @brief Destructor.

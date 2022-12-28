@@ -29,27 +29,44 @@
 namespace cxmath
 {
 
+/** Continuous height dimension. */
 using Height = cxstd::StrongType<double, struct HeightTag,
                                  cxstd::EqualityComparable,
                                  cxstd::Addable>;
 
+/** Continuous width dimension. */
 using Width = cxstd::StrongType<double, struct WidthTag,
                                 cxstd::EqualityComparable,
                                 cxstd::Addable>;
 
 /**********************************************************************************************//**
- * @brief 2D dimensions.
+ * @brief Continuous 2D dimensions.
+ *
+ * Represent the continuous dimensions of some 2D objet (e.g. a window).
  *
  *************************************************************************************************/
 struct Dimensions
 {
+
+    /******************************************************************************************//**
+     * @brief Constructor.
+     *
+     * @param p_height
+     *      The height dimension.
+     * @param p_width
+     *      The width dimension.
+     *
+     *********************************************************************************************/
     constexpr Dimensions(const Height& p_height, const Width& p_width)
     : m_height(p_height)
     , m_width(p_width)
     {
     }
 
+    /** The height dimension. */
     Height m_height;
+
+    /** The width dimension. */
     Width m_width;
 };
 
@@ -61,8 +78,11 @@ struct Dimensions
  * @param p_rhs
  *      The right-hand value to use for the comparison.
  *
+ * @return
+ *      `true` if the dimensions are the same, `false` otherwise.
+ *
  *************************************************************************************************/
-bool operator==(const cxmath::Dimensions& p_lhs, const cxmath::Dimensions& p_rhs);
+[[nodiscard]] bool operator==(const cxmath::Dimensions& p_lhs, const cxmath::Dimensions& p_rhs);
 
 /**********************************************************************************************//**
  * @brief Not equal-to operator.
@@ -72,8 +92,11 @@ bool operator==(const cxmath::Dimensions& p_lhs, const cxmath::Dimensions& p_rhs
  * @param p_rhs
  *      The right-hand value to use for the comparison.
  *
+ * @return
+ *      `true` if the dimensions are the different `false` otherwise.
+ *
  *************************************************************************************************/
-bool operator!=(const cxmath::Dimensions& p_lhs, const cxmath::Dimensions& p_rhs);
+[[nodiscard]] bool operator!=(const cxmath::Dimensions& p_lhs, const cxmath::Dimensions& p_rhs);
 
 } // namespace cxmath
 

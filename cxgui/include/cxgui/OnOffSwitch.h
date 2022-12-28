@@ -52,6 +52,8 @@ public:
     /******************************************************************************************//**
      * @brief Get the underlying Gtkmm widget instance.
      *
+     * @return The underlying Gtkmm switch implementation.
+     *
      *********************************************************************************************/
     [[nodiscard]] Gtk::Switch& GetUnderlying(){return m_underlying;}
 

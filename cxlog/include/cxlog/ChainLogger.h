@@ -65,7 +65,8 @@ public:
     /*******************************************************************************************//**
      * @brief Set which logger (if any) will log the message after the current logger.
      *
-     * @param p_sucessor The sucessor logger.
+     * @param p_sucessor
+     *      The sucessor logger.
      *
      **********************************************************************************************/
     void SetSucessor(std::unique_ptr<ILogger>&& p_sucessor) override;
@@ -73,7 +74,8 @@ public:
     /*******************************************************************************************//**
      * @brief Indicates wether the current logger has a sucessor.
      *
-     * @return @c true if the current logger has a sucessor, @c false otherwise.
+     * @return
+     *      `true` if the current logger has a sucessor, `false` otherwise.
      *
      **********************************************************************************************/
     bool HasSucessor() const override;
@@ -81,6 +83,7 @@ public:
 
 protected:
 
+    /** The next instance that will log. If not set, no further logging happens. */
     std::unique_ptr<ILogger> m_successor;
 
 

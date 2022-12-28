@@ -218,7 +218,7 @@ public:
     /******************************************************************************************//**
      * @brief Gets the current line width value for a specified feature.
      *
-     * @paran p_feature The feature to get the line width for.
+     * @param p_feature The feature to get the line width for.
      *
      * @return The current line width value.
      *

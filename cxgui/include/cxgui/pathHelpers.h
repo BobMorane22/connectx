@@ -48,18 +48,20 @@ namespace cxgui
  * Makes a rectangular path originating from a top/left position and spanning a predifined
  * height and width:
  *
- *                    top/left
- *            X          +--------------------------------------------+
- *     +------>          |                                            |
- *     |                 |                                            |
- *     |                 |                                            |
- *     |                 |                                            | height
- *   Y v                 |                                            |
- *                       |                                            |
- *                       |                                            |
- *                       +--------------------------------------------+
- *                                           width
- *
+ @verbatim
+                     top/left
+             X          +--------------------------------------------+
+      +------>          |                                            |
+      |                 |                                            |
+      |                 |                                            |
+      |                 |                                            | height
+    Y v                 |                                            |
+                        |                                            |
+                        |                                            |
+                        +--------------------------------------------+
+                                            width
+ @endverbatim
+ * 
  * The window in GTK is seen as an X/Y plane in which positive Y is pointing towards
  * the bottom of the window. The "top" in "top/left" refers to the top of the window.
  * This means that the top/left position usually has a smaller Y value that the
@@ -67,10 +69,12 @@ namespace cxgui
  *
  * @param p_context
  *      The cairo context to use.
- * @param p_centerPosition
- *      The disc's wanted center position.
- * @param p_radius
- *      The discs wanted radius.
+ * @param p_topLeft
+ *      Rectangle path origin, as the top/left rectangle corner (see diagram above).
+ * @param p_height
+ *      The path's wanted height (see diagram above).
+ * @param p_width
+ *      The path's wanted width (see diagram above).
  *
  *************************************************************************************************/
 void MakeRectanglarPath(const Cairo::RefPtr<Cairo::Context>& p_context,

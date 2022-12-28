@@ -34,15 +34,26 @@ namespace cxmodel
 namespace cxgui
 {
 
+/*********************************************************************************************//**
+ * @brief Presenter for the About window.
+ *
+ ************************************************************************************************/
 class AboutWindowPresenter : public IAboutWindowPresenter
 {
 
 public:
 
-    AboutWindowPresenter(const cxmodel::IVersioning& p_model);
+    /*****************************************************************************************//**
+     * @brief Constructor.
+     *
+     * @param p_model The model (versioning part).
+     *
+     ********************************************************************************************/
+    explicit AboutWindowPresenter(const cxmodel::IVersioning& p_model);
 
     ~AboutWindowPresenter() override = default;
 
+    // cxgui::IAboutWindowPresenter:
     std::string GetWindowTitle() const override;
     std::string GetApplicationName() const override;
     std::string GetVersionNumber() const override;

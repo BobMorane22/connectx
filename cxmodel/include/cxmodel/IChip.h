@@ -51,7 +51,8 @@ public:
     /******************************************************************************************//**
      * @brief Color accessor.
      *
-     * @return The chip color.
+     * @return
+     *      The chip color.
      *
      ********************************************************************************************/
     virtual ChipColor GetColor() const = 0;
@@ -68,24 +69,30 @@ public:
 /******************************************************************************************//**
  * @brief Equal-to operator.
  *
- * @param p_lhs The left hand side chip.
- * @param p_rhs The right hand side chip.
+ * @param p_lhs
+ *      The left hand side chip.
+ * @param p_rhs
+ *      The right hand side chip.
  *
- * @return `true` if the chips are considered equal, `false` otherwise.
+ * @return
+ *      `true` if the chips are considered equal, `false` otherwise.
  *
  ********************************************************************************************/
-bool operator==(const IChip& p_lhs, const IChip& p_rhs);
+[[nodiscard]] bool operator==(const IChip& p_lhs, const IChip& p_rhs);
 
 /******************************************************************************************//**
  * @brief Not-equal-to operator.
  *
- * @param p_lhs The left hand side chip.
- * @param p_rhs The right hand side chip.
+ * @param p_lhs
+ *      The left hand side chip.
+ * @param p_rhs
+ *      The right hand side chip.
  *
- * @return `true` if the chips are considered NOT equal, `false` otherwise.
+ * @return
+ *      `true` if the chips are considered NOT equal, `false` otherwise.
  *
  ********************************************************************************************/
-bool operator!=(const IChip& p_lhs, const IChip& p_rhs);
+[[nodiscard]] bool operator!=(const IChip& p_lhs, const IChip& p_rhs);
 
 } // namespace cxmodel
 

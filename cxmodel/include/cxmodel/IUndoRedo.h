@@ -16,8 +16,7 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file IUndoRedo.h
- * @date 2020
+ * @file IUndoRedo.h * @date 2020
  *
  *************************************************************************************************/
 
@@ -27,6 +26,10 @@
 namespace cxmodel
 {
 
+/**********************************************************************************************//**
+ * @brief Interface for undoing and redoing commands.
+ *
+ ************************************************************************************************/
 class IUndoRedo
 {
 
@@ -43,8 +46,9 @@ public:
      *
      * If some undoeable actions were done, the last one will be undoed.
      *
-     * @note An action that is undoed must put the model back at the same state is was before
-     *       the action was ever done.
+     * @note
+     *     An action that is undoed must put the model back at the same state is was before
+     *     the action was ever done.
      *
      ********************************************************************************************/
     virtual void Undo() = 0;
@@ -55,8 +59,9 @@ public:
      * If some redoable actions were undoed, the last one that was undoed will be redoed.
      * Otherwise, nothing happens.
      *
-     * @note An action that is redoed must put the model back at the same state it was before
-     *       the action was undoed.
+     * @note
+     *     An action that is redoed must put the model back at the same state it was before
+     *     the action was undoed.
      *
      ********************************************************************************************/
     virtual void Redo() = 0;
@@ -64,8 +69,8 @@ public:
     /******************************************************************************************//**
      * @brief Check is there are commands than can be undone in the stack.
      *
-     * @return `true` if there is at least one command that can be undone in the stack and
-     *         `false` otherwise.
+     * @return 
+     *     `true` if there is at least one command that can be undone in the stack and `false` otherwise.
      *
      ********************************************************************************************/
     virtual bool CanUndo() const = 0;
@@ -73,8 +78,8 @@ public:
     /******************************************************************************************//**
      * @brief Check is there are commands in the stack that can be redone.
      *
-     * @return `true` if there is at least one command that can be redone in the stack and
-     *         `false` otherwise.
+     * @return
+     *      `true` if there is at least one command that can be redone in the stack and `false` otherwise.
      *
      ********************************************************************************************/
     virtual bool CanRedo() const = 0;

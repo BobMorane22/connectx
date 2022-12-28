@@ -29,6 +29,10 @@
 namespace cxgui
 {
 
+/*********************************************************************************************//**
+ * @brief Status bar presenter.
+ *
+ ************************************************************************************************/
 class StatusBarPresenter : public IStatusBarPresenter
 {
 
@@ -45,7 +49,21 @@ private:
 
 };
 
-std::string MakeStatusBarContextString(cxmodel::ModelNotificationContext p_context);
+
+/**********************************************************************************************//**
+ * @brief Generates a formatted string associated to a model notification context.
+ *
+ * Each model notification context is loggued to the status bar for the user to see. This function
+ * takes a model notification context and generates the associated formatted string to show the
+ * user. Some notification contexts are not shown to the user and in these cases, an empty string
+ * is returned by this function.
+ *
+ * @param p_context The model notification context.
+ *
+ * @return The formatted string related to the model notification context (can be empty).
+ *
+ *************************************************************************************************/
+[[nodiscard]] std::string MakeStatusBarContextString(cxmodel::ModelNotificationContext p_context);
 
 } // namespace cxgui
 

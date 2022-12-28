@@ -41,6 +41,7 @@ class IGameViewPresenter
 
 public:
 
+    /** A list of chip colors */
     using ChipColors = std::vector<std::vector<cxmodel::ChipColor>>;
 
 public:

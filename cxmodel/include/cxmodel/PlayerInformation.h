@@ -33,6 +33,7 @@
 namespace cxmodel
 {
 
+/** A list of players. */
 using PlayersList = std::vector<std::shared_ptr<IPlayer>>;
 
 /*********************************************************************************************//**
@@ -46,9 +47,12 @@ struct PlayerInformation final
      *
      * @pre The active player index is different than the next player index.
      *
-     * @param p_players           The player list.
-     * @param p_activePlayerIndex The active player's index in the list.
-     * @param p_nextPlayerIndex   The next player's index in the list.
+     * @param p_players
+     *      The player list.
+     * @param p_activePlayerIndex
+     *      The active player's index in the list.
+     * @param p_nextPlayerIndex
+     *      The next player's index in the list.
      *
      ********************************************************************************************/
     PlayerInformation(PlayersList p_players,
@@ -61,8 +65,13 @@ struct PlayerInformation final
         PRECONDITION(p_activePlayerIndex != p_nextPlayerIndex);
     }
 
+    /** The list of all players. */
     PlayersList m_players;
+
+    /** The index, in the list, of the current player dropping a chip. */
     size_t m_activePlayerIndex;
+
+    /** The index, in the list, of the next player who will drop a chip. */
     size_t m_nextPlayerIndex;
 };
 

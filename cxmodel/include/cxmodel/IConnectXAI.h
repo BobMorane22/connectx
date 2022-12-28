@@ -55,7 +55,8 @@ public:
      *
      * This computation is usually used to get a drop location for managed players.
      *
-     * @param p_algorithm The algorithm to use for computation.
+     * @param p_algorithm
+     *      The algorithm to use for computation.
      *
      *********************************************************************************************/
     virtual void ComputeNextDropColumn(DropColumnComputation p_algorithm) = 0;
@@ -63,7 +64,8 @@ public:
     /******************************************************************************************//**
      * @brief Gets the last computed bot target.
      *
-     * @return The last computed bot target.
+     * @return
+     *      The last computed bot target.
      *
      *********************************************************************************************/
     [[nodiscard]] virtual size_t GetCurrentBotTarget() const = 0;

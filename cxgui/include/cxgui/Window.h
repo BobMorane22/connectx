@@ -39,12 +39,14 @@ namespace cxgui
 /*********************************************************************************************//**
  * @brief An abstract base class for windows implemented in terms of Gtkmm windows.
  *
- * @tparam GtkmmWindow The base Gtkmm window type used for implementation. This type must
- *                     support the following methods:
- *                      1. Gtk::Container::add
- *                      2. Gtk::Widget::signal_realize
- *                      3. Gtk::Widget::show_all
- *                      4. Gtk::Window::set_icon_from_file
+ * @tparam GtkmmWindow
+ *      The base Gtkmm window type used for implementation. This type must support the
+ *      following methods:
+ *
+ *        1. `Gtk::Container::add`
+ *        2. `Gtk::Widget::signal_realize`
+ *        3. `Gtk::Widget::show_all`
+ *        4. `Gtk::Window::set_icon_from_file`
  *
  * This class provides methods that can be overridden to configure the window items, such as
  * child widgets, layouts and the window itself.
@@ -56,8 +58,13 @@ class Window : public IWindow
 
 public:
 
+    /******************************************************************************************//**
+     * @brief Constructor.
+     *
+     ********************************************************************************************/
     Window();
 
+    // cxgui::IWindow:
     int Show() override;
 
     /******************************************************************************************//**
@@ -68,7 +75,6 @@ public:
      *
      ********************************************************************************************/
     void Init();
-
 
 protected:
 
@@ -145,7 +151,10 @@ protected:
      **********************************************************************************************/
     virtual void ConfigureSignalHandlers() = 0;
 
+    /** The underlying GTKmm window's top level layout. */
     Gtk::Grid m_mainLayout;
+
+    /** The underlying GTKmm window instance. */
     GtkmmWindow m_window;
 
 };

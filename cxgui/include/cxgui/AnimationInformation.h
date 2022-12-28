@@ -77,16 +77,16 @@ struct AnimationInformations
         m_currentDisplacement = T{0.0};
     }
 
-    // Indicates if the animation is currently running.
+    /** Indicates if the animation is currently running. */
     bool m_isAnimating = false;
 
-    // The animation currently running (if any).
+    /** The animation currently running (if any). */
     std::optional<BoardAnimation> m_animation;
 
-    // Indicates the displacement actually covered by the animation.
+    /** Indicates the displacement actually covered by the animation. */
     T m_currentDisplacement = T{0.0};
 
-    // Indicates the current animation, if any:
+    /** Indicates the current animation (if any). */
     std::optional<cxgui::BoardAnimation> m_currentAnimation = std::nullopt;
 
 };

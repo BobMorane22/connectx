@@ -43,9 +43,15 @@ class GameResolutionDialogController : public IGameResolutionDialogController
 
 public:
 
-    GameResolutionDialogController(cxmodel::IConnectXGameActions& p_modelAsActions);
+    /*****************************************************************************************//**
+     * @brief Constructor.
+     *
+     * @param p_modelAsActions The model (user actions on the game).
+     *
+     ********************************************************************************************/
+    explicit GameResolutionDialogController(cxmodel::IConnectXGameActions& p_modelAsActions);
 
-    void OnNewGameRequested();
+    void OnNewGameRequested() override;
 
 private:
 

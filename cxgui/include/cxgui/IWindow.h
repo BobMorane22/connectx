@@ -51,8 +51,9 @@ public:
      *
      * Shows the window on the screen for a user to see.
      *
-     * @return @c EXIT_SUCCESS if the window if the window terminated the application without
-     *         errors, @c EXIT_FAILURE otherwise.
+     * @return
+     *      `EXIT_SUCCESS` if the window if the window terminated the application without
+     *       errors, `EXIT_FAILURE` otherwise.
      *
      ********************************************************************************************/
     virtual int Show() = 0;

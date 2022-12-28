@@ -28,24 +28,31 @@ namespace cxlog
 {
 
 /***********************************************************************************************//**
- * @enum A verbosity level characterizes how a logger or a log entry should respectively prioritize
- *       a log entry or itself.
+ * @brief Logger verbosity levels.
+ *
+ * A verbosity level characterizes how a logger or a log entry should respectively prioritize
+ * a log entry or itself.
  *
  **************************************************************************************************/
 enum class VerbosityLevel
 {
-    NONE    = 0,   // Do no logging.
+    /** Do no logging. */
+    NONE = 0,
 
-    FATAL   = 1,   // System can't recover.
+    /** System can't recover. */
+    FATAL = 1,   
 
-    ERROR   = 2,   // System can recover, but something is wrong.
+    /** System can recover, but something is wrong. */
+    ERROR = 2,
 
-    WARNING = 3,   // Warn about something unexpected that is not an error
-                   // but that could lead to errors.
+    /** Warn about something unexpected that is not an error but that could lead to errors. */
+    WARNING = 3,
 
-    INFO    = 4,   // General information that has no impact on the system.
+    /** General information that has no impact on the system. */
+    INFO = 4,
 
-    DEBUG   = 5    // Debug information, for developers only.
+    /** Debug information, for developers only. */
+    DEBUG = 5,
 };
 
 /***********************************************************************************************//**

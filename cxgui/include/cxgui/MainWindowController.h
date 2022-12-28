@@ -37,11 +37,24 @@ namespace cxmodel
 namespace cxgui
 {
 
+/**********************************************************************************************//**
+ * @brief Main window controller.
+ *
+ *************************************************************************************************/
 class MainWindowController : public cxgui::IMainWindowController
 {
 
 public:
 
+    /******************************************************************************************//**
+     * @brief Constructor.
+     *
+     * @param p_modelAsGameActions
+     *      The model (user interactions with the game).
+     * @param p_modelAsUndoRedo
+     *      The model (undo and redo game actions).
+     *
+     *********************************************************************************************/
     MainWindowController(cxmodel::IConnectXGameActions& p_modelAsGameActions,
                          cxmodel::IUndoRedo& p_modelAsUndoRedo);
 

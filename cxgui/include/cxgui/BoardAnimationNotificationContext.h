@@ -34,36 +34,65 @@ namespace cxgui
  * @brief Board animation events.
  *
  * Use as the notifications contexts for board animations. Typically, they are used to program
- * actions that must come before, while and after the animation.
+ * actions that must come before, during and after the animation.
  *
  *************************************************************************************************/
 enum class BoardAnimationNotificationContext
 {
+    /** Move left one column animation notification. */
     ANIMATE_MOVE_LEFT_ONE_COLUMN,
+
+    /** Move left one column animation completed notification. */
     POST_ANIMATE_MOVE_LEFT_ONE_COLUMN,
 
+    /** Move right one column animation notification. */
     ANIMATE_MOVE_RIGHT_ONE_COLUMN,
+
+    /** Move right one column animation completed notification. */
     POST_ANIMATE_MOVE_RIGHT_ONE_COLUMN,
 
+    /** Move right to some target animation notification. */
     ANIMATE_MOVE_RIGHT_TO_TARGET,
+
+    /** Move right to some target animation completed notification. */
     POST_ANIMATE_MOVE_RIGHT_TO_TARGET,
 
+    /** Drop chip animation notification. */
     ANIMATE_MOVE_DROP_CHIP,
+
+    /** Drop chip completed animation notification. */
     POST_ANIMATE_DROP_CHIP,
 
+    /** Undo drop chip animation notification. */
     ANIMATE_UNDO_DROP_CHIP,
+
+    /** Undo drop chip animation completed notification. */
     POST_ANIMATE_UNDO_DROP_CHIP,
 
+    /** Redo drop chip animation notification. */
     ANIMATE_REDO_DROP_CHIP,
+
+    /** Redo drop chip animation completed notification. */
     POST_ANIMATE_REDO_DROP_CHIP,
 
+    /** Reinitialize board animation notification. */
     ANIMATE_REINITIALIZE_BOARD,
+
+    /** Reinitialize board animation completed notification. */
     POST_ANIMATE_REINITIALIZE_BOARD,
 };
 
+/**********************************************************************************************//**
+ * @brief Board animation notifications observer.
+ *
+ *************************************************************************************************/
 using IBoardAnimationObserver = cxmodel::IObserver<cxgui::BoardAnimationNotificationContext>;
-using BoardAnimationSubject = cxmodel::Subject<cxgui::BoardAnimationNotificationContext>;
 
+/**********************************************************************************************//**
+ * @brief Board animation notifications subject.
+ *
+ *************************************************************************************************/
+using BoardAnimationSubject = cxmodel::Subject<cxgui::BoardAnimationNotificationContext>;
 
 } // namespace cxgui
 

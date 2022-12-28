@@ -32,18 +32,36 @@
 namespace cxgui
 {
 
+/**********************************************************************************************//**
+ * @brief Main window status bar.
+ *
+ *************************************************************************************************/
 class StatusBar : public IStatusBar
 {
 
 public:
 
-    ~StatusBar() override;
+    /******************************************************************************************//**
+     * @brief Constructor.
+     *
+     * @param p_presenter
+     *      A status bar presenter.
+     *
+     *********************************************************************************************/
     StatusBar(IStatusBarPresenter& p_presenter);
 
+    // cxgui::IStatusBar:
+    ~StatusBar() override;
     void SetLastUserActionStatus(const std::string& p_lastUserActionDescription) override;
 
+    /******************************************************************************************//**
+     * @brief Get the underlying Gtkmm status bar instance.
+     *
+     * @return
+     *      The underlying Gtkmm status bar instance.
+     *
+     *********************************************************************************************/
     Gtk::Statusbar& GetGtkStatusBar();
-
 
 private:
 

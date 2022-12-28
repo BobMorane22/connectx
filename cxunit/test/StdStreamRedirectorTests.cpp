@@ -16,7 +16,7 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file StdStreamRedirectorTests.h
+ * @file StdStreamRedirectorTests.cpp
  * @date 2021
  *
  * @note For some of these tests, some stream output will pollute the test report, which is

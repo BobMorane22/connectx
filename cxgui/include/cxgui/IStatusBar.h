@@ -28,6 +28,9 @@
 
 #include <cxmodel/ModelNotificationContext.h>
 
+namespace cxgui
+{
+
 /*********************************************************************************************//**
  * @brief Interface for status bars.
  *
@@ -46,17 +49,19 @@ public:
     /******************************************************************************************//**
      * @brief Sets the status bar's user action status string.
      *
-     * @pre p_lastUserActionDescription is not empty.
-     *
-     * @param p_lastUserActionDescription The user action status string, ready for display.
-     *
      * When the user make actions, the status bar is updated to reflect the action. To do
      * this, it displays the string indication what specific action was performed by the user.
      * This method sets this string in the status bar.
+     *
+     * @pre p_lastUserActionDescription is not empty.
+     *
+     * @param p_lastUserActionDescription The user action status string, ready for display.
      *
      ********************************************************************************************/
     virtual void SetLastUserActionStatus(const std::string& p_lastUserActionDescription) = 0;
 
 };
+
+} // namespace cxgui
 
 #endif // ISTATUSBAR_H_B9E6A5FA_CB18_4646_9BD1_F38CE15F1A62

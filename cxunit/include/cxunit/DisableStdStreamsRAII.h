@@ -32,12 +32,11 @@ namespace cxunit
 {
 
 /*********************************************************************************************//**
- * @brief Disable/enable @c stdout and @c stderr.
+ * @brief Disable/enable stdout and stderr.
  *
- * At construction, both streams are redirected to an @c std::stringstream (e.g. nothing gets
- * printed to the console). At destruction, both streams are redirected back to their original
- * targets. Use this class as a data member to either disable streaming to the console, or
- * to access the streaming data in a @c std::string (e.g. for testing).
+ * Redirects both streams (i.e. stdout and stderr) to some internal storage. Their contents
+ * are made available as a `std::string` so that they can be inspected during testing. Upon
+ * destruction, both streams are redirected back to their original targets.
  *
  ************************************************************************************************/
 class DisableStdStreamsRAII final
@@ -45,15 +44,73 @@ class DisableStdStreamsRAII final
 
 public:
 
+    /******************************************************************************************//**
+     * @brief Constructor.
+     *
+     * Redirects the standard and error streams (i.e stdout and stderr) to some buffer.
+     *
+     *********************************************************************************************/
     DisableStdStreamsRAII();
+
+    /******************************************************************************************//**
+     * @brief Destructor.
+     *
+     * Redirects the standard and error streams (i.e stdout and stderr) back to their original
+     * targets.
+     *
+     *********************************************************************************************/
     ~DisableStdStreamsRAII();
 
+    /******************************************************************************************//**
+     * @brief Explicitely disable stdout.
+     *
+     * Contents printed to stdout will then be captured in some internal buffer and become
+     * available during testing.
+     *
+     *********************************************************************************************/
     void DisableStdOut();
+
+    /******************************************************************************************//**
+     * @brief Explicitely enable stdout.
+     *
+     * This will deactivate stdout redirection. The stream will then behave as it does normally.
+     * This is useful if you only want to capture stderr.
+     *
+     *********************************************************************************************/
     void EnableStdOut();
+
+    /******************************************************************************************//**
+     * @brief Explicitely disable stderr.
+     *
+     * Contents printed to stderr will then be captured in some internal buffer and become
+     * available during testing.
+     *
+     *********************************************************************************************/
     void DisableStdErr();
+
+    /******************************************************************************************//**
+     * @brief Explicitely enable stderr.
+     *
+     * This will deactivate stderr redirection. The stream will then behave as it does normally.
+     * This is useful if you only want to capture stdout.
+     *
+     *********************************************************************************************/
     void EnableStdErr();
 
+    /******************************************************************************************//**
+     * @brief Gets the redirected stdout content.
+     *
+     * @return A string with the contents of stdout since it was redirected.
+     *
+     *********************************************************************************************/
     std::string GetStdOutContents() const;
+
+    /******************************************************************************************//**
+     * @brief Gets the redirected stderr content.
+     *
+     * @return A string with the contents of stderr since it was redirected.
+     *
+     *********************************************************************************************/
     std::string GetStdErrContents() const;
 
 

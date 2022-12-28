@@ -44,8 +44,16 @@ class CommandStack : public ICommandStack
 
 public:
 
+    /*********************************************************************************************//**
+     * @brief Constructor.
+     *
+     * @param p_capacity
+     *      The number of commands the stack will accept to store before being considered full.
+     *
+     ************************************************************************************************/
     CommandStack(const size_t p_capacity);
 
+    // cxmodel::ICommandStack:
     [[nodiscard]] CommandCompletionStatus Execute(std::unique_ptr<ICommand>&& p_newCommand) override;
     void Clear() override;
 

@@ -37,28 +37,29 @@ using Color = cxmodel::Color<unsigned short int>;
 
 static_assert(sizeof(cxgui::Color) == sizeof(cxmodel::ChipColor));
 
-// Dialog global margin (on each sides):
-constexpr int DIALOG_SIDE_MARGIN = 10;
+/** Dialog global margin (on each sides). */
+inline constexpr int DIALOG_SIDE_MARGIN = 10;
 
-// Dialog titles bottom margin space:
-constexpr int TITLE_BOTTOM_MARGIN = 20;
+/** Dialog titles bottom margin space. */
+inline constexpr int TITLE_BOTTOM_MARGIN = 20;
 
-// Section titles bottom margin space:
-constexpr int SECTION_BOTTOM_MARGIN = 10;
+/** Section titles bottom margin space. */
+inline constexpr int SECTION_BOTTOM_MARGIN = 10;
 
-// Controls botton margin space:
-constexpr int CONTROL_BOTTOM_MARGIN = 5;
+/** Controls botton margin space. */
+inline constexpr int CONTROL_BOTTOM_MARGIN = 5;
 
-// Indentation space in a dialog. For example, add this to control text to indent it once.
-constexpr char INDENT_MARK[] = "    ";
+/** Indentation space in a dialog. For example, add this to control text to indent it once. */
+inline constexpr char INDENT_MARK[] = "    ";
 
-// Default chip size, in pixels:
-constexpr int DEFAULT_CHIP_SIZE = 40;
+/** Default chip size, in pixels */
+inline constexpr int DEFAULT_CHIP_SIZE = 40;
 
-// Handler event propagation:
-constexpr bool STOP_EVENT_PROPAGATION = true;
-constexpr bool PROPAGATE_EVENT = false;
+/** Stop event propagation (top level enties are not aware of the event). */
+inline constexpr bool STOP_EVENT_PROPAGATION = true;
 
+/** Handler event propagation (top level entities are aware of the event). */
+inline constexpr bool PROPAGATE_EVENT = false;
 
 } // namespace cxgui
 

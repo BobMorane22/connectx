@@ -60,7 +60,7 @@ public:
     /******************************************************************************************//**
      * @brief Sets the current selected color.
      *
-     * @param The color to make visible in the combo box.
+     * @param p_color The color to make visible in the combo box.
      *
      ********************************************************************************************/
     void SetCurrentSelection(const cxgui::Color& p_color);

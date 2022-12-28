@@ -52,13 +52,15 @@ public:
     *
     * A structure holding all necessary abstract references to some concrete model.
     *
+    * @param p_asSubject
+    *      Observed part of the model.
     * @param p_asGameActions
     *      Game action model : perform user actions on the model.
     * @param p_asGameInformation
-    *      Game information model. Used to query informations about the current state of a game.
+    *      Game information model : query informations about the current state of a game.
     * @param p_asLimits
     *      System limits model : query information about the system's static limits. By
-    *      static, we mean limits within each the system should always stand.
+    *      static, we mean limits within which the system should always stand.
     * @param p_asVersionning
     *      Versionning model : query the system's version.
     * @param p_asUndoRedo
@@ -85,12 +87,25 @@ public:
         // Nothing to do...
     }
 
+    /** The observed part of the model. */
     cxmodel::ModelSubject& m_asSubject;
+
+    /** Part of the model managing user actions. */
     cxmodel::IConnectXGameActions& m_asGameActions;
+
+    /** Part of the model managing informations about the current game. */
     cxmodel::IConnectXGameInformation& m_asGameInformation;
+
+    /** Part of the model holding the system (global) limits. */
     cxmodel::IConnectXLimits& m_asLimits;
+
+    /** Part of the model managing versionning. */
     cxmodel::IVersioning& m_asVersionning;
+
+    /** Part of the model managing undos and redos. */
     cxmodel::IUndoRedo& m_asUndoRedo;
+
+    /** Part of the model managing the AI behind bot players. */
     cxmodel::IConnectXAI& m_asAi;
 
 };

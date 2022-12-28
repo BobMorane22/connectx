@@ -137,6 +137,8 @@ public:
     /******************************************************************************************//**
      * @brief Indicates if, according to the current number of players, another one can be removed.
      *
+     * @param p_currentNumberOfPlayers The current number of players in the game.
+     *
      * @return `true` if another player can be removed, `false` otherwise.
      *
      ********************************************************************************************/
@@ -152,6 +154,8 @@ public:
 
     /******************************************************************************************//**
      * @brief Indicates if, according to the current number of players, another one can be added.
+     *
+     * @param p_currentNumberOfPlayers The current number of players in the game.
      *
      * @return `true` if another player can be added, `false` otherwise.
      *
@@ -258,7 +262,7 @@ public:
     /******************************************************************************************//**
      * @brief Checks if the player types passed as arguments are valid.
      *
-     * @param p_playerChipColors A list of player types.
+     * @param p_playerTypes A list of player types.
      *
      * @return `Success` if the list of player types is valid, `Error` otherwise.
      *

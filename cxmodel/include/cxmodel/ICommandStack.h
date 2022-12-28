@@ -79,9 +79,10 @@ public:
     /******************************************************************************************//**
      * @brief Clear the stack.
      *
-     * @post There are no more commands in the stack.
-     *
      * Clears the stack of all its commands.
+     *
+     * @post
+     *      There are no more commands in the stack.
      *
      ********************************************************************************************/
     virtual void Clear() = 0;

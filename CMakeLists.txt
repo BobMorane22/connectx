@@ -73,11 +73,17 @@ add_subdirectory(cxexec)
 # Main Connect X executable:
 add_subdirectory(connectx)
 
-# Data items
+# Data items:
 add_subdirectory(data)
 
-# User help
+# User help:
 add_subdirectory(help)
+
+# Developer documentation:
+generate_doxygen_documentation(
+    doc
+    "Connect X"
+)
 
 # Code coverage:
 if(CMAKE_BUILD_TYPE MATCHES Debug)
@@ -85,5 +91,5 @@ if(CMAKE_BUILD_TYPE MATCHES Debug)
         NAME coverage
         EXECUTABLE ctest
         EXCLUDE "cx*/test/*"
-    )
+)
 endif()

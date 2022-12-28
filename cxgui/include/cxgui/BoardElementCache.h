@@ -33,11 +33,15 @@ namespace Gdk
     class Pixbuf;
 }
 
+/** @cond */
+/*  We explicitely tell Doxygen not to document this part. Otherwise, it is included even
+    though is it related to Glib, not Connect X.*/
 namespace Glib
 {
     template<typename T>
     class RefPtr;
 }
+/** @endcond */
 
 namespace cxgui
 {

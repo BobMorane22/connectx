@@ -61,13 +61,21 @@ public:
     /******************************************************************************************//**
      * @brief Constructor.
      *
-     * @pre The column passed as argument is within the board limits.
+     * @pre
+     *      The column passed as argument is within the board limits.
      *
-     * @param p_board             The game board.
-     * @param p_playersInfo       Information relative to the players.
-     * @param p_droppedChip       The chip being dropped.
-     * @param p_column            The column into which to drop the chip.
-     * @param p_takenPositions    A collection of non-free positions.
+     * @param p_board
+     *      The game board.
+     * @param p_playersInfo
+     *      Information relative to the players.
+     * @param p_droppedChip
+     *      The chip being dropped.
+     * @param p_column
+     *      The column into which to drop the chip.
+     * @param p_takenPositions
+     *      A collection of non-free positions.
+     * @param p_logger
+     *      A logger. It will log intersting information about the execution.
      *
      ********************************************************************************************/
     CommandDropChip(IBoard& p_board,

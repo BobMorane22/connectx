@@ -42,8 +42,17 @@ class CmdArgInvalidStrategy : public ICmdArgWorkflowStrategy
 
 public:
 
+    /*****************************************************************************************//**
+     * @brief Constructor.
+     *
+     * @param p_invalidArg The invalid command line argument.
+     *
+     * @pre The invalid argument string is not empty.
+     *
+     ********************************************************************************************/
     CmdArgInvalidStrategy(const std::string& p_invalidArg);
 
+    // cx::ICmdArgWorkflowStrategy:
     int Handle() override;
 
 

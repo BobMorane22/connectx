@@ -53,7 +53,8 @@ public:
      * Send a textual message to the log target for logging. After a call to this, the message
      * should be in the hand of the target.
      *
-     * @param p_message The message to log.
+     * @param p_message
+     *      The message to log.
      *
      **********************************************************************************************/
     virtual void Log(const std::string& p_message) = 0;

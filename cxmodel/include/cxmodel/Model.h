@@ -68,10 +68,13 @@ public:
     /******************************************************************************************//**
      * @brief Constructor.
      *
-     * @pre p_cmdStack is valid.
-     * @pre p_cmdStack is empty.
+     * @param p_cmdStack
+     *      The command stack.
+     * @param p_logger
+     *      A logger. Used to log actions performed on the model as Connect X is run.
      *
-     * @param p_cmdStack The command stack.
+     * @pre
+     *      The command stack is valid and empty.
      *
      ********************************************************************************************/
     Model(std::unique_ptr<ICommandStack>&& p_cmdStack, cxlog::ILogger& p_logger);

@@ -41,6 +41,7 @@ namespace cxmodel
  ************************************************************************************************/
 struct NewGameInformation final
 {
+    /** A list of Connect X players. */
     using Players = std::vector<std::shared_ptr<IPlayer>>;
 
     // Copying:
@@ -77,10 +78,16 @@ struct NewGameInformation final
      ********************************************************************************************/
     ~NewGameInformation() = default;
 
+    /** The board height (how many chips until a column is considered full) for the new game. */
     size_t m_gridHeight;
+
+    /** The board width (how many chips until a row is considered full) for the new game. */
     size_t m_gridWidth;
+
+    /** The in a in-a-row value for the new game. */
     size_t m_inARowValue;
 
+    /** The list of players for the new game. */
     Players m_players;
 };
 

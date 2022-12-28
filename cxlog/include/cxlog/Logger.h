@@ -46,11 +46,16 @@ public:
      *
      * Logs an entry using the information injected as parameters.
      *
-     * @param p_verbosityLevel The message verbosity level.
-     * @param p_fileName       The source file in which the logging occurred.
-     * @param p_functionName   The function name in which the logging occurred.
-     * @param p_lineNumber     The line number in the source file where the logging occurred.
-     * @param p_message        The message to log.
+     * @param p_verbosityLevel
+     *      The message verbosity level.
+     * @param p_fileName
+     *      The source file in which the logging occurred.
+     * @param p_functionName
+     *      The function name in which the logging occurred.
+     * @param p_lineNumber
+     *      The line number in the source file where the logging occurred.
+     * @param p_message
+     *      The message to log.
      *
      **********************************************************************************************/
     void Log( const VerbosityLevel p_verbosityLevel,
@@ -62,7 +67,8 @@ public:
     /*******************************************************************************************//**
      * @brief Mutates the logger general verbosity level.
      *
-     * @param p_verbosityLevel The new logger-wide verbosity level.
+     * @param p_verbosityLevel
+     *      The new logger-wide verbosity level.
      *
      *********************************************************************************************/
     void SetVerbosityLevel(const VerbosityLevel p_verbosityLevel) override;
@@ -70,16 +76,11 @@ public:
     /*******************************************************************************************//**
      * @brief Indicates the logger general verbosity level.
      *
-     * @return The verbosity level.
+     * @return
+     *      The verbosity level.
      *
      *********************************************************************************************/
     VerbosityLevel GetVerbosityLevel() const override;
-
-
-protected:
-
-    std::unique_ptr<ILogger> m_successor;
-
 
 private:
 

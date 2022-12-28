@@ -38,11 +38,12 @@
  * For a fixture class name `MyFixture`, the following aliases are created:
  *
  *  - `MyFixtureNoStreamRedirector`     : equivalent to `MyFixture`.
- *  - `MyFixtureStdOutStreamRedirector` : use this alias to redirect STDOUT only.
- *  - `MyFixtureStdErrStreamRedirector` : use this alias to redirect STDERR only.
- *  - `MyFixtureBothStreamsRedirector`  : use this alias to redirect both STDOUT and STDERR.
+ *  - `MyFixtureStdOutStreamRedirector` : use this alias to redirect stdout only.
+ *  - `MyFixtureStdErrStreamRedirector` : use this alias to redirect stderr only.
+ *  - `MyFixtureBothStreamsRedirector`  : use this alias to redirect both stdout and stderr.
  *
- * @param p_fixtureClassName The test fixture class name.
+ * @param p_fixtureClassName
+ *      The test fixture class name.
  *
  ************************************************************************************************/
 #define ADD_STREAM_REDIRECTORS(p_fixtureClassName)                                                                                \
@@ -61,9 +62,16 @@ namespace cxunit
  ************************************************************************************************/
 enum class Redirection
 {
+    /** Redirect nothing. */
     NONE,
+
+    /** Redirect stdout only. */
     STDOUT,
+
+    /** Redirect stderr only. */
     STDERR,
+
+    /** Redirect both stdout and stderr. */
     BOTH,
 };
 
@@ -72,13 +80,15 @@ enum class Redirection
  *
  * For a test fixture `T`, adds specific streams redirection according to a specified scenario.
  * Using this, the user can add stream redirection, for his/her fixture `T`, only for the needed
- * stream. For example, only STDERR could be redirected and STDOUT left untouched.
+ * stream. For example, only stderr could be redirected and stdout left untouched.
  *
  * @note Instances of this should only be declared via the `ADD_STREAM_REDIRECTORS` macro (see above).
  * @note Will only compile for test fixtures.
  *
- * @tparam T The test fixture.
- * @tparam R The redirection scenario.
+ * @tparam T
+ *      The test fixture.
+ * @tparam R
+ *      The redirection scenario.
  *
  ************************************************************************************************/
 template <typename T, Redirection R>
@@ -113,9 +123,11 @@ public:
     }
 
     /*****************************************************************************************//**
-     * @brief Gets the redirected STDOUT contents as a string.
+     * @brief Gets the redirected stdout contents as a string.
      *
      * Only available for the `Redirection::STDOUT` and `Redirection::BOTH` scenarios.
+     *
+     * @return The stdout stream contents since it was last redirected.
      *
      ********************************************************************************************/
     template<
@@ -128,9 +140,11 @@ public:
     }
 
     /*****************************************************************************************//**
-     * @brief Gets the redirected STDERR contents as a string.
+     * @brief Gets the redirected stderr contents as a string.
      *
      * Only available for the `Redirection::STDERR` and `Redirection::BOTH` scenarios.
+     *
+     * @return The stderr stream contents since it was last redirected.
      *
      ********************************************************************************************/
     template<

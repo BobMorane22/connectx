@@ -32,7 +32,7 @@ namespace cxgui
 {
 
 /*********************************************************************************************//**
- * @brief Presenter for the About window.
+ * @brief Interface for About window presenters.
  *
  ************************************************************************************************/
 class IAboutWindowPresenter
@@ -49,11 +49,15 @@ public:
     /******************************************************************************************//**
      * @brief Gets the window title text.
      *
+     * @return The window title text.
+     *
      ********************************************************************************************/
     virtual std::string GetWindowTitle() const = 0;
 
     /******************************************************************************************//**
      * @brief Gets the name of the application.
+     *
+     * @return The application name.
      *
      ********************************************************************************************/
     virtual std::string GetApplicationName() const = 0;
@@ -61,17 +65,23 @@ public:
     /******************************************************************************************//**
      * @brief Gets the application version number text.
      *
+     * @return A string containing the formatted application version number.
+     *
      ********************************************************************************************/
     virtual std::string GetVersionNumber() const = 0;
 
     /******************************************************************************************//**
      * @brief Gets the application description text.
      *
+     * @return The application description text.
+     *
      ********************************************************************************************/
     virtual std::string GetApplicationDescription() const = 0;
 
     /******************************************************************************************//**
-     * @brief Gets the window title text.
+     * @brief Gets the license description text.
+     *
+     * @return The license description text.
      *
      ********************************************************************************************/
     virtual std::string GetLicenseDescription() const = 0;
@@ -79,11 +89,15 @@ public:
     /******************************************************************************************//**
      * @brief Gets the copyright notice text.
      *
+     * @return The copyright notice text.
+     *
      ********************************************************************************************/
     virtual std::string GetCopyrightNotice() const = 0;
 
     /******************************************************************************************//**
-     * @brief Gets the close widget text.
+     * @brief Gets the text show on the widget used to close the window.
+     *
+     * @return The string on the widget used to close the window.
      *
      ********************************************************************************************/
     virtual std::string GetCloseText() const = 0;

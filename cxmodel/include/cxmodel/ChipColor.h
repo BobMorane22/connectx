@@ -38,8 +38,11 @@ using ChipColor = Color<unsigned short>;
 /******************************************************************************************//**
  * @brief Makes the "transparent" color.
  *
+ * @return
+ *      A transparent chip color instance.
+ *
  ********************************************************************************************/
-constexpr ChipColor MakeTransparent()
+[[nodiscard]] constexpr ChipColor MakeTransparent()
 {
     return ChipColor{0u, 0u, 0u, 0u};
 }
@@ -47,8 +50,11 @@ constexpr ChipColor MakeTransparent()
 /******************************************************************************************//**
  * @brief Makes the red color.
  *
+ * @return
+ *      A red chip color instance.
+ *
  ********************************************************************************************/
-constexpr ChipColor MakeRed()
+[[nodiscard]] constexpr ChipColor MakeRed()
 {
     return ChipColor::MakePredefined(ChipColor::Predefined::RED);
 }
@@ -56,8 +62,11 @@ constexpr ChipColor MakeRed()
 /******************************************************************************************//**
  * @brief Makes the blue color.
  *
+ * @return
+ *      A blue chip color instance.
+ *
  ********************************************************************************************/
-constexpr ChipColor MakeBlue()
+[[nodiscard]] constexpr ChipColor MakeBlue()
 {
     return ChipColor::MakePredefined(ChipColor::Predefined::BLUE);
 }
@@ -65,8 +74,11 @@ constexpr ChipColor MakeBlue()
 /******************************************************************************************//**
  * @brief Makes the yellow color.
  *
+ * @return
+ *      A yellow chip color instance.
+ *
  ********************************************************************************************/
-constexpr ChipColor MakeYellow()
+[[nodiscard]] constexpr ChipColor MakeYellow()
 {
     return ChipColor::MakePredefined(ChipColor::Predefined::YELLOW);
 }
@@ -74,8 +86,11 @@ constexpr ChipColor MakeYellow()
 /******************************************************************************************//**
  * @brief Makes the green color.
  *
+ * @return
+ *      A green chip color instance.
+ *
  ********************************************************************************************/
-constexpr ChipColor MakeGreen()
+[[nodiscard]] constexpr ChipColor MakeGreen()
 {
     return ChipColor::MakePredefined(ChipColor::Predefined::GREEN);
 }
@@ -83,62 +98,77 @@ constexpr ChipColor MakeGreen()
 /******************************************************************************************//**
  * @brief Factory method for creating chip colors from HSL values. Colors are opaque.
  *
- * @param p_hue        Hue channel value.
- * @param p_saturation Saturation channel value.
- * @param p_lightness  Lightness channel value.
+ * @param p_hue
+ *      Hue channel value.
+ * @param p_saturation
+ *      Saturation channel value.
+ * @param p_lightness
+ *      Lightness channel value.
  *
- * @return The chip color.
+ * @return
+ *      The chip color.
  *
  *********************************************************************************************/
-ChipColor MakeFromHSL(double p_hue,
-                      double p_saturation,
-                      double p_lightness);
+[[nodiscard]] ChipColor MakeFromHSL(double p_hue,
+                                    double p_saturation,
+                                    double p_lightness);
 
 /******************************************************************************************//**
  * @brief Factory method for creating chip colors from HSLA values.
  *
- * @param p_hue        Hue channel value.
- * @param p_saturation Saturation channel value.
- * @param p_lightness  Lightness channel value.
- * @param p_alpha      Alpha channel value.
+ * @param p_hue
+ *      Hue channel value.
+ * @param p_saturation
+ *      Saturation channel value.
+ * @param p_lightness
+ *      Lightness channel value.
+ * @param p_alpha
+ *      Alpha channel value.
  *
- * @return The chip color.
+ * @return
+ *      The chip color.
  *
  *********************************************************************************************/
-ChipColor MakeFromHSLA(double p_hue,
-                       double p_saturation,
-                       double p_lightness,
-                       double p_alpha);
+[[nodiscard]] ChipColor MakeFromHSLA(double p_hue,
+                                     double p_saturation,
+                                     double p_lightness,
+                                     double p_alpha);
 
 /******************************************************************************************//**
  * @brief Computes the hue channel of a chip color.
  *
- * @param p_color The chip color.
+ * @param p_color
+ *      The chip color.
  *
- * @return The hue channel in [0, 1].
+ * @return
+ *      The hue channel (in the \f$[0, 1]\f$ inverval).
  *
  *********************************************************************************************/
-double ComputeHue(const ChipColor& p_color);
+[[nodiscard]] double ComputeHue(const ChipColor& p_color);
 
 /******************************************************************************************//**
  * @brief Computes the saturation channel of a chip color.
  *
- * @param p_color The chip color.
+ * @param p_color
+ *      The chip color.
  *
- * @return The saturation channel in [0, 1].
+ * @return
+ *      The saturation channel (in the \f$[0, 1]\f$ inverval).
  *
  *********************************************************************************************/
-double ComputeSaturation(const ChipColor& p_color);
+[[nodiscard]] double ComputeSaturation(const ChipColor& p_color);
 
 /******************************************************************************************//**
  * @brief Computes the luminosity channel of a chip color.
  *
- * @param p_color The chip color.
+ * @param p_color
+ *      The chip color.
  *
- * @return The luminosity channel in [0, 1].
+ * @return
+ *      The luminosity channel in the \f$[0, 1]\f$ interval).
  *
  *********************************************************************************************/
-double ComputeLuminosity(const ChipColor& p_color);
+[[nodiscard]] double ComputeLuminosity(const ChipColor& p_color);
 
 } // namespace cxmodel
 

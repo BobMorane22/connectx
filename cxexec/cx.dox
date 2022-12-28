@@ -16,29 +16,17 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file EnabledState.h
+ * @file cx.dox
  * @date 2022
  *
  *************************************************************************************************/
 
-namespace cxgui
-{
-
 /**********************************************************************************************//**
- * @brief Widget enabled state.
+ * @namespace cx
  *
- * A widget can be enabled or disabled. A user can interract directly on an enabled widget. With
- * a disabled widget, interaction can also occur, but it has to be indirectly. On most toolkits,
- * diabled widgets are "greyed out".
+ * @brief Top level Connect X facilities.
+ *
+ * The `cx` namespace contains top level facilities specific to Connect X. This namespace
+ * knows about all the others.
  *
  *************************************************************************************************/
-enum class EnabledState
-{
-    /** The user can interract with the widget. */
-    Enabled,  
-
-    /** The user cannot interract with the widget. */
-    Disabled
-};
-
-} // namespace cxgui

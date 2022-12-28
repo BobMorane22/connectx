@@ -1,10 +1,5 @@
 # Connect X
 
-## Introduction
-
-This is the Connect X project home page.
-
-
 ## Building and installing
 
 ### Dependencies

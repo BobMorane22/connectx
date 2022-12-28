@@ -16,29 +16,17 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file EnabledState.h
+ * @file cxstd.dox
  * @date 2022
  *
  *************************************************************************************************/
 
-namespace cxgui
-{
-
 /**********************************************************************************************//**
- * @brief Widget enabled state.
+ * @namespace cxstd
  *
- * A widget can be enabled or disabled. A user can interract directly on an enabled widget. With
- * a disabled widget, interaction can also occur, but it has to be indirectly. On most toolkits,
- * diabled widgets are "greyed out".
+ * @brief Extended Standard Library like tools.
+ *
+ * The `cxstd` namespace contains tools to be used across whole codebases, much like the tools
+ * in the Standard Library.
  *
  *************************************************************************************************/
-enum class EnabledState
-{
-    /** The user can interract with the widget. */
-    Enabled,  
-
-    /** The user cannot interract with the widget. */
-    Disabled
-};
-
-} // namespace cxgui

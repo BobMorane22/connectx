@@ -16,29 +16,16 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file EnabledState.h
+ * @file cxmodel.dox
  * @date 2022
  *
  *************************************************************************************************/
 
-namespace cxgui
-{
-
 /**********************************************************************************************//**
- * @brief Widget enabled state.
+ * @namespace cxmodel
  *
- * A widget can be enabled or disabled. A user can interract directly on an enabled widget. With
- * a disabled widget, interaction can also occur, but it has to be indirectly. On most toolkits,
- * diabled widgets are "greyed out".
+ * @brief The Connect X model namespace
+ *
+ * The `cxmodel` namespace contains the Connect X model as well as facilities related to it.
  *
  *************************************************************************************************/
-enum class EnabledState
-{
-    /** The user can interract with the widget. */
-    Enabled,  
-
-    /** The user cannot interract with the widget. */
-    Disabled
-};
-
-} // namespace cxgui

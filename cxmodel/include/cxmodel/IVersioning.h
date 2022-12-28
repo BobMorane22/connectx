@@ -16,13 +16,13 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file IVersionning.h
+ * @file IVersioning.h
  * @date 2020
  *
  *************************************************************************************************/
 
-#ifndef IVERSIONNING_H_776139B1_BE1B_4469_95F0_2DE9A0E4C816
-#define IVERSIONNING_H_776139B1_BE1B_4469_95F0_2DE9A0E4C816
+#ifndef IVERSIONING_H_776139B1_BE1B_4469_95F0_2DE9A0E4C816
+#define IVERSIONING_H_776139B1_BE1B_4469_95F0_2DE9A0E4C816
 
 #include <string>
 
@@ -47,11 +47,15 @@ public:
     /******************************************************************************************//**
      * @brief Get the API name.
      *
+     * @return A string containing the API name.
+     *
      ********************************************************************************************/
     virtual std::string GetName() const = 0;
 
     /******************************************************************************************//**
      * @brief Get the API version number, formatted as a string.
+     *
+     * @return The API version number, formatted as a string.
      *
      ********************************************************************************************/
     virtual std::string GetVersionNumber() const = 0;
@@ -60,4 +64,4 @@ public:
 
 } // namespace cxmodel
 
-#endif // IVERSIONNING_H_776139B1_BE1B_4469_95F0_2DE9A0E4C816
+#endif // IVERSIONING_H_776139B1_BE1B_4469_95F0_2DE9A0E4C816

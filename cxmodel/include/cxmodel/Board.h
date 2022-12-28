@@ -33,11 +33,29 @@
 namespace cxmodel
 {
 
+/**********************************************************************************************//**
+ * @brief Connect X game board.
+ *
+ *************************************************************************************************/
 class Board : public IBoard
 {
 
 public:
 
+    /******************************************************************************************//**
+     * @brief Constructor.
+     *
+     * @param p_nbRows
+     *      The number of rows to include in the board.
+     * @param p_nbColumns
+     *      The number of columns to include in the board.
+     * @param p_modelAsLimits
+     *      The model limits.
+
+     * @pre
+     *      The number of rows and columns fall within the model limits.
+     *
+     *********************************************************************************************/
     Board(size_t p_nbRows, size_t p_nbColumns, const IConnectXLimits& p_modelAsLimits);
 
     // cxmodel::IBoard:
@@ -49,11 +67,9 @@ public:
     void ResetChip(Position& p_position) override;
     bool IsColumnFull(size_t p_column) const override;
 
-protected:
+private:
 
     void CheckInvariants() const;
-
-private:
 
     using Grid = std::vector<std::vector<std::unique_ptr<IChip>>>;
 

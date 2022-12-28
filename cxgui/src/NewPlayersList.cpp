@@ -37,7 +37,7 @@
 namespace cxgui
 {
 
-/***********************************************************************************************//**
+/***************************************************************************************************
  * @class NewPlayerTitleRow
  *
  * @brief Title row for the new players list.
@@ -61,7 +61,7 @@ private:
     Gtk::Label m_discColorTitle;
 };
 
-/***********************************************************************************************//**
+/***************************************************************************************************
  * @class NewPlayerRow
  *
  * @brief This widget represents the new information needed by the application to register a
@@ -69,16 +69,14 @@ private:
  *
  * The informations needed are:
  *
- * <ul>
- *   <li> The player's type       </li>
- *   <li> The player's name       </li>
- *   <li> The player's disc color </li>
- * </ul>
+ *   - The player's type.
+ *   - The player's name.
+ *   - The player's disc color.
  *
  * This widget is not intended to be used by itself. Rather, it should be bundled together in
- * some Gtk::ListBox widget with others like it. @c cxexec::NewPlayersList is an example.
+ * some `Gtk::ListBox` widget with others like it. `cxexec::NewPlayersList` is an example.
  *
- * @invariant The member variable @c m_playerName does not contain an empty string.
+ * @invariant The member variable `m_playerName` does not contain an empty string.
  *
  * @see cxexec::NewPlayersList
  *
@@ -88,7 +86,7 @@ class NewPlayerRow final : public Gtk::ListBoxRow
 
 public:
 
-    /*******************************************************************************************//**
+    /***********************************************************************************************
      * @brief Constructor.
      *
      * @param p_playerName       The name of the player.
@@ -102,13 +100,13 @@ public:
                  cxmodel::PlayerType p_type,
                  EnabledState p_enabled = EnabledState::Enabled);
 
-    /*******************************************************************************************//**
+    /***********************************************************************************************
      * @brief Default destructor.
      *
      **********************************************************************************************/
     virtual ~NewPlayerRow();
 
-    /*******************************************************************************************//**
+    /***********************************************************************************************
      * @brief Updates the player's information. The name and the disc color can be changed.
      *
      * @param p_playerNewName       The new name of the player.
@@ -128,7 +126,7 @@ public:
      **********************************************************************************************/
     [[nodiscard]] std::string GetPlayerName() const;
 
-    /*******************************************************************************************//**
+    /***********************************************************************************************
      * @brief Accessor for the player's disc color.
      *
      * @return The player's actual disc color.
@@ -136,7 +134,7 @@ public:
      **********************************************************************************************/
     [[nodiscard]] cxmodel::ChipColor GetPlayerDiscColor() const;
 
-    /*******************************************************************************************//**
+    /***********************************************************************************************
      * @brief Accessor for the player type (human or bot).
      *
      * @return The player's actual type.
@@ -162,30 +160,30 @@ private:
 
 };
 
-/***********************************************************************************************//**
+/***************************************************************************************************
  * @brief Equality operator.
  *
- * Checks if two @c NewPlayerRow are equal. Two @c NewPlayerRow are equal <em>if and only if</em>
+ * Checks if two `NewPlayerRow, are equal. Two `NewPlayerRow` are equal *if and only if*
  * they share the same player name and the same player disc color.
  *
- * @param p_lhs The first @NewPlayerRow object to compare against.
- * @param p_rhs The second @NewPlayerRow object to compare against.
+ * @param p_lhs The first `NewPlayerRow` object to compare against.
+ * @param p_rhs The second `NewPlayerRow` object to compare against.
  *
- * @return @c true if both objects are considered equal @c false otherwise.
+ * @return Returns `true` if both objects are considered equal and `false` otherwise.
  *
  **************************************************************************************************/
 [[nodiscard]] bool operator==(const NewPlayerRow& p_lhs, const NewPlayerRow& p_rhs);
 
-/***********************************************************************************************//**
+/***************************************************************************************************
  * @brief Non-equality operator.
  *
- * Checks if two @c NewPlayerRow are NOT equal. Two @c NewPlayerRow are NOT equal if they differ
+ * Checks if two `NewPlayerRow`s are NOT equal. Two `NewPlayerRow`s are NOT equal if they differ
  * in their player names and/or in their player disc colors.
  *
- * @param p_lhs The first @NewPlayerRow object to compare against.
- * @param p_rhs The second @NewPlayerRow object to compare against.
+ * @param p_lhs The first `NewPlayerRow` object to compare against.
+ * @param p_rhs The second `NewPlayerRow` object to compare against.
  *
- * @return @return @c true if both objects are considered NOT equal @c false otherwise.
+ * @return Returns `true` if both objects are considered NOT equal and `false` otherwise.
  *
  **************************************************************************************************/
 [[nodiscard]] bool operator!=(const NewPlayerRow& p_lhs, const NewPlayerRow& p_rhs);
@@ -499,7 +497,7 @@ void cxgui::NewPlayersList::Clear()
     POSTCONDITION(get_children().empty());
 }
 
-const cxgui::NewPlayerRow* cxgui::NewPlayersList::GetRow(const std::size_t p_index) const
+const cxgui::NewPlayerRow* cxgui::NewPlayersList::GetRow(const size_t p_index) const
 {
     PRECONDITION(p_index < GetSize());
 
@@ -514,7 +512,7 @@ const cxgui::NewPlayerRow* cxgui::NewPlayersList::GetRow(const std::size_t p_ind
     return row;
 }
 
-cxgui::NewPlayerRow* cxgui::NewPlayersList::GetRow(const std::size_t p_index)
+cxgui::NewPlayerRow* cxgui::NewPlayersList::GetRow(const size_t p_index)
 {
     PRECONDITION(p_index < GetSize());
 

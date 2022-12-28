@@ -110,3 +110,188 @@ function(install_user_help p_installDir)
   )
 
 endfunction()
+
+# =================================================================================================
+# Setups all options related to the doxyfile.
+#
+# Note that all these options are specific to Connect X and may need to be reviewed for other
+# projects. All options appear in the other they are documented online.
+#
+# See : https://www.doxygen.nl/manual/config.html
+#
+# =================================================================================================
+macro(setup_doxyfile)
+
+  #--------------------------------------------------------------------------------------------
+  # Project related configuration options
+  #--------------------------------------------------------------------------------------------
+  set(DOXYGEN_PROJECT_NAME ${p_projectPrettyName})
+  set(DOXYGEN_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/doxygen)
+  set(DOXYGEN_MARKDOWN_SUPPORT YES)
+
+
+  #--------------------------------------------------------------------------------------------
+  # Build related configuration options
+  #--------------------------------------------------------------------------------------------
+  set(DOXYGEN_EXTRACT_ALL NO)
+  set(DOXYGEN_EXTRACT_LOCAL_CLASSES NO)
+  set(DOXYGEN_SHOW_USED_FILES NO)
+  set(DOXYGEN_SHOW_FILES NO)
+
+
+  #--------------------------------------------------------------------------------------------
+  # Configuration options related to warning and progress messages
+  #--------------------------------------------------------------------------------------------
+  set(DOXYGEN_WARNINGS YES)
+  set(DOXYGEN_WARN_IF_UNDOCUMENTED YES)
+  set(DOXYGEN_WARN_IF_DOC_ERROR YES)
+  set(DOXYGEN_WARN_IF_INCOMPLETE_DOC YES)
+  set(DOXYGEN_WARN_NO_PARAMDOC YES)
+  #set(DOXYGEN_WARN_AS_ERROR YES)
+  set(DOXYGEN_WARN_LOGFILE ${CMAKE_CURRENT_BINARY_DIR}/doxygen/build.log)
+
+
+  #--------------------------------------------------------------------------------------------
+  # Configuration options related to the input files
+  #--------------------------------------------------------------------------------------------
+  set(DOXYGEN_FILE_PATTERNS
+    "*.h"
+    "*.cpp"
+    "*.dox"
+    "*.md"
+  )
+  set(DOXYGEN_EXCLUDE_PATTERNS
+    "*/src/*"
+    "*/test/*"
+    "*/build/*"
+    "*/tools/*"
+    "*/help/*"
+    "*/data/*"
+    "*backlog.md"
+    "*wishlist.md"
+  )
+  set(DOXYGEN_USE_MDFILE_AS_MAINPAGE "README.md")
+
+
+  #--------------------------------------------------------------------------------------------
+  # Configuration options related to source browsing
+  #--------------------------------------------------------------------------------------------
+  set(DOXYGEN_VERBATIM_HEADERS NO)
+
+
+  #--------------------------------------------------------------------------------------------
+  # Configuration options related to the alphabetical class index
+  #--------------------------------------------------------------------------------------------
+
+
+  #--------------------------------------------------------------------------------------------
+  # Configuration options related to the HTML output
+  #--------------------------------------------------------------------------------------------
+  set(DOXYGEN_USE_MATHJAX YES)
+
+
+  #--------------------------------------------------------------------------------------------
+  # Configuration options related to the LaTeX output
+  #--------------------------------------------------------------------------------------------
+
+
+  #--------------------------------------------------------------------------------------------
+  # Configuration options related to the RTF output
+  #--------------------------------------------------------------------------------------------
+
+
+  #--------------------------------------------------------------------------------------------
+  # Configuration options related to the man page output
+  #--------------------------------------------------------------------------------------------
+
+
+  #--------------------------------------------------------------------------------------------
+  # Configuration options related to the XML output
+  #--------------------------------------------------------------------------------------------
+
+
+  #--------------------------------------------------------------------------------------------
+  # Configuration options related to the DOCBOOK output
+  #--------------------------------------------------------------------------------------------
+
+
+  #--------------------------------------------------------------------------------------------
+  # Configuration options for the AutoGen Definitions output
+  #--------------------------------------------------------------------------------------------
+
+
+  #--------------------------------------------------------------------------------------------
+  # Configuration options related to Sqlite3 output
+  #--------------------------------------------------------------------------------------------
+
+
+  #--------------------------------------------------------------------------------------------
+  # Configuration options related to the Perl module output
+  #--------------------------------------------------------------------------------------------
+
+
+  #--------------------------------------------------------------------------------------------
+  # Configuration options related to the preprocessor
+  #--------------------------------------------------------------------------------------------
+  set(DOXYGEN_ENABLE_PREPROCESSING YES)
+
+
+  #--------------------------------------------------------------------------------------------
+  # Configuration options related to external references
+  #--------------------------------------------------------------------------------------------
+
+
+  #--------------------------------------------------------------------------------------------
+  # Configuration options related to the
+  #--------------------------------------------------------------------------------------------
+
+
+endmacro()
+
+# =================================================================================================
+# Adds a target to build Doxygen documentation.
+#
+# This function will add a target named `p_targetName` to build the Doxygen documentation. It
+# only supports HTML output type. The generated documentation will be in the build directory,
+# under a directory names `doxygen`.
+#
+# Notes:
+#
+#   1. Obviously, Doxygen must be installed for this to work. Also, Dot must be installed
+#      as well (see package `graphivz`) to generate the graphs. See:
+#
+#                 https://cmake.org/cmake/help/latest/module/FindDoxygen.html
+#
+#      for more information.
+#
+#   2. The Doxygen documentation generation is not added to ALL with this. The goal is to
+#      allow users to build the software, even though they do not have Doxygen installed
+#      on their system (which is the typical workflow).
+#
+# Parameters:
+#        p_targetName
+#            The target name.
+#
+#        p_projectPrettyName
+#            A string containing the "prettyfied" name of the projet. The project() CMake
+#            command seems to only accept project names without spaces. Since this value
+#            is used by default by this Doxygen utility, it can lead to the documentation
+#            having an ugly projet name. This parameter allows overriding it.
+#
+# =================================================================================================
+function(generate_doxygen_documentation p_targetName p_projectPrettyName)
+
+  # Find the Doxygen package:
+  find_package(Doxygen
+    REQUIRED dot
+  )
+
+  # At this point, Doxygen was found, so we can proceed. We configure the generated doxyfile:
+  setup_doxyfile()
+
+  # We add the target:
+  doxygen_add_docs(${p_targetName}
+    ${CMAKE_SOURCE_DIR}
+  )
+
+endfunction()

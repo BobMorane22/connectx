@@ -16,61 +16,39 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file MenuItem.h
- * @date 2020
+ * @file cxinv.dox
+ * @date 2022
  *
  *************************************************************************************************/
-
-#ifndef MENUITEM_H_A0647363_208A_493B_A9B8_4C275516DCCC
-#define MENUITEM_H_A0647363_208A_493B_A9B8_4C275516DCCC
-
-namespace cxgui
-{
 
 /**********************************************************************************************//**
- * @brief Items found in the Connect X application menu.
+ * @ingroup assertmacros
+ * @ingroup contractmacros
+
+ * @namespace cxinv
+ *
+ * @brief Defensive programming facilities.
+ *
+ * The `cxinv` namespace contains facilities related to defensing programming. @ref contractmacros
+ * "Contract checking macros", and various types of other @ref assertmacros "Defensive programming macros".
  *
  *************************************************************************************************/
-enum class MenuItem
-{
-    /** Game menu in the menu bar. */
-    GAME,
 
-    /** Shows the "New game" window. */
-    NEW_GAME,
-
-    /** Reinitializes the game, keeping the same parameters. */
-    REINITIALIZE_GAME,
-
-    /** Undo the last action. */
-    UNDO,
-
-    /** Redo the last action. */
-    REDO,
-
-    /** Quits Connect X. */
-    QUIT,
-
-    /** Help menu in the menu bar. */
-    HELP,
-
-    /** Shows the user help documentation. */
-    CONTENTS,
-
-    /** Lauches the "About" window.  */
-    ABOUT,
-};
-
-/******************************************************************************************//**
- * @brief Creates a label associated to a menu item.
+/**********************************************************************************************//**
+ * @defgroup contractmacros Contract checking macros
  *
- * @param p_menuItem The menu item to get the label for.
+ * @brief Macros for contract checking.
  *
- * @return The associated label.
+ * Contract checking is done using special macros, which can be disabled at build type for
+ * release builds.
  *
- ********************************************************************************************/
-std::string MakeLabel(MenuItem p_menuItem);
+ *************************************************************************************************/
 
-} // namespace cxgui
-
-#endif // MENUITEM_H_A0647363_208A_493B_A9B8_4C275516DCCC
+/**********************************************************************************************//**
+ * @defgroup assertmacros Defensive programming macros
+ *
+ * @brief Defensive programming macros.
+ *
+ * Various macros to assert specific code states at runtime.
+ *
+ *************************************************************************************************/

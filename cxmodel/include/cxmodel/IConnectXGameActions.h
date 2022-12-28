@@ -16,13 +16,13 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file IGameActions.h
+ * @file IConnectXGameActions.h
  * @date 2020
  *
  *************************************************************************************************/
 
-#ifndef IGAMEACTIONS_H_49B2D12C_4951_4989_AFE9_870A3940ED8F
-#define IGAMEACTIONS_H_49B2D12C_4951_4989_AFE9_870A3940ED8F
+#ifndef ICONNECTXGAMEACTIONS_H_49B2D12C_4951_4989_AFE9_870A3940ED8F
+#define ICONNECTXGAMEACTIONS_H_49B2D12C_4951_4989_AFE9_870A3940ED8F
 
 #include "NewGameInformation.h"
 
@@ -49,7 +49,8 @@ public:
     /******************************************************************************************//**
      * @brief Creates a new game.
      *
-     * @param p_gameInformation The necessary information to create a game.
+     * @param p_gameInformation
+     *      The necessary information to create a game.
      *
      ********************************************************************************************/
     virtual void CreateNewGame(NewGameInformation p_gameInformation) = 0;
@@ -57,8 +58,10 @@ public:
     /******************************************************************************************//**
      * @brief Drops a chip in the game board.
      *
-     * @param p_chip   The chip to drop.
-     * @param p_column The column in which to drop the chip.
+     * @param p_chip
+     *      The chip to drop.
+     * @param p_column
+     *      The column in which to drop the chip.
      *
      ********************************************************************************************/
     virtual void DropChip(const cxmodel::IChip& p_chip, size_t p_column) = 0;
@@ -98,4 +101,4 @@ public:
 
 } // namespace cxmodel
 
-#endif // IGAMEACTIONS_H_49B2D12C_4951_4989_AFE9_870A3940ED8F
+#endif // ICONNECTXGAMEACTIONS_H_49B2D12C_4951_4989_AFE9_870A3940ED8F

@@ -65,16 +65,20 @@ public:
     /******************************************************************************************//**
      * @brief Update the state.
      *
-     * @param p_context The context in which the notification occurs.
-     * @param p_subject The subject that has triggered the update through a notification.
-     *
-     * Update the @c IObserver instance's state. When a subject notifies its observers that some
-     * event as occurred (through its @c Notify() method), this method is automatically called
+     * Update the `IObserver` instance's state. When a subject notifies its observers that some
+     * event as occurred (through its `Notify` method), this method is automatically called
      * on each of the attached observer. Each observer can implement it its own way and update
      * its state accordingly.
      *
      * @warning Never call this method directly. Only a subject, through its notifications,
      *          should call this.
+     *
+     * @tparam T
+     *      The type of notification (must be an `enum`).
+     * @param p_context
+     *      The context in which the notification occurs.
+     * @param p_subject
+     *      The subject that has triggered the update through a notification.
      *
      ********************************************************************************************/
     virtual void Update(T p_context, Subject<T>* p_subject) = 0;

@@ -46,6 +46,21 @@ class NewGameView : public cxgui::IView
 
 public:
 
+    /*****************************************************************************************//**
+     * @brief Constructor.
+     *
+     * @param p_presenter
+     *      A main window presenter (new game view).
+     * @param p_controller
+     *      A main window controller (new game view).
+     * @param p_mainLayout
+     *      The main window's top level layout.
+     * @param p_viewLeft
+     *      The left position of the new game view within the main window's top level layout.
+     * @param p_viewTop
+     *      The top position of the new game view within the main window's top level layout.
+     *
+     ********************************************************************************************/
     NewGameView(INewGameViewPresenter& p_presenter,
                 INewGameViewController& p_controller,
                 Gtk::Grid& p_mainLayout,

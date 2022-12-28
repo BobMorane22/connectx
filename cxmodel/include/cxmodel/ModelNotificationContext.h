@@ -72,9 +72,22 @@ enum class ModelNotificationContext
     GAME_REINITIALIZED,
 };
 
-using IModelObserver = IObserver<ModelNotificationContext>;
-using ModelSubject = Subject<ModelNotificationContext>;
 
+/**********************************************************************************************//**
+ * @brief Observer specific to model notifications.
+ *
+ * Use this convenience alias to clarify the code.
+ *
+ *************************************************************************************************/
+using IModelObserver = IObserver<ModelNotificationContext>;
+
+/**********************************************************************************************//**
+ * @brief Subject specific to model notifications.
+ *
+ * Use this convenience alias to clarify the code.
+ *
+ *************************************************************************************************/
+using ModelSubject = Subject<ModelNotificationContext>;
 
 } // namespace cxmodel
 

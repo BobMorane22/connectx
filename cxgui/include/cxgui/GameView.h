@@ -48,15 +48,31 @@ class GameView : public IView,
 
 public:
 
+    /*****************************************************************************************//**
+     * @brief Constructor.
+     *
+     * @param p_presenter
+     *      The game view presenter.
+     * @param p_controller
+     *      The game view controller.
+     * @param p_mainLayout
+     *      The main window's top level layout (in which to insert the Game view).
+     * @param p_viewLeft
+     *      The left position of the view in the layout.
+     * @param p_viewTop
+     *      The top position of the view in the layout.
+     *
+     ********************************************************************************************/
     GameView(IGameViewPresenter& p_presenter,
              IGameViewController& p_controller,
              Gtk::Grid& p_mainLayout,
              int p_viewLeft,
              int p_viewTop);
 
+    // cxgui::IBoardAnimationObserver:
     void Update(cxgui::BoardAnimationNotificationContext p_context, cxgui::BoardAnimationSubject* p_subject) override;
 
-    // IView:
+    // cxgui::IView:
     void Activate() override;
     void DeActivate() override;
     void Update(cxmodel::ModelNotificationContext p_context) override;

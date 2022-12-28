@@ -40,6 +40,12 @@ namespace cxmodel
 namespace cxmodel
 {
 
+/**********************************************************************************************//**
+ * @brief Command for creating a new Connect X game.
+ *
+ * @note Undoing a game creating is not supported.
+ *
+ *************************************************************************************************/
 class CommandCreateNewGame : public ICommand
 {
 
