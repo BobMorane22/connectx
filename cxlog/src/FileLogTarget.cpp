@@ -35,6 +35,8 @@ void cxlog::FileLogTarget::Log(const std::string& p_message)
 {
     if(INL_ASSERT(FileStream().good()))
     {
-        FileStream() << p_message;
+        // We flush to the buffer here to make sure that if a crash occurs later,
+        // the entry is not lost.
+        FileStream() << p_message << std::flush;
     }
 }
