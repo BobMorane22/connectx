@@ -180,7 +180,6 @@ void cxgui::GameView::Update(cxgui::BoardAnimationNotificationContext p_context,
         {
             // At this point the animation is completed. We reactivate keyboard events in
             // case the user wants to request another animation:
-            EnableKeyHandlers();
             break;
         }
         case cxgui::BoardAnimationNotificationContext::POST_ANIMATE_MOVE_RIGHT_TO_TARGET:

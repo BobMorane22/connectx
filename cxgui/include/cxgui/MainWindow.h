@@ -119,7 +119,7 @@ private:
     void UpdateGameTied(cxmodel::ModelNotificationContext p_context);
     void UpdateGameEnded();
     void UpdateGameReinitialized(cxmodel::ModelNotificationContext p_context);
-    void UpdateMenuItems();
+    void UpdateMenuItems(cxmodel::ModelNotificationContext p_context);
 
     void ConfigureWindow() override;
     void RegisterLayouts() override;

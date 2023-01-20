@@ -178,7 +178,7 @@ void cxgui::MainWindow::Update(cxmodel::ModelNotificationContext p_context, cxmo
         }
     }
 
-    UpdateMenuItems();
+    UpdateMenuItems(p_context);
 }
 
 void cxgui::MainWindow::UpdateCreateNewGame()
@@ -226,11 +226,11 @@ void cxgui::MainWindow::UpdateGameReinitialized(cxmodel::ModelNotificationContex
     m_gameView->Update(p_context); 
 }
 
-void cxgui::MainWindow::UpdateMenuItems()
+void cxgui::MainWindow::UpdateMenuItems(cxmodel::ModelNotificationContext p_context)
 {
     m_newGameMenuItem.set_sensitive(m_presenter.IsNewGamePossible());
     m_reinitializeMenuItem.set_sensitive(m_presenter.IsCurrentGameReinitializationPossible());
-    m_undoMenuItem.set_sensitive(m_presenter.IsUndoPossible());
+    m_undoMenuItem.set_sensitive(p_context == cxmodel::ModelNotificationContext::CHIP_DROPPED || m_presenter.IsUndoPossible());
     m_redoMenuItem.set_sensitive(m_presenter.IsRedoPossible());
 }
 
