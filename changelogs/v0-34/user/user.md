@@ -1,4 +1,4 @@
-# Connect X v0.34 (December 11, 2022)
+# Connect X v0.34 (January 22, 2023)
 
 ## New features
 

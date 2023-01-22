@@ -6,7 +6,8 @@
 
 To build Connect X, the following dependencies are needed:
 
-* Gtkmm 3.24
+* A C++17 compatible compiler.
+* Gtkmm 3.24.
 
 
 ### Installation guide
@@ -33,6 +34,11 @@ To build Connect X, the following dependencies are needed:
 Installing at a custom location is also possible by supplying a custom
 value for the `CMAKE_INSTALL_PREFIX` variable when generating the CMake
 project.
+
+
+## Latest stable
+
+The latest stable version is 0.34.
 
 
 ## Changelogs
