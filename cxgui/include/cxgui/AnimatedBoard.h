@@ -108,11 +108,15 @@ private:
 
     [[nodiscard]] int ComputeMinimumChipDimension(size_t p_nbRows, size_t p_nbColumns) const;
 
-    // A Game View presenter cache.
+    // Handlers:
+    bool OnMouseButtonPressed(GdkEventButton* p_event);
+    bool OnMouseMotion(GdkEventMotion* p_event);
+
+    // A Game View presenter cache:
     std::unique_ptr<IAnimatedBoardPresenter> m_presenter;
     std::unique_ptr<IAnimatedBoardModel> m_animationModel;
 
-    // Clock (ticks m_FPS times per second).
+    // Clock (ticks m_FPS times per second):
     std::unique_ptr<AnimatedBoardTimerRAII> m_timer;
 
     AnimationInformations<cxmath::Width> m_moveLeftAnimationInfo;
@@ -122,6 +126,10 @@ private:
     cxmath::Dimensions m_lastFrameDimensions{cxmath::Height{0.0}, cxmath::Width{0.0}};
 
     BoardElementCache m_boardElementsCache;
+
+    // Signals:
+    sigc::connection m_mouseButtonPressedConnection;
+    sigc::connection m_mouseMotionConnection;
 };
 
 } // namespace cxgui

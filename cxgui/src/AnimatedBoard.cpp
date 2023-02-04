@@ -101,6 +101,11 @@ cxgui::AnimatedBoard::AnimatedBoard(const IGameViewPresenter& p_presenter, const
         return OnResize({newHeight, newWidth});
     });
 
+    // Mouse handling events:
+    add_events(Gdk::BUTTON_PRESS_MASK | Gdk::POINTER_MOTION_MASK);
+    signal_button_press_event().connect([this](GdkEventButton* p_event){return OnMouseButtonPressed(p_event);}, false);
+    signal_motion_notify_event().connect([this](GdkEventMotion* p_event){return OnMouseMotion(p_event);}, false);
+
     POSTCONDITION(m_presenter);
     POSTCONDITION(m_animationModel);
 }
@@ -504,4 +509,32 @@ int cxgui::AnimatedBoard::ComputeMinimumChipDimension(size_t p_nbRows, size_t p_
     // We take two thirds from this value for the board (leaving the remaining to the rest of the
     // game view):
     return (maxChipDimension * 2) / 3;
+}
+
+#include <iostream>
+bool cxgui::AnimatedBoard::OnMouseButtonPressed(GdkEventButton* p_event)
+{
+    IF_CONDITION_NOT_MET_DO(p_event, return PROPAGATE_EVENT;);
+
+    if(p_event->type == GDK_BUTTON_PRESS && p_event->button == 1)
+    {
+        std::cout << "Mouse clicked at : (" << p_event->x << ", " << p_event->y << ")" << std::endl;
+        return STOP_EVENT_PROPAGATION;
+    }
+
+    return PROPAGATE_EVENT;
+    
+}
+
+bool cxgui::AnimatedBoard::OnMouseMotion(GdkEventMotion* p_event)
+{
+    IF_CONDITION_NOT_MET_DO(p_event, return PROPAGATE_EVENT;);
+
+    if(p_event->type == GDK_MOTION_NOTIFY)
+    {
+        std::cout << "Mouse moved at : (" << p_event->x << ", " << p_event->y << ")" << std::endl;
+        return STOP_EVENT_PROPAGATION;
+    }
+
+    return PROPAGATE_EVENT;
 }
