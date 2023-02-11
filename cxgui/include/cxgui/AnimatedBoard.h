@@ -62,6 +62,8 @@ using IUserActionObserver = cxmodel::IObserver<UserAction>;
  * events are handled through a subject/observer system in which a user can, for example,
  * start an animation and then be notified when the animation finishes to resume the game.
  *
+ * Mouse clicks are also events that can be handled through a subject/observer system.
+ *
  * For now, animations are assumed to be synchronous, which means that during animations, the
  * game must not go on and the user should not be able to interract with the board.
  *
