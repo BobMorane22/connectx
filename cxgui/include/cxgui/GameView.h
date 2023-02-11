@@ -43,6 +43,7 @@ namespace cxgui
  ************************************************************************************************/
 class GameView : public IView,
                  public cxgui::IBoardAnimationObserver,
+                 public cxgui::IUserActionObserver,
                  public cxgui::BoardAnimationSubject
 {
 
@@ -71,6 +72,9 @@ public:
 
     // cxgui::IBoardAnimationObserver:
     void Update(cxgui::BoardAnimationNotificationContext p_context, cxgui::BoardAnimationSubject* p_subject) override;
+
+    // cxgui::IUserActionObserver:
+    void Update(cxgui::UserAction p_context, cxgui::UserActionSubject* p_subject) override;
 
     // cxgui::IView:
     void Activate() override;

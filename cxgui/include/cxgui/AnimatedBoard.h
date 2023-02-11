@@ -42,10 +42,14 @@ namespace cxgui
 class IAnimatedBoardPresenter;
 class IGameViewPresenter;
 
-}
-
-namespace cxgui
+enum class UserAction
 {
+    MOUSE_CLICKED,
+};
+
+using UserActionSubject = cxmodel::Subject<UserAction>;
+using IUserActionObserver = cxmodel::IObserver<UserAction>;
+
 
 /**********************************************************************************************//**
  * @brief Connect X animated game board widget.
@@ -65,6 +69,7 @@ namespace cxgui
 class AnimatedBoard : public cxgui::IBoardInformation,
                       public cxgui::IBoardAnimationObserver,
                       public cxgui::BoardAnimationSubject,
+                      public cxgui::UserActionSubject,
                       public Gtk::DrawingArea
 {
 

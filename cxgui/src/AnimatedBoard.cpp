@@ -131,7 +131,7 @@ void cxgui::AnimatedBoard::PerformChipAnimation(BoardAnimation p_animation)
     const auto res = strategy->PerformAnimation(m_dropAnimationInfo, *horizontalAnimationInfo);
     if(res)
     {
-        Notify(*res);
+        BoardAnimationSubject::Notify(*res);
     }
 }
 
@@ -511,14 +511,37 @@ int cxgui::AnimatedBoard::ComputeMinimumChipDimension(size_t p_nbRows, size_t p_
     return (maxChipDimension * 2) / 3;
 }
 
-#include <iostream>
 bool cxgui::AnimatedBoard::OnMouseButtonPressed(GdkEventButton* p_event)
 {
-    IF_CONDITION_NOT_MET_DO(p_event, return PROPAGATE_EVENT;);
+    IF_PRECONDITION_NOT_MET_DO(p_event, return PROPAGATE_EVENT;);
+    IF_PRECONDITION_NOT_MET_DO(m_animationModel, return PROPAGATE_EVENT;);
 
+    // If an animation is ongoing, the mouse has no effect on the board:
+    if(m_moveLeftAnimationInfo.m_isAnimating ||
+       m_moveRightAnimationInfo.m_isAnimating ||
+       m_dropAnimationInfo.m_isAnimating)
+    {
+        return STOP_EVENT_PROPAGATION;
+    }
+
+    // The board is not animated at the moment. We catch the event:
     if(p_event->type == GDK_BUTTON_PRESS && p_event->button == 1)
     {
-        std::cout << "Mouse clicked at : (" << p_event->x << ", " << p_event->y << ")" << std::endl;
+        // We update the model with the necessary information:
+        const cxmodel::Column columnUnderMousePointer = cxgui::ComputeColumnFromPosition(*m_animationModel, {p_event->x, p_event->y});
+        const cxmath::Position targetChipPosition = cxgui::ComputeChipPositionFromColumn(*m_animationModel, columnUnderMousePointer);
+
+        m_animationModel->UpdateCurrentColumn(columnUnderMousePointer);
+
+        const double currentChipHorizontalPosition = m_animationModel->GetChipPosition().m_x;
+        m_animationModel->AddChipDisplacement(
+            cxmath::Height{0.0},
+            cxmath::Width{targetChipPosition.m_x - currentChipHorizontalPosition}
+        );
+
+        // We notify the observers a valid click has been performed on the board:
+        UserActionSubject::Notify(cxgui::UserAction::MOUSE_CLICKED);
+
         return STOP_EVENT_PROPAGATION;
     }
 
@@ -527,8 +550,8 @@ bool cxgui::AnimatedBoard::OnMouseButtonPressed(GdkEventButton* p_event)
 
 bool cxgui::AnimatedBoard::OnMouseMotion(GdkEventMotion* p_event)
 {
-    IF_CONDITION_NOT_MET_DO(p_event, return PROPAGATE_EVENT;);
-    IF_CONDITION_NOT_MET_DO(m_animationModel, return PROPAGATE_EVENT;);
+    IF_PRECONDITION_NOT_MET_DO(p_event, return PROPAGATE_EVENT;);
+    IF_PRECONDITION_NOT_MET_DO(m_animationModel, return PROPAGATE_EVENT;);
 
     // If an animation is ongoing, the mouse has no effect on the board:
     if(m_moveLeftAnimationInfo.m_isAnimating ||

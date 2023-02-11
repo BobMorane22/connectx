@@ -66,7 +66,8 @@ cxgui::GameView::GameView(IGameViewPresenter& p_presenter,
 
     // Attach to the board:
     Attach(m_board.get());
-    m_board->Attach(this);
+    m_board->BoardAnimationSubject::Attach(this);
+    m_board->UserActionSubject::Attach(this);
 
     POSTCONDITION(m_parent);
 }
@@ -190,6 +191,19 @@ void cxgui::GameView::Update(cxgui::BoardAnimationNotificationContext p_context,
         case cxgui::BoardAnimationNotificationContext::POST_ANIMATE_REINITIALIZE_BOARD:
         {
             break;
+        }
+    }
+}
+
+void cxgui::GameView::Update(cxgui::UserAction p_context, cxgui::UserActionSubject* p_subject)
+{
+    IF_CONDITION_NOT_MET_DO(p_subject, return;);
+
+    switch(p_context)
+    {
+        case cxgui::UserAction::MOUSE_CLICKED:
+        {
+            m_controller.OnDown(m_presenter.GetGameViewActivePlayerChipColor(), m_board->GetCurrentColumn().Get());
         }
     }
 }
