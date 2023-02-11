@@ -38,8 +38,8 @@ in a row to win or a tie is detected.</p>
 <section id="sec-game-moving">
 <title>Moving around</title>
 
-<p>The active player can move his chip left and right to pick in which
-column of the board to drop it. This can be done using the <key>Left</key>
+<p>The active player can move around on the board using the mouse.
+Alternatively, he can move his chip left and right using the <key>Left</key>
 and <key>Right</key> keys.</p>
 
 </section>
@@ -49,9 +49,9 @@ and <key>Right</key> keys.</p>
 <title>Dropping chips</title>
 
 <p>When the active player has moved his chip to the wanted column, he
-can drop it using the <key>Down</key> key. When the chip is dropped, it is
-immediately placed at the first available location (from the bottom) of
-the game board.</p>
+can drop it either by left-clicking on the column or by using the <key>Down</key> key.
+When the chip is dropped, it is immediately placed at the first available
+location (from the bottom) of the game board.</p>
 
 <p>At this point, the next player's turn starts.</p>
 
