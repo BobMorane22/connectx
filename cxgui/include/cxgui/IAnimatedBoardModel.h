@@ -240,6 +240,36 @@ public:
 
 };
 
+/**********************************************************************************************//**
+ * @brief For some position, compute the corresponding board column according to a model.
+ *
+ * @pre The position is located on the board.
+ *
+ * @param p_model    An animated board model.
+ * @param p_position The position for which to get the corresponding column.
+ *
+ * @return The corresponding column.
+ *
+ *************************************************************************************************/
+[[nodiscard]] cxmodel::Column ComputeColumnFromPosition(const IAnimatedBoardModel& p_model, const cxmath::Position& p_position);
+
+/**********************************************************************************************//**
+ * @brief For some column, compute the corresponding chip position according to a model.
+ *
+ * The computed position is exactly at the center of the column. The y coordinate of the position
+ * is the one of the chip in the new disc area.
+ *
+ * @pre  The column exists on the board.
+ * @post The computed position is on the board.
+ *
+ * @param p_model  An animated board model.
+ * @param p_column The column for which to get the corresponding nominal chip position.
+ *
+ * @return The corresponding chip position (at the center of the column).
+ *
+ *************************************************************************************************/
+[[nodiscard]] cxmath::Position ComputeChipPositionFromColumn(const IAnimatedBoardModel& p_model, const cxmodel::Column& p_column);
+
 } // namespace cxgui
 
 #endif // IANIMATEDBOARDMODEL_H_01D250F8_D2F7_42FE_9D3F_762B6B5D1F37

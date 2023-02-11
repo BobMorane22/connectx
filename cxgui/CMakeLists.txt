@@ -44,6 +44,7 @@ add_library(${TARGET_NAME}
   src/GameResolutionDialogPresenterFactory.cpp
   src/GameView.cpp
   src/GameViewKeyHandlerStrategyFactory.cpp
+  src/IAnimatedBoardModel.cpp
   src/MainWindowController.cpp
   src/MainWindow.cpp
   src/MainWindowPresenter.cpp

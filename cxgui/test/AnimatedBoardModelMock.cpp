@@ -132,4 +132,3 @@ void AnimatedBoardModelMock::SetCellDimensions(const cxmath::Dimensions& p_cellD
 {
     m_cellDimensions = p_cellDimensions;
 }
-

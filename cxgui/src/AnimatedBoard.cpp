@@ -523,16 +523,44 @@ bool cxgui::AnimatedBoard::OnMouseButtonPressed(GdkEventButton* p_event)
     }
 
     return PROPAGATE_EVENT;
-    
 }
 
 bool cxgui::AnimatedBoard::OnMouseMotion(GdkEventMotion* p_event)
 {
     IF_CONDITION_NOT_MET_DO(p_event, return PROPAGATE_EVENT;);
+    IF_CONDITION_NOT_MET_DO(m_animationModel, return PROPAGATE_EVENT;);
 
+    // If an animation is ongoing, the mouse has no effect on the board:
+    if(m_moveLeftAnimationInfo.m_isAnimating ||
+       m_moveRightAnimationInfo.m_isAnimating ||
+       m_dropAnimationInfo.m_isAnimating)
+    {
+        return STOP_EVENT_PROPAGATION;
+    }
+
+    // The board is not animated at the moment. We catch the event:
     if(p_event->type == GDK_MOTION_NOTIFY)
     {
-        std::cout << "Mouse moved at : (" << p_event->x << ", " << p_event->y << ")" << std::endl;
+        const cxmodel::Column columnUnderMousePointer = cxgui::ComputeColumnFromPosition(*m_animationModel, {p_event->x, p_event->y});
+
+        if(columnUnderMousePointer == m_animationModel->GetCurrentColumn())
+        {
+            return STOP_EVENT_PROPAGATION;
+        }
+
+        // The mouse points over another column. For this column, we compute new chip
+        // coordinates and update the model consequently:
+        const cxmath::Position targetChipPosition = cxgui::ComputeChipPositionFromColumn(*m_animationModel, columnUnderMousePointer);
+
+        m_animationModel->UpdateCurrentColumn(columnUnderMousePointer);
+
+        const double currentChipHorizontalPosition = m_animationModel->GetChipPosition().m_x;
+        m_animationModel->AddChipDisplacement(
+            cxmath::Height{0.0},
+            cxmath::Width{targetChipPosition.m_x - currentChipHorizontalPosition}
+        );
+        
+        queue_draw();
         return STOP_EVENT_PROPAGATION;
     }
 
