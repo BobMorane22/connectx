@@ -40,6 +40,22 @@ add_compile_options(
   -Werror
 )
 
+option(
+    GTKMM_DISABLE_ALL_DEPRECATED
+    "Make sure no Gtkmm related deprecated code is available."
+    OFF)
+
+if(${GTKMM_DISABLE_ALL_DEPRECATED})
+    add_compile_definitions(
+        GTKMM_DISABLE_DEPRECATED
+        GDKMM_DISABLE_DEPRECATED
+        GLIBMM_DISABLE_DEPRECATED
+        GIOMM_DISABLE_DEPRECATED
+        GTK_DISABLE_DEPRECATED
+        GDK_DISABLE_DEPRECATED
+    )
+endif()
+
 # Append the 'cmake' directory to the list of directories looked into when a module
 # is searched for:
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
