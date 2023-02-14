@@ -149,8 +149,8 @@ void cxgui::NewGameView::PopulateWidgets()
 void cxgui::NewGameView::ConfigureWidgets()
 {
     // Window margin:
-    m_mainLayout.set_margin_left(DIALOG_SIDE_MARGIN);
-    m_mainLayout.set_margin_right(DIALOG_SIDE_MARGIN);
+    m_mainLayout.set_margin_start(DIALOG_SIDE_MARGIN);
+    m_mainLayout.set_margin_end(DIALOG_SIDE_MARGIN);
     m_mainLayout.set_margin_top(DIALOG_SIDE_MARGIN);
     m_mainLayout.set_margin_bottom(DIALOG_SIDE_MARGIN);
 

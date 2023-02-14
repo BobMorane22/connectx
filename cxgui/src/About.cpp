@@ -78,8 +78,8 @@ void cxgui::About::ConfigureWidgets()
     m_name.set_margin_bottom(15);
 
     m_description.set_margin_top(5);
-    m_description.set_margin_left(5);
-    m_description.set_margin_right(5);
+    m_description.set_margin_start(5);
+    m_description.set_margin_end(5);
     m_description.set_margin_bottom(5);
 
     m_copyright.set_margin_bottom(5);
