@@ -1,0 +1,413 @@
+/home/morane/Programming/connectx/cxgui/src/About.cpp: In member function ‘virtual void cxgui::About::ConfigureWidgets()’:
+/home/morane/Programming/connectx/cxgui/src/About.cpp:81:19: error: ‘class Gtk::Label’ has no member named ‘set_margin_left’; did you mean ‘set_margin_end’?
+   81 |     m_description.set_margin_left(5);
+      |                   ^~~~~~~~~~~~~~~
+      |                   set_margin_end
+/home/morane/Programming/connectx/cxgui/src/About.cpp:82:19: error: ‘class Gtk::Label’ has no member named ‘set_margin_right’; did you mean ‘set_margin_start’?
+   82 |     m_description.set_margin_right(5);
+      |                   ^~~~~~~~~~~~~~~~
+      |                   set_margin_start
+make[2]: *** [cxgui/CMakeFiles/cxgui.dir/build.make:76: cxgui/CMakeFiles/cxgui.dir/src/About.cpp.o] Error 1
+/home/morane/Programming/connectx/cxgui/src/AnimatedBoard.cpp: In member function ‘int cxgui::AnimatedBoard::ComputeMinimumChipDimension(size_t, size_t) const’:
+/home/morane/Programming/connectx/cxgui/src/AnimatedBoard.cpp:484:42: error: ‘const class Gdk::Screen’ has no member named ‘get_height’
+  484 |     const int fullScreenHeight = screen->get_height();
+      |                                          ^~~~~~~~~~
+/home/morane/Programming/connectx/cxgui/src/AnimatedBoard.cpp:485:41: error: ‘const class Gdk::Screen’ has no member named ‘get_width’
+  485 |     const int fullScreenWidth = screen->get_width();
+      |                                         ^~~~~~~~~
+make[2]: *** [cxgui/CMakeFiles/cxgui.dir/build.make:104: cxgui/CMakeFiles/cxgui.dir/src/AnimatedBoard.cpp.o] Error 1
+In file included from /home/morane/Programming/connectx/cxgui/src/ColorComboBox.cpp:24:
+/home/morane/Programming/connectx/cxgui/src/ColorComboBox.cpp: In member function ‘cxgui::Color cxgui::ColorComboBox::GetCurrentSelection() const’:
+/home/morane/Programming/connectx/cxinv/include/cxinv/assertion.h:315:53: error: no matching function for call to ‘HandleAssert(cxinv::AssertLabel, Gtk::TreeModel::iterator&, const char [5], const char [62], const char [20], int, std::nullptr_t)’
+  315 |                                                     )
+      |                                                     ^
+/home/morane/Programming/connectx/cxgui/src/ColorComboBox.cpp:65:8: note: in expansion of macro ‘INL_ASSERT’
+   65 |     if(INL_ASSERT(iter))
+      |        ^~~~~~~~~~
+/home/morane/Programming/connectx/cxinv/include/cxinv/assertion.h:89:6: note: candidate: ‘bool cxinv::HandleAssert(cxinv::AssertLabel, bool, const char*, const char*, const char*, long int, const char*)’
+   89 | bool HandleAssert(const AssertLabel  p_label,
+      |      ^~~~~~~~~~~~
+/home/morane/Programming/connectx/cxinv/include/cxinv/assertion.h:90:38: note:   no known conversion for argument 2 from ‘Gtk::TreeModel::iterator’ {aka ‘Gtk::TreeIter’} to ‘bool’
+   90 |                   const bool         p_conditionRes,
+      |                   ~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~
+/home/morane/Programming/connectx/cxinv/include/cxinv/assertion.h:132:6: note: candidate: ‘template<class T> bool cxinv::HandleAssert(cxinv::AssertLabel, const std::unique_ptr<_Tp>&, const char*, const char*, const char*, long int, const char*)’
+  132 | bool HandleAssert(const AssertLabel  p_label,
+      |      ^~~~~~~~~~~~
+/home/morane/Programming/connectx/cxinv/include/cxinv/assertion.h:132:6: note:   template argument deduction/substitution failed:
+/home/morane/Programming/connectx/cxinv/include/cxinv/assertion.h:315:53: note:   ‘Gtk::TreeModel::iterator’ {aka ‘Gtk::TreeIter’} is not derived from ‘const std::unique_ptr<_Tp>’
+  315 |                                                     )
+      |                                                     ^
+/home/morane/Programming/connectx/cxgui/src/ColorComboBox.cpp:65:8: note: in expansion of macro ‘INL_ASSERT’
+   65 |     if(INL_ASSERT(iter))
+      |        ^~~~~~~~~~
+/home/morane/Programming/connectx/cxinv/include/cxinv/assertion.h:184:6: note: candidate: ‘template<class T> bool cxinv::HandleAssert(cxinv::AssertLabel, const std::shared_ptr<_Tp>&, const char*, const char*, const char*, long int, const char*)’
+  184 | bool HandleAssert(const AssertLabel  p_label,
+      |      ^~~~~~~~~~~~
+/home/morane/Programming/connectx/cxinv/include/cxinv/assertion.h:184:6: note:   template argument deduction/substitution failed:
+/home/morane/Programming/connectx/cxinv/include/cxinv/assertion.h:315:53: note:   ‘Gtk::TreeModel::iterator’ {aka ‘Gtk::TreeIter’} is not derived from ‘const std::shared_ptr<_Tp>’
+  315 |                                                     )
+      |                                                     ^
+/home/morane/Programming/connectx/cxgui/src/ColorComboBox.cpp:65:8: note: in expansion of macro ‘INL_ASSERT’
+   65 |     if(INL_ASSERT(iter))
+      |        ^~~~~~~~~~
+/home/morane/Programming/connectx/cxinv/include/cxinv/assertion.h:315:53: error: no matching function for call to ‘HandleAssert(cxinv::AssertLabel, Gtk::TreeModel::Row&, const char [4], const char [62], const char [20], int, std::nullptr_t)’
+  315 |                                                     )
+      |                                                     ^
+/home/morane/Programming/connectx/cxgui/src/ColorComboBox.cpp:69:12: note: in expansion of macro ‘INL_ASSERT’
+   69 |         if(INL_ASSERT(row))
+      |            ^~~~~~~~~~
+/home/morane/Programming/connectx/cxinv/include/cxinv/assertion.h:89:6: note: candidate: ‘bool cxinv::HandleAssert(cxinv::AssertLabel, bool, const char*, const char*, const char*, long int, const char*)’
+   89 | bool HandleAssert(const AssertLabel  p_label,
+      |      ^~~~~~~~~~~~
+/home/morane/Programming/connectx/cxinv/include/cxinv/assertion.h:90:38: note:   no known conversion for argument 2 from ‘Gtk::TreeModel::Row’ {aka ‘Gtk::TreeRow’} to ‘bool’
+   90 |                   const bool         p_conditionRes,
+      |                   ~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~
+/home/morane/Programming/connectx/cxinv/include/cxinv/assertion.h:132:6: note: candidate: ‘template<class T> bool cxinv::HandleAssert(cxinv::AssertLabel, const std::unique_ptr<_Tp>&, const char*, const char*, const char*, long int, const char*)’
+  132 | bool HandleAssert(const AssertLabel  p_label,
+      |      ^~~~~~~~~~~~
+/home/morane/Programming/connectx/cxinv/include/cxinv/assertion.h:132:6: note:   template argument deduction/substitution failed:
+/home/morane/Programming/connectx/cxinv/include/cxinv/assertion.h:315:53: note:   ‘Gtk::TreeModel::Row’ {aka ‘Gtk::TreeRow’} is not derived from ‘const std::unique_ptr<_Tp>’
+  315 |                                                     )
+      |                                                     ^
+/home/morane/Programming/connectx/cxgui/src/ColorComboBox.cpp:69:12: note: in expansion of macro ‘INL_ASSERT’
+   69 |         if(INL_ASSERT(row))
+      |            ^~~~~~~~~~
+/home/morane/Programming/connectx/cxinv/include/cxinv/assertion.h:184:6: note: candidate: ‘template<class T> bool cxinv::HandleAssert(cxinv::AssertLabel, const std::shared_ptr<_Tp>&, const char*, const char*, const char*, long int, const char*)’
+  184 | bool HandleAssert(const AssertLabel  p_label,
+      |      ^~~~~~~~~~~~
+/home/morane/Programming/connectx/cxinv/include/cxinv/assertion.h:184:6: note:   template argument deduction/substitution failed:
+/home/morane/Programming/connectx/cxinv/include/cxinv/assertion.h:315:53: note:   ‘Gtk::TreeModel::Row’ {aka ‘Gtk::TreeRow’} is not derived from ‘const std::shared_ptr<_Tp>’
+  315 |                                                     )
+      |                                                     ^
+/home/morane/Programming/connectx/cxgui/src/ColorComboBox.cpp:69:12: note: in expansion of macro ‘INL_ASSERT’
+   69 |         if(INL_ASSERT(row))
+      |            ^~~~~~~~~~
+/home/morane/Programming/connectx/cxgui/src/ColorComboBox.cpp:72:30: error: variable ‘const Gdk::Color color’ has initializer but incomplete type
+   72 |             const Gdk::Color color = row[m_records.m_color];
+      |                              ^~~~~
+/home/morane/Programming/connectx/cxgui/src/ColorComboBox.cpp:74:93: error: no matching function for call to ‘cxmodel::Color<short unsigned int>::Color(<brace-enclosed initializer list>)’
+   74 |             currentColor = cxgui::Color{color.get_red(), color.get_green(), color.get_blue()};
+      |                                                                                             ^
+In file included from /home/morane/Programming/connectx/cxmodel/include/cxmodel/ChipColor.h:27,
+                 from /home/morane/Programming/connectx/cxgui/include/cxgui/common.h:27,
+                 from /home/morane/Programming/connectx/cxgui/include/cxgui/ColorComboBox.h:30,
+                 from /home/morane/Programming/connectx/cxgui/src/ColorComboBox.cpp:25:
+/home/morane/Programming/connectx/cxmodel/include/cxmodel/Color.h:166:15: note: candidate: ‘constexpr cxmodel::Color<Channel>::Color() [with Channel = short unsigned int]’
+  166 |     constexpr Color()
+      |               ^~~~~
+/home/morane/Programming/connectx/cxmodel/include/cxmodel/Color.h:166:15: note:   candidate expects 0 arguments, 3 provided
+/home/morane/Programming/connectx/cxmodel/include/cxmodel/Color.h:114:15: note: candidate: ‘constexpr cxmodel::Color<Channel>::Color(Channel, Channel, Channel) [with Channel = short unsigned int]’
+  114 |     constexpr Color(Channel p_red,
+      |               ^~~~~
+/home/morane/Programming/connectx/cxmodel/include/cxmodel/Color.h:114:15: note:   conversion of argument 1 would be ill-formed:
+/home/morane/Programming/connectx/cxmodel/include/cxmodel/Color.h:86:15: note: candidate: ‘constexpr cxmodel::Color<Channel>::Color(Channel, Channel, Channel, Channel) [with Channel = short unsigned int]’
+   86 |     constexpr Color(Channel p_red,
+      |               ^~~~~
+/home/morane/Programming/connectx/cxmodel/include/cxmodel/Color.h:86:15: note:   candidate expects 4 arguments, 3 provided
+/home/morane/Programming/connectx/cxmodel/include/cxmodel/Color.h:42:7: note: candidate: ‘constexpr cxmodel::Color<short unsigned int>::Color(const cxmodel::Color<short unsigned int>&)’
+   42 | class Color final
+      |       ^~~~~
+/home/morane/Programming/connectx/cxmodel/include/cxmodel/Color.h:42:7: note:   candidate expects 1 argument, 3 provided
+/home/morane/Programming/connectx/cxmodel/include/cxmodel/Color.h:42:7: note: candidate: ‘constexpr cxmodel::Color<short unsigned int>::Color(cxmodel::Color<short unsigned int>&&)’
+/home/morane/Programming/connectx/cxmodel/include/cxmodel/Color.h:42:7: note:   candidate expects 1 argument, 3 provided
+/home/morane/Programming/connectx/cxgui/src/ColorComboBox.cpp: In member function ‘void cxgui::ColorComboBox::SetCurrentSelection(const Color&)’:
+/home/morane/Programming/connectx/cxgui/src/ColorComboBox.cpp:87:16: error: aggregate ‘Gdk::Color newColor’ has incomplete type and cannot be defined
+   87 |     Gdk::Color newColor;
+      |                ^~~~~~~~
+In file included from /home/morane/Programming/connectx/cxgui/src/ColorComboBox.cpp:24:
+/home/morane/Programming/connectx/cxinv/include/cxinv/assertion.h:315:53: error: no matching function for call to ‘HandleAssert(cxinv::AssertLabel, Gtk::TreeModel::Children&, const char [5], const char [62], const char [20], int, std::nullptr_t)’
+  315 |                                                     )
+      |                                                     ^
+/home/morane/Programming/connectx/cxinv/include/cxinv/assertion.h:419:9: note: in expansion of macro ‘INL_ASSERT’
+  419 |     if(!p_assertType(p_condition))                                        \
+      |         ^~~~~~~~~~~~
+/home/morane/Programming/connectx/cxinv/include/cxinv/assertion.h:451:5: note: in expansion of macro ‘IF_CONDITION_NOT_MET_DO_IMPL’
+  451 |     IF_CONDITION_NOT_MET_DO_IMPL(INL_ASSERT, p_condition, p_action) \
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/morane/Programming/connectx/cxgui/src/ColorComboBox.cpp:91:5: note: in expansion of macro ‘IF_CONDITION_NOT_MET_DO’
+   91 |     IF_CONDITION_NOT_MET_DO(rows, return;);
+      |     ^~~~~~~~~~~~~~~~~~~~~~~
+/home/morane/Programming/connectx/cxinv/include/cxinv/assertion.h:89:6: note: candidate: ‘bool cxinv::HandleAssert(cxinv::AssertLabel, bool, const char*, const char*, const char*, long int, const char*)’
+   89 | bool HandleAssert(const AssertLabel  p_label,
+      |      ^~~~~~~~~~~~
+/home/morane/Programming/connectx/cxinv/include/cxinv/assertion.h:90:38: note:   no known conversion for argument 2 from ‘Gtk::TreeModel::Children’ {aka ‘Gtk::TreeNodeChildren’} to ‘bool’
+   90 |                   const bool         p_conditionRes,
+      |                   ~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~
+/home/morane/Programming/connectx/cxinv/include/cxinv/assertion.h:132:6: note: candidate: ‘template<class T> bool cxinv::HandleAssert(cxinv::AssertLabel, const std::unique_ptr<_Tp>&, const char*, const char*, const char*, long int, const char*)’
+  132 | bool HandleAssert(const AssertLabel  p_label,
+      |      ^~~~~~~~~~~~
+/home/morane/Programming/connectx/cxinv/include/cxinv/assertion.h:132:6: note:   template argument deduction/substitution failed:
+/home/morane/Programming/connectx/cxinv/include/cxinv/assertion.h:315:53: note:   ‘Gtk::TreeModel::Children’ {aka ‘Gtk::TreeNodeChildren’} is not derived from ‘const std::unique_ptr<_Tp>’
+  315 |                                                     )
+      |                                                     ^
+/home/morane/Programming/connectx/cxinv/include/cxinv/assertion.h:419:9: note: in expansion of macro ‘INL_ASSERT’
+  419 |     if(!p_assertType(p_condition))                                        \
+      |         ^~~~~~~~~~~~
+/home/morane/Programming/connectx/cxinv/include/cxinv/assertion.h:451:5: note: in expansion of macro ‘IF_CONDITION_NOT_MET_DO_IMPL’
+  451 |     IF_CONDITION_NOT_MET_DO_IMPL(INL_ASSERT, p_condition, p_action) \
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/morane/Programming/connectx/cxgui/src/ColorComboBox.cpp:91:5: note: in expansion of macro ‘IF_CONDITION_NOT_MET_DO’
+   91 |     IF_CONDITION_NOT_MET_DO(rows, return;);
+      |     ^~~~~~~~~~~~~~~~~~~~~~~
+/home/morane/Programming/connectx/cxinv/include/cxinv/assertion.h:184:6: note: candidate: ‘template<class T> bool cxinv::HandleAssert(cxinv::AssertLabel, const std::shared_ptr<_Tp>&, const char*, const char*, const char*, long int, const char*)’
+  184 | bool HandleAssert(const AssertLabel  p_label,
+      |      ^~~~~~~~~~~~
+/home/morane/Programming/connectx/cxinv/include/cxinv/assertion.h:184:6: note:   template argument deduction/substitution failed:
+/home/morane/Programming/connectx/cxinv/include/cxinv/assertion.h:315:53: note:   ‘Gtk::TreeModel::Children’ {aka ‘Gtk::TreeNodeChildren’} is not derived from ‘const std::shared_ptr<_Tp>’
+  315 |                                                     )
+      |                                                     ^
+/home/morane/Programming/connectx/cxinv/include/cxinv/assertion.h:419:9: note: in expansion of macro ‘INL_ASSERT’
+  419 |     if(!p_assertType(p_condition))                                        \
+      |         ^~~~~~~~~~~~
+/home/morane/Programming/connectx/cxinv/include/cxinv/assertion.h:451:5: note: in expansion of macro ‘IF_CONDITION_NOT_MET_DO_IMPL’
+  451 |     IF_CONDITION_NOT_MET_DO_IMPL(INL_ASSERT, p_condition, p_action) \
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/morane/Programming/connectx/cxgui/src/ColorComboBox.cpp:91:5: note: in expansion of macro ‘IF_CONDITION_NOT_MET_DO’
+   91 |     IF_CONDITION_NOT_MET_DO(rows, return;);
+      |     ^~~~~~~~~~~~~~~~~~~~~~~
+/home/morane/Programming/connectx/cxinv/include/cxinv/assertion.h:315:53: error: no matching function for call to ‘HandleAssert(cxinv::AssertLabel, Gtk::TreeRow&, const char [4], const char [62], const char [20], int, std::nullptr_t)’
+  315 |                                                     )
+      |                                                     ^
+/home/morane/Programming/connectx/cxinv/include/cxinv/assertion.h:419:9: note: in expansion of macro ‘INL_ASSERT’
+  419 |     if(!p_assertType(p_condition))                                        \
+      |         ^~~~~~~~~~~~
+/home/morane/Programming/connectx/cxinv/include/cxinv/assertion.h:451:5: note: in expansion of macro ‘IF_CONDITION_NOT_MET_DO_IMPL’
+  451 |     IF_CONDITION_NOT_MET_DO_IMPL(INL_ASSERT, p_condition, p_action) \
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/morane/Programming/connectx/cxgui/src/ColorComboBox.cpp:95:9: note: in expansion of macro ‘IF_CONDITION_NOT_MET_DO’
+   95 |         IF_CONDITION_NOT_MET_DO(row, return;);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~
+/home/morane/Programming/connectx/cxinv/include/cxinv/assertion.h:89:6: note: candidate: ‘bool cxinv::HandleAssert(cxinv::AssertLabel, bool, const char*, const char*, const char*, long int, const char*)’
+   89 | bool HandleAssert(const AssertLabel  p_label,
+      |      ^~~~~~~~~~~~
+/home/morane/Programming/connectx/cxinv/include/cxinv/assertion.h:90:38: note:   no known conversion for argument 2 from ‘Gtk::TreeRow’ to ‘bool’
+   90 |                   const bool         p_conditionRes,
+      |                   ~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~
+/home/morane/Programming/connectx/cxinv/include/cxinv/assertion.h:132:6: note: candidate: ‘template<class T> bool cxinv::HandleAssert(cxinv::AssertLabel, const std::unique_ptr<_Tp>&, const char*, const char*, const char*, long int, const char*)’
+  132 | bool HandleAssert(const AssertLabel  p_label,
+      |      ^~~~~~~~~~~~
+/home/morane/Programming/connectx/cxinv/include/cxinv/assertion.h:132:6: note:   template argument deduction/substitution failed:
+/home/morane/Programming/connectx/cxinv/include/cxinv/assertion.h:315:53: note:   ‘Gtk::TreeRow’ is not derived from ‘const std::unique_ptr<_Tp>’
+  315 |                                                     )
+      |                                                     ^
+/home/morane/Programming/connectx/cxinv/include/cxinv/assertion.h:419:9: note: in expansion of macro ‘INL_ASSERT’
+  419 |     if(!p_assertType(p_condition))                                        \
+      |         ^~~~~~~~~~~~
+/home/morane/Programming/connectx/cxinv/include/cxinv/assertion.h:451:5: note: in expansion of macro ‘IF_CONDITION_NOT_MET_DO_IMPL’
+  451 |     IF_CONDITION_NOT_MET_DO_IMPL(INL_ASSERT, p_condition, p_action) \
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/morane/Programming/connectx/cxgui/src/ColorComboBox.cpp:95:9: note: in expansion of macro ‘IF_CONDITION_NOT_MET_DO’
+   95 |         IF_CONDITION_NOT_MET_DO(row, return;);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~
+/home/morane/Programming/connectx/cxinv/include/cxinv/assertion.h:184:6: note: candidate: ‘template<class T> bool cxinv::HandleAssert(cxinv::AssertLabel, const std::shared_ptr<_Tp>&, const char*, const char*, const char*, long int, const char*)’
+  184 | bool HandleAssert(const AssertLabel  p_label,
+      |      ^~~~~~~~~~~~
+/home/morane/Programming/connectx/cxinv/include/cxinv/assertion.h:184:6: note:   template argument deduction/substitution failed:
+/home/morane/Programming/connectx/cxinv/include/cxinv/assertion.h:315:53: note:   ‘Gtk::TreeRow’ is not derived from ‘const std::shared_ptr<_Tp>’
+  315 |                                                     )
+      |                                                     ^
+/home/morane/Programming/connectx/cxinv/include/cxinv/assertion.h:419:9: note: in expansion of macro ‘INL_ASSERT’
+  419 |     if(!p_assertType(p_condition))                                        \
+      |         ^~~~~~~~~~~~
+/home/morane/Programming/connectx/cxinv/include/cxinv/assertion.h:451:5: note: in expansion of macro ‘IF_CONDITION_NOT_MET_DO_IMPL’
+  451 |     IF_CONDITION_NOT_MET_DO_IMPL(INL_ASSERT, p_condition, p_action) \
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/morane/Programming/connectx/cxgui/src/ColorComboBox.cpp:95:9: note: in expansion of macro ‘IF_CONDITION_NOT_MET_DO’
+   95 |         IF_CONDITION_NOT_MET_DO(row, return;);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~
+/home/morane/Programming/connectx/cxgui/src/ColorComboBox.cpp: In member function ‘void cxgui::ColorComboBox::AddElement(const Color&, bool)’:
+/home/morane/Programming/connectx/cxgui/src/ColorComboBox.cpp:110:16: error: aggregate ‘Gdk::Color color’ has incomplete type and cannot be defined
+  110 |     Gdk::Color color;
+      |                ^~~~~
+/home/morane/Programming/connectx/cxgui/src/ColorComboBox.cpp:113:46: error: invalid use of incomplete type ‘class Gdk::Color’
+  113 |     row[m_records.m_color] = Gdk::Color(color);
+      |                                              ^
+In file included from /usr/include/gdkmm-3.0/gdkmm/event.h:27,
+                 from /usr/include/gtkmm-3.0/gtkmm/widget.h:41,
+                 from /usr/include/gtkmm-3.0/gtkmm/container.h:28,
+                 from /usr/include/gtkmm-3.0/gtkmm/bin.h:27,
+                 from /usr/include/gtkmm-3.0/gtkmm/combobox.h:27,
+                 from /home/morane/Programming/connectx/cxgui/include/cxgui/ColorComboBox.h:27,
+                 from /home/morane/Programming/connectx/cxgui/src/ColorComboBox.cpp:25:
+/usr/include/gdkmm-3.0/gdkmm/types.h:64:7: note: forward declaration of ‘class Gdk::Color’
+   64 | class Color;
+      |       ^~~~~
+/home/morane/Programming/connectx/cxgui/src/ColorComboBox.cpp: In member function ‘void cxgui::ColorComboBox::OnRenderCell(const const_iterator&)’:
+/home/morane/Programming/connectx/cxgui/src/ColorComboBox.cpp:126:22: error: variable ‘const Gdk::Color color’ has initializer but incomplete type
+  126 |     const Gdk::Color color = row[m_records.m_color];
+      |                      ^~~~~
+/home/morane/Programming/connectx/cxgui/src/ColorComboBox.cpp: In member function ‘void cxgui::ColorComboBox::OnComboChanged()’:
+/home/morane/Programming/connectx/cxgui/src/ColorComboBox.cpp:137:16: error: aggregate ‘Gdk::Color currentGdkColor’ has incomplete type and cannot be defined
+  137 |     Gdk::Color currentGdkColor;
+      |                ^~~~~~~~~~~~~~~
+In file included from /usr/include/glibmm-2.4/glibmm/value.h:224,
+                 from /usr/include/glibmm-2.4/glibmm/propertyproxy_base.h:23,
+                 from /usr/include/glibmm-2.4/glibmm/propertyproxy.h:23,
+                 from /usr/include/glibmm-2.4/glibmm/objectbase.h:23,
+                 from /usr/include/glibmm-2.4/glibmm/object.h:29,
+                 from /usr/include/pangomm-1.4/pangomm/context.h:31,
+                 from /usr/include/gtkmm-3.0/gtkmm/widget.h:31,
+                 from /usr/include/gtkmm-3.0/gtkmm/container.h:28,
+                 from /usr/include/gtkmm-3.0/gtkmm/bin.h:27,
+                 from /usr/include/gtkmm-3.0/gtkmm/combobox.h:27,
+                 from /home/morane/Programming/connectx/cxgui/include/cxgui/ColorComboBox.h:27,
+                 from /home/morane/Programming/connectx/cxgui/src/ColorComboBox.cpp:25:
+/usr/include/glibmm-2.4/glibmm/value_custom.h: In instantiation of ‘static GType Glib::Value<T>::value_type() [with T = Gdk::Color; GType = long unsigned int]’:
+/usr/include/gtkmm-3.0/gtkmm/treemodelcolumn.h:134:64:   required from ‘Gtk::TreeModelColumn<T>::TreeModelColumn() [with T = Gdk::Color]’
+/home/morane/Programming/connectx/cxgui/src/ColorComboBox.cpp:27:38:   required from here
+/usr/include/glibmm-2.4/glibmm/value_custom.h:257:53: error: invalid use of incomplete type ‘class Gdk::Color’
+  257 |     custom_type_ = Glib::custom_boxed_type_register(typeid(CppType).name(),
+      |                                                     ^~~~~~~~~~~~~~~
+In file included from /usr/include/gdkmm-3.0/gdkmm/event.h:27,
+                 from /usr/include/gtkmm-3.0/gtkmm/widget.h:41,
+                 from /usr/include/gtkmm-3.0/gtkmm/container.h:28,
+                 from /usr/include/gtkmm-3.0/gtkmm/bin.h:27,
+                 from /usr/include/gtkmm-3.0/gtkmm/combobox.h:27,
+                 from /home/morane/Programming/connectx/cxgui/include/cxgui/ColorComboBox.h:27,
+                 from /home/morane/Programming/connectx/cxgui/src/ColorComboBox.cpp:25:
+/usr/include/gdkmm-3.0/gdkmm/types.h:64:7: note: forward declaration of ‘class Gdk::Color’
+   64 | class Color;
+      |       ^~~~~
+make[2]: *** [cxgui/CMakeFiles/cxgui.dir/build.make:188: cxgui/CMakeFiles/cxgui.dir/src/ColorComboBox.cpp.o] Error 1
+/home/morane/Programming/connectx/cxgui/src/GameResolutionDialog.cpp: In member function ‘virtual void cxgui::GameResolutionDialog::ConfigureLayouts()’:
+/home/morane/Programming/connectx/cxgui/src/GameResolutionDialog.cpp:67:18: error: ‘class Gtk::Grid’ has no member named ‘set_margin_left’; did you mean ‘set_margin_end’?
+   67 |     m_mainLayout.set_margin_left(DIALOG_SIDE_MARGIN);
+      |                  ^~~~~~~~~~~~~~~
+      |                  set_margin_end
+/home/morane/Programming/connectx/cxgui/src/GameResolutionDialog.cpp:68:18: error: ‘class Gtk::Grid’ has no member named ‘set_margin_right’; did you mean ‘set_margin_start’?
+   68 |     m_mainLayout.set_margin_right(DIALOG_SIDE_MARGIN);
+      |                  ^~~~~~~~~~~~~~~~
+      |                  set_margin_start
+make[2]: *** [cxgui/CMakeFiles/cxgui.dir/build.make:272: cxgui/CMakeFiles/cxgui.dir/src/GameResolutionDialog.cpp.o] Error 1
+/home/morane/Programming/connectx/cxgui/src/GameView.cpp: In member function ‘void cxgui::GameView::ConfigureWidgets()’:
+/home/morane/Programming/connectx/cxgui/src/GameView.cpp:256:18: error: ‘class Gtk::Grid’ has no member named ‘set_margin_left’; did you mean ‘set_margin_end’?
+  256 |     m_mainLayout.set_margin_left(DIALOG_SIDE_MARGIN);
+      |                  ^~~~~~~~~~~~~~~
+      |                  set_margin_end
+/home/morane/Programming/connectx/cxgui/src/GameView.cpp:257:18: error: ‘class Gtk::Grid’ has no member named ‘set_margin_right’; did you mean ‘set_margin_start’?
+  257 |     m_mainLayout.set_margin_right(DIALOG_SIDE_MARGIN);
+      |                  ^~~~~~~~~~~~~~~~
+      |                  set_margin_start
+make[2]: *** [cxgui/CMakeFiles/cxgui.dir/build.make:300: cxgui/CMakeFiles/cxgui.dir/src/GameView.cpp.o] Error 1
+In file included from /home/morane/Programming/connectx/cxgui/src/MainWindow.cpp:44:
+/home/morane/Programming/connectx/cxgui/include/cxgui/MainWindow.h:164:10: error: ‘ImageMenuItem’ in namespace ‘Gtk’ does not name a type; did you mean ‘MenuItem’?
+  164 |     Gtk::ImageMenuItem m_undoMenuItem{Gtk::Stock::UNDO};
+      |          ^~~~~~~~~~~~~
+      |          MenuItem
+/home/morane/Programming/connectx/cxgui/include/cxgui/MainWindow.h:164:56: error: extra ‘;’ [-Wpedantic]
+  164 |     Gtk::ImageMenuItem m_undoMenuItem{Gtk::Stock::UNDO};
+      |                                                        ^
+      |                                                        -
+/home/morane/Programming/connectx/cxgui/include/cxgui/MainWindow.h:165:10: error: ‘ImageMenuItem’ in namespace ‘Gtk’ does not name a type; did you mean ‘MenuItem’?
+  165 |     Gtk::ImageMenuItem m_redoMenuItem{Gtk::Stock::REDO};
+      |          ^~~~~~~~~~~~~
+      |          MenuItem
+/home/morane/Programming/connectx/cxgui/include/cxgui/MainWindow.h:165:56: error: extra ‘;’ [-Wpedantic]
+  165 |     Gtk::ImageMenuItem m_redoMenuItem{Gtk::Stock::REDO};
+      |                                                        ^
+      |                                                        -
+/home/morane/Programming/connectx/cxgui/include/cxgui/MainWindow.h:166:10: error: ‘ImageMenuItem’ in namespace ‘Gtk’ does not name a type; did you mean ‘MenuItem’?
+  166 |     Gtk::ImageMenuItem m_quitMenuItem{Gtk::Stock::QUIT};
+      |          ^~~~~~~~~~~~~
+      |          MenuItem
+/home/morane/Programming/connectx/cxgui/include/cxgui/MainWindow.h:166:56: error: extra ‘;’ [-Wpedantic]
+  166 |     Gtk::ImageMenuItem m_quitMenuItem{Gtk::Stock::QUIT};
+      |                                                        ^
+      |                                                        -
+/home/morane/Programming/connectx/cxgui/include/cxgui/MainWindow.h:169:10: error: ‘ImageMenuItem’ in namespace ‘Gtk’ does not name a type; did you mean ‘MenuItem’?
+  169 |     Gtk::ImageMenuItem m_contentsMenuItem{Gtk::Stock::HELP};
+      |          ^~~~~~~~~~~~~
+      |          MenuItem
+/home/morane/Programming/connectx/cxgui/include/cxgui/MainWindow.h:169:60: error: extra ‘;’ [-Wpedantic]
+  169 |     Gtk::ImageMenuItem m_contentsMenuItem{Gtk::Stock::HELP};
+      |                                                            ^
+      |                                                            -
+/home/morane/Programming/connectx/cxgui/include/cxgui/MainWindow.h:170:10: error: ‘ImageMenuItem’ in namespace ‘Gtk’ does not name a type; did you mean ‘MenuItem’?
+  170 |     Gtk::ImageMenuItem m_aboutMenuItem{Gtk::Stock::ABOUT};
+      |          ^~~~~~~~~~~~~
+      |          MenuItem
+/home/morane/Programming/connectx/cxgui/include/cxgui/MainWindow.h:170:58: error: extra ‘;’ [-Wpedantic]
+  170 |     Gtk::ImageMenuItem m_aboutMenuItem{Gtk::Stock::ABOUT};
+      |                                                          ^
+      |                                                          -
+/home/morane/Programming/connectx/cxgui/src/MainWindow.cpp: In member function ‘virtual void cxgui::MainWindow::ConfigureWidgets()’:
+/home/morane/Programming/connectx/cxgui/src/MainWindow.cpp:96:5: error: ‘m_undoMenuItem’ was not declared in this scope; did you mean ‘m_gameMenuItem’?
+   96 |     m_undoMenuItem.set_label(m_presenter.GetMenuLabel(MenuItem::UNDO));
+      |     ^~~~~~~~~~~~~~
+      |     m_gameMenuItem
+/home/morane/Programming/connectx/cxgui/src/MainWindow.cpp:97:5: error: ‘m_redoMenuItem’ was not declared in this scope; did you mean ‘m_helpMenuItem’?
+   97 |     m_redoMenuItem.set_label(m_presenter.GetMenuLabel(MenuItem::REDO));
+      |     ^~~~~~~~~~~~~~
+      |     m_helpMenuItem
+/home/morane/Programming/connectx/cxgui/src/MainWindow.cpp:99:5: error: ‘m_contentsMenuItem’ was not declared in this scope
+   99 |     m_contentsMenuItem.set_label(m_presenter.GetMenuLabel(MenuItem::CONTENTS));
+      |     ^~~~~~~~~~~~~~~~~~
+/home/morane/Programming/connectx/cxgui/src/MainWindow.cpp:100:5: error: ‘m_aboutMenuItem’ was not declared in this scope; did you mean ‘m_gameMenuItem’?
+  100 |     m_aboutMenuItem.set_label(m_presenter.GetMenuLabel(MenuItem::ABOUT));
+      |     ^~~~~~~~~~~~~~~
+      |     m_gameMenuItem
+/home/morane/Programming/connectx/cxgui/src/MainWindow.cpp: In member function ‘virtual void cxgui::MainWindow::ConfigureSignalHandlers()’:
+/home/morane/Programming/connectx/cxgui/src/MainWindow.cpp:110:5: error: ‘m_undoMenuItem’ was not declared in this scope; did you mean ‘m_gameMenuItem’?
+  110 |     m_undoMenuItem.signal_activate().connect([this]{OnUndo();});
+      |     ^~~~~~~~~~~~~~
+      |     m_gameMenuItem
+/home/morane/Programming/connectx/cxgui/src/MainWindow.cpp:111:5: error: ‘m_redoMenuItem’ was not declared in this scope; did you mean ‘m_helpMenuItem’?
+  111 |     m_redoMenuItem.signal_activate().connect([this]{OnRedo();});
+      |     ^~~~~~~~~~~~~~
+      |     m_helpMenuItem
+/home/morane/Programming/connectx/cxgui/src/MainWindow.cpp:112:5: error: ‘m_quitMenuItem’ was not declared in this scope; did you mean ‘m_gameMenuItem’?
+  112 |     m_quitMenuItem.signal_activate().connect([this](){m_window.close();});
+      |     ^~~~~~~~~~~~~~
+      |     m_gameMenuItem
+/home/morane/Programming/connectx/cxgui/src/MainWindow.cpp:113:5: error: ‘m_contentsMenuItem’ was not declared in this scope
+  113 |     m_contentsMenuItem.signal_activate().connect([this](){OnHelpContentsRequested();});
+      |     ^~~~~~~~~~~~~~~~~~
+/home/morane/Programming/connectx/cxgui/src/MainWindow.cpp:114:5: error: ‘m_aboutMenuItem’ was not declared in this scope; did you mean ‘m_gameMenuItem’?
+  114 |     m_aboutMenuItem.signal_activate().connect([this](){OnCreateAboutWindow();});
+      |     ^~~~~~~~~~~~~~~
+      |     m_gameMenuItem
+/home/morane/Programming/connectx/cxgui/src/MainWindow.cpp: In member function ‘void cxgui::MainWindow::UpdateMenuItems(cxmodel::ModelNotificationContext)’:
+/home/morane/Programming/connectx/cxgui/src/MainWindow.cpp:233:5: error: ‘m_undoMenuItem’ was not declared in this scope; did you mean ‘m_gameMenuItem’?
+  233 |     m_undoMenuItem.set_sensitive(p_context == cxmodel::ModelNotificationContext::CHIP_DROPPED || m_presenter.IsUndoPossible());
+      |     ^~~~~~~~~~~~~~
+      |     m_gameMenuItem
+/home/morane/Programming/connectx/cxgui/src/MainWindow.cpp:234:5: error: ‘m_redoMenuItem’ was not declared in this scope; did you mean ‘m_helpMenuItem’?
+  234 |     m_redoMenuItem.set_sensitive(m_presenter.IsRedoPossible());
+      |     ^~~~~~~~~~~~~~
+      |     m_helpMenuItem
+/home/morane/Programming/connectx/cxgui/src/MainWindow.cpp: In member function ‘void cxgui::MainWindow::RegisterMenuBar()’:
+/home/morane/Programming/connectx/cxgui/src/MainWindow.cpp:243:5: error: ‘m_undoMenuItem’ was not declared in this scope; did you mean ‘m_gameMenuItem’?
+  243 |     m_undoMenuItem.add_accelerator("activate",
+      |     ^~~~~~~~~~~~~~
+      |     m_gameMenuItem
+/home/morane/Programming/connectx/cxgui/src/MainWindow.cpp:249:5: error: ‘m_redoMenuItem’ was not declared in this scope; did you mean ‘m_helpMenuItem’?
+  249 |     m_redoMenuItem.add_accelerator("activate",
+      |     ^~~~~~~~~~~~~~
+      |     m_helpMenuItem
+/home/morane/Programming/connectx/cxgui/src/MainWindow.cpp:265:23: error: ‘m_quitMenuItem’ was not declared in this scope; did you mean ‘m_gameMenuItem’?
+  265 |     m_gameMenu.append(m_quitMenuItem);
+      |                       ^~~~~~~~~~~~~~
+      |                       m_gameMenuItem
+/home/morane/Programming/connectx/cxgui/src/MainWindow.cpp:267:23: error: ‘m_contentsMenuItem’ was not declared in this scope
+  267 |     m_helpMenu.append(m_contentsMenuItem);
+      |                       ^~~~~~~~~~~~~~~~~~
+/home/morane/Programming/connectx/cxgui/src/MainWindow.cpp:268:23: error: ‘m_aboutMenuItem’ was not declared in this scope; did you mean ‘m_gameMenuItem’?
+  268 |     m_helpMenu.append(m_aboutMenuItem);
+      |                       ^~~~~~~~~~~~~~~
+      |                       m_gameMenuItem
+make[2]: *** [cxgui/CMakeFiles/cxgui.dir/build.make:356: cxgui/CMakeFiles/cxgui.dir/src/MainWindow.cpp.o] Error 1
+/home/morane/Programming/connectx/cxgui/src/NewGameView.cpp: In member function ‘void cxgui::NewGameView::ConfigureWidgets()’:
+/home/morane/Programming/connectx/cxgui/src/NewGameView.cpp:152:18: error: ‘class Gtk::Grid’ has no member named ‘set_margin_left’; did you mean ‘set_margin_end’?
+  152 |     m_mainLayout.set_margin_left(DIALOG_SIDE_MARGIN);
+      |                  ^~~~~~~~~~~~~~~
+      |                  set_margin_end
+/home/morane/Programming/connectx/cxgui/src/NewGameView.cpp:153:18: error: ‘class Gtk::Grid’ has no member named ‘set_margin_right’; did you mean ‘set_margin_start’?
+  153 |     m_mainLayout.set_margin_right(DIALOG_SIDE_MARGIN);
+      |                  ^~~~~~~~~~~~~~~~
+      |                  set_margin_start
+make[2]: *** [cxgui/CMakeFiles/cxgui.dir/build.make:398: cxgui/CMakeFiles/cxgui.dir/src/NewGameView.cpp.o] Error 1
+make[2]: Target 'cxgui/CMakeFiles/cxgui.dir/build' not remade because of errors.
+make[1]: *** [CMakeFiles/Makefile2:813: cxgui/CMakeFiles/cxgui.dir/all] Error 2
+make[1]: Target 'all' not remade because of errors.
+make: *** [Makefile:146: all] Error 2
+make: Target 'default_target' not remade because of errors.
