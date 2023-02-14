@@ -1,13 +1,3 @@
-/home/morane/Programming/connectx/cxgui/src/About.cpp: In member function ‘virtual void cxgui::About::ConfigureWidgets()’:
-/home/morane/Programming/connectx/cxgui/src/About.cpp:81:19: error: ‘class Gtk::Label’ has no member named ‘set_margin_left’; did you mean ‘set_margin_end’?
-   81 |     m_description.set_margin_left(5);
-      |                   ^~~~~~~~~~~~~~~
-      |                   set_margin_end
-/home/morane/Programming/connectx/cxgui/src/About.cpp:82:19: error: ‘class Gtk::Label’ has no member named ‘set_margin_right’; did you mean ‘set_margin_start’?
-   82 |     m_description.set_margin_right(5);
-      |                   ^~~~~~~~~~~~~~~~
-      |                   set_margin_start
-make[2]: *** [cxgui/CMakeFiles/cxgui.dir/build.make:76: cxgui/CMakeFiles/cxgui.dir/src/About.cpp.o] Error 1
 /home/morane/Programming/connectx/cxgui/src/AnimatedBoard.cpp: In member function ‘int cxgui::AnimatedBoard::ComputeMinimumChipDimension(size_t, size_t) const’:
 /home/morane/Programming/connectx/cxgui/src/AnimatedBoard.cpp:484:42: error: ‘const class Gdk::Screen’ has no member named ‘get_height’
   484 |     const int fullScreenHeight = screen->get_height();
@@ -269,26 +259,6 @@ In file included from /usr/include/gdkmm-3.0/gdkmm/event.h:27,
    64 | class Color;
       |       ^~~~~
 make[2]: *** [cxgui/CMakeFiles/cxgui.dir/build.make:188: cxgui/CMakeFiles/cxgui.dir/src/ColorComboBox.cpp.o] Error 1
-/home/morane/Programming/connectx/cxgui/src/GameResolutionDialog.cpp: In member function ‘virtual void cxgui::GameResolutionDialog::ConfigureLayouts()’:
-/home/morane/Programming/connectx/cxgui/src/GameResolutionDialog.cpp:67:18: error: ‘class Gtk::Grid’ has no member named ‘set_margin_left’; did you mean ‘set_margin_end’?
-   67 |     m_mainLayout.set_margin_left(DIALOG_SIDE_MARGIN);
-      |                  ^~~~~~~~~~~~~~~
-      |                  set_margin_end
-/home/morane/Programming/connectx/cxgui/src/GameResolutionDialog.cpp:68:18: error: ‘class Gtk::Grid’ has no member named ‘set_margin_right’; did you mean ‘set_margin_start’?
-   68 |     m_mainLayout.set_margin_right(DIALOG_SIDE_MARGIN);
-      |                  ^~~~~~~~~~~~~~~~
-      |                  set_margin_start
-make[2]: *** [cxgui/CMakeFiles/cxgui.dir/build.make:272: cxgui/CMakeFiles/cxgui.dir/src/GameResolutionDialog.cpp.o] Error 1
-/home/morane/Programming/connectx/cxgui/src/GameView.cpp: In member function ‘void cxgui::GameView::ConfigureWidgets()’:
-/home/morane/Programming/connectx/cxgui/src/GameView.cpp:256:18: error: ‘class Gtk::Grid’ has no member named ‘set_margin_left’; did you mean ‘set_margin_end’?
-  256 |     m_mainLayout.set_margin_left(DIALOG_SIDE_MARGIN);
-      |                  ^~~~~~~~~~~~~~~
-      |                  set_margin_end
-/home/morane/Programming/connectx/cxgui/src/GameView.cpp:257:18: error: ‘class Gtk::Grid’ has no member named ‘set_margin_right’; did you mean ‘set_margin_start’?
-  257 |     m_mainLayout.set_margin_right(DIALOG_SIDE_MARGIN);
-      |                  ^~~~~~~~~~~~~~~~
-      |                  set_margin_start
-make[2]: *** [cxgui/CMakeFiles/cxgui.dir/build.make:300: cxgui/CMakeFiles/cxgui.dir/src/GameView.cpp.o] Error 1
 In file included from /home/morane/Programming/connectx/cxgui/src/MainWindow.cpp:44:
 /home/morane/Programming/connectx/cxgui/include/cxgui/MainWindow.h:164:10: error: ‘ImageMenuItem’ in namespace ‘Gtk’ does not name a type; did you mean ‘MenuItem’?
   164 |     Gtk::ImageMenuItem m_undoMenuItem{Gtk::Stock::UNDO};
@@ -396,16 +366,6 @@ In file included from /home/morane/Programming/connectx/cxgui/src/MainWindow.cpp
       |                       ^~~~~~~~~~~~~~~
       |                       m_gameMenuItem
 make[2]: *** [cxgui/CMakeFiles/cxgui.dir/build.make:356: cxgui/CMakeFiles/cxgui.dir/src/MainWindow.cpp.o] Error 1
-/home/morane/Programming/connectx/cxgui/src/NewGameView.cpp: In member function ‘void cxgui::NewGameView::ConfigureWidgets()’:
-/home/morane/Programming/connectx/cxgui/src/NewGameView.cpp:152:18: error: ‘class Gtk::Grid’ has no member named ‘set_margin_left’; did you mean ‘set_margin_end’?
-  152 |     m_mainLayout.set_margin_left(DIALOG_SIDE_MARGIN);
-      |                  ^~~~~~~~~~~~~~~
-      |                  set_margin_end
-/home/morane/Programming/connectx/cxgui/src/NewGameView.cpp:153:18: error: ‘class Gtk::Grid’ has no member named ‘set_margin_right’; did you mean ‘set_margin_start’?
-  153 |     m_mainLayout.set_margin_right(DIALOG_SIDE_MARGIN);
-      |                  ^~~~~~~~~~~~~~~~
-      |                  set_margin_start
-make[2]: *** [cxgui/CMakeFiles/cxgui.dir/build.make:398: cxgui/CMakeFiles/cxgui.dir/src/NewGameView.cpp.o] Error 1
 make[2]: Target 'cxgui/CMakeFiles/cxgui.dir/build' not remade because of errors.
 make[1]: *** [CMakeFiles/Makefile2:813: cxgui/CMakeFiles/cxgui.dir/all] Error 2
 make[1]: Target 'all' not remade because of errors.
