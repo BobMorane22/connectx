@@ -40,9 +40,16 @@ class OnOffSwitch : public cxgui::IOnOffSwitch
 
 public:
 
+    /******************************************************************************************//**
+     * @brief Constructor.
+     *
+     *********************************************************************************************/
+    OnOffSwitch();
+
     // cxgui::IOnOffSwitch:
     [[nodiscard]] OnOffState GetState() const override;
     void SetState(OnOffState p_newState) override;
+    void StateChangedSignalConnect(const std::function<void()>& p_slot) override;
 
     // cxgui::IWidget
     [[nodiscard]] size_t GetWidth() const override;
@@ -58,6 +65,8 @@ public:
     [[nodiscard]] Gtk::Switch& GetUnderlying(){return m_underlying;}
 
 private:
+
+    std::function<void()> m_stateChangedSlot = [](){};
 
     Gtk::Switch m_underlying;
 

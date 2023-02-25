@@ -86,6 +86,7 @@ class NewPlayerRow final : public Gtk::ListBoxRow
 
 public:
 
+
     /***********************************************************************************************
      * @brief Constructor.
      *
@@ -141,6 +142,14 @@ public:
      *
      **********************************************************************************************/
     [[nodiscard]] cxmodel::PlayerType GetPlayerType() const;
+
+    /***********************************************************************************************
+     * @brief Connects a slot to be called when the row is updated.
+     *
+     * @param p_slot The slot to call.
+     *
+     **********************************************************************************************/
+    void RowUpdatedSignalConnect(const std::function<void()>& p_slot);
 
 private:
 
@@ -309,6 +318,22 @@ cxmodel::PlayerType cxgui::NewPlayerRow::GetPlayerType() const
     return cxmodel::PlayerType::HUMAN;
 }
 
+void cxgui::NewPlayerRow::RowUpdatedSignalConnect(const std::function<void()>& p_slot)
+{
+    IF_CONDITION_NOT_MET_DO(m_typeSwitch, return;);
+
+    if(!p_slot)
+    {
+        return;
+    }
+
+    m_typeSwitch->StateChangedSignalConnect(p_slot);
+    m_playerName.signal_changed().connect(p_slot);
+    m_playerDiscColor.signal_changed().connect(p_slot);
+
+    CheckInvariants();
+}
+
 void cxgui::NewPlayerRow::CheckInvariants() const
 {
     INVARIANT(!m_playerName.get_text().empty());
@@ -417,7 +442,12 @@ bool cxgui::NewPlayersList::AddRow(const std::string& p_playerNewName,
 
     const std::size_t sizeBefore{GetSize()};
 
-    add(*Gtk::manage(new NewPlayerRow(p_playerNewName, p_playerNewDiscColor, p_playerNewType)));
+    auto row = Gtk::manage(new NewPlayerRow(p_playerNewName, p_playerNewDiscColor, p_playerNewType));
+    IF_CONDITION_NOT_MET_DO(row, return false;);
+    
+    IF_CONDITION_NOT_MET_DO(bool(m_rowUpdatedSlot), return false;);
+    row->RowUpdatedSignalConnect(m_rowUpdatedSlot);
+    add(*row);
 
     const std::size_t sizeAfter{GetSize()};
 
@@ -641,6 +671,25 @@ bool cxgui::NewPlayersList::RemoveManaged(cxgui::NewPlayerRow* p_row)
     IF_CONDITION_NOT_MET_DO(nbRowsBefore == nbRowsAfter + 1, return false;);
 
     return true;
+}
+
+void cxgui::NewPlayersList::RowUpdatedSignalConnect(const std::function<void()>& p_slot)
+{
+    if(!p_slot)
+    {
+        return;
+    }
+
+    // We save the slot for all new rows:
+    m_rowUpdatedSlot = p_slot;
+
+    // We apply the slot on all existing rows:
+    auto rows = cxgui::NewPlayersList::GetRows();
+    for(auto* row : rows)
+    {
+        IF_CONDITION_NOT_MET_DO(row, continue;);
+        row->RowUpdatedSignalConnect(m_rowUpdatedSlot);
+    }
 }
 
 Gtk::Widget& cxgui::NewPlayersList::GetUnderlying()

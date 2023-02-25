@@ -27,6 +27,18 @@
 #include <cxgui/OnOffState.h>
 #include <cxgui/OnOffSwitch.h>
 
+cxgui::OnOffSwitch::OnOffSwitch()
+{
+    GetUnderlying().signal_state_flags_changed().connect(
+        [this](Gtk::StateFlags  /*p_previousState*/)
+        {
+            IF_CONDITION_NOT_MET_DO(bool(m_stateChangedSlot), return;);
+            m_stateChangedSlot();
+        },
+        false
+    );
+}
+
 cxgui::OnOffState cxgui::OnOffSwitch::GetState() const
 {
     if(m_underlying.get_active())
@@ -45,6 +57,14 @@ void cxgui::OnOffSwitch::SetState(cxgui::OnOffState p_newState)
     }
 
     m_underlying.set_active(false);
+
+    IF_CONDITION_NOT_MET_DO(bool(m_stateChangedSlot), return;);
+    m_stateChangedSlot();
+}
+
+void cxgui::OnOffSwitch::StateChangedSignalConnect(const std::function<void()>& p_slot)
+{
+    m_stateChangedSlot = p_slot;
 }
 
 size_t cxgui::OnOffSwitch::GetWidth() const

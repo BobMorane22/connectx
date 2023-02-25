@@ -91,6 +91,7 @@ public:
                                  const cxmodel::ChipColor& p_newPlayerNewDiscColor,
                                  cxmodel::PlayerType p_newPlayerType) override;
     void Clear() override; 
+    void RowUpdatedSignalConnect(const std::function<void()>& p_slot) override;
 
     [[nodiscard]] Gtk::Widget& GetUnderlying() override;
     [[nodiscard]] const Gtk::Widget& GetUnderlying() const override;
@@ -123,6 +124,8 @@ private:
     void FitColumnHeaders();
 
     bool RemoveManaged(cxgui::NewPlayerRow* p_row);
+
+    std::function<void()> m_rowUpdatedSlot = [](){};
 
 };
 

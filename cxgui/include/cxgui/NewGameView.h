@@ -81,6 +81,7 @@ private:
     void OnStart();
     void OnAddPlayer();
     void OnRemovePlayer();
+    void OnNewGameParameterUpdated();
 
     INewGameViewPresenter& m_presenter;
     INewGameViewController& m_controller;

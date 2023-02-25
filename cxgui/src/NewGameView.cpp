@@ -68,6 +68,14 @@ cxgui::NewGameView::NewGameView(INewGameViewPresenter& p_presenter,
     m_removePlayerButton.signal_clicked().connect([this](){OnRemovePlayer();});
     m_addPlayerButton.signal_clicked().connect([this](){OnAddPlayer();});
     m_startButton.signal_clicked().connect([this](){OnStart();});
+
+    // Start button validations:
+    m_inARowEntry.signal_changed().connect([this](){OnNewGameParameterUpdated();});
+    m_gridWidthEntry.signal_changed().connect([this](){OnNewGameParameterUpdated();});
+    m_gridHeightEntry.signal_changed().connect([this](){OnNewGameParameterUpdated();});
+    m_removePlayerButton.signal_clicked().connect([this](){OnNewGameParameterUpdated();});
+    m_addPlayerButton.signal_clicked().connect([this](){OnNewGameParameterUpdated();});
+    m_playersList->RowUpdatedSignalConnect([this](){OnNewGameParameterUpdated();});
 }
 
 void cxgui::NewGameView::Activate()
@@ -350,4 +358,10 @@ void cxgui::NewGameView::OnRemovePlayer()
 
     m_removePlayerButton.set_sensitive(m_presenter.CanRemoveAnotherPlayer(m_playersList->GetSize()));
     m_addPlayerButton.set_sensitive(m_presenter.CanAddAnotherPlayer(m_playersList->GetSize()));
+}
+
+#include<iostream>
+void cxgui::NewGameView::OnNewGameParameterUpdated()
+{
+    std::cout << "Validate start button...\n";
 }

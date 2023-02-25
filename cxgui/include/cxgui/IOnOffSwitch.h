@@ -24,6 +24,8 @@
 #ifndef IONOFFSWITCH_H_19A0A6E4_FA1D_4E24_B071_BB06B97181AC
 #define IONOFFSWITCH_H_19A0A6E4_FA1D_4E24_B071_BB06B97181AC
 
+#include <functional>
+
 #include <cxgui/IWidget.h>
 
 namespace cxgui
@@ -67,6 +69,14 @@ public:
      *
      *************************************************************************************************/
     virtual void SetState(OnOffState p_newState) = 0;
+
+    /**********************************************************************************************//**
+     * @brief Connects a slot that will be executed when the switch state changes.
+     *
+     * @param p_slot The slot to connect.
+     *
+     *************************************************************************************************/
+    virtual void StateChangedSignalConnect(const std::function<void()>& p_slot) = 0;
 
     // cxgui::IWidget:
     [[nodiscard]] size_t GetWidth() const override = 0;

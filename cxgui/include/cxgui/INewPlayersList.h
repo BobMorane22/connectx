@@ -24,6 +24,7 @@
 #ifndef INEWPLAYERSLIST_H_683F8110_A4C7_4915_A304_7940FD621B84
 #define INEWPLAYERSLIST_H_683F8110_A4C7_4915_A304_7940FD621B84
 
+#include <functional>
 #include <string>
 #include <vector>
 
@@ -205,12 +206,13 @@ public:
      **********************************************************************************************/
     virtual void Clear() = 0;
 
-    /*******************************************************************************************//**
-     * @brief Gets the underlying widget.
+    /***********************************************************************************************
+     * @brief Connects a slot to be called when the row is updated.
      *
-     * @return The underlying (Gtkmm) widget.
+     * @param p_slot The slot to call.
      *
      **********************************************************************************************/
+    virtual void RowUpdatedSignalConnect(const std::function<void()>& p_slot) = 0;
 
     // cxgui::IGtkmmBackend:
     [[nodiscard]] Gtk::Widget& GetUnderlying() override = 0;
