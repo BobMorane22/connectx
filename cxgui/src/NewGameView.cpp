@@ -360,8 +360,86 @@ void cxgui::NewGameView::OnRemovePlayer()
     m_addPlayerButton.set_sensitive(m_presenter.CanAddAnotherPlayer(m_playersList->GetSize()));
 }
 
-#include<iostream>
 void cxgui::NewGameView::OnNewGameParameterUpdated()
 {
-    std::cout << "Validate start button...\n";
+    m_startButton.set_sensitive(false);
+
+    // Retrieve game parameters:
+    size_t inARowValue;
+    auto extractionStatus = extractRawUserInput(m_inARowEntry.get_text(), inARowValue);
+    if(!extractionStatus.IsSuccess())
+    {
+        m_startButton.set_tooltip_text(extractionStatus.GetMessage());
+        return;
+    }
+
+    size_t boardWidth;
+    extractionStatus = extractRawUserInput(m_gridWidthEntry.get_text(), boardWidth);
+    if(!extractionStatus.IsSuccess())
+    {
+        m_startButton.set_tooltip_text(extractionStatus.GetMessage());
+        return;
+    }
+
+    size_t boardHeight;
+    extractionStatus = extractRawUserInput(m_gridHeightEntry.get_text(), boardHeight);
+    if(!extractionStatus.IsSuccess())
+    {
+        m_startButton.set_tooltip_text(extractionStatus.GetMessage());
+        return;
+    }
+
+    // Validate the input:
+    const auto inARowInputStatus = m_presenter.IsInARowValueValid(inARowValue);
+    if(!inARowInputStatus.IsSuccess())
+    {
+        m_startButton.set_tooltip_text(inARowInputStatus.GetMessage());
+        return;
+    }
+
+    const auto boardDimensionInputStatus = m_presenter.AreBoardDimensionsValid(boardHeight, boardWidth);
+    if(!boardDimensionInputStatus.IsSuccess())
+    {
+        m_startButton.set_tooltip_text(boardDimensionInputStatus.GetMessage());
+        return;
+    }
+
+    const std::vector<std::string> playerNames = m_playersList->GetAllPlayerNames();
+    const std::vector<cxmodel::ChipColor> playerChipColors = m_playersList->GetAllColors();
+    const std::vector<cxmodel::PlayerType> playerTypes = m_playersList->GetAllPlayerTypes();
+    IF_CONDITION_NOT_MET_DO(playerNames.size() == playerChipColors.size(), return;);
+    IF_CONDITION_NOT_MET_DO(playerTypes.size() == playerTypes.size(), return;);
+
+    const auto playerNamesInputStatus = m_presenter.ArePlayerNamesValid(playerNames);
+    if(!playerNamesInputStatus.IsSuccess())
+    {
+        m_startButton.set_tooltip_text(playerNamesInputStatus.GetMessage());
+        return;
+    }
+
+    const auto playerChipColorsInputStatus = m_presenter.ArePlayerChipColorsValid(playerChipColors);
+    if(!playerChipColorsInputStatus.IsSuccess())
+    {
+        m_startButton.set_tooltip_text(playerChipColorsInputStatus.GetMessage());
+        return;
+    }
+
+    const auto playerTypesInputStatus = m_presenter.ArePlayerTypesValid(playerTypes);
+    if(!playerTypesInputStatus.IsSuccess())
+    {
+        m_startButton.set_tooltip_text(playerTypesInputStatus.GetMessage());
+        return;
+    }
+
+    const auto newGameIsWinnableStatus = m_presenter.IsNewGameWinnable(inARowValue, playerNames.size(), boardHeight, boardWidth);
+    if(!newGameIsWinnableStatus.IsSuccess())
+    {
+        m_startButton.set_tooltip_text(newGameIsWinnableStatus.GetMessage());
+        return;
+    }
+
+    // At this points everything has been validated and a new game can be started.
+    // We make the start button sensitive:
+    m_startButton.set_sensitive(true);
+    m_startButton.set_tooltip_text("");
 }
