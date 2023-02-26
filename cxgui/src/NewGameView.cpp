@@ -26,6 +26,7 @@
 
 #include <gtkmm/messagedialog.h>
 
+#include <cxstd/helpers.h>
 #include <cxinv/assertion.h>
 #include <cxmodel/IChip.h>
 #include <cxmodel/NewGameInformation.h>
@@ -322,24 +323,15 @@ cxmodel::Status cxgui::NewGameView::ExtractGameInformation(cxmodel::NewGameInfor
     // Extracting game parameters from the GUI:
     size_t inARowValue;
     auto extractionStatus = extractRawUserInput(m_inARowEntry.get_text(), inARowValue);
-    if(!extractionStatus.IsSuccess())
-    {
-        return extractionStatus;
-    }
+    RETURN_IF(!extractionStatus.IsSuccess(), extractionStatus);
 
     size_t boardWidth;
     extractionStatus = extractRawUserInput(m_gridWidthEntry.get_text(), boardWidth);
-    if(!extractionStatus.IsSuccess())
-    {
-        return extractionStatus;
-    }
+    RETURN_IF(!extractionStatus.IsSuccess(), extractionStatus);
 
     size_t boardHeight;
     extractionStatus = extractRawUserInput(m_gridHeightEntry.get_text(), boardHeight);
-    if(!extractionStatus.IsSuccess())
-    {
-        return extractionStatus;
-    }
+    RETURN_IF(!extractionStatus.IsSuccess(), extractionStatus);
 
     const std::vector<std::string> playerNames = m_playersList->GetAllPlayerNames();
     const std::vector<cxmodel::ChipColor> playerChipColors = m_playersList->GetAllColors();
@@ -362,16 +354,10 @@ cxmodel::Status cxgui::NewGameView::ExtractGameInformation(cxmodel::NewGameInfor
 cxmodel::Status cxgui::Validate(const cxmodel::NewGameInformation& p_gameInformation, const cxgui::INewGameViewPresenter& p_presenter)
 {
     const auto inARowInputStatus = p_presenter.IsInARowValueValid(p_gameInformation.m_inARowValue);
-    if(!inARowInputStatus.IsSuccess())
-    {
-        return inARowInputStatus;
-    }
+    RETURN_IF(!inARowInputStatus.IsSuccess(), inARowInputStatus);
 
     const auto boardDimensionInputStatus = p_presenter.AreBoardDimensionsValid(p_gameInformation.m_gridHeight, p_gameInformation.m_gridWidth);
-    if(!boardDimensionInputStatus.IsSuccess())
-    {
-        return boardDimensionInputStatus;
-    }
+    RETURN_IF(!boardDimensionInputStatus.IsSuccess(), boardDimensionInputStatus);
 
     std::vector<std::string> playerNames;
     for(const auto player : p_gameInformation.m_players)
@@ -379,10 +365,7 @@ cxmodel::Status cxgui::Validate(const cxmodel::NewGameInformation& p_gameInforma
         playerNames.push_back(player->GetName());
     }
     const auto playerNamesInputStatus = p_presenter.ArePlayerNamesValid(playerNames);
-    if(!playerNamesInputStatus.IsSuccess())
-    {
-        return playerNamesInputStatus;
-    }
+    RETURN_IF(!playerNamesInputStatus.IsSuccess(), playerNamesInputStatus);
 
     std::vector<cxmodel::ChipColor> playerChipColors;
     for(const auto player : p_gameInformation.m_players)
@@ -390,10 +373,7 @@ cxmodel::Status cxgui::Validate(const cxmodel::NewGameInformation& p_gameInforma
         playerChipColors.push_back(player->GetChip().GetColor());
     }
     const auto playerChipColorsInputStatus = p_presenter.ArePlayerChipColorsValid(playerChipColors);
-    if(!playerChipColorsInputStatus.IsSuccess())
-    {
-        return playerChipColorsInputStatus;
-    }
+    RETURN_IF(!playerChipColorsInputStatus.IsSuccess(), playerChipColorsInputStatus);
 
     std::vector<cxmodel::PlayerType> playerTypes;
     for(const auto player : p_gameInformation.m_players)
@@ -401,19 +381,14 @@ cxmodel::Status cxgui::Validate(const cxmodel::NewGameInformation& p_gameInforma
         playerTypes.push_back(player->IsManaged() ? cxmodel::PlayerType::BOT : cxmodel::PlayerType::HUMAN );
     }
     const auto playerTypesInputStatus = p_presenter.ArePlayerTypesValid(playerTypes);
-    if(!playerTypesInputStatus.IsSuccess())
-    {
-        return playerTypesInputStatus;
-    }
+    RETURN_IF(!playerTypesInputStatus.IsSuccess(), playerTypesInputStatus);
 
     const auto newGameIsWinnableStatus = p_presenter.IsNewGameWinnable(p_gameInformation.m_inARowValue,
                                                                        playerNames.size(),
                                                                        p_gameInformation.m_gridHeight,
                                                                        p_gameInformation.m_gridWidth);
-    if(!newGameIsWinnableStatus.IsSuccess())
-    {
-        return newGameIsWinnableStatus;
-    }
+
+    RETURN_IF(!newGameIsWinnableStatus.IsSuccess(), newGameIsWinnableStatus);
 
     return cxmodel::MakeSuccess();
 }

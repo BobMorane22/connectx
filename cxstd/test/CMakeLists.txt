@@ -25,6 +25,7 @@
 
 set(SOURCE_FILES
   StrongTypeTests.cpp
+  helpersTests.cpp
 )
 
 add_lib_unit_test(

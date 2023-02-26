@@ -22,11 +22,19 @@
  *************************************************************************************************/
 
 /**********************************************************************************************//**
+ * @ingroup helpermacros
  * @namespace cxstd
  *
  * @brief Extended Standard Library like tools.
  *
  * The `cxstd` namespace contains tools to be used across whole codebases, much like the tools
  * in the Standard Library.
+ *
+ *************************************************************************************************/
+
+/**********************************************************************************************//**
+ * @defgroup helpermacros General helper macros
+ *
+ * @brief General utility macros for reducig trivial boiler plate code.
  *
  *************************************************************************************************/
