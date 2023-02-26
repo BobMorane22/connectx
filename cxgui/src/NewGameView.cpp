@@ -27,6 +27,7 @@
 #include <gtkmm/messagedialog.h>
 
 #include <cxinv/assertion.h>
+#include <cxmodel/IChip.h>
 #include <cxmodel/NewGameInformation.h>
 #include <cxgui/extractRawUserInput.h>
 #include <cxgui/NewGameView.h>
@@ -223,91 +224,22 @@ void cxgui::NewGameView::OnStart()
     Gtk::Window* parent = dynamic_cast<Gtk::Window*>(mainWindow);
     IF_CONDITION_NOT_MET_DO(parent, return;);
 
-    // Retrieve game parameters:
-    size_t inARowValue;
-    auto extractionStatus = extractRawUserInput(m_inARowEntry.get_text(), inARowValue);
-    if(!extractionStatus.IsSuccess())
-    {
-        DisplayWarningDialog(*parent, extractionStatus.GetMessage());
-        return;
-    }
-
-    size_t boardWidth;
-    extractionStatus = extractRawUserInput(m_gridWidthEntry.get_text(), boardWidth);
-    if(!extractionStatus.IsSuccess())
-    {
-        DisplayWarningDialog(*parent, extractionStatus.GetMessage());
-        return;
-    }
-
-    size_t boardHeight;
-    extractionStatus = extractRawUserInput(m_gridHeightEntry.get_text(), boardHeight);
-    if(!extractionStatus.IsSuccess())
-    {
-        DisplayWarningDialog(*parent, extractionStatus.GetMessage());
-        return;
-    }
-
-    // Validate the input:
-    const auto inARowInputStatus = m_presenter.IsInARowValueValid(inARowValue);
-    if(!inARowInputStatus.IsSuccess())
-    {
-        DisplayWarningDialog(*parent, inARowInputStatus.GetMessage());
-        return;
-    }
-
-    const auto boardDimensionInputStatus = m_presenter.AreBoardDimensionsValid(boardHeight, boardWidth);
-    if(!boardDimensionInputStatus.IsSuccess())
-    {
-        DisplayWarningDialog(*parent, boardDimensionInputStatus.GetMessage());
-        return;
-    }
-
-    const std::vector<std::string> playerNames = m_playersList->GetAllPlayerNames();
-    const std::vector<cxmodel::ChipColor> playerChipColors = m_playersList->GetAllColors();
-    const std::vector<cxmodel::PlayerType> playerTypes = m_playersList->GetAllPlayerTypes();
-    IF_CONDITION_NOT_MET_DO(playerNames.size() == playerChipColors.size(), return;);
-    IF_CONDITION_NOT_MET_DO(playerTypes.size() == playerTypes.size(), return;);
-
-    const auto playerNamesInputStatus = m_presenter.ArePlayerNamesValid(playerNames);
-    if(!playerNamesInputStatus.IsSuccess())
-    {
-        DisplayWarningDialog(*parent, playerNamesInputStatus.GetMessage());
-        return;
-    }
-
-    const auto playerChipColorsInputStatus = m_presenter.ArePlayerChipColorsValid(playerChipColors);
-    if(!playerChipColorsInputStatus.IsSuccess())
-    {
-        DisplayWarningDialog(*parent, playerChipColorsInputStatus.GetMessage());
-        return;
-    }
-
-    const auto playerTypesInputStatus = m_presenter.ArePlayerTypesValid(playerTypes);
-    if(!playerTypesInputStatus.IsSuccess())
-    {
-        DisplayWarningDialog(*parent, playerTypesInputStatus.GetMessage());
-        return;
-    }
-
-    const auto newGameIsWinnableStatus = m_presenter.IsNewGameWinnable(inARowValue, playerNames.size(), boardHeight, boardWidth);
-    if(!newGameIsWinnableStatus.IsSuccess())
-    {
-        DisplayWarningDialog(*parent, newGameIsWinnableStatus.GetMessage());
-        return;
-    }
-
-    // Start game:
     cxmodel::NewGameInformation gameInformation;
-
-    gameInformation.m_inARowValue = inARowValue;
-    gameInformation.m_gridHeight = boardHeight;
-    gameInformation.m_gridWidth = boardWidth;
-    for(size_t index = 0u; index < m_playersList->GetSize(); ++index)
+    const auto extractionStatus = ExtractGameInformation(gameInformation);
+    if(!extractionStatus.IsSuccess())
     {
-        gameInformation.m_players.push_back(cxmodel::CreatePlayer(playerNames[index], playerChipColors[index], playerTypes[index]));
+        DisplayWarningDialog(*parent, extractionStatus.GetMessage());
+        return;
     }
 
+    const auto inputValidationStatus = Validate(gameInformation, m_presenter);
+    if(!inputValidationStatus.IsSuccess())
+    {
+        DisplayWarningDialog(*parent, inputValidationStatus.GetMessage());
+        return;
+    }
+
+    // At this point all user input has been validated. We start the game:
     m_controller.OnStart(std::move(gameInformation));
 }
 
@@ -364,82 +296,124 @@ void cxgui::NewGameView::OnNewGameParameterUpdated()
 {
     m_startButton.set_sensitive(false);
 
-    // Retrieve game parameters:
-    size_t inARowValue;
-    auto extractionStatus = extractRawUserInput(m_inARowEntry.get_text(), inARowValue);
+    cxmodel::NewGameInformation gameInformation;
+    const auto extractionStatus = ExtractGameInformation(gameInformation);
     if(!extractionStatus.IsSuccess())
     {
         m_startButton.set_tooltip_text(extractionStatus.GetMessage());
         return;
+    }
+
+    const auto inputValidationStatus = Validate(gameInformation, m_presenter);
+    if(!inputValidationStatus.IsSuccess())
+    {
+        m_startButton.set_tooltip_text(inputValidationStatus.GetMessage());
+        return;
+    }
+
+    // At this points all user inputs have been validated and a new game can be started.
+    // We make the start button sensitive:
+    m_startButton.set_sensitive(true);
+    m_startButton.set_tooltip_text("");
+}
+
+cxmodel::Status cxgui::NewGameView::ExtractGameInformation(cxmodel::NewGameInformation& p_gameInformation) const
+{
+    // Extracting game parameters from the GUI:
+    size_t inARowValue;
+    auto extractionStatus = extractRawUserInput(m_inARowEntry.get_text(), inARowValue);
+    if(!extractionStatus.IsSuccess())
+    {
+        return extractionStatus;
     }
 
     size_t boardWidth;
     extractionStatus = extractRawUserInput(m_gridWidthEntry.get_text(), boardWidth);
     if(!extractionStatus.IsSuccess())
     {
-        m_startButton.set_tooltip_text(extractionStatus.GetMessage());
-        return;
+        return extractionStatus;
     }
 
     size_t boardHeight;
     extractionStatus = extractRawUserInput(m_gridHeightEntry.get_text(), boardHeight);
     if(!extractionStatus.IsSuccess())
     {
-        m_startButton.set_tooltip_text(extractionStatus.GetMessage());
-        return;
-    }
-
-    // Validate the input:
-    const auto inARowInputStatus = m_presenter.IsInARowValueValid(inARowValue);
-    if(!inARowInputStatus.IsSuccess())
-    {
-        m_startButton.set_tooltip_text(inARowInputStatus.GetMessage());
-        return;
-    }
-
-    const auto boardDimensionInputStatus = m_presenter.AreBoardDimensionsValid(boardHeight, boardWidth);
-    if(!boardDimensionInputStatus.IsSuccess())
-    {
-        m_startButton.set_tooltip_text(boardDimensionInputStatus.GetMessage());
-        return;
+        return extractionStatus;
     }
 
     const std::vector<std::string> playerNames = m_playersList->GetAllPlayerNames();
     const std::vector<cxmodel::ChipColor> playerChipColors = m_playersList->GetAllColors();
     const std::vector<cxmodel::PlayerType> playerTypes = m_playersList->GetAllPlayerTypes();
-    IF_CONDITION_NOT_MET_DO(playerNames.size() == playerChipColors.size(), return;);
-    IF_CONDITION_NOT_MET_DO(playerTypes.size() == playerTypes.size(), return;);
+    ASSERT(playerNames.size() == playerChipColors.size());
+    ASSERT(playerTypes.size() == playerTypes.size());
 
-    const auto playerNamesInputStatus = m_presenter.ArePlayerNamesValid(playerNames);
+    // Feeding the game information structure:
+    p_gameInformation.m_inARowValue = inARowValue;
+    p_gameInformation.m_gridHeight = boardHeight;
+    p_gameInformation.m_gridWidth = boardWidth;
+    for(size_t index = 0u; index < m_playersList->GetSize(); ++index)
+    {
+        p_gameInformation.m_players.push_back(cxmodel::CreatePlayer(playerNames[index], playerChipColors[index], playerTypes[index]));
+    }
+
+    return cxmodel::MakeSuccess();
+}
+
+cxmodel::Status cxgui::Validate(const cxmodel::NewGameInformation& p_gameInformation, const cxgui::INewGameViewPresenter& p_presenter)
+{
+    const auto inARowInputStatus = p_presenter.IsInARowValueValid(p_gameInformation.m_inARowValue);
+    if(!inARowInputStatus.IsSuccess())
+    {
+        return inARowInputStatus;
+    }
+
+    const auto boardDimensionInputStatus = p_presenter.AreBoardDimensionsValid(p_gameInformation.m_gridHeight, p_gameInformation.m_gridWidth);
+    if(!boardDimensionInputStatus.IsSuccess())
+    {
+        return boardDimensionInputStatus;
+    }
+
+    std::vector<std::string> playerNames;
+    for(const auto player : p_gameInformation.m_players)
+    {
+        playerNames.push_back(player->GetName());
+    }
+    const auto playerNamesInputStatus = p_presenter.ArePlayerNamesValid(playerNames);
     if(!playerNamesInputStatus.IsSuccess())
     {
-        m_startButton.set_tooltip_text(playerNamesInputStatus.GetMessage());
-        return;
+        return playerNamesInputStatus;
     }
 
-    const auto playerChipColorsInputStatus = m_presenter.ArePlayerChipColorsValid(playerChipColors);
+    std::vector<cxmodel::ChipColor> playerChipColors;
+    for(const auto player : p_gameInformation.m_players)
+    {
+        playerChipColors.push_back(player->GetChip().GetColor());
+    }
+    const auto playerChipColorsInputStatus = p_presenter.ArePlayerChipColorsValid(playerChipColors);
     if(!playerChipColorsInputStatus.IsSuccess())
     {
-        m_startButton.set_tooltip_text(playerChipColorsInputStatus.GetMessage());
-        return;
+        return playerChipColorsInputStatus;
     }
 
-    const auto playerTypesInputStatus = m_presenter.ArePlayerTypesValid(playerTypes);
+    std::vector<cxmodel::PlayerType> playerTypes;
+    for(const auto player : p_gameInformation.m_players)
+    {
+        playerTypes.push_back(player->IsManaged() ? cxmodel::PlayerType::BOT : cxmodel::PlayerType::HUMAN );
+    }
+    const auto playerTypesInputStatus = p_presenter.ArePlayerTypesValid(playerTypes);
     if(!playerTypesInputStatus.IsSuccess())
     {
-        m_startButton.set_tooltip_text(playerTypesInputStatus.GetMessage());
-        return;
+        return playerTypesInputStatus;
     }
 
-    const auto newGameIsWinnableStatus = m_presenter.IsNewGameWinnable(inARowValue, playerNames.size(), boardHeight, boardWidth);
+    const auto newGameIsWinnableStatus = p_presenter.IsNewGameWinnable(p_gameInformation.m_inARowValue,
+                                                                       playerNames.size(),
+                                                                       p_gameInformation.m_gridHeight,
+                                                                       p_gameInformation.m_gridWidth);
     if(!newGameIsWinnableStatus.IsSuccess())
     {
-        m_startButton.set_tooltip_text(newGameIsWinnableStatus.GetMessage());
-        return;
+        return newGameIsWinnableStatus;
     }
 
-    // At this points everything has been validated and a new game can be started.
-    // We make the start button sensitive:
-    m_startButton.set_sensitive(true);
-    m_startButton.set_tooltip_text("");
+    return cxmodel::MakeSuccess();
 }

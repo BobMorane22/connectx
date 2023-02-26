@@ -24,6 +24,8 @@
 #ifndef NEWGAMEVIEW_H_C5E65447_64C6_4DFE_B0F7_E6E9DB14BEAF
 #define NEWGAMEVIEW_H_C5E65447_64C6_4DFE_B0F7_E6E9DB14BEAF
 
+#include <optional>
+
 #include <gtkmm/button.h>
 #include <gtkmm/entry.h>
 
@@ -83,6 +85,8 @@ private:
     void OnRemovePlayer();
     void OnNewGameParameterUpdated();
 
+    [[nodiscard]] cxmodel::Status ExtractGameInformation(cxmodel::NewGameInformation& p_gameInformation) const;
+
     INewGameViewPresenter& m_presenter;
     INewGameViewController& m_controller;
 
@@ -114,6 +118,13 @@ private:
     Gtk::Button m_startButton;
 
 };
+
+/*********************************************************************************************//**
+ * @brief
+ *
+ ************************************************************************************************/
+[[nodiscard]] cxmodel::Status Validate(const cxmodel::NewGameInformation& p_gameInformation,
+                                       const cxgui::INewGameViewPresenter& p_presenter);
 
 } // namespace cxgui
 
