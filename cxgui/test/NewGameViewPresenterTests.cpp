@@ -16,12 +16,14 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file NewGamePresenterTests.cpp
+ * @file NewGameViewPresenterTests.cpp
  * @date 2020
  *
  *************************************************************************************************/
 
 #include <gtest/gtest.h>
+
+//#include <cxmodel/IPlayer.h>
 
 #include "MainWindowPresenterTestFixture.h"
 #include "NewGameViewPresenterMock.h"
@@ -477,6 +479,20 @@ private:
     cxmodel::Status m_newGameWinnableStatus;
 };
 
+// We don't really care about the game information contents, except that we
+// need at least one player to get coverage in the `for` loops inside the
+// `cxgui::Validate` logic. The tests do not depend on the contents of
+// the new game information, but rather on the presenter validations.
+[[nodiscard]] cxmodel::NewGameInformation NewGameInformationCreate()
+{
+    cxmodel::NewGameInformation info;
+
+    info.m_players.push_back(cxmodel::CreatePlayer("Will Ferrell", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN));
+    info.m_players.push_back(cxmodel::CreatePlayer("RoboCop", cxmodel::MakeBlue(), cxmodel::PlayerType::BOT));
+
+    return info;
+}
+
 } // namespace
 
 TEST(INewGameViewPresenter, /*DISABLED_*/Validate_ValidNewGame_ReturnsSuccess)
@@ -488,7 +504,7 @@ TEST(INewGameViewPresenter, /*DISABLED_*/Validate_ValidNewGame_ReturnsSuccess)
                                                      cxmodel::MakeSuccess(),
                                                      cxmodel::MakeSuccess());
 
-    const cxmodel::Status status = cxgui::Validate(cxmodel::NewGameInformation(), presenter);
+    const cxmodel::Status status = cxgui::Validate(NewGameInformationCreate(), presenter);
 
     ASSERT_TRUE(status.IsSuccess());
 }
@@ -502,7 +518,7 @@ TEST(INewGameViewPresenter, /*DISABLED_*/Validate_InvalidInARowValue_ReturnsErro
                                                      cxmodel::MakeSuccess(),
                                                      cxmodel::MakeSuccess());
 
-    const cxmodel::Status status = cxgui::Validate(cxmodel::NewGameInformation(), presenter);
+    const cxmodel::Status status = cxgui::Validate(NewGameInformationCreate(), presenter);
 
     ASSERT_TRUE(!status.IsSuccess());
     ASSERT_TRUE(status.GetMessage() == "In-a-row invalid");
@@ -517,7 +533,7 @@ TEST(INewGameViewPresenter, /*DISABLED_*/Validate_InvalidBoardDimensions_Returns
                                                      cxmodel::MakeSuccess(),
                                                      cxmodel::MakeSuccess());
 
-    const cxmodel::Status status = cxgui::Validate(cxmodel::NewGameInformation(), presenter);
+    const cxmodel::Status status = cxgui::Validate(NewGameInformationCreate(), presenter);
 
     ASSERT_TRUE(!status.IsSuccess());
     ASSERT_TRUE(status.GetMessage() == "Board dimensions invalid");
@@ -532,7 +548,7 @@ TEST(INewGameViewPresenter, /*DISABLED_*/Validate_InvalidPlayerNames_ReturnsErro
                                                      cxmodel::MakeSuccess(),
                                                      cxmodel::MakeSuccess());
 
-    const cxmodel::Status status = cxgui::Validate(cxmodel::NewGameInformation(), presenter);
+    const cxmodel::Status status = cxgui::Validate(NewGameInformationCreate(), presenter);
 
     ASSERT_TRUE(!status.IsSuccess());
     ASSERT_TRUE(status.GetMessage() == "Player names invalid");
@@ -547,7 +563,7 @@ TEST(INewGameViewPresenter, /*DISABLED_*/Validate_InvalidPlayerChipColors_Return
                                                      cxmodel::MakeSuccess(),
                                                      cxmodel::MakeSuccess());
 
-    const cxmodel::Status status = cxgui::Validate(cxmodel::NewGameInformation(), presenter);
+    const cxmodel::Status status = cxgui::Validate(NewGameInformationCreate(), presenter);
 
     ASSERT_TRUE(!status.IsSuccess());
     ASSERT_TRUE(status.GetMessage() == "Player chip colors invalid");
@@ -562,7 +578,7 @@ TEST(INewGameViewPresenter, /*DISABLED_*/Validate_InvalidPlayerTypes_ReturnsErro
                                                      cxmodel::MakeError("Player types invalid"),
                                                      cxmodel::MakeSuccess());
 
-    const cxmodel::Status status = cxgui::Validate(cxmodel::NewGameInformation(), presenter);
+    const cxmodel::Status status = cxgui::Validate(NewGameInformationCreate(), presenter);
 
     ASSERT_TRUE(!status.IsSuccess());
     ASSERT_TRUE(status.GetMessage() == "Player types invalid");
@@ -577,7 +593,7 @@ TEST(INewGameViewPresenter, /*DISABLED_*/Validate_UnwinableGame_ReturnsError)
                                                      cxmodel::MakeSuccess(),
                                                      cxmodel::MakeError("New game not winnable"));
 
-    const cxmodel::Status status = cxgui::Validate(cxmodel::NewGameInformation(), presenter);
+    const cxmodel::Status status = cxgui::Validate(NewGameInformationCreate(), presenter);
 
     ASSERT_TRUE(!status.IsSuccess());
     ASSERT_TRUE(status.GetMessage() == "New game not winnable");

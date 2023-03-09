@@ -34,7 +34,7 @@ set(SOURCE_FILES
   ConfigurableMainWindowPresenterTestFixture.cpp
   extractRawUserInputTests.cpp
   FrameAnimationStrategyTests.cpp
-  GamePresenterTests.cpp
+  GameViewPresenterTests.cpp
   GameResolutionDialogControllerTestFixture.cpp
   GameResolutionDialogControllerTests.cpp
   GameResolutionDialogPresenterFactoryTests.cpp
@@ -44,7 +44,7 @@ set(SOURCE_FILES
   MainWindowPresenterTestFixture.cpp
   MainWindowPresenterTests.cpp
   MenuItemTests.cpp
-  NewGamePresenterTests.cpp
+  NewGameViewPresenterTests.cpp
   ScalingRatiosTests.cpp
   StatusBarPresenterTests.cpp
   TieGameResolutionDialogPresenterTests.cpp
