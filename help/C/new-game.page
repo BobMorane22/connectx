@@ -94,17 +94,15 @@ This is where game parameters are defined and new games created.</p>
 <section id="sec-new-game-start">
 <title>Start the new game</title>
 
-<p>When all game parameters have been set, the <gui>Start</gui> button can
-be clicked to start the game.</p>
+<p>When all game parameters have been appropriately set, the <gui>Start</gui>
+button will become clickable. Clicking it will start the new game.</p>
 
-<p>In some specific cases, even if all game parameters have been set
-appropriately, a new game can be refused. This usually happens in limit
-cases where a combination of parameter values would yield an ill-formed
-game.</p>
-
-<p>For example, a game on a 7 by 6 game board with an in-a-row value of 8
-could never be won, simply because the board dimensions don't allow it. In
-this case, the game would be refused.</p>
+<note style="tip">
+    <p>If the <gui>Start</gui> button is not clickable, it means some
+    game parameters are invalid. Hovering the mouse over the button will
+    give some information about the invalid parameter in the form of a
+    tooltip.</p>
+</note>
 
 </section>
 
