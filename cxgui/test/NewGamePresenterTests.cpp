@@ -24,6 +24,7 @@
 #include <gtest/gtest.h>
 
 #include "MainWindowPresenterTestFixture.h"
+#include "NewGameViewPresenterMock.h"
 
 TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetTitle_NewGamePresenter_TitleReturned)
 {
@@ -434,4 +435,150 @@ TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/IsNewGameWinnable_InARowValu
 
     const auto status = GetNewGameViewPresenter().IsNewGameWinnable(inARowValue, nbOfPlayers, boardHeight, boardWidth);
     ASSERT_EQ(status.GetMessage(), "The in-a-row value does not fit on the board.");
+}
+
+namespace
+{
+
+class NewGameViewPresenterValidateMock : public NewGameViewPresenterMock
+{
+
+public:
+
+    NewGameViewPresenterValidateMock(
+        const cxmodel::Status& p_inARowStatus,
+        const cxmodel::Status& p_boardDimensionsStatus,
+        const cxmodel::Status& p_playerNamesStatus,
+        const cxmodel::Status& p_playerChipColorsStatus,
+        const cxmodel::Status& p_playerTypesStatus,
+        const cxmodel::Status& p_newGameWinnableStatus)
+    : m_inARowStatus{p_inARowStatus}
+    , m_boardDimensionsStatus{p_boardDimensionsStatus}
+    , m_playerNamesStatus{p_playerNamesStatus}
+    , m_playerChipColorsStatus{p_playerChipColorsStatus}
+    , m_playerTypesStatus{p_playerTypesStatus}
+    , m_newGameWinnableStatus{p_newGameWinnableStatus}
+    {}
+
+    [[nodiscard]] cxmodel::Status IsInARowValueValid(size_t /*p_inARowValue*/) const override {return m_inARowStatus;}
+    [[nodiscard]] cxmodel::Status AreBoardDimensionsValid(size_t /*p_boardHeight*/, size_t /*p_boardWidth*/) const override {return m_boardDimensionsStatus;}
+    [[nodiscard]] cxmodel::Status ArePlayerNamesValid(const std::vector<std::string>& /*p_playerNames*/) const override {return m_playerNamesStatus;}
+    [[nodiscard]] cxmodel::Status ArePlayerChipColorsValid(const std::vector<cxmodel::ChipColor>& /*p_playerChipColors*/) const override {return m_playerChipColorsStatus;}
+    [[nodiscard]] cxmodel::Status ArePlayerTypesValid(const std::vector<cxmodel::PlayerType>& /*p_playerTypes*/) const override {return m_playerTypesStatus;}
+    [[nodiscard]] cxmodel::Status IsNewGameWinnable(size_t /*p_inARowValue*/, size_t /*p_nbOfPlayers*/, size_t /*p_boardHeight*/, size_t /*p_boardWidth*/) const override {return m_newGameWinnableStatus;}
+
+private:
+
+    cxmodel::Status m_inARowStatus;
+    cxmodel::Status m_boardDimensionsStatus;
+    cxmodel::Status m_playerNamesStatus;
+    cxmodel::Status m_playerChipColorsStatus;
+    cxmodel::Status m_playerTypesStatus;
+    cxmodel::Status m_newGameWinnableStatus;
+};
+
+} // namespace
+
+TEST(INewGameViewPresenter, /*DISABLED_*/Validate_ValidNewGame_ReturnsSuccess)
+{
+    const NewGameViewPresenterValidateMock presenter(cxmodel::MakeSuccess(),
+                                                     cxmodel::MakeSuccess(),
+                                                     cxmodel::MakeSuccess(),
+                                                     cxmodel::MakeSuccess(),
+                                                     cxmodel::MakeSuccess(),
+                                                     cxmodel::MakeSuccess());
+
+    const cxmodel::Status status = cxgui::Validate(cxmodel::NewGameInformation(), presenter);
+
+    ASSERT_TRUE(status.IsSuccess());
+}
+
+TEST(INewGameViewPresenter, /*DISABLED_*/Validate_InvalidInARowValue_ReturnsError)
+{
+    const NewGameViewPresenterValidateMock presenter(cxmodel::MakeError("In-a-row invalid"),
+                                                     cxmodel::MakeSuccess(),
+                                                     cxmodel::MakeSuccess(),
+                                                     cxmodel::MakeSuccess(),
+                                                     cxmodel::MakeSuccess(),
+                                                     cxmodel::MakeSuccess());
+
+    const cxmodel::Status status = cxgui::Validate(cxmodel::NewGameInformation(), presenter);
+
+    ASSERT_TRUE(!status.IsSuccess());
+    ASSERT_TRUE(status.GetMessage() == "In-a-row invalid");
+}
+
+TEST(INewGameViewPresenter, /*DISABLED_*/Validate_InvalidBoardDimensions_ReturnsError)
+{
+    const NewGameViewPresenterValidateMock presenter(cxmodel::MakeSuccess(),
+                                                     cxmodel::MakeError("Board dimensions invalid"),
+                                                     cxmodel::MakeSuccess(),
+                                                     cxmodel::MakeSuccess(),
+                                                     cxmodel::MakeSuccess(),
+                                                     cxmodel::MakeSuccess());
+
+    const cxmodel::Status status = cxgui::Validate(cxmodel::NewGameInformation(), presenter);
+
+    ASSERT_TRUE(!status.IsSuccess());
+    ASSERT_TRUE(status.GetMessage() == "Board dimensions invalid");
+}
+
+TEST(INewGameViewPresenter, /*DISABLED_*/Validate_InvalidPlayerNames_ReturnsError)
+{
+    const NewGameViewPresenterValidateMock presenter(cxmodel::MakeSuccess(),
+                                                     cxmodel::MakeSuccess(),
+                                                     cxmodel::MakeError("Player names invalid"),
+                                                     cxmodel::MakeSuccess(),
+                                                     cxmodel::MakeSuccess(),
+                                                     cxmodel::MakeSuccess());
+
+    const cxmodel::Status status = cxgui::Validate(cxmodel::NewGameInformation(), presenter);
+
+    ASSERT_TRUE(!status.IsSuccess());
+    ASSERT_TRUE(status.GetMessage() == "Player names invalid");
+}
+
+TEST(INewGameViewPresenter, /*DISABLED_*/Validate_InvalidPlayerChipColors_ReturnsError)
+{
+    const NewGameViewPresenterValidateMock presenter(cxmodel::MakeSuccess(),
+                                                     cxmodel::MakeSuccess(),
+                                                     cxmodel::MakeSuccess(),
+                                                     cxmodel::MakeError("Player chip colors invalid"),
+                                                     cxmodel::MakeSuccess(),
+                                                     cxmodel::MakeSuccess());
+
+    const cxmodel::Status status = cxgui::Validate(cxmodel::NewGameInformation(), presenter);
+
+    ASSERT_TRUE(!status.IsSuccess());
+    ASSERT_TRUE(status.GetMessage() == "Player chip colors invalid");
+}
+
+TEST(INewGameViewPresenter, /*DISABLED_*/Validate_InvalidPlayerTypes_ReturnsError)
+{
+    const NewGameViewPresenterValidateMock presenter(cxmodel::MakeSuccess(),
+                                                     cxmodel::MakeSuccess(),
+                                                     cxmodel::MakeSuccess(),
+                                                     cxmodel::MakeSuccess(),
+                                                     cxmodel::MakeError("Player types invalid"),
+                                                     cxmodel::MakeSuccess());
+
+    const cxmodel::Status status = cxgui::Validate(cxmodel::NewGameInformation(), presenter);
+
+    ASSERT_TRUE(!status.IsSuccess());
+    ASSERT_TRUE(status.GetMessage() == "Player types invalid");
+}
+
+TEST(INewGameViewPresenter, /*DISABLED_*/Validate_UnwinableGame_ReturnsError)
+{
+    const NewGameViewPresenterValidateMock presenter(cxmodel::MakeSuccess(),
+                                                     cxmodel::MakeSuccess(),
+                                                     cxmodel::MakeSuccess(),
+                                                     cxmodel::MakeSuccess(),
+                                                     cxmodel::MakeSuccess(),
+                                                     cxmodel::MakeError("New game not winnable"));
+
+    const cxmodel::Status status = cxgui::Validate(cxmodel::NewGameInformation(), presenter);
+
+    ASSERT_TRUE(!status.IsSuccess());
+    ASSERT_TRUE(status.GetMessage() == "New game not winnable");
 }

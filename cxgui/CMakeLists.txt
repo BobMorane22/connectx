@@ -45,6 +45,7 @@ add_library(${TARGET_NAME}
   src/GameView.cpp
   src/GameViewKeyHandlerStrategyFactory.cpp
   src/IAnimatedBoardModel.cpp
+  src/INewGameViewPresenter.cpp
   src/MainWindowController.cpp
   src/MainWindow.cpp
   src/MainWindowPresenter.cpp

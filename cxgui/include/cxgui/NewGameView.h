@@ -119,21 +119,6 @@ private:
 
 };
 
-/*********************************************************************************************//**
- * @brief Validates new game information.
- *
- * @param p_gameInformation
- *      The new game information to validate.
- *
- * @param p_presenter
- *      A New Game View compatible presenter.
- *
- * @return A status instance, indicating if the new game information is valid.
- *
- ************************************************************************************************/
-[[nodiscard]] cxmodel::Status Validate(const cxmodel::NewGameInformation& p_gameInformation,
-                                       const cxgui::INewGameViewPresenter& p_presenter);
-
 } // namespace cxgui
 
 #endif // NEWGAMEVIEW_H_C5E65447_64C6_4DFE_B0F7_E6E9DB14BEAF

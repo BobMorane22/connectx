@@ -28,6 +28,13 @@
 
 #include <cxmodel/Status.h>
 
+namespace cxmodel
+{
+
+class NewGameInformation;
+
+}
+
 namespace cxgui
 {
 
@@ -286,6 +293,22 @@ public:
                                               size_t p_boardHeight,
                                               size_t p_boardWidth) const = 0;
 };
+
+/*********************************************************************************************//**
+ * @brief Validates new game information.
+ *
+ * @param p_gameInformation
+ *      The new game information to validate.
+ *
+ * @param p_presenter
+ *      A New Game View compatible presenter.
+ *
+ * @return A status instance, indicating if the new game information is valid.
+ *
+ ************************************************************************************************/
+[[nodiscard]] cxmodel::Status Validate(const cxmodel::NewGameInformation& p_gameInformation,
+                                       const cxgui::INewGameViewPresenter& p_presenter);
+
 
 }
 
