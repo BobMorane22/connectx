@@ -2,6 +2,7 @@
 
 Here is a list of all changes, per release:
 
+* March 9, 2023 - [v1.1](./v1-1/user/user.md)
 * February 12, 2023 - [v1.0](./v1-0/user/user.md)
 * **January 22, 2023 - [v0.34](./v0-34/user/user.md)** (stable, beta)
 * January 2, 2022 - [v0.33](./v0-33/user/user.md)
