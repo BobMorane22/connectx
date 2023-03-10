@@ -550,21 +550,33 @@ struct DropChipStartAnimationData
     {}
 };
 
+// Custom Google Test printer:
+void PrintTo(const DropChipStartAnimationData& p_data, std::ostream* p_stream)
+{
+    *p_stream << "\n"
+              << "{\n"
+              << "    Number of chips in board : " << p_data.m_nbOfChipsInBoard << "\n"
+              << "    Current displacement     : " << p_data.m_currentDisplacement << "\n"
+              << "}";
+}
+
 class FrameAnimationTestFixtureForDropChipStartAnimation : public FrameAnimationTestFixture,
                                                            public testing::WithParamInterface<DropChipStartAnimationData>
 {
 };
 
+// When starting a drop chip animation, the initial displacement is always
+// nul because we start with acceleration 0 (when t=0s).
 std::vector<DropChipStartAnimationData> MakeDropChipStartAnimationData()
 {
     return
         {
-            {0u, 7.5},
-            {1u, 7.1428571428571432},
-            {2u, 6.666666666666667},
-            {3u, 7.5},
-            {4u, 6.666666666666667},
-            {5u, 5.0},
+            {0u, 0.0},
+            {1u, 0.0},
+            {2u, 0.0},
+            {3u, 0.0},
+            {4u, 0.0},
+            {5u, 0.0},
         };
 }
 
