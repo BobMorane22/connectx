@@ -74,11 +74,15 @@ struct AnimationInformations
     void Reset()
     {
         Stop();
+        m_nbOfRenderedFrames = 0u;
         m_currentDisplacement = T{0.0};
     }
 
     /** Indicates if the animation is currently running. */
     bool m_isAnimating = false;
+
+    /** Incates the number of frames already rendered to produce the current animation */
+    size_t m_nbOfRenderedFrames = 0u;
 
     /** The animation currently running (if any). */
     std::optional<BoardAnimation> m_animation;

@@ -132,6 +132,7 @@ void cxgui::AnimatedBoard::PerformChipAnimation(BoardAnimation p_animation)
     if(res)
     {
         BoardAnimationSubject::Notify(*res);
+        return;
     }
 }
 

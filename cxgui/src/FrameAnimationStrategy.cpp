@@ -24,6 +24,7 @@
 #include <cmath>
 
 #include <cxinv/assertion.h>
+#include <cxmath/math.h>
 #include <cxgui/BoardAnimation.h>
 #include <cxmodel/Color.h>
 #include <cxgui/BoardAnimationNotificationContext.h>
@@ -297,16 +298,27 @@ cxmodel::Row DropChipFrameAnimationStrategy::GetDropPosition(const cxmodel::Colu
 std::optional<cxgui::BoardAnimationNotificationContext> DropChipFrameAnimationStrategy::DropChipFrameAnimationStrategy::PerformAnimation(cxgui::AnimationInformations<cxmath::Height>& p_verticalAnimationInfo,
                                                                                                                                          cxgui::AnimationInformations<cxmath::Width>& /*p_horizontalAnimationInfo*/)
 {
-    const double fps = static_cast<double>(m_animationModel.GetFPS().Get());
-    const double speed = static_cast<double>(m_animationModel.GetAnimationSpeed().Get());
-
     const double cellHeight = m_animationModel.GetCellDimensions().m_height.Get();
     const double oneAnimationHeight = (GetDropPosition(m_animationModel.GetCurrentColumn()) + cxmodel::Row{1}).Get() * cellHeight;
 
-    // Since the falling distance may vary, the number of frames needed for the
-    // animation has to be adjusted to make sure the speed is constant for the user:
-    const double relativeFPS = fps * (oneAnimationHeight / (m_animationModel.GetAnimatedAreaDimensions().m_height.Get() - cellHeight));
-    const cxmath::Height delta{oneAnimationHeight / std::ceil(relativeFPS / speed)};
+    const double fps = static_cast<double>(m_animationModel.GetFPS().Get());
+    const double nbFrames = p_verticalAnimationInfo.m_nbOfRenderedFrames;
+    const double t = nbFrames / fps; // In seconds.
+
+    // For a free falling object, starting with no acceleration, we can compute the displacement
+    // at time t using the following formula:
+    //
+    //                                    d(t) = -½gt².
+    //
+    // In our case, we need the absolute value of this computation because the y values go
+    // increasing from top to bottom in Gtkmm. Furthermore, we multiply this value by 8
+    // otherwise the animation is too slow and the game play feels awkward. In the end, we
+    // compute the following below:
+    //
+    //                                    d(t) = |4gt²|
+    //
+    // to get a smooth gravity animation when dropping a chip:
+    const cxmath::Height delta{4 * cxmath::g<double> * t * t};
 
     if(p_verticalAnimationInfo.m_currentDisplacement.Get() >= oneAnimationHeight || std::abs(p_verticalAnimationInfo.m_currentDisplacement.Get() - oneAnimationHeight) <= 1e-6)
     {
@@ -325,6 +337,7 @@ std::optional<cxgui::BoardAnimationNotificationContext> DropChipFrameAnimationSt
     {
         m_animationModel.AddChipDisplacement(delta, cxmath::Width{0.0});
         p_verticalAnimationInfo.m_currentDisplacement += delta;
+        p_verticalAnimationInfo.m_nbOfRenderedFrames += 1u;;
     }
 
     return std::nullopt;

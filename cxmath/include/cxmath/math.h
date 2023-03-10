@@ -27,9 +27,23 @@
 namespace cxmath
 {
 
-/** @brief The \f$\pi\f$ constant. */
+/**********************************************************************************************//**
+ * @brief The \f$\pi\f$ constant.
+ *
+ *************************************************************************************************/
 template<typename T>
 inline constexpr T pi = T(3.14159265358979323846264338327950288419716939937510);
+
+/**********************************************************************************************//**
+ * @brief Earth's standard gravitational acceleration constant (in m/s²).
+ *
+ * Earth's gravitational acceleration constant varies, in practice, from place to place. This
+ * is the nominal average value at Earth's surface. We can use it to *approximate* Earth's true
+ * gravitational constant at any place.
+ *
+ *************************************************************************************************/
+template <typename T>
+inline constexpr T g = T{9.80665};
 
 /**********************************************************************************************//**
  * @brief Checks whether two values are equal.
