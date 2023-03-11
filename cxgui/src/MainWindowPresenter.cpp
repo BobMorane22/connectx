@@ -284,6 +284,21 @@ size_t cxgui::MainWindowPresenter::GetNewGameViewMaxBoardHeightValue() const
     return m_modelAsLimits.GetMaximumGridHeight();
 }
 
+size_t cxgui::MainWindowPresenter::GetDefaultInARowValue() const
+{
+    return 4u;
+}
+
+size_t cxgui::MainWindowPresenter::GetDefaultBoardHeightValue() const
+{
+    return 6u;
+}
+
+size_t cxgui::MainWindowPresenter::GetDefaultBoardWidthValue() const
+{
+    return 7u;
+}
+
 cxmodel::Status cxgui::MainWindowPresenter::IsInARowValueValid(size_t p_inARowValue) const
 {
     if(p_inARowValue < GetNewGameViewMinInARowValue() || p_inARowValue > GetNewGameViewMaxInARowValue())

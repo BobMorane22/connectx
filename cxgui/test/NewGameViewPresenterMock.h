@@ -144,6 +144,21 @@ public:
         throw cxunit::NotImplementedException();
     }
 
+    [[nodiscard]] size_t GetDefaultInARowValue() const override
+    {
+        throw cxunit::NotImplementedException();
+    }
+
+    [[nodiscard]] size_t GetDefaultBoardHeightValue() const override
+    {
+        throw cxunit::NotImplementedException();
+    }
+
+    [[nodiscard]] size_t GetDefaultBoardWidthValue() const override
+    {
+        throw cxunit::NotImplementedException();
+    }
+
     [[nodiscard]] cxmodel::Status IsInARowValueValid(size_t /*p_inARowValue*/) const override
     {
         throw cxunit::NotImplementedException();

@@ -226,6 +226,36 @@ public:
     virtual size_t GetNewGameViewMaxBoardHeightValue() const = 0;
 
     /******************************************************************************************//**
+     * @brief Default in-a-row value accessor.
+     *
+     * This is the value that will be suggested to the user in the view.
+     *
+     * @return The default in-a-row value.
+     *
+     ********************************************************************************************/
+    [[nodiscard]] virtual size_t GetDefaultInARowValue() const  = 0;
+
+    /******************************************************************************************//**
+     * @brief Default board height value accessor.
+     *
+     * This is the value that will be suggested to the user in the view.
+     *
+     * @return The default board height value.
+     *
+     ********************************************************************************************/
+    [[nodiscard]] virtual size_t GetDefaultBoardHeightValue() const  = 0;
+
+    /******************************************************************************************//**
+     * @brief Default board width value accessor.
+     *
+     * This is the value that will be suggested to the user in the view.
+     *
+     * @return The default board width value.
+     *
+     ********************************************************************************************/
+    [[nodiscard]] virtual size_t GetDefaultBoardWidthValue() const  = 0;
+
+    /******************************************************************************************//**
      * @brief Checks if the in-a-row value is valid.
      *
      * @param p_inARowValue The in-a-row value to check.

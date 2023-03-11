@@ -23,8 +23,6 @@
 
 #include <gtest/gtest.h>
 
-//#include <cxmodel/IPlayer.h>
-
 #include "MainWindowPresenterTestFixture.h"
 #include "NewGameViewPresenterMock.h"
 
@@ -155,6 +153,21 @@ TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetMinBoardHeightValue_NewGa
 TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetMaxBoardHeightValue_NewGamePresenter_MaxValueReturned)
 {
     ASSERT_EQ(GetNewGameViewPresenter().GetNewGameViewMaxBoardHeightValue(), GetLimitsModel().GetMaximumGridHeight());
+}
+
+TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetDefaultInARowValue_NewGamePresenter_DefaultValueReturned)
+{
+    ASSERT_EQ(GetNewGameViewPresenter().GetDefaultInARowValue(), 4u);
+}
+
+TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetDefaultBoardHeightValue_NewGamePresenter_DefaultValueReturned)
+{
+    ASSERT_EQ(GetNewGameViewPresenter().GetDefaultBoardHeightValue(), 6u);
+}
+
+TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetDefaultBoardWidthValue_NewGamePresenter_DefaultValueReturned)
+{
+    ASSERT_EQ(GetNewGameViewPresenter().GetDefaultBoardWidthValue(), 7u);
 }
 
 TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetInARowInvalidInputMessage_NewGamePresenter_MessageReturned)
