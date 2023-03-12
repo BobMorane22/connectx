@@ -366,7 +366,7 @@ cxgui::NewPlayersList::NewPlayersList(const INewGameViewPresenter& p_presenter)
     // Since at least one player must be human, the first player is always set to human and
     // cannot be changed. This is debatable, and could be unlocked in a later relese.
     add(*Gtk::manage(new NewPlayerRow("-- Player 1 --", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN, EnabledState::Disabled)));
-    add(*Gtk::manage(new NewPlayerRow("-- Player 2 --", cxmodel::MakeGreen(), cxmodel::PlayerType::HUMAN)));
+    add(*Gtk::manage(new NewPlayerRow("-- Player 2 --", cxmodel::MakeGreen(), cxmodel::PlayerType::BOT)));
 
     AddColumnHeaders();
 }

@@ -144,6 +144,20 @@ void cxgui::NewGameView::PopulateWidgets()
     m_gameSectionTitle.set_text(m_presenter.GetNewGameViewGameSectionTitle());
     m_inARowLabel.set_text(m_presenter.GetNewGameViewInARowLabelText());
 
+    try
+    {
+        m_inARowEntry.set_text(std::to_string(m_presenter.GetDefaultInARowValue()));
+        m_gridHeightEntry.set_text(std::to_string(m_presenter.GetDefaultBoardHeightValue()));
+        m_gridWidthEntry.set_text(std::to_string(m_presenter.GetDefaultBoardWidthValue()));
+    }
+    catch(const std::exception& p_exception)
+    {
+        // If an exception is caught, we raise an error, however execution
+        // continues since the error is not fatal. The user will have no
+        // default values in his view.
+        ASSERT_ERROR_MSG(p_exception.what());
+    }
+
     m_gridSectionTitle.set_text(m_presenter.GetNewGameViewBoardSectionTitle());
     m_gridWidthLabel.set_text(m_presenter.GetNewGameViewWidthLabelText());
     m_gridHeightLabel.set_text(m_presenter.GetNewGameViewHeightLabelText());
@@ -252,7 +266,7 @@ void cxgui::NewGameView::OnAddPlayer()
         std::ostringstream os;
         os << "-- Player " << nbNext << " --";
 
-        IF_CONDITION_NOT_MET_DO(m_playersList->AddRow(os.str(), cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN), return;);
+        IF_CONDITION_NOT_MET_DO(m_playersList->AddRow(os.str(), cxmodel::MakeRed(), cxmodel::PlayerType::BOT), return;);
         m_playersList->GetUnderlying().show_all();
     }
 

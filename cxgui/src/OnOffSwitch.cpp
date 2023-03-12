@@ -55,8 +55,10 @@ void cxgui::OnOffSwitch::SetState(cxgui::OnOffState p_newState)
     {
         m_underlying.set_active(true);
     }
-
-    m_underlying.set_active(false);
+    else
+    {
+        m_underlying.set_active(false);
+    }
 
     IF_CONDITION_NOT_MET_DO(bool(m_stateChangedSlot), return;);
     m_stateChangedSlot();
