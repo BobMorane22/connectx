@@ -256,6 +256,42 @@ public:
     [[nodiscard]] virtual size_t GetDefaultBoardWidthValue() const  = 0;
 
     /******************************************************************************************//**
+     * @brief Default new player name.
+     *
+     * This is the value that will be suggested to the user in the view.
+     *
+     * @param p_playerIndex The player index in the view (1st, 2nd, etc.)
+     *
+     * @return The default player name.
+     *
+     ********************************************************************************************/
+    [[nodiscard]] virtual std::string GetDefaultPlayerName(size_t p_playerIndex) const = 0;
+
+    /******************************************************************************************//**
+     * @brief Default chip color for new players.
+     *
+     * This is the value that will be suggested to the user in the view.
+     *
+     * @param p_playerIndex The player index in the view (1st, 2nd, etc.)
+     *
+     * @return The default chip color for new players.
+     *
+     ********************************************************************************************/
+    [[nodiscard]] virtual cxmodel::ChipColor GetDefaultChipColor(size_t p_playerIndex) const = 0;
+
+    /******************************************************************************************//**
+     * @brief Default new player type.
+     *
+     * This is the value that will be suggested to the user in the view.
+     *
+     * @param p_playerIndex The player index in the view (1st, 2nd, etc.)
+     *
+     * @return The default new player type.
+     *
+     ********************************************************************************************/
+    [[nodiscard]] virtual cxmodel::PlayerType GetDefaultPlayerType(size_t p_playerIndex) const = 0;
+
+    /******************************************************************************************//**
      * @brief Checks if the in-a-row value is valid.
      *
      * @param p_inARowValue The in-a-row value to check.

@@ -262,11 +262,12 @@ void cxgui::NewGameView::OnAddPlayer()
 {
     if(m_presenter.CanAddAnotherPlayer(m_playersList->GetSize()))
     {
-        const size_t nbNext = m_playersList->GetSize() + 1;
-        std::ostringstream os;
-        os << "-- Player " << nbNext << " --";
+        const size_t nbNext = m_playersList->GetSize() + 1u;
+        const std::string defaultName = m_presenter.GetDefaultPlayerName(nbNext);
+        const cxmodel::ChipColor defaultChipColor = m_presenter.GetDefaultChipColor(nbNext);
+        const cxmodel::PlayerType defaultPlayerType = m_presenter.GetDefaultPlayerType(nbNext);
+        IF_CONDITION_NOT_MET_DO(m_playersList->AddRow(defaultName, defaultChipColor, defaultPlayerType), return;);
 
-        IF_CONDITION_NOT_MET_DO(m_playersList->AddRow(os.str(), cxmodel::MakeRed(), cxmodel::PlayerType::BOT), return;);
         m_playersList->GetUnderlying().show_all();
     }
 

@@ -299,6 +299,34 @@ size_t cxgui::MainWindowPresenter::GetDefaultBoardWidthValue() const
     return 7u;
 }
 
+std::string cxgui::MainWindowPresenter::GetDefaultPlayerName(size_t p_playerIndex) const
+{
+    std::ostringstream oss;
+    oss << "-- Player " << p_playerIndex << " --";
+
+    return oss.str();
+}
+
+cxmodel::ChipColor cxgui::MainWindowPresenter::GetDefaultChipColor(size_t p_playerIndex) const
+{
+    if(p_playerIndex == 2u)
+    {
+        return cxmodel::MakeGreen();
+    }
+
+    return cxmodel::MakeRed();
+}
+
+cxmodel::PlayerType cxgui::MainWindowPresenter::GetDefaultPlayerType(size_t p_playerIndex) const
+{
+    if(p_playerIndex == 1u)
+    {
+        return cxmodel::PlayerType::HUMAN;
+    }
+
+    return cxmodel::PlayerType::BOT;
+}
+
 cxmodel::Status cxgui::MainWindowPresenter::IsInARowValueValid(size_t p_inARowValue) const
 {
     if(p_inARowValue < GetNewGameViewMinInARowValue() || p_inARowValue > GetNewGameViewMaxInARowValue())

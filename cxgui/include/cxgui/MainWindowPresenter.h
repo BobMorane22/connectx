@@ -110,9 +110,12 @@ public:
     size_t GetNewGameViewMinBoardHeightValue() const override;
     size_t GetNewGameViewMaxBoardHeightValue() const override;
 
-    [[nodiscard]] virtual size_t GetDefaultInARowValue() const override;
-    [[nodiscard]] virtual size_t GetDefaultBoardHeightValue() const override;
-    [[nodiscard]] virtual size_t GetDefaultBoardWidthValue() const override;
+    [[nodiscard]] size_t GetDefaultInARowValue() const override;
+    [[nodiscard]] size_t GetDefaultBoardHeightValue() const override;
+    [[nodiscard]] size_t GetDefaultBoardWidthValue() const override;
+    [[nodiscard]] std::string GetDefaultPlayerName(size_t p_playerIndex) const override;
+    [[nodiscard]] cxmodel::ChipColor GetDefaultChipColor(size_t p_playerIndex) const override;
+    [[nodiscard]] cxmodel::PlayerType GetDefaultPlayerType(size_t p_playerIndex) const override;
 
     cxmodel::Status IsInARowValueValid(size_t p_inARowValue) const override;
     cxmodel::Status AreBoardDimensionsValid(size_t p_boardHeight, size_t p_boardWidth) const override;

@@ -159,6 +159,21 @@ public:
         throw cxunit::NotImplementedException();
     }
 
+    [[nodiscard]] std::string GetDefaultPlayerName(size_t /*p_playerIndex*/) const override
+    {
+        throw cxunit::NotImplementedException();
+    }
+
+    [[nodiscard]] cxmodel::ChipColor GetDefaultChipColor(size_t /*p_playerIndex*/) const override
+    {
+        throw cxunit::NotImplementedException();
+    }
+
+    [[nodiscard]] cxmodel::PlayerType GetDefaultPlayerType(size_t /*p_playerIndex*/) const override
+    {
+        throw cxunit::NotImplementedException();
+    }
+
     [[nodiscard]] cxmodel::Status IsInARowValueValid(size_t /*p_inARowValue*/) const override
     {
         throw cxunit::NotImplementedException();

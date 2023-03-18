@@ -170,6 +170,48 @@ TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetDefaultBoardWidthValue_Ne
     ASSERT_EQ(GetNewGameViewPresenter().GetDefaultBoardWidthValue(), 7u);
 }
 
+TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetDefaultPlayerName_NewGamePresenter_DefaultValueReturned)
+{
+    ASSERT_EQ(GetNewGameViewPresenter().GetDefaultPlayerName(1u), "-- Player 1 --");
+    ASSERT_EQ(GetNewGameViewPresenter().GetDefaultPlayerName(2u), "-- Player 2 --");
+    ASSERT_EQ(GetNewGameViewPresenter().GetDefaultPlayerName(3u), "-- Player 3 --");
+    ASSERT_EQ(GetNewGameViewPresenter().GetDefaultPlayerName(4u), "-- Player 4 --");
+    ASSERT_EQ(GetNewGameViewPresenter().GetDefaultPlayerName(5u), "-- Player 5 --");
+    ASSERT_EQ(GetNewGameViewPresenter().GetDefaultPlayerName(6u), "-- Player 6 --");
+    ASSERT_EQ(GetNewGameViewPresenter().GetDefaultPlayerName(7u), "-- Player 7 --");
+    ASSERT_EQ(GetNewGameViewPresenter().GetDefaultPlayerName(8u), "-- Player 8 --");
+    ASSERT_EQ(GetNewGameViewPresenter().GetDefaultPlayerName(9u), "-- Player 9 --");
+    ASSERT_EQ(GetNewGameViewPresenter().GetDefaultPlayerName(10u), "-- Player 10 --");
+}
+
+TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetDefaultChipColor_NewGamePresenter_DefaultValueReturned)
+{
+    ASSERT_EQ(GetNewGameViewPresenter().GetDefaultChipColor(1u), cxmodel::MakeRed());
+    ASSERT_EQ(GetNewGameViewPresenter().GetDefaultChipColor(2u), cxmodel::MakeGreen());
+    ASSERT_EQ(GetNewGameViewPresenter().GetDefaultChipColor(3u), cxmodel::MakeRed());
+    ASSERT_EQ(GetNewGameViewPresenter().GetDefaultChipColor(4u), cxmodel::MakeRed());
+    ASSERT_EQ(GetNewGameViewPresenter().GetDefaultChipColor(5u), cxmodel::MakeRed());
+    ASSERT_EQ(GetNewGameViewPresenter().GetDefaultChipColor(6u), cxmodel::MakeRed());
+    ASSERT_EQ(GetNewGameViewPresenter().GetDefaultChipColor(7u), cxmodel::MakeRed());
+    ASSERT_EQ(GetNewGameViewPresenter().GetDefaultChipColor(8u), cxmodel::MakeRed());
+    ASSERT_EQ(GetNewGameViewPresenter().GetDefaultChipColor(9u), cxmodel::MakeRed());
+    ASSERT_EQ(GetNewGameViewPresenter().GetDefaultChipColor(10u), cxmodel::MakeRed());
+}
+
+TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetDefaultPlayerType_NewGamePresenter_DefaultValueReturned)
+{
+    ASSERT_EQ(GetNewGameViewPresenter().GetDefaultPlayerType(1u), cxmodel::PlayerType::HUMAN);
+    ASSERT_EQ(GetNewGameViewPresenter().GetDefaultPlayerType(2u), cxmodel::PlayerType::BOT);
+    ASSERT_EQ(GetNewGameViewPresenter().GetDefaultPlayerType(3u), cxmodel::PlayerType::BOT);
+    ASSERT_EQ(GetNewGameViewPresenter().GetDefaultPlayerType(4u), cxmodel::PlayerType::BOT);
+    ASSERT_EQ(GetNewGameViewPresenter().GetDefaultPlayerType(5u), cxmodel::PlayerType::BOT);
+    ASSERT_EQ(GetNewGameViewPresenter().GetDefaultPlayerType(6u), cxmodel::PlayerType::BOT);
+    ASSERT_EQ(GetNewGameViewPresenter().GetDefaultPlayerType(7u), cxmodel::PlayerType::BOT);
+    ASSERT_EQ(GetNewGameViewPresenter().GetDefaultPlayerType(8u), cxmodel::PlayerType::BOT);
+    ASSERT_EQ(GetNewGameViewPresenter().GetDefaultPlayerType(9u), cxmodel::PlayerType::BOT);
+    ASSERT_EQ(GetNewGameViewPresenter().GetDefaultPlayerType(10u), cxmodel::PlayerType::BOT);
+}
+
 TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetInARowInvalidInputMessage_NewGamePresenter_MessageReturned)
 {
     auto& presenter = GetNewGameViewPresenter();
