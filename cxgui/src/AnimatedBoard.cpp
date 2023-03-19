@@ -23,6 +23,7 @@
 
 #include <gdkmm/display.h>
 #include <gdkmm/general.h>
+#include <gdkmm/monitor.h>
 
 #include <cxinv/assertion.h>
 #include <cxmodel/Disc.h>
@@ -80,10 +81,7 @@ cxgui::AnimatedBoard::AnimatedBoard(const IGameViewPresenter& p_presenter, const
     m_animationModel = std::make_unique<cxgui::AnimatedBoardModel>(*m_presenter, p_speed);
 
     // Customize width and height according to window dimension.
-    const cxmodel::Height nbRows = m_presenter->GetBoardHeight();
-    const cxmodel::Width nbColumns = m_presenter->GetBoardWidth();
-    const int chipDimension = ComputeMinimumChipDimension(nbRows.Get(), nbColumns.Get());
-    set_size_request(nbColumns.Get() * chipDimension, nbRows.Get() * chipDimension);
+    signal_realize().connect([this](){CustomizeHeightAccordingToMonitorDimensions();});
 
     set_vexpand(true);
     set_hexpand(true);
@@ -475,28 +473,47 @@ void cxgui::AnimatedBoard::Update(cxgui::BoardAnimationNotificationContext p_con
 
 // Computes the best chip dimension so that the game view, when the board is present with all
 // chips drawn, is entirely viewable on the user's screen.
-int cxgui::AnimatedBoard::ComputeMinimumChipDimension(size_t p_nbRows, size_t p_nbColumns) const
+
+void cxgui::AnimatedBoard::CustomizeHeightAccordingToMonitorDimensions()
 {
+    // Get the window containing the widget. The casting is necessary to get a
+    // non const reference on the window, in order to satisfy the Gdk::Display API:
+    const Glib::RefPtr<Gdk::Window> window = get_window();
+    IF_CONDITION_NOT_MET_DO(bool(window), return;);
+
     // Get screen containing the widget:
     const Glib::RefPtr<const Gdk::Screen> screen = get_screen();
-    IF_CONDITION_NOT_MET_DO(bool(screen), return -1;);
+    IF_CONDITION_NOT_MET_DO(bool(screen), return;);
 
-    // Get the screen dimensions:
-    const int fullScreenHeight = screen->get_height();
-    const int fullScreenWidth = screen->get_width();
+    // Get the display associated to the screen:
+    const Glib::RefPtr<const Gdk::Display> display = get_display();
+    IF_CONDITION_NOT_MET_DO(bool(display), return;);
+
+    // Get the monitor associated to the display. Fisrt, we need to get a non const
+    // reference on the window to satisfy the Gdk::Display API:
+    const Glib::RefPtr<const Gdk::Monitor> monitor = display->get_monitor_at_window(window);
+    IF_CONDITION_NOT_MET_DO(bool(monitor), return;);
+
+    // Get the monitor dimensions:
+    Gdk::Rectangle monitorDimensions;
+    monitor->get_geometry(monitorDimensions);
+    const int monitorHeight = monitorDimensions.get_height();
+    const int monitorWidth = monitorDimensions.get_width();
 
     // Get minimum screen dimension:
-    const int minFullScreenDimension = std::min(fullScreenHeight, fullScreenWidth);
+    const int minimumMonitorDimension = std::min(monitorHeight, monitorWidth);
 
     // First, we check if the chips can use their default size:
-    int nbRows = static_cast<int>(p_nbRows);
-    int nbColumns = static_cast<int>(p_nbColumns);
+    const int nbRows = static_cast<int>(m_presenter->GetBoardHeight().Get());
+    const int nbColumns = static_cast<int>(m_presenter->GetBoardWidth().Get());
 
-    if(nbRows * cxgui::DEFAULT_CHIP_SIZE < (2 * fullScreenHeight) / 3)
+    if(nbRows * cxgui::DEFAULT_CHIP_SIZE < (2 * monitorHeight) / 3)
     {
-        if(nbColumns * cxgui::DEFAULT_CHIP_SIZE < (2 * fullScreenWidth) / 3)
+        if(nbColumns * cxgui::DEFAULT_CHIP_SIZE < (2 * monitorWidth) / 3)
         {
-            return cxgui::DEFAULT_CHIP_SIZE;
+            const int chipDimension = cxgui::DEFAULT_CHIP_SIZE;
+            set_size_request(nbColumns * chipDimension, nbRows * chipDimension);
+            return;
         }
     }
 
@@ -505,11 +522,12 @@ int cxgui::AnimatedBoard::ComputeMinimumChipDimension(size_t p_nbRows, size_t p_
 
     // From this, the max chip dimension (dimension at which together, chips from the board would fill the
     // entire screen in its smallest dimension) is computed:
-    const int maxChipDimension = (minFullScreenDimension / maxBoardDimension);
+    const int maxChipDimension = (minimumMonitorDimension / maxBoardDimension);
 
     // We take two thirds from this value for the board (leaving the remaining to the rest of the
     // game view):
-    return (maxChipDimension * 2) / 3;
+    const int chipDimension = (maxChipDimension * 2) / 3;
+    set_size_request(nbColumns * chipDimension, nbRows * chipDimension);
 }
 
 bool cxgui::AnimatedBoard::OnMouseButtonPressed(GdkEventButton* p_event)
