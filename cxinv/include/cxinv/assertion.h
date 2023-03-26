@@ -86,13 +86,13 @@ enum class AssertLabel
  *      Never use this function by itself! Use assertion macros instead.
  *
  ************************************************************************************************/
-bool HandleAssert(const AssertLabel  p_label,
-                  const bool         p_conditionRes,
-                  const char*        p_conditionExpr,
-                  const char*        p_fileName,
-                  const char*        p_functionName,
-                  const long         p_lineNumber,
-                  const char*        p_message = nullptr);
+bool HandleAssert(const AssertLabel p_label,
+                  const bool        p_conditionRes,
+                  const char*       p_conditionExpr,
+                  const char*       p_fileName,
+                  const char*       p_functionName,
+                  const long        p_lineNumber,
+                  const char*       p_message = nullptr);
 
 /*********************************************************************************************//**
  * @private
@@ -129,13 +129,13 @@ bool HandleAssert(const AssertLabel  p_label,
  *
  ************************************************************************************************/
 template<typename T>
-bool HandleAssert(const AssertLabel  p_label,
+bool HandleAssert(const AssertLabel         p_label,
                   const std::unique_ptr<T>& p_ptrRes,
-                  const char*              p_conditionExpr,
-                  const char*              p_fileName,
-                  const char*              p_functionName,
-                  const long               p_lineNumber,
-                  const char*              p_message = nullptr)
+                  const char*               p_conditionExpr,
+                  const char*               p_fileName,
+                  const char*               p_functionName,
+                  const long                p_lineNumber,
+                  const char*               p_message = nullptr)
 {
     return HandleAssert(p_label,
                         p_ptrRes != nullptr,
@@ -181,13 +181,13 @@ bool HandleAssert(const AssertLabel  p_label,
  *
  ************************************************************************************************/
 template<typename T>
-bool HandleAssert(const AssertLabel  p_label,
+bool HandleAssert(const AssertLabel         p_label,
                   const std::shared_ptr<T>& p_ptrRes,
-                  const char*              p_conditionExpr,
-                  const char*              p_fileName,
-                  const char*              p_functionName,
-                  const long               p_lineNumber,
-                  const char*              p_message = nullptr)
+                  const char*               p_conditionExpr,
+                  const char*               p_fileName,
+                  const char*               p_functionName,
+                  const long                p_lineNumber,
+                  const char*               p_message = nullptr)
 {
     return HandleAssert(p_label,
                         p_ptrRes != nullptr,
@@ -215,13 +215,13 @@ bool HandleAssert(const AssertLabel  p_label,
  *      The condition to assert.
  *
  *************************************************************************************************/
-#define ASSERT(p_condition) cxinv::HandleAssert(cxinv::AssertLabel::ASSERTION, \
-                                                (p_condition),                 \
-                                                #p_condition,                  \
-                                                __FILE__,                      \
-                                                __FUNCTION__,                  \
-                                                __LINE__,                      \
-                                                nullptr                        \
+#define ASSERT(p_condition) cxinv::HandleAssert(cxinv::AssertLabel::ASSERTION,  \
+                                                static_cast<bool>(p_condition), \
+                                                #p_condition,                   \
+                                                __FILE__,                       \
+                                                __FUNCTION__,                   \
+                                                __LINE__,                       \
+                                                nullptr                         \
                                                 )
 #else
 #define ASSERT(p_condition) ((void)0)
@@ -243,13 +243,13 @@ bool HandleAssert(const AssertLabel  p_label,
  *      The message to print.
  *
  *************************************************************************************************/
-#define ASSERT_MSG(p_condition, p_message) cxinv::HandleAssert(cxinv::AssertLabel::ASSERTION, \
-                                                               ( p_condition ),               \
-                                                               #p_condition,                  \
-                                                               __FILE__,                      \
-                                                               __FUNCTION__,                  \
-                                                               __LINE__,                      \
-                                                               p_message                      \
+#define ASSERT_MSG(p_condition, p_message) cxinv::HandleAssert(cxinv::AssertLabel::ASSERTION,  \
+                                                               static_cast<bool>(p_condition), \
+                                                               #p_condition,                   \
+                                                               __FILE__,                       \
+                                                               __FUNCTION__,                   \
+                                                               __LINE__,                       \
+                                                               p_message                       \
                                                                )
 #else
 #define ASSERT_MSG(p_condition, p_message) ((void)0)
@@ -305,13 +305,13 @@ bool HandleAssert(const AssertLabel  p_label,
  *      The condition to assert.
  *
  *************************************************************************************************/
-#define INL_ASSERT(p_condition) cxinv::HandleAssert(cxinv::AssertLabel::ASSERTION, \
-                                                    (p_condition),                 \
-                                                    #p_condition,                  \
-                                                    __FILE__,                      \
-                                                    __FUNCTION__,                  \
-                                                    __LINE__,                      \
-                                                    nullptr                        \
+#define INL_ASSERT(p_condition) cxinv::HandleAssert(cxinv::AssertLabel::ASSERTION,  \
+                                                    static_cast<bool>(p_condition), \
+                                                    #p_condition,                   \
+                                                    __FILE__,                       \
+                                                    __FUNCTION__,                   \
+                                                    __LINE__,                       \
+                                                    nullptr                         \
                                                     )
 #else
 #define INL_ASSERT(p_condition) (p_condition)
@@ -330,12 +330,12 @@ bool HandleAssert(const AssertLabel  p_label,
  *      The precondition to assert.
  *
  ************************************************************************************************/
-#define PRECONDITION(p_preCondition) cxinv::HandleAssert(cxinv::AssertLabel::PRECONDITION, \
-                                                         ( p_preCondition ),               \
-                                                         #p_preCondition,                  \
-                                                         __FILE__,                         \
-                                                         __FUNCTION__,                     \
-                                                         __LINE__                          \
+#define PRECONDITION(p_preCondition) cxinv::HandleAssert(cxinv::AssertLabel::PRECONDITION,  \
+                                                         static_cast<bool>(p_preCondition), \
+                                                         #p_preCondition,                   \
+                                                         __FILE__,                          \
+                                                         __FUNCTION__,                      \
+                                                         __LINE__                           \
                                                          )
 #else
 #define PRECONDITION(p_preCondition) ((void)0)
@@ -356,12 +356,12 @@ bool HandleAssert(const AssertLabel  p_label,
  *      The precondition to assert.
  *
  *************************************************************************************************/
-#define INL_PRECONDITION(p_preCondition) cxinv::HandleAssert(cxinv::AssertLabel::PRECONDITION, \
-                                                             ( p_preCondition ),               \
-                                                             #p_preCondition,                  \
-                                                             __FILE__,                         \
-                                                             __FUNCTION__,                     \
-                                                             __LINE__                          \
+#define INL_PRECONDITION(p_preCondition) cxinv::HandleAssert(cxinv::AssertLabel::PRECONDITION,  \
+                                                             static_cast<bool>(p_preCondition), \
+                                                             #p_preCondition,                   \
+                                                             __FILE__,                          \
+                                                             __FUNCTION__,                      \
+                                                             __LINE__                           \
                                                              )
 #else
 #define INL_PRECONDITION(p_condition) (p_condition)
@@ -380,12 +380,12 @@ bool HandleAssert(const AssertLabel  p_label,
  *      The postcondition to assert.
  *
  ************************************************************************************************/
-#define POSTCONDITION(p_postCondition) cxinv::HandleAssert(cxinv::AssertLabel::POSTCONDITION, \
-                                                           ( p_postCondition ),               \
-                                                           #p_postCondition,                  \
-                                                           __FILE__,                          \
-                                                           __FUNCTION__,                      \
-                                                           __LINE__                           \
+#define POSTCONDITION(p_postCondition) cxinv::HandleAssert(cxinv::AssertLabel::POSTCONDITION,  \
+                                                           static_cast<bool>(p_postCondition), \
+                                                           #p_postCondition,                   \
+                                                           __FILE__,                           \
+                                                           __FUNCTION__,                       \
+                                                           __LINE__                            \
                                                            )
 #else
 #define POSTCONDITION(p_postCondition) ((void)0)
@@ -404,12 +404,12 @@ bool HandleAssert(const AssertLabel  p_label,
  *      The invariant to assert.
  *
  ************************************************************************************************/
-#define INVARIANT(p_invariant) cxinv::HandleAssert(cxinv::AssertLabel::INVARIANT, \
-                                                   ( p_invariant ),               \
-                                                   #p_invariant,                  \
-                                                   __FILE__,                      \
-                                                   __FUNCTION__,                  \
-                                                   __LINE__                       \
+#define INVARIANT(p_invariant) cxinv::HandleAssert(cxinv::AssertLabel::INVARIANT,  \
+                                                   static_cast<bool>(p_invariant), \
+                                                   #p_invariant,                   \
+                                                   __FILE__,                       \
+                                                   __FUNCTION__,                   \
+                                                   __LINE__                        \
                                                    )
 #else
 #define INVARIANT(p_invariant) ((void)0)
