@@ -169,6 +169,11 @@ public:
         throw cxunit::NotImplementedException();
     }
 
+    [[nodiscard]] std::vector<cxmodel::ChipColor> GetDefaultChipColors() const override
+    {
+        throw cxunit::NotImplementedException();
+    }
+
     [[nodiscard]] cxmodel::PlayerType GetDefaultPlayerType(size_t /*p_playerIndex*/) const override
     {
         throw cxunit::NotImplementedException();

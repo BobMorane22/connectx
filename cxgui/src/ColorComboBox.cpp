@@ -56,6 +56,29 @@ cxgui::ColorComboBox::ColorComboBox()
     INVARIANT(bool(m_treeModel));
 }
 
+cxgui::ColorComboBox::ColorComboBox(const std::vector<cxgui::Color>& p_colors)
+{
+    PRECONDITION(p_colors.size() != 0u);
+
+    m_treeModel = Gtk::ListStore::create(m_records);
+    ASSERT(m_treeModel);
+
+    set_model(m_treeModel);
+
+    for(const auto& color : p_colors)
+    {
+        AddElement(color, true);
+    }
+
+    set_cell_data_func(m_renderer, sigc::mem_fun(*this, &cxgui::ColorComboBox::OnRenderCell));
+    pack_start(m_renderer);
+
+    //Connect signal handler:
+    signal_changed().connect([this](){OnComboChanged();});
+
+    INVARIANT(bool(m_treeModel));
+}
+
 cxgui::Color cxgui::ColorComboBox::GetCurrentSelection() const
 {
     cxgui::Color currentColor{0, 0, 0, 0}; // Transparent...

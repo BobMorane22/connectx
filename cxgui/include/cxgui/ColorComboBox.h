@@ -50,6 +50,20 @@ public:
     ColorComboBox();
 
     /******************************************************************************************//**
+     * @brief Constructor.
+     *
+     * Constructs a combo box from a list of colors. The listed colors become available options
+     * in the combobox.
+     *
+     * @param p_colors
+     *      List of colors to display in the combo box.
+     *
+     * @pre The list of colors is not empty.
+     *
+     ********************************************************************************************/
+    ColorComboBox(const std::vector<Color>& p_colors);
+
+    /******************************************************************************************//**
      * @brief Retrieves the current user selection.
      *
      * @return The color currently visible in the combo box.

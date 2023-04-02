@@ -228,8 +228,6 @@ public:
     /******************************************************************************************//**
      * @brief Default in-a-row value accessor.
      *
-     * This is the value that will be suggested to the user in the view.
-     *
      * @return The default in-a-row value.
      *
      ********************************************************************************************/
@@ -237,8 +235,6 @@ public:
 
     /******************************************************************************************//**
      * @brief Default board height value accessor.
-     *
-     * This is the value that will be suggested to the user in the view.
      *
      * @return The default board height value.
      *
@@ -248,8 +244,6 @@ public:
     /******************************************************************************************//**
      * @brief Default board width value accessor.
      *
-     * This is the value that will be suggested to the user in the view.
-     *
      * @return The default board width value.
      *
      ********************************************************************************************/
@@ -257,8 +251,6 @@ public:
 
     /******************************************************************************************//**
      * @brief Default new player name.
-     *
-     * This is the value that will be suggested to the user in the view.
      *
      * @param p_playerIndex The player index in the view (1st, 2nd, etc.)
      *
@@ -270,14 +262,22 @@ public:
     /******************************************************************************************//**
      * @brief Default chip color for new players.
      *
-     * This is the value that will be suggested to the user in the view.
-     *
      * @param p_playerIndex The player index in the view (1st, 2nd, etc.)
      *
      * @return The default chip color for new players.
      *
      ********************************************************************************************/
     [[nodiscard]] virtual cxmodel::ChipColor GetDefaultChipColor(size_t p_playerIndex) const = 0;
+
+    /******************************************************************************************//**
+     * @brief Default chip colors to select from on game start.
+     *
+     * @postcondition The returned list contains at least one element.
+     *
+     * @return The default chip color list for new players.
+     *
+     ********************************************************************************************/
+    [[nodiscard]] virtual std::vector<cxmodel::ChipColor> GetDefaultChipColors() const = 0;
 
     /******************************************************************************************//**
      * @brief Default new player type.

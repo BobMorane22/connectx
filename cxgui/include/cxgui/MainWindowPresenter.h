@@ -115,6 +115,7 @@ public:
     [[nodiscard]] size_t GetDefaultBoardWidthValue() const override;
     [[nodiscard]] std::string GetDefaultPlayerName(size_t p_playerIndex) const override;
     [[nodiscard]] cxmodel::ChipColor GetDefaultChipColor(size_t p_playerIndex) const override;
+    [[nodiscard]] std::vector<cxmodel::ChipColor> GetDefaultChipColors() const override;
     [[nodiscard]] cxmodel::PlayerType GetDefaultPlayerType(size_t p_playerIndex) const override;
 
     cxmodel::Status IsInARowValueValid(size_t p_inARowValue) const override;

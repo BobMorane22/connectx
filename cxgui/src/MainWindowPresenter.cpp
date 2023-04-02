@@ -317,6 +317,24 @@ cxmodel::ChipColor cxgui::MainWindowPresenter::GetDefaultChipColor(size_t p_play
     return cxmodel::MakeRed();
 }
 
+std::vector<cxmodel::ChipColor> cxgui::MainWindowPresenter::GetDefaultChipColors() const
+{
+    std::vector<cxmodel::ChipColor> colors;
+
+    colors.push_back(cxmodel::ChipColor::MakePredefined(cxmodel::ChipColor::Predefined::RED));
+    colors.push_back(cxmodel::ChipColor::MakePredefined(cxmodel::ChipColor::Predefined::GREEN));
+    colors.push_back(cxmodel::ChipColor::MakePredefined(cxmodel::ChipColor::Predefined::YELLOW));
+    colors.push_back(cxmodel::ChipColor::MakePredefined(cxmodel::ChipColor::Predefined::AQUA));
+    colors.push_back(cxmodel::ChipColor::MakePredefined(cxmodel::ChipColor::Predefined::FUSCHIA));
+    colors.push_back(cxmodel::ChipColor::MakePredefined(cxmodel::ChipColor::Predefined::GRAY));
+    colors.push_back(cxmodel::ChipColor::MakePredefined(cxmodel::ChipColor::Predefined::LIME));
+    colors.push_back(cxmodel::ChipColor::MakePredefined(cxmodel::ChipColor::Predefined::MAROON));
+    colors.push_back(cxmodel::ChipColor::MakePredefined(cxmodel::ChipColor::Predefined::OLIVE));
+    colors.push_back(cxmodel::ChipColor::MakePredefined(cxmodel::ChipColor::Predefined::TEAL));
+
+    return colors;
+}
+
 cxmodel::PlayerType cxgui::MainWindowPresenter::GetDefaultPlayerType(size_t p_playerIndex) const
 {
     if(p_playerIndex == 1u)
