@@ -96,10 +96,9 @@ public:
     std::string GetNewGameViewIsManagedColumnHeaderText() const override;
 
     std::string GetNewGameViewRemovePlayerButtonText() const override;
-    bool CanRemoveAnotherPlayer(std::size_t p_currentNumberOfPlayers) const override;
-
     std::string GetNewGameViewAddPlayerButtonText() const override;
-    bool CanAddAnotherPlayer(std::size_t p_currentNumberOfPlayers) const override;
+    [[nodiscard]] bool CanRemoveAnotherPlayer(std::size_t p_currentNumberOfPlayers) const override;
+    [[nodiscard]] bool CanAddAnotherPlayer(std::size_t p_currentNumberOfPlayers) const override;
 
     std::string GetNewGameViewStartButtonText() const override;
 

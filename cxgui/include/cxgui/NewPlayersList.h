@@ -79,13 +79,8 @@ public:
     [[nodiscard]] std::vector<cxmodel::ChipColor> GetAllColors() const override;
     [[nodiscard]] std::vector<std::string> GetAllPlayerNames() const override;
     [[nodiscard]] std::vector<cxmodel::PlayerType> GetAllPlayerTypes() const override;
-    [[nodiscard]] bool AddRow(const std::string& p_playerNewName,
-                              const cxmodel::ChipColor& p_playerNewDiscColor,
-                              cxmodel::PlayerType p_playerNewType) override;
+    [[nodiscard]] bool AddRow(const INewGameViewPresenter& p_presenter, size_t p_rowIndex) override;
     [[nodiscard]] bool RemoveRow(const std::size_t p_index) override;
-    [[nodiscard]] bool RemoveRow(const std::string& p_playerName,
-                                 const cxmodel::ChipColor& p_playerDiscColor,
-                                 cxmodel::PlayerType p_playerType) override;
     [[nodiscard]] bool UpdateRow(const std::size_t p_index,
                                  const std::string& p_newPlayerNewName,
                                  const cxmodel::ChipColor& p_newPlayerNewDiscColor,

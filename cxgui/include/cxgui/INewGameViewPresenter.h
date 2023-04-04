@@ -142,16 +142,6 @@ public:
     virtual std::string GetNewGameViewRemovePlayerButtonText() const = 0;
 
     /******************************************************************************************//**
-     * @brief Indicates if, according to the current number of players, another one can be removed.
-     *
-     * @param p_currentNumberOfPlayers The current number of players in the game.
-     *
-     * @return `true` if another player can be removed, `false` otherwise.
-     *
-     ********************************************************************************************/
-    virtual bool CanRemoveAnotherPlayer(std::size_t p_currentNumberOfPlayers) const = 0;
-
-    /******************************************************************************************//**
      * @brief Add player button text accessor.
      *
      * @return Add player button text.
@@ -160,14 +150,41 @@ public:
     virtual std::string GetNewGameViewAddPlayerButtonText() const = 0;
 
     /******************************************************************************************//**
-     * @brief Indicates if, according to the current number of players, another one can be added.
+     * @brief
+     *      Indicates if, according to the current number of players, another one can be removed.
      *
-     * @param p_currentNumberOfPlayers The current number of players in the game.
+     * @param p_currentNumberOfPlayers
+     *      The current number of players in the game.
      *
-     * @return `true` if another player can be added, `false` otherwise.
+     * @pre
+     *      The number of players passed as argument is lower or equal to the maximum number
+     *      of players allowed.
+     * @pre
+     *      The number of players passed as argument is greater or equal to the minumum number
+     *      of player allowed.
+     *
+     * @return
+     *      `true` if another player can be removed, `false` otherwise.
      *
      ********************************************************************************************/
-    virtual bool CanAddAnotherPlayer(std::size_t p_currentNumberOfPlayers) const = 0;
+    [[nodiscard]] virtual bool CanRemoveAnotherPlayer(std::size_t p_currentNumberOfPlayers) const = 0;
+
+    /******************************************************************************************//**
+     * @brief
+     *      Indicates if, according to the current number of players, another one can be added.
+     *
+     * @param p_currentNumberOfPlayers
+     *      The current number of players in the game.
+     *
+     * @pre
+     *      The number of players passed as argument is lower or equal to the maximum number
+     *      of players allowed.
+     *
+     * @return
+     *      `true` if another player can be added, `false` otherwise.
+     *
+     ********************************************************************************************/
+    [[nodiscard]] virtual bool CanAddAnotherPlayer(std::size_t p_currentNumberOfPlayers) const = 0;
 
     /******************************************************************************************//**
      * @brief Start button text accessor.
@@ -260,21 +277,27 @@ public:
     [[nodiscard]] virtual std::string GetDefaultPlayerName(size_t p_playerIndex) const = 0;
 
     /******************************************************************************************//**
-     * @brief Default chip color for new players.
+     * @brief
+     *      Default chip color for new players.
      *
-     * @param p_playerIndex The player index in the view (1st, 2nd, etc.)
+     * @param p_playerIndex
+     *      The player index in the view (1st, 2nd, etc.)
      *
-     * @return The default chip color for new players.
+     * @return
+     *      The default chip color for new players.
      *
      ********************************************************************************************/
     [[nodiscard]] virtual cxmodel::ChipColor GetDefaultChipColor(size_t p_playerIndex) const = 0;
 
     /******************************************************************************************//**
-     * @brief Default chip colors to select from on game start.
+     * @brief
+     *      Default chip colors to select from on game start.
      *
-     * @postcondition The returned list contains at least one element.
+     * @post
+     *      The returned list contains at least one element.
      *
-     * @return The default chip color list for new players.
+     * @return
+     *      The default chip color list for new players.
      *
      ********************************************************************************************/
     [[nodiscard]] virtual std::vector<cxmodel::ChipColor> GetDefaultChipColors() const = 0;

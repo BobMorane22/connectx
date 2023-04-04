@@ -29,32 +29,32 @@ cxgui::ColorComboBox::Record::Record()
     add(m_color);
 }
 
-cxgui::ColorComboBox::ColorComboBox()
-{
-    m_treeModel = Gtk::ListStore::create(m_records);
-    ASSERT(bool(m_treeModel));
-
-    set_model(m_treeModel);
-
-    AddElement(cxgui::Color::MakePredefined(cxgui::Color::Predefined::RED), true);
-    AddElement(cxgui::Color::MakePredefined(cxgui::Color::Predefined::GREEN), true);
-    AddElement(cxgui::Color::MakePredefined(cxgui::Color::Predefined::YELLOW), true);
-    AddElement(cxgui::Color::MakePredefined(cxgui::Color::Predefined::AQUA), true);
-    AddElement(cxgui::Color::MakePredefined(cxgui::Color::Predefined::FUSCHIA), true);
-    AddElement(cxgui::Color::MakePredefined(cxgui::Color::Predefined::GRAY), true);
-    AddElement(cxgui::Color::MakePredefined(cxgui::Color::Predefined::LIME), true);
-    AddElement(cxgui::Color::MakePredefined(cxgui::Color::Predefined::MAROON), true);
-    AddElement(cxgui::Color::MakePredefined(cxgui::Color::Predefined::OLIVE), true);
-    AddElement(cxgui::Color::MakePredefined(cxgui::Color::Predefined::TEAL), true);
-
-    set_cell_data_func(m_renderer, sigc::mem_fun(*this, &cxgui::ColorComboBox::OnRenderCell));
-    pack_start(m_renderer);
-
-    //Connect signal handler:
-    signal_changed().connect([this](){OnComboChanged();});
-
-    INVARIANT(bool(m_treeModel));
-}
+//cxgui::ColorComboBox::ColorComboBox()
+//{
+//    m_treeModel = Gtk::ListStore::create(m_records);
+//    ASSERT(bool(m_treeModel));
+//
+//    set_model(m_treeModel);
+//
+//    AddElement(cxgui::Color::MakePredefined(cxgui::Color::Predefined::RED), true);
+//    AddElement(cxgui::Color::MakePredefined(cxgui::Color::Predefined::GREEN), true);
+//    AddElement(cxgui::Color::MakePredefined(cxgui::Color::Predefined::YELLOW), true);
+//    AddElement(cxgui::Color::MakePredefined(cxgui::Color::Predefined::AQUA), true);
+//    AddElement(cxgui::Color::MakePredefined(cxgui::Color::Predefined::FUSCHIA), true);
+//    AddElement(cxgui::Color::MakePredefined(cxgui::Color::Predefined::GRAY), true);
+//    AddElement(cxgui::Color::MakePredefined(cxgui::Color::Predefined::LIME), true);
+//    AddElement(cxgui::Color::MakePredefined(cxgui::Color::Predefined::MAROON), true);
+//    AddElement(cxgui::Color::MakePredefined(cxgui::Color::Predefined::OLIVE), true);
+//    AddElement(cxgui::Color::MakePredefined(cxgui::Color::Predefined::TEAL), true);
+//
+//    set_cell_data_func(m_renderer, sigc::mem_fun(*this, &cxgui::ColorComboBox::OnRenderCell));
+//    pack_start(m_renderer);
+//
+//    //Connect signal handler:
+//    signal_changed().connect([this](){OnComboChanged();});
+//
+//    INVARIANT(bool(m_treeModel));
+//}
 
 cxgui::ColorComboBox::ColorComboBox(const std::vector<cxgui::Color>& p_colors)
 {

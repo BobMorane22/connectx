@@ -125,20 +125,15 @@ public:
      *
      * Adds a row to the list. The row is appended at the end of the list.
      *
-     * @param p_playerNewName      The player's name.
-     * @param p_playerNewDiscColor The player's disc color.
-     * @param p_playerNewType      The player's new type (human or bot).
+     * @param p_presenter A New Game view compatible presenter.
+     * @param p_rowIndex The new row index.
      *
-     * @pre The player name is not an empty string.
+     * @pre The new row index is not bigger than the maximum players allowed.
      *
      * @return `true` if the row could be added, `false` otherwise.
      *
-     * @see cxutil::ReturnCode
-     *
      **********************************************************************************************/
-    [[nodiscard]] virtual bool AddRow(const std::string& p_playerNewName,
-                                      const cxmodel::ChipColor& p_playerNewDiscColor,
-                                      cxmodel::PlayerType p_playerNewType) = 0;
+    [[nodiscard]] virtual bool AddRow(const INewGameViewPresenter& p_presenter, size_t p_rowIndex) = 0;
 
     /*******************************************************************************************//**
      * @brief Removes a row from the list by its index.
@@ -152,26 +147,6 @@ public:
      *
      **********************************************************************************************/
     [[nodiscard]] virtual bool RemoveRow(const std::size_t p_index) = 0;
-
-    /*******************************************************************************************//**
-     * @brief Removes a row from the list.
-     *
-     * Removes a row from the list. The row must match a given player name and disc color.. If
-     * the player name and the disc color pair is not found, an error is returned and nothing
-     * is removed.
-     *
-     * @param p_playerName      The player's name.
-     * @param p_playerDiscColor The player's disc color.
-     * @param p_playerType      The player's type (human or bot).
-     *
-     * @pre The player name is not an empty string.
-     *
-     * @return `true` if the specified row was successfully removed, `false` otherwise.
-     *
-     **********************************************************************************************/
-    [[nodiscard]] virtual bool RemoveRow(const std::string& p_playerName,
-                                         const cxmodel::ChipColor& p_playerDiscColor,
-                                         cxmodel::PlayerType p_playerType) = 0;
 
     /*******************************************************************************************//**
      * @brief Updates a row from its index.

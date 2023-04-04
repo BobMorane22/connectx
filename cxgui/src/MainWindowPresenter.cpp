@@ -228,23 +228,22 @@ std::string cxgui::MainWindowPresenter::GetNewGameViewRemovePlayerButtonText() c
     return "Remove player";
 }
 
-bool cxgui::MainWindowPresenter::CanRemoveAnotherPlayer(std::size_t p_currentNumberOfPlayers) const
-{
-    PRECONDITION(p_currentNumberOfPlayers >= m_modelAsLimits.GetMinimumNumberOfPlayers());
-    PRECONDITION(p_currentNumberOfPlayers < (m_modelAsLimits.GetMaximumNumberOfPlayers() + 1));
-
-    return p_currentNumberOfPlayers > m_modelAsLimits.GetMinimumNumberOfPlayers();
-}
-
 std::string cxgui::MainWindowPresenter::GetNewGameViewAddPlayerButtonText() const
 {
     return "Add player";
 }
 
-bool cxgui::MainWindowPresenter::CanAddAnotherPlayer(std::size_t p_currentNumberOfPlayers) const
+bool cxgui::MainWindowPresenter::CanRemoveAnotherPlayer(std::size_t p_currentNumberOfPlayers) const
 {
     PRECONDITION(p_currentNumberOfPlayers >= m_modelAsLimits.GetMinimumNumberOfPlayers());
-    PRECONDITION(p_currentNumberOfPlayers < (m_modelAsLimits.GetMaximumNumberOfPlayers() + 1));
+    PRECONDITION(p_currentNumberOfPlayers <= m_modelAsLimits.GetMaximumNumberOfPlayers());
+
+    return p_currentNumberOfPlayers > m_modelAsLimits.GetMinimumNumberOfPlayers();
+}
+
+bool cxgui::MainWindowPresenter::CanAddAnotherPlayer(std::size_t p_currentNumberOfPlayers) const
+{
+    PRECONDITION(p_currentNumberOfPlayers <= m_modelAsLimits.GetMaximumNumberOfPlayers());
 
     return p_currentNumberOfPlayers < m_modelAsLimits.GetMaximumNumberOfPlayers();
 }
