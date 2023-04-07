@@ -29,9 +29,6 @@
 
 #include <cxstd/algorithm.h>
 
-/*************************************************************************************************
- *                            cxstd::ComputeStricDifference
-*************************************************************************************************/
 namespace
 {
 
@@ -49,6 +46,9 @@ public:
     [[nodiscard]] static Unsortable F(){return Unsortable{'F'};}
 
     Unsortable(const Unsortable& p_rhs) = default;
+    Unsortable(Unsortable&& p_rhs) = default;
+    Unsortable& operator=(const Unsortable& p_rhs) = default;
+    Unsortable& operator=(Unsortable&& p_rhs) = default;
 
     [[nodiscard]] bool operator==(const Unsortable& p_rhs) const
     {
@@ -56,7 +56,6 @@ public:
     }
 
     // Restricted:
-    Unsortable& operator=(const Unsortable& p_rhs) = delete;
     bool operator!=(const Unsortable& p_rhs) = delete;
     bool operator<(const Unsortable& p_rhs) = delete;
     bool operator<=(const Unsortable& p_rhs) = delete;
@@ -77,6 +76,14 @@ bool operator<(const Unsortable& p_lhs, const Unsortable& p_rhs) = delete;
 bool operator<=(const Unsortable& p_lhs, const Unsortable& p_rhs) = delete;
 bool operator>(const Unsortable& p_lhs, const Unsortable& p_rhs) = delete;
 bool operator>=(const Unsortable& p_lhs, const Unsortable& p_rhs) = delete;
+
+} // namespace
+
+/*************************************************************************************************
+ *                            cxstd::ComputeStricDifference
+ ************************************************************************************************/
+namespace
+{
 
 template<typename T>
 class ComputeStrictDifferenceFixture : public testing::Test {};
@@ -218,4 +225,112 @@ TYPED_TEST(ComputeStrictDifferenceFixture, ComputeStrictDifference_LhsAndRhsNotM
 
     const Container result = cxstd::ComputeStrictDifference(lhs, rhs);
     ASSERT_TRUE(result == expected);
+}
+
+/*************************************************************************************************
+ *                                    cxstd::Unique
+ ************************************************************************************************/
+namespace
+{
+
+template<typename T>
+class UniqueFixture : public testing::Test {};
+
+using UniqueTypes = ::testing::Types<
+    std::deque<Unsortable>,
+    std::list<Unsortable>,
+    std::vector<Unsortable>
+>;
+
+TYPED_TEST_SUITE(UniqueFixture, UniqueTypes);
+
+} // namespace
+
+TYPED_TEST(UniqueFixture, Unique_EmptyCollection_DoesNothing)
+{
+    using Container = TypeParam;
+
+    Container collection;
+    ASSERT_TRUE(collection.empty());
+
+    cxstd::Unique(collection);
+    ASSERT_TRUE(collection.empty());
+}
+
+TYPED_TEST(UniqueFixture, Unique_CollectionWithNoDuplicates_DoesNothing)
+{
+    using Container = TypeParam;
+
+    Container collection
+    {
+        Unsortable::A(),
+        Unsortable::B(),
+        Unsortable::C(),
+    };
+    ASSERT_TRUE(!collection.empty());
+
+    const Container expected = collection;
+
+    cxstd::Unique(collection);
+    ASSERT_TRUE(collection == expected);
+}
+
+TYPED_TEST(UniqueFixture, Unique_CollectionWithSortedDuplicates_DuplicatesRemoved)
+{
+    using Container = TypeParam;
+
+    Container collection
+    {
+        Unsortable::A(),
+        Unsortable::B(),
+        Unsortable::B(),
+        Unsortable::C(),
+        Unsortable::D(),
+        Unsortable::E(),
+        Unsortable::E(),
+        Unsortable::E(),
+    };
+    ASSERT_TRUE(!collection.empty());
+
+    const Container expected
+    {
+        Unsortable::A(),
+        Unsortable::B(),
+        Unsortable::C(),
+        Unsortable::D(),
+        Unsortable::E(),
+    };
+
+    cxstd::Unique(collection);
+    ASSERT_TRUE(collection == expected);
+}
+
+TYPED_TEST(UniqueFixture, Unique_CollectionWithUnsortedDuplicates_DuplicatesRemoved)
+{
+    using Container = TypeParam;
+
+    Container collection
+    {
+        Unsortable::E(),
+        Unsortable::B(),
+        Unsortable::D(),
+        Unsortable::C(),
+        Unsortable::A(),
+        Unsortable::E(),
+        Unsortable::E(),
+        Unsortable::B(),
+    };
+    ASSERT_TRUE(!collection.empty());
+
+    const Container expected
+    {
+        Unsortable::E(),
+        Unsortable::B(),
+        Unsortable::D(),
+        Unsortable::C(),
+        Unsortable::A(),
+    };
+
+    cxstd::Unique(collection);
+    ASSERT_TRUE(collection == expected);
 }
