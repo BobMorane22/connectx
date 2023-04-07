@@ -23,6 +23,8 @@
 
 #include <vector>
 
+#include <cxinv/assertion.h>
+#include <cxstd/algorithm.h>
 #include <cxstd/helpers.h>
 #include <cxmodel/ChipColor.h>
 #include <cxmodel/IChip.h>
@@ -71,4 +73,16 @@ cxmodel::Status cxgui::Validate(const cxmodel::NewGameInformation& p_gameInforma
     RETURN_IF(!newGameIsWinnableStatus.IsSuccess(), newGameIsWinnableStatus);
 
     return cxmodel::MakeSuccess();
+}
+
+std::vector<cxmodel::ChipColor> cxgui::GetRemainingDefaultColors(const std::vector<cxmodel::ChipColor>& p_alreadyChosenColors,
+                                                                 const cxgui::INewGameViewPresenter& p_presenter)
+{
+    auto defaultRemainingColors = cxstd::ComputeStrictDifference(p_presenter.GetDefaultChipColors(), p_alreadyChosenColors);
+    ASSERT(!defaultRemainingColors.empty());
+
+    cxstd::Unique(defaultRemainingColors);
+    ASSERT(!defaultRemainingColors.empty());
+
+    return defaultRemainingColors;
 }

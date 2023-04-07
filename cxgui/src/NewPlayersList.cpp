@@ -92,14 +92,26 @@ public:
      * Creates a new player row, according to default values from the presenter. These default values
      * can vary according to how many players already are registered in the game.
      *
-     * @param p_presenter A New Game view compatible presenter.
-     * @param p_rowIndex  The row index.
-     * @param p_enabled   A flag indicating is a user can iterract with the row.
+     * @param p_presenter
+     *      A New Game view compatible presenter.
      *
-     * @pre The row number does not exceed the maximum number of players allowed in the game.
+     * @param p_rowIndex
+     *      The row index for this new row.
+     *
+     * @param p_alreadyChosenColors
+     *      A list of colors that cannot be picked from.
+     *
+     * @param p_enabled
+     *      A flag indicating is a user can iterract with the row.
+     *
+     * @pre
+     *      The row number does not exceed the maximum number of players allowed in the game.
      *
      **********************************************************************************************/
-    NewPlayerRow(const cxgui::INewGameViewPresenter& p_presenter, size_t p_rowIndex, EnabledState p_enabled);
+    NewPlayerRow(const cxgui::INewGameViewPresenter& p_presenter,
+                 size_t p_rowIndex,
+                 const std::vector<cxmodel::ChipColor>& p_alreadyChosenColors,
+                 EnabledState p_enabled);
 
     /***********************************************************************************************
      * @brief Default destructor.
@@ -233,6 +245,7 @@ void cxgui::NewPlayerTitleRow::SetDiscColorTitleWidth(int p_newWidth)
 
 cxgui::NewPlayerRow::NewPlayerRow(const cxgui::INewGameViewPresenter& p_presenter,
                                   size_t p_rowIndex,
+                                  const std::vector<cxmodel::ChipColor>& p_alreadyChosenColors,
                                   EnabledState p_enabled)
 {
     if(p_rowIndex > 0u)
@@ -243,10 +256,13 @@ cxgui::NewPlayerRow::NewPlayerRow(const cxgui::INewGameViewPresenter& p_presente
     m_playerName.set_text(p_presenter.GetDefaultPlayerName(p_rowIndex));
     m_playerName.set_margin_end(cxgui::CONTROL_BOTTOM_MARGIN);
 
-    m_playerDiscColor = std::make_unique<ColorComboBox>(p_presenter.GetDefaultChipColors());
+    const auto defaultColors = cxgui::GetRemainingDefaultColors(p_alreadyChosenColors, p_presenter);
+    IF_CONDITION_NOT_MET_DO(!defaultColors.empty(), return;);
+
+    m_playerDiscColor = std::make_unique<ColorComboBox>(defaultColors);
     ASSERT(m_playerDiscColor);
 
-    m_playerDiscColor->SetCurrentSelection(p_presenter.GetDefaultChipColor(p_rowIndex));
+    m_playerDiscColor->SetCurrentSelection(defaultColors.front());
 
     auto typeSwitch = std::make_unique<cxgui::OnOffSwitch>();
     if(p_presenter.GetDefaultPlayerType(p_rowIndex) == cxmodel::PlayerType::BOT) 
@@ -371,8 +387,8 @@ cxgui::NewPlayersList::NewPlayersList(const INewGameViewPresenter& p_presenter)
 
     // Since at least one player must be human, the first player is always set to human and
     // cannot be changed. This is debatable, and could be unlocked in a later release.
-    add(*Gtk::manage(new NewPlayerRow(p_presenter, 1u, EnabledState::Disabled)));
-    add(*Gtk::manage(new NewPlayerRow(p_presenter, 2u, EnabledState::Enabled)));
+    add(*Gtk::manage(new NewPlayerRow(p_presenter, 1u, GetAllColors(), EnabledState::Disabled)));
+    add(*Gtk::manage(new NewPlayerRow(p_presenter, 2u, GetAllColors(), EnabledState::Enabled)));
 
     AddColumnHeaders();
 }
@@ -449,10 +465,10 @@ bool cxgui::NewPlayersList::AddRow(const cxgui::INewGameViewPresenter& p_present
 
     const size_t sizeBefore{GetSize()};
 
-    auto row = Gtk::manage(new NewPlayerRow(p_presenter, p_rowIndex, EnabledState::Enabled));
+    auto* row = Gtk::manage(new NewPlayerRow(p_presenter, p_rowIndex, GetAllColors(), EnabledState::Enabled));
     IF_CONDITION_NOT_MET_DO(row, return false;);
     
-    IF_CONDITION_NOT_MET_DO(bool(m_rowUpdatedSlot), return false;);
+    IF_CONDITION_NOT_MET_DO(m_rowUpdatedSlot, return false;);
     row->RowUpdatedSignalConnect(m_rowUpdatedSlot);
     add(*row);
 

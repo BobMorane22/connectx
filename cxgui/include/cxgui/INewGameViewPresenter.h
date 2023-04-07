@@ -398,6 +398,24 @@ public:
 [[nodiscard]] cxmodel::Status Validate(const cxmodel::NewGameInformation& p_gameInformation,
                                        const cxgui::INewGameViewPresenter& p_presenter);
 
+/*********************************************************************************************//**
+ * @brief Gets the remainding default colors available, from a current chip color selection.
+ *
+ * Already chosen colors are filtered out, leaving less room for error.
+ *
+ * @param p_alreadyChosenColors
+ *      The list of already chosen chip colors.
+ *
+ * @param p_presenter
+ *      A New Game View compatible presenter.
+ *
+ * @return
+ *      The list of remaining available default colors, once the already chosen colors
+ *       have been filtered out.
+ *
+ ************************************************************************************************/
+[[nodiscard]] std::vector<cxmodel::ChipColor> GetRemainingDefaultColors(const std::vector<cxmodel::ChipColor>& p_alreadyChosenColors,
+                                                                        const cxgui::INewGameViewPresenter& p_presenter);
 
 }
 
