@@ -21,12 +21,17 @@
  *
  *************************************************************************************************/
 
+#include <deque>
+#include <list>
 #include <vector>
 
 #include <gtest/gtest.h>
 
 #include <cxstd/algorithm.h>
 
+/*************************************************************************************************
+ *                            cxstd::ComputeStricDifference
+*************************************************************************************************/
 namespace
 {
 
@@ -73,57 +78,79 @@ bool operator<=(const Unsortable& p_lhs, const Unsortable& p_rhs) = delete;
 bool operator>(const Unsortable& p_lhs, const Unsortable& p_rhs) = delete;
 bool operator>=(const Unsortable& p_lhs, const Unsortable& p_rhs) = delete;
 
+template<typename T>
+class ComputeStrictDifferenceFixture : public testing::Test {};
+
+using ComputeStrictDifferenceTypes = ::testing::Types<
+    std::deque<Unsortable>,
+    std::list<Unsortable>,
+    std::vector<Unsortable>
+>;
+
+TYPED_TEST_SUITE(ComputeStrictDifferenceFixture, ComputeStrictDifferenceTypes);
+
 } // namespace
 
-TEST(Algorithm, ComputeStrictDifference_LhsAndRhsEmpty_ReturnsEmpty)
+TYPED_TEST(ComputeStrictDifferenceFixture, ComputeStrictDifference_LhsAndRhsEmpty_ReturnsEmpty)
 {
-    const std::vector<Unsortable> lhs, rhs;
+    using Container = TypeParam;
+
+    Container lhs, rhs;
+
     ASSERT_TRUE(lhs.empty());
     ASSERT_TRUE(rhs.empty());
 
-    const std::vector<Unsortable> result = cxstd::ComputeStrictDifference(lhs, rhs);
+    const Container result = cxstd::ComputeStrictDifference(lhs, rhs);
     ASSERT_TRUE(result.empty());
 }
 
-TEST(Algorithm, ComputeStrictDifference_LhsEmptyButRhsNotEmpty_ReturnsEmpty)
+TYPED_TEST(ComputeStrictDifferenceFixture, ComputeStrictDifference_LhsEmptyButRhsNotEmpty_ReturnsEmpty)
 {
-    const std::vector<Unsortable> lhs;
+    using Container = TypeParam;
+
+    const Container lhs;
     ASSERT_TRUE(lhs.empty());
 
-    const std::vector<Unsortable> rhs{Unsortable::A()};
+    const Container rhs{Unsortable::A()};
     ASSERT_TRUE(!rhs.empty());
 
-    const std::vector<Unsortable> result = cxstd::ComputeStrictDifference(lhs, rhs);
+    const Container result = cxstd::ComputeStrictDifference(lhs, rhs);
     ASSERT_TRUE(result.empty());
 }
 
-TEST(Algorithm, ComputeStrictDifference_LhsNotEmptyButRhsEmpty_ReturnsLhs)
+TYPED_TEST(ComputeStrictDifferenceFixture, ComputeStrictDifference_LhsNotEmptyButRhsEmpty_ReturnsLhs)
 {
-    const std::vector<Unsortable> lhs{Unsortable::A()};
+    using Container = TypeParam;
+
+    const Container lhs{Unsortable::A()};
     ASSERT_TRUE(!lhs.empty());
 
-    const std::vector<Unsortable> rhs;
+    const Container rhs;
     ASSERT_TRUE(rhs.empty());
 
-    const std::vector<Unsortable> result = cxstd::ComputeStrictDifference(lhs, rhs);
+    const Container result = cxstd::ComputeStrictDifference(lhs, rhs);
     ASSERT_TRUE(result == lhs);
 }
 
-TEST(Algorithm, ComputeStrictDifference_LhsAndRhsMutuallyExclusive_ReturnsLhs)
+TYPED_TEST(ComputeStrictDifferenceFixture, ComputeStrictDifference_LhsAndRhsMutuallyExclusive_ReturnsLhs)
 {
-    const std::vector<Unsortable> lhs{Unsortable::A()};
+    using Container = TypeParam;
+
+    const Container lhs{Unsortable::A()};
     ASSERT_TRUE(!lhs.empty());
 
-    const std::vector<Unsortable> rhs{Unsortable::B()};
+    const Container rhs{Unsortable::B()};
     ASSERT_TRUE(!rhs.empty());
 
-    const std::vector<Unsortable> result = cxstd::ComputeStrictDifference(lhs, rhs);
+    const Container result = cxstd::ComputeStrictDifference(lhs, rhs);
     ASSERT_TRUE(result == lhs);
 }
 
-TEST(Algorithm, ComputeStrictDifference_LhsAndRhsNotMutuallyExclusiveSorted_ReturnsDifference)
+TYPED_TEST(ComputeStrictDifferenceFixture, ComputeStrictDifference_LhsAndRhsNotMutuallyExclusiveSorted_ReturnsDifference)
 {
-    const std::vector<Unsortable> lhs
+    using Container = TypeParam;
+
+    const Container lhs
     {
         Unsortable::A(),
         Unsortable::B(),
@@ -135,7 +162,7 @@ TEST(Algorithm, ComputeStrictDifference_LhsAndRhsNotMutuallyExclusiveSorted_Retu
     };
     ASSERT_TRUE(!lhs.empty());
 
-    const std::vector<Unsortable> rhs
+    const Container rhs
     {
         Unsortable::B(),
         Unsortable::D(),
@@ -143,7 +170,7 @@ TEST(Algorithm, ComputeStrictDifference_LhsAndRhsNotMutuallyExclusiveSorted_Retu
     }; 
     ASSERT_TRUE(!rhs.empty());
 
-    const std::vector<Unsortable> expected
+    const Container expected
     {
         Unsortable::A(),
         Unsortable::C(),
@@ -152,13 +179,15 @@ TEST(Algorithm, ComputeStrictDifference_LhsAndRhsNotMutuallyExclusiveSorted_Retu
     };
     ASSERT_TRUE(!expected.empty());
 
-    const std::vector<Unsortable> result = cxstd::ComputeStrictDifference(lhs, rhs);
+    const Container result = cxstd::ComputeStrictDifference(lhs, rhs);
     ASSERT_TRUE(result == expected);
 }
 
-TEST(Algorithm, ComputeStrictDifference_LhsAndRhsNotMutuallyExclusiveUnsorted_ReturnsDifference)
+TYPED_TEST(ComputeStrictDifferenceFixture, ComputeStrictDifference_LhsAndRhsNotMutuallyExclusiveUnsorted_ReturnsDifference)
 {
-    const std::vector<Unsortable> lhs
+    using Container = TypeParam;
+
+    const Container lhs
     {
         Unsortable::E(),
         Unsortable::B(),
@@ -170,7 +199,7 @@ TEST(Algorithm, ComputeStrictDifference_LhsAndRhsNotMutuallyExclusiveUnsorted_Re
     };
     ASSERT_TRUE(!lhs.empty());
 
-    const std::vector<Unsortable> rhs
+    const Container rhs
     {
         Unsortable::F(),
         Unsortable::B(),
@@ -178,7 +207,7 @@ TEST(Algorithm, ComputeStrictDifference_LhsAndRhsNotMutuallyExclusiveUnsorted_Re
     }; 
     ASSERT_TRUE(!rhs.empty());
 
-    const std::vector<Unsortable> expected
+    const Container expected
     {
         Unsortable::E(),
         Unsortable::C(),
@@ -187,6 +216,6 @@ TEST(Algorithm, ComputeStrictDifference_LhsAndRhsNotMutuallyExclusiveUnsorted_Re
     };
     ASSERT_TRUE(!expected.empty());
 
-    const std::vector<Unsortable> result = cxstd::ComputeStrictDifference(lhs, rhs);
+    const Container result = cxstd::ComputeStrictDifference(lhs, rhs);
     ASSERT_TRUE(result == expected);
 }
