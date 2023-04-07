@@ -24,6 +24,7 @@
 #************************************************************************************************/
 
 set(SOURCE_FILES
+  algorithmTests.cpp
   StrongTypeTests.cpp
   helpersTests.cpp
 )
