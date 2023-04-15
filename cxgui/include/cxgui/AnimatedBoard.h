@@ -134,6 +134,11 @@ private:
 
     BoardElementCache m_boardElementsCache;
 
+    // Surface in RAM on which to perform the drawing, in memory, before effectively
+    // drawing on the screen. Caching this surface here avois recreating it on every
+    // frame draw, which helps performancewise:
+    Cairo::RefPtr<Cairo::Surface> m_surfaceBuffer;
+
     // Signals:
     sigc::connection m_mouseButtonPressedConnection;
     sigc::connection m_mouseMotionConnection;

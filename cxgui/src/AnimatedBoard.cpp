@@ -161,10 +161,30 @@ bool cxgui::AnimatedBoard::on_draw(const Cairo::RefPtr<Cairo::Context>& p_contex
 
     m_animationModel->Update(m_lastFrameDimensions, m_moveLeftAnimationInfo.m_isAnimating || m_moveRightAnimationInfo.m_isAnimating);
 
-    auto buffer = Cairo::ImageSurface::create(Cairo::Format::FORMAT_ARGB32,
-                                              m_animationModel->GetAnimatedAreaDimensions().m_width.Get(),
-                                              m_animationModel->GetAnimatedAreaDimensions().m_height.Get());
-    const auto bufferContext = Cairo::Context::create(buffer);
+    if(!m_surfaceBuffer)
+    {
+        m_surfaceBuffer = Cairo::ImageSurface::create(Cairo::Format::FORMAT_ARGB32,
+                                                      m_animationModel->GetAnimatedAreaDimensions().m_width.Get(),
+                                                      m_animationModel->GetAnimatedAreaDimensions().m_height.Get());
+        ASSERT(m_surfaceBuffer);
+    }
+
+    const auto bufferContext = Cairo::Context::create(m_surfaceBuffer);
+    
+    // We clear the surface:
+    {
+        const cxgui::ContextRestoreRAII contextRestoreRAII{bufferContext};
+
+        cxgui::MakeRectanglarPath(bufferContext,
+                                  {0.0, 0.0},
+                                  m_animationModel->GetAnimatedAreaDimensions().m_height.Get(),
+                                  m_animationModel->GetAnimatedAreaDimensions().m_width.Get());
+
+        bufferContext->set_source_rgba(0.0, 0.0, 0.0, 0.0);
+        bufferContext->set_operator(Cairo::Operator::OPERATOR_SOURCE);
+        bufferContext->fill_preserve();
+        bufferContext->stroke();
+    }
 
     // Draw colum highlight:
     DrawActiveColumnHighlight(bufferContext);
@@ -195,7 +215,7 @@ bool cxgui::AnimatedBoard::on_draw(const Cairo::RefPtr<Cairo::Context>& p_contex
     }
 
     // Draw the whole thing:
-    p_context->set_source(buffer, 0, 0);
+    p_context->set_source(m_surfaceBuffer, 0, 0);
     p_context->paint();
 
     return true;
@@ -209,7 +229,7 @@ void cxgui::AnimatedBoard::DrawActiveColumnHighlight(const Cairo::RefPtr<Cairo::
     const double cellWidth = cellDimensions.m_width.Get();
     const double cellHeight = cellDimensions.m_height.Get();
 
-    cxgui::ContextRestoreRAII contextRestoreRAII{p_context};
+    const cxgui::ContextRestoreRAII contextRestoreRAII{p_context};
 
     cxgui::MakeRectanglarPath(p_context,
                               {m_animationModel->GetChipPosition().m_x - (cellWidth / 2.0), cellHeight},
