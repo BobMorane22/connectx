@@ -162,15 +162,15 @@ bool cxgui::AnimatedBoard::on_draw(const Cairo::RefPtr<Cairo::Context>& p_contex
 
     m_animationModel->Update(m_lastFrameDimensions, m_moveLeftAnimationInfo.m_isAnimating || m_moveRightAnimationInfo.m_isAnimating);
 
-    if(!m_surfaceBuffer)
+    if(!m_surfaceCache)
     {
-        m_surfaceBuffer = Cairo::ImageSurface::create(Cairo::Format::FORMAT_ARGB32,
+        m_surfaceCache = Cairo::ImageSurface::create(Cairo::Format::FORMAT_ARGB32,
                                                       m_animationModel->GetAnimatedAreaDimensions().m_width.Get(),
                                                       m_animationModel->GetAnimatedAreaDimensions().m_height.Get());
-        ASSERT(m_surfaceBuffer);
+        ASSERT(m_surfaceCache);
     }
 
-    const auto bufferContext = Cairo::Context::create(m_surfaceBuffer);
+    const auto bufferContext = Cairo::Context::create(m_surfaceCache);
     
     // We clear the surface:
     {
@@ -206,7 +206,6 @@ bool cxgui::AnimatedBoard::on_draw(const Cairo::RefPtr<Cairo::Context>& p_contex
     }
 
     // Draw the game board:
-    m_boardElementsCache.Clear();
     for(size_t row = 0u; row < m_presenter->GetBoardHeight().Get(); ++row)
     {
         for(size_t column = 0u; column < m_presenter->GetBoardWidth().Get(); ++column)
@@ -216,7 +215,7 @@ bool cxgui::AnimatedBoard::on_draw(const Cairo::RefPtr<Cairo::Context>& p_contex
     }
 
     // Draw the whole thing:
-    p_context->set_source(m_surfaceBuffer, 0, 0);
+    p_context->set_source(m_surfaceCache, 0, 0);
     p_context->paint();
 
     return true;
@@ -232,17 +231,30 @@ void cxgui::AnimatedBoard::DrawActiveColumnHighlight(const Cairo::RefPtr<Cairo::
 
     const cxgui::ContextRestoreRAII contextRestoreRAII{p_context};
 
-    cxgui::MakeRectanglarPath(p_context,
-                              {m_animationModel->GetChipPosition().m_x - (cellWidth / 2.0), cellHeight},
-                              m_animationModel->GetAnimatedAreaDimensions().m_height.Get() - cellHeight,
-                              cellWidth);
+    if(m_columnHilightCache)
+    {
+        p_context->set_source(m_columnHilightCache, m_animationModel->GetChipPosition().m_x - (cellWidth / 2.0), cellHeight);
+        p_context->paint();
 
-    // Set background color:
-    p_context->set_source_rgba(0.3, 0.3, 0.3, 0.5);
+        return;
+    }
 
+    m_columnHilightCache = Cairo::ImageSurface::create(Cairo::Format::FORMAT_ARGB32, cellWidth, m_animationModel->GetAnimatedAreaDimensions().m_height.Get() - cellHeight);
+    ASSERT(m_columnHilightCache);
+
+    const auto bufferContext = Cairo::Context::create(m_columnHilightCache);
+    {
+        const cxgui::ContextRestoreRAII bufferContextRestoreRAII{bufferContext};
+
+        cxgui::MakeRectanglarPath(bufferContext, {0.0, 0.0}, m_animationModel->GetAnimatedAreaDimensions().m_height.Get() - cellHeight, cellWidth);
+        bufferContext->set_source_rgba(0.3, 0.3, 0.3, 0.5);
+        bufferContext->fill_preserve();
+        bufferContext->stroke();
+    }
+    
     // Draw everything:
-    p_context->fill_preserve();
-    p_context->stroke();
+    p_context->set_source(m_columnHilightCache, m_animationModel->GetChipPosition().m_x - (cellWidth / 2.0), cellHeight);
+    p_context->paint();
 }
 
 // See `on_draw()`. Basically draws a chip and the rectangular space around it (which has the board color). All
@@ -256,6 +268,9 @@ void cxgui::AnimatedBoard::DrawBoardElement(const Cairo::RefPtr<Cairo::Context>&
 
     const IGameViewPresenter::ChipColors& chipColors = m_presenter->GetBoardChipColors();
     const cxmodel::ChipColor chipColor = chipColors[p_row.Get()][p_column.Get()];
+
+    const cxgui::ContextRestoreRAII contextRestoreRAII{p_context};
+
     if(m_boardElementsCache.HasElement(chipColor))
     {
         // Paint that part to the canvas:
@@ -273,7 +288,7 @@ void cxgui::AnimatedBoard::DrawBoardElement(const Cairo::RefPtr<Cairo::Context>&
                                               cellHeight + m_animationModel->GetLineWidth(cxgui::Feature::CELL).Get());
     const auto bufferContext = Cairo::Context::create(buffer);
     {
-        cxgui::ContextRestoreRAII contextRestoreRAII{bufferContext};
+        cxgui::ContextRestoreRAII bufferContextRestoreRAII{bufferContext};
 
         // Draw paths for chip space and the cell contour:
         cxgui::MakeCircularPath(bufferContext, {cellWidth / 2.0, cellHeight / 2.0}, radius);
@@ -290,7 +305,7 @@ void cxgui::AnimatedBoard::DrawBoardElement(const Cairo::RefPtr<Cairo::Context>&
 
     // Add border and draw model chips:
     {
-        cxgui::ContextRestoreRAII contextRestoreRAII{bufferContext};
+        cxgui::ContextRestoreRAII bufferContextRestoreRAII{bufferContext};
 
         cxgui::MakeCircularPath(bufferContext, {cellWidth / 2.0, cellHeight / 2.0}, radius);
 
@@ -391,7 +406,8 @@ bool cxgui::AnimatedBoard::OnResize(const cxmath::Dimensions& p_newDimensions)
     RETURN_IF(m_lastFrameDimensions.m_width == cxmath::Width{0.0}, cxgui::STOP_EVENT_PROPAGATION);
 
     m_boardElementsCache.Clear();
-    m_surfaceBuffer.clear();
+    m_columnHilightCache.clear();
+    m_surfaceCache.clear();
 
     if(!cxmath::AreLogicallyEqual(p_newDimensions.m_height.Get(), m_lastFrameDimensions.m_height.Get()))
     {

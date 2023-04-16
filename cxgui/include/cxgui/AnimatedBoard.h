@@ -135,8 +135,9 @@ private:
     // Surfaces in RAM on which to perform the drawing, in memory, before effectively
     // drawing on the screen. Caching these surfaces here avoids recreating them on every
     // frame draw, which helps performancewise:
-    BoardElementCache m_boardElementsCache;          // For individual discs.
-    Cairo::RefPtr<Cairo::Surface> m_surfaceBuffer;   // The whole drawn surface.
+    BoardElementCache m_boardElementsCache;             // For individual discs.
+    Cairo::RefPtr<Cairo::Surface> m_columnHilightCache; // For the column hilight.
+    Cairo::RefPtr<Cairo::Surface> m_surfaceCache;       // For the whole drawn surface.
 
     // Signals:
     sigc::connection m_mouseButtonPressedConnection;
