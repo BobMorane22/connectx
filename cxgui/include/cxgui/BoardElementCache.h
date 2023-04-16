@@ -28,18 +28,13 @@
 
 #include <cxmodel/ChipColor.h>
 
-namespace Gdk
-{
-    class Pixbuf;
-}
-
 /** @cond */
 /*  We explicitely tell Doxygen not to document this part. Otherwise, it is included even
-    though is it related to Glib, not Connect X.*/
-namespace Glib
+    though is it related to Cairo, not Connect X.*/
+namespace Cairo
 {
-    template<typename T>
-    class RefPtr;
+    template<typename T> class RefPtr;
+    class Surface;
 }
 /** @endcond */
 
@@ -68,7 +63,7 @@ namespace cxgui
  *                                     |       +  +       |
  *                                     +------------------+
  *
- * Before entering the cache, these board elements must first be drawn onto a Gtk::Pixbuf
+ * Before entering the cache, these board elements must first be drawn onto a `Cairo::Surface`
  * surface. In the cache, the board element is stored with its corresponding disc color as
  * the key. Using this key, one can later retreive the board element and reuse it instead
  * of redrawing everything.
@@ -95,7 +90,7 @@ public:
      *      The board element to cache.
      *
      *********************************************************************************************/
-    void Add(const cxmodel::ChipColor& p_color, const Glib::RefPtr<Gdk::Pixbuf> p_surface);
+    void Add(const cxmodel::ChipColor& p_color, const Cairo::RefPtr<Cairo::Surface>& p_surface);
 
     /******************************************************************************************//**
      * @brief Gets the correspondig cached board element from a key.
@@ -110,7 +105,7 @@ public:
      * @return The cached board element.
      *
      *********************************************************************************************/
-    Glib::RefPtr<Gdk::Pixbuf> Get(const cxmodel::ChipColor& p_color) const;
+    const Cairo::RefPtr<Cairo::Surface>& Get(const cxmodel::ChipColor& p_color) const;
 
     /******************************************************************************************//**
      * @brief Clears all key/elements pairs from the cache.
@@ -132,7 +127,7 @@ public:
 private:
 
     std::vector<cxmodel::ChipColor> m_keys;
-    std::vector<Glib::RefPtr<Gdk::Pixbuf>> m_surfaces;
+    std::vector<Cairo::RefPtr<Cairo::Surface>> m_surfaces;
 
 };
 

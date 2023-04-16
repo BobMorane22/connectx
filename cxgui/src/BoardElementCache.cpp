@@ -28,7 +28,7 @@
 #include <cxinv/assertion.h>
 #include <cxgui/BoardElementCache.h>
 
-void cxgui::BoardElementCache::Add(const cxmodel::ChipColor& p_color, const Glib::RefPtr<Gdk::Pixbuf> p_surface)
+void cxgui::BoardElementCache::Add(const cxmodel::ChipColor& p_color, const Cairo::RefPtr<Cairo::Surface>& p_surface)
 {
     // Only add if not already present:
     const bool isNewKey = (std::find(m_keys.cbegin(), m_keys.cend(), p_color) == m_keys.cend());
@@ -41,7 +41,7 @@ void cxgui::BoardElementCache::Add(const cxmodel::ChipColor& p_color, const Glib
     }
 }
 
-Glib::RefPtr<Gdk::Pixbuf> cxgui::BoardElementCache::Get(const cxmodel::ChipColor& p_color) const
+const Cairo::RefPtr<Cairo::Surface>& cxgui::BoardElementCache::Get(const cxmodel::ChipColor& p_color) const
 {
     size_t index = 0;
 

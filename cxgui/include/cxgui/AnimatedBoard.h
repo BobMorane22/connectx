@@ -132,12 +132,11 @@ private:
 
     cxmath::Dimensions m_lastFrameDimensions{cxmath::Height{0.0}, cxmath::Width{0.0}};
 
-    BoardElementCache m_boardElementsCache;
-
-    // Surface in RAM on which to perform the drawing, in memory, before effectively
-    // drawing on the screen. Caching this surface here avois recreating it on every
+    // Surfaces in RAM on which to perform the drawing, in memory, before effectively
+    // drawing on the screen. Caching these surfaces here avoids recreating them on every
     // frame draw, which helps performancewise:
-    Cairo::RefPtr<Cairo::Surface> m_surfaceBuffer;
+    BoardElementCache m_boardElementsCache;          // For individual discs.
+    Cairo::RefPtr<Cairo::Surface> m_surfaceBuffer;   // The whole drawn surface.
 
     // Signals:
     sigc::connection m_mouseButtonPressedConnection;

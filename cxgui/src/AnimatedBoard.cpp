@@ -26,6 +26,7 @@
 #include <gdkmm/monitor.h>
 
 #include <cxinv/assertion.h>
+#include <cxstd/helpers.h>
 #include <cxmodel/Disc.h>
 #include <cxgui/AnimatedBoard.h>
 #include <cxgui/AnimatedBoardModel.h>
@@ -258,10 +259,9 @@ void cxgui::AnimatedBoard::DrawBoardElement(const Cairo::RefPtr<Cairo::Context>&
     if(m_boardElementsCache.HasElement(chipColor))
     {
         // Paint that part to the canvas:
-        Gdk::Cairo::set_source_pixbuf(p_context,
-                                      m_boardElementsCache.Get(chipColor),
-                                      p_column.Get() * cellWidth,
-                                      (p_row.Get() + 1) * cellHeight);
+        p_context->set_source(m_boardElementsCache.Get(chipColor),
+                              p_column.Get() * cellWidth,
+                              (p_row.Get() + 1) * cellHeight);
         p_context->paint();
 
         return;
@@ -303,12 +303,7 @@ void cxgui::AnimatedBoard::DrawBoardElement(const Cairo::RefPtr<Cairo::Context>&
     }
 
     // Add to the cache:
-    const Glib::RefPtr<Gdk::Pixbuf> boardElement = Gdk::Pixbuf::create(buffer,
-                                                                       0,
-                                                                       0,
-                                                                       cellWidth + m_animationModel->GetLineWidth(cxgui::Feature::CELL).Get(),
-                                                                       cellHeight + m_animationModel->GetLineWidth(cxgui::Feature::CELL).Get());
-    m_boardElementsCache.Add(chipColor, boardElement);
+    m_boardElementsCache.Add(chipColor, buffer);
 
     // Paint that part to the canvas:
     p_context->set_source(buffer,
@@ -392,17 +387,12 @@ bool cxgui::AnimatedBoard::Redraw()
 bool cxgui::AnimatedBoard::OnResize(const cxmath::Dimensions& p_newDimensions)
 {
     // Handling initial values to avoid division by zero:
-    if(m_lastFrameDimensions.m_height == cxmath::Height{0.0})
-    {
-        return cxgui::STOP_EVENT_PROPAGATION;
-    }
+    RETURN_IF(m_lastFrameDimensions.m_height == cxmath::Height{0.0}, cxgui::STOP_EVENT_PROPAGATION);
+    RETURN_IF(m_lastFrameDimensions.m_width == cxmath::Width{0.0}, cxgui::STOP_EVENT_PROPAGATION);
 
-    if(m_lastFrameDimensions.m_width == cxmath::Width{0.0})
-    {
-        return cxgui::STOP_EVENT_PROPAGATION;
-    }
+    m_boardElementsCache.Clear();
+    m_surfaceBuffer.clear();
 
-    // Now the real work:
     if(!cxmath::AreLogicallyEqual(p_newDimensions.m_height.Get(), m_lastFrameDimensions.m_height.Get()))
     {
         const cxgui::ScalingRatios ratios{cxgui::VerticalScalingRatio{p_newDimensions.m_height.Get() / m_lastFrameDimensions.m_height.Get()}};
