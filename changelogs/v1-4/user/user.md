@@ -1,4 +1,4 @@
-# Connect X v1.4 (Month DD, YYYY)
+# Connect X v1.4 (April 23, 2023)
 
 ## New features
 
