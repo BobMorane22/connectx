@@ -86,7 +86,7 @@ private:
 
         Record();
 
-        Gtk::TreeModelColumn<Gdk::Color> m_color;
+        Gtk::TreeModelColumn<Gdk::RGBA> m_color;
     };
 
     Record m_records;
