@@ -43,7 +43,7 @@ add_compile_options(
 option(
     GTKMM_DISABLE_ALL_DEPRECATED
     "Make sure no Gtkmm related deprecated code is available."
-    OFF)
+    ON)
 
 if(${GTKMM_DISABLE_ALL_DEPRECATED})
     add_compile_definitions(
