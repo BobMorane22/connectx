@@ -95,6 +95,7 @@ void cxgui::MainWindow::ConfigureWidgets()
     m_reinitializeMenuItem.set_label(m_presenter.GetMenuLabel(MenuItem::REINITIALIZE_GAME));
     m_undoMenuItem.set_label(m_presenter.GetMenuLabel(MenuItem::UNDO));
     m_redoMenuItem.set_label(m_presenter.GetMenuLabel(MenuItem::REDO));
+    m_quitMenuItem.set_label(m_presenter.GetMenuLabel(MenuItem::QUIT));
     m_helpMenuItem.set_label(m_presenter.GetMenuLabel(MenuItem::HELP));
     m_contentsMenuItem.set_label(m_presenter.GetMenuLabel(MenuItem::CONTENTS));
     m_aboutMenuItem.set_label(m_presenter.GetMenuLabel(MenuItem::ABOUT));
@@ -252,8 +253,17 @@ void cxgui::MainWindow::RegisterMenuBar()
                                    Gdk::ModifierType::CONTROL_MASK,
                                    Gtk::ACCEL_VISIBLE);
 
-    // Note that the <F1> accelerator is enabled by default for the
-    // contents menu, which launches the Gnome help browser.
+    m_quitMenuItem.add_accelerator("activate",
+                                   acceleratorGroup,
+                                   GDK_KEY_Q,
+                                   Gdk::ModifierType::CONTROL_MASK,
+                                   Gtk::ACCEL_VISIBLE);
+
+    m_contentsMenuItem.add_accelerator("activate",
+                                       acceleratorGroup,
+                                       GDK_KEY_F1,
+                                       ~Gdk::ModifierType::MODIFIER_MASK,
+                                       Gtk::ACCEL_VISIBLE);
 
     m_menubar.append(m_gameMenuItem);
     m_menubar.append(m_helpMenuItem);

@@ -161,13 +161,13 @@ private:
     Gtk::Menu m_gameMenu;
     Gtk::MenuItem m_newGameMenuItem;
     Gtk::MenuItem m_reinitializeMenuItem;
-    Gtk::ImageMenuItem m_undoMenuItem{Gtk::Stock::UNDO};
-    Gtk::ImageMenuItem m_redoMenuItem{Gtk::Stock::REDO};
-    Gtk::ImageMenuItem m_quitMenuItem{Gtk::Stock::QUIT};
+    Gtk::MenuItem m_undoMenuItem;
+    Gtk::MenuItem m_redoMenuItem;
+    Gtk::MenuItem m_quitMenuItem;
     Gtk::MenuItem m_helpMenuItem;
     Gtk::Menu m_helpMenu;
-    Gtk::ImageMenuItem m_contentsMenuItem{Gtk::Stock::HELP}; 
-    Gtk::ImageMenuItem m_aboutMenuItem{Gtk::Stock::ABOUT};
+    Gtk::MenuItem m_contentsMenuItem; 
+    Gtk::MenuItem m_aboutMenuItem;
 
     // Views:
     const int m_viewLeft;
