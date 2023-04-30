@@ -47,6 +47,52 @@
 #include <cxgui/StatusBarPresenter.h>
 #include <cxgui/GameResolutionDialogController.h>
 
+namespace
+{
+
+// Icon names can be found here:
+//
+//    https://specifications.freedesktop.org/icon-naming-spec/0.8/ar01s04.html
+//
+// If no icon name is specified, the menu item will only show a text label. This is
+// temporary because in Gtkmm4, `Gtk::MenuItem`s are deprecated. The "popover" technology
+// should be used instead.
+[[nodiscard]] Gtk::MenuItem* MakeMenuItem(const std::string& p_label, const std::string& p_iconName = {})
+{ 
+    IF_PRECONDITION_NOT_MET_DO(!p_label.empty(), return nullptr;);
+
+    Gtk::Grid* menuItemLabelLayout = Gtk::manage(new Gtk::Grid());
+
+    Gtk::Image* menuItemImageLabel = nullptr;
+    if(!p_iconName.empty())
+    {
+        menuItemImageLabel = Gtk::manage(new Gtk::Image(p_iconName, Gtk::BuiltinIconSize::ICON_SIZE_MENU));
+    }
+    else
+    {
+        // If no icon name is specified, we use an "empty" icon, to make sure all
+        // menu string labels are aligned, like before:
+        const Gtk::IconSize iconSize = Gtk::BuiltinIconSize::ICON_SIZE_MENU;
+        int width, height;
+        Gtk::IconSize::lookup(iconSize, width, height);
+        const auto iconSurface = Cairo::ImageSurface::create(Cairo::Format::FORMAT_ARGB32, width, height);
+        menuItemImageLabel = Gtk::manage(new Gtk::Image(iconSurface));
+    }
+    IF_CONDITION_NOT_MET_DO(menuItemImageLabel, return nullptr;);
+
+    Gtk::Label* menuItemTextLabel = Gtk::manage(new Gtk::Label(p_label));
+    menuItemLabelLayout->attach(*menuItemImageLabel, 0, 0, 1, 1);
+    menuItemLabelLayout->attach(*menuItemTextLabel, 1, 0, 1, 1);
+    menuItemLabelLayout->set_column_spacing(5);
+    
+    Gtk::MenuItem* menuItem = Gtk::manage(new Gtk::MenuItem(*menuItemLabelLayout));
+
+    POSTCONDITION(menuItem);
+    return menuItem;
+}
+
+} // namespace
+
 cxgui::MainWindow::MainWindow(Gtk::Application& p_gtkApplication,
                               cxmodel::ModelSubject& p_model,
                               cxgui::IMainWindowController& p_controller,
@@ -58,6 +104,11 @@ cxgui::MainWindow::MainWindow(Gtk::Application& p_gtkApplication,
  , m_viewLeft{0}
  , m_viewTop{1}
 {
+    // This should be located elsewhere. For now, I don't have a choice to locate it
+    // here because of the pointer nature of the attribute. To be moved when passing
+    // to popover menus.
+    m_contentsMenuItem = MakeMenuItem(m_presenter.GetMenuLabel(MenuItem::CONTENTS), "help-contents");
+    m_aboutMenuItem = MakeMenuItem(m_presenter.GetMenuLabel(MenuItem::ABOUT));
 }
 
 void cxgui::MainWindow::ConfigureWindow()
@@ -97,8 +148,6 @@ void cxgui::MainWindow::ConfigureWidgets()
     m_redoMenuItem.set_label(m_presenter.GetMenuLabel(MenuItem::REDO));
     m_quitMenuItem.set_label(m_presenter.GetMenuLabel(MenuItem::QUIT));
     m_helpMenuItem.set_label(m_presenter.GetMenuLabel(MenuItem::HELP));
-    m_contentsMenuItem.set_label(m_presenter.GetMenuLabel(MenuItem::CONTENTS));
-    m_aboutMenuItem.set_label(m_presenter.GetMenuLabel(MenuItem::ABOUT));
 
     m_model.Attach(m_statusbarPresenter.get());
     m_statusbarPresenter->Attach(m_statusbar.get());
@@ -111,8 +160,8 @@ void cxgui::MainWindow::ConfigureSignalHandlers()
     m_undoMenuItem.signal_activate().connect([this]{OnUndo();});
     m_redoMenuItem.signal_activate().connect([this]{OnRedo();});
     m_quitMenuItem.signal_activate().connect([this](){m_window.close();});
-    m_contentsMenuItem.signal_activate().connect([this](){OnHelpContentsRequested();});
-    m_aboutMenuItem.signal_activate().connect([this](){OnCreateAboutWindow();});
+    m_contentsMenuItem->signal_activate().connect([this](){OnHelpContentsRequested();});
+    m_aboutMenuItem->signal_activate().connect([this](){OnCreateAboutWindow();});
 }
 
 int cxgui::MainWindow::Show()
@@ -259,7 +308,7 @@ void cxgui::MainWindow::RegisterMenuBar()
                                    Gdk::ModifierType::CONTROL_MASK,
                                    Gtk::ACCEL_VISIBLE);
 
-    m_contentsMenuItem.add_accelerator("activate",
+    m_contentsMenuItem->add_accelerator("activate",
                                        acceleratorGroup,
                                        GDK_KEY_F1,
                                        ~Gdk::ModifierType::MODIFIER_MASK,
@@ -274,8 +323,8 @@ void cxgui::MainWindow::RegisterMenuBar()
     m_gameMenu.append(m_redoMenuItem);
     m_gameMenu.append(m_quitMenuItem);
     m_helpMenuItem.set_submenu(m_helpMenu);
-    m_helpMenu.append(m_contentsMenuItem);
-    m_helpMenu.append(m_aboutMenuItem);
+    m_helpMenu.append(*m_contentsMenuItem);
+    m_helpMenu.append(*m_aboutMenuItem);
 
     m_newGameMenuItem.set_sensitive(m_presenter.IsNewGamePossible());
     m_reinitializeMenuItem.set_sensitive(m_presenter.IsCurrentGameReinitializationPossible());

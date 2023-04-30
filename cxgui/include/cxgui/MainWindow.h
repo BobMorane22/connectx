@@ -166,8 +166,8 @@ private:
     Gtk::MenuItem m_quitMenuItem;
     Gtk::MenuItem m_helpMenuItem;
     Gtk::Menu m_helpMenu;
-    Gtk::MenuItem m_contentsMenuItem; 
-    Gtk::MenuItem m_aboutMenuItem;
+    Gtk::MenuItem* m_contentsMenuItem;
+    Gtk::MenuItem* m_aboutMenuItem;
 
     // Views:
     const int m_viewLeft;
