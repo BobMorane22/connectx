@@ -159,11 +159,11 @@ private:
     Gtk::MenuBar m_menubar;
     Gtk::MenuItem m_gameMenuItem;
     Gtk::Menu m_gameMenu;
-    Gtk::MenuItem m_newGameMenuItem;
-    Gtk::MenuItem m_reinitializeMenuItem;
-    Gtk::MenuItem m_undoMenuItem;
-    Gtk::MenuItem m_redoMenuItem;
-    Gtk::MenuItem m_quitMenuItem;
+    Gtk::MenuItem* m_newGameMenuItem;
+    Gtk::MenuItem* m_reinitializeMenuItem;
+    Gtk::MenuItem* m_undoMenuItem;
+    Gtk::MenuItem* m_redoMenuItem;
+    Gtk::MenuItem* m_quitMenuItem;
     Gtk::MenuItem m_helpMenuItem;
     Gtk::Menu m_helpMenu;
     Gtk::MenuItem* m_contentsMenuItem;
