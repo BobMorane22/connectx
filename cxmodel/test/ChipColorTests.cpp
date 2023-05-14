@@ -66,3 +66,33 @@ TEST(ChipColor, /*DISABLED_*/ComputeHSL_RGBRandomColor_HSLComputed)
     const double luminosity = cxmodel::ComputeLuminosity(random);
     ASSERT_NEAR(0.374990, luminosity, 1e-6);
 }
+
+TEST(ChipColor, /*DISABLED*/ColorFactories_RunTime_ColorsReturned)
+{
+    ASSERT_TRUE(cxmodel::MakeTransparent() == cxmodel::ChipColor(0u, 0u, 0u, 0u));
+    ASSERT_TRUE(cxmodel::MakeRed() == cxmodel::ChipColor(63222u, 6425u, 13878u));
+    ASSERT_TRUE(cxmodel::MakeBlue() == cxmodel::ChipColor(7453u, 34695u, 65535u));
+    ASSERT_TRUE(cxmodel::MakeYellow() == cxmodel::ChipColor(64764u, 54507u, 9252u));
+    ASSERT_TRUE(cxmodel::MakeGreen() == cxmodel::ChipColor(1028u, 56797u, 5911u));
+    ASSERT_TRUE(cxmodel::MakePink() == cxmodel::ChipColor(62194u, 29041u, 62194u));
+    ASSERT_TRUE(cxmodel::MakeOrange() == cxmodel::ChipColor(64764u, 29041u, 3855u));
+    ASSERT_TRUE(cxmodel::MakeAqua() == cxmodel::ChipColor(16191u, 61166u, 58339u));
+    ASSERT_TRUE(cxmodel::MakeBlack() == cxmodel::ChipColor(10280u, 7967u, 8481u));
+    ASSERT_TRUE(cxmodel::MakeLilac() == cxmodel::ChipColor(31611u, 15163u, 65535u));
+    ASSERT_TRUE(cxmodel::MakeSalmon() == cxmodel::ChipColor(65535u, 41377u, 33410u));
+}
+
+TEST(ChipColor, /*DISABLED*/ColorFactories_CompileTime_ColorsReturned)
+{
+    static_assert(cxmodel::MakeTransparent() == cxmodel::ChipColor{0u, 0u, 0u, 0u});
+    static_assert(cxmodel::MakeRed() == cxmodel::ChipColor{63222u, 6425u, 13878u});
+    static_assert(cxmodel::MakeBlue() == cxmodel::ChipColor{7453u, 34695u, 65535u});
+    static_assert(cxmodel::MakeYellow() == cxmodel::ChipColor{64764u, 54507u, 9252u});
+    static_assert(cxmodel::MakeGreen() == cxmodel::ChipColor{1028u, 56797u, 5911u});
+    static_assert(cxmodel::MakePink() == cxmodel::ChipColor{62194u, 29041u, 62194u});
+    static_assert(cxmodel::MakeOrange() == cxmodel::ChipColor{64764u, 29041u, 3855u});
+    static_assert(cxmodel::MakeAqua() == cxmodel::ChipColor{16191u, 61166u, 58339u});
+    static_assert(cxmodel::MakeBlack() == cxmodel::ChipColor{10280u, 7967u, 8481u});
+    static_assert(cxmodel::MakeLilac() == cxmodel::ChipColor{31611u, 15163u, 65535u});
+    static_assert(cxmodel::MakeSalmon() == cxmodel::ChipColor{65535u, 41377u, 33410u});
+}
