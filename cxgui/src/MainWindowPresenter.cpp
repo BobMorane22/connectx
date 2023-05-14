@@ -320,16 +320,16 @@ std::vector<cxmodel::ChipColor> cxgui::MainWindowPresenter::GetDefaultChipColors
 {
     std::vector<cxmodel::ChipColor> colors;
 
-    colors.push_back(cxmodel::ChipColor::MakePredefined(cxmodel::ChipColor::Predefined::RED));
-    colors.push_back(cxmodel::ChipColor::MakePredefined(cxmodel::ChipColor::Predefined::GREEN));
-    colors.push_back(cxmodel::ChipColor::MakePredefined(cxmodel::ChipColor::Predefined::YELLOW));
-    colors.push_back(cxmodel::ChipColor::MakePredefined(cxmodel::ChipColor::Predefined::AQUA));
-    colors.push_back(cxmodel::ChipColor::MakePredefined(cxmodel::ChipColor::Predefined::FUSCHIA));
-    colors.push_back(cxmodel::ChipColor::MakePredefined(cxmodel::ChipColor::Predefined::GRAY));
-    colors.push_back(cxmodel::ChipColor::MakePredefined(cxmodel::ChipColor::Predefined::LIME));
-    colors.push_back(cxmodel::ChipColor::MakePredefined(cxmodel::ChipColor::Predefined::MAROON));
-    colors.push_back(cxmodel::ChipColor::MakePredefined(cxmodel::ChipColor::Predefined::OLIVE));
-    colors.push_back(cxmodel::ChipColor::MakePredefined(cxmodel::ChipColor::Predefined::TEAL));
+    colors.push_back(cxmodel::MakeRed());
+    colors.push_back(cxmodel::MakeGreen());
+    colors.push_back(cxmodel::MakeYellow());
+    colors.push_back(cxmodel::MakeBlue());
+    colors.push_back(cxmodel::MakePink());
+    colors.push_back(cxmodel::MakeOrange());
+    colors.push_back(cxmodel::MakeAqua());
+    colors.push_back(cxmodel::MakeBlack());
+    colors.push_back(cxmodel::MakeLilac());
+    colors.push_back(cxmodel::MakeSalmon());
 
     return colors;
 }

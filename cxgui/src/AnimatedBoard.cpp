@@ -295,7 +295,7 @@ void cxgui::AnimatedBoard::DrawBoardElement(const Cairo::RefPtr<Cairo::Context>&
         cxgui::MakeRectanglarPath(bufferContext, {0.0, 0.0}, cellHeight, cellWidth);
 
         // Set background color:
-        bufferContext->set_source_rgba(0.0, 0.0, 0.8, 1.0);
+        bufferContext->set_source_rgba(0.129411764705882, 0.129411764705882, 0.780392156862745, 1.0);
 
         // Draw everything:
         bufferContext->set_fill_rule(Cairo::FILL_RULE_EVEN_ODD);

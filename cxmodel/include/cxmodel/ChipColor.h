@@ -24,6 +24,8 @@
 #ifndef CHIPCOLOR_H_B5759AA2_F394_4B95_900C_C9DEA836633B
 #define CHIPCOLOR_H_B5759AA2_F394_4B95_900C_C9DEA836633B
 
+#include <limits>
+
 #include "Color.h"
 
 namespace cxmodel
@@ -56,7 +58,7 @@ using ChipColor = Color<unsigned short>;
  ********************************************************************************************/
 [[nodiscard]] constexpr ChipColor MakeRed()
 {
-    return ChipColor::MakePredefined(ChipColor::Predefined::RED);
+    return ChipColor{63222u, 6425u, 13878u};
 }
 
 /******************************************************************************************//**
@@ -68,7 +70,7 @@ using ChipColor = Color<unsigned short>;
  ********************************************************************************************/
 [[nodiscard]] constexpr ChipColor MakeBlue()
 {
-    return ChipColor::MakePredefined(ChipColor::Predefined::BLUE);
+    return ChipColor{7453u, 34695u, 65535u};
 }
 
 /******************************************************************************************//**
@@ -80,7 +82,7 @@ using ChipColor = Color<unsigned short>;
  ********************************************************************************************/
 [[nodiscard]] constexpr ChipColor MakeYellow()
 {
-    return ChipColor::MakePredefined(ChipColor::Predefined::YELLOW);
+    return ChipColor{64764u, 54507u, 9252u};
 }
 
 /******************************************************************************************//**
@@ -92,7 +94,79 @@ using ChipColor = Color<unsigned short>;
  ********************************************************************************************/
 [[nodiscard]] constexpr ChipColor MakeGreen()
 {
-    return ChipColor::MakePredefined(ChipColor::Predefined::GREEN);
+    return ChipColor{1028u, 56797u, 5911u};
+}
+
+/******************************************************************************************//**
+ * @brief Makes the pink color.
+ *
+ * @return
+ *      A pink chip color instance.
+ *
+ ********************************************************************************************/
+[[nodiscard]] constexpr ChipColor MakePink()
+{
+    return ChipColor{62194u, 29041u, 62194u};
+}
+
+/******************************************************************************************//**
+ * @brief Makes the orange color.
+ *
+ * @return
+ *      A orange chip color instance.
+ *
+ ********************************************************************************************/
+[[nodiscard]] constexpr ChipColor MakeOrange()
+{
+    return ChipColor{64764u, 29041u, 3855u};
+}
+
+/******************************************************************************************//**
+ * @brief Makes the aqua color.
+ *
+ * @return
+ *      A aqua chip color instance.
+ *
+ ********************************************************************************************/
+[[nodiscard]] constexpr ChipColor MakeAqua()
+{
+    return ChipColor{16191u, 61166u, 58339u};
+}
+
+/******************************************************************************************//**
+ * @brief Makes the black color.
+ *
+ * @return
+ *      A black chip color instance.
+ *
+ ********************************************************************************************/
+[[nodiscard]] constexpr ChipColor MakeBlack()
+{
+    return ChipColor{10280u, 7967u, 8481u};
+}
+
+/******************************************************************************************//**
+ * @brief Makes the lilac color.
+ *
+ * @return
+ *      A lilac chip color instance.
+ *
+ ********************************************************************************************/
+[[nodiscard]] constexpr ChipColor MakeLilac()
+{
+    return ChipColor{31611u, 15163u, 65535u};
+}
+
+/******************************************************************************************//**
+ * @brief Makes the salmon color.
+ *
+ * @return
+ *      A salmon chip color instance.
+ *
+ ********************************************************************************************/
+[[nodiscard]] constexpr ChipColor MakeSalmon()
+{
+    return ChipColor{65535u, 41377u, 33410u};
 }
 
 /******************************************************************************************//**
