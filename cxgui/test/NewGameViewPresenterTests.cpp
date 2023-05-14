@@ -203,16 +203,16 @@ TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetDefaultChipColors_NewGame
     const auto defaults = GetNewGameViewPresenter().GetDefaultChipColors();
 
     ASSERT_TRUE(defaults.size() == 10u);
-    ASSERT_TRUE(defaults[0] == cxmodel::ChipColor::MakePredefined(cxmodel::ChipColor::Predefined::RED));
-    ASSERT_TRUE(defaults[1] == cxmodel::ChipColor::MakePredefined(cxmodel::ChipColor::Predefined::GREEN));
-    ASSERT_TRUE(defaults[2] == cxmodel::ChipColor::MakePredefined(cxmodel::ChipColor::Predefined::YELLOW));
-    ASSERT_TRUE(defaults[3] == cxmodel::ChipColor::MakePredefined(cxmodel::ChipColor::Predefined::AQUA));
-    ASSERT_TRUE(defaults[4] == cxmodel::ChipColor::MakePredefined(cxmodel::ChipColor::Predefined::FUSCHIA));
-    ASSERT_TRUE(defaults[5] == cxmodel::ChipColor::MakePredefined(cxmodel::ChipColor::Predefined::GRAY));
-    ASSERT_TRUE(defaults[6] == cxmodel::ChipColor::MakePredefined(cxmodel::ChipColor::Predefined::LIME));
-    ASSERT_TRUE(defaults[7] == cxmodel::ChipColor::MakePredefined(cxmodel::ChipColor::Predefined::MAROON));
-    ASSERT_TRUE(defaults[8] == cxmodel::ChipColor::MakePredefined(cxmodel::ChipColor::Predefined::OLIVE));
-    ASSERT_TRUE(defaults[9] == cxmodel::ChipColor::MakePredefined(cxmodel::ChipColor::Predefined::TEAL));
+    ASSERT_TRUE(defaults[0u] == cxmodel::MakeRed());
+    ASSERT_TRUE(defaults[1u] == cxmodel::MakeGreen());
+    ASSERT_TRUE(defaults[2u] == cxmodel::MakeYellow());
+    ASSERT_TRUE(defaults[3u] == cxmodel::MakeBlue());
+    ASSERT_TRUE(defaults[4u] == cxmodel::MakePink());
+    ASSERT_TRUE(defaults[5u] == cxmodel::MakeOrange());
+    ASSERT_TRUE(defaults[6u] == cxmodel::MakeAqua());
+    ASSERT_TRUE(defaults[7u] == cxmodel::MakeBlack());
+    ASSERT_TRUE(defaults[8u] == cxmodel::MakeLilac());
+    ASSERT_TRUE(defaults[9u] == cxmodel::MakeSalmon());
 }
 
 TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetDefaultPlayerType_NewGamePresenter_DefaultValueReturned)

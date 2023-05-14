@@ -29,7 +29,7 @@ TEST(ChipColor, /*DISABLED_*/MakeFromHSLA_RedFromHSLA_RedReturned)
 {
     using namespace cxmodel;
 
-    const cxmodel::ChipColor expectedRed = cxmodel::MakeRed();
+    const cxmodel::ChipColor expectedRed{65535u, 0u, 0u};
     const cxmodel::ChipColor result = cxmodel::MakeFromHSLA(0.0, 1.0, 0.5, 1.0);
 
     ASSERT_EQ(expectedRed, result);
@@ -37,7 +37,7 @@ TEST(ChipColor, /*DISABLED_*/MakeFromHSLA_RedFromHSLA_RedReturned)
 
 TEST(ChipColor, /*DISABLED_*/ComputeHSL_RGBRedColor_HSLComputed)
 {
-    const cxmodel::ChipColor red = cxmodel::MakeRed();
+    const cxmodel::ChipColor red{65535u, 0u, 0u};
 
     const double hue = cxmodel::ComputeHue(red);
     ASSERT_EQ(0.0, hue);
