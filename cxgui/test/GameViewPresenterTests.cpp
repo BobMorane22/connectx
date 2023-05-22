@@ -69,3 +69,15 @@ TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetBoardHeight_GamePresenter
 {
     ASSERT_EQ(GetGameViewPresenter().GetGameViewBoardHeight(), GetLimitsModel().GetMinimumGridHeight());
 }
+
+TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetGameViewBoardColor_GamePresenter_ColorReturned)
+{
+    constexpr cxgui::Color expectedColor{8481u, 8481u, 51143u};
+    ASSERT_EQ(GetGameViewPresenter().GetGameViewBoardColor(), expectedColor);
+}
+
+TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetGameViewColumnHighlightColor_GamePresenter_ColorReturned)
+{
+    constexpr cxgui::Color expectedColor{19660u, 19660u, 19660u, 32767u};
+    ASSERT_EQ(GetGameViewPresenter().GetGameViewColumnHighlightColor(), expectedColor);
+}

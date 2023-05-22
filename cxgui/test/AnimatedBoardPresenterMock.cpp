@@ -43,6 +43,16 @@ cxmodel::Width AnimatedBoardPresenterMock::GetBoardWidth() const
     return m_boardWidth;
 }
 
+cxgui::Color AnimatedBoardPresenterMock::GetGameViewBoardColor() const
+{
+    return cxgui::Color{8481u, 8481u, 51143u};
+}
+
+cxgui::Color AnimatedBoardPresenterMock::GetGameViewColumnHighlightColor() const
+{
+    return cxgui::Color{19660u, 19660u, 19660u, 32767u};
+}
+
 cxmodel::ChipColor AnimatedBoardPresenterMock::GetActivePlayerChipColor() const
 {
     return cxmodel::MakeTransparent();

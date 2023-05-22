@@ -37,6 +37,8 @@ public:
     void Sync() override;
     [[nodiscard]] cxmodel::Height GetBoardHeight() const override;
     [[nodiscard]] cxmodel::Width GetBoardWidth() const override;
+    [[nodiscard]] cxgui::Color GetGameViewBoardColor() const override;
+    [[nodiscard]] cxgui::Color GetGameViewColumnHighlightColor() const override;
     [[nodiscard]] cxmodel::ChipColor GetActivePlayerChipColor() const override;
     [[nodiscard]] const cxgui::IGameViewPresenter::ChipColors& GetBoardChipColors() const override;
     [[nodiscard]] cxmodel::Column GetBotTarget() const override;

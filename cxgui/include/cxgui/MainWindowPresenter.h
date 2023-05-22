@@ -145,6 +145,8 @@ public:
 
     size_t GetGameViewBoardWidth() const override;
     size_t GetGameViewBoardHeight() const override;
+    [[nodiscard]] cxgui::Color GetGameViewBoardColor() const override;
+    [[nodiscard]] cxgui::Color GetGameViewColumnHighlightColor() const override;
 
     const ChipColors& GetGameViewChipColors() const override;
 

@@ -507,6 +507,16 @@ size_t cxgui::MainWindowPresenter::GetGameViewBoardHeight() const
     return m_currentBoardHeight;
 }
 
+cxgui::Color cxgui::MainWindowPresenter::GetGameViewBoardColor() const
+{
+    return cxgui::Color{8481u, 8481u, 51143u};
+}
+
+cxgui::Color cxgui::MainWindowPresenter::GetGameViewColumnHighlightColor() const
+{
+    return cxgui::Color{19660u, 19660u, 19660u, 32767u};
+}
+
 const cxgui::IGameViewPresenter::ChipColors& cxgui::MainWindowPresenter::GetGameViewChipColors() const
 {
     return m_chipColors;

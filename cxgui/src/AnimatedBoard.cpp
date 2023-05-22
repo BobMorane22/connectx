@@ -41,6 +41,28 @@ namespace
 {
 
 /**************************************************************************************************
+ * @brief Sets the source pattern within the Cairo context to a translucent color. 
+ *
+ * This color will then be used for any subsequent drawing operation until a new source pattern
+ * is set.
+ *
+ * @param p_context
+ *      The cairo context to use.
+ * @param p_newSourceColor
+ *      The new source color to use.
+ *
+ *************************************************************************************************/
+template<typename Channel>
+void SetSourceColor(const Cairo::RefPtr<Cairo::Context>& p_context,
+                    const cxmodel::Color<Channel>& p_newSourceColor)
+{
+    p_context->set_source_rgba(cxmodel::NormalizedR(p_newSourceColor),
+                               cxmodel::NormalizedG(p_newSourceColor),
+                               cxmodel::NormalizedB(p_newSourceColor),
+                               cxmodel::NormalizedA(p_newSourceColor));
+}
+
+/**************************************************************************************************
  * @brief Draw a chip.
  *
  * The chip will have a boarder around it.
@@ -65,10 +87,7 @@ void DrawChip(const Cairo::RefPtr<Cairo::Context>& p_context,
     cxgui::MakeCircularPath(p_context, p_centerPosition, p_radius);
 
     // Set background color:
-    p_context->set_source_rgba(cxmodel::NormalizedR(p_backgroundColor),
-                               cxmodel::NormalizedG(p_backgroundColor),
-                               cxmodel::NormalizedB(p_backgroundColor),
-                               cxmodel::NormalizedA(p_backgroundColor));
+    SetSourceColor(p_context, p_backgroundColor);
 
     // Draw everything:
     p_context->fill();
@@ -181,7 +200,7 @@ bool cxgui::AnimatedBoard::on_draw(const Cairo::RefPtr<Cairo::Context>& p_contex
                                   m_animationModel->GetAnimatedAreaDimensions().m_height.Get(),
                                   m_animationModel->GetAnimatedAreaDimensions().m_width.Get());
 
-        bufferContext->set_source_rgba(0.0, 0.0, 0.0, 0.0);
+        SetSourceColor(bufferContext, cxmodel::MakeTransparent());
         bufferContext->set_operator(Cairo::Operator::OPERATOR_SOURCE);
         bufferContext->fill_preserve();
         bufferContext->stroke();
@@ -247,7 +266,7 @@ void cxgui::AnimatedBoard::DrawActiveColumnHighlight(const Cairo::RefPtr<Cairo::
         const cxgui::ContextRestoreRAII bufferContextRestoreRAII{bufferContext};
 
         cxgui::MakeRectanglarPath(bufferContext, {0.0, 0.0}, m_animationModel->GetAnimatedAreaDimensions().m_height.Get() - cellHeight, cellWidth);
-        bufferContext->set_source_rgba(0.3, 0.3, 0.3, 0.5);
+        SetSourceColor(bufferContext, m_presenter->GetGameViewColumnHighlightColor());
         bufferContext->fill_preserve();
         bufferContext->stroke();
     }
@@ -295,7 +314,7 @@ void cxgui::AnimatedBoard::DrawBoardElement(const Cairo::RefPtr<Cairo::Context>&
         cxgui::MakeRectanglarPath(bufferContext, {0.0, 0.0}, cellHeight, cellWidth);
 
         // Set background color:
-        bufferContext->set_source_rgba(0.129411764705882, 0.129411764705882, 0.780392156862745, 1.0);
+        SetSourceColor(bufferContext, m_presenter->GetGameViewBoardColor());
 
         // Draw everything:
         bufferContext->set_fill_rule(Cairo::FILL_RULE_EVEN_ODD);
@@ -309,10 +328,7 @@ void cxgui::AnimatedBoard::DrawBoardElement(const Cairo::RefPtr<Cairo::Context>&
 
         cxgui::MakeCircularPath(bufferContext, {cellWidth / 2.0, cellHeight / 2.0}, radius);
 
-        bufferContext->set_source_rgba(cxmodel::NormalizedR(chipColor),
-                                       cxmodel::NormalizedG(chipColor),
-                                       cxmodel::NormalizedB(chipColor),
-                                       cxmodel::NormalizedA(chipColor));
+        SetSourceColor(bufferContext, chipColor);
 
         bufferContext->fill();
     }

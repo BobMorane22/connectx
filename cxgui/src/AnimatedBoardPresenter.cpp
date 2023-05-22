@@ -48,6 +48,16 @@ cxmodel::Width cxgui::AnimatedBoardPresenter::GetBoardWidth() const
     return m_cache.m_boardWidth;
 }
 
+cxgui::Color cxgui::AnimatedBoardPresenter::GetGameViewBoardColor() const
+{
+    return m_gameVewPresenter.GetGameViewBoardColor();
+}
+
+cxgui::Color cxgui::AnimatedBoardPresenter::GetGameViewColumnHighlightColor() const
+{
+    return m_gameVewPresenter.GetGameViewColumnHighlightColor();
+}
+
 cxmodel::ChipColor cxgui::AnimatedBoardPresenter::GetActivePlayerChipColor() const
 {
     return m_cache.m_activePlayerChipColor;

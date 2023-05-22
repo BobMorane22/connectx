@@ -64,6 +64,25 @@ public:
     [[nodiscard]] virtual cxmodel::Width GetBoardWidth() const = 0;
 
     /******************************************************************************************//**
+     * @brief Retreive the board color (not cached).
+     *
+     * @return The board color.
+     *
+     ********************************************************************************************/
+    [[nodiscard]] virtual cxgui::Color GetGameViewBoardColor() const = 0;
+
+    /******************************************************************************************//**
+     * @brief Retreive the column highlight color (not cached).
+     *
+     * Since this color is used to "highlight" the column over which the current disct is located,
+     * it usually has a transparency component.
+     *
+     * @return The column highlight color.
+     *
+     ********************************************************************************************/
+    [[nodiscard]] virtual cxgui::Color GetGameViewColumnHighlightColor() const = 0;
+
+    /******************************************************************************************//**
      * @brief Retreive the cached active player chip color.
      * 
      * @return The cached active player chip color.

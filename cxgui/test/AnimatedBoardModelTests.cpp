@@ -149,6 +149,8 @@ public:
     void Sync() override {FAIL();}
     [[nodiscard]] cxmodel::Height GetBoardHeight() const override {return cxmodel::Height{6u};}
     [[nodiscard]] cxmodel::Width GetBoardWidth() const override {return cxmodel::Width{7u};}
+    [[nodiscard]] cxgui::Color GetGameViewBoardColor() const override {return cxgui::Color{8481u, 8481u, 51143u};}
+    [[nodiscard]] cxgui::Color GetGameViewColumnHighlightColor() const override {return cxgui::Color{19660u, 19660u, 19660u, 32767u};}
     [[nodiscard]] cxmodel::ChipColor GetActivePlayerChipColor() const override {return cxmodel::MakeRed();}
     [[nodiscard]] const cxgui::IGameViewPresenter::ChipColors& GetBoardChipColors() const override {return m_chipColors;}
     [[nodiscard]] cxmodel::Column GetBotTarget() const {return cxmodel::Column{5u};}

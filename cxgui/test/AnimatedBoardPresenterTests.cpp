@@ -62,6 +62,8 @@ public:
     cxmodel::ChipColor GetGameViewActivePlayerChipColor() const override {return m_activePlayerChipColor;}
     size_t GetGameViewBoardWidth() const override {return m_boardWidth;}
     size_t GetGameViewBoardHeight() const override {return m_boardHeight;}
+    [[nodiscard]] cxgui::Color GetGameViewBoardColor() const override {return cxgui::Color{8481u, 8481u, 51143u};}
+    [[nodiscard]] cxgui::Color GetGameViewColumnHighlightColor() const override {return cxgui::Color{19660u, 19660u, 19660u, 32767u};}
     const ChipColors& GetGameViewChipColors() const override {return m_boardColors;}
     [[nodiscard]] virtual bool IsCurrentPlayerABot() const {return false;};
     [[nodiscard]] virtual size_t GetBotTarget() const {return m_botTarget;};
@@ -204,6 +206,16 @@ TEST_F(AnimatedBoardPresenterTestFixture, /*DISABLED_*/GetBoardHeight_ValidPrese
 TEST_F(AnimatedBoardPresenterTestFixture, /*DISABLED_*/GetBoardWidth_ValidPresenter_BoardWidthReturned)
 {
     ASSERT_TRUE(GetPresenter().GetBoardWidth() == cxmodel::Width{7u});
+}
+
+TEST_F(AnimatedBoardPresenterTestFixture, /*DISABLED_*/GetGameViewBoardColor_ValidPresenter_BoardColorReturned)
+{
+    ASSERT_TRUE((GetPresenter().GetGameViewBoardColor() == cxgui::Color{8481u, 8481u, 51143u}));
+}
+
+TEST_F(AnimatedBoardPresenterTestFixture, /*DISABLED_*/GetGameViewColumnHighlightColor_ValidPresenter_ColumnHighlightColorReturned)
+{
+    ASSERT_TRUE((GetPresenter().GetGameViewColumnHighlightColor() == cxgui::Color{19660u, 19660u, 19660u, 32767u}));
 }
 
 TEST_F(AnimatedBoardPresenterTestFixture, /*DISABLED_*/GetActivePlayerChipColor_ValidPresenter_ActivePlayerChipColorReturned)

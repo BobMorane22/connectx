@@ -28,6 +28,7 @@
 #include <vector>
 
 #include <cxmodel/ChipColor.h>
+#include <cxgui/common.h>
 
 namespace cxgui
 {
@@ -123,6 +124,25 @@ public:
      *
      ********************************************************************************************/
     virtual size_t GetGameViewBoardHeight() const = 0;
+
+    /******************************************************************************************//**
+     * @brief Board color accessor.
+     *
+     * @return The board color.
+     *
+     ********************************************************************************************/
+    [[nodiscard]] virtual cxgui::Color GetGameViewBoardColor() const = 0;
+
+    /******************************************************************************************//**
+     * @brief Column highlight color accessor.
+     *
+     * Since this color is used to "highlight" the column over which the current disct is located,
+     * it usually has a transparency component.
+     *
+     * @return The column highlight color.
+     *
+     ********************************************************************************************/
+    [[nodiscard]] virtual cxgui::Color GetGameViewColumnHighlightColor() const = 0;
 
     /******************************************************************************************//**
      * @brief Chip colors accessor.
