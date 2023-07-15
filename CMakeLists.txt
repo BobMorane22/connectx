@@ -108,4 +108,8 @@ if(CMAKE_BUILD_TYPE MATCHES Debug)
         EXECUTABLE ctest
         EXCLUDE "cx*/test/*"
 )
+
+# Prototypes:
+add_subdirectory(prototypes)
+
 endif()
