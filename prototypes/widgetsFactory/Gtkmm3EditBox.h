@@ -16,29 +16,26 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file IButton.h
+ * @file Gtkmm3EditBox.h
  * @date 2023
  *
  *************************************************************************************************/
 #pragma once
 
-#include <string>
+#include <gtkmm.h>
 
-#include "ISignal.h"
+#include "IEditBox.h"
 
-/**************************************************************************************************
- * Clickable button.
- *
- *************************************************************************************************/
-class IButton
+class Gtkmm3EditBox : public IEditBox,
+                      public Gtk::Entry
 {
 
 public:
 
-    virtual ~IButton() = default;
-
-    virtual void SetText(const std::string& p_text) = 0;
+    void SetText(const std::string& p_text) override;
+    std::string GetText() const override;
 
     // Signals:
-    virtual std::unique_ptr<ISignal<void>> OnClicked() = 0;
+    std::unique_ptr<ISignal<void, const std::string&>> OnTextInsert() override;
+
 };

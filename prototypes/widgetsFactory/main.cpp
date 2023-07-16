@@ -29,6 +29,7 @@
 
 #include "IAbstractWidgetsFactory.h"
 #include "IButton.h"
+#include "IEditBox.h"
 #include "ILayout.h"
 
 class MainWindow : public Gtk::ApplicationWindow
@@ -42,21 +43,41 @@ private:
 
     std::unique_ptr<IAbstractWidgetsFactory> m_widgetsFactory;
 
-    std::unique_ptr<IButton> m_button;
+    std::unique_ptr<IButton>  m_button;
+    std::unique_ptr<IEditBox> m_editBox;
+
     std::unique_ptr<ILayout> m_layout;
 
 };
 
 MainWindow::MainWindow()
 {
-
     m_widgetsFactory = CreateAbstractWidgetsFactory(Backend::GTKMM3);
 
+    // Creating a button:
     m_button = m_widgetsFactory->CreateButton();
     m_button->SetText("test");
+    m_button->OnClicked()->Connect(
+        []()
+        {
+            std::cout << "Button clicked\n";
+        }
+    );
 
+    // Creating an edit box:
+    m_editBox = m_widgetsFactory->CreateEditBox();
+    m_editBox->SetText("Initial contents...");
+    m_editBox->OnTextInsert()->Connect(
+        [](const std::string& p_newContents)
+        {
+            std::cout << "New entry contents : " << p_newContents << "\n";
+        }
+    );
+
+    // Creating a layout (aka container) and adding the widgets to it:
     m_layout = m_widgetsFactory->CreateLayout();
-    m_layout->Attach(*m_button, 0, 0);
+    m_layout->Attach(*m_button,  0, 0);
+    m_layout->Attach(*m_editBox, 1, 0);
     
     add(*(dynamic_cast<Gtk::Grid*>(m_layout.get())));
 }

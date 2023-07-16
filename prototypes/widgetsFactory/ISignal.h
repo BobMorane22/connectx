@@ -16,29 +16,34 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file IButton.h
+ * @file ISignal.h
  * @date 2023
  *
  *************************************************************************************************/
 #pragma once
 
-#include <string>
+#include <functional>
 
-#include "ISignal.h"
-
-/**************************************************************************************************
- * Clickable button.
- *
- *************************************************************************************************/
-class IButton
+class IConnection
 {
 
 public:
 
-    virtual ~IButton() = default;
+    virtual ~IConnection() = default;
 
-    virtual void SetText(const std::string& p_text) = 0;
+    virtual bool IsConnected() const = 0;
+    virtual void Disconnect() = 0;
 
-    // Signals:
-    virtual std::unique_ptr<ISignal<void>> OnClicked() = 0;
+};
+
+template<typename ReturnType, typename... Arguments>
+class ISignal
+{
+
+public:
+
+    virtual ~ISignal() = default;
+
+    virtual std::unique_ptr<IConnection> Connect(const std::function<ReturnType(Arguments...)>& p_slot) = 0;
+
 };

@@ -34,7 +34,8 @@ class Gtkmm3WidgetsFactory : public IAbstractWidgetsFactory
 
 public:
 
-    std::unique_ptr<IButton> CreateButton() const override;
-    std::unique_ptr<ILayout> CreateLayout() const override;
+    std::unique_ptr<IButton>  CreateButton() const override;
+    std::unique_ptr<IEditBox> CreateEditBox() const override;
+    std::unique_ptr<ILayout>  CreateLayout() const override;
 
 };

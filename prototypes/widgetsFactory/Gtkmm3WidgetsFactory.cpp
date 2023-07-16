@@ -25,11 +25,17 @@
 
 #include "Gtkmm3WidgetsFactory.h"
 #include "Gtkmm3Button.h"
+#include "Gtkmm3EditBox.h"
 #include "Gtkmm3Layout.h"
 
 std::unique_ptr<IButton> Gtkmm3WidgetsFactory::CreateButton() const
 {
     return std::make_unique<Gtkmm3Button>();
+}
+
+std::unique_ptr<IEditBox> Gtkmm3WidgetsFactory::CreateEditBox() const
+{
+    return std::make_unique<Gtkmm3EditBox>();
 }
 
 std::unique_ptr<ILayout> Gtkmm3WidgetsFactory::CreateLayout() const

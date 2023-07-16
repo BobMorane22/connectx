@@ -16,29 +16,38 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file IButton.h
+ * @file Gtkmm3Signal.h
  * @date 2023
  *
  *************************************************************************************************/
 #pragma once
 
-#include <string>
+#include <sigc++/connection.h>
 
 #include "ISignal.h"
 
-/**************************************************************************************************
- * Clickable button.
- *
- *************************************************************************************************/
-class IButton
+class Gtkmm3Connection : public IConnection
 {
 
 public:
 
-    virtual ~IButton() = default;
+    Gtkmm3Connection(const sigc::connection& p_connection)
+    : m_connection{p_connection}
+    {
+    }
 
-    virtual void SetText(const std::string& p_text) = 0;
+    bool IsConnected() const override
+    {
+        return m_connection.connected();
+    }
 
-    // Signals:
-    virtual std::unique_ptr<ISignal<void>> OnClicked() = 0;
+    void Disconnect() override
+    {
+        m_connection.disconnect();
+    }
+
+private:
+
+    sigc::connection m_connection;
+
 };

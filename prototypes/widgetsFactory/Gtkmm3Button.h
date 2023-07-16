@@ -24,6 +24,7 @@
 #pragma once
 
 #include <gtkmm.h>
+
 #include "IButton.h"
 
 class Gtkmm3Button : public IButton,
@@ -33,5 +34,8 @@ class Gtkmm3Button : public IButton,
 public:
 
     void SetText(const std::string& p_text) override;
+
+    // Signals:
+    std::unique_ptr<ISignal<void>> OnClicked() override;
 
 };

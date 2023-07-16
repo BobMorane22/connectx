@@ -24,8 +24,9 @@
 set(TARGET_NAME widgetsFactory)
 
 add_executable(${TARGET_NAME}
-  Gtkmm3Layout.cpp
   Gtkmm3Button.cpp
+  Gtkmm3EditBox.cpp
+  Gtkmm3Layout.cpp
   Gtkmm3WidgetsFactory.cpp
   IAbstractWidgetsFactory.cpp
   main.cpp

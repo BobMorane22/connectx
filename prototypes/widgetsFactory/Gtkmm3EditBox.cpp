@@ -16,29 +16,53 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file IButton.h
+ * @file Gtkmm3EditBox.cpp
  * @date 2023
  *
  *************************************************************************************************/
-#pragma once
 
-#include <string>
+#include "Gtkmm3EditBox.h"
+#include "Gtkmm3Signal.h"
 
-#include "ISignal.h"
+namespace
+{
 
-/**************************************************************************************************
- * Clickable button.
- *
- *************************************************************************************************/
-class IButton
+class Gtkmm3OnTextInsertSignal : public ISignal<void, const std::string&>
 {
 
 public:
 
-    virtual ~IButton() = default;
+    Gtkmm3OnTextInsertSignal(Gtk::Entry& p_insertedToEntry)
+    : m_insertedToEntry{p_insertedToEntry}
+    {
+    }
 
-    virtual void SetText(const std::string& p_text) = 0;
+    std::unique_ptr<IConnection> Connect(const std::function<void(const std::string&)>& p_slot) override
+    {
+        sigc::connection gtkConnection = m_insertedToEntry.signal_insert_at_cursor().connect(p_slot);
 
-    // Signals:
-    virtual std::unique_ptr<ISignal<void>> OnClicked() = 0;
+        return std::make_unique<Gtkmm3Connection>(gtkConnection);
+    }
+
+private:
+
+    Gtk::Entry& m_insertedToEntry;
+
 };
+
+}
+
+void Gtkmm3EditBox::SetText(const std::string& p_text)
+{
+    set_text(p_text);
+}
+
+std::string Gtkmm3EditBox::GetText() const
+{
+    return get_text();
+}
+
+std::unique_ptr<ISignal<void, const std::string&>> Gtkmm3EditBox::OnTextInsert()
+{
+    return std::make_unique<Gtkmm3OnTextInsertSignal>(*this);
+}

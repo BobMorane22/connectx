@@ -16,7 +16,7 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file IButton.h
+ * @file IEditBox.h
  * @date 2023
  *
  *************************************************************************************************/
@@ -26,19 +26,16 @@
 
 #include "ISignal.h"
 
-/**************************************************************************************************
- * Clickable button.
- *
- *************************************************************************************************/
-class IButton
+class IEditBox
 {
 
 public:
 
-    virtual ~IButton() = default;
+    virtual ~IEditBox() = default;
 
     virtual void SetText(const std::string& p_text) = 0;
+    virtual std::string GetText() const = 0;
 
     // Signals:
-    virtual std::unique_ptr<ISignal<void>> OnClicked() = 0;
+    virtual std::unique_ptr<ISignal<void, const std::string&>> OnTextInsert() = 0;
 };

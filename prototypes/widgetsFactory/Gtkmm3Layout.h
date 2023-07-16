@@ -32,5 +32,6 @@ class Gtkmm3Layout : public ILayout, public Gtk::Grid
 public:
 
     void Attach(IButton& p_button, int p_left, int p_top) override;
+    void Attach(IEditBox& p_editBox, int p_left, int p_top) override;
 
 };

@@ -25,6 +25,7 @@
 #include <memory>
 
 class IButton;
+class IEditBox;
 class ILayout;
 
 
@@ -48,8 +49,9 @@ public:
 
     virtual ~IAbstractWidgetsFactory() = default;
 
-    virtual std::unique_ptr<IButton> CreateButton() const = 0;
-    virtual std::unique_ptr<ILayout> CreateLayout() const = 0;
+    virtual std::unique_ptr<IButton>  CreateButton() const = 0;
+    virtual std::unique_ptr<IEditBox> CreateEditBox() const = 0;
+    virtual std::unique_ptr<ILayout>  CreateLayout() const = 0;
 
 };
 
