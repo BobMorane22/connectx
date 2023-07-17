@@ -16,52 +16,30 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file Gtkmm3Button.cpp
+ * @file Gtkmm3Window.h
  * @date 2023
  *
  *************************************************************************************************/
+#pragma once
 
-#include "Gtkmm3Button.h"
-#include "Gtkmm3Signal.h"
+#include <gtkmm.h>
 
-namespace
-{
+#include "IWindow.h"
 
-class Gtkmm3OnClickedSignal : public ISignal<void>
+class Gtkmm3Window : public IWindow,
+                     public Gtk::Window
 {
 
 public:
 
-    Gtkmm3OnClickedSignal(Gtk::Button& p_clickedButton)
-    : m_clickedButton{p_clickedButton}
-    {
-    }
+    // IWidget:
+    void Show() override;
 
-    std::unique_ptr<IConnection> Connect(const std::function<void()>& p_slot) override
-    {
-        sigc::connection gtkConnection = m_clickedButton.signal_clicked().connect(p_slot);
-
-        return std::make_unique<Gtkmm3Connection>(gtkConnection);
-    }
+    // IWindow:
+    void RegisterLayout(std::unique_ptr<ILayout> p_layout) override;
 
 private:
 
-    Gtk::Button& m_clickedButton;
+    std::unique_ptr<ILayout> m_layout;
+
 };
-
-}
-
-void Gtkmm3Button::Show()
-{
-    show();
-}
-
-void Gtkmm3Button::SetText(const std::string& p_text)
-{
-    set_label(p_text);
-}
-
-std::unique_ptr<ISignal<void>> Gtkmm3Button::OnClicked()
-{
-    return std::make_unique<Gtkmm3OnClickedSignal>(*this);
-}

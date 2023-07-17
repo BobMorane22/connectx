@@ -25,20 +25,23 @@
 #include <string>
 
 #include "ISignal.h"
+#include "IWidget.h"
 
 /**************************************************************************************************
  * Clickable button.
  *
  *************************************************************************************************/
-class IButton
+class IButton : public IWidget
 {
 
 public:
 
     virtual ~IButton() = default;
 
-    virtual void SetText(const std::string& p_text) = 0;
+    // IWidget:
+    void Show() override = 0;
 
-    // Signals:
+    // IButton:
+    virtual void SetText(const std::string& p_text) = 0;
     virtual std::unique_ptr<ISignal<void>> OnClicked() = 0;
 };

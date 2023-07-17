@@ -32,10 +32,12 @@ class Gtkmm3EditBox : public IEditBox,
 
 public:
 
+    // IWidget:
+    void Show() override;
+
+    // IEditBox:
     void SetText(const std::string& p_text) override;
     std::string GetText() const override;
-
-    // Signals:
     std::unique_ptr<ISignal<void, const std::string&>> OnTextInsert() override;
 
 };

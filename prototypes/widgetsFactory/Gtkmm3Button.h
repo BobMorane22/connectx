@@ -33,9 +33,11 @@ class Gtkmm3Button : public IButton,
 
 public:
 
-    void SetText(const std::string& p_text) override;
+    // IWidget:
+    void Show() override;
 
-    // Signals:
+    // IButton:
+    void SetText(const std::string& p_text) override;
     std::unique_ptr<ISignal<void>> OnClicked() override;
 
 };

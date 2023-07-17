@@ -52,6 +52,11 @@ private:
 
 }
 
+void Gtkmm3EditBox::Show()
+{
+    show();
+}
+
 void Gtkmm3EditBox::SetText(const std::string& p_text)
 {
     set_text(p_text);

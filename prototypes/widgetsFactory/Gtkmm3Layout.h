@@ -26,7 +26,8 @@
 
 class IButton;
 
-class Gtkmm3Layout : public ILayout, public Gtk::Grid
+class Gtkmm3Layout : public ILayout,
+                     public Gtk::Grid
 {
 
 public:

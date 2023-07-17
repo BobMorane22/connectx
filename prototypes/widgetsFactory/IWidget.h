@@ -16,52 +16,18 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file Gtkmm3Button.cpp
+ * @file IWidget.h
  * @date 2023
  *
  *************************************************************************************************/
+#pragma once
 
-#include "Gtkmm3Button.h"
-#include "Gtkmm3Signal.h"
-
-namespace
-{
-
-class Gtkmm3OnClickedSignal : public ISignal<void>
+class IWidget
 {
 
 public:
 
-    Gtkmm3OnClickedSignal(Gtk::Button& p_clickedButton)
-    : m_clickedButton{p_clickedButton}
-    {
-    }
+    virtual ~IWidget() = default;
 
-    std::unique_ptr<IConnection> Connect(const std::function<void()>& p_slot) override
-    {
-        sigc::connection gtkConnection = m_clickedButton.signal_clicked().connect(p_slot);
-
-        return std::make_unique<Gtkmm3Connection>(gtkConnection);
-    }
-
-private:
-
-    Gtk::Button& m_clickedButton;
+    virtual void Show() = 0;
 };
-
-}
-
-void Gtkmm3Button::Show()
-{
-    show();
-}
-
-void Gtkmm3Button::SetText(const std::string& p_text)
-{
-    set_label(p_text);
-}
-
-std::unique_ptr<ISignal<void>> Gtkmm3Button::OnClicked()
-{
-    return std::make_unique<Gtkmm3OnClickedSignal>(*this);
-}

@@ -154,7 +154,11 @@ Note that the assertion should always hold, since we designed for it.
 
 
 ### 3.3. Windows
-Soon...
+Since windows are visible by the user, they inherit from the `IWidget`
+interface. Windows can do two things: register a layout and show themselves.
+Showing themselves (becoming visible to the user) in inherited from the
+`IWidget` interface. Layout registering is specific. Only one layout can
+be registered (owned), and it holds all the window's child widgets.
 
 
 ### 3.4. Connecting to signals

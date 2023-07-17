@@ -25,17 +25,20 @@
 #include <string>
 
 #include "ISignal.h"
+#include "IWidget.h"
 
-class IEditBox
+class IEditBox : public IWidget
 {
 
 public:
 
     virtual ~IEditBox() = default;
 
+    // IWidget:
+    void Show() override = 0;
+
+    // IEditBox:
     virtual void SetText(const std::string& p_text) = 0;
     virtual std::string GetText() const = 0;
-
-    // Signals:
     virtual std::unique_ptr<ISignal<void, const std::string&>> OnTextInsert() = 0;
 };

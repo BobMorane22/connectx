@@ -27,6 +27,7 @@
 class IButton;
 class IEditBox;
 class ILayout;
+class IWindow;
 
 
 /**************************************************************************************************
@@ -52,6 +53,7 @@ public:
     virtual std::unique_ptr<IButton>  CreateButton() const = 0;
     virtual std::unique_ptr<IEditBox> CreateEditBox() const = 0;
     virtual std::unique_ptr<ILayout>  CreateLayout() const = 0;
+    virtual std::unique_ptr<IWindow>  CreateWindow() const = 0;
 
 };
 
