@@ -22,8 +22,7 @@
  *************************************************************************************************/
  #pragma once
 
-class IButton;
-class IEditBox;
+class IWidget;
 
 /**************************************************************************************************
  * Widgets layout.
@@ -36,7 +35,6 @@ public:
 
     virtual ~ILayout() = default;
 
-    virtual void Attach(IButton& p_button, int p_left, int p_top) = 0;
-    virtual void Attach(IEditBox& p_editBox, int p_left, int p_top) = 0;
+    virtual void Attach(IWidget& p_widget, int p_left, int p_top) = 0;
 
 };

@@ -39,6 +39,7 @@ The basic idea is that the underlying GUI toolkit must be completely encapsulate
 such that the Connect X application code nevers knows what toolkit it is actually
 using. This additionnal level of indirection will come into the form of an abstract
 widgets factory: 
+
 ![Abstract factory (high level)](./architecture.png)
 
 In this UML class diagram, a first class hierarchy is created for the individual
@@ -117,7 +118,7 @@ class IContainer
 
 public:
 
-    virtual void Add(IButton& p_button) = 0;
+    virtual void Add(IWidget& p_widget) = 0;
 };
 
 class Gtkmm3Container : public IContainer
@@ -125,9 +126,9 @@ class Gtkmm3Container : public IContainer
 
 public
 
-    void Add(IButton& p_button) override
+    void Add(IWidget& p_widget) override
     {
-        // How to deal with p_button here?
+        // How to deal with p_widget here?
     }
 
 private:
@@ -245,10 +246,141 @@ be looked at to make sure the slot return and arguments type are generic
 enough to be implementable in other toolkits.
 
 
-
 <a name="extending-for-connect-x-specific-widgets"></a>
 ## 4. Extending for Connect X specific widgets
-Soon...
+Making basic toolkit widgets available through an abstract factory is a
+good start. Most widget toolkits allow extension, through inheritance and
+polymorphism. A developper can inherit from, let's say, a `Gtk::Button`
+and design his own button `own::Button` from it.
+
+One example of this is the `cxgui::ColorCombobox` available in Connect X.
+This combobox is used to select colors from a visual list of colors.
+With the abstract factory pattern, one looses the ability to inherit from
+toolkit implementations to refine it.
+
+Furthermore, these custom widgets, build on top of the toolkit, should
+not be created by the same abstract factory instance that is used to
+decouple the toolkits specific widgets. 
+
+
+### 4.1. Separating Connect X specific widgets
+A second abstract factory is therefore created, to handle Connect X
+specific widgets—Widgets the common widget toolkit interface doesn't
+support. This approach is illustrated below, where the Connect X
+specific abstract factory exposes a "Green label" widget, which
+is (in this fictious example), Connect X related only.
+
+![A Connect X specific widgets factory](./connectxspecific.png)
+
+All widget, wether "base" widgets or Connect X specific, implement
+the `IWidget` interface. This makes it possible to add all types
+of widgets to layouts.
+
+### 4.2. Updating the layering for widget libraries
+The addition of Connect X specific widgets calls for reviewing the
+layering of widgets related libraries within the Connect X project.
+Consider the following:
+
+![Layerings](./layering.png)
+
+#### 4.2.1. First layering strategy (1)
+This is the current strategy. All widgets (Connect X specific or not)
+are contained within the `cxgui` library. The `cxexec` library, on the
+other hand, handles the GTK specific initialization. This means that
+everywhere, GTK is known (i.e. it is a dependency).
+
+#### 4.2.2. Second layering strategy (2)
+The abstract factory pattern allows for a `cxui` layer, which consists
+of a set of reusable "base" widget interfaces, as well as the
+general purpose widget abstract factory interface. In this
+layer, there are no concrete classes, and GTK is not a dependency.
+This is where, for example, `IWidget` and `IButton` live. 
+
+Standard widgets (the concrete edit box and button) as well
+as their factories live in a seperate layer, `cxstdui` on
+which everything else is built. The `cxgui` library is used
+as a porting buffer and, in the end,  accomodates all widgets
+that are not standard and do not fit in the `cxui` and `cxstdui`
+libraries.
+
+Also, at this point, the `cxexec` library does not depend on GTK
+anymore: all the concrete GTK initialization code has been hidden
+behind an interface living in `cxui` and the `cxexec` library only
+instanciates the toolkit indrectly, through this interface.
+
+#### 4.2.3. Third layering strategy (3)
+A second abstract factory splits the responsibilities of creating
+widgets between two distinct interfaces: A standard interface, which
+lives in the `cxui` library, and a Connect X specific interface,
+which lives in the `cxcustomui` library. At this point, the standard
+widgets could be reused in another application by linking to the
+`cxui` and `cxstdui` libraries. The `cxgui` library contains the
+implementations for the Connect X specific widget interfaces defined
+in the `cxcustomui` library.
+
+#### 4.2.4. Final layering strategy (4)
+This layering strategy is only a possible extension of what was
+described in (3). If, for example, a textual user interface would
+ever be needed, the `cxstdui` library could be renamed as the
+`cxstdgui` library and a new `cxstdtui` library, containing ncurses
+specific code could be created.
+
+The choice of whichever is used would be made in the `cxexec`
+library and then only abstractions from `cxui` and `cxcustomui`
+libraries would be used.
+
+This makes the support of new toolkits and open/closed process.
+
+### 4.3. Dealing with two abstract factories at once
+Dealing with two seperate abstract factories could be a problem if
+care is not taken to manage that complexity. In every place needing
+both standard and Connect X specific widgets, both factories
+would need to be injected, and the user would need to remember
+which one to use any time a new widget would be instanciated.
+
+To avoid this duplication, a class is created to access the
+factories from a single location:
+
+```c++
+class WidgetsFactories
+{
+
+public:
+
+    WidgetsFactories(std::unique_ptr<IAbstractWidgetsFactory> p_toolkitFactory,
+                    std::unique_ptr<IConnectXAbstractWidgetsFactory> p_connectXSpecificFactory)
+    : m_toolkitFactory{std::move(p_toolkitFactory)}
+    , m_connectXSpecificFactory{std::move(p_connectXSpecificFactory)}
+    {}
+
+    IAbstractWidgetsFactory* operator->() const
+    {
+        return m_toolkitFactory.get();
+    }
+
+    IConnectXAbstractWidgetsFactory* GetConnectXSpecific() const
+    {
+        return m_connectXSpecificFactory.get();
+    }
+
+private:
+
+    std::unique_ptr<IAbstractWidgetsFactory>         m_toolkitFactory;
+    std::unique_ptr<IConnectXAbstractWidgetsFactory> m_connectXSpecificFactory;
+};
+```
+So the standard widget factory, the one which will be the most often used,
+can be accessed directly through the `operator->`. The Connect X specific
+factory can be access through the `GetConnectXSpecific` member function.
+In practice:
+
+```c++
+IWidget* standard = m_factories->CreateStandard();
+IWidget* connectx = m_factories->GetConnectXSpecific()->CreateConnectX();
+```
+
+This makes it clear in the code from which toolkit everything
+comes from and avoids having to track two factories.
 
 
 <a name="gradual-porting"></a>

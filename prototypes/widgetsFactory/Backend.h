@@ -16,23 +16,17 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file IAbstractWidgetsFactory.cpp
+ * @file Backend.h
  * @date 2023
  *
  *************************************************************************************************/
 
-#include "Backend.h"
-#include "IAbstractWidgetsFactory.h"
-
-#include "Gtkmm3WidgetsFactory.h"
-
-std::unique_ptr<IAbstractWidgetsFactory> CreateAbstractWidgetsFactory(Backend p_backend)
+/**************************************************************************************************
+ * Available widget toolkit backend.
+ *
+ *************************************************************************************************/
+enum class Backend
 {
-    switch(p_backend)
-    {
-        case Backend::GTKMM3:
-	    return std::make_unique<Gtkmm3WidgetsFactory>();
-    }
+    GTKMM3,
+};
 
-    return nullptr;
-}

@@ -16,23 +16,40 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file IAbstractWidgetsFactory.cpp
+ * @file WidgetsFactories.h
  * @date 2023
  *
  *************************************************************************************************/
+#pragma once
 
-#include "Backend.h"
+#include <memory>
+
 #include "IAbstractWidgetsFactory.h"
+#include "IConnectXAbstractWidgetsFactory.h"
 
-#include "Gtkmm3WidgetsFactory.h"
-
-std::unique_ptr<IAbstractWidgetsFactory> CreateAbstractWidgetsFactory(Backend p_backend)
+class WidgetsFactories
 {
-    switch(p_backend)
+
+public:
+
+    WidgetsFactories(std::unique_ptr<IAbstractWidgetsFactory> p_toolkitFactory,
+                    std::unique_ptr<IConnectXAbstractWidgetsFactory> p_connectXSpecificFactory)
+    : m_toolkitFactory{std::move(p_toolkitFactory)}
+    , m_connectXSpecificFactory{std::move(p_connectXSpecificFactory)}
+    {}
+
+    IAbstractWidgetsFactory* operator->() const
     {
-        case Backend::GTKMM3:
-	    return std::make_unique<Gtkmm3WidgetsFactory>();
+        return m_toolkitFactory.get();
     }
 
-    return nullptr;
-}
+    IConnectXAbstractWidgetsFactory* GetConnectXSpecific() const
+    {
+        return m_connectXSpecificFactory.get();
+    }
+
+private:
+
+    std::unique_ptr<IAbstractWidgetsFactory>         m_toolkitFactory;
+    std::unique_ptr<IConnectXAbstractWidgetsFactory> m_connectXSpecificFactory;
+};

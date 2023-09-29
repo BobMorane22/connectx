@@ -16,22 +16,24 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file IAbstractWidgetsFactory.cpp
+ * @file IConnectXAbstractWidgetsFactory.cpp
  * @date 2023
  *
  *************************************************************************************************/
 
 #include "Backend.h"
-#include "IAbstractWidgetsFactory.h"
+#include "Gtkmm3ConnectXWidgetsFactory.h"
+#include "IConnectXAbstractWidgetsFactory.h"
 
-#include "Gtkmm3WidgetsFactory.h"
-
-std::unique_ptr<IAbstractWidgetsFactory> CreateAbstractWidgetsFactory(Backend p_backend)
+std::unique_ptr<IConnectXAbstractWidgetsFactory> CreateConnectXAbstractWidgetsFactory(Backend p_backend)
 {
     switch(p_backend)
     {
         case Backend::GTKMM3:
-	    return std::make_unique<Gtkmm3WidgetsFactory>();
+            return std::make_unique<Gtkmm3ConnectXWidgetsFactory>();
+
+        default:
+            break;
     }
 
     return nullptr;

@@ -24,15 +24,12 @@
 #include <gtkmm.h>
 #include "ILayout.h"
 
-class IButton;
-
 class Gtkmm3Layout : public ILayout,
                      public Gtk::Grid
 {
 
 public:
 
-    void Attach(IButton& p_button, int p_left, int p_top) override;
-    void Attach(IEditBox& p_editBox, int p_left, int p_top) override;
+    void Attach(IWidget& p_widget, int p_left, int p_top) override;
 
 };

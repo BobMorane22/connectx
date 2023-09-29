@@ -25,12 +25,16 @@ set(TARGET_NAME widgetsFactory)
 
 add_executable(${TARGET_NAME}
   Gtkmm3Button.cpp
+  Gtkmm3ConnectXWidgetsFactory.cpp
   Gtkmm3EditBox.cpp
+  Gtkmm3GreenLabel.cpp
   Gtkmm3Layout.cpp
   Gtkmm3WidgetsFactory.cpp
   Gtkmm3Window.cpp
   IAbstractWidgetsFactory.cpp
+  IConnectXAbstractWidgetsFactory.cpp
   main.cpp
+  WidgetsFactories.h
 )
 
 target_include_directories(${TARGET_NAME}

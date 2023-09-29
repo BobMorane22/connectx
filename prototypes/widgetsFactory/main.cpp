@@ -27,18 +27,21 @@
 
 #include <gtkmm.h>
 
+#include "Backend.h"
 #include "IAbstractWidgetsFactory.h"
 #include "IButton.h"
 #include "IEditBox.h"
+#include "IGreenLabel.h"
 #include "ILayout.h"
 #include "IWindow.h"
+#include "WidgetsFactories.h"
 
 class MainWindow : public Gtk::ApplicationWindow
 {
 
 public:
 
-    MainWindow(IAbstractWidgetsFactory& p_widgetsFactory);
+    MainWindow(WidgetsFactories& p_widgetFactories);
 
     void Show();
 
@@ -46,20 +49,24 @@ public:
 
 private:
 
-    IAbstractWidgetsFactory& m_widgetsFactory;
+    WidgetsFactories& m_widgetsFactories;
 
-    std::unique_ptr<IButton>  m_button;
-    std::unique_ptr<IEditBox> m_editBox;
+    std::unique_ptr<IGreenLabel> m_label;
+    std::unique_ptr<IButton>     m_button;
+    std::unique_ptr<IEditBox>    m_editBox;
 
     std::unique_ptr<IWindow> m_window;
 
 };
 
-MainWindow::MainWindow(IAbstractWidgetsFactory& p_widgetsFactory)
-: m_widgetsFactory{p_widgetsFactory}
+MainWindow::MainWindow(WidgetsFactories& p_widgetsFactories)
+: m_widgetsFactories{p_widgetsFactories}
 {
+    // Creating a Connect X specific green label:
+    m_label = m_widgetsFactories.GetConnectXSpecific()->CreateGreenLabel();
+
     // Creating a button:
-    m_button = m_widgetsFactory.CreateButton();
+    m_button = m_widgetsFactories->CreateButton();
     m_button->SetText("test");
     m_button->OnClicked()->Connect(
         []()
@@ -69,7 +76,7 @@ MainWindow::MainWindow(IAbstractWidgetsFactory& p_widgetsFactory)
     );
 
     // Creating an edit box:
-    m_editBox = m_widgetsFactory.CreateEditBox();
+    m_editBox = m_widgetsFactories->CreateEditBox();
     m_editBox->SetText("Initial contents...");
     m_editBox->OnTextInsert()->Connect(
         [](const std::string& p_newContents)
@@ -79,12 +86,13 @@ MainWindow::MainWindow(IAbstractWidgetsFactory& p_widgetsFactory)
     );
 
     // Creating a layout (aka container) and adding the widgets to it:
-    auto layout = m_widgetsFactory.CreateLayout();
-    layout->Attach(*m_button,  0, 0);
-    layout->Attach(*m_editBox, 1, 0);
+    auto layout = m_widgetsFactories->CreateLayout();
+    layout->Attach(*m_label,   0, 0);
+    layout->Attach(*m_button,  1, 0);
+    layout->Attach(*m_editBox, 2, 0);
     
     // Creating the window:
-    m_window = m_widgetsFactory.CreateWindow();
+    m_window = m_widgetsFactories->CreateWindow();
     m_window->RegisterLayout(std::move(layout));
 }
 
@@ -110,9 +118,13 @@ int main(int argc, char *argv[])
 
     auto app = Gtk::Application::create(argc, argv, "org.gtkmm.examples.base");
   
-    std::unique_ptr<IAbstractWidgetsFactory> widgetsFactory = CreateAbstractWidgetsFactory(Backend::GTKMM3);
+    const auto backendImplementation = Backend::GTKMM3;
+    std::unique_ptr<IAbstractWidgetsFactory> toolkitWidgetsFactory = CreateAbstractWidgetsFactory(backendImplementation);
+    std::unique_ptr<IConnectXAbstractWidgetsFactory> connectXWidgetsFactory = CreateConnectXAbstractWidgetsFactory(backendImplementation);
 
-    MainWindow window{*widgetsFactory};
+    WidgetsFactories factories(std::move(toolkitWidgetsFactory), std::move(connectXWidgetsFactory));
+
+    MainWindow window{factories};
     window.Show();
   
     return app->run(window.ToGtk());

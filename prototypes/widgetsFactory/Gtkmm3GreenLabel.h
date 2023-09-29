@@ -16,23 +16,24 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file IAbstractWidgetsFactory.cpp
+ * @file Gtkmm3GreenLabel.h
  * @date 2023
  *
  *************************************************************************************************/
+#pragma once
 
-#include "Backend.h"
-#include "IAbstractWidgetsFactory.h"
+#include <gtkmm.h>
 
-#include "Gtkmm3WidgetsFactory.h"
+#include "IGreenLabel.h"
 
-std::unique_ptr<IAbstractWidgetsFactory> CreateAbstractWidgetsFactory(Backend p_backend)
+class Gtkmm3GreenLabel : public IGreenLabel,
+                         public Gtk::Label
 {
-    switch(p_backend)
-    {
-        case Backend::GTKMM3:
-	    return std::make_unique<Gtkmm3WidgetsFactory>();
-    }
 
-    return nullptr;
-}
+public:
+
+    Gtkmm3GreenLabel();
+
+    // IWidget:
+    void Show() override;
+};

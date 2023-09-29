@@ -16,23 +16,15 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file IAbstractWidgetsFactory.cpp
+ * @file Gtkmm3ConnectXWidgetsFactory.cpp
  * @date 2023
  *
  *************************************************************************************************/
 
-#include "Backend.h"
-#include "IAbstractWidgetsFactory.h"
+#include "Gtkmm3ConnectXWidgetsFactory.h"
+#include "Gtkmm3GreenLabel.h"
 
-#include "Gtkmm3WidgetsFactory.h"
-
-std::unique_ptr<IAbstractWidgetsFactory> CreateAbstractWidgetsFactory(Backend p_backend)
+std::unique_ptr<IGreenLabel> Gtkmm3ConnectXWidgetsFactory::CreateGreenLabel() const
 {
-    switch(p_backend)
-    {
-        case Backend::GTKMM3:
-	    return std::make_unique<Gtkmm3WidgetsFactory>();
-    }
-
-    return nullptr;
+    return std::make_unique<Gtkmm3GreenLabel>();
 }

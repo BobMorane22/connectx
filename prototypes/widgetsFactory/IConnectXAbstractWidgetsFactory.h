@@ -16,23 +16,34 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file IAbstractWidgetsFactory.cpp
+ * @file IConnectXAbstractWidgetsFactory.h
  * @date 2023
  *
  *************************************************************************************************/
+#pragma once
 
-#include "Backend.h"
-#include "IAbstractWidgetsFactory.h"
+#include <memory>
 
-#include "Gtkmm3WidgetsFactory.h"
+class IGreenLabel;
+enum class Backend;
 
-std::unique_ptr<IAbstractWidgetsFactory> CreateAbstractWidgetsFactory(Backend p_backend)
+/**************************************************************************************************
+ * Abstract widgets factory (for ConnectX specific widgets).
+ *
+ *************************************************************************************************/
+class IConnectXAbstractWidgetsFactory
 {
-    switch(p_backend)
-    {
-        case Backend::GTKMM3:
-	    return std::make_unique<Gtkmm3WidgetsFactory>();
-    }
 
-    return nullptr;
-}
+public:
+
+    virtual ~IConnectXAbstractWidgetsFactory() = default;
+
+    virtual std::unique_ptr<IGreenLabel> CreateGreenLabel() const = 0;
+
+};
+
+/**************************************************************************************************
+ * Creates the appropriate widget factory according to a specified backend.
+ *
+ *************************************************************************************************/
+std::unique_ptr<IConnectXAbstractWidgetsFactory> CreateConnectXAbstractWidgetsFactory(Backend p_backend);

@@ -25,14 +25,8 @@
 #include "Gtkmm3Button.h"
 #include "Gtkmm3EditBox.h"
 
-void Gtkmm3Layout::Attach(IButton& p_button, int p_left, int p_top)
+void Gtkmm3Layout::Attach(IWidget& p_widget, int p_left, int p_top)
 {
-    Gtk::Button* child = dynamic_cast<Gtk::Button*>(&p_button);
-    attach(*child, p_left, p_top);
-}
-
-void Gtkmm3Layout::Attach(IEditBox& p_editBox, int p_left, int p_top)
-{
-    Gtk::Entry* child = dynamic_cast<Gtk::Entry*>(&p_editBox);
+    auto* child = dynamic_cast<Gtk::Widget*>(&p_widget);
     attach(*child, p_left, p_top);
 }
