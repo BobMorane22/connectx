@@ -6,7 +6,6 @@
 3. [Specific framework elements](#specific-framework-elements)
 4. [Extending for Connect X specific widgets](#extending-for-connect-x-specific-widgets)
 5. [Gradual porting](#gradual-porting)
-6. [Bibliography](#bibliography)
 
 
 <a name="motivation"></a>
@@ -418,8 +417,3 @@ types for now) are "registerable" using the new container interface. Then,
 widgets will be gradually ported. The nice thing about this approach is that
 since this is an overload, once a widget will be ported the container will
 automatically switch to the new `Attach` call.
-
-
-<a name="bibliography"></a>
-## 6. Bibliography
-Soon...
