@@ -30,3 +30,8 @@ void Gtkmm3Layout::Attach(IWidget& p_widget, int p_left, int p_top)
     auto* child = dynamic_cast<Gtk::Widget*>(&p_widget);
     attach(*child, p_left, p_top);
 }
+
+void Gtkmm3Layout::Attach(Gtk::Widget& p_widget, int p_left, int p_top)
+{
+    attach(p_widget, p_left, p_top);
+}

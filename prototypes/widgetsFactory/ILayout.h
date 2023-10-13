@@ -23,6 +23,10 @@
  #pragma once
 
 class IWidget;
+namespace Gtk
+{
+    class Widget;
+}
 
 /**************************************************************************************************
  * Widgets layout.
@@ -36,5 +40,8 @@ public:
     virtual ~ILayout() = default;
 
     virtual void Attach(IWidget& p_widget, int p_left, int p_top) = 0;
+
+    // Temporary
+    virtual void Attach(Gtk::Widget& p_widget, int p_left, int p_top) = 0;
 
 };

@@ -51,9 +51,10 @@ private:
 
     WidgetsFactories& m_widgetsFactories;
 
-    std::unique_ptr<IGreenLabel> m_label;
+    std::unique_ptr<IGreenLabel> m_label;  // Connect X specific.
     std::unique_ptr<IButton>     m_button;
     std::unique_ptr<IEditBox>    m_editBox;
+    Gtk::Switch                  m_switch; // Not yet ported.
 
     std::unique_ptr<IWindow> m_window;
 
@@ -90,6 +91,7 @@ MainWindow::MainWindow(WidgetsFactories& p_widgetsFactories)
     layout->Attach(*m_label,   0, 0);
     layout->Attach(*m_button,  1, 0);
     layout->Attach(*m_editBox, 2, 0);
+    layout->Attach(m_switch,   0, 1);
     
     // Creating the window:
     m_window = m_widgetsFactories->CreateWindow();

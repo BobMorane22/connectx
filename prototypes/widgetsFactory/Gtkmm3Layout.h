@@ -32,4 +32,6 @@ public:
 
     void Attach(IWidget& p_widget, int p_left, int p_top) override;
 
+    // Temporary
+    void Attach(Gtk::Widget& p_widget, int p_left, int p_top) override;
 };

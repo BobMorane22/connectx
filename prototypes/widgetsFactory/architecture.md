@@ -385,12 +385,39 @@ comes from and avoids having to track two factories.
 
 <a name="gradual-porting"></a>
 ## 5. Gradual porting strategy
-Soon...
- - Handles to backend to gradual porting.
- - Temporary hadle for future design: design with current Gtk version, and then abstract.
-    Benefits:
-     a) Faster UI design and testing. No boiler plate code involved.
-     b) You only abstract what is truly needed.
+Because widgets cannot all be ported at once, a gradual porting strategy is put
+in place. The main problem when trying to port widgets with different techonogies
+is when they need to be registered in a container. If the container is the bare
+toolkit container, widgets need to be casted to the bare toolkit types. If the
+container is abstracted, all widgets need to be abstracted to conform to the
+interface.
+
+To gradually port the widgets, the first abstraction that will be integrated
+into Connect X is the container (aka layout) interface. An extra, and temporary,
+overload for registering widgets using the `Gtk::Widget` interface will
+be added:
+
+```c++
+class ILayout
+{
+
+public:
+
+    virtual ~ILayout() = default;
+
+    virtual void Attach(IWidget& p_widget, int p_left, int p_top) = 0;
+
+    // Temporary
+    virtual void Attach(Gtk::Widget& p_widget, int p_left, int p_top) = 0;
+
+};
+```
+
+This extra overload will make sure all current widgets (all using bare Gtk
+types for now) are "registerable" using the new container interface. Then,
+widgets will be gradually ported. The nice thing about this approach is that
+since this is an overload, once a widget will be ported the container will
+automatically switch to the new `Attach` call.
 
 
 <a name="bibliography"></a>
