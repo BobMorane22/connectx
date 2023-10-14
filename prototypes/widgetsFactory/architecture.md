@@ -11,9 +11,9 @@
 <a name="motivation"></a>
 ## 1. Motivation
 While Gtkmm is a GUI library which is fun to work with, its API is pretty unstable. From
-ong version to another majors API changes frequently occurs, which make maintenance a pain.
+one version to another majors API changes frequently occur, which make maintenance a pain.
 Much effort is put into the UI code, which is later broken by these API changes. The
-views code depend directly on Gtkmm which triggers views code changes to restore
+view code depends directly on Gtkmm which triggers view code changes to restore
 functionnalities that were broken by Gtkmm API changes. These changes can result in new
 bugs that can creep in, unnoticed. Lastly, if one of these changes ever breaks too
 much functionnalities and that a migration to another toolkit is needed, it is going
@@ -21,23 +21,22 @@ to be really hard with the current state of things because too much code depend
 directly on Gtkmm.
 
 Since Gtkmm3 is now deprecated and that Gtkmm4 will soon be the new standard on Ubuntu LTS
-distros (and many others), a migration was needed. I have decided to take advantage of
+distros (and many others), a migration is needed. I have decided to take advantage of
 this. The migration will not happen by simple "call replacements", but rather I will
 add an indirection layer between the views and the Gtkmm related code, freeing myself
 from it at the same time. With this approach, later migrations should be easier and
-much less risky. Moving to another framework (if that ever becomes a need) also.
+much less risky. Moving to another framework also (if that ever becomes a need).
 
 
 <a name="architecture-overview"></a>
 ## 2. Architecture overview
 To achieve this, the *Abstract Factory* design pattern is going to be used. I have been
 wanting to try this pattern for a while, and this seems like the perfect application
-for it. It even is the application described in the GOF book.
-
+for it. It even is the application described in the GOF book to introduce the pattern.
 The basic idea is that the underlying GUI toolkit must be completely encapsulated,
 such that the Connect X application code nevers knows what toolkit it is actually
 using. This additionnal level of indirection will come into the form of an abstract
-widgets factory: 
+widgets factory:
 
 ![Abstract factory (high level)](./architecture.png)
 
@@ -51,7 +50,7 @@ Creating these widgets will be the responsibility of the abstract factory, which
 will have an implementation for all supported toolkits. The abstracty factory
 will select the needed implementation at construction time and from there, will
 create the widgets using the appropriate implementation, while only making the abstract
-interfaces available ton Connect X.
+interfaces available to Connect X.
 
 
 <a name="specific-framework-elements"></a>
@@ -71,17 +70,17 @@ for creating a button could look something like this:
 std::unique<IButton> button = factory.CreateButton();
 ```
 
-where the type `IButton` is GUI toolkit agnostic. It should only know about
+where the type `IButton` is UI toolkit agnostic. It should only know about
 `std` and Connect X types, nothing more. Like in most GUI toolkits, the
 widgets get more and more specialized through inheritance. So one could
 also write:
 
 ```c++
-std::unique_ptr<IWidget> button factory.CreateButton();
+std::unique_ptr<IWidget> button = factory.CreateButton();
 ```
 
 if all that is needed later on is the generic `IWidget` interface. For reasons
-that will become clear in the next section, all specific widgets implementations
+that will become clear in the next section, all specific widget implementations
 should also publicly inherit from the toolkit's interface for that widget. For
 example, the button implementation for the Gtkmm toolkit would look something
 like:
@@ -101,14 +100,14 @@ the implementation. More on this later.
 
 
 ### 3.2. Containers
-Containers are a type of GUI element that is not directly visible by the
+Containers are a type of UI element that is not directly visible by the
 user of the software. Their task is to spatially arrange widgets inside
-the window. In GTK, they are known as containers, in Qt, they are known
+the window. In GTKmm, they are known as containers, in Qt, they are known
 as layouts.
 
-One important detail about containers is that they *are* not widgets, they
+One important detail about containers is that they *are not* widgets, they
 *contain* widgets. Another important detail is that their implementation
-needs to know about the underlying GUI toolkit for the widgets they are
+needs to know about the underlying UI toolkit for the widgets they are
 manipulating. For example, let's say we have this container class:
 
 ```c++
@@ -137,17 +136,17 @@ private:
 ```
 
 The Gtkmm 3 `Add` implementation cannot add the button because all it knows
-about is the `IButton` interface, which is Gtkmm agnostic. This is where we,
+about is the `IWidget` interface, which is Gtkmm agnostic. This is where we,
 as implementers of the abstract factory, will use our private knowledge that
-in this case, `p_button` also inherits from `Gtk::Button` (see previous section).
+in this case, `p_widget` also inherits from `Gtk::Widget` (see previous section).
 Because of this, we can use casting to solve the problem:
 
 ```c++
-void Add(IButton& p_button) override
+void Add(IWidget& p_widget) override
 {
-    Gtk::Button* gtkmmButton = dynamic_cast<Gtk::Button*>(p_button);
-    assert(gtmkkButton);
-    m_grid.attach(*gtkmmButton, 0, 0, 1, 1);
+    Gtk::Widget* gtkmmWidget = dynamic_cast<Gtk::Widget*>(p_widget);
+    assert(gtmmWidget);
+    m_grid.attach(*gtkmmWidget, 0, 0, 1, 1);
 }
 ```
 Note that the assertion should always hold, since we designed for it.
@@ -156,7 +155,7 @@ Note that the assertion should always hold, since we designed for it.
 ### 3.3. Windows
 Since windows are visible by the user, they inherit from the `IWidget`
 interface. Windows can do two things: register a layout and show themselves.
-Showing themselves (becoming visible to the user) in inherited from the
+Showing themselves (becoming visible to the user) is inherited from the
 `IWidget` interface. Layout registering is specific. Only one layout can
 be registered (owned), and it holds all the window's child widgets.
 
@@ -164,7 +163,7 @@ be registered (owned), and it holds all the window's child widgets.
 ### 3.4. Connecting to signals
 Signal handling is an important part of widget interactions. It is through
 these that user can interact with the system. Because the Gtkmm signaling
-technology is so nice, it is the design which will be used for the widget
+technology is so nice, it is the design which will be used for the widgets
 factory as well. What I like about the Gtkmm signaling system:
 
  1. It is strong typed: If you fail to provide the right slot signature
@@ -193,12 +192,12 @@ public:
 };
 ```
 The `Connect` method is provided a slot which has `ReturnType` as its
-return type and `Arguments...` as its arguments types. The parameter pack
+return type and `Arguments...` as its arguments' types. The parameter pack
 makes it possible for a slot to have any given number of arguments of
 any desired type. This method is the core of the strong typing.
 
 For any signal you want to expose, you must implement the `ISignal` interface
-and provide the return and arguments types for the corresponding slot. The
+and provide the return and argument types for the corresponding slot. The
 `ISignal::Connect` method returns a connection instance, which you can
 reference for later (in case you need to disconnect the slot, at some later
 point in time). In production code, connection to a signal will look
@@ -259,7 +258,8 @@ toolkit implementations to refine it.
 
 Furthermore, these custom widgets, build on top of the toolkit, should
 not be created by the same abstract factory instance that is used to
-decouple the toolkits specific widgets. 
+decouple the toolkits specific widgets, to make sure the standard
+widgets factory is reusable in another context if needed.
 
 
 ### 4.1. Separating Connect X specific widgets
@@ -271,9 +271,9 @@ is (in this fictious example), Connect X related only.
 
 ![A Connect X specific widgets factory](./connectxspecific.png)
 
-All widget, wether "base" widgets or Connect X specific, implement
+All widgets, wether base widgets or Connect X specific, implement
 the `IWidget` interface. This makes it possible to add all types
-of widgets to layouts.
+of widgets to containers.
 
 ### 4.2. Updating the layering for widget libraries
 The addition of Connect X specific widgets calls for reviewing the
@@ -285,15 +285,15 @@ Consider the following:
 #### 4.2.1. First layering strategy (1)
 This is the current strategy. All widgets (Connect X specific or not)
 are contained within the `cxgui` library. The `cxexec` library, on the
-other hand, handles the GTK specific initialization. This means that
-everywhere, GTK is known (i.e. it is a dependency).
+other hand, handles the GTKmm specific initialization. This means that
+everywhere, GTKmm is known (i.e. it is a dependency).
 
 #### 4.2.2. Second layering strategy (2)
 The abstract factory pattern allows for a `cxui` layer, which consists
-of a set of reusable "base" widget interfaces, as well as the
+of a set of reusable base widget interfaces, as well as the
 general purpose widget abstract factory interface. In this
 layer, there are no concrete classes, and GTK is not a dependency.
-This is where, for example, `IWidget` and `IButton` live. 
+This is where, for example, `IWidget` and `IButton` live.
 
 Standard widgets (the concrete edit box and button) as well
 as their factories live in a seperate layer, `cxstdui` on
@@ -302,10 +302,10 @@ as a porting buffer and, in the end,  accomodates all widgets
 that are not standard and do not fit in the `cxui` and `cxstdui`
 libraries.
 
-Also, at this point, the `cxexec` library does not depend on GTK
-anymore: all the concrete GTK initialization code has been hidden
+Also, at this point, the `cxexec` library does not depend on GTKmm
+anymore: all the concrete GTKmm initialization code has been hidden
 behind an interface living in `cxui` and the `cxexec` library only
-instanciates the toolkit indrectly, through this interface.
+instantiates the toolkit indrectly, through this interface.
 
 #### 4.2.3. Third layering strategy (3)
 A second abstract factory splits the responsibilities of creating
@@ -316,6 +316,10 @@ widgets could be reused in another application by linking to the
 `cxui` and `cxstdui` libraries. The `cxgui` library contains the
 implementations for the Connect X specific widget interfaces defined
 in the `cxcustomui` library.
+
+At this point, `cxexec` is completely decoupled from the concrete
+UI code, it only uses libraries providing abstractions and is
+completely UI toolkit agnostic, even at link time.
 
 #### 4.2.4. Final layering strategy (4)
 This layering strategy is only a possible extension of what was
@@ -337,17 +341,17 @@ both standard and Connect X specific widgets, both factories
 would need to be injected, and the user would need to remember
 which one to use any time a new widget would be instanciated.
 
-To avoid this duplication, a class is created to access the
+To avoid this duplication, a facade class is created to access the
 factories from a single location:
 
 ```c++
-class WidgetsFactories
+class WidgetsFactoriesFacade
 {
 
 public:
 
-    WidgetsFactories(std::unique_ptr<IAbstractWidgetsFactory> p_toolkitFactory,
-                    std::unique_ptr<IConnectXAbstractWidgetsFactory> p_connectXSpecificFactory)
+    WidgetsFactoriesFacade(std::unique_ptr<IAbstractWidgetsFactory> p_toolkitFactory,
+                           std::unique_ptr<IConnectXAbstractWidgetsFactory> p_connectXSpecificFactory)
     : m_toolkitFactory{std::move(p_toolkitFactory)}
     , m_connectXSpecificFactory{std::move(p_connectXSpecificFactory)}
     {}
@@ -397,12 +401,12 @@ overload for registering widgets using the `Gtk::Widget` interface will
 be added:
 
 ```c++
-class ILayout
+class IContainer
 {
 
 public:
 
-    virtual ~ILayout() = default;
+    virtual ~IContainer() = default;
 
     virtual void Attach(IWidget& p_widget, int p_left, int p_top) = 0;
 
