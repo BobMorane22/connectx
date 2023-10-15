@@ -22,10 +22,13 @@
  *************************************************************************************************/
 #pragma once
 
+#include <memory>
 #include <string>
 
-#include "ISignal.h"
 #include "IWidget.h"
+
+template<typename ReturnType, typename... Arguments>
+class ISignal;
 
 /**************************************************************************************************
  * Clickable button.

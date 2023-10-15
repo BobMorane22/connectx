@@ -34,7 +34,6 @@ add_executable(${TARGET_NAME}
   IAbstractWidgetsFactory.cpp
   IConnectXAbstractWidgetsFactory.cpp
   main.cpp
-  WidgetsFactories.h
 )
 
 target_include_directories(${TARGET_NAME}

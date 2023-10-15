@@ -50,7 +50,7 @@ private:
 
 };
 
-}
+} // namespace
 
 void Gtkmm3EditBox::Show()
 {

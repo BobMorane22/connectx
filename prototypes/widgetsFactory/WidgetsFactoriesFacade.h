@@ -16,7 +16,7 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file WidgetsFactories.h
+ * @file WidgetsFactoriesFacade.h
  * @date 2023
  *
  *************************************************************************************************/
@@ -27,13 +27,13 @@
 #include "IAbstractWidgetsFactory.h"
 #include "IConnectXAbstractWidgetsFactory.h"
 
-class WidgetsFactories
+class WidgetsFactoriesFacade
 {
 
 public:
 
-    WidgetsFactories(std::unique_ptr<IAbstractWidgetsFactory> p_toolkitFactory,
-                    std::unique_ptr<IConnectXAbstractWidgetsFactory> p_connectXSpecificFactory)
+    WidgetsFactoriesFacade(std::unique_ptr<IAbstractWidgetsFactory> p_toolkitFactory,
+                           std::unique_ptr<IConnectXAbstractWidgetsFactory> p_connectXSpecificFactory)
     : m_toolkitFactory{std::move(p_toolkitFactory)}
     , m_connectXSpecificFactory{std::move(p_connectXSpecificFactory)}
     {}

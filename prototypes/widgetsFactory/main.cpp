@@ -33,15 +33,16 @@
 #include "IEditBox.h"
 #include "IGreenLabel.h"
 #include "ILayout.h"
+#include "ISignal.h"
 #include "IWindow.h"
-#include "WidgetsFactories.h"
+#include "WidgetsFactoriesFacade.h"
 
 class MainWindow : public Gtk::ApplicationWindow
 {
 
 public:
 
-    MainWindow(WidgetsFactories& p_widgetFactories);
+    MainWindow(WidgetsFactoriesFacade& p_widgetFactories);
 
     void Show();
 
@@ -49,7 +50,7 @@ public:
 
 private:
 
-    WidgetsFactories& m_widgetsFactories;
+    WidgetsFactoriesFacade& m_widgetsFactories;
 
     std::unique_ptr<IGreenLabel> m_label;  // Connect X specific.
     std::unique_ptr<IButton>     m_button;
@@ -60,7 +61,7 @@ private:
 
 };
 
-MainWindow::MainWindow(WidgetsFactories& p_widgetsFactories)
+MainWindow::MainWindow(WidgetsFactoriesFacade& p_widgetsFactories)
 : m_widgetsFactories{p_widgetsFactories}
 {
     // Creating a Connect X specific green label:
@@ -124,7 +125,7 @@ int main(int argc, char *argv[])
     std::unique_ptr<IAbstractWidgetsFactory> toolkitWidgetsFactory = CreateAbstractWidgetsFactory(backendImplementation);
     std::unique_ptr<IConnectXAbstractWidgetsFactory> connectXWidgetsFactory = CreateConnectXAbstractWidgetsFactory(backendImplementation);
 
-    WidgetsFactories factories(std::move(toolkitWidgetsFactory), std::move(connectXWidgetsFactory));
+    WidgetsFactoriesFacade factories(std::move(toolkitWidgetsFactory), std::move(connectXWidgetsFactory));
 
     MainWindow window{factories};
     window.Show();
