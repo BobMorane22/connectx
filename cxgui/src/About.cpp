@@ -35,6 +35,7 @@ cxgui::About::About(std::unique_ptr<IAboutWindowPresenter>&& p_presenter)
     m_name.set_label("<b><big>" + m_presenter->GetApplicationName() + "</big></b>");
     m_version.set_label(m_presenter->GetVersionNumber());
     m_description.set_label(m_presenter->GetApplicationDescription());
+    m_website.set_markup(m_presenter->GetWebsiteLinkContents());
     m_license.set_label(m_presenter->GetLicenseDescription());
     m_copyright.set_label(m_presenter->GetCopyrightNotice());
     m_close.set_label(m_presenter->GetCloseText());
@@ -62,7 +63,8 @@ void cxgui::About::RegisterWidgets()
     m_mainLayout.attach(m_name, 0, 0, 1, 2);
     m_mainLayout.attach_next_to(m_version, m_name, Gtk::PositionType::POS_BOTTOM, 1, 1);
     m_mainLayout.attach_next_to(m_description, m_version, Gtk::PositionType::POS_BOTTOM, 1, 1);
-    m_mainLayout.attach_next_to(m_license, m_description, Gtk::PositionType::POS_BOTTOM, 1, 1);
+    m_mainLayout.attach_next_to(m_website, m_description, Gtk::PositionType::POS_BOTTOM, 1, 1);
+    m_mainLayout.attach_next_to(m_license, m_website, Gtk::PositionType::POS_BOTTOM, 1, 1);
     m_mainLayout.attach_next_to(m_copyright, m_license, Gtk::PositionType::POS_BOTTOM, 1, 1);
     m_mainLayout.attach_next_to(m_close, m_copyright, Gtk::PositionType::POS_BOTTOM, 1, 1);
 }

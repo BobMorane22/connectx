@@ -58,6 +58,7 @@ public:
     std::string GetApplicationName() const override;
     std::string GetVersionNumber() const override;
     std::string GetApplicationDescription() const override;
+    std::string GetWebsiteLinkContents() const override;
     std::string GetLicenseDescription() const override;
     std::string GetCopyrightNotice() const override;
     std::string GetCloseText() const override;

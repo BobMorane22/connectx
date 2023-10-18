@@ -47,6 +47,11 @@ TEST_F(AboutWindowPresenterTestFixture, /*DISABLED_*/GetApplicationDescription_V
     ASSERT_EQ(GetPresenter().GetApplicationDescription(), "Connect X is a scalable Four-In-A-Row clone");
 }
 
+TEST_F(AboutWindowPresenterTestFixture, /*DISABLED_*/GetWebsiteLinkContents_ValidPresenter_LinkContentsStringReturned)
+{
+    ASSERT_EQ(GetPresenter().GetWebsiteLinkContents(), "<a href=\"https://github.com/BobMorane22/connectx\">Website</a>");
+}
+
 TEST_F(AboutWindowPresenterTestFixture, /*DISABLED_*/GetLicenseDescription_ValidPresenter_ValidStringReturned)
 {
     ASSERT_EQ(GetPresenter().GetLicenseDescription(), "License: GNU GPL v3");

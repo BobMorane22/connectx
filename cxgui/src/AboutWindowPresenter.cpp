@@ -52,6 +52,11 @@ std::string cxgui::AboutWindowPresenter::GetApplicationDescription() const
     return "Connect X is a scalable Four-In-A-Row clone";
 }
 
+std::string cxgui::AboutWindowPresenter::GetWebsiteLinkContents() const
+{
+    return "<a href=\"https://github.com/BobMorane22/connectx\">Website</a>";
+}
+
 std::string cxgui::AboutWindowPresenter::GetLicenseDescription() const
 {
     return "License: GNU GPL v3";

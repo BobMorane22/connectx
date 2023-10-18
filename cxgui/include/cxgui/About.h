@@ -70,6 +70,7 @@ private:
     Gtk::Label m_name;
     Gtk::Label m_version;
     Gtk::Label m_description;
+    Gtk::Label m_website;
     Gtk::Label m_license;
     Gtk::Label m_copyright;
 

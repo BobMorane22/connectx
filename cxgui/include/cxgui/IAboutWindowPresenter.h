@@ -79,6 +79,17 @@ public:
     virtual std::string GetApplicationDescription() const = 0;
 
     /******************************************************************************************//**
+     * @brief Gets the application's website link contents, as text.
+     *
+     * The link contents is the website URL in HTML tags forming a hyperlink. For example:
+     * `<a href="URL">link text</a>`.
+     *
+     * @return The application's website link contents, as text.
+     *
+     ********************************************************************************************/
+    virtual std::string GetWebsiteLinkContents() const = 0;
+
+    /******************************************************************************************//**
      * @brief Gets the license description text.
      *
      * @return The license description text.
