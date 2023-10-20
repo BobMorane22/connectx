@@ -1,0 +1,209 @@
+/**************************************************************************************************
+ *  This file is part of Connect X.
+ *
+ *  Connect X is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  Connect X is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with Connect X. If not, see <https://www.gnu.org/licenses/>.
+ *
+ *************************************************************************************************/
+/**********************************************************************************************//**
+ * @file ILayout.h
+ * @date 2023
+ *
+ *************************************************************************************************/
+
+#ifndef ILAYOUT_H_D6AEBC20_3580_4018_B083_08451439CC56
+#define ILAYOUT_H_D6AEBC20_3580_4018_B083_08451439CC56
+
+#include <cxstd/StrongType.h>
+#include <cxmodel/common.h>
+
+namespace cxgui
+{
+    class IWidget;
+}
+ 
+namespace Gtk
+{
+    class Widget;
+}
+
+namespace cxgui
+{
+
+
+/**********************************************************************************************//**
+ * @brief Layout for widgets (and other layouts).
+ *
+ * In a typical window, more than one widget is shown. In these situations, the widgets need
+ * some layout system to position themselves with respect to the other widgets.
+ * 
+ * Using this interface, one can register widgets by specifying their coordinates (row and column)
+ * in the layout and their span (for each coordinate).
+ *
+ * The layout coordinates are referenced as follow:
+ *
+ @verbatim
+
+                                  0   1   2   3  (Column)
+                                 +---+---+---+---+--- ...
+                               0 |   |   |   |   |
+                                 +---+---+---+---+--- ...
+                               1 |   |   |   |   |
+                                 +---+---+---+---+--- ...
+                               2 |   |   |   |   |
+                                 +---+---+---+---+--- ...
+                        (Row)  3 |   |   |   |   |
+                                 +---+---+---+---+--- ...
+                                 |   |   |   |   |
+                                 .
+                                 .
+                                 .
+
+ @endverbatim
+ *
+ * For more complex scenarios, already existing layouts can be registered to a new layout, making
+ * layouts composition possible.
+ *
+ * @note The layout does not own the widgets it arranges.
+ *
+ *************************************************************************************************/
+class ILayout
+{
+
+public:
+
+    /******************************************************************************************//**
+     * @brief Describes a number of rows needed to arrange some widget in a layout.
+     *
+     * A row span of 2 means that the widget requires two rows in the layout. For example:
+     *
+     @verbatim
+    
+                                            +----------+
+                                            | Button   |
+                                            +----------+
+                                            | EditBox  |
+                                            +----------+
+                                            |          |
+                                            | Label    |
+                                            +----------+
+    
+     @endverbatim
+     *
+     * In this case, both the button and the edit box have a row span of one. The label, however
+     * is displayed over two rows and hence has a row span of 2.
+     *
+     *********************************************************************************************/
+    using RowSpan = cxstd::StrongType<size_t, struct RowSpanTag, cxstd::Addable, cxstd::Comparable>;
+    
+    /******************************************************************************************//**
+     * @brief Describes a number of columns needed to arrange some widget in a layout.
+     *
+     * A column span of 2 means that the widget requires two columns in the layout. For example:
+     *
+     @verbatim
+    
+                                       +---------+---------+
+                                       | Button  | EditBox |
+                                       +---------+---------+
+                                       |       Label       |
+                                       +-------------------+
+    
+     @endverbatim
+     *
+     * In this case, both the button and the edit box have a column span of one. The label, however
+     * is displayed over two columns and hence has a column span of 2.
+     *
+     *********************************************************************************************/
+    using ColumnSpan = cxstd::StrongType<size_t, struct RowSpanTag, cxstd::Addable, cxstd::Comparable>;
+
+    /******************************************************************************************//**
+     * @brief Necessary information to position a widget in a layout.
+     *
+     * @tparam Coordinate Coordinate type (row or column).
+     * @tparam Span       Span type (row or column).
+     *
+     *********************************************************************************************/
+    template<typename Coordinate, typename Span>
+    struct CoordinateDescriptor
+    {
+        /******************************************************************************************//**
+         * @brief Constructor.
+         *
+         * @param p_coordinate The coordinate where the widget should be registered in the layout.
+         * @param p_span       The number of coordinate unit needed by the widget in the layout.
+         *
+         *********************************************************************************************/
+        constexpr CoordinateDescriptor(const Coordinate& p_coordinate, const Span& p_span)
+        : m_coordinate{p_coordinate}
+        , m_span{p_span}
+        {
+        }
+    
+        Coordinate m_coordinate;
+        Span m_span;
+    };
+
+    /******************************************************************************************//**
+     * @brief Necessary row information to position a widget in a layout.
+     *
+     *********************************************************************************************/
+    using RowDescriptor = CoordinateDescriptor<cxmodel::Row, RowSpan>;
+    
+    /******************************************************************************************//**
+     * @brief Necessary column information to position a widget in a layout.
+     *
+     *********************************************************************************************/
+    using ColumnDescriptor = CoordinateDescriptor<cxmodel::Column, ColumnSpan>;
+
+
+public:
+
+    /******************************************************************************************//**
+     * @brief Register a widget to the layout.
+     *
+     * @param p_widget The widget to register to the layout.
+     * @param p_row    Description of where to register the widget, vertically.
+     * @param p_column Description of where to register the widget, horizontally.
+     *
+     *********************************************************************************************/
+    virtual void Register(IWidget& p_widget, const RowDescriptor& p_row, const ColumnDescriptor& p_column) = 0;
+
+    /******************************************************************************************//**
+     * @brief Register a layout to the layout.
+     *
+     * @param p_layout The layout to register to the layout.
+     * @param p_row    Description of where to register the widget, vertically.
+     * @param p_column Description of where to register the widget, horizontally.
+     *
+     *********************************************************************************************/
+    virtual void Register(ILayout& p_layout, const RowDescriptor& p_row, const ColumnDescriptor& p_column) = 0;
+
+    /******************************************************************************************//**
+     * @brief Register a Gtkmm widget to the layout.
+     *
+     * @param p_gtkWidget The Gtkmm widget to register to the layout.
+     * @param p_row       Description of where to register the widget, vertically.
+     * @param p_column    Description of where to register the widget, horizontally.
+     *
+     * @warning This call is temporary. It will be removed once all widgets will have been
+     *          abstracted away (TG-256).
+     *
+     *********************************************************************************************/
+    virtual void Register(Gtk::Widget& p_gtkWidget, const RowDescriptor& p_row, const ColumnDescriptor& p_column) = 0;
+
+};
+
+} // namespace cxgui
+
+#endif // ILAYOUT_H_D6AEBC20_3580_4018_B083_08451439CC56
