@@ -31,6 +31,7 @@
 #include <cxgui/DiscChip.h>
 #include <cxgui/GameView.h>
 #include <cxgui/GameViewKeyHandlerStrategyFactory.h>
+#include <cxgui/Gtkmm3Layout.h>
 #include <cxgui/IAnimatedBoardPresenter.h>
 
 namespace
@@ -42,11 +43,13 @@ constexpr size_t NUMBER_CHIPS_MOVED_PER_SECOND = 3u;
 
 cxgui::GameView::GameView(IGameViewPresenter& p_presenter,
                           IGameViewController& p_controller,
-                          Gtk::Grid& p_mainLayout,
-                          int p_viewLeft,
-                          int p_viewTop)
+                          Gtk::Window& p_parentWindow,
+                          cxgui::ILayout& p_mainLayout,
+                          const cxmodel::Column& p_viewLeft,
+                          const cxmodel::Row& p_viewTop)
 : m_presenter{p_presenter}
 , m_controller{p_controller}
+, m_parentWindow{p_parentWindow}
 , m_mainLayout{p_mainLayout}
 , m_viewLeft{p_viewLeft}
 , m_viewTop{p_viewTop}
@@ -57,26 +60,24 @@ cxgui::GameView::GameView(IGameViewPresenter& p_presenter,
     PRECONDITION(m_activePlayerChip);
     PRECONDITION(m_nextPlayerChip);
 
+    m_viewLayout = std::make_unique<Gtkmm3Layout>();
+    m_playersInfoLayout = std::make_unique<Gtkmm3Layout>();
+
     SetLayout();
     PopulateWidgets();
     ConfigureWidgets();
-
-    // Get a reference to the parent window:
-    m_parent = dynamic_cast<Gtk::Window*>(m_mainLayout.get_parent());
 
     // Attach to the board:
     Attach(m_board.get());
     m_board->BoardAnimationSubject::Attach(this);
     m_board->UserActionSubject::Attach(this);
-
-    POSTCONDITION(m_parent);
 }
 
 void cxgui::GameView::Activate()
 {
     EnableKeyHandlers();
 
-    auto* currentViewLayout = m_mainLayout.get_child_at(m_viewLeft, m_viewTop);
+    cxgui::ILayout* currentViewLayout = m_mainLayout.GetLayoutAtPosition(m_viewTop, m_viewLeft);
 
     if(!currentViewLayout)
     {
@@ -84,15 +85,26 @@ void cxgui::GameView::Activate()
         return;
     }
 
-    // Remove previous view layout:
-    m_mainLayout.remove(*currentViewLayout);
+    // Unregister the previous view layout:
+    m_mainLayout.Unregister(*currentViewLayout);
 
-    // Add new view layout:
-    m_mainLayout.attach(m_viewLayout, m_viewLeft, m_viewTop, 2, 1);
+    // Register the new view layout:
+    m_mainLayout.Register(*m_viewLayout,
+                          {m_viewTop, cxgui::ILayout::RowSpan{1u}},
+                          {m_viewLeft, cxgui::ILayout::ColumnSpan{2u}});
 }
 
 void cxgui::GameView::DeActivate()
 {
+    // Since the Game View is recreated every time, we need to clear
+    // the view layout from the main layout, otherwise we will have a
+    // dangling reference in the main layout once the view is reset.
+    auto* currentViewLayout = m_mainLayout.GetLayoutAtPosition(m_viewTop, m_viewLeft);
+    if(INL_ASSERT(currentViewLayout))
+    {
+        m_mainLayout.Unregister(*currentViewLayout);
+    }
+
     DisableKeyHandlers();
 }
 
@@ -210,30 +222,44 @@ void cxgui::GameView::Update(cxgui::UserAction p_context, cxgui::UserActionSubje
 
 void cxgui::GameView::SetLayout()
 {
-    constexpr int TOTAL_WIDTH = 2;
+    IF_CONDITION_NOT_MET_DO(m_viewLayout, return;);
+    IF_CONDITION_NOT_MET_DO(m_playersInfoLayout, return;);
+
+    constexpr cxmodel::Row row0{0u};
+    constexpr cxmodel::Row row1{1u};
+    constexpr cxmodel::Row row2{2u};
+    constexpr cxmodel::Row row4{4u};
+    constexpr cxgui::ILayout::RowSpan singleRowSpan{1u};
+
+    constexpr cxmodel::Column column0{0u};
+    constexpr cxmodel::Column column1{1u};
+    constexpr cxmodel::Column column2{2u};
+    constexpr cxgui::ILayout::ColumnSpan singleColumnSpan{1u};
+    constexpr cxgui::ILayout::ColumnSpan fullSpan{2u};
+
 
     // Main view layout:
-    m_viewLayout.attach(m_title, 0, 0, TOTAL_WIDTH, 1);
-    m_viewLayout.attach(m_playersInfoLayout, 0, 1, TOTAL_WIDTH, 1);
+    m_viewLayout->Register(m_title, {row0, singleRowSpan}, {column0, fullSpan});
+    m_viewLayout->Register(*m_playersInfoLayout, {row1, singleRowSpan}, {column0, fullSpan});
 
     if(INL_ASSERT(m_board))
     {
-        m_viewLayout.attach(*m_board, 0, 4, TOTAL_WIDTH, 1);
+        m_viewLayout->Register(*m_board, {row4, singleRowSpan}, {column0, fullSpan});
     }
 
     // Players info layout:
-    m_playersInfoLayout.attach(m_activePlayerLabel, 0, 0, 1, 1);
-    m_playersInfoLayout.attach(m_activePlayerName, 1, 0, 1, 1);
+    m_playersInfoLayout->Register(m_activePlayerLabel, {row0, singleRowSpan}, {column0, singleColumnSpan});
+    m_playersInfoLayout->Register(m_activePlayerName, {row0, singleRowSpan}, {column1, singleColumnSpan});
     if(INL_ASSERT(m_activePlayerChip))
     {
-        m_playersInfoLayout.attach(*m_activePlayerChip, 2, 0, 1, 1);
+        m_playersInfoLayout->Register(*m_activePlayerChip, {row0, singleRowSpan}, {column2, singleColumnSpan});
     }
 
-    m_playersInfoLayout.attach(m_nextPlayerLabel, 0, 1, 1, 1);
-    m_playersInfoLayout.attach(m_nextPlayerName, 1, 1, 1, 1);
+    m_playersInfoLayout->Register(m_nextPlayerLabel, {row1, singleRowSpan}, {column0, singleColumnSpan});
+    m_playersInfoLayout->Register(m_nextPlayerName, {row1, singleRowSpan}, {column1, singleColumnSpan});
     if(INL_ASSERT(m_nextPlayerChip))
     {
-        m_playersInfoLayout.attach(*m_nextPlayerChip, 2, 1, 1, 1);
+        m_playersInfoLayout->Register(*m_nextPlayerChip, {row1, singleRowSpan}, {column2, singleColumnSpan});
     }
 }
 
@@ -253,10 +279,12 @@ void cxgui::GameView::PopulateWidgets()
 void cxgui::GameView::ConfigureWidgets()
 {
     // Window margin:
-    m_mainLayout.set_margin_start(DIALOG_SIDE_MARGIN);
-    m_mainLayout.set_margin_end(DIALOG_SIDE_MARGIN);
-    m_mainLayout.set_margin_top(DIALOG_SIDE_MARGIN);
-    m_mainLayout.set_margin_bottom(DIALOG_SIDE_MARGIN);
+    m_mainLayout.SetMargins({
+        TopMargin{DIALOG_SIDE_MARGIN},
+        BottomMargin{DIALOG_SIDE_MARGIN},
+        LeftMargin{DIALOG_SIDE_MARGIN},
+        RightMargin{DIALOG_SIDE_MARGIN}
+    });
 
     // View title:
     m_title.set_use_markup(true);
@@ -289,7 +317,12 @@ void cxgui::GameView::ConfigureWidgets()
         m_nextPlayerChip->set_halign(Gtk::Align::ALIGN_START);
     }
 
-    m_playersInfoLayout.set_margin_bottom(SECTION_BOTTOM_MARGIN);
+    m_playersInfoLayout->SetMargins({
+        cxgui::TopMargin{0},
+        cxgui::BottomMargin{SECTION_BOTTOM_MARGIN},
+        cxgui::LeftMargin{0},
+        cxgui::RightMargin{0},
+    });
 }
 
 bool cxgui::GameView::OnKeyPressed(GdkEventKey* p_event)
@@ -318,20 +351,14 @@ bool cxgui::GameView::OnKeyPressed(GdkEventKey* p_event)
 
 void cxgui::GameView::EnableKeyHandlers()
 {
-    if(INL_ASSERT(m_parent))
-    {
-        m_parent->add_events(Gdk::KEY_PRESS_MASK);
-        m_keysPressedConnection = m_parent->signal_key_press_event().connect([this](GdkEventKey* p_event){return OnKeyPressed(p_event);}, false);
-    }
+    m_parentWindow.add_events(Gdk::KEY_PRESS_MASK);
+    m_keysPressedConnection = m_parentWindow.signal_key_press_event().connect([this](GdkEventKey* p_event){return OnKeyPressed(p_event);}, false);
 }
 
 void cxgui::GameView::DisableKeyHandlers()
 {
-    if(INL_ASSERT(m_parent))
-    {
-        m_keysPressedConnection.disconnect();
-        m_parent->add_events(m_parent->get_events() & ~Gdk::KEY_PRESS_MASK);
-    }
+   m_keysPressedConnection.disconnect();
+   m_parentWindow.add_events(m_parentWindow.get_events() & ~Gdk::KEY_PRESS_MASK);
 }
 
 void cxgui::GameView::UpdateChipDropped()

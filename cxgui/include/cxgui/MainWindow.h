@@ -170,8 +170,8 @@ private:
     Gtk::MenuItem* m_aboutMenuItem;
 
     // Views:
-    const int m_viewLeft;
-    const int m_viewTop;
+    const cxmodel::Column m_viewLeft;
+    const cxmodel::Row m_viewTop;
     std::unique_ptr<IView> m_newGameView;
     std::unique_ptr<IView> m_gameView;
 

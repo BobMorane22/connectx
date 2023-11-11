@@ -31,6 +31,7 @@
 #include <cxmodel/IChip.h>
 #include <cxmodel/NewGameInformation.h>
 #include <cxgui/extractRawUserInput.h>
+#include <cxgui/Gtkmm3Layout.h>
 #include <cxgui/NewGameView.h>
 #include <cxgui/NewPlayersList.h>
 
@@ -52,16 +53,19 @@ void DisplayWarningDialog(Gtk::Window& parent, const std::string& p_message)
 
 cxgui::NewGameView::NewGameView(INewGameViewPresenter& p_presenter,
                                 INewGameViewController& p_controller,
-                                Gtk::Grid& p_mainLayout,
-                                int p_viewLeft,
-                                int p_viewTop)
+                                Gtk::Window& p_parentWindow,
+                                cxgui::ILayout& p_mainLayout,
+                                const cxmodel::Column& p_viewLeft,
+                                const cxmodel::Row& p_viewTop)
  : m_presenter{p_presenter}
  , m_controller{p_controller}
+ , m_parentWindow{p_parentWindow}
  , m_mainLayout{p_mainLayout}
  , m_viewLeft{p_viewLeft}
  , m_viewTop{p_viewTop}
 {
     m_playersList = std::make_unique<cxgui::NewPlayersList>(p_presenter);
+    m_viewLayout = std::make_unique<Gtkmm3Layout>();
 
     SetLayout();
     PopulateWidgets();
@@ -82,22 +86,9 @@ cxgui::NewGameView::NewGameView(INewGameViewPresenter& p_presenter,
 
 void cxgui::NewGameView::Activate()
 {
-    auto* currentViewLayout = m_mainLayout.get_child_at(m_viewLeft, m_viewTop);
-
-    if(!currentViewLayout)
-    {
-        // This is probably the init phase, so there is nothing to remove. In this
-        // case, we simply add it:
-        m_mainLayout.attach(m_viewLayout, m_viewLeft, m_viewTop, 2, 1);
-
-        return;
-    }
-
-    // Remove previous view layout:
-    m_mainLayout.remove(*currentViewLayout);
-
-    // Add new view layout:
-    m_mainLayout.attach(m_viewLayout, m_viewLeft, m_viewTop, 2, 1);
+   m_mainLayout.Register(*m_viewLayout,
+                         {m_viewTop, ILayout::RowSpan{1u}},
+                         {m_viewLeft, ILayout::ColumnSpan{2u}});
 }
 
 void cxgui::NewGameView::DeActivate()
@@ -112,29 +103,39 @@ void cxgui::NewGameView::Update(cxmodel::ModelNotificationContext /*p_context*/)
 
 void cxgui::NewGameView::SetLayout()
 {
-    constexpr int TOTAL_WIDTH = 2;
+    constexpr cxmodel::Column column0{0u};
+    constexpr cxmodel::Column column1{1u};
+    constexpr cxgui::ILayout::ColumnSpan singleColumnSpan{1u};
+    constexpr cxgui::ILayout::ColumnSpan fullColumnSpan{2u};
 
-    m_viewLayout.set_column_homogeneous(true);
+    constexpr cxmodel::Row row0{0u};
+    constexpr cxmodel::Row row1{1u};
+    constexpr cxmodel::Row row2{2u};
+    constexpr cxmodel::Row row3{3u};
+    constexpr cxmodel::Row row4{4u};
+    constexpr cxmodel::Row row5{5u};
+    constexpr cxmodel::Row row6{6u};
+    constexpr cxmodel::Row row7{7u};
+    constexpr cxmodel::Row row8{8u};
+    constexpr cxmodel::Row row9{9u};
+    constexpr cxgui::ILayout::RowSpan singleRowSpan{1u};
 
-    m_viewLayout.attach(m_title, 0, 0, TOTAL_WIDTH, 1);
+    m_viewLayout->SetColumnSpacingMode(cxgui::ILayout::ColumnSpacingMode::EQUAL);
 
-    m_viewLayout.attach(m_gameSectionTitle, 0, 1, TOTAL_WIDTH, 1);
-    m_viewLayout.attach(m_inARowLabel, 0, 2, 1, 1);
-    m_viewLayout.attach(m_inARowEntry, 1, 2, 1, 1);
-
-    m_viewLayout.attach(m_gridSectionTitle, 0, 3, TOTAL_WIDTH, 1);
-    m_viewLayout.attach(m_gridWidthLabel, 0, 4, 1, 1);
-    m_viewLayout.attach(m_gridWidthEntry, 1, 4,  1, 1);
-    m_viewLayout.attach(m_gridHeightLabel, 0, 5, 1, 1);
-    m_viewLayout.attach(m_gridHeightEntry, 1, 5, 1, 1);
-
-    m_viewLayout.attach(m_playersSectionTitle, 0, 6, TOTAL_WIDTH, 1);
-    m_viewLayout.attach(m_playersList->GetUnderlying(), 0, 7, TOTAL_WIDTH, 1);
-
-    m_viewLayout.attach(m_removePlayerButton, 0, 9, 1, 1);
-    m_viewLayout.attach(m_addPlayerButton, 1, 9, 1, 1);
-
-    m_viewLayout.attach(m_startButton, 0, 10, TOTAL_WIDTH, 1);
+    m_viewLayout->Register(m_title,                        {row0,  singleRowSpan}, {column0, fullColumnSpan});
+    m_viewLayout->Register(m_gameSectionTitle,             {row1,  singleRowSpan}, {column0, fullColumnSpan});
+    m_viewLayout->Register(m_inARowLabel,                  {row2,  singleRowSpan}, {column0, singleColumnSpan});
+    m_viewLayout->Register(m_inARowEntry,                  {row2,  singleRowSpan}, {column1, singleColumnSpan});
+    m_viewLayout->Register(m_gridSectionTitle,             {row3,  singleRowSpan}, {column0, fullColumnSpan});
+    m_viewLayout->Register(m_gridWidthLabel,               {row4,  singleRowSpan}, {column0, singleRowSpan});
+    m_viewLayout->Register(m_gridWidthEntry,               {row4,  singleRowSpan}, {column1, singleColumnSpan});
+    m_viewLayout->Register(m_gridHeightLabel,              {row5,  singleRowSpan}, {column0, singleColumnSpan});
+    m_viewLayout->Register(m_gridHeightEntry,              {row5,  singleRowSpan}, {column1, singleColumnSpan});
+    m_viewLayout->Register(m_playersSectionTitle,          {row6,  singleRowSpan}, {column0, fullColumnSpan});
+    m_viewLayout->Register(m_playersList->GetUnderlying(), {row7,  singleRowSpan}, {column0, fullColumnSpan});
+    m_viewLayout->Register(m_removePlayerButton,           {row8,  singleRowSpan}, {column0, singleColumnSpan});
+    m_viewLayout->Register(m_addPlayerButton,              {row8,  singleRowSpan}, {column1, singleColumnSpan});
+    m_viewLayout->Register(m_startButton,                  {row9, singleRowSpan}, {column0, fullColumnSpan});
 }
 
 void cxgui::NewGameView::PopulateWidgets()
@@ -173,10 +174,12 @@ void cxgui::NewGameView::PopulateWidgets()
 void cxgui::NewGameView::ConfigureWidgets()
 {
     // Window margin:
-    m_mainLayout.set_margin_start(DIALOG_SIDE_MARGIN);
-    m_mainLayout.set_margin_end(DIALOG_SIDE_MARGIN);
-    m_mainLayout.set_margin_top(DIALOG_SIDE_MARGIN);
-    m_mainLayout.set_margin_bottom(DIALOG_SIDE_MARGIN);
+    m_mainLayout.SetMargins({
+        TopMargin{DIALOG_SIDE_MARGIN},
+        BottomMargin{DIALOG_SIDE_MARGIN},
+        LeftMargin{DIALOG_SIDE_MARGIN},
+        RightMargin{DIALOG_SIDE_MARGIN}
+    });
 
     // View title:
     m_title.set_use_markup(true);
@@ -231,26 +234,18 @@ void cxgui::NewGameView::ConfigureWidgets()
 
 void cxgui::NewGameView::OnStart()
 {
-    // First, we get an handle to the main window in case a warning dialog needs to be
-    // displayed:
-    Gtk::Container* mainWindow = m_mainLayout.get_parent();
-    IF_CONDITION_NOT_MET_DO(mainWindow, return;);
-
-    Gtk::Window* parent = dynamic_cast<Gtk::Window*>(mainWindow);
-    IF_CONDITION_NOT_MET_DO(parent, return;);
-
     cxmodel::NewGameInformation gameInformation;
     const auto extractionStatus = ExtractGameInformation(gameInformation);
     if(!extractionStatus.IsSuccess())
     {
-        DisplayWarningDialog(*parent, extractionStatus.GetMessage());
+        DisplayWarningDialog(m_parentWindow, extractionStatus.GetMessage());
         return;
     }
 
     const auto inputValidationStatus = Validate(gameInformation, m_presenter);
     if(!inputValidationStatus.IsSuccess())
     {
-        DisplayWarningDialog(*parent, inputValidationStatus.GetMessage());
+        DisplayWarningDialog(m_parentWindow, inputValidationStatus.GetMessage());
         return;
     }
 
@@ -278,27 +273,20 @@ void cxgui::NewGameView::OnRemovePlayer()
     {
         IF_CONDITION_NOT_MET_DO(m_playersList->RemoveRow(m_playersList->GetSize() - 1), return;);
 
-        // At this point, the rwo is removed. If we don't act though, the extra
+        // At this point, the row is removed. If we don't act though, the extra
         // space left by the removed row will still be displayed on the screen,
         // leaving the window with ugly extra space. We want the window to resize
-        // to the new list. First, we get a handle to the main window:
-        Gtk::Container* parentAsGtk = m_mainLayout.get_parent();
-        IF_CONDITION_NOT_MET_DO(parentAsGtk != nullptr, return;);
-
-        Gtk::Window* mainWindowAsGtk = dynamic_cast<Gtk::Window*>(parentAsGtk);
-        IF_CONDITION_NOT_MET_DO(mainWindowAsGtk!= nullptr, return;);
-
-        // Then, we get the preferred heights values:
+        // to the new list. We get the preferred heights values:
         int minimumHeight, naturalHeight;
-        mainWindowAsGtk->get_preferred_height(minimumHeight, naturalHeight);
+        m_parentWindow.get_preferred_height(minimumHeight, naturalHeight);
 
         // Then, we make a size request using the minimum height. Notice the '100'
         // that is removed. This was added to make sure Gtkmm did not leave any
         // extra blank space by resizing smaller than the minimum value:
-        mainWindowAsGtk->set_size_request(mainWindowAsGtk->get_width(), minimumHeight - 100);
+        m_parentWindow.set_size_request(m_parentWindow.get_width(), minimumHeight - 100);
 
         // Then resize accordingly:
-        mainWindowAsGtk->resize(mainWindowAsGtk->get_width(), naturalHeight);
+        m_parentWindow.resize(m_parentWindow.get_width(), naturalHeight);
     }
 
     m_removePlayerButton.set_sensitive(m_presenter.CanRemoveAnotherPlayer(m_playersList->GetSize()));

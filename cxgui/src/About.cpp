@@ -60,13 +60,27 @@ void cxgui::About::RegisterLayouts()
 
 void cxgui::About::RegisterWidgets()
 {
-    m_mainLayout.attach(m_name, 0, 0, 1, 2);
-    m_mainLayout.attach_next_to(m_version, m_name, Gtk::PositionType::POS_BOTTOM, 1, 1);
-    m_mainLayout.attach_next_to(m_description, m_version, Gtk::PositionType::POS_BOTTOM, 1, 1);
-    m_mainLayout.attach_next_to(m_website, m_description, Gtk::PositionType::POS_BOTTOM, 1, 1);
-    m_mainLayout.attach_next_to(m_license, m_website, Gtk::PositionType::POS_BOTTOM, 1, 1);
-    m_mainLayout.attach_next_to(m_copyright, m_license, Gtk::PositionType::POS_BOTTOM, 1, 1);
-    m_mainLayout.attach_next_to(m_close, m_copyright, Gtk::PositionType::POS_BOTTOM, 1, 1);
+    IF_CONDITION_NOT_MET_DO(m_mainLayout, return;);
+
+    constexpr cxmodel::Row row0{0u};
+    constexpr cxmodel::Row row1{1u};
+    constexpr cxmodel::Row row2{2u};
+    constexpr cxmodel::Row row3{3u};
+    constexpr cxmodel::Row row4{4u};
+    constexpr cxmodel::Row row5{5u};
+    constexpr cxmodel::Row row6{6u};
+    constexpr cxgui::ILayout::RowSpan rowSpan1{1u};
+
+    constexpr cxmodel::Column column0{0u};
+    constexpr cxgui::ILayout::ColumnSpan columnSpan1{1u};
+    
+    m_mainLayout->Register(m_name,        {row0, rowSpan1}, {column0, columnSpan1});
+    m_mainLayout->Register(m_version,     {row1, rowSpan1}, {column0, columnSpan1});
+    m_mainLayout->Register(m_description, {row2, rowSpan1}, {column0, columnSpan1});
+    m_mainLayout->Register(m_website,     {row3, rowSpan1}, {column0, columnSpan1});
+    m_mainLayout->Register(m_license,     {row4, rowSpan1}, {column0, columnSpan1});
+    m_mainLayout->Register(m_copyright,   {row5, rowSpan1}, {column0, columnSpan1});
+    m_mainLayout->Register(m_close,       {row6, rowSpan1}, {column0, columnSpan1});
 }
 
 void cxgui::About::ConfigureLayouts()

@@ -26,6 +26,7 @@
 
 #include <cxstd/StrongType.h>
 #include <cxmodel/common.h>
+#include <cxgui/Margins.h>
 
 namespace cxgui
 {
@@ -39,7 +40,6 @@ namespace Gtk
 
 namespace cxgui
 {
-
 
 /**********************************************************************************************//**
  * @brief Layout for widgets (and other layouts).
@@ -140,8 +140,10 @@ public:
         /******************************************************************************************//**
          * @brief Constructor.
          *
-         * @param p_coordinate The coordinate where the widget should be registered in the layout.
-         * @param p_span       The number of coordinate unit needed by the widget in the layout.
+         * @param p_coordinate
+         *      The coordinate where the widget should be registered in the layout.
+         * @param p_span
+         *      The number of coordinate unit needed by the widget in the layout.
          *
          *********************************************************************************************/
         constexpr CoordinateDescriptor(const Coordinate& p_coordinate, const Span& p_span)
@@ -166,15 +168,43 @@ public:
      *********************************************************************************************/
     using ColumnDescriptor = CoordinateDescriptor<cxmodel::Column, ColumnSpan>;
 
+    /******************************************************************************************//**
+     * @brief Row spacing modes.
+     *
+     *********************************************************************************************/
+    enum class RowSpacingMode
+    {
+        /** All layout rows are equaly spaced. */
+        EQUAL, 
+    
+        /** All layout rows adapt their size according to their children sizes. */
+        INDEPENDANT,
+    };
+    
+    /******************************************************************************************//**
+     * @brief Column spacing modes.
+     *
+     *********************************************************************************************/
+    enum class ColumnSpacingMode
+    {
+        /** All layout columns are equaly spaced. */
+        EQUAL,
+    
+        /** All layout columns adapt their size according to their children sizes. */
+        INDEPENDANT,
+    };
 
 public:
 
     /******************************************************************************************//**
      * @brief Register a widget to the layout.
      *
-     * @param p_widget The widget to register to the layout.
-     * @param p_row    Description of where to register the widget, vertically.
-     * @param p_column Description of where to register the widget, horizontally.
+     * @param p_widget
+     *      The widget to register to the layout.
+     * @param p_row
+     *      Description of where to register the widget, vertically.
+     * @param p_column
+     *      Description of where to register the widget, horizontally.
      *
      *********************************************************************************************/
     virtual void Register(IWidget& p_widget, const RowDescriptor& p_row, const ColumnDescriptor& p_column) = 0;
@@ -182,9 +212,12 @@ public:
     /******************************************************************************************//**
      * @brief Register a layout to the layout.
      *
-     * @param p_layout The layout to register to the layout.
-     * @param p_row    Description of where to register the widget, vertically.
-     * @param p_column Description of where to register the widget, horizontally.
+     * @param p_layout
+     *      The layout to register to the layout.
+     * @param p_row
+     *      Description of where to register the widget, vertically.
+     * @param p_column
+     *      Description of where to register the widget, horizontally.
      *
      *********************************************************************************************/
     virtual void Register(ILayout& p_layout, const RowDescriptor& p_row, const ColumnDescriptor& p_column) = 0;
@@ -192,16 +225,117 @@ public:
     /******************************************************************************************//**
      * @brief Register a Gtkmm widget to the layout.
      *
-     * @param p_gtkWidget The Gtkmm widget to register to the layout.
-     * @param p_row       Description of where to register the widget, vertically.
-     * @param p_column    Description of where to register the widget, horizontally.
+     * @param p_gtkWidget
+     *      The Gtkmm widget to register to the layout.
+     * @param p_row
+     *      Description of where to register the widget, vertically.
+     * @param p_column
+     *      Description of where to register the widget, horizontally.
      *
-     * @warning This call is temporary. It will be removed once all widgets will have been
-     *          abstracted away (TG-256).
+     * @warning
+     *      This call is temporary. It will be removed once all widgets will have been
+     *      abstracted away (TG-256).
      *
      *********************************************************************************************/
     virtual void Register(Gtk::Widget& p_gtkWidget, const RowDescriptor& p_row, const ColumnDescriptor& p_column) = 0;
 
+    /******************************************************************************************//**
+     * @brief Unregister a widget from the layout.
+     *
+     * @param p_widget
+     *      The widget to unregister from the layout.
+     *
+     *********************************************************************************************/
+    virtual void Unregister(IWidget& p_widget) = 0;
+
+    /******************************************************************************************//**
+     * @brief Unregister a child layout from the layout.
+     *
+     * @param p_layout
+     *      The layout to unregister from the layout.
+     *
+     *********************************************************************************************/
+    virtual void Unregister(ILayout& p_layout) = 0;
+
+    /******************************************************************************************//**
+     * @brief Unregister a Gtkmm widget from the layout.
+     *
+     * @param p_gtkWidget
+     *      The Gtkmm widget to unregister from the layout.
+     *
+     * @warning
+     *      This call is temporary. It will be removed once all widgets will have been
+     *      abstracted away (TG-256).
+     *
+     *********************************************************************************************/
+    virtual void Unregister(Gtk::Widget& p_gtkWidget) = 0;
+
+    /******************************************************************************************//**
+     * @brief Get the registered widget at the specified location.
+     *
+     * @param p_row
+     *      The row in which the widget is located.
+     * @param p_column
+     *      The column in which the widget is located.
+     *
+     * @return
+     *      The widget's address, or `nullptr` otherwise.
+     *
+     *********************************************************************************************/
+    [[nodiscard]] virtual const IWidget* GetWidgetAtPosition(const cxmodel::Row& p_row, const cxmodel::Column& p_column) const = 0;
+
+    /******************************************************************************************//**
+     * @copydoc cxgui::ILayout::GetWidgetAtPosition
+     *
+     *********************************************************************************************/
+    [[nodiscard]] virtual IWidget* GetWidgetAtPosition(const cxmodel::Row& p_row, const cxmodel::Column& p_column) = 0;
+
+    /******************************************************************************************//**
+     * @brief Get the registered layout at the specified location.
+     *
+     * @param p_row
+     *      The row in which the layout is located.
+     * @param p_column
+     *      The column in which the layout is located.
+     *
+     * @return
+     *      The layout's address, or `nullptr` otherwise.
+     *
+     *********************************************************************************************/
+    [[nodiscard]] virtual const ILayout* GetLayoutAtPosition(const cxmodel::Row& p_row, const cxmodel::Column& p_column) const = 0;
+
+    /******************************************************************************************//**
+     * @copydoc cxgui::ILayout::GetLayoutAtPosition
+     *
+     *********************************************************************************************/
+    [[nodiscard]] virtual ILayout* GetLayoutAtPosition(const cxmodel::Row& p_row, const cxmodel::Column& p_column) = 0;
+
+    /******************************************************************************************//**
+     * @brief Changes the margin sizes for the layout.
+     *
+     * @param p_newMarginSizes
+     *      The new margin sizes.
+     *
+     *********************************************************************************************/
+    virtual void SetMargins(const Margins& p_newMarginSizes) = 0;
+
+    /******************************************************************************************//**
+     * @brief Changes the row spacing mode. Affects all rows in the layout.
+     *
+     * @param p_newMode
+     *      The new row spacing mode.
+     *
+     *********************************************************************************************/
+    virtual void SetRowSpacingMode(RowSpacingMode p_newMode) = 0;
+
+    /******************************************************************************************//**
+     * @brief Changes the column spacing mode. Affects all columns in the layout.
+     *
+     * @param p_newMode
+     *      The new column spacing mode.
+     *
+     *********************************************************************************************/
+    virtual void SetColumnSpacingMode(ColumnSpacingMode p_newMode) = 0;
 };
 
 } // namespace cxgui

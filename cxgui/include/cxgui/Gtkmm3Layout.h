@@ -40,7 +40,8 @@ namespace cxgui
  * @brief Gtkmm 3 implementation for the `cxgui::ILayout` interface.
  *
  *************************************************************************************************/
-class Gtkmm3Layout : public ILayout
+class Gtkmm3Layout : public ILayout,
+                     public Gtk::Grid
 {
 
 public:
@@ -49,10 +50,16 @@ public:
     void Register(IWidget& p_widget, const ILayout::RowDescriptor& p_row, const ILayout::ColumnDescriptor& p_column) override;
     void Register(ILayout& p_layout, const ILayout::RowDescriptor& p_row, const ILayout::ColumnDescriptor& p_column) override;
     void Register(Gtk::Widget& p_gtkWidget, const ILayout::RowDescriptor& p_row, const ILayout::ColumnDescriptor& p_column) override;
-
-private:
-
-    Gtk::Grid m_gtkmm3Layout;
+    void Unregister(IWidget& p_widget) override;
+    void Unregister(ILayout& p_layout) override;
+    void Unregister(Gtk::Widget& p_gtkWidget) override;
+    [[nodiscard]] const IWidget* GetWidgetAtPosition(const cxmodel::Row& p_row, const cxmodel::Column& p_column) const override;
+    [[nodiscard]] IWidget* GetWidgetAtPosition(const cxmodel::Row& p_row, const cxmodel::Column& p_column) override;
+    [[nodiscard]] const ILayout* GetLayoutAtPosition(const cxmodel::Row& p_row, const cxmodel::Column& p_column) const override;
+    [[nodiscard]] ILayout* GetLayoutAtPosition(const cxmodel::Row& p_row, const cxmodel::Column& p_column) override;
+    void SetMargins(const Margins& p_newMarginSizes) override;
+    void SetRowSpacingMode(RowSpacingMode p_newMode) override;
+    void SetColumnSpacingMode(ColumnSpacingMode p_newMode) override;
 
 };
 

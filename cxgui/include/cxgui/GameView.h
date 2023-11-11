@@ -24,7 +24,6 @@
 #ifndef GAMEVIEW_H_AA8C282C_9CC4_45F4_BE91_C8840160BA1B
 #define GAMEVIEW_H_AA8C282C_9CC4_45F4_BE91_C8840160BA1B
 
-#include <gtkmm/grid.h>
 #include <gtkmm/label.h>
 
 #include "AnimatedBoard.h"
@@ -33,6 +32,11 @@
 #include "IGameViewController.h"
 #include "IGameViewPresenter.h"
 #include "IView.h"
+
+namespace cxgui
+{
+    class ILayout;
+}
 
 namespace cxgui
 {
@@ -56,6 +60,8 @@ public:
      *      The game view presenter.
      * @param p_controller
      *      The game view controller.
+     * @param p_parentWindow
+     *      The window containing the view in its main layout.
      * @param p_mainLayout
      *      The main window's top level layout (in which to insert the Game view).
      * @param p_viewLeft
@@ -66,9 +72,10 @@ public:
      ********************************************************************************************/
     GameView(IGameViewPresenter& p_presenter,
              IGameViewController& p_controller,
-             Gtk::Grid& p_mainLayout,
-             int p_viewLeft,
-             int p_viewTop);
+             Gtk::Window& p_parentWindow,
+             cxgui::ILayout& p_mainLayout,
+             const cxmodel::Column& p_viewLeft,
+             const cxmodel::Row& p_viewTop);
 
     // cxgui::IBoardAnimationObserver:
     void Update(cxgui::BoardAnimationNotificationContext p_context, cxgui::BoardAnimationSubject* p_subject) override;
@@ -106,20 +113,20 @@ private:
     IGameViewPresenter& m_presenter;
     IGameViewController& m_controller;
 
-    Gtk::Grid& m_mainLayout;
+    // The window containing the view in its main layout.
+    Gtk::Window& m_parentWindow;
 
-    const int m_viewLeft;
-    const int m_viewTop;
+    cxgui::ILayout& m_mainLayout;
 
-    Gtk::Grid m_viewLayout;
+    const cxmodel::Column m_viewLeft;
+    const cxmodel::Row m_viewTop;
 
-    // Parent window:
-    Gtk::Window* m_parent;
+    std::unique_ptr<ILayout> m_viewLayout;
 
     // Controls:
     Gtk::Label m_title;
 
-    Gtk::Grid m_playersInfoLayout;
+    std::unique_ptr<ILayout> m_playersInfoLayout;
 
     Gtk::Label m_activePlayerLabel;
     Gtk::Label m_activePlayerName;

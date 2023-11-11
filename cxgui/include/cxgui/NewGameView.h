@@ -38,6 +38,11 @@
 
 namespace cxgui
 {
+    class ILayout;
+}
+
+namespace cxgui
+{
 
 /*********************************************************************************************//**
  * @brief View for creating new games.
@@ -55,6 +60,8 @@ public:
      *      A main window presenter (new game view).
      * @param p_controller
      *      A main window controller (new game view).
+     * @param p_parentWindow
+     *      The window containing the view.
      * @param p_mainLayout
      *      The main window's top level layout.
      * @param p_viewLeft
@@ -65,9 +72,10 @@ public:
      ********************************************************************************************/
     NewGameView(INewGameViewPresenter& p_presenter,
                 INewGameViewController& p_controller,
-                Gtk::Grid& p_mainLayout,
-                int p_viewLeft,
-                int p_viewTop);
+                Gtk::Window& p_parentWindow,
+                cxgui::ILayout& p_mainLayout,
+                const cxmodel::Column& p_viewLeft,
+                const cxmodel::Row& p_viewTop);
 
     // IView:
     void Activate() override;
@@ -90,12 +98,14 @@ private:
     INewGameViewPresenter& m_presenter;
     INewGameViewController& m_controller;
 
-    Gtk::Grid& m_mainLayout;
+    Gtk::Window& m_parentWindow;
 
-    const int m_viewLeft;
-    const int m_viewTop;
+    cxgui::ILayout& m_mainLayout;
 
-    Gtk::Grid m_viewLayout;
+    const cxmodel::Column m_viewLeft;
+    const cxmodel::Row m_viewTop;
+
+    std::unique_ptr<ILayout> m_viewLayout;
 
     // Controls:
     Gtk::Label m_title;

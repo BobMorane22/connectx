@@ -25,10 +25,11 @@
 #define WINDOW_H_861FC628_597C_407E_8206_E67F71000A55
 
 #include <glibmm/fileutils.h>
-#include <gtkmm/grid.h>
 
 #include <cxinv/assertion.h>
 #include <cxgui/generated/ressources.h>
+#include <cxgui/Gtkmm3Layout.h>
+#include <cxgui/ILayout.h>
 
 #include "IWindow.h"
 
@@ -151,8 +152,8 @@ protected:
      **********************************************************************************************/
     virtual void ConfigureSignalHandlers() = 0;
 
-    /** The underlying GTKmm window's top level layout. */
-    Gtk::Grid m_mainLayout;
+    /** The underlying window's top level layout. */
+    std::unique_ptr<cxgui::ILayout> m_mainLayout;
 
     /** The underlying GTKmm window instance. */
     GtkmmWindow m_window;
@@ -162,7 +163,14 @@ protected:
 template<typename GtkmmWindow>
 Window<GtkmmWindow>::Window()
 {
-    m_window.add(m_mainLayout);
+    m_mainLayout = std::make_unique<cxgui::Gtkmm3Layout>();
+    ASSERT(m_mainLayout);
+
+    Gtk::Widget* mainLayoutAsGtk = dynamic_cast<Gtk::Widget*>(m_mainLayout.get());
+    if(INL_ASSERT(mainLayoutAsGtk))
+    {
+        m_window.add(*mainLayoutAsGtk);
+    }
 }
 
 template<typename GtkmmWindow>

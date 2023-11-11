@@ -28,6 +28,7 @@
 #include <gtkmm/stock.h>
 
 #include <cxinv/assertion.h>
+#include <cxmodel/common.h>
 #include <cxmodel/IConnectXGameActions.h>
 #include <cxmodel/IConnectXGameInformation.h>
 #include <cxmodel/IVersioning.h>
@@ -132,11 +133,13 @@ void cxgui::MainWindow::RegisterLayouts()
 
 void cxgui::MainWindow::RegisterWidgets()
 {
+    IF_CONDITION_NOT_MET_DO(m_mainLayout, return;);
+
     RegisterMenuBar();
 
-    m_mainLayout.attach(m_menubar, 0, 0, 2, 1);
+    m_mainLayout->Register(m_menubar, {cxmodel::Row{0u}, cxgui::ILayout::RowSpan{1u}}, {cxmodel::Column{0u}, cxgui::ILayout::ColumnSpan{2u}});
 
-    m_newGameView = std::make_unique<NewGameView>(m_presenter, m_controller, m_mainLayout, m_viewLeft, m_viewTop);
+    m_newGameView = std::make_unique<NewGameView>(m_presenter, m_controller, m_window, *m_mainLayout, m_viewLeft, m_viewTop);
     m_newGameView->Activate();
 
     RegisterStatusBar();
@@ -340,7 +343,10 @@ void cxgui::MainWindow::RegisterStatusBar()
     m_statusbarPresenter = std::make_unique<StatusBarPresenter>();
     std::unique_ptr<StatusBar> concreteStatusBar = std::make_unique<StatusBar>(*m_statusbarPresenter);
 
-    m_mainLayout.attach(concreteStatusBar->GetGtkStatusBar(), 0, m_viewTop + 1, 2, 1);
+    m_mainLayout->Register(
+        concreteStatusBar->GetGtkStatusBar(),
+        {m_viewTop + cxmodel::Row{1u},cxgui::ILayout::RowSpan{1u}},
+        {cxmodel::Column{0u}, cxgui::ILayout::ColumnSpan{2u}});
 
     m_statusbar = std::move(concreteStatusBar);
 
@@ -455,9 +461,11 @@ void cxgui::MainWindow::CreateGameResolutionWindow(cxmodel::ModelNotificationCon
 
 void cxgui::MainWindow::ActivateNewGameView()
 {
+    IF_CONDITION_NOT_MET_DO(m_mainLayout, return;);
+
     if(!m_newGameView)
     {
-        m_newGameView = std::make_unique<NewGameView>(m_presenter, m_controller, m_mainLayout, m_viewLeft, m_viewTop);
+        m_newGameView = std::make_unique<NewGameView>(m_presenter, m_controller, m_window, *m_mainLayout, m_viewLeft, m_viewTop);
     }
 
     m_newGameView->Activate();
@@ -476,9 +484,11 @@ void cxgui::MainWindow::DeactivateNewGameView()
 
 void cxgui::MainWindow::ActivateGameView()
 {
+    IF_CONDITION_NOT_MET_DO(m_mainLayout, return;);
+
     if(!m_gameView)
     {
-        m_gameView = std::make_unique<GameView>(m_presenter, m_controller, m_mainLayout, m_viewLeft, m_viewTop);
+        m_gameView = std::make_unique<GameView>(m_presenter, m_controller, m_window, *m_mainLayout, m_viewLeft, m_viewTop);
     }
 
     m_gameView->Activate();

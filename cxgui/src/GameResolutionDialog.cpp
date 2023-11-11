@@ -55,17 +55,31 @@ void cxgui::GameResolutionDialog::RegisterLayouts()
 
 void cxgui::GameResolutionDialog::RegisterWidgets()
 {
-    m_mainLayout.attach(m_title, 0, 0, 1, 1);
-    m_mainLayout.attach(m_message, 0, 1, 1, 1);
-    m_mainLayout.attach(m_startNewGame, 0, 2, 1, 1);
+    IF_CONDITION_NOT_MET_DO(m_mainLayout, return;);
+
+    constexpr cxmodel::Row row0{0u};
+    constexpr cxmodel::Row row1{1u};
+    constexpr cxmodel::Row row2{2u};
+    constexpr cxgui::ILayout::RowSpan rowSpan1{1u};
+
+    constexpr cxmodel::Column column0{0u};
+    constexpr cxgui::ILayout::ColumnSpan columnSpan1{1u};
+
+    m_mainLayout->Register(m_title,        {row0, rowSpan1}, {column0, columnSpan1});
+    m_mainLayout->Register(m_message,      {row1, rowSpan1}, {column0, columnSpan1});
+    m_mainLayout->Register(m_startNewGame, {row2, rowSpan1}, {column0, columnSpan1});
 }
 
 void cxgui::GameResolutionDialog::ConfigureLayouts()
 {
-    m_mainLayout.set_margin_bottom(DIALOG_SIDE_MARGIN);
-    m_mainLayout.set_margin_top(DIALOG_SIDE_MARGIN);
-    m_mainLayout.set_margin_start(DIALOG_SIDE_MARGIN);
-    m_mainLayout.set_margin_end(DIALOG_SIDE_MARGIN);
+    IF_CONDITION_NOT_MET_DO(m_mainLayout, return;);
+    
+    m_mainLayout->SetMargins({
+        TopMargin{DIALOG_SIDE_MARGIN},
+        BottomMargin{DIALOG_SIDE_MARGIN},
+        LeftMargin{DIALOG_SIDE_MARGIN},
+        RightMargin{DIALOG_SIDE_MARGIN}
+    });
 }
 
 void cxgui::GameResolutionDialog::ConfigureWidgets()
