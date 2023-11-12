@@ -40,6 +40,8 @@ add_compile_options(
   -Werror
 )
 
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 option(
     GTKMM_DISABLE_ALL_DEPRECATED
     "Make sure no Gtkmm related deprecated code is available."
