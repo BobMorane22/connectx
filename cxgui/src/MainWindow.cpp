@@ -82,10 +82,10 @@ namespace
     Gtk::AccelLabel* menuItemAccelLabel = Gtk::manage(new Gtk::AccelLabel(p_label));
     menuItemAccelLabel->set_xalign(0.0);
 
-    Gtk::Box* menuItemLabelLayout = Gtk::manage(new Gtk::Box());
-    menuItemLabelLayout->set_spacing(5);
-    menuItemLabelLayout->pack_start(*menuItemImageLabel, false, false);
-    menuItemLabelLayout->pack_start(*menuItemAccelLabel, true, true);
+    Gtk::Grid* menuItemLabelLayout = Gtk::manage(new Gtk::Grid());
+    menuItemImageLabel->set_margin_end(5);
+    menuItemLabelLayout->attach(*menuItemImageLabel, 0, 0, 1, 1);
+    menuItemLabelLayout->attach(*menuItemAccelLabel, 1, 0, 1, 1);
     
     Gtk::MenuItem* menuItem = Gtk::manage(new Gtk::MenuItem(*menuItemLabelLayout));
     menuItemAccelLabel->set_accel_widget(*menuItem);
