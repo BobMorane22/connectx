@@ -58,7 +58,7 @@ namespace
 // If no icon name is specified, the menu item will only show a text label. This is
 // temporary because in Gtkmm4, `Gtk::MenuItem`s are deprecated. The "popover" technology
 // should be used instead.
-[[nodiscard]] Gtk::MenuItem* MakeMenuItem(const std::string& p_label, const std::string& p_iconName = {})
+[[nodiscard]] std::unique_ptr<Gtk::MenuItem> MakeMenuItem(const std::string& p_label, const std::string& p_iconName = {})
 { 
     IF_PRECONDITION_NOT_MET_DO(!p_label.empty(), return nullptr;);
 
@@ -87,7 +87,9 @@ namespace
     menuItemLabelLayout->attach(*menuItemImageLabel, 0, 0, 1, 1);
     menuItemLabelLayout->attach(*menuItemAccelLabel, 1, 0, 1, 1);
     
-    Gtk::MenuItem* menuItem = Gtk::manage(new Gtk::MenuItem(*menuItemLabelLayout));
+    auto menuItem = std::make_unique<Gtk::MenuItem>(*menuItemLabelLayout);
+    IF_CONDITION_NOT_MET_DO(menuItem, return nullptr;);
+
     menuItemAccelLabel->set_accel_widget(*menuItem);
 
     POSTCONDITION(menuItem);

@@ -159,15 +159,15 @@ private:
     Gtk::MenuBar m_menubar;
     Gtk::MenuItem m_gameMenuItem;
     Gtk::Menu m_gameMenu;
-    Gtk::MenuItem* m_newGameMenuItem;
-    Gtk::MenuItem* m_reinitializeMenuItem;
-    Gtk::MenuItem* m_undoMenuItem;
-    Gtk::MenuItem* m_redoMenuItem;
-    Gtk::MenuItem* m_quitMenuItem;
+    std::unique_ptr<Gtk::MenuItem> m_newGameMenuItem;
+    std::unique_ptr<Gtk::MenuItem> m_reinitializeMenuItem;
+    std::unique_ptr<Gtk::MenuItem> m_undoMenuItem;
+    std::unique_ptr<Gtk::MenuItem> m_redoMenuItem;
+    std::unique_ptr<Gtk::MenuItem> m_quitMenuItem;
     Gtk::MenuItem m_helpMenuItem;
     Gtk::Menu m_helpMenu;
-    Gtk::MenuItem* m_contentsMenuItem;
-    Gtk::MenuItem* m_aboutMenuItem;
+    std::unique_ptr<Gtk::MenuItem> m_contentsMenuItem;
+    std::unique_ptr<Gtk::MenuItem> m_aboutMenuItem;
 
     // Views:
     const cxmodel::Column m_viewLeft;
