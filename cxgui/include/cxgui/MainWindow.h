@@ -36,6 +36,7 @@
 #include <gtkmm/menu.h>
 #include <gtkmm/stock.h>
 
+#include "Gtkmm3MenuItem.h"
 #include "IStatusBar.h"
 #include "IStatusBarPresenter.h"
 #include "IView.h"
@@ -159,15 +160,15 @@ private:
     Gtk::MenuBar m_menubar;
     Gtk::MenuItem m_gameMenuItem;
     Gtk::Menu m_gameMenu;
-    std::unique_ptr<Gtk::MenuItem> m_newGameMenuItem;
-    std::unique_ptr<Gtk::MenuItem> m_reinitializeMenuItem;
-    std::unique_ptr<Gtk::MenuItem> m_undoMenuItem;
-    std::unique_ptr<Gtk::MenuItem> m_redoMenuItem;
-    std::unique_ptr<Gtk::MenuItem> m_quitMenuItem;
+    std::unique_ptr<cxgui::Gtkmm3MenuItem> m_newGameMenuItem;
+    std::unique_ptr<cxgui::Gtkmm3MenuItem> m_reinitializeMenuItem;
+    std::unique_ptr<cxgui::Gtkmm3MenuItem> m_undoMenuItem;
+    std::unique_ptr<cxgui::Gtkmm3MenuItem> m_redoMenuItem;
+    std::unique_ptr<cxgui::Gtkmm3MenuItem> m_quitMenuItem;
     Gtk::MenuItem m_helpMenuItem;
     Gtk::Menu m_helpMenu;
-    std::unique_ptr<Gtk::MenuItem> m_contentsMenuItem;
-    std::unique_ptr<Gtk::MenuItem> m_aboutMenuItem;
+    std::unique_ptr<cxgui::Gtkmm3MenuItem> m_contentsMenuItem;
+    std::unique_ptr<cxgui::Gtkmm3MenuItem> m_aboutMenuItem;
 
     // Views:
     const cxmodel::Column m_viewLeft;

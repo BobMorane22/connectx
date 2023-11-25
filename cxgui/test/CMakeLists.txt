@@ -47,6 +47,7 @@ set(SOURCE_FILES
   NewGameViewPresenterTests.cpp
   ScalingRatiosTests.cpp
   StatusBarPresenterTests.cpp
+  StdActionIconTests.cpp
   TieGameResolutionDialogPresenterTests.cpp
   WinGameResolutionDialogPresenterTests.cpp
 )

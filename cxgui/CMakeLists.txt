@@ -45,6 +45,7 @@ add_library(${TARGET_NAME}
   src/GameView.cpp
   src/GameViewKeyHandlerStrategyFactory.cpp
   src/Gtkmm3Layout.cpp
+  src/Gtkmm3MenuItem.cpp
   src/IAnimatedBoardModel.cpp
   src/INewGameViewPresenter.cpp
   src/MainWindowController.cpp
@@ -57,6 +58,7 @@ add_library(${TARGET_NAME}
   src/pathHelpers.cpp
   src/StatusBar.cpp
   src/StatusBarPresenter.cpp
+  src/StdActionIcon.cpp
   src/TieGameResolutionDialogPresenter.cpp
   src/WinGameResolutionDialogPresenter.cpp
 )

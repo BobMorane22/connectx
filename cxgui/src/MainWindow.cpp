@@ -21,6 +21,8 @@
  *
  *************************************************************************************************/
 
+#include "cxgui/Gtkmm3Layout.h"
+#include "cxgui/StdActionIcon.h"
 #include <string>
 
 #include <gtkmm/application.h>
@@ -40,63 +42,14 @@
 #include <cxgui/GameResolutionDialogPresenterFactory.h>
 #include <cxgui/GameView.h>
 #include <cxgui/IAnimatedBoardPresenter.h>
+#include <cxgui/ILayout.h>
 #include <cxgui/IMainWindowController.h>
 #include <cxgui/IMainWindowPresenter.h>
 #include <cxgui/MainWindow.h>
 #include <cxgui/NewGameView.h>
 #include <cxgui/StatusBar.h>
 #include <cxgui/StatusBarPresenter.h>
-#include <cxgui/GameResolutionDialogController.h>
-
-namespace
-{
-
-// Icon names can be found here:
-//
-//    https://specifications.freedesktop.org/icon-naming-spec/0.8/ar01s04.html
-//
-// If no icon name is specified, the menu item will only show a text label. This is
-// temporary because in Gtkmm4, `Gtk::MenuItem`s are deprecated. The "popover" technology
-// should be used instead.
-[[nodiscard]] std::unique_ptr<Gtk::MenuItem> MakeMenuItem(const std::string& p_label, const std::string& p_iconName = {})
-{ 
-    IF_PRECONDITION_NOT_MET_DO(!p_label.empty(), return nullptr;);
-
-    Gtk::Image* menuItemImageLabel = nullptr;
-    if(!p_iconName.empty())
-    {
-        menuItemImageLabel = Gtk::manage(new Gtk::Image(p_iconName, Gtk::BuiltinIconSize::ICON_SIZE_MENU));
-    }
-    else
-    {
-        // If no icon name is specified, we use an "empty" icon, to make sure all
-        // menu string labels are aligned, like before:
-        const Gtk::IconSize iconSize = Gtk::BuiltinIconSize::ICON_SIZE_MENU;
-        int width, height;
-        Gtk::IconSize::lookup(iconSize, width, height);
-        const auto iconSurface = Cairo::ImageSurface::create(Cairo::Format::FORMAT_ARGB32, width, height);
-        menuItemImageLabel = Gtk::manage(new Gtk::Image(iconSurface));
-    }
-    IF_CONDITION_NOT_MET_DO(menuItemImageLabel, return nullptr;);
-
-    Gtk::AccelLabel* menuItemAccelLabel = Gtk::manage(new Gtk::AccelLabel(p_label));
-    menuItemAccelLabel->set_xalign(0.0);
-
-    Gtk::Grid* menuItemLabelLayout = Gtk::manage(new Gtk::Grid());
-    menuItemImageLabel->set_margin_end(5);
-    menuItemLabelLayout->attach(*menuItemImageLabel, 0, 0, 1, 1);
-    menuItemLabelLayout->attach(*menuItemAccelLabel, 1, 0, 1, 1);
-    
-    auto menuItem = std::make_unique<Gtk::MenuItem>(*menuItemLabelLayout);
-    IF_CONDITION_NOT_MET_DO(menuItem, return nullptr;);
-
-    menuItemAccelLabel->set_accel_widget(*menuItem);
-
-    POSTCONDITION(menuItem);
-    return menuItem;
-}
-
-} // namespace
+#include <cxgui/StdActionIcon.h>
 
 cxgui::MainWindow::MainWindow(Gtk::Application& p_gtkApplication,
                               cxmodel::ModelSubject& p_model,
@@ -112,14 +65,13 @@ cxgui::MainWindow::MainWindow(Gtk::Application& p_gtkApplication,
     // This should be located elsewhere. For now, I don't have a choice to locate it
     // here because of the pointer nature of the attribute. To be moved when passing
     // to popover menus.
-    m_newGameMenuItem = MakeMenuItem(m_presenter.GetMenuLabel(MenuItem::NEW_GAME));
-    m_reinitializeMenuItem = MakeMenuItem(m_presenter.GetMenuLabel(MenuItem::REINITIALIZE_GAME));
-    m_undoMenuItem = MakeMenuItem(m_presenter.GetMenuLabel(MenuItem::UNDO), "edit-undo");
-    m_redoMenuItem = MakeMenuItem(m_presenter.GetMenuLabel(MenuItem::REDO), "edit-redo");
-    m_quitMenuItem = MakeMenuItem(m_presenter.GetMenuLabel(MenuItem::QUIT), "application-exit");
-
-    m_contentsMenuItem = MakeMenuItem(m_presenter.GetMenuLabel(MenuItem::CONTENTS), "help-contents");
-    m_aboutMenuItem = MakeMenuItem(m_presenter.GetMenuLabel(MenuItem::ABOUT), "help-about");
+    m_newGameMenuItem      = std::make_unique<cxgui::Gtkmm3MenuItem>(m_presenter.GetMenuLabel(MenuItem::NEW_GAME));
+    m_reinitializeMenuItem = std::make_unique<cxgui::Gtkmm3MenuItem>(m_presenter.GetMenuLabel(MenuItem::REINITIALIZE_GAME));
+    m_undoMenuItem         = std::make_unique<cxgui::Gtkmm3MenuItem>(m_presenter.GetMenuLabel(MenuItem::UNDO), cxgui::FreeDesktop::StdActionIcon::EDIT_UNDO);
+    m_redoMenuItem         = std::make_unique<cxgui::Gtkmm3MenuItem>(m_presenter.GetMenuLabel(MenuItem::REDO), cxgui::FreeDesktop::StdActionIcon::EDIT_REDO);
+    m_quitMenuItem         = std::make_unique<cxgui::Gtkmm3MenuItem>(m_presenter.GetMenuLabel(MenuItem::QUIT), cxgui::FreeDesktop::StdActionIcon::APPLICATION_EXIT);
+    m_contentsMenuItem     = std::make_unique<cxgui::Gtkmm3MenuItem>(m_presenter.GetMenuLabel(MenuItem::CONTENTS), cxgui::FreeDesktop::StdActionIcon::HELP_CONTENTS);
+    m_aboutMenuItem        = std::make_unique<cxgui::Gtkmm3MenuItem>(m_presenter.GetMenuLabel(MenuItem::ABOUT), cxgui::FreeDesktop::StdActionIcon::HELP_ABOUT);
 }
 
 void cxgui::MainWindow::ConfigureWindow()
