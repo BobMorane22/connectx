@@ -28,7 +28,6 @@
 
 #include <gtkmm/applicationwindow.h>
 #include <gtkmm/button.h>
-#include <gtkmm/grid.h>
 #include <gtkmm/imagemenuitem.h>
 #include <gtkmm/label.h>
 #include <gtkmm/menubar.h>
