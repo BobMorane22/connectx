@@ -24,6 +24,7 @@
 #include <cxinv/assertion.h>
 
 #include <cxgui/EnabledState.h>
+#include <cxgui/Margins.h>
 #include <cxgui/OnOffState.h>
 #include <cxgui/OnOffSwitch.h>
 
@@ -88,4 +89,17 @@ size_t cxgui::OnOffSwitch::GetHeight() const
 void cxgui::OnOffSwitch::SetEnabled(EnabledState p_enabled)
 {
     m_underlying.set_sensitive(p_enabled == EnabledState::Enabled ? true : false);
+}
+
+void cxgui::OnOffSwitch::SetMargins(const Margins& p_newMarginSizes)
+{
+    const int start = p_newMarginSizes.m_left.Get();
+    const int end = p_newMarginSizes.m_right.Get();
+    const int top = p_newMarginSizes.m_top.Get();
+    const int bottom = p_newMarginSizes.m_bottom.Get();
+
+    m_underlying.set_margin_start(start);
+    m_underlying.set_margin_end(end);
+    m_underlying.set_margin_top(top);
+    m_underlying.set_margin_bottom(bottom);
 }

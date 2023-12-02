@@ -24,10 +24,18 @@
 #ifndef IWIDGET_H_845C70A7_65F2_4B7C_8446_A11ED3BC31E8
 #define IWIDGET_H_845C70A7_65F2_4B7C_8446_A11ED3BC31E8
 
+#include <cstddef>
+
 namespace cxgui
 {
 
-enum class EnabledState;
+    enum class EnabledState;
+    struct Margins;
+
+}
+
+namespace cxgui
+{
 
 /**********************************************************************************************//**
  * @brief Interface aggrating services common to all widgets.
@@ -82,6 +90,15 @@ public:
      *
      *************************************************************************************************/
     virtual void SetEnabled(EnabledState p_enabled) = 0;
+
+    /******************************************************************************************//**
+     * @brief Changes the margin sizes for the layout.
+     *
+     * @param p_newMarginSizes
+     *      The new margin sizes.
+     *
+     *********************************************************************************************/
+    virtual void SetMargins(const Margins& p_newMarginSizes) = 0;
 
 ///@}
 

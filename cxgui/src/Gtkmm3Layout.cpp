@@ -26,6 +26,7 @@
 
 #include <cxgui/Gtkmm3Layout.h>
 #include <cxgui/IWidget.h>
+#include <cxgui/Margins.h>
 
 void cxgui::Gtkmm3Layout::Register(cxgui::IWidget& p_widget,
                                    const cxgui::ILayout::RowDescriptor& p_row,

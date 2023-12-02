@@ -16,7 +16,7 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file NewPlayersList.cpp
+ * @file Gtkmm3NewPlayersList.cpp
  * @date 2020
  *
  *************************************************************************************************/
@@ -30,9 +30,10 @@
 #include <cxgui/common.h>
 #include <cxgui/EnabledState.h>
 #include <cxgui/INewGameViewPresenter.h>
+#include <cxgui/Margins.h>
 #include <cxgui/OnOffState.h>
 #include <cxgui/OnOffSwitch.h>
-#include <cxgui/NewPlayersList.h>
+#include <cxgui/Gtkmm3NewPlayersList.h>
 
 namespace cxgui
 {
@@ -74,11 +75,11 @@ private:
  *   - The player's disc color.
  *
  * This widget is not intended to be used by itself. Rather, it should be bundled together in
- * some `Gtk::ListBox` widget with others like it. `cxexec::NewPlayersList` is an example.
+ * some `Gtk::ListBox` widget with others like it. `cxexec::Gtkmm3NewPlayersList` is an example.
  *
  * @invariant The member variable `m_playerName` does not contain an empty string.
  *
- * @see cxexec::NewPlayersList
+ * @see cxexec::Gtkmm3NewPlayersList
  *
  **************************************************************************************************/
 class NewPlayerRow final : public Gtk::ListBoxRow
@@ -169,10 +170,10 @@ private:
     // row to compute the dimensions of its child widgets. These dimensions are
     // later used to resize the column titles appropriately, so that their dimensions
     // match the colum contents.
-    friend NewPlayersList;
+    friend Gtkmm3NewPlayersList;
 
     void CheckInvariants() const;
-    void RetreiveColumnDimensions(NewPlayersList& parent_) const;
+    void RetreiveColumnDimensions(Gtkmm3NewPlayersList& parent_) const;
 
     Gtk::Grid m_layout;
     std::unique_ptr<cxgui::IOnOffSwitch> m_typeSwitch; 
@@ -361,7 +362,7 @@ void cxgui::NewPlayerRow::CheckInvariants() const
     INVARIANT(!m_playerName.get_text().empty());
 }
 
-void cxgui::NewPlayerRow::RetreiveColumnDimensions(NewPlayersList& parent_) const
+void cxgui::NewPlayerRow::RetreiveColumnDimensions(Gtkmm3NewPlayersList& parent_) const
 {
     parent_.m_columnWidths.m_first = m_typeSwitch->GetWidth();
     parent_.m_columnWidths.m_second = m_playerName.get_width();
@@ -380,7 +381,7 @@ bool cxgui::operator!=(const NewPlayerRow& p_lhs, const NewPlayerRow& p_rhs)
     return !(p_lhs == p_rhs);
 }
 
-cxgui::NewPlayersList::NewPlayersList(const INewGameViewPresenter& p_presenter)
+cxgui::Gtkmm3NewPlayersList::Gtkmm3NewPlayersList(const INewGameViewPresenter& p_presenter)
 {
     m_titleRow = std::make_unique<NewPlayerTitleRow>(p_presenter);
     ASSERT(m_titleRow);
@@ -393,14 +394,48 @@ cxgui::NewPlayersList::NewPlayersList(const INewGameViewPresenter& p_presenter)
     AddColumnHeaders();
 }
 
-cxgui::NewPlayersList::~NewPlayersList() = default;
+cxgui::Gtkmm3NewPlayersList::~Gtkmm3NewPlayersList() = default;
 
-std::size_t cxgui::NewPlayersList::GetSize() const
+size_t cxgui::Gtkmm3NewPlayersList::GetWidth() const
+{
+    const int width = get_width();
+    IF_CONDITION_NOT_MET_DO(width > 0, return 0u;);
+
+    return static_cast<size_t>(width);
+}
+
+size_t cxgui::Gtkmm3NewPlayersList::GetHeight() const
+{
+    const int height = get_height();
+    IF_CONDITION_NOT_MET_DO(height > 0, return 0u;);
+
+    return static_cast<size_t>(height);
+}
+
+void cxgui::Gtkmm3NewPlayersList::SetEnabled(EnabledState p_enabled)
+{
+    set_sensitive(p_enabled == EnabledState::Enabled ? true : false);
+}
+
+void cxgui::Gtkmm3NewPlayersList::SetMargins(const Margins& p_newMarginSizes)
+{
+    const int start = p_newMarginSizes.m_left.Get();
+    const int end = p_newMarginSizes.m_right.Get();
+    const int top = p_newMarginSizes.m_top.Get();
+    const int bottom = p_newMarginSizes.m_bottom.Get();
+
+    set_margin_start(start);
+    set_margin_end(end);
+    set_margin_top(top);
+    set_margin_bottom(bottom);
+}
+
+std::size_t cxgui::Gtkmm3NewPlayersList::GetSize() const
 {
     return get_children().size();
 }
 
-cxmodel::ChipColor cxgui::NewPlayersList::GetRowPlayerDiscColor(const std::size_t p_index) const
+cxmodel::ChipColor cxgui::Gtkmm3NewPlayersList::GetRowPlayerDiscColor(const std::size_t p_index) const
 {
     PRECONDITION(p_index < GetSize());
 
@@ -410,7 +445,7 @@ cxmodel::ChipColor cxgui::NewPlayersList::GetRowPlayerDiscColor(const std::size_
     return specificRow->GetPlayerDiscColor();
 }
 
-std::string cxgui::NewPlayersList::GetPlayerNameAtRow(const std::size_t p_index) const
+std::string cxgui::Gtkmm3NewPlayersList::GetPlayerNameAtRow(const std::size_t p_index) const
 {
     PRECONDITION(p_index < GetSize());
 
@@ -420,7 +455,7 @@ std::string cxgui::NewPlayersList::GetPlayerNameAtRow(const std::size_t p_index)
     return specificRow->GetPlayerName();
 }
 
-std::vector<cxmodel::ChipColor> cxgui::NewPlayersList::GetAllColors() const
+std::vector<cxmodel::ChipColor> cxgui::Gtkmm3NewPlayersList::GetAllColors() const
 {
     std::vector<cxmodel::ChipColor> colors;
 
@@ -432,7 +467,7 @@ std::vector<cxmodel::ChipColor> cxgui::NewPlayersList::GetAllColors() const
     return colors;
 }
 
-std::vector<std::string> cxgui::NewPlayersList::GetAllPlayerNames() const
+std::vector<std::string> cxgui::Gtkmm3NewPlayersList::GetAllPlayerNames() const
 {
     std::vector<std::string> names;
 
@@ -444,7 +479,7 @@ std::vector<std::string> cxgui::NewPlayersList::GetAllPlayerNames() const
     return names;
 }
 
-std::vector<cxmodel::PlayerType> cxgui::NewPlayersList::GetAllPlayerTypes() const
+std::vector<cxmodel::PlayerType> cxgui::Gtkmm3NewPlayersList::GetAllPlayerTypes() const
 {
     std::vector<cxmodel::PlayerType> types;
 
@@ -456,7 +491,7 @@ std::vector<cxmodel::PlayerType> cxgui::NewPlayersList::GetAllPlayerTypes() cons
     return types;
 }
 
-bool cxgui::NewPlayersList::AddRow(const cxgui::INewGameViewPresenter& p_presenter, size_t p_rowIndex)
+bool cxgui::Gtkmm3NewPlayersList::AddRow(const cxgui::INewGameViewPresenter& p_presenter, size_t p_rowIndex)
 {
     if(p_rowIndex > 0u)
     {
@@ -477,10 +512,12 @@ bool cxgui::NewPlayersList::AddRow(const cxgui::INewGameViewPresenter& p_present
     // We check if the new row has indeed been added:
     IF_CONDITION_NOT_MET_DO(sizeAfter == sizeBefore + 1, return false;);
 
+    show_all();
+
     return true;
 }
 
-bool cxgui::NewPlayersList::RemoveRow(const std::size_t p_index)
+bool cxgui::Gtkmm3NewPlayersList::RemoveRow(const std::size_t p_index)
 {
     PRECONDITION(p_index < GetSize());
 
@@ -490,7 +527,7 @@ bool cxgui::NewPlayersList::RemoveRow(const std::size_t p_index)
     return RemoveManaged(specificRow);
 }
 
-bool cxgui::NewPlayersList::UpdateRow(const std::size_t p_index,
+bool cxgui::Gtkmm3NewPlayersList::UpdateRow(const std::size_t p_index,
                                       const std::string& p_playerNewName,
                                       const cxmodel::ChipColor& p_playerNewDiscColor,
                                       const cxmodel::PlayerType p_playerNewType)
@@ -507,7 +544,7 @@ bool cxgui::NewPlayersList::UpdateRow(const std::size_t p_index,
     return true;
 }
 
-void cxgui::NewPlayersList::Clear()
+void cxgui::Gtkmm3NewPlayersList::Clear()
 {
     std::vector<NewPlayerRow*> allRows = GetRows();
 
@@ -521,7 +558,7 @@ void cxgui::NewPlayersList::Clear()
     POSTCONDITION(get_children().empty());
 }
 
-const cxgui::NewPlayerRow* cxgui::NewPlayersList::GetRow(const size_t p_index) const
+const cxgui::NewPlayerRow* cxgui::Gtkmm3NewPlayersList::GetRow(const size_t p_index) const
 {
     PRECONDITION(p_index < GetSize());
 
@@ -536,18 +573,18 @@ const cxgui::NewPlayerRow* cxgui::NewPlayersList::GetRow(const size_t p_index) c
     return row;
 }
 
-cxgui::NewPlayerRow* cxgui::NewPlayersList::GetRow(const size_t p_index)
+cxgui::NewPlayerRow* cxgui::Gtkmm3NewPlayersList::GetRow(const size_t p_index)
 {
     PRECONDITION(p_index < GetSize());
 
-    cxgui::NewPlayerRow* row{const_cast<cxgui::NewPlayerRow*>(static_cast<const cxgui::NewPlayersList*>(this)->GetRow(p_index))};
+    cxgui::NewPlayerRow* row{const_cast<cxgui::NewPlayerRow*>(static_cast<const cxgui::Gtkmm3NewPlayersList*>(this)->GetRow(p_index))};
 
     POSTCONDITION(row);
 
     return row;
 }
 
-std::vector<const cxgui::NewPlayerRow*> cxgui::NewPlayersList::GetRows() const
+std::vector<const cxgui::NewPlayerRow*> cxgui::Gtkmm3NewPlayersList::GetRows() const
 {
     // We get the address of all the non-internal children:
     const std::vector<const Gtk::Widget*> baseRows = get_children();
@@ -571,7 +608,7 @@ std::vector<const cxgui::NewPlayerRow*> cxgui::NewPlayersList::GetRows() const
     return specificRows;
 }
 
-std::vector<cxgui::NewPlayerRow*> cxgui::NewPlayersList::GetRows()
+std::vector<cxgui::NewPlayerRow*> cxgui::Gtkmm3NewPlayersList::GetRows()
 {
     // We get the address of all the non-internal children:
     const std::vector<Gtk::Widget*> baseRows = get_children();
@@ -596,7 +633,7 @@ std::vector<cxgui::NewPlayerRow*> cxgui::NewPlayersList::GetRows()
 }
 
 // The Gtk::ListBoxRow widget does not have column headers, since on each row,
-// the widget contents may vary. However, each row of a cxgui::NewPlayersList
+// the widget contents may vary. However, each row of a cxgui::Gtkmm3NewPlayersList
 // will contain the same widgets, and we want to simulate column headers.
 //
 // If the Gtk::ListBoxRow cannot have column headers, it can have row headers,
@@ -604,7 +641,7 @@ std::vector<cxgui::NewPlayerRow*> cxgui::NewPlayersList::GetRows()
 // add a header to the first row only. We then resize it on the realize
 // signal. At this point, the row widgets' sizes have been allocated and we
 // can retreive them to update the header to fit them.
-void cxgui::NewPlayersList::AddColumnHeaders()
+void cxgui::Gtkmm3NewPlayersList::AddColumnHeaders()
 {
     // Each row of 
     set_header_func([this](Gtk::ListBoxRow* p_row, Gtk::ListBoxRow* /*p_before*/)
@@ -624,7 +661,7 @@ void cxgui::NewPlayersList::AddColumnHeaders()
 // Fit the dimensions of the header widgets with the contents of the column
 // widgets. This should only be called on the first row, since we do not
 // want headers of other rows.
-void cxgui::NewPlayersList::FitColumnHeaders()
+void cxgui::Gtkmm3NewPlayersList::FitColumnHeaders()
 {
     cxgui::NewPlayerRow* topRow = GetRow(0u);
     IF_CONDITION_NOT_MET_DO(topRow != nullptr, return;);
@@ -636,7 +673,7 @@ void cxgui::NewPlayersList::FitColumnHeaders()
     m_titleRow->SetDiscColorTitleWidth(m_columnWidths.m_third);
 }
 
-bool cxgui::NewPlayersList::RemoveManaged(cxgui::NewPlayerRow* p_row)
+bool cxgui::Gtkmm3NewPlayersList::RemoveManaged(cxgui::NewPlayerRow* p_row)
 {
     const std::vector<cxgui::NewPlayerRow*> allRows = GetRows();
 
@@ -667,7 +704,7 @@ bool cxgui::NewPlayersList::RemoveManaged(cxgui::NewPlayerRow* p_row)
     return true;
 }
 
-void cxgui::NewPlayersList::RowUpdatedSignalConnect(const std::function<void()>& p_slot)
+void cxgui::Gtkmm3NewPlayersList::RowUpdatedSignalConnect(const std::function<void()>& p_slot)
 {
     if(!p_slot)
     {
@@ -678,20 +715,10 @@ void cxgui::NewPlayersList::RowUpdatedSignalConnect(const std::function<void()>&
     m_rowUpdatedSlot = p_slot;
 
     // We apply the slot on all existing rows:
-    auto rows = cxgui::NewPlayersList::GetRows();
+    auto rows = cxgui::Gtkmm3NewPlayersList::GetRows();
     for(auto* row : rows)
     {
         IF_CONDITION_NOT_MET_DO(row, continue;);
         row->RowUpdatedSignalConnect(m_rowUpdatedSlot);
     }
-}
-
-Gtk::Widget& cxgui::NewPlayersList::GetUnderlying()
-{
-    return const_cast<Gtk::Widget&>(static_cast<const Gtk::Widget&>(*this));
-}
-
-const Gtk::Widget& cxgui::NewPlayersList::GetUnderlying() const
-{
-    return *this;
 }

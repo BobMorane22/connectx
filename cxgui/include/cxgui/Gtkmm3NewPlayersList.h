@@ -16,13 +16,13 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file NewPlayersList.h
+ * @file Gtkmm3NewPlayersList.h
  * @date 2020
  *
  *************************************************************************************************/
 
-#ifndef NEWPLAYERSLIST_H_FDB93AF1_A5AC_4484_9857_0B207BAE8724
-#define NEWPLAYERSLIST_H_FDB93AF1_A5AC_4484_9857_0B207BAE8724
+#ifndef GTKMM3NEWPLAYERSLIST_H_FDB93AF1_A5AC_4484_9857_0B207BAE8724
+#define GTKMM3NEWPLAYERSLIST_H_FDB93AF1_A5AC_4484_9857_0B207BAE8724
 
 #include <gtkmm/listbox.h>
 
@@ -49,9 +49,16 @@ namespace cxgui
  * @see cxgui::NewPlayerRow
  *
  **************************************************************************************************/
-class NewPlayersList final : public INewPlayersList,
-                             public Gtk::ListBox
+class Gtkmm3NewPlayersList final : public INewPlayersList,
+                                   public Gtk::ListBox
 {
+public:
+
+    // cxgui::IWidget:
+    [[nodiscard]] size_t GetWidth() const override;
+    [[nodiscard]] size_t GetHeight() const override;
+    void SetEnabled(EnabledState p_enabled) override;
+    void SetMargins(const Margins& p_newMarginSizes) override;
 
 public:
 
@@ -64,13 +71,13 @@ public:
      * @param p_presenter A new game view presenter.
      *
      **********************************************************************************************/
-    NewPlayersList(const INewGameViewPresenter& p_presenter);
+    Gtkmm3NewPlayersList(const INewGameViewPresenter& p_presenter);
 
     /*******************************************************************************************//**
      * @brief Default destructor.
      *
      **********************************************************************************************/
-    ~NewPlayersList() override;
+    ~Gtkmm3NewPlayersList() override;
 
     // cxgui::INewPlayersList:
     [[nodiscard]] std::size_t GetSize() const override;
@@ -87,9 +94,6 @@ public:
                                  cxmodel::PlayerType p_newPlayerType) override;
     void Clear() override; 
     void RowUpdatedSignalConnect(const std::function<void()>& p_slot) override;
-
-    [[nodiscard]] Gtk::Widget& GetUnderlying() override;
-    [[nodiscard]] const Gtk::Widget& GetUnderlying() const override;
 
 private:
 
@@ -126,4 +130,4 @@ private:
 
 } // namespace cxgui
 
-#endif // NEWPLAYERSLIST_H_FDB93AF1_A5AC_4484_9857_0B207BAE8724
+#endif // GTKMM3NEWPLAYERSLIST_H_FDB93AF1_A5AC_4484_9857_0B207BAE8724

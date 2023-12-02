@@ -55,6 +55,7 @@ public:
     [[nodiscard]] size_t GetWidth() const override;
     [[nodiscard]] size_t GetHeight() const override;
     void SetEnabled(EnabledState p_enabled) override;
+    void SetMargins(const Margins& p_newMarginSizes) override;
 
     /******************************************************************************************//**
      * @brief Get the underlying Gtkmm widget instance.

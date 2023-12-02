@@ -25,6 +25,7 @@
 #include <cxgui/GameResolutionDialog.h>
 #include <cxgui/IGameResolutionDialogController.h>
 #include <cxgui/IGameResolutionDialogPresenter.h>
+#include <cxgui/Margins.h>
 
 cxgui::GameResolutionDialog::GameResolutionDialog(std::unique_ptr<IGameResolutionDialogPresenter> p_presenter,
                                                   std::unique_ptr<IGameResolutionDialogController> p_controller)
@@ -75,10 +76,10 @@ void cxgui::GameResolutionDialog::ConfigureLayouts()
     IF_CONDITION_NOT_MET_DO(m_mainLayout, return;);
     
     m_mainLayout->SetMargins({
-        TopMargin{DIALOG_SIDE_MARGIN},
-        BottomMargin{DIALOG_SIDE_MARGIN},
-        LeftMargin{DIALOG_SIDE_MARGIN},
-        RightMargin{DIALOG_SIDE_MARGIN}
+        cxgui::TopMargin{DIALOG_SIDE_MARGIN},
+        cxgui::BottomMargin{DIALOG_SIDE_MARGIN},
+        cxgui::LeftMargin{DIALOG_SIDE_MARGIN},
+        cxgui::RightMargin{DIALOG_SIDE_MARGIN}
     });
 }
 

@@ -33,6 +33,7 @@
 #include <cxgui/GameViewKeyHandlerStrategyFactory.h>
 #include <cxgui/Gtkmm3Layout.h>
 #include <cxgui/IAnimatedBoardPresenter.h>
+#include <cxgui/Margins.h>
 
 namespace
 {
@@ -280,10 +281,10 @@ void cxgui::GameView::ConfigureWidgets()
 {
     // Window margin:
     m_mainLayout.SetMargins({
-        TopMargin{DIALOG_SIDE_MARGIN},
-        BottomMargin{DIALOG_SIDE_MARGIN},
-        LeftMargin{DIALOG_SIDE_MARGIN},
-        RightMargin{DIALOG_SIDE_MARGIN}
+        cxgui::TopMargin{DIALOG_SIDE_MARGIN},
+        cxgui::BottomMargin{DIALOG_SIDE_MARGIN},
+        cxgui::LeftMargin{DIALOG_SIDE_MARGIN},
+        cxgui::RightMargin{DIALOG_SIDE_MARGIN}
     });
 
     // View title:

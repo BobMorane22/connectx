@@ -24,18 +24,13 @@
 #ifndef INEWPLAYERSLIST_H_683F8110_A4C7_4915_A304_7940FD621B84
 #define INEWPLAYERSLIST_H_683F8110_A4C7_4915_A304_7940FD621B84
 
-#include "cxmodel/IPlayer.h"
 #include <functional>
 #include <string>
 #include <vector>
 
 #include <cxmodel/ChipColor.h>
-#include <cxgui/IGtkmmBackend.h>
-
-namespace Gtk
-{
-    class Widget;
-}
+#include <cxmodel/IPlayer.h>
+#include <cxgui/IWidget.h>
 
 namespace cxmodel
 {
@@ -57,8 +52,15 @@ namespace cxgui
  * they have chosen for their discs.
  *
  **************************************************************************************************/
-class INewPlayersList : public IGtkmmBackend<Gtk::Widget>
-{
+class INewPlayersList : public cxgui::IWidget
+{ 
+public:
+
+    // cxgui::IWidget:
+    [[nodiscard]] size_t GetWidth() const override = 0;
+    [[nodiscard]] size_t GetHeight() const override = 0;
+    void SetEnabled(EnabledState p_enabled) override = 0;
+    void SetMargins(const Margins& p_newMarginSizes) override = 0;
 
 public:
 
@@ -66,7 +68,7 @@ public:
      * @brief Default destructor.
      *
      **********************************************************************************************/
-    ~INewPlayersList() override = default;
+    virtual ~INewPlayersList() = default;
 
     /*******************************************************************************************//**
      * @brief Accesses the size of the list.
@@ -199,10 +201,6 @@ public:
      *
      **********************************************************************************************/
     virtual void RowUpdatedSignalConnect(const std::function<void()>& p_slot) = 0;
-
-    // cxgui::IGtkmmBackend:
-    [[nodiscard]] Gtk::Widget& GetUnderlying() override = 0;
-    [[nodiscard]] const Gtk::Widget& GetUnderlying() const override = 0;
 
 };
 

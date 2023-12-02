@@ -26,11 +26,11 @@
 
 #include <cxstd/StrongType.h>
 #include <cxmodel/common.h>
-#include <cxgui/Margins.h>
 
 namespace cxgui
 {
     class IWidget;
+    struct Margins;
 }
  
 namespace Gtk

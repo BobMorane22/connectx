@@ -22,6 +22,7 @@
  *************************************************************************************************/
 
 #include <algorithm>
+#include <memory>
 #include <sstream>
 
 #include <gtkmm/messagedialog.h>
@@ -32,8 +33,9 @@
 #include <cxmodel/NewGameInformation.h>
 #include <cxgui/extractRawUserInput.h>
 #include <cxgui/Gtkmm3Layout.h>
+#include <cxgui/Gtkmm3NewPlayersList.h>
+#include <cxgui/Margins.h>
 #include <cxgui/NewGameView.h>
-#include <cxgui/NewPlayersList.h>
 
 namespace
 {
@@ -64,7 +66,7 @@ cxgui::NewGameView::NewGameView(INewGameViewPresenter& p_presenter,
  , m_viewLeft{p_viewLeft}
  , m_viewTop{p_viewTop}
 {
-    m_playersList = std::make_unique<cxgui::NewPlayersList>(p_presenter);
+    m_playersList = std::make_unique<cxgui::Gtkmm3NewPlayersList>(p_presenter);
     m_viewLayout = std::make_unique<Gtkmm3Layout>();
 
     SetLayout();
@@ -132,10 +134,10 @@ void cxgui::NewGameView::SetLayout()
     m_viewLayout->Register(m_gridHeightLabel,              {row5,  singleRowSpan}, {column0, singleColumnSpan});
     m_viewLayout->Register(m_gridHeightEntry,              {row5,  singleRowSpan}, {column1, singleColumnSpan});
     m_viewLayout->Register(m_playersSectionTitle,          {row6,  singleRowSpan}, {column0, fullColumnSpan});
-    m_viewLayout->Register(m_playersList->GetUnderlying(), {row7,  singleRowSpan}, {column0, fullColumnSpan});
+    m_viewLayout->Register(*m_playersList,                  {row7,  singleRowSpan}, {column0, fullColumnSpan});
     m_viewLayout->Register(m_removePlayerButton,           {row8,  singleRowSpan}, {column0, singleColumnSpan});
     m_viewLayout->Register(m_addPlayerButton,              {row8,  singleRowSpan}, {column1, singleColumnSpan});
-    m_viewLayout->Register(m_startButton,                  {row9, singleRowSpan}, {column0, fullColumnSpan});
+    m_viewLayout->Register(m_startButton,                  {row9, singleRowSpan},  {column0, fullColumnSpan});
 }
 
 void cxgui::NewGameView::PopulateWidgets()
@@ -175,10 +177,10 @@ void cxgui::NewGameView::ConfigureWidgets()
 {
     // Window margin:
     m_mainLayout.SetMargins({
-        TopMargin{DIALOG_SIDE_MARGIN},
-        BottomMargin{DIALOG_SIDE_MARGIN},
-        LeftMargin{DIALOG_SIDE_MARGIN},
-        RightMargin{DIALOG_SIDE_MARGIN}
+        cxgui::TopMargin{DIALOG_SIDE_MARGIN},
+        cxgui::BottomMargin{DIALOG_SIDE_MARGIN},
+        cxgui::LeftMargin{DIALOG_SIDE_MARGIN},
+        cxgui::RightMargin{DIALOG_SIDE_MARGIN}
     });
 
     // View title:
@@ -220,7 +222,12 @@ void cxgui::NewGameView::ConfigureWidgets()
     m_title.set_margin_bottom(SECTION_BOTTOM_MARGIN);
 
     // Player list:
-    m_playersList->GetUnderlying().set_margin_bottom(CONTROL_BOTTOM_MARGIN);
+    m_playersList->SetMargins({
+        cxgui::TopMargin{0u},
+        cxgui::BottomMargin{DIALOG_SIDE_MARGIN},
+        cxgui::LeftMargin{0u},
+        cxgui::RightMargin{0u}
+    });
 
     // Add/Remove player buttons:
     m_removePlayerButton.set_margin_bottom(CONTROL_BOTTOM_MARGIN);
@@ -259,8 +266,6 @@ void cxgui::NewGameView::OnAddPlayer()
     {
         const size_t nextColumnIndex = m_playersList->GetSize() + 1u;
         IF_CONDITION_NOT_MET_DO(m_playersList->AddRow(m_presenter, nextColumnIndex), return;);
-
-        m_playersList->GetUnderlying().show_all();
     }
 
     m_removePlayerButton.set_sensitive(m_presenter.CanRemoveAnotherPlayer(m_playersList->GetSize()));

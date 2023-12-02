@@ -48,6 +48,14 @@ class IOnOffSwitch : public cxgui::IWidget
 
 public:
 
+    // cxgui::IWidget:
+    [[nodiscard]] size_t GetWidth() const override = 0;
+    [[nodiscard]] size_t GetHeight() const override = 0;
+    void SetEnabled(EnabledState p_enabled) override = 0;
+    void SetMargins(const Margins& p_newMarginSizes) override = 0;
+
+public:
+
     /******************************************************************************************//**
      * @brief Default destructor.
      *
@@ -77,11 +85,6 @@ public:
      *
      *********************************************************************************************/
     virtual void StateChangedSignalConnect(const std::function<void()>& p_slot) = 0;
-
-    // cxgui::IWidget:
-    [[nodiscard]] size_t GetWidth() const override = 0;
-    [[nodiscard]] size_t GetHeight() const override = 0;
-    void SetEnabled(EnabledState p_enabled) override = 0;
 
 };
 
