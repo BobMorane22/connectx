@@ -46,7 +46,7 @@ cxgui::ColorComboBox::ColorComboBox(const std::vector<cxgui::Color>& p_colors)
     set_cell_data_func(m_renderer, sigc::mem_fun(*this, &cxgui::ColorComboBox::OnRenderCell));
     pack_start(m_renderer);
 
-    //Connect signal handler:
+    // Connect signal handler:
     signal_changed().connect([this](){OnComboChanged();});
 
     INVARIANT(bool(m_treeModel));
@@ -121,8 +121,12 @@ void cxgui::ColorComboBox::OnRenderCell(const Gtk::TreeModel::const_iterator& it
     auto row = *iter;
     const Gdk::RGBA color = row[m_records.m_color];
 
-    // Change other cell renderer properties too:
+    // Update cell color:
     m_renderer.property_background() = color.to_string();
+
+    // Fix cell width (in number of characters). Otherwise the combobox, which
+    // has no text, is too narrow and looks bad.
+    m_renderer.property_width_chars() = 6;
 
     INVARIANT(bool(m_treeModel));
 }

@@ -43,8 +43,10 @@
 #include <cxgui/GameView.h>
 #include <cxgui/IAnimatedBoardPresenter.h>
 #include <cxgui/ILayout.h>
+#include <cxgui/INewPlayersList.h>
 #include <cxgui/IMainWindowController.h>
 #include <cxgui/IMainWindowPresenter.h>
+#include <cxgui/ISpinBox.h>
 #include <cxgui/MainWindow.h>
 #include <cxgui/NewGameView.h>
 #include <cxgui/StatusBar.h>

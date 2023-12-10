@@ -21,6 +21,8 @@
  *
  *************************************************************************************************/
 
+#include <cxgui/Gtkmm3SpinBox.h>
+#include <cxgui/ISpinBox.h>
 #include <algorithm>
 #include <memory>
 #include <sstream>
@@ -31,9 +33,13 @@
 #include <cxinv/assertion.h>
 #include <cxmodel/IChip.h>
 #include <cxmodel/NewGameInformation.h>
+#include <cxgui/ColorComboBox.h>
 #include <cxgui/extractRawUserInput.h>
 #include <cxgui/Gtkmm3Layout.h>
 #include <cxgui/Gtkmm3NewPlayersList.h>
+#include <cxgui/Gtkmm3SpinBox.h>
+#include <cxgui/INewGameViewController.h>
+#include <cxgui/INewGameViewPresenter.h>
 #include <cxgui/Margins.h>
 #include <cxgui/NewGameView.h>
 
@@ -66,8 +72,35 @@ cxgui::NewGameView::NewGameView(INewGameViewPresenter& p_presenter,
  , m_viewLeft{p_viewLeft}
  , m_viewTop{p_viewTop}
 {
-    m_playersList = std::make_unique<cxgui::Gtkmm3NewPlayersList>(p_presenter);
     m_viewLayout = std::make_unique<Gtkmm3Layout>();
+    ASSERT(m_viewLayout);
+
+    m_playersList = std::make_unique<cxgui::Gtkmm3NewPlayersList>(p_presenter);
+    ASSERT(m_playersList);
+
+    const size_t inARowMinValue = p_presenter.GetNewGameViewMinInARowValue();
+    const size_t inARowMaxValue = p_presenter.GetNewGameViewMaxInARowValue();
+    m_inARowSpinBox = std::make_unique<Gtkmm3SpinBox>(m_presenter.GetDefaultInARowValue(),
+                                                      ISpinBox::ClimbRate{1u},
+                                                      ISpinBox::Range{ISpinBox::Minimum{static_cast<int>(inARowMinValue)},
+                                                                      ISpinBox::Maximum{static_cast<int>(inARowMaxValue)}});
+    ASSERT(m_inARowSpinBox);
+
+    const int boardWidthMinValue = p_presenter.GetNewGameViewMinBoardWidthValue();
+    const int boardWidthMaxValue = p_presenter.GetNewGameViewMaxBoardWidthValue();
+    m_boardWidthSpinBox = std::make_unique<Gtkmm3SpinBox>(m_presenter.GetDefaultBoardWidthValue(),
+                                                          ISpinBox::ClimbRate{1u},
+                                                          ISpinBox::Range{ISpinBox::Minimum{static_cast<int>(boardWidthMinValue)},
+                                                                          ISpinBox::Maximum{static_cast<int>(boardWidthMaxValue)}});
+    ASSERT(m_boardWidthSpinBox);
+
+    const int boardHeightMinValue = p_presenter.GetNewGameViewMinBoardHeightValue();
+    const int boardHeightMaxValue = p_presenter.GetNewGameViewMaxBoardHeightValue();
+    m_boardHeightSpinBox = std::make_unique<Gtkmm3SpinBox>(m_presenter.GetDefaultBoardHeightValue(),
+                                                           ISpinBox::ClimbRate{1u},
+                                                           ISpinBox::Range{ISpinBox::Minimum{static_cast<int>(boardHeightMinValue)},
+                                                                           ISpinBox::Maximum{static_cast<int>(boardHeightMaxValue)}});
+    ASSERT(m_boardHeightSpinBox);
 
     SetLayout();
     PopulateWidgets();
@@ -78,9 +111,6 @@ cxgui::NewGameView::NewGameView(INewGameViewPresenter& p_presenter,
     m_startButton.signal_clicked().connect([this](){OnStart();});
 
     // Start button validations:
-    m_inARowEntry.signal_changed().connect([this](){OnNewGameParameterUpdated();});
-    m_gridWidthEntry.signal_changed().connect([this](){OnNewGameParameterUpdated();});
-    m_gridHeightEntry.signal_changed().connect([this](){OnNewGameParameterUpdated();});
     m_removePlayerButton.signal_clicked().connect([this](){OnNewGameParameterUpdated();});
     m_addPlayerButton.signal_clicked().connect([this](){OnNewGameParameterUpdated();});
     m_playersList->RowUpdatedSignalConnect([this](){OnNewGameParameterUpdated();});
@@ -124,20 +154,20 @@ void cxgui::NewGameView::SetLayout()
 
     m_viewLayout->SetColumnSpacingMode(cxgui::ILayout::ColumnSpacingMode::EQUAL);
 
-    m_viewLayout->Register(m_title,                        {row0,  singleRowSpan}, {column0, fullColumnSpan});
-    m_viewLayout->Register(m_gameSectionTitle,             {row1,  singleRowSpan}, {column0, fullColumnSpan});
-    m_viewLayout->Register(m_inARowLabel,                  {row2,  singleRowSpan}, {column0, singleColumnSpan});
-    m_viewLayout->Register(m_inARowEntry,                  {row2,  singleRowSpan}, {column1, singleColumnSpan});
-    m_viewLayout->Register(m_gridSectionTitle,             {row3,  singleRowSpan}, {column0, fullColumnSpan});
-    m_viewLayout->Register(m_gridWidthLabel,               {row4,  singleRowSpan}, {column0, singleRowSpan});
-    m_viewLayout->Register(m_gridWidthEntry,               {row4,  singleRowSpan}, {column1, singleColumnSpan});
-    m_viewLayout->Register(m_gridHeightLabel,              {row5,  singleRowSpan}, {column0, singleColumnSpan});
-    m_viewLayout->Register(m_gridHeightEntry,              {row5,  singleRowSpan}, {column1, singleColumnSpan});
-    m_viewLayout->Register(m_playersSectionTitle,          {row6,  singleRowSpan}, {column0, fullColumnSpan});
-    m_viewLayout->Register(*m_playersList,                  {row7,  singleRowSpan}, {column0, fullColumnSpan});
-    m_viewLayout->Register(m_removePlayerButton,           {row8,  singleRowSpan}, {column0, singleColumnSpan});
-    m_viewLayout->Register(m_addPlayerButton,              {row8,  singleRowSpan}, {column1, singleColumnSpan});
-    m_viewLayout->Register(m_startButton,                  {row9, singleRowSpan},  {column0, fullColumnSpan});
+    m_viewLayout->Register(m_title,               {row0,  singleRowSpan}, {column0, fullColumnSpan});
+    m_viewLayout->Register(m_gameSectionTitle,    {row1,  singleRowSpan}, {column0, fullColumnSpan});
+    m_viewLayout->Register(m_inARowLabel,         {row2,  singleRowSpan}, {column0, singleColumnSpan});
+    m_viewLayout->Register(*m_inARowSpinBox,      {row2,  singleRowSpan}, {column1, singleColumnSpan});
+    m_viewLayout->Register(m_gridSectionTitle,    {row3,  singleRowSpan}, {column0, fullColumnSpan});
+    m_viewLayout->Register(m_gridWidthLabel,      {row4,  singleRowSpan}, {column0, singleRowSpan});
+    m_viewLayout->Register(*m_boardWidthSpinBox,  {row4,  singleRowSpan}, {column1, singleColumnSpan});
+    m_viewLayout->Register(m_gridHeightLabel,     {row5,  singleRowSpan}, {column0, singleColumnSpan});
+    m_viewLayout->Register(*m_boardHeightSpinBox, {row5,  singleRowSpan}, {column1, singleColumnSpan});
+    m_viewLayout->Register(m_playersSectionTitle, {row6,  singleRowSpan}, {column0, fullColumnSpan});
+    m_viewLayout->Register(*m_playersList,        {row7,  singleRowSpan}, {column0, fullColumnSpan});
+    m_viewLayout->Register(m_removePlayerButton,  {row8,  singleRowSpan}, {column0, singleColumnSpan});
+    m_viewLayout->Register(m_addPlayerButton,     {row8,  singleRowSpan}, {column1, singleColumnSpan});
+    m_viewLayout->Register(m_startButton,         {row9,  singleRowSpan}, {column0, fullColumnSpan});
 }
 
 void cxgui::NewGameView::PopulateWidgets()
@@ -146,20 +176,6 @@ void cxgui::NewGameView::PopulateWidgets()
 
     m_gameSectionTitle.set_text(m_presenter.GetNewGameViewGameSectionTitle());
     m_inARowLabel.set_text(m_presenter.GetNewGameViewInARowLabelText());
-
-    try
-    {
-        m_inARowEntry.set_text(std::to_string(m_presenter.GetDefaultInARowValue()));
-        m_gridHeightEntry.set_text(std::to_string(m_presenter.GetDefaultBoardHeightValue()));
-        m_gridWidthEntry.set_text(std::to_string(m_presenter.GetDefaultBoardWidthValue()));
-    }
-    catch(const std::exception& p_exception)
-    {
-        // If an exception is caught, we raise an error, however execution
-        // continues since the error is not fatal. The user will have no
-        // default values in his view.
-        ASSERT_ERROR_MSG(p_exception.what());
-    }
 
     m_gridSectionTitle.set_text(m_presenter.GetNewGameViewBoardSectionTitle());
     m_gridWidthLabel.set_text(m_presenter.GetNewGameViewWidthLabelText());
@@ -208,12 +224,22 @@ void cxgui::NewGameView::ConfigureWidgets()
     m_gridWidthLabel.set_halign(Gtk::Align::ALIGN_START);
     m_gridWidthLabel.set_text(INDENT_MARK + m_gridWidthLabel.get_text());
     m_gridWidthLabel.set_margin_bottom(CONTROL_BOTTOM_MARGIN);
-    m_gridWidthEntry.set_margin_bottom(CONTROL_BOTTOM_MARGIN);
+    m_boardWidthSpinBox->SetMargins({
+        cxgui::TopMargin{0u},
+        cxgui::BottomMargin{CONTROL_BOTTOM_MARGIN},
+        cxgui::LeftMargin{0u},
+        cxgui::RightMargin{0u}
+    });
 
     m_gridHeightLabel.set_halign(Gtk::Align::ALIGN_START);
     m_gridHeightLabel.set_text(INDENT_MARK + m_gridHeightLabel.get_text());
     m_gridHeightLabel.set_margin_bottom(CONTROL_BOTTOM_MARGIN);
-    m_gridHeightEntry.set_margin_bottom(CONTROL_BOTTOM_MARGIN);
+    m_boardHeightSpinBox->SetMargins({
+        cxgui::TopMargin{0u},
+        cxgui::BottomMargin{CONTROL_BOTTOM_MARGIN},
+        cxgui::LeftMargin{0u},
+        cxgui::RightMargin{0u}
+    });
 
     // Players section:
     m_playersSectionTitle.set_use_markup(true);
@@ -326,17 +352,17 @@ void cxgui::NewGameView::OnNewGameParameterUpdated()
 cxmodel::Status cxgui::NewGameView::ExtractGameInformation(cxmodel::NewGameInformation& p_gameInformation) const
 {
     // Extracting game parameters from the GUI:
-    size_t inARowValue;
-    auto extractionStatus = extractRawUserInput(m_inARowEntry.get_text(), inARowValue);
-    RETURN_IF(!extractionStatus.IsSuccess(), extractionStatus);
+    const int valueInARow = m_inARowSpinBox->GetValue();
+    IF_CONDITION_NOT_MET_DO(valueInARow > 0, return cxmodel::MakeError("Unexpected error occured."););
+    const size_t inARowValue = static_cast<size_t>(valueInARow);
 
-    size_t boardWidth;
-    extractionStatus = extractRawUserInput(m_gridWidthEntry.get_text(), boardWidth);
-    RETURN_IF(!extractionStatus.IsSuccess(), extractionStatus);
+    const int valueBoardWidth = m_boardWidthSpinBox->GetValue();
+    IF_CONDITION_NOT_MET_DO(valueBoardWidth > 0, return cxmodel::MakeError("Unexpected error occured."););
+    const size_t boardWidth = static_cast<size_t>(valueBoardWidth);
 
-    size_t boardHeight;
-    extractionStatus = extractRawUserInput(m_gridHeightEntry.get_text(), boardHeight);
-    RETURN_IF(!extractionStatus.IsSuccess(), extractionStatus);
+    const int valueBoardHeight = m_boardHeightSpinBox->GetValue();
+    IF_CONDITION_NOT_MET_DO(valueBoardHeight > 0, return cxmodel::MakeError("Unexpected error occured."););
+    const size_t boardHeight = static_cast<size_t>(valueBoardHeight);
 
     const std::vector<std::string> playerNames = m_playersList->GetAllPlayerNames();
     const std::vector<cxmodel::ChipColor> playerChipColors = m_playersList->GetAllColors();

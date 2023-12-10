@@ -224,9 +224,9 @@ cxgui::NewPlayerTitleRow::NewPlayerTitleRow(const INewGameViewPresenter& p_prese
     m_playerNameTitle.set_hexpand(true);
     m_discColorTitle.set_hexpand(true);
 
-    attach(m_isBotTitle, 0, 0, 1, 1);
+    attach(m_isBotTitle,      0, 0, 1, 1);
     attach(m_playerNameTitle, 1, 0, 1, 1);
-    attach(m_discColorTitle, 2, 0, 1, 1);
+    attach(m_discColorTitle,  2, 0, 1, 1);
 }
 
 void cxgui::NewPlayerTitleRow::SetIsBotTitleWidth(int p_newWidth)

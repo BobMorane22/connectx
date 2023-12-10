@@ -27,18 +27,25 @@
 #include <optional>
 
 #include <gtkmm/button.h>
-#include <gtkmm/entry.h>
+#include <gtkmm/label.h>
 
-#include "ColorComboBox.h"
-#include "INewGameViewController.h"
-#include "INewGameViewPresenter.h"
+#include <cxmodel/Status.h>
+
 #include "IView.h"
-#include "INewPlayersList.h"
 #include "Window.h"
+
+namespace cxmodel
+{
+    class NewGameInformation;
+}
 
 namespace cxgui
 {
     class ILayout;
+    class INewGameViewController;
+    class INewGameViewPresenter;
+    class INewPlayersList;
+    class ISpinBox;
 }
 
 namespace cxgui
@@ -112,13 +119,13 @@ private:
 
     Gtk::Label m_gameSectionTitle;
     Gtk::Label m_inARowLabel;
-    Gtk::Entry m_inARowEntry;
+    std::unique_ptr<ISpinBox> m_inARowSpinBox;
 
     Gtk::Label m_gridSectionTitle;
     Gtk::Label m_gridWidthLabel;
-    Gtk::Entry m_gridWidthEntry;
+    std::unique_ptr<ISpinBox> m_boardWidthSpinBox;
     Gtk::Label m_gridHeightLabel;
-    Gtk::Entry m_gridHeightEntry;
+    std::unique_ptr<ISpinBox> m_boardHeightSpinBox;
 
     Gtk::Label m_playersSectionTitle;
     std::unique_ptr<cxgui::INewPlayersList> m_playersList;
