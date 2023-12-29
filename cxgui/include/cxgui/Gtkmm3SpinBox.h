@@ -24,6 +24,8 @@
 #ifndef GTKMM3SPINBOX_H_73AD5C68_A06C_4EFB_94EE_928437F83BA6
 #define GTKMM3SPINBOX_H_73AD5C68_A06C_4EFB_94EE_928437F83BA6
 
+#include <memory>
+
 #include <gtkmm/spinbutton.h>
 
 #include <cxgui/ISpinBox.h>
@@ -35,17 +37,9 @@ namespace cxgui
  * @brief Gtkmm 3 implementation for the `cxgui::ISpinBox` interface.
  *
  *************************************************************************************************/
-class Gtkmm3SpinBox : public cxgui::ISpinBox,
-                      public Gtk::SpinButton
+class Gtkmm3SpinBox final : public cxgui::ISpinBox,
+                            public Gtk::SpinButton
 {
-
-public:
-
-    // cxgui::IWidget:
-    [[nodiscard]] size_t GetWidth() const override;
-    [[nodiscard]] size_t GetHeight() const override;
-    void SetEnabled(EnabledState p_enabled) override;
-    void SetMargins(const Margins& p_newMarginSizes) override;
 
 public:
 
@@ -66,10 +60,20 @@ public:
                   const ClimbRate& p_climbRate,
                   const Range& p_range);
 
+    void SetDelegate(std::unique_ptr<IWidget> p_delegate);
+
+    // cxgui::IWidget:
+    [[nodiscard]] size_t GetWidth() const override;
+    [[nodiscard]] size_t GetHeight() const override;
+    void SetEnabled(EnabledState p_enabled) override;
+    void SetMargins(const Margins& p_newMarginSizes) override;
+
     // cxgui::ISpinBox:
     [[nodiscard]] int GetValue() const override;
 
 private:
+
+    std::unique_ptr<IWidget> m_delegate;
 
     cxgui::ISpinBox::Range m_limits;
 

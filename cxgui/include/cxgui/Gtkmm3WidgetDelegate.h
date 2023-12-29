@@ -64,6 +64,9 @@ public:
      * @pre
      *      The supplied address is valid.
      *
+     * @post
+     *      The underlying address is valid.
+     *
      *********************************************************************************************/
     void SetUnderlying(Gtk::Widget* p_underlying);
 
