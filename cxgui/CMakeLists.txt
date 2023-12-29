@@ -47,6 +47,7 @@ add_library(${TARGET_NAME}
   src/Gtkmm3Layout.cpp
   src/Gtkmm3MenuItem.cpp
   src/Gtkmm3SpinBox.cpp
+  src/Gtkmm3WidgetDelegate.cpp
   src/IAnimatedBoardModel.cpp
   src/INewGameViewPresenter.cpp
   src/MainWindowController.cpp
