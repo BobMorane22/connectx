@@ -52,13 +52,6 @@ namespace cxgui
 class Gtkmm3NewPlayersList final : public INewPlayersList,
                                    public Gtk::ListBox
 {
-public:
-
-    // cxgui::IWidget:
-    [[nodiscard]] size_t GetWidth() const override;
-    [[nodiscard]] size_t GetHeight() const override;
-    void SetEnabled(EnabledState p_enabled) override;
-    void SetMargins(const Margins& p_newMarginSizes) override;
 
 public:
 
@@ -71,13 +64,30 @@ public:
      * @param p_presenter A new game view presenter.
      *
      **********************************************************************************************/
-    Gtkmm3NewPlayersList(const INewGameViewPresenter& p_presenter);
+    explicit Gtkmm3NewPlayersList(const INewGameViewPresenter& p_presenter);
 
     /*******************************************************************************************//**
      * @brief Default destructor.
      *
      **********************************************************************************************/
     ~Gtkmm3NewPlayersList() override;
+
+    /*******************************************************************************************//**
+     * @brief Sets the delegate for widget common facilities.
+     *
+     * The delegate is reponsible to carry the implementation for generic `cxgui::IWidget` operations.
+     * It is meant to avoid implementation duplication.
+     *
+     * @param p_delegate
+     *      The widget delegate.
+     *
+     * @pre
+     *      The widget delegate instance given as an argument is valid.
+     * @post
+     *      The registered widget delegate is valid.
+     *
+     **********************************************************************************************/
+    void SetDelegate(std::unique_ptr<cxgui::IWidget> p_delegate);
 
     // cxgui::INewPlayersList:
     [[nodiscard]] std::size_t GetSize() const override;
@@ -95,6 +105,12 @@ public:
     void Clear() override; 
     void RowUpdatedSignalConnect(const std::function<void()>& p_slot) override;
 
+    // cxgui::IWidget:
+    [[nodiscard]] size_t GetWidth() const override;
+    [[nodiscard]] size_t GetHeight() const override;
+    void SetEnabled(EnabledState p_enabled) override;
+    void SetMargins(const Margins& p_newMarginSizes) override;
+
 private:
 
     // This friendship is needed because the top row needs to make its child widgets'
@@ -110,6 +126,8 @@ private:
     };
 
     ColumnWidth m_columnWidths;
+
+    std::unique_ptr<cxgui::IWidget> m_delegate;
 
     std::unique_ptr<NewPlayerTitleRow> m_titleRow;
 

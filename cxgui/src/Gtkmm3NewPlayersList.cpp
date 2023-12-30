@@ -25,6 +25,7 @@
 #include <gtkmm/grid.h>
 
 #include <cxinv/assertion.h>
+#include <cxstd/helpers.h>
 #include <cxmodel/IPlayer.h>
 #include <cxgui/ColorComboBox.h>
 #include <cxgui/common.h>
@@ -396,38 +397,37 @@ cxgui::Gtkmm3NewPlayersList::Gtkmm3NewPlayersList(const INewGameViewPresenter& p
 
 cxgui::Gtkmm3NewPlayersList::~Gtkmm3NewPlayersList() = default;
 
+void cxgui::Gtkmm3NewPlayersList::SetDelegate(std::unique_ptr<cxgui::IWidget> p_delegate)
+{
+    IF_PRECONDITION_NOT_MET_DO(p_delegate, return;);
+
+    m_delegate = std::move(p_delegate);
+
+    POSTCONDITION(m_delegate);
+}
+
 size_t cxgui::Gtkmm3NewPlayersList::GetWidth() const
 {
-    const int width = get_width();
-    IF_CONDITION_NOT_MET_DO(width > 0, return 0u;);
-
-    return static_cast<size_t>(width);
+    RETURN_IF(!m_delegate, 0u);
+    return m_delegate->GetWidth();
 }
 
 size_t cxgui::Gtkmm3NewPlayersList::GetHeight() const
 {
-    const int height = get_height();
-    IF_CONDITION_NOT_MET_DO(height > 0, return 0u;);
-
-    return static_cast<size_t>(height);
+    RETURN_IF(!m_delegate, 0u);
+    return m_delegate->GetHeight();
 }
 
 void cxgui::Gtkmm3NewPlayersList::SetEnabled(EnabledState p_enabled)
 {
-    set_sensitive(p_enabled == EnabledState::Enabled ? true : false);
+    RETURN_IF(!m_delegate,);
+    m_delegate->SetEnabled(p_enabled);
 }
 
 void cxgui::Gtkmm3NewPlayersList::SetMargins(const Margins& p_newMarginSizes)
 {
-    const int start = p_newMarginSizes.m_left.Get();
-    const int end = p_newMarginSizes.m_right.Get();
-    const int top = p_newMarginSizes.m_top.Get();
-    const int bottom = p_newMarginSizes.m_bottom.Get();
-
-    set_margin_start(start);
-    set_margin_end(end);
-    set_margin_top(top);
-    set_margin_bottom(bottom);
+    RETURN_IF(!m_delegate,);
+    m_delegate->SetMargins(p_newMarginSizes);
 }
 
 std::size_t cxgui::Gtkmm3NewPlayersList::GetSize() const

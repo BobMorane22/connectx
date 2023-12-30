@@ -54,13 +54,6 @@ namespace cxgui
  **************************************************************************************************/
 class INewPlayersList : public cxgui::IWidget
 { 
-public:
-
-    // cxgui::IWidget:
-    [[nodiscard]] size_t GetWidth() const override = 0;
-    [[nodiscard]] size_t GetHeight() const override = 0;
-    void SetEnabled(EnabledState p_enabled) override = 0;
-    void SetMargins(const Margins& p_newMarginSizes) override = 0;
 
 public:
 

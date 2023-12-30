@@ -46,6 +46,21 @@ class Gtkmm3Layout : public ILayout,
 
 public:
 
+    /*******************************************************************************************//**
+     * @brief Sets the delegate for widget common facilities.
+     *
+     * The delegate is reponsible to carry the implementation for generic `cxgui::IWidget` operations.
+     * It is meant to avoid implementation duplication.
+     *
+     * @param p_delegate
+     *      The widget delegate.
+     *
+     * @pre
+     *      The widget delegate instance given as an argument is valid.
+     * @post
+     *      The registered widget delegate is valid.
+     *
+     **********************************************************************************************/
     void SetDelegate(std::unique_ptr<IWidget> p_delegate);
 
     // cxgui::ILayout:

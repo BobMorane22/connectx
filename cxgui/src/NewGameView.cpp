@@ -89,8 +89,22 @@ cxgui::NewGameView::NewGameView(INewGameViewPresenter& p_presenter,
         ASSERT(m_viewLayout);
     }
 
-    m_playersList = std::make_unique<cxgui::Gtkmm3NewPlayersList>(p_presenter);
-    ASSERT(m_playersList);
+    {
+        auto playersList = std::make_unique<cxgui::Gtkmm3NewPlayersList>(p_presenter);
+        ASSERT(playersList);
+
+        auto* underlying = dynamic_cast<Gtk::Widget*>(playersList.get());
+        ASSERT(underlying);
+
+        auto widgetDelegate = std::make_unique<cxgui::Gtkmm3WidgetDelegate>();
+        ASSERT(widgetDelegate);
+
+        widgetDelegate->SetUnderlying(underlying);
+        playersList->SetDelegate(std::move(widgetDelegate));
+
+        m_playersList = std::move(playersList);
+        ASSERT(m_playersList);
+    }
 
     {
         const size_t inARowMinValue = p_presenter.GetNewGameViewMinInARowValue();
