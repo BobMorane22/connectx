@@ -72,105 +72,35 @@ cxgui::NewGameView::NewGameView(INewGameViewPresenter& p_presenter,
  , m_viewLeft{p_viewLeft}
  , m_viewTop{p_viewTop}
 {
-    {
-        auto viewLayout = std::make_unique<Gtkmm3Layout>();
-        ASSERT(viewLayout);
+    m_viewLayout = CreateWidget<Gtkmm3Layout>();
+    ASSERT(m_viewLayout);
 
-        auto* underlying = dynamic_cast<Gtk::Widget*>(viewLayout.get());
-        ASSERT(underlying);
+    m_playersList = CreateWidget<Gtkmm3NewPlayersList>(p_presenter);
+    ASSERT(m_playersList);
 
-        auto widgetDelegate = std::make_unique<cxgui::Gtkmm3WidgetDelegate>();
-        ASSERT(widgetDelegate);
+    const size_t inARowMinValue = p_presenter.GetNewGameViewMinInARowValue();
+    const size_t inARowMaxValue = p_presenter.GetNewGameViewMaxInARowValue();
+    m_inARowSpinBox = CreateWidget<Gtkmm3SpinBox>(m_presenter.GetDefaultInARowValue(),
+                                                  ISpinBox::ClimbRate{1u},
+                                                  ISpinBox::Range{ISpinBox::Minimum{static_cast<int>(inARowMinValue)},
+                                                                  ISpinBox::Maximum{static_cast<int>(inARowMaxValue)}});
+    ASSERT(m_inARowSpinBox);
 
-        widgetDelegate->SetUnderlying(underlying);
-        viewLayout->SetDelegate(std::move(widgetDelegate));
+    const int boardWidthMinValue = p_presenter.GetNewGameViewMinBoardWidthValue();
+    const int boardWidthMaxValue = p_presenter.GetNewGameViewMaxBoardWidthValue();
+    m_boardWidthSpinBox = CreateWidget<Gtkmm3SpinBox>(m_presenter.GetDefaultBoardWidthValue(),
+                                                      ISpinBox::ClimbRate{1u},
+                                                      ISpinBox::Range{ISpinBox::Minimum{static_cast<int>(boardWidthMinValue)},
+                                                                      ISpinBox::Maximum{static_cast<int>(boardWidthMaxValue)}});
+    ASSERT(m_boardWidthSpinBox);
 
-        m_viewLayout = std::move(viewLayout);
-        ASSERT(m_viewLayout);
-    }
-
-    {
-        auto playersList = std::make_unique<cxgui::Gtkmm3NewPlayersList>(p_presenter);
-        ASSERT(playersList);
-
-        auto* underlying = dynamic_cast<Gtk::Widget*>(playersList.get());
-        ASSERT(underlying);
-
-        auto widgetDelegate = std::make_unique<cxgui::Gtkmm3WidgetDelegate>();
-        ASSERT(widgetDelegate);
-
-        widgetDelegate->SetUnderlying(underlying);
-        playersList->SetDelegate(std::move(widgetDelegate));
-
-        m_playersList = std::move(playersList);
-        ASSERT(m_playersList);
-    }
-
-    {
-        const size_t inARowMinValue = p_presenter.GetNewGameViewMinInARowValue();
-        const size_t inARowMaxValue = p_presenter.GetNewGameViewMaxInARowValue();
-        auto inARowSpinBox = std::make_unique<Gtkmm3SpinBox>(m_presenter.GetDefaultInARowValue(),
-                                                             ISpinBox::ClimbRate{1u},
-                                                             ISpinBox::Range{ISpinBox::Minimum{static_cast<int>(inARowMinValue)},
-                                                                             ISpinBox::Maximum{static_cast<int>(inARowMaxValue)}});
-        ASSERT(inARowSpinBox);
-
-        auto inARowSpinBoxDelegate = std::make_unique<cxgui::Gtkmm3WidgetDelegate>();
-        ASSERT(inARowSpinBoxDelegate);
-
-        auto* underlying = dynamic_cast<Gtk::Widget*>(inARowSpinBox.get());
-        ASSERT(underlying);
-
-        inARowSpinBoxDelegate->SetUnderlying(underlying);
-        inARowSpinBox->SetDelegate(std::move(inARowSpinBoxDelegate));
-
-        m_inARowSpinBox = std::move(inARowSpinBox);
-        ASSERT(m_inARowSpinBox);
-    }
-
-    {
-        const int boardWidthMinValue = p_presenter.GetNewGameViewMinBoardWidthValue();
-        const int boardWidthMaxValue = p_presenter.GetNewGameViewMaxBoardWidthValue();
-        auto boardWidthSpinBox = std::make_unique<Gtkmm3SpinBox>(m_presenter.GetDefaultBoardWidthValue(),
-                                                                 ISpinBox::ClimbRate{1u},
-                                                                 ISpinBox::Range{ISpinBox::Minimum{static_cast<int>(boardWidthMinValue)},
-                                                                                 ISpinBox::Maximum{static_cast<int>(boardWidthMaxValue)}});
-        ASSERT(boardWidthSpinBox);
-
-        auto boardWidthSpinBoxDelegate = std::make_unique<cxgui::Gtkmm3WidgetDelegate>();
-        ASSERT(boardWidthSpinBoxDelegate);
-
-        auto* underlying = dynamic_cast<Gtk::Widget*>(boardWidthSpinBox.get());
-        ASSERT(underlying);
-
-        boardWidthSpinBoxDelegate->SetUnderlying(underlying);
-        boardWidthSpinBox->SetDelegate(std::move(boardWidthSpinBoxDelegate));
-
-        m_boardWidthSpinBox = std::move(boardWidthSpinBox);
-        ASSERT(m_boardWidthSpinBox);
-    }
-
-    {
-        const int boardHeightMinValue = p_presenter.GetNewGameViewMinBoardHeightValue();
-        const int boardHeightMaxValue = p_presenter.GetNewGameViewMaxBoardHeightValue();
-        auto boardHeightSpinBox = std::make_unique<Gtkmm3SpinBox>(m_presenter.GetDefaultBoardHeightValue(),
-                                                                  ISpinBox::ClimbRate{1u},
-                                                                  ISpinBox::Range{ISpinBox::Minimum{static_cast<int>(boardHeightMinValue)},
-                                                                                  ISpinBox::Maximum{static_cast<int>(boardHeightMaxValue)}});
-        ASSERT(boardHeightSpinBox);
-
-        auto boardHeightSpinBoxDelegate = std::make_unique<cxgui::Gtkmm3WidgetDelegate>();
-        ASSERT(boardHeightSpinBoxDelegate);
-
-        auto* underlying = dynamic_cast<Gtk::Widget*>(boardHeightSpinBox.get());
-        ASSERT(underlying);
-
-        boardHeightSpinBoxDelegate->SetUnderlying(underlying);
-        boardHeightSpinBox->SetDelegate(std::move(boardHeightSpinBoxDelegate));
-
-        m_boardHeightSpinBox = std::move(boardHeightSpinBox);
-        ASSERT(m_boardHeightSpinBox);
-    }
+    const int boardHeightMinValue = p_presenter.GetNewGameViewMinBoardHeightValue();
+    const int boardHeightMaxValue = p_presenter.GetNewGameViewMaxBoardHeightValue();
+    m_boardHeightSpinBox = CreateWidget<Gtkmm3SpinBox>(m_presenter.GetDefaultBoardHeightValue(),
+                                                       ISpinBox::ClimbRate{1u},
+                                                       ISpinBox::Range{ISpinBox::Minimum{static_cast<int>(boardHeightMinValue)},
+                                                                       ISpinBox::Maximum{static_cast<int>(boardHeightMaxValue)}});
+    ASSERT(m_boardHeightSpinBox);
 
     SetLayout();
     PopulateWidgets();

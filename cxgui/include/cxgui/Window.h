@@ -164,22 +164,7 @@ protected:
 template<typename GtkmmWindow>
 Window<GtkmmWindow>::Window()
 {
-    {
-        auto mainLayout = std::make_unique<cxgui::Gtkmm3Layout>();
-        ASSERT(mainLayout);
-
-        auto widgetDelegate = std::make_unique<cxgui::Gtkmm3WidgetDelegate>();
-        ASSERT(widgetDelegate);
-
-        auto* underlying = dynamic_cast<Gtk::Widget*>(mainLayout.get());
-        ASSERT(underlying);
-
-        widgetDelegate->SetUnderlying(underlying);
-        mainLayout->SetDelegate(std::move(widgetDelegate));
-
-        m_mainLayout = std::move(mainLayout);
-    }
-
+    m_mainLayout = CreateWidget<Gtkmm3Layout>();
     ASSERT(m_mainLayout);
 
     Gtk::Widget* mainLayoutAsGtk = dynamic_cast<Gtk::Widget*>(m_mainLayout.get());

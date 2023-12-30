@@ -24,6 +24,9 @@
 #ifndef GTKMM3WIDGETDELEGATE_H_9F639EAC_D67C_40B9_8652_436419A7E59E
 #define GTKMM3WIDGETDELEGATE_H_9F639EAC_D67C_40B9_8652_436419A7E59E
 
+#include <memory>
+
+#include <cxstd/helpers.h>
 #include <cxgui/IWidget.h>
 
 namespace Gtk
@@ -81,6 +84,35 @@ private:
     Gtk::Widget* m_underlying = nullptr;
 
 };
+
+/**********************************************************************************************//**
+ * @brief Creates a widget with a valid widget delegate.
+ *
+ * @tparam Widget
+ *      The target widget type.
+ * @tparam Args  
+ *      The parameters needed to create the widget.
+ *
+ * @return A widget of type `Widget` configured with a valid widget delegate.
+ *
+ *************************************************************************************************/
+template<typename Widget, typename... Args>
+[[nodiscard]] std::unique_ptr<Widget> CreateWidget(Args&&... p_args)
+{
+    auto widget = std::make_unique<Widget>(std::forward<Args>(p_args)...);
+    IF_CONDITION_NOT_MET_DO(widget, return nullptr;);
+
+    auto* gtkWidget = dynamic_cast<Gtk::Widget*>(widget.get());
+    IF_CONDITION_NOT_MET_DO(gtkWidget, return nullptr;);
+
+    auto delegate = std::make_unique<Gtkmm3WidgetDelegate>();
+    IF_CONDITION_NOT_MET_DO(delegate, return nullptr;);
+
+    delegate->SetUnderlying(gtkWidget);
+    widget->SetDelegate(std::move(delegate));
+
+    return widget;
+}
 
 } // namespace cxgui
 

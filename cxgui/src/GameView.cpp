@@ -62,39 +62,11 @@ cxgui::GameView::GameView(IGameViewPresenter& p_presenter,
     PRECONDITION(m_activePlayerChip);
     PRECONDITION(m_nextPlayerChip);
 
-    {
-        auto viewLayout = std::make_unique<Gtkmm3Layout>();
-        ASSERT(viewLayout);
-        
-        auto widgetDelegate = std::make_unique<cxgui::Gtkmm3WidgetDelegate>();
-        ASSERT(widgetDelegate);
+    m_viewLayout = CreateWidget<Gtkmm3Layout>();
+    ASSERT(m_viewLayout);
 
-        auto* underlying = dynamic_cast<Gtk::Widget*>(viewLayout.get());
-        ASSERT(underlying);
-
-        widgetDelegate->SetUnderlying(underlying);
-        viewLayout->SetDelegate(std::move(widgetDelegate));
-
-        m_viewLayout = std::move(viewLayout);
-        ASSERT(m_viewLayout);
-    }
-
-    {
-        auto playersInfoLayout = std::make_unique<Gtkmm3Layout>();
-        ASSERT(playersInfoLayout);
-        
-        auto widgetDelegate = std::make_unique<cxgui::Gtkmm3WidgetDelegate>();
-        ASSERT(widgetDelegate);
-
-        auto* underlying = dynamic_cast<Gtk::Widget*>(playersInfoLayout.get());
-        ASSERT(underlying);
-
-        widgetDelegate->SetUnderlying(underlying);
-        playersInfoLayout->SetDelegate(std::move(widgetDelegate));
-
-        m_playersInfoLayout = std::move(playersInfoLayout);
-        ASSERT(m_playersInfoLayout);
-    }
+    m_playersInfoLayout = CreateWidget<Gtkmm3Layout>();
+    ASSERT(m_playersInfoLayout);
 
     SetLayout();
     PopulateWidgets();
