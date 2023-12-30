@@ -210,19 +210,6 @@ public:
     virtual void Register(IWidget& p_widget, const RowDescriptor& p_row, const ColumnDescriptor& p_column) = 0;
 
     /******************************************************************************************//**
-     * @brief Register a layout to the layout.
-     *
-     * @param p_layout
-     *      The layout to register to the layout.
-     * @param p_row
-     *      Description of where to register the widget, vertically.
-     * @param p_column
-     *      Description of where to register the widget, horizontally.
-     *
-     *********************************************************************************************/
-    virtual void Register(ILayout& p_layout, const RowDescriptor& p_row, const ColumnDescriptor& p_column) = 0;
-
-    /******************************************************************************************//**
      * @brief Register a Gtkmm widget to the layout.
      *
      * @param p_gtkWidget
@@ -247,15 +234,6 @@ public:
      *
      *********************************************************************************************/
     virtual void Unregister(IWidget& p_widget) = 0;
-
-    /******************************************************************************************//**
-     * @brief Unregister a child layout from the layout.
-     *
-     * @param p_layout
-     *      The layout to unregister from the layout.
-     *
-     *********************************************************************************************/
-    virtual void Unregister(ILayout& p_layout) = 0;
 
     /******************************************************************************************//**
      * @brief Unregister a Gtkmm widget from the layout.
@@ -289,26 +267,6 @@ public:
      *
      *********************************************************************************************/
     [[nodiscard]] virtual IWidget* GetWidgetAtPosition(const cxmodel::Row& p_row, const cxmodel::Column& p_column) = 0;
-
-    /******************************************************************************************//**
-     * @brief Get the registered layout at the specified location.
-     *
-     * @param p_row
-     *      The row in which the layout is located.
-     * @param p_column
-     *      The column in which the layout is located.
-     *
-     * @return
-     *      The layout's address, or `nullptr` otherwise.
-     *
-     *********************************************************************************************/
-    [[nodiscard]] virtual const ILayout* GetLayoutAtPosition(const cxmodel::Row& p_row, const cxmodel::Column& p_column) const = 0;
-
-    /******************************************************************************************//**
-     * @copydoc cxgui::ILayout::GetLayoutAtPosition
-     *
-     *********************************************************************************************/
-    [[nodiscard]] virtual ILayout* GetLayoutAtPosition(const cxmodel::Row& p_row, const cxmodel::Column& p_column) = 0;
 
     /******************************************************************************************//**
      * @brief Changes the row spacing mode. Affects all rows in the layout.

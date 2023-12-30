@@ -81,7 +81,7 @@ cxgui::MainWindow::~MainWindow()
     // We unregister the current view from the main layout. If the view is
     // reset before the layout has had time to unregister it, we get a dangling
     // reference to it in the layout.
-    auto* currentViewLayout = m_mainLayout->GetLayoutAtPosition(m_viewTop, m_viewLeft);
+    cxgui::IWidget* currentViewLayout = m_mainLayout->GetWidgetAtPosition(m_viewTop, m_viewLeft);
     if(INL_ASSERT(currentViewLayout))
     {
         m_mainLayout->Unregister(*currentViewLayout);

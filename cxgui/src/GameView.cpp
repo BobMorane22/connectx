@@ -110,7 +110,7 @@ void cxgui::GameView::Activate()
 {
     EnableKeyHandlers();
 
-    cxgui::ILayout* currentViewLayout = m_mainLayout.GetLayoutAtPosition(m_viewTop, m_viewLeft);
+    cxgui::IWidget* currentViewLayout = m_mainLayout.GetWidgetAtPosition(m_viewTop, m_viewLeft);
 
     if(!currentViewLayout)
     {
@@ -132,7 +132,7 @@ void cxgui::GameView::DeActivate()
     // Since the Game View is recreated every time, we need to clear
     // the view layout from the main layout, otherwise we will have a
     // dangling reference in the main layout once the view is reset.
-    auto* currentViewLayout = m_mainLayout.GetLayoutAtPosition(m_viewTop, m_viewLeft);
+    cxgui::IWidget* currentViewLayout = m_mainLayout.GetWidgetAtPosition(m_viewTop, m_viewLeft);
     if(INL_ASSERT(currentViewLayout))
     {
         m_mainLayout.Unregister(*currentViewLayout);
