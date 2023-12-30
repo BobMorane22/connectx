@@ -26,10 +26,10 @@
 
 #include <cxstd/StrongType.h>
 #include <cxmodel/common.h>
+#include <cxgui/IWidget.h>
 
 namespace cxgui
 {
-    class IWidget;
     struct Margins;
 }
  
@@ -77,7 +77,7 @@ namespace cxgui
  * @note The layout does not own the widgets it arranges.
  *
  *************************************************************************************************/
-class ILayout
+class ILayout : public IWidget
 {
 
 public:
@@ -311,15 +311,6 @@ public:
     [[nodiscard]] virtual ILayout* GetLayoutAtPosition(const cxmodel::Row& p_row, const cxmodel::Column& p_column) = 0;
 
     /******************************************************************************************//**
-     * @brief Changes the margin sizes for the layout.
-     *
-     * @param p_newMarginSizes
-     *      The new margin sizes.
-     *
-     *********************************************************************************************/
-    virtual void SetMargins(const Margins& p_newMarginSizes) = 0;
-
-    /******************************************************************************************//**
      * @brief Changes the row spacing mode. Affects all rows in the layout.
      *
      * @param p_newMode
@@ -336,6 +327,7 @@ public:
      *
      *********************************************************************************************/
     virtual void SetColumnSpacingMode(ColumnSpacingMode p_newMode) = 0;
+
 };
 
 } // namespace cxgui

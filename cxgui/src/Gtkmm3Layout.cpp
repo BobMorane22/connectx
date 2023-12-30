@@ -6,7 +6,7 @@
  *  the Free Software Foundation, either version 3 of the License, or
  *  (at your option) any later version.
  *
- *  Connect X is distributed in the hope that it will be useful,
+ *  Connect X is distributed in the hope that it will be useful, 
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  *  GNU General Public License for more details.
@@ -27,6 +27,15 @@
 #include <cxgui/Gtkmm3Layout.h>
 #include <cxgui/IWidget.h>
 #include <cxgui/Margins.h>
+
+void cxgui::Gtkmm3Layout::SetDelegate(std::unique_ptr<IWidget> p_delegate)
+{
+    IF_PRECONDITION_NOT_MET_DO(p_delegate, return;);
+
+    m_delegate = std::move(p_delegate);
+
+    POSTCONDITION(m_delegate);
+}
 
 void cxgui::Gtkmm3Layout::Register(cxgui::IWidget& p_widget,
                                    const cxgui::ILayout::RowDescriptor& p_row,
@@ -129,19 +138,6 @@ cxgui::ILayout* cxgui::Gtkmm3Layout::GetLayoutAtPosition(const cxmodel::Row& p_r
     return const_cast<cxgui::ILayout*>(const_cast<const cxgui::Gtkmm3Layout*>(this)->GetLayoutAtPosition(p_row, p_column));
 }
 
-void cxgui::Gtkmm3Layout::SetMargins(const Margins& p_newMarginSizes)
-{
-    const int start = p_newMarginSizes.m_left.Get();
-    const int end = p_newMarginSizes.m_right.Get();
-    const int top = p_newMarginSizes.m_top.Get();
-    const int bottom = p_newMarginSizes.m_bottom.Get();
-
-    set_margin_start(start);
-    set_margin_end(end);
-    set_margin_top(top);
-    set_margin_bottom(bottom);
-}
-
 void cxgui::Gtkmm3Layout::SetRowSpacingMode(cxgui::ILayout::RowSpacingMode p_newMode)
 {
     if(p_newMode == cxgui::ILayout::RowSpacingMode::EQUAL)
@@ -165,3 +161,28 @@ void cxgui::Gtkmm3Layout::SetColumnSpacingMode(cxgui::ILayout::ColumnSpacingMode
         set_column_homogeneous(false);
     }
 }
+
+size_t cxgui::Gtkmm3Layout::GetWidth() const
+{
+    RETURN_IF(!m_delegate, 0u);
+    return m_delegate->GetWidth();
+}
+
+size_t cxgui::Gtkmm3Layout::GetHeight() const
+{
+    RETURN_IF(!m_delegate, 0u);
+    return m_delegate->GetHeight();
+}
+
+void  cxgui::Gtkmm3Layout::SetEnabled(EnabledState p_enabled)
+{
+    RETURN_IF(!m_delegate,);
+    m_delegate->SetEnabled(p_enabled);
+}
+
+void cxgui::Gtkmm3Layout::SetMargins(const Margins& p_newMarginSizes)
+{
+    RETURN_IF(!m_delegate,);
+    m_delegate->SetMargins(p_newMarginSizes);
+}
+

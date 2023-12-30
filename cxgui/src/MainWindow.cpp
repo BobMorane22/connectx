@@ -76,6 +76,18 @@ cxgui::MainWindow::MainWindow(Gtk::Application& p_gtkApplication,
     m_aboutMenuItem        = std::make_unique<cxgui::Gtkmm3MenuItem>(m_presenter.GetMenuLabel(MenuItem::ABOUT), cxgui::FreeDesktop::StdActionIcon::HELP_ABOUT);
 }
 
+cxgui::MainWindow::~MainWindow()
+{
+    // We unregister the current view from the main layout. If the view is
+    // reset before the layout has had time to unregister it, we get a dangling
+    // reference to it in the layout.
+    auto* currentViewLayout = m_mainLayout->GetLayoutAtPosition(m_viewTop, m_viewLeft);
+    if(INL_ASSERT(currentViewLayout))
+    {
+        m_mainLayout->Unregister(*currentViewLayout);
+    }
+}
+
 void cxgui::MainWindow::ConfigureWindow()
 {
     m_window.set_title(m_presenter.GetWindowTitle());

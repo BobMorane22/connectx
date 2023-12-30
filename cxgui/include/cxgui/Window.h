@@ -30,6 +30,7 @@
 #include <cxgui/generated/ressources.h>
 #include <cxgui/Gtkmm3Layout.h>
 #include <cxgui/ILayout.h>
+#include <cxgui/Gtkmm3WidgetDelegate.h>
 
 #include "IWindow.h"
 
@@ -163,7 +164,22 @@ protected:
 template<typename GtkmmWindow>
 Window<GtkmmWindow>::Window()
 {
-    m_mainLayout = std::make_unique<cxgui::Gtkmm3Layout>();
+    {
+        auto mainLayout = std::make_unique<cxgui::Gtkmm3Layout>();
+        ASSERT(mainLayout);
+
+        auto widgetDelegate = std::make_unique<cxgui::Gtkmm3WidgetDelegate>();
+        ASSERT(widgetDelegate);
+
+        auto* underlying = dynamic_cast<Gtk::Widget*>(mainLayout.get());
+        ASSERT(underlying);
+
+        widgetDelegate->SetUnderlying(underlying);
+        mainLayout->SetDelegate(std::move(widgetDelegate));
+
+        m_mainLayout = std::move(mainLayout);
+    }
+
     ASSERT(m_mainLayout);
 
     Gtk::Widget* mainLayoutAsGtk = dynamic_cast<Gtk::Widget*>(m_mainLayout.get());

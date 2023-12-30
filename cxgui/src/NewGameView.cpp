@@ -21,8 +21,6 @@
  *
  *************************************************************************************************/
 
-#include <cxgui/Gtkmm3SpinBox.h>
-#include <cxgui/ISpinBox.h>
 #include <algorithm>
 #include <memory>
 #include <sstream>
@@ -41,6 +39,7 @@
 #include <cxgui/Gtkmm3WidgetDelegate.h>
 #include <cxgui/INewGameViewController.h>
 #include <cxgui/INewGameViewPresenter.h>
+#include <cxgui/ISpinBox.h>
 #include <cxgui/Margins.h>
 #include <cxgui/NewGameView.h>
 
@@ -73,8 +72,22 @@ cxgui::NewGameView::NewGameView(INewGameViewPresenter& p_presenter,
  , m_viewLeft{p_viewLeft}
  , m_viewTop{p_viewTop}
 {
-    m_viewLayout = std::make_unique<Gtkmm3Layout>();
-    ASSERT(m_viewLayout);
+    {
+        auto viewLayout = std::make_unique<Gtkmm3Layout>();
+        ASSERT(viewLayout);
+
+        auto* underlying = dynamic_cast<Gtk::Widget*>(viewLayout.get());
+        ASSERT(underlying);
+
+        auto widgetDelegate = std::make_unique<cxgui::Gtkmm3WidgetDelegate>();
+        ASSERT(widgetDelegate);
+
+        widgetDelegate->SetUnderlying(underlying);
+        viewLayout->SetDelegate(std::move(widgetDelegate));
+
+        m_viewLayout = std::move(viewLayout);
+        ASSERT(m_viewLayout);
+    }
 
     m_playersList = std::make_unique<cxgui::Gtkmm3NewPlayersList>(p_presenter);
     ASSERT(m_playersList);

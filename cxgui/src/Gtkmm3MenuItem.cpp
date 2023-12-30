@@ -24,6 +24,7 @@
 #include <cxinv/assertion.h>
 #include <cxgui/Gtkmm3Layout.h>
 #include <cxgui/Gtkmm3MenuItem.h>
+#include <cxgui/Gtkmm3WidgetDelegate.h>
 #include <cxgui/StdActionIcon.h>
 
 cxgui::Gtkmm3MenuItem::Gtkmm3MenuItem(const std::string& p_label,
@@ -58,8 +59,22 @@ cxgui::Gtkmm3MenuItem::Gtkmm3MenuItem(const std::string& p_label,
     m_accelerator->set_accel_widget(*this);
 
     // We register the icon and the label in the container:
-    m_layout = std::make_unique<cxgui::Gtkmm3Layout>();
-    ASSERT(m_layout);
+    {
+        auto layout = std::make_unique<cxgui::Gtkmm3Layout>();
+        ASSERT(layout);
+
+        auto* underlying = dynamic_cast<Gtk::Widget*>(layout.get());
+        ASSERT(underlying);
+
+        auto widgetDelegate = std::make_unique<Gtkmm3WidgetDelegate>(); 
+        ASSERT(widgetDelegate);
+
+        widgetDelegate->SetUnderlying(underlying);
+        layout->SetDelegate(std::move(widgetDelegate));
+
+        m_layout = std::move(layout);
+        ASSERT(m_layout);
+    }
 
     constexpr cxmodel::Row row0{0u};
     constexpr cxgui::ILayout::RowSpan oneRowSpan{1u};

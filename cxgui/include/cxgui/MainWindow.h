@@ -105,6 +105,8 @@ public:
                IMainWindowController& p_controller,
                IMainWindowPresenter& p_presenter);
 
+    ~MainWindow() override;
+
     int Show() override;
 
 

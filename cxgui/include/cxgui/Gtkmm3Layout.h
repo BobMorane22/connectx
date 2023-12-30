@@ -46,6 +46,8 @@ class Gtkmm3Layout : public ILayout,
 
 public:
 
+    void SetDelegate(std::unique_ptr<IWidget> p_delegate);
+
     // cxgui::ILayout:
     void Register(IWidget& p_widget, const ILayout::RowDescriptor& p_row, const ILayout::ColumnDescriptor& p_column) override;
     void Register(ILayout& p_layout, const ILayout::RowDescriptor& p_row, const ILayout::ColumnDescriptor& p_column) override;
@@ -57,9 +59,18 @@ public:
     [[nodiscard]] IWidget* GetWidgetAtPosition(const cxmodel::Row& p_row, const cxmodel::Column& p_column) override;
     [[nodiscard]] const ILayout* GetLayoutAtPosition(const cxmodel::Row& p_row, const cxmodel::Column& p_column) const override;
     [[nodiscard]] ILayout* GetLayoutAtPosition(const cxmodel::Row& p_row, const cxmodel::Column& p_column) override;
-    void SetMargins(const Margins& p_newMarginSizes) override;
     void SetRowSpacingMode(RowSpacingMode p_newMode) override;
     void SetColumnSpacingMode(ColumnSpacingMode p_newMode) override;
+
+    // cxgui::IWidget:
+    [[nodiscard]] size_t GetWidth() const override;
+    [[nodiscard]] size_t GetHeight() const override;
+    void SetEnabled(EnabledState p_enabled) override;
+    void SetMargins(const Margins& p_newMarginSizes) override;
+
+private:
+
+    std::unique_ptr<IWidget> m_delegate;
 
 };
 
