@@ -91,9 +91,15 @@ private:
  * @tparam Widget
  *      The target widget type.
  * @tparam Args  
- *      The parameters needed to create the widget.
+ *      The parameters types needed to create the widget, in the same order as what
+ *      is requested by the widget's contructor.
  *
- * @return A widget of type `Widget` configured with a valid widget delegate.
+ * @param p_args
+ *      Parameters needed to create the widget. These are the same parameters you would
+ *      use to call the widget's constrcutor (in the same order).
+ *
+ * @return
+ *      A widget of type `Widget` configured with a valid widget delegate.
  *
  *************************************************************************************************/
 template<typename Widget, typename... Args>
