@@ -156,6 +156,7 @@ injected at construction, as shown in [Figure 2](#widget-delegation).
 <a name="widget-delegation">Figure 2 :</a> Delegation of the widget implementation.
 
 </figcaption>
+
 ![Delegation for code reuse](./delegation.png)
 
 We can see that the widget delegate implements the `IWidget` interface (which
