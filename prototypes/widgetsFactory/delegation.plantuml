@@ -1,0 +1,35 @@
+@startuml
+
+skinparam linetype ortho
+
+package Gtk
+{
+  abstract "Gtk::Widget" as Widget 
+  class    "Gtk::Button" as Button
+
+  Widget <|-- Button
+}
+
+package cxgui
+{
+
+  together{
+    interface "cxgui::IWidget"              as IWidget
+    class     "cxgui::Gtkmm3WidgetDelegate" as WidgetDelegate
+  }
+
+  interface "cxgui::IButton"      as IButton
+  class     "cxgui::Gtkmm3Button" as Button
+
+  IWidget <|-- IButton
+  IWidget <|-- WidgetDelegate
+  IButton <|-- Button
+  Button  *--  WidgetDelegate
+}
+
+Gtk ---[hidden]-> cxgui
+
+cxgui.WidgetDelegate o--  Gtk.Widget
+Gtk.Button           <|-- cxgui.Button
+
+@enduml

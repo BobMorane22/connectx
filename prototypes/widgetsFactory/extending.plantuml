@@ -1,0 +1,41 @@
+@startuml
+
+skinparam linetype ortho
+
+package Gtk
+{
+  abstract "Gtk::Widget"   as Widget
+  class    "Gtk::ComboBox" as ComboBox
+
+  Widget <|-- ComboBox
+}
+
+package cxgui
+{
+  package "Standard toolkit" as std
+  {
+    interface "cxgui::IWidget"   as IWidget
+    interface "cxgui::IComboBox" as IComboBox
+
+    class "cxgui::WidgetDelegate"   as WidgetDelegate
+    class "cxgui::ComboBoxDelegate" as ComboBoxDelegate
+
+    IWidget          <|--     IComboBox
+    IWidget          <|-left- WidgetDelegate
+    IComboBox        <|--     ComboBoxDelegate
+    ComboBoxDelegate *--      WidgetDelegate
+  }
+
+  package "Connect X specific toolkit" as cx
+  {
+    interface "cxgui::IColorComboBox"      as IComboBox
+    class     "cxgui::Gtkmm3ColorComboBox" as ComboBox
+
+    cxgui.std.IComboBox <|-- IComboBox
+    IComboBox           <|-- ComboBox
+    Gtk.ComboBox        <|-- ComboBox
+    ComboBox            *--  ComboBoxDelegate
+  }
+}
+
+@enduml
