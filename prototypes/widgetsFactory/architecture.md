@@ -346,6 +346,7 @@ from the `cxgui::IComboBox` interface, as shown in [Figure 3](#widget-extension)
 <a name="widget-extension">Figure 3 :</a> Extending widgets
 
 </figcaption>
+
 ![Extending widgets](./extending.png)
 
 To resuse the behaviors inherited from `cxgui::IWidget` and `cxgui::ComboBox`,
