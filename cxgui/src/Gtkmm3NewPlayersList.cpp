@@ -387,9 +387,7 @@ cxgui::Gtkmm3NewPlayersList::Gtkmm3NewPlayersList(const INewGameViewPresenter& p
     m_titleRow = std::make_unique<NewPlayerTitleRow>(p_presenter);
     ASSERT(m_titleRow);
 
-    // Since at least one player must be human, the first player is always set to human and
-    // cannot be changed. This is debatable, and could be unlocked in a later release.
-    add(*Gtk::manage(new NewPlayerRow(p_presenter, 1u, GetAllColors(), EnabledState::Disabled)));
+    add(*Gtk::manage(new NewPlayerRow(p_presenter, 1u, GetAllColors(), EnabledState::Enabled)));
     add(*Gtk::manage(new NewPlayerRow(p_presenter, 2u, GetAllColors(), EnabledState::Enabled)));
 
     AddColumnHeaders();
