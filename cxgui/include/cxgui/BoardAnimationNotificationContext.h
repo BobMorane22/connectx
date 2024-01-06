@@ -39,6 +39,10 @@ namespace cxgui
  *************************************************************************************************/
 enum class BoardAnimationNotificationContext
 {
+    /** The underlying animation model is now valid. From this point,
+        one can safely request animations. */
+    ANIMATION_MODEL_VALID,
+
     /** Move left one column animation notification. */
     ANIMATE_MOVE_LEFT_ONE_COLUMN,
 

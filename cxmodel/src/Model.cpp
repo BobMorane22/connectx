@@ -231,20 +231,26 @@ void cxmodel::Model::DropChip(const cxmodel::IChip& p_chip, size_t p_column)
         m_currentDropCommands = dropCommands.get();
 
         IF_CONDITION_NOT_MET_DO(m_cmdStack->Execute(std::move(dropCommands)) <= CommandCompletionStatus::FAILED_EXPECTED, return;);
-    }
-    else
-    {
-        IF_CONDITION_NOT_MET_DO(m_currentDropCommands, return;);
-
-        IF_CONDITION_NOT_MET_DO(command->Execute() == CommandCompletionStatus::SUCCESS, return;);
-        m_currentDropCommands->Add(std::move(command));
 
         if(shouldResetDropCommands)
         {
             m_currentDropCommands = nullptr;
         }
     }
+    else
+    {
+        IF_CONDITION_NOT_MET_DO(command->Execute() == CommandCompletionStatus::SUCCESS, return;);
 
+        if(m_currentDropCommands)
+        {
+            m_currentDropCommands->Add(std::move(command));
+        }
+
+        if(shouldResetDropCommands)
+        {
+            m_currentDropCommands = nullptr;
+        }
+    }
 
     // Won and tie checks come next. They are not part of the command because they never
     // have to be rechecked once the initial drop is done. Undoing or redoing a drop can

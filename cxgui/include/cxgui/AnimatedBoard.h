@@ -142,6 +142,7 @@ private:
     // Signals:
     sigc::connection m_mouseButtonPressedConnection;
     sigc::connection m_mouseMotionConnection;
+    sigc::connection m_initialSizeAllocationConnection;
 };
 
 } // namespace cxgui

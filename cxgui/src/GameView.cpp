@@ -169,6 +169,18 @@ void cxgui::GameView::Update(cxgui::BoardAnimationNotificationContext p_context,
 
     switch(p_context)
     {
+        case cxgui::BoardAnimationNotificationContext::ANIMATION_MODEL_VALID:
+        {
+            // If the first player is a bot, we simulate a chip drop. This is necessary
+            // to start the board animation process.
+            if(m_presenter.IsCurrentPlayerABot())
+            {
+                DisableKeyHandlers();
+                UpdateChipMovedRightToTarget();
+            }
+
+            return;
+        }
         case cxgui::BoardAnimationNotificationContext::ANIMATE_MOVE_LEFT_ONE_COLUMN:
         case cxgui::BoardAnimationNotificationContext::ANIMATE_MOVE_RIGHT_ONE_COLUMN:
         case cxgui::BoardAnimationNotificationContext::ANIMATE_MOVE_RIGHT_TO_TARGET:
@@ -196,8 +208,6 @@ void cxgui::GameView::Update(cxgui::BoardAnimationNotificationContext p_context,
         case cxgui::BoardAnimationNotificationContext::POST_ANIMATE_UNDO_DROP_CHIP:
         case cxgui::BoardAnimationNotificationContext::POST_ANIMATE_REDO_DROP_CHIP:
         {
-            // At this point the animation is completed. We reactivate keyboard events in
-            // case the user wants to request another animation:
             break;
         }
         case cxgui::BoardAnimationNotificationContext::POST_ANIMATE_MOVE_RIGHT_TO_TARGET:

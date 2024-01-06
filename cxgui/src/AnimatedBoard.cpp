@@ -101,7 +101,10 @@ cxgui::AnimatedBoard::AnimatedBoard(const IGameViewPresenter& p_presenter, const
     m_animationModel = std::make_unique<cxgui::AnimatedBoardModel>(*m_presenter, p_speed);
 
     // Customize width and height according to window dimension.
-    signal_realize().connect([this](){CustomizeHeightAccordingToMonitorDimensions();});
+    signal_realize().connect([this](){
+
+        CustomizeHeightAccordingToMonitorDimensions();
+    });
 
     set_vexpand(true);
     set_hexpand(true);
@@ -109,6 +112,22 @@ cxgui::AnimatedBoard::AnimatedBoard(const IGameViewPresenter& p_presenter, const
     m_timer = std::make_unique<AnimatedBoardTimerRAII>(
        [this](){return Redraw();},
        Period{1000.0/m_animationModel->GetFPS().Get()});
+
+    // We connect to the size allocation signal to update the model with
+    // valid dimensions as soon as they are available.
+     m_initialSizeAllocationConnection = signal_size_allocate().connect([this](Gtk::Allocation& p_allocation){
+
+        const cxmath::Height height{static_cast<double>(p_allocation.get_height())};
+        const cxmath::Width width{static_cast<double>(p_allocation.get_width())};
+        m_animationModel->Update({height, width}, true);
+        m_animationModel->ResetChipPositions();
+
+        BoardAnimationSubject::Notify(cxgui::BoardAnimationNotificationContext::ANIMATION_MODEL_VALID);
+
+        // We no longer need this handler since it is only useful to initialize the model
+        // before using it.
+        m_initialSizeAllocationConnection.disconnect();
+    });
 
     // Resize events:
     signal_configure_event().connect([this](GdkEventConfigure* p_event){

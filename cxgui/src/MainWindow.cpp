@@ -457,6 +457,7 @@ void cxgui::MainWindow::ActivateGameView()
     if(!m_gameView)
     {
         m_gameView = std::make_unique<GameView>(m_presenter, m_controller, m_window, *m_mainLayout, m_viewLeft, m_viewTop);
+        IF_CONDITION_NOT_MET_DO(m_gameView, return;);
     }
 
     m_gameView->Activate();

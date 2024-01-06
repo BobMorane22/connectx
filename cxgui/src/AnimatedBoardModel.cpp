@@ -429,9 +429,6 @@ void cxgui::AnimatedBoardModel::ResetChipPositions()
 
 void cxgui::AnimatedBoardModel::UpdateCurrentColumn(const cxmodel::Column& p_newCurrentColumn)
 {
-    // const auto delta = static_cast<double>(p_newCurrentColumn.Get() - m_currentColumn.Get());
-    // m_chipPosition.m_x = delta * m_cellDimensions.m_width.Get();
-
     m_currentColumn = p_newCurrentColumn;
 }
 
