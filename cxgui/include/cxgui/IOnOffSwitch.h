@@ -24,13 +24,16 @@
 #ifndef IONOFFSWITCH_H_19A0A6E4_FA1D_4E24_B071_BB06B97181AC
 #define IONOFFSWITCH_H_19A0A6E4_FA1D_4E24_B071_BB06B97181AC
 
-#include <functional>
+#include <memory>
 
 #include <cxgui/IWidget.h>
 
 namespace cxgui
 {
     enum class OnOffState;
+
+    template<typename ReturnType, typename... Arguments>
+    class ISignal;
 }
 
 namespace cxgui
@@ -47,20 +50,6 @@ class IOnOffSwitch : public cxgui::IWidget
 {
 
 public:
-
-    // cxgui::IWidget:
-    [[nodiscard]] size_t GetWidth() const override = 0;
-    [[nodiscard]] size_t GetHeight() const override = 0;
-    void SetEnabled(EnabledState p_enabled) override = 0;
-    void SetMargins(const Margins& p_newMarginSizes) override = 0;
-
-public:
-
-    /******************************************************************************************//**
-     * @brief Default destructor.
-     *
-     *********************************************************************************************/
-    virtual ~IOnOffSwitch() = default;
 
     /******************************************************************************************//**
      * @brief Gets the state of the switch.
@@ -79,12 +68,12 @@ public:
     virtual void SetState(OnOffState p_newState) = 0;
 
     /******************************************************************************************//**
-     * @brief Connects a slot that will be executed when the switch state changes.
+     * @brief Signal when the state of the switch has been changed by the user.
      *
-     * @param p_slot The slot to connect.
+     * @return The signal.
      *
      *********************************************************************************************/
-    virtual void StateChangedSignalConnect(const std::function<void()>& p_slot) = 0;
+    [[nodiscard]] virtual std::unique_ptr<ISignal<void>> OnStateChanged() = 0;
 
 };
 

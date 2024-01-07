@@ -46,6 +46,7 @@ add_library(${TARGET_NAME}
   src/GameViewKeyHandlerStrategyFactory.cpp
   src/Gtkmm3Layout.cpp
   src/Gtkmm3MenuItem.cpp
+  src/Gtkmm3OnOffSwitch.cpp
   src/Gtkmm3SpinBox.cpp
   src/Gtkmm3WidgetDelegate.cpp
   src/IAnimatedBoardModel.cpp
@@ -56,7 +57,6 @@ add_library(${TARGET_NAME}
   src/MenuItem.cpp
   src/NewGameView.cpp
   src/Gtkmm3NewPlayersList.cpp
-  src/OnOffSwitch.cpp
   src/pathHelpers.cpp
   src/StatusBar.cpp
   src/StatusBarPresenter.cpp

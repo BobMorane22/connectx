@@ -30,10 +30,11 @@
 #include <cxgui/ColorComboBox.h>
 #include <cxgui/common.h>
 #include <cxgui/EnabledState.h>
+#include <cxgui/Gtkmm3OnOffSwitch.h>
 #include <cxgui/INewGameViewPresenter.h>
+#include <cxgui/ISignal.h>
 #include <cxgui/Margins.h>
 #include <cxgui/OnOffState.h>
-#include <cxgui/OnOffSwitch.h>
 #include <cxgui/Gtkmm3NewPlayersList.h>
 
 namespace cxgui
@@ -266,25 +267,32 @@ cxgui::NewPlayerRow::NewPlayerRow(const cxgui::INewGameViewPresenter& p_presente
 
     m_playerDiscColor->SetCurrentSelection(defaultColors.front());
 
-    auto typeSwitch = std::make_unique<cxgui::OnOffSwitch>();
+    m_typeSwitch = std::make_unique<cxgui::Gtkmm3OnOffSwitch>();
     if(p_presenter.GetDefaultPlayerType(p_rowIndex) == cxmodel::PlayerType::BOT) 
     {
-        typeSwitch->SetState(cxgui::OnOffState::ON);
+        m_typeSwitch->SetState(cxgui::OnOffState::ON);
     }
     else
     {
-        typeSwitch->SetState(cxgui::OnOffState::OFF);
+        m_typeSwitch->SetState(cxgui::OnOffState::OFF);
     }
 
-    Gtk::Switch& underlying = typeSwitch->GetUnderlying();
-    underlying.set_valign(Gtk::Align::ALIGN_CENTER);
-    underlying.set_halign(Gtk::Align::ALIGN_CENTER);
-    underlying.set_margin_end(cxgui::CONTROL_BOTTOM_MARGIN);
+    m_typeSwitch->SetEnabled(p_enabled);
 
-    typeSwitch->SetEnabled(p_enabled);
+    m_typeSwitch->SetMargins({
+        TopMargin{0},
+        BottomMargin{cxgui::CONTROL_BOTTOM_MARGIN},
+        LeftMargin{0},
+        RightMargin{0}
+    });
 
-    m_layout.add(underlying);
-    m_typeSwitch = std::move(typeSwitch);
+    auto* gtkSwitch = dynamic_cast<Gtk::Switch*>(m_typeSwitch.get());
+    ASSERT(gtkSwitch);
+
+    gtkSwitch->set_valign(Gtk::Align::ALIGN_CENTER);
+    gtkSwitch->set_halign(Gtk::Align::ALIGN_CENTER);
+
+    m_layout.add(*gtkSwitch);
     m_layout.add(m_playerName);
     m_layout.add(*m_playerDiscColor);
 
@@ -345,13 +353,9 @@ cxmodel::PlayerType cxgui::NewPlayerRow::GetPlayerType() const
 void cxgui::NewPlayerRow::RowUpdatedSignalConnect(const std::function<void()>& p_slot)
 {
     IF_CONDITION_NOT_MET_DO(m_typeSwitch, return;);
+    RETURN_IF(!p_slot,);
 
-    if(!p_slot)
-    {
-        return;
-    }
-
-    m_typeSwitch->StateChangedSignalConnect(p_slot);
+    m_typeSwitch->OnStateChanged()->Connect(p_slot);
     m_playerName.signal_changed().connect(p_slot);
     m_playerDiscColor->signal_changed().connect(p_slot);
 

@@ -16,7 +16,7 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file OnOffSwitch.cpp
+ * @file Gtkmm3OnOffSwitch.cpp
  * @date 2022
  *
  *************************************************************************************************/ 
@@ -24,25 +24,43 @@
 #include <cxinv/assertion.h>
 
 #include <cxgui/EnabledState.h>
+#include <cxgui/Gtkmm3Connection.h>
+#include <cxgui/Gtkmm3OnOffSwitch.h>
+#include <cxgui/ISignal.h>
 #include <cxgui/Margins.h>
 #include <cxgui/OnOffState.h>
-#include <cxgui/OnOffSwitch.h>
 
-cxgui::OnOffSwitch::OnOffSwitch()
+namespace
 {
-    GetUnderlying().signal_state_flags_changed().connect(
-        [this](Gtk::StateFlags  /*p_previousState*/)
-        {
-            IF_CONDITION_NOT_MET_DO(bool(m_stateChangedSlot), return;);
-            m_stateChangedSlot();
-        },
-        false
-    );
-}
 
-cxgui::OnOffState cxgui::OnOffSwitch::GetState() const
+class Gtkmm3OnStateChangedSignal : public cxgui::ISignal<void>
 {
-    if(m_underlying.get_active())
+
+public:
+
+    explicit Gtkmm3OnStateChangedSignal(Gtk::Switch& p_switch)
+    : m_switch{p_switch}
+    {
+    }
+
+    [[nodiscard]] virtual std::unique_ptr<cxgui::IConnection> Connect(const std::function<void()>& p_slot) override
+    {
+        sigc::connection gtkConnection = m_switch.connect_property_changed_with_return("active", p_slot);
+        IF_CONDITION_NOT_MET_DO(gtkConnection.connected(), return nullptr;);
+
+        return std::make_unique<cxgui::Gtkmm3Connection>(gtkConnection);
+    }
+
+private:
+
+    Gtk::Switch& m_switch;
+};
+
+} // namespace
+
+cxgui::OnOffState cxgui::Gtkmm3OnOffSwitch::GetState() const
+{
+    if(get_active())
     {
         return OnOffState::ON;
     }
@@ -50,56 +68,53 @@ cxgui::OnOffState cxgui::OnOffSwitch::GetState() const
     return OnOffState::OFF;
 }
 
-void cxgui::OnOffSwitch::SetState(cxgui::OnOffState p_newState)
+void cxgui::Gtkmm3OnOffSwitch::SetState(cxgui::OnOffState p_newState)
 {
     if(p_newState == OnOffState::ON)
     {
-        m_underlying.set_active(true);
+        set_active(true);
     }
     else
     {
-        m_underlying.set_active(false);
+        set_active(false);
     }
-
-    IF_CONDITION_NOT_MET_DO(bool(m_stateChangedSlot), return;);
-    m_stateChangedSlot();
 }
 
-void cxgui::OnOffSwitch::StateChangedSignalConnect(const std::function<void()>& p_slot)
+std::unique_ptr<cxgui::ISignal<void>> cxgui::Gtkmm3OnOffSwitch::OnStateChanged()
 {
-    m_stateChangedSlot = p_slot;
+    return std::make_unique<Gtkmm3OnStateChangedSignal>(*this);
 }
 
-size_t cxgui::OnOffSwitch::GetWidth() const
+size_t cxgui::Gtkmm3OnOffSwitch::GetWidth() const
 {
-    const int width = m_underlying.get_width();
+    const int width = get_width();
     IF_CONDITION_NOT_MET_DO(width >= 0, return 0u;);
 
     return width;
 }
 
-size_t cxgui::OnOffSwitch::GetHeight() const
+size_t cxgui::Gtkmm3OnOffSwitch::GetHeight() const
 {
-    const int height = m_underlying.get_height();
+    const int height = get_height();
     IF_CONDITION_NOT_MET_DO(height >= 0, return 0u;);
 
     return height;
 }
 
-void cxgui::OnOffSwitch::SetEnabled(EnabledState p_enabled)
+void cxgui::Gtkmm3OnOffSwitch::SetEnabled(EnabledState p_enabled)
 {
-    m_underlying.set_sensitive(p_enabled == EnabledState::Enabled ? true : false);
+    set_sensitive(p_enabled == EnabledState::Enabled ? true : false);
 }
 
-void cxgui::OnOffSwitch::SetMargins(const Margins& p_newMarginSizes)
+void cxgui::Gtkmm3OnOffSwitch::SetMargins(const Margins& p_newMarginSizes)
 {
     const int start = p_newMarginSizes.m_left.Get();
     const int end = p_newMarginSizes.m_right.Get();
     const int top = p_newMarginSizes.m_top.Get();
     const int bottom = p_newMarginSizes.m_bottom.Get();
 
-    m_underlying.set_margin_start(start);
-    m_underlying.set_margin_end(end);
-    m_underlying.set_margin_top(top);
-    m_underlying.set_margin_bottom(bottom);
+    set_margin_start(start);
+    set_margin_end(end);
+    set_margin_top(top);
+    set_margin_bottom(bottom);
 }

@@ -16,13 +16,13 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file OnOffSwitch.h
+ * @file Gtkmm3OnOffSwitch.h
  * @date 2022
  *
  *************************************************************************************************/
 
-#ifndef ONOFFSWITCH_H_3F9ABCFC_7442_44F5_8C96_A15828BC28B8
-#define ONOFFSWITCH_H_3F9ABCFC_7442_44F5_8C96_A15828BC28B8
+#ifndef GTKMM3ONOFFSWITCH_H_3F9ABCFC_7442_44F5_8C96_A15828BC28B8
+#define GTKMM3ONOFFSWITCH_H_3F9ABCFC_7442_44F5_8C96_A15828BC28B8
 
 #include <gtkmm/switch.h>
 
@@ -35,44 +35,25 @@ namespace cxgui
  * @brief A switch that is either "On" or "Off".
  *
  *************************************************************************************************/
-class OnOffSwitch : public cxgui::IOnOffSwitch
+class Gtkmm3OnOffSwitch : public cxgui::IOnOffSwitch,
+                          public Gtk::Switch
 {
 
 public:
 
-    /******************************************************************************************//**
-     * @brief Constructor.
-     *
-     *********************************************************************************************/
-    OnOffSwitch();
-
-    // cxgui::IOnOffSwitch:
-    [[nodiscard]] OnOffState GetState() const override;
-    void SetState(OnOffState p_newState) override;
-    void StateChangedSignalConnect(const std::function<void()>& p_slot) override;
-
-    // cxgui::IWidget
+    // cxgui::IWidget:
     [[nodiscard]] size_t GetWidth() const override;
     [[nodiscard]] size_t GetHeight() const override;
     void SetEnabled(EnabledState p_enabled) override;
     void SetMargins(const Margins& p_newMarginSizes) override;
 
-    /******************************************************************************************//**
-     * @brief Get the underlying Gtkmm widget instance.
-     *
-     * @return The underlying Gtkmm switch implementation.
-     *
-     *********************************************************************************************/
-    [[nodiscard]] Gtk::Switch& GetUnderlying(){return m_underlying;}
-
-private:
-
-    std::function<void()> m_stateChangedSlot = [](){};
-
-    Gtk::Switch m_underlying;
+    // cxgui::IOnOffSwitch:
+    [[nodiscard]] OnOffState GetState() const override;
+    void SetState(OnOffState p_newState) override;
+    [[nodiscard]] std::unique_ptr<ISignal<void>> OnStateChanged() override;
 
 };
 
 } // namespace cxgui
 
-#endif // ONOFFSWITCH_H_3F9ABCFC_7442_44F5_8C96_A15828BC28B8
+#endif // GTKMM3ONOFFSWITCH_H_3F9ABCFC_7442_44F5_8C96_A15828BC28B8
