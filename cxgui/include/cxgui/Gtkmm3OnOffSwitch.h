@@ -41,6 +41,23 @@ class Gtkmm3OnOffSwitch : public cxgui::IOnOffSwitch,
 
 public:
 
+    /*******************************************************************************************//**
+     * @brief Sets the delegate for widget common facilities.
+     *
+     * The delegate is reponsible to carry the implementation for generic `cxgui::IWidget` operations.
+     * It is meant to avoid implementation duplication.
+     *
+     * @param p_delegate
+     *      The widget delegate.
+     *
+     * @pre
+     *      The widget delegate instance given as an argument is valid.
+     * @post
+     *      The registered widget delegate is valid.
+     *
+     **********************************************************************************************/
+    void SetDelegate(std::unique_ptr<IWidget> p_delegate);
+
     // cxgui::IWidget:
     [[nodiscard]] size_t GetWidth() const override;
     [[nodiscard]] size_t GetHeight() const override;
@@ -51,6 +68,10 @@ public:
     [[nodiscard]] OnOffState GetState() const override;
     void SetState(OnOffState p_newState) override;
     [[nodiscard]] std::unique_ptr<ISignal<void>> OnStateChanged() override;
+
+private:
+
+    std::unique_ptr<IWidget> m_delegate;
 
 };
 

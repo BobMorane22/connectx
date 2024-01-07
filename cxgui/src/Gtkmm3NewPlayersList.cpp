@@ -31,6 +31,7 @@
 #include <cxgui/common.h>
 #include <cxgui/EnabledState.h>
 #include <cxgui/Gtkmm3OnOffSwitch.h>
+#include <cxgui/Gtkmm3WidgetDelegate.h>
 #include <cxgui/INewGameViewPresenter.h>
 #include <cxgui/ISignal.h>
 #include <cxgui/Margins.h>
@@ -178,7 +179,7 @@ private:
     void RetreiveColumnDimensions(Gtkmm3NewPlayersList& parent_) const;
 
     Gtk::Grid m_layout;
-    std::unique_ptr<cxgui::IOnOffSwitch> m_typeSwitch; 
+    std::shared_ptr<cxgui::IOnOffSwitch> m_typeSwitch; // needed because a grid is used.
     Gtk::Entry m_playerName;
     std::unique_ptr<cxgui::ColorComboBox> m_playerDiscColor;
 
@@ -267,7 +268,7 @@ cxgui::NewPlayerRow::NewPlayerRow(const cxgui::INewGameViewPresenter& p_presente
 
     m_playerDiscColor->SetCurrentSelection(defaultColors.front());
 
-    m_typeSwitch = std::make_unique<cxgui::Gtkmm3OnOffSwitch>();
+    m_typeSwitch = CreateWidget<cxgui::Gtkmm3OnOffSwitch>();
     if(p_presenter.GetDefaultPlayerType(p_rowIndex) == cxmodel::PlayerType::BOT) 
     {
         m_typeSwitch->SetState(cxgui::OnOffState::ON);

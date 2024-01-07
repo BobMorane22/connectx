@@ -22,7 +22,7 @@
  *************************************************************************************************/ 
 
 #include <cxinv/assertion.h>
-
+#include <cxstd/helpers.h>
 #include <cxgui/EnabledState.h>
 #include <cxgui/Gtkmm3Connection.h>
 #include <cxgui/Gtkmm3OnOffSwitch.h>
@@ -58,6 +58,15 @@ private:
 
 } // namespace
 
+void cxgui::Gtkmm3OnOffSwitch::SetDelegate(std::unique_ptr<cxgui::IWidget> p_delegate)
+{
+    IF_PRECONDITION_NOT_MET_DO(p_delegate, return;);
+
+    m_delegate = std::move(p_delegate);
+
+    POSTCONDITION(m_delegate);
+}
+
 cxgui::OnOffState cxgui::Gtkmm3OnOffSwitch::GetState() const
 {
     if(get_active())
@@ -87,34 +96,24 @@ std::unique_ptr<cxgui::ISignal<void>> cxgui::Gtkmm3OnOffSwitch::OnStateChanged()
 
 size_t cxgui::Gtkmm3OnOffSwitch::GetWidth() const
 {
-    const int width = get_width();
-    IF_CONDITION_NOT_MET_DO(width >= 0, return 0u;);
-
-    return width;
+    RETURN_IF(!m_delegate, 0u);
+    return m_delegate->GetWidth();
 }
 
 size_t cxgui::Gtkmm3OnOffSwitch::GetHeight() const
 {
-    const int height = get_height();
-    IF_CONDITION_NOT_MET_DO(height >= 0, return 0u;);
-
-    return height;
+    RETURN_IF(!m_delegate, 0u);
+    return m_delegate->GetHeight();
 }
 
 void cxgui::Gtkmm3OnOffSwitch::SetEnabled(EnabledState p_enabled)
 {
-    set_sensitive(p_enabled == EnabledState::Enabled ? true : false);
+    RETURN_IF(!m_delegate,);
+    m_delegate->SetEnabled(p_enabled);
 }
 
 void cxgui::Gtkmm3OnOffSwitch::SetMargins(const Margins& p_newMarginSizes)
 {
-    const int start = p_newMarginSizes.m_left.Get();
-    const int end = p_newMarginSizes.m_right.Get();
-    const int top = p_newMarginSizes.m_top.Get();
-    const int bottom = p_newMarginSizes.m_bottom.Get();
-
-    set_margin_start(start);
-    set_margin_end(end);
-    set_margin_top(top);
-    set_margin_bottom(bottom);
+    RETURN_IF(!m_delegate,);
+    m_delegate->SetMargins(p_newMarginSizes);
 }
