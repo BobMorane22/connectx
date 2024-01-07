@@ -61,7 +61,7 @@ This is where game parameters are defined and new games created.</p>
     <item>
         <title><gui>Players/Bot</gui></title>
         <p>Indicates if the player is a bot (i.e. controlled by the computer) or
-           not. The first player can never be a bot.</p>
+           not. For any given game, at least one player cannot be a bot.</p>
     </item>
     <item>
         <title><gui>Players/Name</gui></title>
