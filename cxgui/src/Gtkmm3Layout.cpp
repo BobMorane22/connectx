@@ -28,6 +28,39 @@
 #include <cxgui/IWidget.h>
 #include <cxgui/Margins.h>
 
+namespace
+{
+
+[[nodiscard]] Gtk::Align ToGtk(cxgui::ILayout::VerticalAlignement p_alignement)
+{
+    switch(p_alignement)
+    {
+        case cxgui::ILayout::VerticalAlignement::TOP:    return Gtk::Align::ALIGN_START;
+        case cxgui::ILayout::VerticalAlignement::CENTER: return Gtk::Align::ALIGN_CENTER;
+        case cxgui::ILayout::VerticalAlignement::BOTTOM: return Gtk::Align::ALIGN_END;
+        case cxgui::ILayout::VerticalAlignement::FILL:   return Gtk::Align::ALIGN_FILL;
+    }
+
+    ASSERT_ERROR_MSG("Unknown alignement value");
+    return Gtk::Align::ALIGN_FILL;
+}
+
+[[nodiscard]] Gtk::Align ToGtk(cxgui::ILayout::HorizontalAlignement p_alignement)
+{
+    switch(p_alignement)
+    {
+        case cxgui::ILayout::HorizontalAlignement::LEFT:   return Gtk::Align::ALIGN_START;
+        case cxgui::ILayout::HorizontalAlignement::CENTER: return Gtk::Align::ALIGN_CENTER;
+        case cxgui::ILayout::HorizontalAlignement::RIGHT:  return Gtk::Align::ALIGN_END;
+        case cxgui::ILayout::HorizontalAlignement::FILL:   return Gtk::Align::ALIGN_FILL;
+    }
+
+    ASSERT_ERROR_MSG("Unknown alignement value");
+    return Gtk::Align::ALIGN_FILL;
+}
+
+} // namespace
+
 void cxgui::Gtkmm3Layout::SetDelegate(std::unique_ptr<IWidget> p_delegate)
 {
     IF_PRECONDITION_NOT_MET_DO(p_delegate, return;);
@@ -39,7 +72,8 @@ void cxgui::Gtkmm3Layout::SetDelegate(std::unique_ptr<IWidget> p_delegate)
 
 void cxgui::Gtkmm3Layout::Register(cxgui::IWidget& p_widget,
                                    const cxgui::ILayout::RowDescriptor& p_row,
-                                   const cxgui::ILayout::ColumnDescriptor& p_column)
+                                   const cxgui::ILayout::ColumnDescriptor& p_column,
+                                   const ILayout::Alignement& p_alignement)
 {
     const int left = static_cast<int>(p_column.m_coordinate.Get());
     const int top = static_cast<int>(p_row.m_coordinate.Get());
@@ -49,17 +83,24 @@ void cxgui::Gtkmm3Layout::Register(cxgui::IWidget& p_widget,
     auto* gtkWidget = dynamic_cast<Gtk::Widget*>(&p_widget);
     ASSERT(gtkWidget);
 
+    gtkWidget->set_valign(ToGtk(p_alignement.m_vertical));
+    gtkWidget->set_halign(ToGtk(p_alignement.m_horizontal));
+
     attach(*gtkWidget, left, top, width, height );
 }
 
 void cxgui::Gtkmm3Layout::Register(Gtk::Widget& p_gtkWidget,
                                    const cxgui::ILayout::RowDescriptor& p_row,
-                                   const cxgui::ILayout::ColumnDescriptor& p_column)
+                                   const cxgui::ILayout::ColumnDescriptor& p_column,
+                                   const ILayout::Alignement& p_alignement)
 {
     const int left = static_cast<int>(p_column.m_coordinate.Get());
     const int top = static_cast<int>(p_row.m_coordinate.Get());
     const int width = static_cast<int>(p_column.m_span.Get());
     const int height = static_cast<int>(p_row.m_span.Get());
+
+    p_gtkWidget.set_valign(ToGtk(p_alignement.m_vertical));
+    p_gtkWidget.set_halign(ToGtk(p_alignement.m_horizontal));
 
     attach(p_gtkWidget, left, top, width, height );
 }

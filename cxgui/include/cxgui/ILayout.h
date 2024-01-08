@@ -194,6 +194,80 @@ public:
         INDEPENDANT,
     };
 
+    /******************************************************************************************//**
+     * @brief Widget vertical alignement inside the layout.
+     *
+     *********************************************************************************************/
+    enum class VerticalAlignement
+    {
+        /** Widget is aligned to the top of the layout cell. The widget does not vertically stretch. */
+        TOP,
+
+        /** Widget is aligned to the center of the layout cell. The widget does not vertically stretch. */
+        CENTER,
+
+        /** Widget is aligned to the bottom of the layout cell. The widget does not vertically stretch. */
+        BOTTOM,
+
+        /** Widget vertically stretches to fill the whole layout cell. */
+        FILL,
+    };
+
+    /******************************************************************************************//**
+     * @brief Widget horizontal alignement inside the layout.
+     *
+     *********************************************************************************************/
+    enum class HorizontalAlignement
+    {
+        /** Widget is aligned to the left of the layout cell. The widget does not horizontally stretch. */
+        LEFT,
+
+        /** Widget is aligned to the center of the layout cell. The widget does not horizontally stretch. */
+        CENTER,
+
+        /** Widget is aligned to the right of the layout cell. The widget does not horizontally stretch. */
+        RIGHT,
+
+        /** Widget horizontally stretches to fill the whole layout cell. */
+        FILL,
+    };
+
+    /******************************************************************************************//**
+     * @brief Widget alignement inside the layout.
+     *
+     *********************************************************************************************/
+    struct Alignement
+    {
+
+        /**************************************************************************************//**
+         * @brief Default constructor.
+         *
+         * The widget fills the whole layout cell both vertically and horizontally.
+         *
+         *****************************************************************************************/
+        constexpr Alignement()
+        :Alignement(VerticalAlignement::FILL, HorizontalAlignement::FILL)
+        {}
+
+        /**************************************************************************************//**
+         * @brief Constructor.
+         *
+         * @param p_vertical
+         *      The widget's vertical alignement within its layout cell.
+         * @param p_horizontal
+         *      The widget's horizontal alignement within its layout cell.
+         *
+         *****************************************************************************************/
+        constexpr Alignement(VerticalAlignement p_vertical, HorizontalAlignement p_horizontal)
+        : m_vertical{p_vertical}
+        , m_horizontal{p_horizontal}
+        {
+        }
+
+        VerticalAlignement m_vertical;
+        HorizontalAlignement m_horizontal;
+    };
+
 public:
 
     /******************************************************************************************//**
@@ -205,9 +279,15 @@ public:
      *      Description of where to register the widget, vertically.
      * @param p_column
      *      Description of where to register the widget, horizontally.
+     * @param p_alignement
+     *      The widget's alignement from within it's layout cell. By default, widgets fill the
+     *      entire layout cell.
      *
      *********************************************************************************************/
-    virtual void Register(IWidget& p_widget, const RowDescriptor& p_row, const ColumnDescriptor& p_column) = 0;
+    virtual void Register(IWidget& p_widget,
+                          const RowDescriptor& p_row,
+                          const ColumnDescriptor& p_column,
+                          const Alignement& p_alignement = {}) = 0;
 
     /******************************************************************************************//**
      * @brief Register a Gtkmm widget to the layout.
@@ -218,13 +298,19 @@ public:
      *      Description of where to register the widget, vertically.
      * @param p_column
      *      Description of where to register the widget, horizontally.
+     * @param p_alignement
+     *      The widget's alignement from within it's layout cell. By default, widgets fill the
+     *      entire layout cell.
      *
      * @warning
      *      This call is temporary. It will be removed once all widgets will have been
      *      abstracted away (TG-256).
      *
      *********************************************************************************************/
-    virtual void Register(Gtk::Widget& p_gtkWidget, const RowDescriptor& p_row, const ColumnDescriptor& p_column) = 0;
+    virtual void Register(Gtk::Widget& p_gtkWidget,
+                          const RowDescriptor& p_row,
+                          const ColumnDescriptor& p_column,
+                          const Alignement& p_alignement = {}) = 0;
 
     /******************************************************************************************//**
      * @brief Unregister a widget from the layout.

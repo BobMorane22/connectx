@@ -301,7 +301,8 @@ cxgui::NewPlayerRow::NewPlayerRow(const cxgui::INewGameViewPresenter& p_presente
     constexpr cxgui::ILayout::RowSpan rowSpan{1u};
     constexpr cxgui::ILayout::ColumnSpan columnSpan{1u};
     constexpr cxmodel::Row row{0u};
-    m_layout->Register(*m_typeSwitch,      {row, rowSpan}, {cxmodel::Column{0u}, columnSpan});
+    constexpr cxgui::ILayout::Alignement alignCenter{cxgui::ILayout::VerticalAlignement::CENTER, cxgui::ILayout::HorizontalAlignement::CENTER};
+    m_layout->Register(*m_typeSwitch,      {row, rowSpan}, {cxmodel::Column{0u}, columnSpan}, alignCenter);
     m_layout->Register(m_playerName,       {row, rowSpan}, {cxmodel::Column{1u}, columnSpan});
     m_layout->Register(*m_playerDiscColor, {row, rowSpan}, {cxmodel::Column{2u}, columnSpan});
 
