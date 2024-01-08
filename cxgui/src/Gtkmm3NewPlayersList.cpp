@@ -287,9 +287,9 @@ cxgui::NewPlayerRow::NewPlayerRow(const cxgui::INewGameViewPresenter& p_presente
 
     m_typeSwitch->SetMargins({
         TopMargin{0},
-        BottomMargin{cxgui::CONTROL_BOTTOM_MARGIN},
+        BottomMargin{0},
         LeftMargin{0},
-        RightMargin{0}
+        RightMargin{cxgui::CONTROL_BOTTOM_MARGIN}
     });
 
     auto* gtkSwitch = dynamic_cast<Gtk::Switch*>(m_typeSwitch.get());
