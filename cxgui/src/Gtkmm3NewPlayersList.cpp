@@ -30,8 +30,10 @@
 #include <cxgui/ColorComboBox.h>
 #include <cxgui/common.h>
 #include <cxgui/EnabledState.h>
+#include <cxgui/Gtkmm3Layout.h>
 #include <cxgui/Gtkmm3OnOffSwitch.h>
 #include <cxgui/Gtkmm3WidgetDelegate.h>
+#include <cxgui/ILayout.h>
 #include <cxgui/INewGameViewPresenter.h>
 #include <cxgui/ISignal.h>
 #include <cxgui/Margins.h>
@@ -178,8 +180,8 @@ private:
     void CheckInvariants() const;
     void RetreiveColumnDimensions(Gtkmm3NewPlayersList& parent_) const;
 
-    Gtk::Grid m_layout;
-    std::shared_ptr<cxgui::IOnOffSwitch> m_typeSwitch; // needed because a grid is used.
+    std::unique_ptr<cxgui::ILayout> m_layout;
+    std::unique_ptr<cxgui::IOnOffSwitch> m_typeSwitch;
     Gtk::Entry m_playerName;
     std::unique_ptr<cxgui::ColorComboBox> m_playerDiscColor;
 
@@ -257,6 +259,9 @@ cxgui::NewPlayerRow::NewPlayerRow(const cxgui::INewGameViewPresenter& p_presente
         PRECONDITION(p_presenter.CanAddAnotherPlayer(p_rowIndex - 1u));
     }
 
+    m_layout = std::make_unique<cxgui::Gtkmm3Layout>();
+    ASSERT(m_layout);
+
     m_playerName.set_text(p_presenter.GetDefaultPlayerName(p_rowIndex));
     m_playerName.set_margin_end(cxgui::CONTROL_BOTTOM_MARGIN);
 
@@ -293,14 +298,19 @@ cxgui::NewPlayerRow::NewPlayerRow(const cxgui::INewGameViewPresenter& p_presente
     gtkSwitch->set_valign(Gtk::Align::ALIGN_CENTER);
     gtkSwitch->set_halign(Gtk::Align::ALIGN_CENTER);
 
-    m_layout.add(*gtkSwitch);
-    m_layout.add(m_playerName);
-    m_layout.add(*m_playerDiscColor);
+    constexpr cxgui::ILayout::RowSpan rowSpan{1u};
+    constexpr cxgui::ILayout::ColumnSpan columnSpan{1u};
+    constexpr cxmodel::Row row{0u};
+    m_layout->Register(*m_typeSwitch,      {row, rowSpan}, {cxmodel::Column{0u}, columnSpan});
+    m_layout->Register(m_playerName,       {row, rowSpan}, {cxmodel::Column{1u}, columnSpan});
+    m_layout->Register(*m_playerDiscColor, {row, rowSpan}, {cxmodel::Column{2u}, columnSpan});
 
     m_playerName.set_hexpand(true);
     m_playerDiscColor->set_hexpand(true);
 
-    add(m_layout);
+    auto* gtkLayout = dynamic_cast<Gtk::Grid*>(m_layout.release());
+    ASSERT(gtkLayout);
+    add(*gtkLayout);
 
     CheckInvariants();
 }
@@ -392,8 +402,10 @@ cxgui::Gtkmm3NewPlayersList::Gtkmm3NewPlayersList(const INewGameViewPresenter& p
     m_titleRow = std::make_unique<NewPlayerTitleRow>(p_presenter);
     ASSERT(m_titleRow);
 
-    add(*Gtk::manage(new NewPlayerRow(p_presenter, 1u, GetAllColors(), EnabledState::Enabled)));
-    add(*Gtk::manage(new NewPlayerRow(p_presenter, 2u, GetAllColors(), EnabledState::Enabled)));
+    m_rows.push_back(std::make_unique<NewPlayerRow>(p_presenter, 1u, GetAllColors(), EnabledState::Enabled));
+    add(*m_rows.back());
+    m_rows.push_back(std::make_unique<NewPlayerRow>(p_presenter, 2u, GetAllColors(), EnabledState::Enabled));
+    add(*m_rows.back());
 
     AddColumnHeaders();
 }
@@ -442,7 +454,7 @@ cxmodel::ChipColor cxgui::Gtkmm3NewPlayersList::GetRowPlayerDiscColor(const std:
 {
     PRECONDITION(p_index < GetSize());
 
-    const cxgui::NewPlayerRow* specificRow{GetRow(p_index)};
+    auto& specificRow = m_rows[p_index];
     IF_CONDITION_NOT_MET_DO(specificRow, return cxmodel::MakeTransparent(););
 
     return specificRow->GetPlayerDiscColor();
@@ -452,7 +464,7 @@ std::string cxgui::Gtkmm3NewPlayersList::GetPlayerNameAtRow(const std::size_t p_
 {
     PRECONDITION(p_index < GetSize());
 
-    const cxgui::NewPlayerRow* specificRow{GetRow(p_index)};
+    auto& specificRow = m_rows[p_index];
     IF_CONDITION_NOT_MET_DO(specificRow, return {};);
 
     return specificRow->GetPlayerName();
@@ -462,7 +474,7 @@ std::vector<cxmodel::ChipColor> cxgui::Gtkmm3NewPlayersList::GetAllColors() cons
 {
     std::vector<cxmodel::ChipColor> colors;
 
-    for(const auto row : GetRows())
+    for(const auto& row : m_rows)
     {
         colors.push_back(row->GetPlayerDiscColor());
     }
@@ -474,7 +486,7 @@ std::vector<std::string> cxgui::Gtkmm3NewPlayersList::GetAllPlayerNames() const
 {
     std::vector<std::string> names;
 
-    for(const auto row : GetRows())
+    for(const auto& row : m_rows)
     {
         names.push_back(row->GetPlayerName());
     }
@@ -486,7 +498,7 @@ std::vector<cxmodel::PlayerType> cxgui::Gtkmm3NewPlayersList::GetAllPlayerTypes(
 {
     std::vector<cxmodel::PlayerType> types;
 
-    for(const auto row : GetRows())
+    for(const auto& row : m_rows)
     {
         types.push_back(row->GetPlayerType());
     }
@@ -503,12 +515,15 @@ bool cxgui::Gtkmm3NewPlayersList::AddRow(const cxgui::INewGameViewPresenter& p_p
 
     const size_t sizeBefore{GetSize()};
 
-    auto* row = Gtk::manage(new NewPlayerRow(p_presenter, p_rowIndex, GetAllColors(), EnabledState::Enabled));
-    IF_CONDITION_NOT_MET_DO(row, return false;);
-    
-    IF_CONDITION_NOT_MET_DO(m_rowUpdatedSlot, return false;);
-    row->RowUpdatedSignalConnect(m_rowUpdatedSlot);
-    add(*row);
+    {
+        auto row = std::make_unique<NewPlayerRow>(p_presenter, p_rowIndex, GetAllColors(), EnabledState::Enabled);
+        IF_CONDITION_NOT_MET_DO(row, return false;);
+        
+        IF_CONDITION_NOT_MET_DO(m_rowUpdatedSlot, return false;);
+        row->RowUpdatedSignalConnect(m_rowUpdatedSlot);
+        add(*row);
+        m_rows.push_back(std::move(row));
+    }
 
     const std::size_t sizeAfter{GetSize()};
 
@@ -524,10 +539,13 @@ bool cxgui::Gtkmm3NewPlayersList::RemoveRow(const std::size_t p_index)
 {
     PRECONDITION(p_index < GetSize());
 
-    cxgui::NewPlayerRow* specificRow{GetRow(p_index)};
+    auto& specificRow = m_rows[p_index];
     IF_CONDITION_NOT_MET_DO(specificRow, return false;);
 
-    return RemoveManaged(specificRow);
+    remove(*specificRow);
+    m_rows.erase(m_rows.begin() + p_index);
+    
+    return true;
 }
 
 bool cxgui::Gtkmm3NewPlayersList::UpdateRow(const std::size_t p_index,
@@ -539,7 +557,7 @@ bool cxgui::Gtkmm3NewPlayersList::UpdateRow(const std::size_t p_index,
     PRECONDITION(!p_playerNewName.empty());
 
     // All is fine, we can proceed with the update:
-    cxgui::NewPlayerRow* rowToUpdate{GetRow(p_index)};
+    auto& rowToUpdate = m_rows[p_index];
     IF_CONDITION_NOT_MET_DO(rowToUpdate, return false;);
 
     rowToUpdate->Update(p_playerNewName, p_playerNewDiscColor, p_playerNewType);
@@ -549,90 +567,10 @@ bool cxgui::Gtkmm3NewPlayersList::UpdateRow(const std::size_t p_index,
 
 void cxgui::Gtkmm3NewPlayersList::Clear()
 {
-    std::vector<NewPlayerRow*> allRows = GetRows();
-
-    for(auto* row : allRows)
-    {
-        IF_CONDITION_NOT_MET_DO(row, continue;);
-        ASSERT(RemoveManaged(row));
-    }
+    m_rows.clear();
 
     // There should be no one left...
     POSTCONDITION(get_children().empty());
-}
-
-const cxgui::NewPlayerRow* cxgui::Gtkmm3NewPlayersList::GetRow(const size_t p_index) const
-{
-    PRECONDITION(p_index < GetSize());
-
-    // We get the address of all the non-internal children (const version):
-    const std::vector<const Gtk::Widget*> rows = get_children();
-
-    // We cast the needed widget to its most specific row type:
-    const cxgui::NewPlayerRow* row = static_cast<const cxgui::NewPlayerRow*>(rows[p_index]);
-
-    POSTCONDITION(row);
-
-    return row;
-}
-
-cxgui::NewPlayerRow* cxgui::Gtkmm3NewPlayersList::GetRow(const size_t p_index)
-{
-    PRECONDITION(p_index < GetSize());
-
-    cxgui::NewPlayerRow* row{const_cast<cxgui::NewPlayerRow*>(static_cast<const cxgui::Gtkmm3NewPlayersList*>(this)->GetRow(p_index))};
-
-    POSTCONDITION(row);
-
-    return row;
-}
-
-std::vector<const cxgui::NewPlayerRow*> cxgui::Gtkmm3NewPlayersList::GetRows() const
-{
-    // We get the address of all the non-internal children:
-    const std::vector<const Gtk::Widget*> baseRows = get_children();
-
-    // We setup a new vector, with specific types:
-    std::vector<const cxgui::NewPlayerRow*> specificRows;
-
-    // We specialize every widget into its most specific type:
-    for(auto row : baseRows)
-    {
-        specificRows.push_back(static_cast<const cxgui::NewPlayerRow*>(row));
-    }
-
-    POSTCONDITION(std::none_of(std::begin(specificRows),
-                               std::end(specificRows),
-                               [](const cxgui::NewPlayerRow* p_row)
-                               {
-                                   return p_row == nullptr;
-                               }));
-
-    return specificRows;
-}
-
-std::vector<cxgui::NewPlayerRow*> cxgui::Gtkmm3NewPlayersList::GetRows()
-{
-    // We get the address of all the non-internal children:
-    const std::vector<Gtk::Widget*> baseRows = get_children();
-
-    // We setup a new vector, with specific types:
-    std::vector<cxgui::NewPlayerRow*> specificRows;
-
-    // We specialize every widget into its most specific type:
-    for(auto row : baseRows)
-    {
-        specificRows.push_back(static_cast<cxgui::NewPlayerRow*>(row));
-    }
-
-    POSTCONDITION(std::none_of(std::begin(specificRows),
-                               std::end(specificRows),
-                               [](const cxgui::NewPlayerRow* p_row)
-                               {
-                                   return p_row == nullptr;
-                               }));
-
-    return specificRows;
 }
 
 // The Gtk::ListBoxRow widget does not have column headers, since on each row,
@@ -666,7 +604,7 @@ void cxgui::Gtkmm3NewPlayersList::AddColumnHeaders()
 // want headers of other rows.
 void cxgui::Gtkmm3NewPlayersList::FitColumnHeaders()
 {
-    cxgui::NewPlayerRow* topRow = GetRow(0u);
+    auto& topRow = m_rows[0u];
     IF_CONDITION_NOT_MET_DO(topRow != nullptr, return;);
 
     topRow->RetreiveColumnDimensions(*this);
@@ -674,37 +612,6 @@ void cxgui::Gtkmm3NewPlayersList::FitColumnHeaders()
     m_titleRow->SetIsBotTitleWidth(m_columnWidths.m_first);
     m_titleRow->SetPlayerNameTitleWidth(m_columnWidths.m_second);
     m_titleRow->SetDiscColorTitleWidth(m_columnWidths.m_third);
-}
-
-bool cxgui::Gtkmm3NewPlayersList::RemoveManaged(cxgui::NewPlayerRow* p_row)
-{
-    const std::vector<cxgui::NewPlayerRow*> allRows = GetRows();
-
-    const bool rowDoesNotExist{std::none_of(std::begin(allRows),
-                                            std::end(allRows),
-                                            [p_row](const cxgui::NewPlayerRow* p_aRow)
-                                            {
-                                                return p_aRow == p_row;
-                                            })};
-
-    if(rowDoesNotExist)
-    {
-        return false;
-    }
-
-    const std::size_t nbRowsBefore{GetRows().size()};
-
-    // Remove the row from the Gtk::Container:
-    remove(*p_row);
-
-    // Free it from the heap:
-    delete(p_row);
-
-    const std::size_t nbRowsAfter{GetRows().size()};
-
-    IF_CONDITION_NOT_MET_DO(nbRowsBefore == nbRowsAfter + 1, return false;);
-
-    return true;
 }
 
 void cxgui::Gtkmm3NewPlayersList::RowUpdatedSignalConnect(const std::function<void()>& p_slot)
@@ -718,8 +625,7 @@ void cxgui::Gtkmm3NewPlayersList::RowUpdatedSignalConnect(const std::function<vo
     m_rowUpdatedSlot = p_slot;
 
     // We apply the slot on all existing rows:
-    auto rows = cxgui::Gtkmm3NewPlayersList::GetRows();
-    for(auto* row : rows)
+    for(auto& row : m_rows)
     {
         IF_CONDITION_NOT_MET_DO(row, continue;);
         row->RowUpdatedSignalConnect(m_rowUpdatedSlot);

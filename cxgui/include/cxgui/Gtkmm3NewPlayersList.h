@@ -129,20 +129,16 @@ private:
 
     std::unique_ptr<cxgui::IWidget> m_delegate;
 
-    std::unique_ptr<NewPlayerTitleRow> m_titleRow;
-
-    const cxgui::NewPlayerRow* GetRow(const size_t p_index) const;
-    cxgui::NewPlayerRow* GetRow(const size_t p_index);
-
-    std::vector<const cxgui::NewPlayerRow*> GetRows() const;
-    std::vector<cxgui::NewPlayerRow*> GetRows();
-
     void AddColumnHeaders();
     void FitColumnHeaders();
 
-    bool RemoveManaged(cxgui::NewPlayerRow* p_row);
-
     std::function<void()> m_rowUpdatedSlot = [](){};
+
+    // Rows defined in the list are owned here. Every time a row is either
+    // added or removed from the list container, it must also be added or
+    // removed from here.
+    std::unique_ptr<NewPlayerTitleRow> m_titleRow;
+    std::vector<std::unique_ptr<NewPlayerRow>> m_rows;
 
 };
 
