@@ -176,17 +176,6 @@ public:
                                          const cxmodel::ChipColor& p_newPlayerNewDiscColor,
                                          cxmodel::PlayerType p_newPlayerType) = 0;
 
-    /*******************************************************************************************//**
-     * @brief Clears the list content.
-     *
-     * Removes every players in the list, leaving the container empty (visually, there are
-     * no rows left).
-     *
-     * @post The list is empty (no more rows).
-     *
-     **********************************************************************************************/
-    virtual void Clear() = 0;
-
     /***********************************************************************************************
      * @brief Connects a slot to be called when the row is updated.
      *

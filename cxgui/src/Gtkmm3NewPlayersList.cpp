@@ -565,14 +565,6 @@ bool cxgui::Gtkmm3NewPlayersList::UpdateRow(const std::size_t p_index,
     return true;
 }
 
-void cxgui::Gtkmm3NewPlayersList::Clear()
-{
-    m_rows.clear();
-
-    // There should be no one left...
-    POSTCONDITION(get_children().empty());
-}
-
 // The Gtk::ListBoxRow widget does not have column headers, since on each row,
 // the widget contents may vary. However, each row of a cxgui::Gtkmm3NewPlayersList
 // will contain the same widgets, and we want to simulate column headers.

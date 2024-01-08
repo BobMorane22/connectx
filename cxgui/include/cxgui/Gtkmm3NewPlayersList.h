@@ -102,7 +102,6 @@ public:
                                  const std::string& p_newPlayerNewName,
                                  const cxmodel::ChipColor& p_newPlayerNewDiscColor,
                                  cxmodel::PlayerType p_newPlayerType) override;
-    void Clear() override; 
     void RowUpdatedSignalConnect(const std::function<void()>& p_slot) override;
 
     // cxgui::IWidget:
