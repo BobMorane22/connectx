@@ -57,6 +57,7 @@ cxgui::Gtkmm3MenuItem::Gtkmm3MenuItem(const std::string& p_label,
     ASSERT(m_accelerator);
     m_accelerator->set_xalign(0.0);
     m_accelerator->set_accel_widget(*this);
+    m_accelerator->set_hexpand(true); // Necessary otherwise the key shortcut is not displayed.
 
     // We register the icon and the label in the container:
     m_layout = CreateWidget<Gtkmm3Layout>();
