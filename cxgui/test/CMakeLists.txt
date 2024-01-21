@@ -39,6 +39,7 @@ set(SOURCE_FILES
   GameResolutionDialogControllerTests.cpp
   GameResolutionDialogPresenterFactoryTests.cpp
   IAnimatedBoardModelTests.cpp
+  KeyboardShortcutTests.cpp
   MainWindowControllerTestFixture.cpp
   MainWindowControllerTests.cpp
   MainWindowPresenterTestFixture.cpp

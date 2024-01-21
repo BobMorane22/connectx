@@ -51,6 +51,7 @@ add_library(${TARGET_NAME}
   src/Gtkmm3WidgetDelegate.cpp
   src/IAnimatedBoardModel.cpp
   src/INewGameViewPresenter.cpp
+  src/KeyboardShortcut.cpp
   src/MainWindowController.cpp
   src/MainWindow.cpp
   src/MainWindowPresenter.cpp
