@@ -24,6 +24,8 @@
 #ifndef IBOARD_H_0D53584F_433F_4007_86CD_A0CF3135BAF3
 #define IBOARD_H_0D53584F_433F_4007_86CD_A0CF3135BAF3
 
+#include <cstddef>
+
 #include "IChip.h"
 
 namespace cxmodel

@@ -42,7 +42,7 @@ cxmodel::Status cxgui::Validate(const cxmodel::NewGameInformation& p_gameInforma
     RETURN_IF(!boardDimensionInputStatus.IsSuccess(), boardDimensionInputStatus);
 
     std::vector<std::string> playerNames;
-    for(const auto player : p_gameInformation.m_players)
+    for(const auto& player : p_gameInformation.m_players)
     {
         playerNames.push_back(player->GetName());
     }
@@ -50,7 +50,7 @@ cxmodel::Status cxgui::Validate(const cxmodel::NewGameInformation& p_gameInforma
     RETURN_IF(!playerNamesInputStatus.IsSuccess(), playerNamesInputStatus);
 
     std::vector<cxmodel::ChipColor> playerChipColors;
-    for(const auto player : p_gameInformation.m_players)
+    for(const auto& player : p_gameInformation.m_players)
     {
         playerChipColors.push_back(player->GetChip().GetColor());
     }
@@ -58,7 +58,7 @@ cxmodel::Status cxgui::Validate(const cxmodel::NewGameInformation& p_gameInforma
     RETURN_IF(!playerChipColorsInputStatus.IsSuccess(), playerChipColorsInputStatus);
 
     std::vector<cxmodel::PlayerType> playerTypes;
-    for(const auto player : p_gameInformation.m_players)
+    for(const auto& player : p_gameInformation.m_players)
     {
         playerTypes.push_back(player->IsManaged() ? cxmodel::PlayerType::BOT : cxmodel::PlayerType::HUMAN );
     }
