@@ -26,10 +26,10 @@
 
 #include <optional>
 
-#include <gtkmm/button.h>
 #include <gtkmm/label.h>
 
 #include <cxmodel/Status.h>
+#include <cxgui/IButton.h>
 
 #include "IView.h"
 #include "Window.h"
@@ -130,9 +130,9 @@ private:
     Gtk::Label m_playersSectionTitle;
     std::unique_ptr<cxgui::INewPlayersList> m_playersList;
 
-    Gtk::Button m_removePlayerButton;
-    Gtk::Button m_addPlayerButton;
-    Gtk::Button m_startButton;
+    std::unique_ptr<IButton> m_removePlayerButton;
+    std::unique_ptr<IButton> m_addPlayerButton;
+    std::unique_ptr<IButton> m_startButton;
 
 };
 

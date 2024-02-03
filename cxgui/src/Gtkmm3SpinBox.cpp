@@ -67,26 +67,32 @@ void cxgui::Gtkmm3SpinBox::SetDelegate(std::unique_ptr<cxgui::IWidget> p_delegat
 
 size_t cxgui::Gtkmm3SpinBox::GetWidth() const
 {
-    RETURN_IF(!m_delegate, 0u);
+    IF_CONDITION_NOT_MET_DO(m_delegate, return 0u;);
     return m_delegate->GetWidth();
 }
 
 size_t cxgui::Gtkmm3SpinBox::GetHeight() const
 {
-    RETURN_IF(!m_delegate, 0u);
+    IF_CONDITION_NOT_MET_DO(m_delegate, return 0u;);
     return m_delegate->GetHeight();
 }
 
 void cxgui::Gtkmm3SpinBox::SetEnabled(EnabledState p_enabled)
 {
-    RETURN_IF(!m_delegate,);
+    IF_CONDITION_NOT_MET_DO(m_delegate, return;);
     m_delegate->SetEnabled(p_enabled);
 }
 
 void cxgui::Gtkmm3SpinBox::SetMargins(const Margins& p_newMarginSizes)
 {
-    RETURN_IF(!m_delegate,);
+    IF_CONDITION_NOT_MET_DO(m_delegate, return;);
     m_delegate->SetMargins(p_newMarginSizes);
+}
+
+void cxgui::Gtkmm3SpinBox::SetTooltip(const std::string& p_tooltipContents)
+{
+    IF_CONDITION_NOT_MET_DO(m_delegate, return;);
+    m_delegate->SetTooltip(p_tooltipContents);
 }
 
 int cxgui::Gtkmm3SpinBox::GetValue() const

@@ -12,8 +12,7 @@
  *  GNU General Public License for more details.
  *
  *  You should have received a copy of the GNU General Public License
- *  along with Connect X. If not, see <https://www.gnu.org/licenses/>.
- *
+ *  along with Connect X. If not, see <https://www.gnu.org/licenses/>.  *
  *************************************************************************************************/
 /**********************************************************************************************//**
  * @file Gtkmm3NewPlayersList.h
@@ -109,6 +108,7 @@ public:
     [[nodiscard]] size_t GetHeight() const override;
     void SetEnabled(EnabledState p_enabled) override;
     void SetMargins(const Margins& p_newMarginSizes) override;
+    void SetTooltip(const std::string& p_tooltipContents) override;
 
 private:
 

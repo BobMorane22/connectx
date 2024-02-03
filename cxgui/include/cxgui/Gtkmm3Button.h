@@ -16,30 +16,43 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file Gtkmm3OnOffSwitch.h
- * @date 2022
+ * @file Gtkmm3Button.h
+ * @date 2024
  *
  *************************************************************************************************/
 
-#ifndef GTKMM3ONOFFSWITCH_H_3F9ABCFC_7442_44F5_8C96_A15828BC28B8
-#define GTKMM3ONOFFSWITCH_H_3F9ABCFC_7442_44F5_8C96_A15828BC28B8
+#ifndef GTKMM3BUTTON_H_28BFEAFC_06B4_4950_A338_12355AA185D0
+#define GTKMM3BUTTON_H_28BFEAFC_06B4_4950_A338_12355AA185D0
 
-#include <gtkmm/switch.h>
+#include <string>
 
-#include <cxgui/IOnOffSwitch.h>
+#include <gtkmm/button.h>
+
+#include <cxgui/IButton.h>
 
 namespace cxgui
 {
 
 /**********************************************************************************************//**
- * @brief A switch that is either "On" or "Off".
+ * @brief Gtkmm 3 implementation of the `cxgui::IButton` interface.
  *
  *************************************************************************************************/
-class Gtkmm3OnOffSwitch : public cxgui::IOnOffSwitch,
-                          public Gtk::Switch
+class Gtkmm3Button : public IButton,
+                     public Gtk::Button
+
 {
 
 public:
+
+    /******************************************************************************************//**
+     * @brief Constructor.
+     *
+     * @param p_label
+     *      The textual label to appear on the button. The label can be empty. In this case,
+     *      nothing will show on the button.
+     *
+     *********************************************************************************************/
+    explicit Gtkmm3Button(const std::string& p_label);
 
     /*******************************************************************************************//**
      * @brief Sets the delegate for widget common facilities.
@@ -58,17 +71,15 @@ public:
      **********************************************************************************************/
     void SetDelegate(std::unique_ptr<IWidget> p_delegate);
 
+    // cxgui::IButton:
+    [[nodiscard]] std::unique_ptr<ISignal<void>> OnClicked() override;
+
     // cxgui::IWidget:
     [[nodiscard]] size_t GetWidth() const override;
     [[nodiscard]] size_t GetHeight() const override;
     void SetEnabled(EnabledState p_enabled) override;
     void SetMargins(const Margins& p_newMarginSizes) override;
     void SetTooltip(const std::string& p_tooltipContents) override;
-
-    // cxgui::IOnOffSwitch:
-    [[nodiscard]] OnOffState GetState() const override;
-    void SetState(OnOffState p_newState) override;
-    [[nodiscard]] std::unique_ptr<ISignal<void>> OnStateChanged() override;
 
 private:
 
@@ -78,4 +89,4 @@ private:
 
 } // namespace cxgui
 
-#endif // GTKMM3ONOFFSWITCH_H_3F9ABCFC_7442_44F5_8C96_A15828BC28B8
+#endif // GTKMM3BUTTON_H_28BFEAFC_06B4_4950_A338_12355AA185D0

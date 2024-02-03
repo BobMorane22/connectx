@@ -79,3 +79,10 @@ void cxgui::Gtkmm3WidgetDelegate::SetMargins(const Margins& p_newMarginSizes)
     m_underlying->set_margin_top(top);
     m_underlying->set_margin_bottom(bottom);
 }
+
+void cxgui::Gtkmm3WidgetDelegate::SetTooltip(const std::string& p_tooltipContents)
+{
+    IF_PRECONDITION_NOT_MET_DO(m_underlying, return;);
+
+    m_underlying->set_tooltip_text(p_tooltipContents);
+}

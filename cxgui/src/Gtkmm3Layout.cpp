@@ -163,25 +163,30 @@ void cxgui::Gtkmm3Layout::SetColumnSpacingMode(cxgui::ILayout::ColumnSpacingMode
 
 size_t cxgui::Gtkmm3Layout::GetWidth() const
 {
-    RETURN_IF(!m_delegate, 0u);
+    IF_CONDITION_NOT_MET_DO(m_delegate, return 0u;);
     return m_delegate->GetWidth();
 }
 
 size_t cxgui::Gtkmm3Layout::GetHeight() const
 {
-    RETURN_IF(!m_delegate, 0u);
+    IF_CONDITION_NOT_MET_DO(m_delegate, return 0u;);
     return m_delegate->GetHeight();
 }
 
 void  cxgui::Gtkmm3Layout::SetEnabled(EnabledState p_enabled)
 {
-    RETURN_IF(!m_delegate,);
+    IF_CONDITION_NOT_MET_DO(m_delegate, return;);
     m_delegate->SetEnabled(p_enabled);
 }
 
 void cxgui::Gtkmm3Layout::SetMargins(const Margins& p_newMarginSizes)
 {
-    RETURN_IF(!m_delegate,);
+    IF_CONDITION_NOT_MET_DO(m_delegate, return;);
     m_delegate->SetMargins(p_newMarginSizes);
 }
 
+void cxgui::Gtkmm3Layout::SetTooltip(const std::string& p_tooltipContents)
+{
+    IF_CONDITION_NOT_MET_DO(m_delegate, return;);
+    m_delegate->SetTooltip(p_tooltipContents);
+}

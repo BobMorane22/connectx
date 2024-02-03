@@ -1,8 +1,7 @@
 /**************************************************************************************************
  *  This file is part of Connect X.
  *
- *  Connect X is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
+ *  Connect X is free software: you can redistribute it and/or modify *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation, either version 3 of the License, or
  *  (at your option) any later version.
  *
@@ -25,6 +24,7 @@
 #define IWIDGET_H_845C70A7_65F2_4B7C_8446_A11ED3BC31E8
 
 #include <cstddef>
+#include <string>
 
 namespace cxgui
 {
@@ -92,13 +92,22 @@ public:
     virtual void SetEnabled(EnabledState p_enabled) = 0;
 
     /******************************************************************************************//**
-     * @brief Changes the margin sizes for the layout.
+     * @brief Changes the margin sizes for the widget.
      *
      * @param p_newMarginSizes
      *      The new margin sizes.
      *
      *********************************************************************************************/
     virtual void SetMargins(const Margins& p_newMarginSizes) = 0;
+
+    /******************************************************************************************//**
+     * @brief Sets a tooltip.
+     *
+     * @param p_tooltipContents
+     *      The text to appear inside the tooltip.
+     *
+     *********************************************************************************************/
+    virtual void SetTooltip(const std::string& p_tooltipContents) = 0;
 
 ///@}
 

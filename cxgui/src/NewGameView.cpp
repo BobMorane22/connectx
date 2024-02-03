@@ -32,7 +32,9 @@
 #include <cxmodel/IChip.h>
 #include <cxmodel/NewGameInformation.h>
 #include <cxgui/ColorComboBox.h>
+#include <cxgui/EnabledState.h>
 #include <cxgui/extractRawUserInput.h>
+#include <cxgui/Gtkmm3Button.h>
 #include <cxgui/Gtkmm3Layout.h>
 #include <cxgui/Gtkmm3NewPlayersList.h>
 #include <cxgui/Gtkmm3SpinBox.h>
@@ -102,17 +104,24 @@ cxgui::NewGameView::NewGameView(INewGameViewPresenter& p_presenter,
                                                                        ISpinBox::Maximum{static_cast<int>(boardHeightMaxValue)}});
     ASSERT(m_boardHeightSpinBox);
 
+    m_addPlayerButton = CreateWidget<Gtkmm3Button>(m_presenter.GetNewGameViewAddPlayerButtonText());
+    ASSERT(m_addPlayerButton);
+    m_removePlayerButton = CreateWidget<Gtkmm3Button>(m_presenter.GetNewGameViewRemovePlayerButtonText());
+    ASSERT(m_removePlayerButton);
+    m_startButton = CreateWidget<Gtkmm3Button>(m_presenter.GetNewGameViewStartButtonText());
+    ASSERT(m_startButton);
+
     SetLayout();
     PopulateWidgets();
     ConfigureWidgets();
 
-    m_removePlayerButton.signal_clicked().connect([this](){OnRemovePlayer();});
-    m_addPlayerButton.signal_clicked().connect([this](){OnAddPlayer();});
-    m_startButton.signal_clicked().connect([this](){OnStart();});
+    m_removePlayerButton->OnClicked()->Connect([this](){OnRemovePlayer();});
+    m_addPlayerButton->OnClicked()->Connect([this](){OnAddPlayer();});
+    m_startButton->OnClicked()->Connect([this](){OnStart();});
 
     // Start button validations:
-    m_removePlayerButton.signal_clicked().connect([this](){OnNewGameParameterUpdated();});
-    m_addPlayerButton.signal_clicked().connect([this](){OnNewGameParameterUpdated();});
+    m_removePlayerButton->OnClicked()->Connect([this](){OnNewGameParameterUpdated();});
+    m_addPlayerButton->OnClicked()->Connect([this](){OnNewGameParameterUpdated();});
     m_playersList->RowUpdatedSignalConnect([this](){OnNewGameParameterUpdated();});
 }
 
@@ -165,9 +174,9 @@ void cxgui::NewGameView::SetLayout()
     m_viewLayout->Register(*m_boardHeightSpinBox, {row5,  singleRowSpan}, {column1, singleColumnSpan});
     m_viewLayout->Register(m_playersSectionTitle, {row6,  singleRowSpan}, {column0, fullColumnSpan});
     m_viewLayout->Register(*m_playersList,        {row7,  singleRowSpan}, {column0, fullColumnSpan});
-    m_viewLayout->Register(m_removePlayerButton,  {row8,  singleRowSpan}, {column0, singleColumnSpan});
-    m_viewLayout->Register(m_addPlayerButton,     {row8,  singleRowSpan}, {column1, singleColumnSpan});
-    m_viewLayout->Register(m_startButton,         {row9,  singleRowSpan}, {column0, fullColumnSpan});
+    m_viewLayout->Register(*m_removePlayerButton, {row8,  singleRowSpan}, {column0, singleColumnSpan});
+    m_viewLayout->Register(*m_addPlayerButton,    {row8,  singleRowSpan}, {column1, singleColumnSpan});
+    m_viewLayout->Register(*m_startButton,        {row9,  singleRowSpan}, {column0, fullColumnSpan});
 }
 
 void cxgui::NewGameView::PopulateWidgets()
@@ -182,11 +191,6 @@ void cxgui::NewGameView::PopulateWidgets()
     m_gridHeightLabel.set_text(m_presenter.GetNewGameViewHeightLabelText());
 
     m_playersSectionTitle.set_text(m_presenter.GetNewGameViewPlayersSectionTitle());
-
-    m_removePlayerButton.set_label(m_presenter.GetNewGameViewRemovePlayerButtonText());
-    m_addPlayerButton.set_label(m_presenter.GetNewGameViewAddPlayerButtonText());
-
-    m_startButton.set_label(m_presenter.GetNewGameViewStartButtonText());
 }
 
 void cxgui::NewGameView::ConfigureWidgets()
@@ -256,13 +260,39 @@ void cxgui::NewGameView::ConfigureWidgets()
     });
 
     // Add/Remove player buttons:
-    m_removePlayerButton.set_margin_bottom(CONTROL_BOTTOM_MARGIN);
-    m_addPlayerButton.set_margin_bottom(CONTROL_BOTTOM_MARGIN);
-    m_removePlayerButton.set_sensitive(m_presenter.CanRemoveAnotherPlayer(m_playersList->GetSize()));
-    m_addPlayerButton.set_sensitive(m_presenter.CanAddAnotherPlayer(m_playersList->GetSize()));
+    m_removePlayerButton->SetMargins({
+        cxgui::TopMargin{0u},
+        cxgui::BottomMargin{CONTROL_BOTTOM_MARGIN},
+        cxgui::LeftMargin{0u},
+        cxgui::RightMargin{0u}
+    });
+
+    m_removePlayerButton->SetEnabled(cxgui::EnabledState::Disabled);
+    if(m_presenter.CanRemoveAnotherPlayer(m_playersList->GetSize()))
+    {
+        m_removePlayerButton->SetEnabled(cxgui::EnabledState::Enabled);
+    }
+
+    m_addPlayerButton->SetMargins({
+        cxgui::TopMargin{0u},
+        cxgui::BottomMargin{CONTROL_BOTTOM_MARGIN},
+        cxgui::LeftMargin{0u},
+        cxgui::RightMargin{0u}
+    });
+
+    m_addPlayerButton->SetEnabled(cxgui::EnabledState::Disabled);
+    if(m_presenter.CanAddAnotherPlayer(m_playersList->GetSize()))
+    {
+        m_addPlayerButton->SetEnabled(cxgui::EnabledState::Enabled);
+    }
 
     // Start button:
-    m_startButton.set_margin_bottom(CONTROL_BOTTOM_MARGIN);
+    m_startButton->SetMargins({
+        cxgui::TopMargin{0u},
+        cxgui::BottomMargin{CONTROL_BOTTOM_MARGIN},
+        cxgui::LeftMargin{0u},
+        cxgui::RightMargin{0u}
+    });
 }
 
 void cxgui::NewGameView::OnStart()
@@ -294,8 +324,17 @@ void cxgui::NewGameView::OnAddPlayer()
         IF_CONDITION_NOT_MET_DO(m_playersList->AddRow(m_presenter, nextColumnIndex), return;);
     }
 
-    m_removePlayerButton.set_sensitive(m_presenter.CanRemoveAnotherPlayer(m_playersList->GetSize()));
-    m_addPlayerButton.set_sensitive(m_presenter.CanAddAnotherPlayer(m_playersList->GetSize()));
+    m_removePlayerButton->SetEnabled(cxgui::EnabledState::Disabled);
+    if(m_presenter.CanRemoveAnotherPlayer(m_playersList->GetSize()))
+    {
+        m_removePlayerButton->SetEnabled(cxgui::EnabledState::Enabled);
+    }
+
+    m_addPlayerButton->SetEnabled(cxgui::EnabledState::Disabled);
+    if(m_presenter.CanAddAnotherPlayer(m_playersList->GetSize()))
+    {
+        m_addPlayerButton->SetEnabled(cxgui::EnabledState::Enabled);
+    }
 }
 
 void cxgui::NewGameView::OnRemovePlayer()
@@ -320,33 +359,42 @@ void cxgui::NewGameView::OnRemovePlayer()
         m_parentWindow.resize(m_parentWindow.get_width(), naturalHeight);
     }
 
-    m_removePlayerButton.set_sensitive(m_presenter.CanRemoveAnotherPlayer(m_playersList->GetSize()));
-    m_addPlayerButton.set_sensitive(m_presenter.CanAddAnotherPlayer(m_playersList->GetSize()));
+    m_removePlayerButton->SetEnabled(cxgui::EnabledState::Disabled);
+    if(m_presenter.CanRemoveAnotherPlayer(m_playersList->GetSize()))
+    {
+        m_removePlayerButton->SetEnabled(cxgui::EnabledState::Enabled);
+    }
+
+    m_addPlayerButton->SetEnabled(cxgui::EnabledState::Disabled);
+    if(m_presenter.CanAddAnotherPlayer(m_playersList->GetSize()))
+    {
+        m_addPlayerButton->SetEnabled(cxgui::EnabledState::Enabled);
+    }
 }
 
 void cxgui::NewGameView::OnNewGameParameterUpdated()
 {
-    m_startButton.set_sensitive(false);
+    m_startButton->SetEnabled(cxgui::EnabledState::Disabled);
 
     cxmodel::NewGameInformation gameInformation;
     const auto extractionStatus = ExtractGameInformation(gameInformation);
     if(!extractionStatus.IsSuccess())
     {
-        m_startButton.set_tooltip_text(extractionStatus.GetMessage());
+        m_startButton->SetTooltip(extractionStatus.GetMessage());
         return;
     }
 
     const auto inputValidationStatus = Validate(gameInformation, m_presenter);
     if(!inputValidationStatus.IsSuccess())
     {
-        m_startButton.set_tooltip_text(inputValidationStatus.GetMessage());
+        m_startButton->SetTooltip(inputValidationStatus.GetMessage());
         return;
     }
 
     // At this points all user inputs have been validated and a new game can be started.
     // We make the start button sensitive:
-    m_startButton.set_sensitive(true);
-    m_startButton.set_tooltip_text("");
+    m_startButton->SetEnabled(cxgui::EnabledState::Enabled);
+    m_startButton->SetTooltip("");
 }
 
 cxmodel::Status cxgui::NewGameView::ExtractGameInformation(cxmodel::NewGameInformation& p_gameInformation) const

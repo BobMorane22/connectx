@@ -221,3 +221,9 @@ void cxgui::Gtkmm3MenuItem::SetMargins(const Margins& p_newMarginSizes)
     IF_CONDITION_NOT_MET_DO(m_delegate, return;);
     m_delegate->SetMargins(p_newMarginSizes);
 }
+
+void cxgui::Gtkmm3MenuItem::SetTooltip(const std::string& p_tooltipContents)
+{
+    IF_CONDITION_NOT_MET_DO(m_delegate, return;);
+    m_delegate->SetTooltip(p_tooltipContents);
+}

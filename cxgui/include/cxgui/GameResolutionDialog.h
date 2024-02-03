@@ -24,9 +24,10 @@
 #ifndef GAMERESOLUTIONDIALOG_H_E524D346_789D_4165_ABD3_4B876F7FBBD7
 #define GAMERESOLUTIONDIALOG_H_E524D346_789D_4165_ABD3_4B876F7FBBD7
 
-#include <gtkmm/button.h>
 #include <gtkmm/label.h>
 #include <gtkmm/window.h>
+
+#include <cxgui/IButton.h>
 
 #include "Window.h"
 
@@ -84,7 +85,7 @@ private:
 
     Gtk::Label m_title;
     Gtk::Label m_message;
-    Gtk::Button m_startNewGame;
+    std::unique_ptr<IButton> m_startNewGame;
 
 };
 

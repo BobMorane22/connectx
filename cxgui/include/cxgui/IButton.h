@@ -16,69 +16,45 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file About.h
- * @date 2020
+ * @file IButton.h
+ * @date 2024
  *
  *************************************************************************************************/
 
-#ifndef ABOUT_H_396864CD_88A3_43F2_B08B_3F9FEBE89DE1
-#define ABOUT_H_396864CD_88A3_43F2_B08B_3F9FEBE89DE1
+#ifndef IBUTTON_H_1C2926A8_3089_41A9_A788_6E72D152DB1D
+#define IBUTTON_H_1C2926A8_3089_41A9_A788_6E72D152DB1D
 
-#include <gtkmm/label.h>
-#include <gtkmm/window.h>
-
-#include <cxgui/IButton.h>
-
-#include "IAboutWindowPresenter.h"
-#include "Window.h"
+#include <cxgui/ISignal.h>
+#include <cxgui/IWidget.h>
 
 namespace cxgui
 {
 
 /**********************************************************************************************//**
- * @brief About window.
+ * @brief A clickable button.
  *
  *************************************************************************************************/
-class About : public Window<Gtk::Window>
+class IButton : public IWidget
 {
 
 public:
 
     /******************************************************************************************//**
-     * @brief Constructor.
-     *
-     * @param p_presenter
-     *      An about window presenter implemetation.
+     * @brief Destructor.
      *
      *********************************************************************************************/
-    About(std::unique_ptr<IAboutWindowPresenter>&& p_presenter);
+    virtual ~IButton() = default;
 
-    // cxmodel::IModelObserver:
-    void Update(cxmodel::ModelNotificationContext p_context, cxmodel::ModelSubject* p_subject) override;
-
-
-private:
-
-    void ConfigureWindow() override;
-    void RegisterLayouts() override;
-    void RegisterWidgets() override;
-    void ConfigureLayouts() override;
-    void ConfigureWidgets() override;
-    void ConfigureSignalHandlers() override;
-
-    std::unique_ptr<IAboutWindowPresenter> m_presenter;
-
-    Gtk::Label m_name;
-    Gtk::Label m_version;
-    Gtk::Label m_description;
-    Gtk::Label m_website;
-    Gtk::Label m_license;
-    Gtk::Label m_copyright;
-
-    std::unique_ptr<IButton> m_close;
+    /******************************************************************************************//**
+     * @brief Get the signal for when the button is clicked by the user.
+     *
+     * @return A signal to connect to for when the button is clicked.
+     *
+     *********************************************************************************************/
+    [[nodiscard]] virtual std::unique_ptr<ISignal<void>> OnClicked() = 0;
 
 };
 
 } // namespace cxgui
 
-#endif // ABOUT_H_396864CD_88A3_43F2_B08B_3F9FEBE89DE1
+#endif // IBUTTON_H_1C2926A8_3089_41A9_A788_6E72D152DB1D

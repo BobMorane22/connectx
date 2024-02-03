@@ -424,26 +424,32 @@ void cxgui::Gtkmm3NewPlayersList::SetDelegate(std::unique_ptr<cxgui::IWidget> p_
 
 size_t cxgui::Gtkmm3NewPlayersList::GetWidth() const
 {
-    RETURN_IF(!m_delegate, 0u);
+    IF_CONDITION_NOT_MET_DO(m_delegate, return 0u;);
     return m_delegate->GetWidth();
 }
 
 size_t cxgui::Gtkmm3NewPlayersList::GetHeight() const
 {
-    RETURN_IF(!m_delegate, 0u);
+    IF_CONDITION_NOT_MET_DO(m_delegate, return 0u;);
     return m_delegate->GetHeight();
 }
 
 void cxgui::Gtkmm3NewPlayersList::SetEnabled(EnabledState p_enabled)
 {
-    RETURN_IF(!m_delegate,);
+    IF_CONDITION_NOT_MET_DO(m_delegate, return;);
     m_delegate->SetEnabled(p_enabled);
 }
 
 void cxgui::Gtkmm3NewPlayersList::SetMargins(const Margins& p_newMarginSizes)
 {
-    RETURN_IF(!m_delegate,);
+    IF_CONDITION_NOT_MET_DO(m_delegate, return;);
     m_delegate->SetMargins(p_newMarginSizes);
+}
+
+void cxgui::Gtkmm3NewPlayersList::SetTooltip(const std::string& p_tooltipContents)
+{
+    IF_CONDITION_NOT_MET_DO(m_delegate, return;);
+    m_delegate->SetTooltip(p_tooltipContents);
 }
 
 std::size_t cxgui::Gtkmm3NewPlayersList::GetSize() const

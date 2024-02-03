@@ -82,6 +82,7 @@ public:
     [[nodiscard]] size_t GetHeight() const override;
     void SetEnabled(EnabledState p_enabled) override;
     void SetMargins(const Margins& p_newMarginSizes) override;
+    void SetTooltip(const std::string& p_tooltipContents) override;
 
     // cxgui::ISpinBox:
     [[nodiscard]] int GetValue() const override;

@@ -22,6 +22,7 @@
  *************************************************************************************************/
 
 #include <cxgui/About.h>
+#include <cxgui/Gtkmm3Button.h>
 #include <cxgui/IAboutWindowPresenter.h>
 
 cxgui::About::About(std::unique_ptr<IAboutWindowPresenter>&& p_presenter)
@@ -38,7 +39,9 @@ cxgui::About::About(std::unique_ptr<IAboutWindowPresenter>&& p_presenter)
     m_website.set_markup(m_presenter->GetWebsiteLinkContents());
     m_license.set_label(m_presenter->GetLicenseDescription());
     m_copyright.set_label(m_presenter->GetCopyrightNotice());
-    m_close.set_label(m_presenter->GetCloseText());
+
+    m_close = CreateWidget<Gtkmm3Button>(m_presenter->GetCloseText());
+    ASSERT(m_close);
 }
 
 void cxgui::About::Update(cxmodel::ModelNotificationContext /*p_context*/, cxmodel::ModelSubject* /*p_subject*/)
@@ -80,7 +83,7 @@ void cxgui::About::RegisterWidgets()
     m_mainLayout->Register(m_website,     {row3, rowSpan1}, {column0, columnSpan1});
     m_mainLayout->Register(m_license,     {row4, rowSpan1}, {column0, columnSpan1});
     m_mainLayout->Register(m_copyright,   {row5, rowSpan1}, {column0, columnSpan1});
-    m_mainLayout->Register(m_close,       {row6, rowSpan1}, {column0, columnSpan1});
+    m_mainLayout->Register(*m_close,      {row6, rowSpan1}, {column0, columnSpan1});
 }
 
 void cxgui::About::ConfigureLayouts()
@@ -103,5 +106,5 @@ void cxgui::About::ConfigureWidgets()
 
 void cxgui::About::ConfigureSignalHandlers()
 {
-    m_close.signal_clicked().connect([this](){m_window.close();});
+    m_close->OnClicked()->Connect([this](){m_window.close();});
 }

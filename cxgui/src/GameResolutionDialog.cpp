@@ -23,6 +23,7 @@
 
 #include <cxgui/common.h>
 #include <cxgui/GameResolutionDialog.h>
+#include <cxgui/Gtkmm3Button.h>
 #include <cxgui/IGameResolutionDialogController.h>
 #include <cxgui/IGameResolutionDialogPresenter.h>
 #include <cxgui/Margins.h>
@@ -32,6 +33,9 @@ cxgui::GameResolutionDialog::GameResolutionDialog(std::unique_ptr<IGameResolutio
 : m_presenter{std::move(p_presenter)}
 , m_controller{std::move(p_controller)}
 {
+    m_startNewGame = CreateWidget<Gtkmm3Button>(m_presenter->GetStartNewGameButtonText());
+    ASSERT(m_startNewGame);
+
     POSTCONDITION(m_presenter);
     POSTCONDITION(m_controller);
 }
@@ -66,9 +70,9 @@ void cxgui::GameResolutionDialog::RegisterWidgets()
     constexpr cxmodel::Column column0{0u};
     constexpr cxgui::ILayout::ColumnSpan columnSpan1{1u};
 
-    m_mainLayout->Register(m_title,        {row0, rowSpan1}, {column0, columnSpan1});
-    m_mainLayout->Register(m_message,      {row1, rowSpan1}, {column0, columnSpan1});
-    m_mainLayout->Register(m_startNewGame, {row2, rowSpan1}, {column0, columnSpan1});
+    m_mainLayout->Register(m_title,         {row0, rowSpan1}, {column0, columnSpan1});
+    m_mainLayout->Register(m_message,       {row1, rowSpan1}, {column0, columnSpan1});
+    m_mainLayout->Register(*m_startNewGame, {row2, rowSpan1}, {column0, columnSpan1});
 }
 
 void cxgui::GameResolutionDialog::ConfigureLayouts()
@@ -88,7 +92,6 @@ void cxgui::GameResolutionDialog::ConfigureWidgets()
     // Populate widgets:
     m_title.set_text(m_presenter->GetTitle());
     m_message.set_text(m_presenter->GetResolutionMessage());
-    m_startNewGame.set_label(m_presenter->GetStartNewGameButtonText());
 
     // Window title:
     m_title.set_use_markup(true);
@@ -100,21 +103,16 @@ void cxgui::GameResolutionDialog::ConfigureWidgets()
     // Win resolution message:
     m_message.set_halign(Gtk::Align::ALIGN_CENTER);
     m_message.set_margin_bottom(CONTROL_BOTTOM_MARGIN);
-
-    // Button:
-    m_startNewGame.set_halign(Gtk::Align::ALIGN_FILL);
-    m_startNewGame.set_hexpand_set(true);
-    m_startNewGame.set_hexpand(true);
-    m_startNewGame.set_margin_bottom(CONTROL_BOTTOM_MARGIN);
 }
 
 void cxgui::GameResolutionDialog::ConfigureSignalHandlers()
 {
-    m_startNewGame.signal_clicked().connect([this]()
-                                            {
-                                                IF_CONDITION_NOT_MET_DO(m_controller, return;);
-                                                m_controller->OnNewGameRequested();
+    m_startNewGame->OnClicked()->Connect(
+        [this]()
+        {
+            IF_CONDITION_NOT_MET_DO(m_controller, return;);
+            m_controller->OnNewGameRequested();
 
-                                                m_window.close();
-                                            });
+            m_window.close();
+        });
 }
