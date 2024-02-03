@@ -32,7 +32,7 @@ class Gtkmm3OnTextInsertSignal : public ISignal<void, const std::string&>
 
 public:
 
-    Gtkmm3OnTextInsertSignal(Gtk::Entry& p_insertedToEntry)
+    explicit Gtkmm3OnTextInsertSignal(Gtk::Entry& p_insertedToEntry)
     : m_insertedToEntry{p_insertedToEntry}
     {
     }
