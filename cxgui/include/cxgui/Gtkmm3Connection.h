@@ -32,7 +32,7 @@ namespace cxgui
 {
 
 /**********************************************************************************************//**
- * @brief Gtkmm3 connection.
+ * @brief Gtkmm 3 implementation of the `cxgui::IConnection` interface.
  *
  *************************************************************************************************/
 class Gtkmm3Connection : public IConnection

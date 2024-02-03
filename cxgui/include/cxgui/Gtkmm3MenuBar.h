@@ -30,6 +30,10 @@
 namespace cxgui
 {
 
+/***********************************************************************************************//**
+ * @brief Gtkmm 3 implementation of the `cxgui::IMenuBar` interface.
+ *
+ **************************************************************************************************/
 class Gtkmm3MenuBar : public IMenuBar,
                       public Gtk::MenuBar
 {
