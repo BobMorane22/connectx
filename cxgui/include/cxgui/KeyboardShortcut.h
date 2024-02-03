@@ -53,12 +53,20 @@ struct KeyboardShortcut final
      *      The key to hit.
      *
      *********************************************************************************************/
-    explicit KeyboardShortcut(Key p_first);
+    KeyboardShortcut(Key p_first);
 
     /******************************************************************************************//**
      * @brief Copy constructor.
      *
      * Creates a two keys keyboard shortcut.
+     *
+     * @note
+     *      The constructor is not marked `explicit` by design. In this case, we want the implicit
+     *      conversion to be able to write expressions such as:
+     *
+     *      @code{.cpp}
+     *             m_myMenuItem->RegisterKeyboardShortcut({cxgui::Key::F1});
+     *      @endcode
      *
      * @param p_shortcut
      *      The keyboard shortcut to copy.

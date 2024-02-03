@@ -28,14 +28,8 @@
 
 #include <gtkmm/applicationwindow.h>
 #include <gtkmm/button.h>
-#include <gtkmm/imagemenuitem.h>
 #include <gtkmm/label.h>
-#include <gtkmm/menubar.h>
-#include <gtkmm/menuitem.h>
-#include <gtkmm/menu.h>
-#include <gtkmm/stock.h>
 
-#include "Gtkmm3MenuItem.h"
 #include "IStatusBar.h"
 #include "IStatusBarPresenter.h"
 #include "IView.h"
@@ -43,6 +37,9 @@
 
 namespace cxgui
 {
+    class IMenuBar;
+    class IMenu;
+    class IMenuItem;
     class IMainWindowController;
     class IMainWindowPresenter;
 }
@@ -156,20 +153,20 @@ private:
     IMainWindowPresenter& m_presenter;
     std::unique_ptr<IStatusBarPresenter> m_statusbarPresenter;
 
+    // Status bar:
     std::unique_ptr<IStatusBar> m_statusbar;
 
-    Gtk::MenuBar m_menubar;
-    Gtk::MenuItem m_gameMenuItem;
-    Gtk::Menu m_gameMenu;
-    std::unique_ptr<cxgui::Gtkmm3MenuItem> m_newGameMenuItem;
-    std::unique_ptr<cxgui::Gtkmm3MenuItem> m_reinitializeMenuItem;
-    std::unique_ptr<cxgui::Gtkmm3MenuItem> m_undoMenuItem;
-    std::unique_ptr<cxgui::Gtkmm3MenuItem> m_redoMenuItem;
-    std::unique_ptr<cxgui::Gtkmm3MenuItem> m_quitMenuItem;
-    Gtk::MenuItem m_helpMenuItem;
-    Gtk::Menu m_helpMenu;
-    std::unique_ptr<cxgui::Gtkmm3MenuItem> m_contentsMenuItem;
-    std::unique_ptr<cxgui::Gtkmm3MenuItem> m_aboutMenuItem;
+    // Menu bar:
+    std::unique_ptr<IMenuBar> m_menuBar;
+    std::unique_ptr<IMenu> m_gameMenu;
+    std::unique_ptr<IMenuItem> m_newGameMenuItem;
+    std::unique_ptr<IMenuItem> m_reinitializeMenuItem;
+    std::unique_ptr<IMenuItem> m_undoMenuItem;
+    std::unique_ptr<IMenuItem> m_redoMenuItem;
+    std::unique_ptr<IMenuItem> m_quitMenuItem;
+    std::unique_ptr<IMenu> m_helpMenu;
+    std::unique_ptr<IMenuItem> m_contentsMenuItem;
+    std::unique_ptr<IMenuItem> m_aboutMenuItem;
 
     // Views:
     const cxmodel::Column m_viewLeft;

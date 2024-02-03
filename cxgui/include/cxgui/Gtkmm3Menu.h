@@ -16,61 +16,38 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file Gtkmm3MenuItem.h
- * @date 2023
+ * @file Gtkmm3Menu.h
+ * @date 2024
  *
  *************************************************************************************************/
 
-#ifndef GTKMM3MENUITEM_H_C4184C81_A135_45A6_A70F_71CDA081E9F2
-#define GTKMM3MENUITEM_H_C4184C81_A135_45A6_A70F_71CDA081E9F2
+#ifndef GTKMM3MENU_H_8F6908BA_083B_4C86_A927_97A375555E22
+#define GTKMM3MENU_H_8F6908BA_083B_4C86_A927_97A375555E22
 
-#include <memory>
-#include <optional>
+#include <gtkmm/menu.h>
 
-#include <gtkmm/image.h>
-#include <gtkmm/menuitem.h>
-
-#include <cxgui/ILayout.h>
-#include <cxgui/IMenuItem.h>
-
-namespace cxgui::FreeDesktop
-{
-    enum class StdActionIcon;
-}
+#include <cxgui/IMenu.h>
 
 namespace cxgui
 {
 
-/**********************************************************************************************//**
- * @brief Gtkmm 3 implementation for the `cxgui::IMenuItem` interface.
- *
- *************************************************************************************************/
-class Gtkmm3MenuItem : public IMenuItem,
-                       public Gtk::MenuItem
+class Gtkmm3Menu : public IMenu,
+                   public Gtk::Menu
 {
 
 public:
 
-    /******************************************************************************************//**
+    /*******************************************************************************************//**
      * @brief Constructor.
      *
-     * @param p_label
-     *      The text to appear on the menu item.
-     * @param p_icon
-     *      The optional icon to appear on the menu item.
+     * @param p_title
+     *      The menu title, as shown to the user.
      *
-     * @precondition
-     *      The text is not empty.
+     * @pre
+     *      The menu title is not empty.
      *
-     *********************************************************************************************/
-    Gtkmm3MenuItem(const std::string& p_label,
-                   const std::optional<FreeDesktop::StdActionIcon>& p_icon = std::nullopt);
-
-    /******************************************************************************************//**
-     * @brief Destructor.
-     *
-     *********************************************************************************************/
-    ~Gtkmm3MenuItem() override;
+     **********************************************************************************************/
+    explicit Gtkmm3Menu(const std::string& p_title);
 
     /*******************************************************************************************//**
      * @brief Sets the delegate for widget common facilities.
@@ -89,9 +66,21 @@ public:
      **********************************************************************************************/
     void SetDelegate(std::unique_ptr<IWidget> p_delegate);
 
-    // cxgui::IMenuItem:
-    [[nodiscard]] std::unique_ptr<ISignal<void>> OnTriggered() override;
-    void RegisterKeyboardShortcut(const KeyboardShortcut& p_shortcut) override;
+    /*******************************************************************************************//**
+     * @brief The Gtk menu item used to show the title.
+     *
+     * Sadly, Gtkmm 3 (at the time of writing: 3.24.5) does not offer the possibility to create
+     * a menu and specify a title "on the spot". The call exists, but was deprecated in Gtkmm
+     * 3.10. We have to go trough an extra menu item (of which the menu is a sub-menu of) to
+     * add a title. This getter exposes this extra menu item.
+     *
+     * @return The menu item through which the title, and the menu, can be added.
+     *
+     **********************************************************************************************/
+    [[nodiscard]] Gtk::MenuItem& GetTitleMenuItem();
+
+    // cxgui::IMenu:
+    void Register(IMenuItem& p_item) override;
 
     // cxgui::IWidget:
     [[nodiscard]] size_t GetWidth() const override;
@@ -101,14 +90,11 @@ public:
 
 private:
 
-    std::unique_ptr<cxgui::ILayout> m_layout;
-    std::unique_ptr<Gtk::Image> m_icon;
-    std::unique_ptr<Gtk::AccelLabel> m_accelerator;
-
+    Gtk::MenuItem m_titleMenuItem;
     std::unique_ptr<IWidget> m_delegate;
 
 };
 
 } // namespace cxgui
 
-#endif // GTKMM3MENUITEM_H_C4184C81_A135_45A6_A70F_71CDA081E9F2
+#endif // GTKMM3MENU_H_8F6908BA_083B_4C86_A927_97A375555E22

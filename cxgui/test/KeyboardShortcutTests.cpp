@@ -35,6 +35,15 @@ TEST(KeyboardShortcut, Constructor_SingleKey_ValidFirstKey)
     ASSERT_TRUE(shortcut.m_second == std::nullopt);
 }
 
+TEST(KeyboardShortcut, Constructor_ImplicitSingleKey_ValidFirstKey)
+{
+    using namespace cxgui;
+    const KeyboardShortcut shortcut{{Key::F1}};
+
+    ASSERT_TRUE(shortcut.m_first == Key::F1);
+    ASSERT_TRUE(shortcut.m_second == std::nullopt);
+}
+
 TEST(KeyboardShortcut, Constructor_TwoKeys_BothKeysValid)
 {
     using namespace cxgui;

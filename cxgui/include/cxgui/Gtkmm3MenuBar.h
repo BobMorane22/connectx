@@ -16,61 +16,25 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file Gtkmm3MenuItem.h
- * @date 2023
+ * @file Gtkmm3MenuBar.h
+ * @date 2024
  *
  *************************************************************************************************/
 
-#ifndef GTKMM3MENUITEM_H_C4184C81_A135_45A6_A70F_71CDA081E9F2
-#define GTKMM3MENUITEM_H_C4184C81_A135_45A6_A70F_71CDA081E9F2
+#ifndef GTKMM3MENUBAR_H_B09C49CF_EA28_4DBB_8ED7_BA7E8CEC3CC6
+#define GTKMM3MENUBAR_H_B09C49CF_EA28_4DBB_8ED7_BA7E8CEC3CC6
 
-#include <memory>
-#include <optional>
-
-#include <gtkmm/image.h>
-#include <gtkmm/menuitem.h>
-
-#include <cxgui/ILayout.h>
-#include <cxgui/IMenuItem.h>
-
-namespace cxgui::FreeDesktop
-{
-    enum class StdActionIcon;
-}
+#include <gtkmm/menubar.h>
+#include <cxgui/IMenuBar.h>
 
 namespace cxgui
 {
 
-/**********************************************************************************************//**
- * @brief Gtkmm 3 implementation for the `cxgui::IMenuItem` interface.
- *
- *************************************************************************************************/
-class Gtkmm3MenuItem : public IMenuItem,
-                       public Gtk::MenuItem
+class Gtkmm3MenuBar : public IMenuBar,
+                      public Gtk::MenuBar
 {
 
 public:
-
-    /******************************************************************************************//**
-     * @brief Constructor.
-     *
-     * @param p_label
-     *      The text to appear on the menu item.
-     * @param p_icon
-     *      The optional icon to appear on the menu item.
-     *
-     * @precondition
-     *      The text is not empty.
-     *
-     *********************************************************************************************/
-    Gtkmm3MenuItem(const std::string& p_label,
-                   const std::optional<FreeDesktop::StdActionIcon>& p_icon = std::nullopt);
-
-    /******************************************************************************************//**
-     * @brief Destructor.
-     *
-     *********************************************************************************************/
-    ~Gtkmm3MenuItem() override;
 
     /*******************************************************************************************//**
      * @brief Sets the delegate for widget common facilities.
@@ -89,9 +53,8 @@ public:
      **********************************************************************************************/
     void SetDelegate(std::unique_ptr<IWidget> p_delegate);
 
-    // cxgui::IMenuItem:
-    [[nodiscard]] std::unique_ptr<ISignal<void>> OnTriggered() override;
-    void RegisterKeyboardShortcut(const KeyboardShortcut& p_shortcut) override;
+    // cxgui::IMenuBar:
+    void Register(IMenu& p_menu) override;
 
     // cxgui::IWidget:
     [[nodiscard]] size_t GetWidth() const override;
@@ -101,14 +64,10 @@ public:
 
 private:
 
-    std::unique_ptr<cxgui::ILayout> m_layout;
-    std::unique_ptr<Gtk::Image> m_icon;
-    std::unique_ptr<Gtk::AccelLabel> m_accelerator;
-
     std::unique_ptr<IWidget> m_delegate;
 
 };
 
 } // namespace cxgui
 
-#endif // GTKMM3MENUITEM_H_C4184C81_A135_45A6_A70F_71CDA081E9F2
+#endif // GTKMM3MENUBAR_H_B09C49CF_EA28_4DBB_8ED7_BA7E8CEC3CC6

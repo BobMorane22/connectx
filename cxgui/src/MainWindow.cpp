@@ -21,8 +21,6 @@
  *
  *************************************************************************************************/
 
-#include "cxgui/Gtkmm3Layout.h"
-#include "cxgui/StdActionIcon.h"
 #include <string>
 
 #include <gtkmm/application.h>
@@ -37,16 +35,22 @@
 #include <cxmodel/GameResolutionStrategyFactory.h>
 #include <cxgui/About.h>
 #include <cxgui/AboutWindowPresenter.h>
+#include <cxgui/EnabledState.h>
 #include <cxgui/GameResolutionDialog.h>
 #include <cxgui/GameResolutionDialogController.h>
 #include <cxgui/GameResolutionDialogPresenterFactory.h>
 #include <cxgui/GameView.h>
+#include <cxgui/Gtkmm3Layout.h>
+#include <cxgui/Gtkmm3Menu.h>
+#include <cxgui/Gtkmm3MenuBar.h>
+#include <cxgui/Gtkmm3MenuItem.h>
 #include <cxgui/IAnimatedBoardPresenter.h>
 #include <cxgui/ILayout.h>
 #include <cxgui/INewPlayersList.h>
 #include <cxgui/IMainWindowController.h>
 #include <cxgui/IMainWindowPresenter.h>
 #include <cxgui/ISpinBox.h>
+#include <cxgui/KeyboardShortcut.h>
 #include <cxgui/MainWindow.h>
 #include <cxgui/NewGameView.h>
 #include <cxgui/StatusBar.h>
@@ -67,13 +71,35 @@ cxgui::MainWindow::MainWindow(Gtk::Application& p_gtkApplication,
     // This should be located elsewhere. For now, I don't have a choice to locate it
     // here because of the pointer nature of the attribute. To be moved when passing
     // to popover menus.
-    m_newGameMenuItem      = std::make_unique<cxgui::Gtkmm3MenuItem>(m_presenter.GetMenuLabel(MenuItem::NEW_GAME));
-    m_reinitializeMenuItem = std::make_unique<cxgui::Gtkmm3MenuItem>(m_presenter.GetMenuLabel(MenuItem::REINITIALIZE_GAME));
-    m_undoMenuItem         = std::make_unique<cxgui::Gtkmm3MenuItem>(m_presenter.GetMenuLabel(MenuItem::UNDO), cxgui::FreeDesktop::StdActionIcon::EDIT_UNDO);
-    m_redoMenuItem         = std::make_unique<cxgui::Gtkmm3MenuItem>(m_presenter.GetMenuLabel(MenuItem::REDO), cxgui::FreeDesktop::StdActionIcon::EDIT_REDO);
-    m_quitMenuItem         = std::make_unique<cxgui::Gtkmm3MenuItem>(m_presenter.GetMenuLabel(MenuItem::QUIT), cxgui::FreeDesktop::StdActionIcon::APPLICATION_EXIT);
-    m_contentsMenuItem     = std::make_unique<cxgui::Gtkmm3MenuItem>(m_presenter.GetMenuLabel(MenuItem::CONTENTS), cxgui::FreeDesktop::StdActionIcon::HELP_CONTENTS);
-    m_aboutMenuItem        = std::make_unique<cxgui::Gtkmm3MenuItem>(m_presenter.GetMenuLabel(MenuItem::ABOUT), cxgui::FreeDesktop::StdActionIcon::HELP_ABOUT);
+    m_menuBar = CreateWidget<Gtkmm3MenuBar>();
+    ASSERT(m_menuBar);
+
+    m_gameMenu = CreateWidget<Gtkmm3Menu>(m_presenter.GetMenuLabel(MenuItem::GAME));
+    ASSERT(m_gameMenu);
+
+    m_newGameMenuItem = CreateWidget<Gtkmm3MenuItem>(m_presenter.GetMenuLabel(MenuItem::NEW_GAME));
+    ASSERT(m_newGameMenuItem);
+
+    m_reinitializeMenuItem = CreateWidget<Gtkmm3MenuItem>(m_presenter.GetMenuLabel(MenuItem::REINITIALIZE_GAME));
+    ASSERT(m_reinitializeMenuItem);
+
+    m_undoMenuItem = CreateWidget<Gtkmm3MenuItem>(m_presenter.GetMenuLabel(MenuItem::UNDO), cxgui::FreeDesktop::StdActionIcon::EDIT_UNDO);
+    ASSERT(m_undoMenuItem);
+
+    m_redoMenuItem = CreateWidget<Gtkmm3MenuItem>(m_presenter.GetMenuLabel(MenuItem::REDO), cxgui::FreeDesktop::StdActionIcon::EDIT_REDO);
+    ASSERT(m_redoMenuItem);
+
+    m_quitMenuItem = CreateWidget<Gtkmm3MenuItem>(m_presenter.GetMenuLabel(MenuItem::QUIT), cxgui::FreeDesktop::StdActionIcon::APPLICATION_EXIT);
+    ASSERT(m_quitMenuItem);
+
+    m_helpMenu = CreateWidget<Gtkmm3Menu>(m_presenter.GetMenuLabel(MenuItem::HELP));
+    ASSERT(m_helpMenu);
+
+    m_contentsMenuItem = CreateWidget<Gtkmm3MenuItem>(m_presenter.GetMenuLabel(MenuItem::CONTENTS), cxgui::FreeDesktop::StdActionIcon::HELP_CONTENTS);
+    ASSERT(m_contentsMenuItem);
+
+    m_aboutMenuItem = CreateWidget<Gtkmm3MenuItem>(m_presenter.GetMenuLabel(MenuItem::ABOUT), cxgui::FreeDesktop::StdActionIcon::HELP_ABOUT);
+    ASSERT(m_aboutMenuItem);
 }
 
 cxgui::MainWindow::~MainWindow()
@@ -103,9 +129,9 @@ void cxgui::MainWindow::RegisterWidgets()
 {
     IF_CONDITION_NOT_MET_DO(m_mainLayout, return;);
 
-    RegisterMenuBar();
+    m_mainLayout->Register(*m_menuBar, {cxmodel::Row{0u}, cxgui::ILayout::RowSpan{1u}}, {cxmodel::Column{0u}, cxgui::ILayout::ColumnSpan{2u}});
 
-    m_mainLayout->Register(m_menubar, {cxmodel::Row{0u}, cxgui::ILayout::RowSpan{1u}}, {cxmodel::Column{0u}, cxgui::ILayout::ColumnSpan{2u}});
+    RegisterMenuBar();
 
     m_newGameView = std::make_unique<NewGameView>(m_presenter, m_controller, m_window, *m_mainLayout, m_viewLeft, m_viewTop);
     m_newGameView->Activate();
@@ -120,22 +146,19 @@ void cxgui::MainWindow::ConfigureLayouts()
 
 void cxgui::MainWindow::ConfigureWidgets()
 {
-    m_gameMenuItem.set_label(m_presenter.GetMenuLabel(MenuItem::GAME));
-    m_helpMenuItem.set_label(m_presenter.GetMenuLabel(MenuItem::HELP));
-
     m_model.Attach(m_statusbarPresenter.get());
     m_statusbarPresenter->Attach(m_statusbar.get());
 }
 
 void cxgui::MainWindow::ConfigureSignalHandlers()
 {
-    m_newGameMenuItem->signal_activate().connect([this](){OnNewGame();});
-    m_reinitializeMenuItem->signal_activate().connect([this](){OnReinitializeCurrentGame();});
-    m_undoMenuItem->signal_activate().connect([this]{OnUndo();});
-    m_redoMenuItem->signal_activate().connect([this]{OnRedo();});
-    m_quitMenuItem->signal_activate().connect([this](){m_window.close();});
-    m_contentsMenuItem->signal_activate().connect([this](){OnHelpContentsRequested();});
-    m_aboutMenuItem->signal_activate().connect([this](){OnCreateAboutWindow();});
+    m_newGameMenuItem->OnTriggered()->Connect([this](){OnNewGame();});
+    m_reinitializeMenuItem->OnTriggered()->Connect([this](){OnReinitializeCurrentGame();});
+    m_undoMenuItem->OnTriggered()->Connect([this]{OnUndo();});
+    m_redoMenuItem->OnTriggered()->Connect([this]{OnRedo();});
+    m_quitMenuItem->OnTriggered()->Connect([this](){m_window.close();});
+    m_contentsMenuItem->OnTriggered()->Connect([this](){OnHelpContentsRequested();});
+    m_aboutMenuItem->OnTriggered()->Connect([this](){OnCreateAboutWindow();});
 }
 
 int cxgui::MainWindow::Show()
@@ -252,58 +275,53 @@ void cxgui::MainWindow::UpdateGameReinitialized(cxmodel::ModelNotificationContex
 
 void cxgui::MainWindow::UpdateMenuItems(cxmodel::ModelNotificationContext p_context)
 {
-    m_newGameMenuItem->set_sensitive(m_presenter.IsNewGamePossible());
-    m_reinitializeMenuItem->set_sensitive(m_presenter.IsCurrentGameReinitializationPossible());
-    m_undoMenuItem->set_sensitive(p_context == cxmodel::ModelNotificationContext::CHIP_DROPPED || m_presenter.IsUndoPossible());
-    m_redoMenuItem->set_sensitive(m_presenter.IsRedoPossible());
+    m_newGameMenuItem->SetEnabled(cxgui::EnabledState::Disabled);
+    if(m_presenter.IsNewGamePossible())
+    {
+        m_newGameMenuItem->SetEnabled(cxgui::EnabledState::Enabled);
+    }
+
+    m_reinitializeMenuItem->SetEnabled(cxgui::EnabledState::Disabled);
+    if(m_presenter.IsCurrentGameReinitializationPossible())
+    {
+        m_reinitializeMenuItem->SetEnabled(cxgui::EnabledState::Enabled);
+    }
+
+    m_undoMenuItem->SetEnabled(cxgui::EnabledState::Disabled);
+    if(p_context == cxmodel::ModelNotificationContext::CHIP_DROPPED || m_presenter.IsUndoPossible())
+    {
+        m_undoMenuItem->SetEnabled(cxgui::EnabledState::Enabled);
+    }
+
+    m_redoMenuItem->SetEnabled(cxgui::EnabledState::Disabled);
+    if(m_presenter.IsRedoPossible())
+    {
+        m_redoMenuItem->SetEnabled(cxgui::EnabledState::Enabled);
+    }
 }
 
 void cxgui::MainWindow::RegisterMenuBar()
 {
-    // Adding accelerators:
-    auto acceleratorGroup = Gtk::AccelGroup::create();
-    m_window.add_accel_group(acceleratorGroup);
+    // Keyboard shortcuts:
+    m_undoMenuItem->RegisterKeyboardShortcut({cxgui::Key::CTRL + cxgui::Key::Z});
+    m_redoMenuItem->RegisterKeyboardShortcut({cxgui::Key::CTRL + cxgui::Key::Y});
+    m_quitMenuItem->RegisterKeyboardShortcut({cxgui::Key::CTRL + cxgui::Key::Q});
+    m_contentsMenuItem->RegisterKeyboardShortcut({cxgui::Key::F1});
 
-    m_undoMenuItem->add_accelerator("activate",
-                                    acceleratorGroup,
-                                    GDK_KEY_z,
-                                    Gdk::ModifierType::CONTROL_MASK,
-                                    Gtk::ACCEL_VISIBLE);
+    // Game menu:
+    m_gameMenu->Register(*m_newGameMenuItem);
+    m_gameMenu->Register(*m_reinitializeMenuItem);
+    m_gameMenu->Register(*m_undoMenuItem);
+    m_gameMenu->Register(*m_redoMenuItem);
+    m_gameMenu->Register(*m_quitMenuItem);
 
-    m_redoMenuItem->add_accelerator("activate",
-                                    acceleratorGroup,
-                                    GDK_KEY_y,
-                                    Gdk::ModifierType::CONTROL_MASK,
-                                    Gtk::ACCEL_VISIBLE);
+    // Help menu:
+    m_helpMenu->Register(*m_contentsMenuItem);
+    m_helpMenu->Register(*m_aboutMenuItem);
 
-    m_quitMenuItem->add_accelerator("activate",
-                                    acceleratorGroup,
-                                    GDK_KEY_Q,
-                                    Gdk::ModifierType::CONTROL_MASK,
-                                    Gtk::ACCEL_VISIBLE);
-
-    m_contentsMenuItem->add_accelerator("activate",
-                                        acceleratorGroup,
-                                        GDK_KEY_F1,
-                                        ~Gdk::ModifierType::MODIFIER_MASK,
-                                        Gtk::ACCEL_VISIBLE);
-
-    m_menubar.append(m_gameMenuItem);
-    m_menubar.append(m_helpMenuItem);
-    m_gameMenuItem.set_submenu(m_gameMenu);
-    m_gameMenu.append(*m_newGameMenuItem);
-    m_gameMenu.append(*m_reinitializeMenuItem);
-    m_gameMenu.append(*m_undoMenuItem);
-    m_gameMenu.append(*m_redoMenuItem);
-    m_gameMenu.append(*m_quitMenuItem);
-    m_helpMenuItem.set_submenu(m_helpMenu);
-    m_helpMenu.append(*m_contentsMenuItem);
-    m_helpMenu.append(*m_aboutMenuItem);
-
-    m_newGameMenuItem->set_sensitive(m_presenter.IsNewGamePossible());
-    m_reinitializeMenuItem->set_sensitive(m_presenter.IsCurrentGameReinitializationPossible());
-    m_undoMenuItem->set_sensitive(m_presenter.IsUndoPossible());
-    m_redoMenuItem->set_sensitive(m_presenter.IsRedoPossible());
+    // Registering everythin in the menuBar:
+    m_menuBar->Register(*m_gameMenu);
+    m_menuBar->Register(*m_helpMenu);
 }
 
 void cxgui::MainWindow::RegisterStatusBar()
