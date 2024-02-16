@@ -35,6 +35,7 @@
 #include <cxgui/EnabledState.h>
 #include <cxgui/extractRawUserInput.h>
 #include <cxgui/Gtkmm3Button.h>
+#include <cxgui/Gtkmm3Label.h>
 #include <cxgui/Gtkmm3Layout.h>
 #include <cxgui/Gtkmm3NewPlayersList.h>
 #include <cxgui/Gtkmm3SpinBox.h>
@@ -111,6 +112,21 @@ cxgui::NewGameView::NewGameView(INewGameViewPresenter& p_presenter,
     m_startButton = CreateWidget<Gtkmm3Button>(m_presenter.GetNewGameViewStartButtonText());
     ASSERT(m_startButton);
 
+    m_title = CreateWidget<Gtkmm3Label>("");
+    ASSERT(m_title);
+    m_gameSectionTitle = CreateWidget<Gtkmm3Label>("");
+    ASSERT(m_gameSectionTitle);
+    m_inARowLabel = CreateWidget<Gtkmm3Label>("");
+    ASSERT(m_inARowLabel);
+    m_gridSectionTitle = CreateWidget<Gtkmm3Label>("");
+    ASSERT(m_gridSectionTitle);
+    m_gridWidthLabel = CreateWidget<Gtkmm3Label>("");
+    ASSERT(m_gridWidthLabel);
+    m_gridHeightLabel = CreateWidget<Gtkmm3Label>("");
+    ASSERT(m_gridHeightLabel);
+    m_playersSectionTitle = CreateWidget<Gtkmm3Label>("");
+    ASSERT(m_playersSectionTitle);
+
     SetLayout();
     PopulateWidgets();
     ConfigureWidgets();
@@ -161,111 +177,86 @@ void cxgui::NewGameView::SetLayout()
     constexpr cxmodel::Row row9{9u};
     constexpr cxgui::ILayout::RowSpan singleRowSpan{1u};
 
+    constexpr ILayout::Alignement hAlignLeft{
+        ILayout::VerticalAlignement::FILL,
+        ILayout::HorizontalAlignement::LEFT
+    };
+
     m_viewLayout->SetColumnSpacingMode(cxgui::ILayout::ColumnSpacingMode::EQUAL);
 
-    m_viewLayout->Register(m_title,               {row0,  singleRowSpan}, {column0, fullColumnSpan});
-    m_viewLayout->Register(m_gameSectionTitle,    {row1,  singleRowSpan}, {column0, fullColumnSpan});
-    m_viewLayout->Register(m_inARowLabel,         {row2,  singleRowSpan}, {column0, singleColumnSpan});
-    m_viewLayout->Register(*m_inARowSpinBox,      {row2,  singleRowSpan}, {column1, singleColumnSpan});
-    m_viewLayout->Register(m_gridSectionTitle,    {row3,  singleRowSpan}, {column0, fullColumnSpan});
-    m_viewLayout->Register(m_gridWidthLabel,      {row4,  singleRowSpan}, {column0, singleRowSpan});
-    m_viewLayout->Register(*m_boardWidthSpinBox,  {row4,  singleRowSpan}, {column1, singleColumnSpan});
-    m_viewLayout->Register(m_gridHeightLabel,     {row5,  singleRowSpan}, {column0, singleColumnSpan});
-    m_viewLayout->Register(*m_boardHeightSpinBox, {row5,  singleRowSpan}, {column1, singleColumnSpan});
-    m_viewLayout->Register(m_playersSectionTitle, {row6,  singleRowSpan}, {column0, fullColumnSpan});
-    m_viewLayout->Register(*m_playersList,        {row7,  singleRowSpan}, {column0, fullColumnSpan});
-    m_viewLayout->Register(*m_removePlayerButton, {row8,  singleRowSpan}, {column0, singleColumnSpan});
-    m_viewLayout->Register(*m_addPlayerButton,    {row8,  singleRowSpan}, {column1, singleColumnSpan});
-    m_viewLayout->Register(*m_startButton,        {row9,  singleRowSpan}, {column0, fullColumnSpan});
+    m_viewLayout->Register(*m_title,               {row0,  singleRowSpan}, {column0, fullColumnSpan}              );
+    m_viewLayout->Register(*m_gameSectionTitle,    {row1,  singleRowSpan}, {column0, fullColumnSpan},   hAlignLeft);
+    m_viewLayout->Register(*m_inARowLabel,         {row2,  singleRowSpan}, {column0, singleColumnSpan}, hAlignLeft);
+    m_viewLayout->Register(*m_inARowSpinBox,       {row2,  singleRowSpan}, {column1, singleColumnSpan}            );
+    m_viewLayout->Register(*m_gridSectionTitle,    {row3,  singleRowSpan}, {column0, fullColumnSpan},   hAlignLeft);
+    m_viewLayout->Register(*m_gridWidthLabel,      {row4,  singleRowSpan}, {column0, singleRowSpan},    hAlignLeft);
+    m_viewLayout->Register(*m_boardWidthSpinBox,   {row4,  singleRowSpan}, {column1, singleColumnSpan}            );
+    m_viewLayout->Register(*m_gridHeightLabel,     {row5,  singleRowSpan}, {column0, singleColumnSpan}, hAlignLeft);
+    m_viewLayout->Register(*m_boardHeightSpinBox,  {row5,  singleRowSpan}, {column1, singleColumnSpan}            );
+    m_viewLayout->Register(*m_playersSectionTitle, {row6,  singleRowSpan}, {column0, fullColumnSpan},   hAlignLeft);
+    m_viewLayout->Register(*m_playersList,         {row7,  singleRowSpan}, {column0, fullColumnSpan}              );
+    m_viewLayout->Register(*m_removePlayerButton,  {row8,  singleRowSpan}, {column0, singleColumnSpan}            );
+    m_viewLayout->Register(*m_addPlayerButton,     {row8,  singleRowSpan}, {column1, singleColumnSpan}            );
+    m_viewLayout->Register(*m_startButton,         {row9,  singleRowSpan}, {column0, fullColumnSpan}              );
 }
 
 void cxgui::NewGameView::PopulateWidgets()
 {
-    m_title.set_text(m_presenter.GetNewGameViewTitle());
+    m_title->UpdateContents(m_presenter.GetNewGameViewTitle());
 
-    m_gameSectionTitle.set_text(m_presenter.GetNewGameViewGameSectionTitle());
-    m_inARowLabel.set_text(m_presenter.GetNewGameViewInARowLabelText());
+    m_gameSectionTitle->UpdateContents(m_presenter.GetNewGameViewGameSectionTitle());
+    m_inARowLabel->UpdateContents(m_presenter.GetNewGameViewInARowLabelText());
 
-    m_gridSectionTitle.set_text(m_presenter.GetNewGameViewBoardSectionTitle());
-    m_gridWidthLabel.set_text(m_presenter.GetNewGameViewWidthLabelText());
-    m_gridHeightLabel.set_text(m_presenter.GetNewGameViewHeightLabelText());
+    m_gridSectionTitle->UpdateContents(m_presenter.GetNewGameViewBoardSectionTitle());
+    m_gridWidthLabel->UpdateContents(m_presenter.GetNewGameViewWidthLabelText());
+    m_gridHeightLabel->UpdateContents(m_presenter.GetNewGameViewHeightLabelText());
 
-    m_playersSectionTitle.set_text(m_presenter.GetNewGameViewPlayersSectionTitle());
+    m_playersSectionTitle->UpdateContents(m_presenter.GetNewGameViewPlayersSectionTitle());
 }
 
 void cxgui::NewGameView::ConfigureWidgets()
 {
     // Window margin:
     m_mainLayout.SetMargins({
-        cxgui::TopMargin{DIALOG_SIDE_MARGIN},
-        cxgui::BottomMargin{DIALOG_SIDE_MARGIN},
-        cxgui::LeftMargin{DIALOG_SIDE_MARGIN},
-        cxgui::RightMargin{DIALOG_SIDE_MARGIN}
+        TopMargin{DIALOG_SIDE_MARGIN},
+        BottomMargin{DIALOG_SIDE_MARGIN},
+        LeftMargin{DIALOG_SIDE_MARGIN},
+        RightMargin{DIALOG_SIDE_MARGIN}
     });
 
     // View title:
-    m_title.set_use_markup(true);
-    m_title.set_markup("<big><b>" + m_title.get_text() + "</b></big>");
-    m_title.set_margin_bottom(TITLE_BOTTOM_MARGIN);
+    m_title->UpdateContents("<big><b>" + m_title->GetContents() + "</b></big>");
+    m_title->SetMargins({TopMargin{0u}, BottomMargin{TITLE_BOTTOM_MARGIN}, LeftMargin{0u}, RightMargin{0u}});
 
     // Game section
-    m_gameSectionTitle.set_use_markup(true);
-    m_gameSectionTitle.set_markup("<b>" + m_gameSectionTitle.get_text() + "</b>");
-    m_gameSectionTitle.set_halign(Gtk::Align::ALIGN_START);
-    m_title.set_margin_bottom(SECTION_BOTTOM_MARGIN);
+    m_gameSectionTitle->UpdateContents("<b>" + m_gameSectionTitle->GetContents() + "</b>");
+    m_title->SetMargins({TopMargin{0u}, BottomMargin{SECTION_BOTTOM_MARGIN}, LeftMargin{0u}, RightMargin{0u}});
 
     // In-a-row:
-    m_inARowLabel.set_halign(Gtk::Align::ALIGN_START);
-    m_inARowLabel.set_text(INDENT_MARK + m_inARowLabel.get_text());
+    m_inARowLabel->UpdateContents(INDENT_MARK + m_inARowLabel->GetContents());
 
     // Grid section:
-    m_gridSectionTitle.set_use_markup(true);
-    m_gridSectionTitle.set_markup("<b>" + m_gridSectionTitle.get_text() + "</b>");
-    m_gridSectionTitle.set_halign(Gtk::Align::ALIGN_START);
-    m_title.set_margin_bottom(SECTION_BOTTOM_MARGIN);
+    m_gridSectionTitle->UpdateContents("<b>" + m_gridSectionTitle->GetContents() + "</b>");
+    m_title->SetMargins({TopMargin{0u}, BottomMargin{SECTION_BOTTOM_MARGIN}, LeftMargin{0u}, RightMargin{0u}});
 
     // Width/height:
-    m_gridWidthLabel.set_halign(Gtk::Align::ALIGN_START);
-    m_gridWidthLabel.set_text(INDENT_MARK + m_gridWidthLabel.get_text());
-    m_gridWidthLabel.set_margin_bottom(CONTROL_BOTTOM_MARGIN);
-    m_boardWidthSpinBox->SetMargins({
-        cxgui::TopMargin{0u},
-        cxgui::BottomMargin{CONTROL_BOTTOM_MARGIN},
-        cxgui::LeftMargin{0u},
-        cxgui::RightMargin{0u}
-    });
+    m_gridWidthLabel->UpdateContents(INDENT_MARK + m_gridWidthLabel->GetContents());
+    m_gridWidthLabel->SetMargins({TopMargin{0u}, BottomMargin{CONTROL_BOTTOM_MARGIN}, LeftMargin{0u}, RightMargin{0u}});
+    m_boardWidthSpinBox->SetMargins({TopMargin{0u}, BottomMargin{CONTROL_BOTTOM_MARGIN}, LeftMargin{0u}, RightMargin{0u}});
 
-    m_gridHeightLabel.set_halign(Gtk::Align::ALIGN_START);
-    m_gridHeightLabel.set_text(INDENT_MARK + m_gridHeightLabel.get_text());
-    m_gridHeightLabel.set_margin_bottom(CONTROL_BOTTOM_MARGIN);
-    m_boardHeightSpinBox->SetMargins({
-        cxgui::TopMargin{0u},
-        cxgui::BottomMargin{CONTROL_BOTTOM_MARGIN},
-        cxgui::LeftMargin{0u},
-        cxgui::RightMargin{0u}
-    });
+    m_gridHeightLabel->UpdateContents(INDENT_MARK + m_gridHeightLabel->GetContents());
+    m_gridHeightLabel->SetMargins({TopMargin{0u}, BottomMargin{CONTROL_BOTTOM_MARGIN}, LeftMargin{0u}, RightMargin{0u}});
+    m_boardHeightSpinBox->SetMargins({TopMargin{0u}, BottomMargin{CONTROL_BOTTOM_MARGIN}, LeftMargin{0u}, RightMargin{0u}});
 
     // Players section:
-    m_playersSectionTitle.set_use_markup(true);
-    m_playersSectionTitle.set_markup("<b>" + m_playersSectionTitle.get_text() + "</b>");
-    m_playersSectionTitle.set_halign(Gtk::Align::ALIGN_START);
-    m_title.set_margin_bottom(SECTION_BOTTOM_MARGIN);
+    m_playersSectionTitle->UpdateContents("<b>" + m_playersSectionTitle->GetContents() + "</b>");
+    m_title->SetMargins({TopMargin{0u}, BottomMargin{SECTION_BOTTOM_MARGIN}, LeftMargin{0u}, RightMargin{0u}});
 
     // Player list:
-    m_playersList->SetMargins({
-        cxgui::TopMargin{0u},
-        cxgui::BottomMargin{DIALOG_SIDE_MARGIN},
-        cxgui::LeftMargin{0u},
-        cxgui::RightMargin{0u}
-    });
+    m_playersList->SetMargins({TopMargin{0u}, BottomMargin{DIALOG_SIDE_MARGIN}, LeftMargin{0u}, RightMargin{0u}});
 
     // Add/Remove player buttons:
-    m_removePlayerButton->SetMargins({
-        cxgui::TopMargin{0u},
-        cxgui::BottomMargin{CONTROL_BOTTOM_MARGIN},
-        cxgui::LeftMargin{0u},
-        cxgui::RightMargin{0u}
-    });
+    m_removePlayerButton->SetMargins({TopMargin{0u}, BottomMargin{CONTROL_BOTTOM_MARGIN}, LeftMargin{0u}, RightMargin{0u}});
 
     m_removePlayerButton->SetEnabled(cxgui::EnabledState::Disabled);
     if(m_presenter.CanRemoveAnotherPlayer(m_playersList->GetSize()))
@@ -273,12 +264,7 @@ void cxgui::NewGameView::ConfigureWidgets()
         m_removePlayerButton->SetEnabled(cxgui::EnabledState::Enabled);
     }
 
-    m_addPlayerButton->SetMargins({
-        cxgui::TopMargin{0u},
-        cxgui::BottomMargin{CONTROL_BOTTOM_MARGIN},
-        cxgui::LeftMargin{0u},
-        cxgui::RightMargin{0u}
-    });
+    m_addPlayerButton->SetMargins({cxgui::TopMargin{0u}, cxgui::BottomMargin{CONTROL_BOTTOM_MARGIN}, cxgui::LeftMargin{0u}, cxgui::RightMargin{0u}});
 
     m_addPlayerButton->SetEnabled(cxgui::EnabledState::Disabled);
     if(m_presenter.CanAddAnotherPlayer(m_playersList->GetSize()))
@@ -287,12 +273,7 @@ void cxgui::NewGameView::ConfigureWidgets()
     }
 
     // Start button:
-    m_startButton->SetMargins({
-        cxgui::TopMargin{0u},
-        cxgui::BottomMargin{CONTROL_BOTTOM_MARGIN},
-        cxgui::LeftMargin{0u},
-        cxgui::RightMargin{0u}
-    });
+    m_startButton->SetMargins({TopMargin{0u}, BottomMargin{CONTROL_BOTTOM_MARGIN}, LeftMargin{0u}, RightMargin{0u}});
 }
 
 void cxgui::NewGameView::OnStart()

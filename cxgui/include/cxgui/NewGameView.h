@@ -26,10 +26,7 @@
 
 #include <optional>
 
-#include <gtkmm/label.h>
-
 #include <cxmodel/Status.h>
-#include <cxgui/IButton.h>
 
 #include "IView.h"
 #include "Window.h"
@@ -41,6 +38,8 @@ namespace cxmodel
 
 namespace cxgui
 {
+    class IButton;
+    class ILabel;
     class ILayout;
     class INewGameViewController;
     class INewGameViewPresenter;
@@ -115,20 +114,20 @@ private:
     std::unique_ptr<ILayout> m_viewLayout;
 
     // Controls:
-    Gtk::Label m_title;
+    std::unique_ptr<ILabel> m_title;
 
-    Gtk::Label m_gameSectionTitle;
-    Gtk::Label m_inARowLabel;
+    std::unique_ptr<ILabel> m_gameSectionTitle;
+    std::unique_ptr<ILabel> m_inARowLabel;
     std::unique_ptr<ISpinBox> m_inARowSpinBox;
 
-    Gtk::Label m_gridSectionTitle;
-    Gtk::Label m_gridWidthLabel;
+    std::unique_ptr<ILabel> m_gridSectionTitle;
+    std::unique_ptr<ILabel> m_gridWidthLabel;
     std::unique_ptr<ISpinBox> m_boardWidthSpinBox;
-    Gtk::Label m_gridHeightLabel;
+    std::unique_ptr<ILabel> m_gridHeightLabel;
     std::unique_ptr<ISpinBox> m_boardHeightSpinBox;
 
-    Gtk::Label m_playersSectionTitle;
-    std::unique_ptr<cxgui::INewPlayersList> m_playersList;
+    std::unique_ptr<ILabel> m_playersSectionTitle;
+    std::unique_ptr<INewPlayersList> m_playersList;
 
     std::unique_ptr<IButton> m_removePlayerButton;
     std::unique_ptr<IButton> m_addPlayerButton;

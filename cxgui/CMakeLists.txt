@@ -45,6 +45,7 @@ add_library(${TARGET_NAME}
   src/GameView.cpp
   src/GameViewKeyHandlerStrategyFactory.cpp
   src/Gtkmm3Button.cpp
+  src/Gtkmm3Label.cpp
   src/Gtkmm3Layout.cpp
   src/Gtkmm3Menu.cpp
   src/Gtkmm3MenuBar.cpp
