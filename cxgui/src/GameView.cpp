@@ -109,6 +109,9 @@ void cxgui::GameView::Activate()
     m_mainLayout.Register(*m_viewLayout,
                           {m_viewTop, cxgui::ILayout::RowSpan{1u}},
                           {m_viewLeft, cxgui::ILayout::ColumnSpan{2u}});
+
+    // Renintialize animated game board.
+    UpdateGameReinitialized();
 }
 
 void cxgui::GameView::DeActivate()
