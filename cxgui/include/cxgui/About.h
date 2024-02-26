@@ -24,13 +24,16 @@
 #ifndef ABOUT_H_396864CD_88A3_43F2_B08B_3F9FEBE89DE1
 #define ABOUT_H_396864CD_88A3_43F2_B08B_3F9FEBE89DE1
 
-#include <gtkmm/label.h>
 #include <gtkmm/window.h>
-
-#include <cxgui/IButton.h>
 
 #include "IAboutWindowPresenter.h"
 #include "Window.h"
+
+namespace cxgui
+{
+    class IButton;
+    class ILabel;
+}
 
 namespace cxgui
 {
@@ -68,12 +71,12 @@ private:
 
     std::unique_ptr<IAboutWindowPresenter> m_presenter;
 
-    Gtk::Label m_name;
-    Gtk::Label m_version;
-    Gtk::Label m_description;
-    Gtk::Label m_website;
-    Gtk::Label m_license;
-    Gtk::Label m_copyright;
+    std::unique_ptr<ILabel> m_name;
+    std::unique_ptr<ILabel> m_version;
+    std::unique_ptr<ILabel> m_description;
+    std::unique_ptr<ILabel> m_website;
+    std::unique_ptr<ILabel> m_license;
+    std::unique_ptr<ILabel> m_copyright;
 
     std::unique_ptr<IButton> m_close;
 

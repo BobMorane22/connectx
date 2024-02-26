@@ -23,7 +23,11 @@
 
 #include <cxgui/About.h>
 #include <cxgui/Gtkmm3Button.h>
+#include <cxgui/Gtkmm3Label.h>
 #include <cxgui/IAboutWindowPresenter.h>
+#include <cxgui/IButton.h>
+#include <cxgui/ILabel.h>
+#include <cxgui/Margins.h>
 
 cxgui::About::About(std::unique_ptr<IAboutWindowPresenter>&& p_presenter)
  : Window()
@@ -33,12 +37,18 @@ cxgui::About::About(std::unique_ptr<IAboutWindowPresenter>&& p_presenter)
 
     m_window.set_title(m_presenter->GetWindowTitle());
 
-    m_name.set_label("<b><big>" + m_presenter->GetApplicationName() + "</big></b>");
-    m_version.set_label(m_presenter->GetVersionNumber());
-    m_description.set_label(m_presenter->GetApplicationDescription());
-    m_website.set_markup(m_presenter->GetWebsiteLinkContents());
-    m_license.set_label(m_presenter->GetLicenseDescription());
-    m_copyright.set_label(m_presenter->GetCopyrightNotice());
+    m_name = CreateWidget<Gtkmm3Label>("");
+    ASSERT(m_name);
+    m_version = CreateWidget<Gtkmm3Label>("");
+    ASSERT(m_version);
+    m_description = CreateWidget<Gtkmm3Label>("");
+    ASSERT(m_description);
+    m_website = CreateWidget<Gtkmm3Label>("");
+    ASSERT(m_website);
+    m_license = CreateWidget<Gtkmm3Label>("");
+    ASSERT(m_license);
+    m_copyright = CreateWidget<Gtkmm3Label>("");
+    ASSERT(m_copyright);
 
     m_close = CreateWidget<Gtkmm3Button>(m_presenter->GetCloseText());
     ASSERT(m_close);
@@ -77,13 +87,13 @@ void cxgui::About::RegisterWidgets()
     constexpr cxmodel::Column column0{0u};
     constexpr cxgui::ILayout::ColumnSpan columnSpan1{1u};
     
-    m_mainLayout->Register(m_name,        {row0, rowSpan1}, {column0, columnSpan1});
-    m_mainLayout->Register(m_version,     {row1, rowSpan1}, {column0, columnSpan1});
-    m_mainLayout->Register(m_description, {row2, rowSpan1}, {column0, columnSpan1});
-    m_mainLayout->Register(m_website,     {row3, rowSpan1}, {column0, columnSpan1});
-    m_mainLayout->Register(m_license,     {row4, rowSpan1}, {column0, columnSpan1});
-    m_mainLayout->Register(m_copyright,   {row5, rowSpan1}, {column0, columnSpan1});
-    m_mainLayout->Register(*m_close,      {row6, rowSpan1}, {column0, columnSpan1});
+    m_mainLayout->Register(*m_name,        {row0, rowSpan1}, {column0, columnSpan1});
+    m_mainLayout->Register(*m_version,     {row1, rowSpan1}, {column0, columnSpan1});
+    m_mainLayout->Register(*m_description, {row2, rowSpan1}, {column0, columnSpan1});
+    m_mainLayout->Register(*m_website,     {row3, rowSpan1}, {column0, columnSpan1});
+    m_mainLayout->Register(*m_license,     {row4, rowSpan1}, {column0, columnSpan1});
+    m_mainLayout->Register(*m_copyright,   {row5, rowSpan1}, {column0, columnSpan1});
+    m_mainLayout->Register(*m_close,       {row6, rowSpan1}, {column0, columnSpan1});
 }
 
 void cxgui::About::ConfigureLayouts()
@@ -93,15 +103,16 @@ void cxgui::About::ConfigureLayouts()
 
 void cxgui::About::ConfigureWidgets()
 {
-    m_name.set_use_markup(true);
-    m_name.set_margin_bottom(15);
+    m_name->SetMargins({TopMargin{0}, BottomMargin{15}, LeftMargin{0}, RightMargin{0}});
+    m_description->SetMargins({TopMargin{5}, BottomMargin{5}, LeftMargin{5}, RightMargin{5}});
+    m_copyright->SetMargins({TopMargin{0}, BottomMargin{5}, LeftMargin{0}, RightMargin{0}});
 
-    m_description.set_margin_top(5);
-    m_description.set_margin_start(5);
-    m_description.set_margin_end(5);
-    m_description.set_margin_bottom(5);
-
-    m_copyright.set_margin_bottom(5);
+    m_name->UpdateContents("<b><big>" + m_presenter->GetApplicationName() + "</big></b>");
+    m_version->UpdateContents(m_presenter->GetVersionNumber());
+    m_description->UpdateContents(m_presenter->GetApplicationDescription());
+    m_website->UpdateContents(m_presenter->GetWebsiteLinkContents());
+    m_license->UpdateContents(m_presenter->GetLicenseDescription());
+    m_copyright->UpdateContents(m_presenter->GetCopyrightNotice());
 }
 
 void cxgui::About::ConfigureSignalHandlers()
