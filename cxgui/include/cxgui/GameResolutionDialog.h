@@ -24,17 +24,16 @@
 #ifndef GAMERESOLUTIONDIALOG_H_E524D346_789D_4165_ABD3_4B876F7FBBD7
 #define GAMERESOLUTIONDIALOG_H_E524D346_789D_4165_ABD3_4B876F7FBBD7
 
-#include <gtkmm/label.h>
 #include <gtkmm/window.h>
-
-#include <cxgui/IButton.h>
 
 #include "Window.h"
 
 namespace cxgui
 {
+    class IButton;
     class IGameResolutionDialogController;
     class IGameResolutionDialogPresenter;
+    class ILabel;
 }
 
 namespace cxgui
@@ -83,8 +82,8 @@ private:
     const std::unique_ptr<IGameResolutionDialogPresenter> m_presenter;
     const std::unique_ptr<IGameResolutionDialogController> m_controller;
 
-    Gtk::Label m_title;
-    Gtk::Label m_message;
+    std::unique_ptr<ILabel> m_title;
+    std::unique_ptr<ILabel> m_message;
     std::unique_ptr<IButton> m_startNewGame;
 
 };

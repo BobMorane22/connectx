@@ -24,8 +24,11 @@
 #include <cxgui/common.h>
 #include <cxgui/GameResolutionDialog.h>
 #include <cxgui/Gtkmm3Button.h>
+#include <cxgui/Gtkmm3Label.h>
+#include <cxgui/IButton.h>
 #include <cxgui/IGameResolutionDialogController.h>
 #include <cxgui/IGameResolutionDialogPresenter.h>
+#include <cxgui/ILabel.h>
 #include <cxgui/Margins.h>
 
 cxgui::GameResolutionDialog::GameResolutionDialog(std::unique_ptr<IGameResolutionDialogPresenter> p_presenter,
@@ -33,6 +36,11 @@ cxgui::GameResolutionDialog::GameResolutionDialog(std::unique_ptr<IGameResolutio
 : m_presenter{std::move(p_presenter)}
 , m_controller{std::move(p_controller)}
 {
+    m_title = CreateWidget<Gtkmm3Label>("");
+    ASSERT(m_title);
+    m_message = CreateWidget<Gtkmm3Label>("");
+    ASSERT(m_message);
+
     m_startNewGame = CreateWidget<Gtkmm3Button>(m_presenter->GetStartNewGameButtonText());
     ASSERT(m_startNewGame);
 
@@ -70,8 +78,8 @@ void cxgui::GameResolutionDialog::RegisterWidgets()
     constexpr cxmodel::Column column0{0u};
     constexpr cxgui::ILayout::ColumnSpan columnSpan1{1u};
 
-    m_mainLayout->Register(m_title,         {row0, rowSpan1}, {column0, columnSpan1});
-    m_mainLayout->Register(m_message,       {row1, rowSpan1}, {column0, columnSpan1});
+    m_mainLayout->Register(*m_title,        {row0, rowSpan1}, {column0, columnSpan1});
+    m_mainLayout->Register(*m_message,      {row1, rowSpan1}, {column0, columnSpan1});
     m_mainLayout->Register(*m_startNewGame, {row2, rowSpan1}, {column0, columnSpan1});
 }
 
@@ -79,30 +87,21 @@ void cxgui::GameResolutionDialog::ConfigureLayouts()
 {
     IF_CONDITION_NOT_MET_DO(m_mainLayout, return;);
     
-    m_mainLayout->SetMargins({
-        cxgui::TopMargin{DIALOG_SIDE_MARGIN},
-        cxgui::BottomMargin{DIALOG_SIDE_MARGIN},
-        cxgui::LeftMargin{DIALOG_SIDE_MARGIN},
-        cxgui::RightMargin{DIALOG_SIDE_MARGIN}
-    });
+    m_mainLayout->SetMargins({ TopMargin{DIALOG_SIDE_MARGIN}, BottomMargin{DIALOG_SIDE_MARGIN}, LeftMargin{DIALOG_SIDE_MARGIN}, RightMargin{DIALOG_SIDE_MARGIN}});
 }
 
 void cxgui::GameResolutionDialog::ConfigureWidgets()
 {
     // Populate widgets:
-    m_title.set_text(m_presenter->GetTitle());
-    m_message.set_text(m_presenter->GetResolutionMessage());
+    m_title->UpdateContents(m_presenter->GetTitle());
+    m_message->UpdateContents(m_presenter->GetResolutionMessage());
 
     // Window title:
-    m_title.set_use_markup(true);
-    m_title.set_markup("<big><b>" + m_title.get_text() + "</b></big>");
-    m_title.set_margin_bottom(TITLE_BOTTOM_MARGIN);
-    m_title.set_halign(Gtk::Align::ALIGN_CENTER);
-    m_title.set_hexpand(true);
+    m_title->UpdateContents("<big><b>" + m_title->GetContents() + "</b></big>");
+    m_title->SetMargins({TopMargin{0}, BottomMargin{TITLE_BOTTOM_MARGIN}, LeftMargin{0}, RightMargin{0}});
 
     // Win resolution message:
-    m_message.set_halign(Gtk::Align::ALIGN_CENTER);
-    m_message.set_margin_bottom(CONTROL_BOTTOM_MARGIN);
+    m_message->SetMargins({TopMargin{0}, BottomMargin{CONTROL_BOTTOM_MARGIN}, LeftMargin{0}, RightMargin{0}});
 }
 
 void cxgui::GameResolutionDialog::ConfigureSignalHandlers()

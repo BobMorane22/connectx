@@ -45,6 +45,7 @@
 #include <cxgui/Gtkmm3MenuBar.h>
 #include <cxgui/Gtkmm3MenuItem.h>
 #include <cxgui/IAnimatedBoardPresenter.h>
+#include <cxgui/IButton.h>
 #include <cxgui/ILabel.h>
 #include <cxgui/ILayout.h>
 #include <cxgui/INewPlayersList.h>
