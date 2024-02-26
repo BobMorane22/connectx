@@ -24,8 +24,6 @@
 #ifndef GAMEVIEW_H_AA8C282C_9CC4_45F4_BE91_C8840160BA1B
 #define GAMEVIEW_H_AA8C282C_9CC4_45F4_BE91_C8840160BA1B
 
-#include <gtkmm/label.h>
-
 #include "AnimatedBoard.h"
 #include "Chip.h"
 #include "GameViewKeyHandlerStrategyFactory.h"
@@ -35,6 +33,7 @@
 
 namespace cxgui
 {
+    class ILabel;
     class ILayout;
 }
 
@@ -124,16 +123,16 @@ private:
     std::unique_ptr<ILayout> m_viewLayout;
 
     // Controls:
-    Gtk::Label m_title;
+    std::unique_ptr<ILabel> m_title;
 
     std::unique_ptr<ILayout> m_playersInfoLayout;
 
-    Gtk::Label m_activePlayerLabel;
-    Gtk::Label m_activePlayerName;
+    std::unique_ptr<ILabel> m_activePlayerLabel;
+    std::unique_ptr<ILabel> m_activePlayerName;
     std::unique_ptr<cxgui::Chip> m_activePlayerChip;
 
-    Gtk::Label m_nextPlayerLabel;
-    Gtk::Label m_nextPlayerName;
+    std::unique_ptr<ILabel> m_nextPlayerLabel;
+    std::unique_ptr<ILabel> m_nextPlayerName;
     std::unique_ptr<cxgui::Chip> m_nextPlayerChip;
 
     std::unique_ptr<cxgui::AnimatedBoard> m_board;

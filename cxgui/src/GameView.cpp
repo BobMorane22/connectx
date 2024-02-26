@@ -31,6 +31,7 @@
 #include <cxgui/DiscChip.h>
 #include <cxgui/GameView.h>
 #include <cxgui/GameViewKeyHandlerStrategyFactory.h>
+#include <cxgui/Gtkmm3Label.h>
 #include <cxgui/Gtkmm3Layout.h>
 #include <cxgui/Gtkmm3WidgetDelegate.h>
 #include <cxgui/IAnimatedBoardPresenter.h>
@@ -67,6 +68,17 @@ cxgui::GameView::GameView(IGameViewPresenter& p_presenter,
 
     m_playersInfoLayout = CreateWidget<Gtkmm3Layout>();
     ASSERT(m_playersInfoLayout);
+
+    m_title = CreateWidget<Gtkmm3Label>("");
+    ASSERT(m_title);
+    m_activePlayerLabel = CreateWidget<Gtkmm3Label>("");
+    ASSERT(m_activePlayerLabel);
+    m_activePlayerName = CreateWidget<Gtkmm3Label>("");
+    ASSERT(m_activePlayerName);
+    m_nextPlayerLabel = CreateWidget<Gtkmm3Label>("");
+    ASSERT(m_nextPlayerLabel);
+    m_nextPlayerName = CreateWidget<Gtkmm3Label>("");
+    ASSERT(m_nextPlayerName);
 
     SetLayout();
     PopulateWidgets();
@@ -242,19 +254,22 @@ void cxgui::GameView::SetLayout()
 
     constexpr cxmodel::Row row0{0u};
     constexpr cxmodel::Row row1{1u};
-    constexpr cxmodel::Row row2{2u};
     constexpr cxmodel::Row row4{4u};
-    constexpr cxgui::ILayout::RowSpan singleRowSpan{1u};
+    constexpr ILayout::RowSpan singleRowSpan{1u};
 
     constexpr cxmodel::Column column0{0u};
     constexpr cxmodel::Column column1{1u};
     constexpr cxmodel::Column column2{2u};
-    constexpr cxgui::ILayout::ColumnSpan singleColumnSpan{1u};
-    constexpr cxgui::ILayout::ColumnSpan fullSpan{2u};
+    constexpr ILayout::ColumnSpan singleColumnSpan{1u};
+    constexpr ILayout::ColumnSpan fullSpan{2u};
 
+    constexpr ILayout::Alignement hAlignLeft{
+        ILayout::VerticalAlignement::FILL,
+        ILayout::HorizontalAlignement::LEFT
+    };
 
     // Main view layout:
-    m_viewLayout->Register(m_title, {row0, singleRowSpan}, {column0, fullSpan});
+    m_viewLayout->Register(*m_title,             {row0, singleRowSpan}, {column0, fullSpan});
     m_viewLayout->Register(*m_playersInfoLayout, {row1, singleRowSpan}, {column0, fullSpan});
 
     if(INL_ASSERT(m_board))
@@ -263,15 +278,16 @@ void cxgui::GameView::SetLayout()
     }
 
     // Players info layout:
-    m_playersInfoLayout->Register(m_activePlayerLabel, {row0, singleRowSpan}, {column0, singleColumnSpan});
-    m_playersInfoLayout->Register(m_activePlayerName, {row0, singleRowSpan}, {column1, singleColumnSpan});
+    m_playersInfoLayout->SetColumnSpacingMode(ILayout::ColumnSpacingMode::EQUAL);
+    m_playersInfoLayout->Register(*m_activePlayerLabel, {row0, singleRowSpan}, {column0, singleColumnSpan}, hAlignLeft);
+    m_playersInfoLayout->Register(*m_activePlayerName,  {row0, singleRowSpan}, {column1, singleColumnSpan}, hAlignLeft);
     if(INL_ASSERT(m_activePlayerChip))
     {
         m_playersInfoLayout->Register(*m_activePlayerChip, {row0, singleRowSpan}, {column2, singleColumnSpan});
     }
 
-    m_playersInfoLayout->Register(m_nextPlayerLabel, {row1, singleRowSpan}, {column0, singleColumnSpan});
-    m_playersInfoLayout->Register(m_nextPlayerName, {row1, singleRowSpan}, {column1, singleColumnSpan});
+    m_playersInfoLayout->Register(*m_nextPlayerLabel, {row1, singleRowSpan}, {column0, singleColumnSpan}, hAlignLeft);
+    m_playersInfoLayout->Register(*m_nextPlayerName,  {row1, singleRowSpan}, {column1, singleColumnSpan}, hAlignLeft);
     if(INL_ASSERT(m_nextPlayerChip))
     {
         m_playersInfoLayout->Register(*m_nextPlayerChip, {row1, singleRowSpan}, {column2, singleColumnSpan});
@@ -280,14 +296,14 @@ void cxgui::GameView::SetLayout()
 
 void cxgui::GameView::PopulateWidgets()
 {
-    m_title.set_text(m_presenter.GetGameViewTitle());
+    m_title->UpdateContents(m_presenter.GetGameViewTitle());
 
-    m_activePlayerLabel.set_text(m_presenter.GetGameViewActivePlayerLabelText());
-    m_activePlayerName.set_text(m_presenter.GetGameViewActivePlayerName());
+    m_activePlayerLabel->UpdateContents(m_presenter.GetGameViewActivePlayerLabelText());
+    m_activePlayerName->UpdateContents(m_presenter.GetGameViewActivePlayerName());
     m_activePlayerChip->ChangeColor(m_presenter.GetGameViewActivePlayerChipColor());
 
-    m_nextPlayerLabel.set_text(m_presenter.GetGameViewNextPlayerLabelText());
-    m_nextPlayerName.set_text(m_presenter.GetGameViewNextPlayerName());
+    m_nextPlayerLabel->UpdateContents(m_presenter.GetGameViewNextPlayerLabelText());
+    m_nextPlayerName->UpdateContents(m_presenter.GetGameViewNextPlayerName());
     m_nextPlayerChip->ChangeColor(m_presenter.GetGameViewNextPlayerChipColor());
 }
 
@@ -302,35 +318,12 @@ void cxgui::GameView::ConfigureWidgets()
     });
 
     // View title:
-    m_title.set_use_markup(true);
-    m_title.set_markup("<big><b>" + m_title.get_text() + "</b></big>");
-    m_title.set_margin_bottom(TITLE_BOTTOM_MARGIN);
+    m_title->UpdateContents("<big><b>" + m_title->GetContents() + "</b></big>");
+    m_title->SetMargins({TopMargin{0}, BottomMargin{TITLE_BOTTOM_MARGIN}, LeftMargin{0}, RightMargin{0}});
 
     // Players section:
-    m_activePlayerLabel.set_halign(Gtk::Align::ALIGN_START);
-    m_activePlayerLabel.set_hexpand(true);
-    m_activePlayerLabel.set_markup("<b>" + m_activePlayerLabel.get_text() + "</b>");
-    m_activePlayerName.set_halign(Gtk::Align::ALIGN_START);
-    m_activePlayerName.set_hexpand(true);
-    if(INL_ASSERT(m_activePlayerChip))
-    {
-        m_activePlayerChip->set_hexpand(true);
-        m_activePlayerChip->set_vexpand(false);
-        m_activePlayerChip->set_halign(Gtk::Align::ALIGN_START);
-    }
-
-    m_nextPlayerLabel.set_halign(Gtk::Align::ALIGN_START);
-    m_nextPlayerLabel.set_hexpand(true);
-    m_nextPlayerLabel.set_use_markup(true);
-    m_nextPlayerLabel.set_markup("<b>" + m_nextPlayerLabel.get_text() + "</b>");
-    m_nextPlayerName.set_halign(Gtk::Align::ALIGN_START);
-    m_nextPlayerName.set_hexpand(true);
-    if(INL_ASSERT(m_nextPlayerChip))
-    {
-        m_nextPlayerChip->set_hexpand(true);
-        m_nextPlayerChip->set_vexpand(false);
-        m_nextPlayerChip->set_halign(Gtk::Align::ALIGN_START);
-    }
+    m_activePlayerLabel->UpdateContents("<b>" + m_activePlayerLabel->GetContents() + "</b>");
+    m_nextPlayerLabel->UpdateContents("<b>" + m_nextPlayerLabel->GetContents() + "</b>");
 
     m_playersInfoLayout->SetMargins({
         cxgui::TopMargin{0},
@@ -440,8 +433,8 @@ void cxgui::GameView::UpdateGameReinitialized()
 void cxgui::GameView::SyncPlayers()
 {
     m_activePlayerChip->ChangeColor(m_presenter.GetGameViewActivePlayerChipColor());
-    m_activePlayerName.set_text(m_presenter.GetGameViewActivePlayerName());
+    m_activePlayerName->UpdateContents(m_presenter.GetGameViewActivePlayerName());
 
     m_nextPlayerChip->ChangeColor(m_presenter.GetGameViewNextPlayerChipColor());
-    m_nextPlayerName.set_text(m_presenter.GetGameViewNextPlayerName());
+    m_nextPlayerName->UpdateContents(m_presenter.GetGameViewNextPlayerName());
 }
