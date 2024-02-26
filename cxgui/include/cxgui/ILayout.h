@@ -246,7 +246,7 @@ public:
          *
          *****************************************************************************************/
         constexpr Alignement()
-        :Alignement(VerticalAlignement::FILL, HorizontalAlignement::FILL)
+        : Alignement(VerticalAlignement::FILL, HorizontalAlignement::FILL)
         {}
 
         /**************************************************************************************//**

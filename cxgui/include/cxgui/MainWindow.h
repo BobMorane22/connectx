@@ -27,8 +27,6 @@
 #include <memory>
 
 #include <gtkmm/applicationwindow.h>
-#include <gtkmm/button.h>
-#include <gtkmm/label.h>
 
 #include "IStatusBar.h"
 #include "IStatusBarPresenter.h"

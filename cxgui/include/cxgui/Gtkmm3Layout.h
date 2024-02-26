@@ -67,11 +67,11 @@ public:
     void Register(IWidget& p_widget,
                   const ILayout::RowDescriptor& p_row,
                   const ILayout::ColumnDescriptor& p_column,
-                  const ILayout::Alignement& p_alignement = {}) override;
+                  const Alignement& p_alignement = {}) override;
     void Register(Gtk::Widget& p_gtkWidget,
                   const ILayout::RowDescriptor& p_row,
                   const ILayout::ColumnDescriptor& p_column,
-                  const ILayout::Alignement& p_alignement = {}) override;
+                  const Alignement& p_alignement = {}) override;
     void Unregister(IWidget& p_widget) override;
     void Unregister(Gtk::Widget& p_gtkWidget) override;
     [[nodiscard]] const IWidget* GetWidgetAtPosition(const cxmodel::Row& p_row, const cxmodel::Column& p_column) const override;
