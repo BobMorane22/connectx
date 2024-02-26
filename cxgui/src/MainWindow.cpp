@@ -57,6 +57,7 @@
 #include <cxgui/StatusBar.h>
 #include <cxgui/StatusBarPresenter.h>
 #include <cxgui/StdActionIcon.h>
+#include <cxgui/widgetUtilities.h>
 
 cxgui::MainWindow::MainWindow(Gtk::Application& p_gtkApplication,
                               cxmodel::ModelSubject& p_model,
@@ -276,29 +277,10 @@ void cxgui::MainWindow::UpdateGameReinitialized(cxmodel::ModelNotificationContex
 
 void cxgui::MainWindow::UpdateMenuItems(cxmodel::ModelNotificationContext p_context)
 {
-    m_newGameMenuItem->SetEnabled(cxgui::EnabledState::Disabled);
-    if(m_presenter.IsNewGamePossible())
-    {
-        m_newGameMenuItem->SetEnabled(cxgui::EnabledState::Enabled);
-    }
-
-    m_reinitializeMenuItem->SetEnabled(cxgui::EnabledState::Disabled);
-    if(m_presenter.IsCurrentGameReinitializationPossible())
-    {
-        m_reinitializeMenuItem->SetEnabled(cxgui::EnabledState::Enabled);
-    }
-
-    m_undoMenuItem->SetEnabled(cxgui::EnabledState::Disabled);
-    if(p_context == cxmodel::ModelNotificationContext::CHIP_DROPPED || m_presenter.IsUndoPossible())
-    {
-        m_undoMenuItem->SetEnabled(cxgui::EnabledState::Enabled);
-    }
-
-    m_redoMenuItem->SetEnabled(cxgui::EnabledState::Disabled);
-    if(m_presenter.IsRedoPossible())
-    {
-        m_redoMenuItem->SetEnabled(cxgui::EnabledState::Enabled);
-    }
+    EnabledStateUpdate(*m_newGameMenuItem,      m_presenter.IsNewGamePossible());
+    EnabledStateUpdate(*m_reinitializeMenuItem, m_presenter.IsCurrentGameReinitializationPossible());
+    EnabledStateUpdate(*m_undoMenuItem,         p_context == cxmodel::ModelNotificationContext::CHIP_DROPPED || m_presenter.IsUndoPossible());
+    EnabledStateUpdate(*m_redoMenuItem,         m_presenter.IsRedoPossible());
 }
 
 void cxgui::MainWindow::RegisterMenuBar()
@@ -320,9 +302,15 @@ void cxgui::MainWindow::RegisterMenuBar()
     m_helpMenu->Register(*m_contentsMenuItem);
     m_helpMenu->Register(*m_aboutMenuItem);
 
-    // Registering everythin in the menuBar:
+    // Registering everything in the menuBar:
     m_menuBar->Register(*m_gameMenu);
     m_menuBar->Register(*m_helpMenu);
+
+    // Enabling menu items according to the application state:
+    EnabledStateUpdate(*m_newGameMenuItem,      m_presenter.IsNewGamePossible());
+    EnabledStateUpdate(*m_reinitializeMenuItem, m_presenter.IsCurrentGameReinitializationPossible());
+    EnabledStateUpdate(*m_undoMenuItem,         m_presenter.IsUndoPossible());
+    EnabledStateUpdate(*m_redoMenuItem,         m_presenter.IsRedoPossible());
 }
 
 void cxgui::MainWindow::RegisterStatusBar()

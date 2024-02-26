@@ -24,6 +24,7 @@
 #define IWIDGET_H_845C70A7_65F2_4B7C_8446_A11ED3BC31E8
 
 #include <cstddef>
+#include <memory>
 #include <string>
 
 namespace cxgui

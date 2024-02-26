@@ -21,6 +21,7 @@
  *
  *************************************************************************************************/
 
+#include "cxgui/widgetUtilities.h"
 #include <algorithm>
 #include <memory>
 #include <sstream>
@@ -257,20 +258,9 @@ void cxgui::NewGameView::ConfigureWidgets()
 
     // Add/Remove player buttons:
     m_removePlayerButton->SetMargins({TopMargin{0u}, BottomMargin{CONTROL_BOTTOM_MARGIN}, LeftMargin{0u}, RightMargin{0u}});
-
-    m_removePlayerButton->SetEnabled(cxgui::EnabledState::Disabled);
-    if(m_presenter.CanRemoveAnotherPlayer(m_playersList->GetSize()))
-    {
-        m_removePlayerButton->SetEnabled(cxgui::EnabledState::Enabled);
-    }
-
     m_addPlayerButton->SetMargins({cxgui::TopMargin{0u}, cxgui::BottomMargin{CONTROL_BOTTOM_MARGIN}, cxgui::LeftMargin{0u}, cxgui::RightMargin{0u}});
-
-    m_addPlayerButton->SetEnabled(cxgui::EnabledState::Disabled);
-    if(m_presenter.CanAddAnotherPlayer(m_playersList->GetSize()))
-    {
-        m_addPlayerButton->SetEnabled(cxgui::EnabledState::Enabled);
-    }
+    EnabledStateUpdate(*m_removePlayerButton, m_presenter.CanRemoveAnotherPlayer(m_playersList->GetSize()));
+    EnabledStateUpdate(*m_addPlayerButton, m_presenter.CanAddAnotherPlayer(m_playersList->GetSize()));
 
     // Start button:
     m_startButton->SetMargins({TopMargin{0u}, BottomMargin{CONTROL_BOTTOM_MARGIN}, LeftMargin{0u}, RightMargin{0u}});
@@ -305,17 +295,8 @@ void cxgui::NewGameView::OnAddPlayer()
         IF_CONDITION_NOT_MET_DO(m_playersList->AddRow(m_presenter, nextColumnIndex), return;);
     }
 
-    m_removePlayerButton->SetEnabled(cxgui::EnabledState::Disabled);
-    if(m_presenter.CanRemoveAnotherPlayer(m_playersList->GetSize()))
-    {
-        m_removePlayerButton->SetEnabled(cxgui::EnabledState::Enabled);
-    }
-
-    m_addPlayerButton->SetEnabled(cxgui::EnabledState::Disabled);
-    if(m_presenter.CanAddAnotherPlayer(m_playersList->GetSize()))
-    {
-        m_addPlayerButton->SetEnabled(cxgui::EnabledState::Enabled);
-    }
+    EnabledStateUpdate(*m_removePlayerButton, m_presenter.CanRemoveAnotherPlayer(m_playersList->GetSize()));
+    EnabledStateUpdate(*m_addPlayerButton, m_presenter.CanAddAnotherPlayer(m_playersList->GetSize()));
 }
 
 void cxgui::NewGameView::OnRemovePlayer()
@@ -340,17 +321,8 @@ void cxgui::NewGameView::OnRemovePlayer()
         m_parentWindow.resize(m_parentWindow.get_width(), naturalHeight);
     }
 
-    m_removePlayerButton->SetEnabled(cxgui::EnabledState::Disabled);
-    if(m_presenter.CanRemoveAnotherPlayer(m_playersList->GetSize()))
-    {
-        m_removePlayerButton->SetEnabled(cxgui::EnabledState::Enabled);
-    }
-
-    m_addPlayerButton->SetEnabled(cxgui::EnabledState::Disabled);
-    if(m_presenter.CanAddAnotherPlayer(m_playersList->GetSize()))
-    {
-        m_addPlayerButton->SetEnabled(cxgui::EnabledState::Enabled);
-    }
+    EnabledStateUpdate(*m_removePlayerButton, m_presenter.CanRemoveAnotherPlayer(m_playersList->GetSize()));
+    EnabledStateUpdate(*m_addPlayerButton, m_presenter.CanAddAnotherPlayer(m_playersList->GetSize()));
 }
 
 void cxgui::NewGameView::OnNewGameParameterUpdated()

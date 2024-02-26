@@ -50,6 +50,7 @@ set(SOURCE_FILES
   StatusBarPresenterTests.cpp
   StdActionIconTests.cpp
   TieGameResolutionDialogPresenterTests.cpp
+  widgetUtilitiesTests.cpp
   WinGameResolutionDialogPresenterTests.cpp
 )
 
