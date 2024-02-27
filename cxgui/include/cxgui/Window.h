@@ -67,7 +67,7 @@ public:
     Window();
 
     // cxgui::IWindow:
-    int Show() override;
+    [[nodiscard]] int Show() override;
 
     /******************************************************************************************//**
      * @brief Initializes the window widgets.

@@ -56,7 +56,7 @@ public:
      *       errors, `EXIT_FAILURE` otherwise.
      *
      ********************************************************************************************/
-    virtual int Show() = 0;
+    [[nodiscard]] virtual int Show() = 0;
 
 };
 
