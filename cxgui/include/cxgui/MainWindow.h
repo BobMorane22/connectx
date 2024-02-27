@@ -81,7 +81,7 @@ namespace cxgui
  * the gaming widgets, such as the board.
  *
  ************************************************************************************************/
-class MainWindow : public cxgui::Window<Gtk::Window>
+class MainWindow : public cxgui::Gtkmm3Window<Gtk::Window>
 {
 
 public:

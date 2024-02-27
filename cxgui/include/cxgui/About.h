@@ -42,7 +42,7 @@ namespace cxgui
  * @brief About window.
  *
  *************************************************************************************************/
-class About : public Window<Gtk::Window>
+class About : public Gtkmm3Window<Gtk::Window>
 {
 
 public:

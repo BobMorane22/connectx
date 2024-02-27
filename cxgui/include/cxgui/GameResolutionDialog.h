@@ -48,7 +48,7 @@ namespace cxgui
  * @note This window is modal.
  *
  ************************************************************************************************/
-class GameResolutionDialog : public Window<Gtk::Window>
+class GameResolutionDialog : public Gtkmm3Window<Gtk::Window>
 {
 
 public:

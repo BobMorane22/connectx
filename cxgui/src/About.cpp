@@ -30,7 +30,7 @@
 #include <cxgui/Margins.h>
 
 cxgui::About::About(std::unique_ptr<IAboutWindowPresenter>&& p_presenter)
- : Window()
+ : Gtkmm3Window()
  , m_presenter{std::move(p_presenter)}
 {
     POSTCONDITION(m_presenter);

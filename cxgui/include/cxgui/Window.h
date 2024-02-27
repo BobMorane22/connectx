@@ -55,7 +55,7 @@ namespace cxgui
  *
  ************************************************************************************************/
 template<typename GtkmmWindow>
-class Window : public IWindow
+class Gtkmm3Window : public IWindow
 {
 
 public:
@@ -64,7 +64,7 @@ public:
      * @brief Constructor.
      *
      ********************************************************************************************/
-    Window();
+    Gtkmm3Window();
 
     // cxgui::IWindow:
     [[nodiscard]] int Show() override;
@@ -162,7 +162,7 @@ protected:
 };
 
 template<typename GtkmmWindow>
-Window<GtkmmWindow>::Window()
+Gtkmm3Window<GtkmmWindow>::Gtkmm3Window()
 {
     m_mainLayout = CreateWidget<Gtkmm3Layout>();
     ASSERT(m_mainLayout);
@@ -175,7 +175,7 @@ Window<GtkmmWindow>::Window()
 }
 
 template<typename GtkmmWindow>
-int Window<GtkmmWindow>::Show()
+int Gtkmm3Window<GtkmmWindow>::Show()
 {
     m_window.show_all();
 
@@ -183,7 +183,7 @@ int Window<GtkmmWindow>::Show()
 }
 
 template<typename GtkmmWindow>
-void Window<GtkmmWindow>::Init()
+void Gtkmm3Window<GtkmmWindow>::Init()
 {
     ConfigureWindowIcon();
     ConfigureWindow();
