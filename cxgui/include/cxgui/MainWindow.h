@@ -81,7 +81,7 @@ namespace cxgui
  * the gaming widgets, such as the board.
  *
  ************************************************************************************************/
-class MainWindow : public cxgui::Window<Gtk::ApplicationWindow>
+class MainWindow : public cxgui::Window<Gtk::Window>
 {
 
 public:
@@ -102,7 +102,7 @@ public:
 
     ~MainWindow() override;
 
-    int Show() override;
+    [[nodiscard]] int Show() override;
 
 
 private:
