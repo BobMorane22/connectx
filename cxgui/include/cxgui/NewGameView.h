@@ -29,7 +29,7 @@
 #include <cxmodel/Status.h>
 
 #include "IView.h"
-#include "Window.h"
+#include "Gtkmm3Window.h"
 
 namespace cxmodel
 {

@@ -35,7 +35,7 @@ cxgui::About::About(std::unique_ptr<IAboutWindowPresenter>&& p_presenter)
 {
     POSTCONDITION(m_presenter);
 
-    m_window.set_title(m_presenter->GetWindowTitle());
+    set_title(m_presenter->GetWindowTitle());
 
     m_name = CreateWidget<Gtkmm3Label>("");
     ASSERT(m_name);
@@ -61,9 +61,9 @@ void cxgui::About::Update(cxmodel::ModelNotificationContext /*p_context*/, cxmod
 
 void cxgui::About::ConfigureWindow()
 {
-    m_window.set_title(m_presenter->GetWindowTitle());
-    m_window.set_position(Gtk::WIN_POS_CENTER);
-    m_window.set_resizable(false);
+    set_title(m_presenter->GetWindowTitle());
+    set_position(Gtk::WIN_POS_CENTER);
+    set_resizable(false);
 }
 
 void cxgui::About::RegisterLayouts()
@@ -117,5 +117,5 @@ void cxgui::About::ConfigureWidgets()
 
 void cxgui::About::ConfigureSignalHandlers()
 {
-    m_close->OnClicked()->Connect([this](){m_window.close();});
+    m_close->OnClicked()->Connect([this](){close();});
 }

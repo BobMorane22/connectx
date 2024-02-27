@@ -119,8 +119,8 @@ cxgui::MainWindow::~MainWindow()
 
 void cxgui::MainWindow::ConfigureWindow()
 {
-    m_window.set_title(m_presenter.GetWindowTitle());
-    m_window.set_position(Gtk::WIN_POS_CENTER);
+    set_title(m_presenter.GetWindowTitle());
+    set_position(Gtk::WIN_POS_CENTER);
 }
 
 void cxgui::MainWindow::RegisterLayouts()
@@ -136,7 +136,7 @@ void cxgui::MainWindow::RegisterWidgets()
 
     RegisterMenuBar();
 
-    m_newGameView = std::make_unique<NewGameView>(m_presenter, m_controller, m_window, *m_mainLayout, m_viewLeft, m_viewTop);
+    m_newGameView = std::make_unique<NewGameView>(m_presenter, m_controller, *this, *m_mainLayout, m_viewLeft, m_viewTop);
     m_newGameView->Activate();
 
     RegisterStatusBar();
@@ -159,15 +159,15 @@ void cxgui::MainWindow::ConfigureSignalHandlers()
     m_reinitializeMenuItem->OnTriggered()->Connect([this](){OnReinitializeCurrentGame();});
     m_undoMenuItem->OnTriggered()->Connect([this]{OnUndo();});
     m_redoMenuItem->OnTriggered()->Connect([this]{OnRedo();});
-    m_quitMenuItem->OnTriggered()->Connect([this](){m_window.close();});
+    m_quitMenuItem->OnTriggered()->Connect([this](){close();});
     m_contentsMenuItem->OnTriggered()->Connect([this](){OnHelpContentsRequested();});
     m_aboutMenuItem->OnTriggered()->Connect([this](){OnCreateAboutWindow();});
 }
 
 int cxgui::MainWindow::Show()
 {
-    m_window.show_all();
-    return m_gtkApplication.run(m_window);
+    show_all();
+    return m_gtkApplication.run(*this);
 }
 
 void cxgui::MainWindow::Update(cxmodel::ModelNotificationContext p_context, cxmodel::ModelSubject* p_subject)
@@ -336,7 +336,7 @@ void cxgui::MainWindow::OnHelpContentsRequested()
     GError* error = nullptr;
 
     // Trigger the Gnome help system:
-    Gtk::Window* window = dynamic_cast<Gtk::Window*>(&m_window);
+    Gtk::Window* window = dynamic_cast<Gtk::Window*>(this);
     IF_CONDITION_NOT_MET_DO(window, return;);
 
     const bool status = gtk_show_uri_on_window(window->gobj(),
@@ -441,12 +441,12 @@ void cxgui::MainWindow::ActivateNewGameView()
 
     if(!m_newGameView)
     {
-        m_newGameView = std::make_unique<NewGameView>(m_presenter, m_controller, m_window, *m_mainLayout, m_viewLeft, m_viewTop);
+        m_newGameView = std::make_unique<NewGameView>(m_presenter, m_controller, *this, *m_mainLayout, m_viewLeft, m_viewTop);
     }
 
     m_newGameView->Activate();
-    m_window.resize(1, 1);
-    m_window.show_all();
+    resize(1, 1);
+    show_all();
 }
 
 void cxgui::MainWindow::DeactivateNewGameView()
@@ -464,13 +464,13 @@ void cxgui::MainWindow::ActivateGameView()
 
     if(!m_gameView)
     {
-        m_gameView = std::make_unique<GameView>(m_presenter, m_controller, m_window, *m_mainLayout, m_viewLeft, m_viewTop);
+        m_gameView = std::make_unique<GameView>(m_presenter, m_controller, *this, *m_mainLayout, m_viewLeft, m_viewTop);
         IF_CONDITION_NOT_MET_DO(m_gameView, return;);
     }
 
     m_gameView->Activate();
-    m_window.resize(1, 1);
-    m_window.show_all();
+    resize(1, 1);
+    show_all();
 }
 
 void cxgui::MainWindow::DeactivateGameView()

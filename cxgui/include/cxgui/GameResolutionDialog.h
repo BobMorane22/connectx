@@ -26,7 +26,7 @@
 
 #include <gtkmm/window.h>
 
-#include "Window.h"
+#include "Gtkmm3Window.h"
 
 namespace cxgui
 {
@@ -48,7 +48,7 @@ namespace cxgui
  * @note This window is modal.
  *
  ************************************************************************************************/
-class GameResolutionDialog : public Gtkmm3Window<Gtk::Window>
+class GameResolutionDialog : public Gtkmm3Window
 {
 
 public:

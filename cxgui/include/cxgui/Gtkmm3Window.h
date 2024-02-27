@@ -16,15 +16,16 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file Window.h
+ * @file Gtkmm3Window.h
  * @date 2020
  *
  *************************************************************************************************/
 
-#ifndef WINDOW_H_861FC628_597C_407E_8206_E67F71000A55
-#define WINDOW_H_861FC628_597C_407E_8206_E67F71000A55
+#ifndef GTKMM3WINDOW_H_861FC628_597C_407E_8206_E67F71000A55
+#define GTKMM3WINDOW_H_861FC628_597C_407E_8206_E67F71000A55
 
 #include <glibmm/fileutils.h>
+#include <gtkmm/window.h>
 
 #include <cxinv/assertion.h>
 #include <cxgui/generated/ressources.h>
@@ -54,8 +55,8 @@ namespace cxgui
  * child widgets, layouts and the window itself.
  *
  ************************************************************************************************/
-template<typename GtkmmWindow>
-class Gtkmm3Window : public IWindow
+class Gtkmm3Window : public IWindow,
+                     public Gtk::Window
 {
 
 public:
@@ -86,20 +87,7 @@ protected:
      * Override this method to specify a path for the window icon.
      *
      **********************************************************************************************/
-    virtual void ConfigureWindowIcon()
-    {
-        try
-        {
-            m_window.set_icon_from_file(cxgui::RESSOURCE_ICONS_PATH + std::string{"/cxicon16.png"});
-        }
-        catch(const Glib::FileError& p_exception)
-        {
-            const std::string errorMsg = p_exception.what();
-            ASSERT_ERROR_MSG(errorMsg.c_str());
-
-            return;
-        }
-    }
+    void ConfigureWindowIcon();
 
     /*******************************************************************************************//**
      * @brief Configures the window.
@@ -156,44 +144,8 @@ protected:
     /** The underlying window's top level layout. */
     std::unique_ptr<cxgui::ILayout> m_mainLayout;
 
-    /** The underlying GTKmm window instance. */
-    GtkmmWindow m_window;
-
 };
-
-template<typename GtkmmWindow>
-Gtkmm3Window<GtkmmWindow>::Gtkmm3Window()
-{
-    m_mainLayout = CreateWidget<Gtkmm3Layout>();
-    ASSERT(m_mainLayout);
-
-    Gtk::Widget* mainLayoutAsGtk = dynamic_cast<Gtk::Widget*>(m_mainLayout.get());
-    if(INL_ASSERT(mainLayoutAsGtk))
-    {
-        m_window.add(*mainLayoutAsGtk);
-    }
-}
-
-template<typename GtkmmWindow>
-int Gtkmm3Window<GtkmmWindow>::Show()
-{
-    m_window.show_all();
-
-    return EXIT_SUCCESS;
-}
-
-template<typename GtkmmWindow>
-void Gtkmm3Window<GtkmmWindow>::Init()
-{
-    ConfigureWindowIcon();
-    ConfigureWindow();
-    RegisterLayouts();
-    RegisterWidgets();
-    ConfigureLayouts();
-    ConfigureWidgets();
-    ConfigureSignalHandlers();
-}
 
 } // namespace cxgui
 
-#endif // WINDOW_H_861FC628_597C_407E_8206_E67F71000A55
+#endif // GTKMM3WINDOW_H_861FC628_597C_407E_8206_E67F71000A55

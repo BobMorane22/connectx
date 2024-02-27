@@ -56,8 +56,8 @@ void cxgui::GameResolutionDialog::ConfigureWindow()
 {
     // We do now want the user to simply close the window by pressing the
     // 'X' button.
-    m_window.set_deletable(false);
-    m_window.set_modal(true);
+    set_deletable(false);
+    set_modal(true);
 }
 
 void cxgui::GameResolutionDialog::RegisterLayouts()
@@ -111,6 +111,6 @@ void cxgui::GameResolutionDialog::ConfigureSignalHandlers()
             IF_CONDITION_NOT_MET_DO(m_controller, return;);
             m_controller->OnNewGameRequested();
 
-            m_window.close();
+            close();
         });
 }

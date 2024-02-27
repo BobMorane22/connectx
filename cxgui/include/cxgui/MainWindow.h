@@ -31,7 +31,7 @@
 #include "IStatusBar.h"
 #include "IStatusBarPresenter.h"
 #include "IView.h"
-#include "Window.h"
+#include "Gtkmm3Window.h"
 
 namespace cxgui
 {
@@ -81,7 +81,7 @@ namespace cxgui
  * the gaming widgets, such as the board.
  *
  ************************************************************************************************/
-class MainWindow : public cxgui::Gtkmm3Window<Gtk::Window>
+class MainWindow : public cxgui::Gtkmm3Window
 {
 
 public:

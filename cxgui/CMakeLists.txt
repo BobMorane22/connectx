@@ -53,6 +53,7 @@ add_library(${TARGET_NAME}
   src/Gtkmm3OnOffSwitch.cpp
   src/Gtkmm3SpinBox.cpp
   src/Gtkmm3WidgetDelegate.cpp
+  src/Gtkmm3Window.cpp
   src/IAnimatedBoardModel.cpp
   src/INewGameViewPresenter.cpp
   src/KeyboardShortcut.cpp

@@ -27,7 +27,7 @@
 #include <gtkmm/window.h>
 
 #include "IAboutWindowPresenter.h"
-#include "Window.h"
+#include "Gtkmm3Window.h"
 
 namespace cxgui
 {
@@ -42,7 +42,7 @@ namespace cxgui
  * @brief About window.
  *
  *************************************************************************************************/
-class About : public Gtkmm3Window<Gtk::Window>
+class About : public Gtkmm3Window
 {
 
 public:
