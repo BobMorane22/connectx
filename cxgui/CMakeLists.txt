@@ -40,7 +40,7 @@ add_library(${TARGET_NAME}
   src/extractRawUserInput.cpp
   src/FrameAnimationStrategy.cpp
   src/GameResolutionDialogController.cpp
-  src/GameResolutionDialog.cpp
+  src/Gtkmm3GameResolutionDialog.cpp
   src/GameResolutionDialogPresenterFactory.cpp
   src/GameView.cpp
   src/GameViewKeyHandlerStrategyFactory.cpp

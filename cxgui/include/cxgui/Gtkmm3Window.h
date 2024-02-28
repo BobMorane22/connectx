@@ -24,17 +24,14 @@
 #ifndef GTKMM3WINDOW_H_861FC628_597C_407E_8206_E67F71000A55
 #define GTKMM3WINDOW_H_861FC628_597C_407E_8206_E67F71000A55
 
-#include <glibmm/fileutils.h>
 #include <gtkmm/window.h>
 
 #include <cxinv/assertion.h>
 #include <cxgui/generated/ressources.h>
 #include <cxgui/Gtkmm3Layout.h>
 #include <cxgui/ILayout.h>
+#include <cxgui/IWindow.h>
 #include <cxgui/Gtkmm3WidgetDelegate.h>
-
-#include "IWindow.h"
-
 
 namespace cxgui
 {

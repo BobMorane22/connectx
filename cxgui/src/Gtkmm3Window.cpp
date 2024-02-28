@@ -21,6 +21,8 @@
  *
  *************************************************************************************************/
 
+#include <glibmm/fileutils.h>
+
 #include <cxgui/Gtkmm3Window.h>
 
 void cxgui::Gtkmm3Window::ConfigureWindowIcon()

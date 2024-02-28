@@ -16,15 +16,13 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file GameResolutionDialog.h
+ * @file Gtkmm3GameResolutionDialog.h
  * @date 2020
  *
  *************************************************************************************************/
 
-#ifndef GAMERESOLUTIONDIALOG_H_E524D346_789D_4165_ABD3_4B876F7FBBD7
-#define GAMERESOLUTIONDIALOG_H_E524D346_789D_4165_ABD3_4B876F7FBBD7
-
-#include <gtkmm/window.h>
+#ifndef GTKMM3GAMERESOLUTIONDIALOG_H_E524D346_789D_4165_ABD3_4B876F7FBBD7
+#define GTKMM3GAMERESOLUTIONDIALOG_H_E524D346_789D_4165_ABD3_4B876F7FBBD7
 
 #include "Gtkmm3Window.h"
 
@@ -48,7 +46,7 @@ namespace cxgui
  * @note This window is modal.
  *
  ************************************************************************************************/
-class GameResolutionDialog : public Gtkmm3Window
+class Gtkmm3GameResolutionDialog : public Gtkmm3Window
 {
 
 public:
@@ -65,19 +63,19 @@ public:
      *     The window presenter.
      *
      ********************************************************************************************/
-    GameResolutionDialog(std::unique_ptr<IGameResolutionDialogPresenter> p_presenter,
-                         std::unique_ptr<IGameResolutionDialogController> p_controller);
+    Gtkmm3GameResolutionDialog(std::unique_ptr<IGameResolutionDialogPresenter> p_presenter,
+                               std::unique_ptr<IGameResolutionDialogController> p_controller);
 
 private:
 
-    void Update(cxmodel::ModelNotificationContext p_context, cxmodel::ModelSubject* p_subject) override;
+    void Update(cxmodel::ModelNotificationContext p_context, cxmodel::ModelSubject* p_subject) final;
 
-    void ConfigureWindow() override;
-    void RegisterLayouts() override;
-    void RegisterWidgets() override;
-    void ConfigureLayouts() override;
-    void ConfigureWidgets() override;
-    void ConfigureSignalHandlers() override;
+    void ConfigureWindow() final;
+    void RegisterLayouts() final;
+    void RegisterWidgets() final;
+    void ConfigureLayouts() final;
+    void ConfigureWidgets() final;
+    void ConfigureSignalHandlers() final;
 
     const std::unique_ptr<IGameResolutionDialogPresenter> m_presenter;
     const std::unique_ptr<IGameResolutionDialogController> m_controller;
@@ -90,4 +88,4 @@ private:
 
 } // namespace cxgui
 
-#endif // GAMERESOLUTIONDIALOG_H_E524D346_789D_4165_ABD3_4B876F7FBBD7
+#endif // GTKMM3GAMERESOLUTIONDIALOG_H_E524D346_789D_4165_ABD3_4B876F7FBBD7

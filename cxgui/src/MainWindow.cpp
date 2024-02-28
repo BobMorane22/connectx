@@ -36,10 +36,10 @@
 #include <cxgui/Gtkmm3AboutWindow.h>
 #include <cxgui/AboutWindowPresenter.h>
 #include <cxgui/EnabledState.h>
-#include <cxgui/GameResolutionDialog.h>
 #include <cxgui/GameResolutionDialogController.h>
 #include <cxgui/GameResolutionDialogPresenterFactory.h>
 #include <cxgui/GameView.h>
+#include <cxgui/Gtkmm3GameResolutionDialog.h>
 #include <cxgui/Gtkmm3Layout.h>
 #include <cxgui/Gtkmm3Menu.h>
 #include <cxgui/Gtkmm3MenuBar.h>
@@ -427,14 +427,15 @@ void cxgui::MainWindow::CreateGameResolutionWindow(cxmodel::ModelNotificationCon
         IF_CONDITION_NOT_MET_DO(gameResolutionController, return;);
 
         {
-            auto gameResolutionWindow = std::make_unique<GameResolutionDialog>(std::move(gameResolutionPresenter), std::move(gameResolutionController));
+            auto gameResolutionWindow = CreateWidget<Gtkmm3GameResolutionDialog>(std::move(gameResolutionPresenter), std::move(gameResolutionController));
             gameResolutionWindow->Init();
 
             m_gameResolution = std::move(gameResolutionWindow);
         }
     }
 
-    m_gameResolution->Show();
+    const int result = m_gameResolution->Show();
+    ASSERT(result == EXIT_SUCCESS);
 }
 
 void cxgui::MainWindow::ActivateNewGameView()

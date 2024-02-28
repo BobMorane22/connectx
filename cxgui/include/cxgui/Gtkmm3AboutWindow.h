@@ -54,10 +54,10 @@ public:
      *********************************************************************************************/
     explicit Gtkmm3AboutWindow(std::unique_ptr<IAboutWindowPresenter> p_presenter);
 
+private:
+
     // cxmodel::IModelObserver:
     void Update(cxmodel::ModelNotificationContext p_context, cxmodel::ModelSubject* p_subject) final;
-
-private:
 
     void ConfigureWindow() final;
     void RegisterLayouts() final;
