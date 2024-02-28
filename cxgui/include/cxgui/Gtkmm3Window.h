@@ -106,7 +106,6 @@ public:
 protected:
 
     std::unique_ptr<cxgui::ILayout> m_mainLayout;
-    std::unique_ptr<IWidget> m_delegate;
 
 private:
 
@@ -169,6 +168,10 @@ private:
      *
      **********************************************************************************************/
     virtual void ConfigureSignalHandlers() = 0;
+
+private:
+
+    std::unique_ptr<IWidget> m_delegate;
 
 };
 
