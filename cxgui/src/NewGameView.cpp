@@ -21,7 +21,6 @@
  *
  *************************************************************************************************/
 
-#include "cxgui/widgetUtilities.h"
 #include <algorithm>
 #include <memory>
 #include <sstream>
@@ -46,6 +45,7 @@
 #include <cxgui/ISpinBox.h>
 #include <cxgui/Margins.h>
 #include <cxgui/NewGameView.h>
+#include <cxgui/widgetUtilities.h>
 
 namespace
 {

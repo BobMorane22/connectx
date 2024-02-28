@@ -22,7 +22,8 @@
  *************************************************************************************************/
 
 #include <cxinv/assertion.h>
-#include <cxgui/MainWindow.h>
+#include <cxgui/Gtkmm3MainWindow.h>
+#include <cxgui/IWindow.h>
 #include <cxgui/MainWindowController.h>
 #include <cxgui/MainWindowPresenter.h>
 #include <cxexec/GtkmmUIManager.h>
@@ -44,7 +45,8 @@ cx::GtkmmUIManager::GtkmmUIManager(int argc, char *argv[], cx::ModelReferences& 
     // Note: we must use the 'get' method with the 'operator*' because Gtk::RefPtr does not
     // support, like most smart pointers, accessing the underlying instance through 'operator*':
     {
-        auto mainWindow = std::make_unique<cxgui::MainWindow>(*(m_app.get()), p_model.m_asSubject, *m_controller, *m_presenter);
+        auto mainWindow = cxgui::CreateWidget<cxgui::Gtkmm3MainWindow>(*(m_app.get()), p_model.m_asSubject, *m_controller, *m_presenter);
+        ASSERT(mainWindow);
         mainWindow->Init();
 
         m_mainWindow = std::move(mainWindow);

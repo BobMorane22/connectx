@@ -30,7 +30,6 @@
 
 #include <cxmodel/ModelNotificationContext.h>
 
-#include <cxgui/IWindow.h>
 #include <cxgui/IMainWindowController.h>
 #include <cxgui/IMainWindowPresenter.h>
 
@@ -39,6 +38,11 @@
 namespace cx
 {
     class ModelReferences;
+}
+
+namespace cxgui
+{
+    class IWindow;
 }
 
 namespace cx

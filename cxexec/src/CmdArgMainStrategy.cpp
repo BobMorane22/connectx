@@ -24,6 +24,7 @@
 #include <cstdlib>
 
 #include <cxinv/assertion.h>
+#include <cxgui/IWindow.h>
 #include <cxexec/CmdArgMainStrategy.h>
 
 cx::CmdArgMainStrategy::CmdArgMainStrategy(int argc, char *argv[], cx::ModelReferences& p_model)

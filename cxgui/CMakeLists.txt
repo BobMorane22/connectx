@@ -47,6 +47,7 @@ add_library(${TARGET_NAME}
   src/Gtkmm3Button.cpp
   src/Gtkmm3Label.cpp
   src/Gtkmm3Layout.cpp
+  src/Gtkmm3MainWindow.cpp
   src/Gtkmm3Menu.cpp
   src/Gtkmm3MenuBar.cpp
   src/Gtkmm3MenuItem.cpp
@@ -58,7 +59,6 @@ add_library(${TARGET_NAME}
   src/INewGameViewPresenter.cpp
   src/KeyboardShortcut.cpp
   src/MainWindowController.cpp
-  src/MainWindow.cpp
   src/MainWindowPresenter.cpp
   src/MenuItem.cpp
   src/NewGameView.cpp

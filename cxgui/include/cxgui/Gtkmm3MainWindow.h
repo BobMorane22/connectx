@@ -16,17 +16,15 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file MainWindow.h
+ * @file Gtkmm3MainWindow.h
  * @date 2019
  *
  *************************************************************************************************/
 
-#ifndef MAINWINDOW_H_F0ED11E8_831A_4C6A_8A9B_8C329506BD72
-#define MAINWINDOW_H_F0ED11E8_831A_4C6A_8A9B_8C329506BD72
+#ifndef GTKMM3MAINWINDOW_H_F0ED11E8_831A_4C6A_8A9B_8C329506BD72
+#define GTKMM3MAINWINDOW_H_F0ED11E8_831A_4C6A_8A9B_8C329506BD72
 
 #include <memory>
-
-#include <gtkmm/applicationwindow.h>
 
 #include "IStatusBar.h"
 #include "IStatusBarPresenter.h"
@@ -81,7 +79,7 @@ namespace cxgui
  * the gaming widgets, such as the board.
  *
  ************************************************************************************************/
-class MainWindow : public cxgui::Gtkmm3Window
+class Gtkmm3MainWindow : public cxgui::Gtkmm3Window
 {
 
 public:
@@ -95,12 +93,12 @@ public:
      * @param p_presenter  The main window presenter.
      *
      ********************************************************************************************/
-    MainWindow(Gtk::Application& p_gtkApplication,
-               cxmodel::ModelSubject& p_model,
-               IMainWindowController& p_controller,
-               IMainWindowPresenter& p_presenter);
+    Gtkmm3MainWindow(Gtk::Application& p_gtkApplication,
+                     cxmodel::ModelSubject& p_model,
+                     IMainWindowController& p_controller,
+                     IMainWindowPresenter& p_presenter);
 
-    ~MainWindow() override;
+    ~Gtkmm3MainWindow() override;
 
     [[nodiscard]] int Show() override;
 
@@ -179,4 +177,4 @@ private:
 
 } // namespace cxgui
 
-#endif // MAINWINDOW_H_F0ED11E8_831A_4C6A_8A9B_8C329506BD72
+#endif // GTKMM3MAINWINDOW_H_F0ED11E8_831A_4C6A_8A9B_8C329506BD72
