@@ -25,6 +25,7 @@
 #define IWINDOW_H_4807796E_6C76_4D0A_BF7D_81534795BA29
 
 #include <cxmodel/ModelNotificationContext.h>
+#include <cxgui/IWidget.h>
 
 namespace cxgui
 {
@@ -35,7 +36,8 @@ namespace cxgui
  * This interface presents the basic utilities needed to create windows.
  *
  ************************************************************************************************/
-class IWindow : public cxmodel::IModelObserver
+class IWindow : public IWidget,
+                public cxmodel::IModelObserver
 {
 
 public:

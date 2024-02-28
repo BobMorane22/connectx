@@ -67,9 +67,6 @@ public:
      ********************************************************************************************/
     Gtkmm3Window();
 
-    // cxgui::IWindow:
-    [[nodiscard]] int Show() override;
-
     /******************************************************************************************//**
      * @brief Initializes the window widgets.
      *
@@ -79,7 +76,39 @@ public:
      ********************************************************************************************/
     void Init();
 
+    /*******************************************************************************************//**
+     * @brief Sets the delegate for widget common facilities.
+     *
+     * The delegate is reponsible to carry the implementation for generic `cxgui::IWidget` operations.
+     * It is meant to avoid implementation duplication.
+     *
+     * @param p_delegate
+     *      The widget delegate.
+     *
+     * @pre
+     *      The widget delegate instance given as an argument is valid.
+     * @post
+     *      The registered widget delegate is valid.
+     *
+     **********************************************************************************************/
+    void SetDelegate(std::unique_ptr<IWidget> p_delegate);
+
+    // cxgui::IWindow:
+    [[nodiscard]] int Show() override;
+
+    // cxgui::IWidget:
+    [[nodiscard]] virtual size_t GetWidth() const override;
+    [[nodiscard]] virtual size_t GetHeight() const override;
+    void SetEnabled(EnabledState p_enabled) override;
+    void SetMargins(const Margins& p_newMarginSizes) override;
+    void SetTooltip(const std::string& p_tooltipContents) override;
+
 protected:
+
+    std::unique_ptr<cxgui::ILayout> m_mainLayout;
+    std::unique_ptr<IWidget> m_delegate;
+
+private:
 
     /*******************************************************************************************//**
      * @brief Configures the window icon.
@@ -140,9 +169,6 @@ protected:
      *
      **********************************************************************************************/
     virtual void ConfigureSignalHandlers() = 0;
-
-    /** The underlying window's top level layout. */
-    std::unique_ptr<cxgui::ILayout> m_mainLayout;
 
 };
 

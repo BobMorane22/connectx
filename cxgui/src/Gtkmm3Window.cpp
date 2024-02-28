@@ -67,3 +67,42 @@ void cxgui::Gtkmm3Window::Init()
     ConfigureWidgets();
     ConfigureSignalHandlers();
 }
+
+void cxgui::Gtkmm3Window::SetDelegate(std::unique_ptr<IWidget> p_delegate)
+{
+    IF_PRECONDITION_NOT_MET_DO(p_delegate, return;);
+
+    m_delegate = std::move(p_delegate);
+
+    POSTCONDITION(m_delegate);
+}
+
+size_t cxgui::Gtkmm3Window::GetWidth() const 
+{
+    IF_CONDITION_NOT_MET_DO(m_delegate, return 0u;);
+    return m_delegate->GetWidth();
+}
+
+size_t cxgui::Gtkmm3Window::GetHeight() const 
+{
+    IF_CONDITION_NOT_MET_DO(m_delegate, return 0u;);
+    return m_delegate->GetHeight();
+}
+
+void cxgui::Gtkmm3Window::SetEnabled(EnabledState p_enabled) 
+{
+    IF_CONDITION_NOT_MET_DO(m_delegate, return;);
+    m_delegate->SetEnabled(p_enabled);
+}
+
+void cxgui::Gtkmm3Window::SetMargins(const Margins& p_newMarginSizes) 
+{
+    IF_CONDITION_NOT_MET_DO(m_delegate, return;);
+    m_delegate->SetMargins(p_newMarginSizes);
+}
+
+void cxgui::Gtkmm3Window::SetTooltip(const std::string& p_tooltipContents)
+{
+    IF_CONDITION_NOT_MET_DO(m_delegate, return;);
+    m_delegate->SetTooltip(p_tooltipContents);
+}
