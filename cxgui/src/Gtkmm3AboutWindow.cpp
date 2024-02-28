@@ -16,12 +16,12 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file About.cpp
+ * @file Gtkmm3AboutWindow.cpp
  * @date 2020
  *
  *************************************************************************************************/
 
-#include <cxgui/About.h>
+#include <cxgui/Gtkmm3AboutWindow.h>
 #include <cxgui/Gtkmm3Button.h>
 #include <cxgui/Gtkmm3Label.h>
 #include <cxgui/IAboutWindowPresenter.h>
@@ -29,7 +29,7 @@
 #include <cxgui/ILabel.h>
 #include <cxgui/Margins.h>
 
-cxgui::About::About(std::unique_ptr<IAboutWindowPresenter>&& p_presenter)
+cxgui::Gtkmm3AboutWindow::Gtkmm3AboutWindow(std::unique_ptr<IAboutWindowPresenter> p_presenter)
  : Gtkmm3Window()
  , m_presenter{std::move(p_presenter)}
 {
@@ -54,24 +54,24 @@ cxgui::About::About(std::unique_ptr<IAboutWindowPresenter>&& p_presenter)
     ASSERT(m_close);
 }
 
-void cxgui::About::Update(cxmodel::ModelNotificationContext /*p_context*/, cxmodel::ModelSubject* /*p_subject*/)
+void cxgui::Gtkmm3AboutWindow::Update(cxmodel::ModelNotificationContext /*p_context*/, cxmodel::ModelSubject* /*p_subject*/)
 {
     // Nothing to do...
 }
 
-void cxgui::About::ConfigureWindow()
+void cxgui::Gtkmm3AboutWindow::ConfigureWindow()
 {
     set_title(m_presenter->GetWindowTitle());
     set_position(Gtk::WIN_POS_CENTER);
     set_resizable(false);
 }
 
-void cxgui::About::RegisterLayouts()
+void cxgui::Gtkmm3AboutWindow::RegisterLayouts()
 {
     // Nothing to do.
 }
 
-void cxgui::About::RegisterWidgets()
+void cxgui::Gtkmm3AboutWindow::RegisterWidgets()
 {
     IF_CONDITION_NOT_MET_DO(m_mainLayout, return;);
 
@@ -96,12 +96,12 @@ void cxgui::About::RegisterWidgets()
     m_mainLayout->Register(*m_close,       {row6, rowSpan1}, {column0, columnSpan1});
 }
 
-void cxgui::About::ConfigureLayouts()
+void cxgui::Gtkmm3AboutWindow::ConfigureLayouts()
 {
     // Nothing to do.
 }
 
-void cxgui::About::ConfigureWidgets()
+void cxgui::Gtkmm3AboutWindow::ConfigureWidgets()
 {
     m_name->SetMargins({TopMargin{0}, BottomMargin{15}, LeftMargin{0}, RightMargin{0}});
     m_description->SetMargins({TopMargin{5}, BottomMargin{5}, LeftMargin{5}, RightMargin{5}});
@@ -115,7 +115,7 @@ void cxgui::About::ConfigureWidgets()
     m_copyright->UpdateContents(m_presenter->GetCopyrightNotice());
 }
 
-void cxgui::About::ConfigureSignalHandlers()
+void cxgui::Gtkmm3AboutWindow::ConfigureSignalHandlers()
 {
     m_close->OnClicked()->Connect([this](){close();});
 }

@@ -33,7 +33,7 @@
 #include <cxmodel/IConnectXGameInformation.h>
 #include <cxmodel/IVersioning.h>
 #include <cxmodel/GameResolutionStrategyFactory.h>
-#include <cxgui/About.h>
+#include <cxgui/Gtkmm3AboutWindow.h>
 #include <cxgui/AboutWindowPresenter.h>
 #include <cxgui/EnabledState.h>
 #include <cxgui/GameResolutionDialog.h>
@@ -362,14 +362,16 @@ void cxgui::MainWindow::OnCreateAboutWindow()
         IF_CONDITION_NOT_MET_DO(aboutPresenter, return;);
 
         {
-            auto aboutWindow = std::make_unique<About>(std::move(aboutPresenter));
+            auto aboutWindow = CreateWidget<Gtkmm3AboutWindow>(std::move(aboutPresenter));
+            ASSERT(aboutWindow);
             aboutWindow->Init();
 
             m_about = std::move(aboutWindow);
         }
     }
 
-    m_about->Show();
+    const int result = m_about->Show();
+    ASSERT(result == EXIT_SUCCESS);
 }
 
 void cxgui::MainWindow::OnNewGame()

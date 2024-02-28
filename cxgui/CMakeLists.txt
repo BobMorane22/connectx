@@ -26,7 +26,7 @@
 set(TARGET_NAME cxgui)
 
 add_library(${TARGET_NAME}
-  src/About.cpp
+  src/Gtkmm3AboutWindow.cpp
   src/AboutWindowPresenter.cpp
   src/AnimatedBoard.cpp
   src/AnimatedBoardModel.cpp

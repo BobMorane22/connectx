@@ -16,15 +16,13 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file About.h
+ * @file Gtkmm3AboutWindow.h
  * @date 2020
  *
  *************************************************************************************************/
 
-#ifndef ABOUT_H_396864CD_88A3_43F2_B08B_3F9FEBE89DE1
-#define ABOUT_H_396864CD_88A3_43F2_B08B_3F9FEBE89DE1
-
-#include <gtkmm/window.h>
+#ifndef GTKMM3ABOUTWINDOW_H_396864CD_88A3_43F2_B08B_3F9FEBE89DE1
+#define GTKMM3ABOUTWINDOW_H_396864CD_88A3_43F2_B08B_3F9FEBE89DE1
 
 #include "IAboutWindowPresenter.h"
 #include "Gtkmm3Window.h"
@@ -39,10 +37,10 @@ namespace cxgui
 {
 
 /**********************************************************************************************//**
- * @brief About window.
+ * @brief Gtkmm3 About window.
  *
  *************************************************************************************************/
-class About : public Gtkmm3Window
+class Gtkmm3AboutWindow : public Gtkmm3Window
 {
 
 public:
@@ -54,20 +52,19 @@ public:
      *      An about window presenter implemetation.
      *
      *********************************************************************************************/
-    About(std::unique_ptr<IAboutWindowPresenter>&& p_presenter);
+    explicit Gtkmm3AboutWindow(std::unique_ptr<IAboutWindowPresenter> p_presenter);
 
     // cxmodel::IModelObserver:
-    void Update(cxmodel::ModelNotificationContext p_context, cxmodel::ModelSubject* p_subject) override;
-
+    void Update(cxmodel::ModelNotificationContext p_context, cxmodel::ModelSubject* p_subject) final;
 
 private:
 
-    void ConfigureWindow() override;
-    void RegisterLayouts() override;
-    void RegisterWidgets() override;
-    void ConfigureLayouts() override;
-    void ConfigureWidgets() override;
-    void ConfigureSignalHandlers() override;
+    void ConfigureWindow() final;
+    void RegisterLayouts() final;
+    void RegisterWidgets() final;
+    void ConfigureLayouts() final;
+    void ConfigureWidgets() final;
+    void ConfigureSignalHandlers() final;
 
     std::unique_ptr<IAboutWindowPresenter> m_presenter;
 
@@ -84,4 +81,4 @@ private:
 
 } // namespace cxgui
 
-#endif // ABOUT_H_396864CD_88A3_43F2_B08B_3F9FEBE89DE1
+#endif // GTKMM3ABOUTWINDOW_H_396864CD_88A3_43F2_B08B_3F9FEBE89DE1
