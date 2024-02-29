@@ -42,6 +42,24 @@ class IWindow : public IWidget,
 
 public:
 
+    /*****************************************************************************************//**
+     * @brief Window orientation on which to operate.
+     *
+     ********************************************************************************************/
+    enum class Orientation
+    {
+        /** Operate on width only. */
+        HORIZONTAL,
+
+        /** Operate on height only. */
+        VERTICAL,
+
+        /** Operate on both width and height */
+        ALL,
+    };
+
+public:
+
     /******************************************************************************************//**
      * @brief Default destructor.
      *
@@ -59,6 +77,18 @@ public:
      *
      ********************************************************************************************/
     [[nodiscard]] virtual int Show() = 0;
+
+    /******************************************************************************************//**
+     * @brief Make any extra space removed on the window.
+     *
+     * Once this call completes, there should be no extra window space with no widgets in it.
+     * Useful when dynamically changing a layout.
+     *
+     * @param p_orientation
+     *      The window dimension(s) to shrink.
+     *
+     ********************************************************************************************/
+    virtual void ShrinkToContents(Orientation p_orientation) = 0;
 
 };
 

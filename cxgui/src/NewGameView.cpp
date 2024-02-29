@@ -25,16 +25,16 @@
 #include <memory>
 #include <sstream>
 
-#include <gtkmm/messagedialog.h>
-
 #include <cxstd/helpers.h>
 #include <cxinv/assertion.h>
 #include <cxmodel/IChip.h>
 #include <cxmodel/NewGameInformation.h>
 #include <cxgui/ColorComboBox.h>
+#include <cxgui/DialogRole.h>
 #include <cxgui/EnabledState.h>
 #include <cxgui/extractRawUserInput.h>
 #include <cxgui/Gtkmm3Button.h>
+#include <cxgui/Gtkmm3Dialog.h>
 #include <cxgui/Gtkmm3Label.h>
 #include <cxgui/Gtkmm3Layout.h>
 #include <cxgui/Gtkmm3NewPlayersList.h>
@@ -50,22 +50,25 @@
 namespace
 {
 
-void DisplayWarningDialog(Gtk::Window& parent, const std::string& p_message)
+void DisplayWarningDialog(cxgui::IWindow& p_parent, const std::string& p_message)
 {
-    PRECONDITION(!p_message.empty());
+    using namespace cxgui;
 
-    constexpr bool NO_MARKUP = false;
+    IF_PRECONDITION_NOT_MET_DO(!p_message.empty(), return;);
 
-    Gtk::MessageDialog errorDlg{parent, p_message, NO_MARKUP, Gtk::MessageType::MESSAGE_WARNING, Gtk::ButtonsType::BUTTONS_OK, true};
+    std::unique_ptr<IWindow> errorDialog = CreateWidget<Gtkmm3Dialog>(p_parent, DialogRole::WARNING, p_message);
+    ASSERT(errorDialog);
 
-    errorDlg.run();
+    // Blocks the main loop:
+    const int result = errorDialog->Show();
+    ASSERT(result == EXIT_SUCCESS);
 }
 
 } // namespace
 
 cxgui::NewGameView::NewGameView(INewGameViewPresenter& p_presenter,
                                 INewGameViewController& p_controller,
-                                Gtk::Window& p_parentWindow,
+                                IWindow& p_parentWindow,
                                 cxgui::ILayout& p_mainLayout,
                                 const cxmodel::Column& p_viewLeft,
                                 const cxmodel::Row& p_viewTop)
@@ -305,20 +308,8 @@ void cxgui::NewGameView::OnRemovePlayer()
     {
         IF_CONDITION_NOT_MET_DO(m_playersList->RemoveRow(m_playersList->GetSize() - 1), return;);
 
-        // At this point, the row is removed. If we don't act though, the extra
-        // space left by the removed row will still be displayed on the screen,
-        // leaving the window with ugly extra space. We want the window to resize
-        // to the new list. We get the preferred heights values:
-        int minimumHeight, naturalHeight;
-        m_parentWindow.get_preferred_height(minimumHeight, naturalHeight);
-
-        // Then, we make a size request using the minimum height. Notice the '100'
-        // that is removed. This was added to make sure Gtkmm did not leave any
-        // extra blank space by resizing smaller than the minimum value:
-        m_parentWindow.set_size_request(m_parentWindow.get_width(), minimumHeight - 100);
-
-        // Then resize accordingly:
-        m_parentWindow.resize(m_parentWindow.get_width(), naturalHeight);
+        // One row is gone. We need to resize the window as to leave no extra space.
+        m_parentWindow.ShrinkToContents(cxgui::IWindow::Orientation::HORIZONTAL);
     }
 
     EnabledStateUpdate(*m_removePlayerButton, m_presenter.CanRemoveAnotherPlayer(m_playersList->GetSize()));

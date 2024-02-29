@@ -92,6 +92,7 @@ public:
 
     // cxgui::IWindow:
     [[nodiscard]] int Show() override;
+    void ShrinkToContents(IWindow::Orientation p_orientation) override;
 
     // cxgui::IWidget:
     [[nodiscard]] virtual size_t GetWidth() const override;

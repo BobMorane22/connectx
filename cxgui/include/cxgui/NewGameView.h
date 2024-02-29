@@ -27,9 +27,8 @@
 #include <optional>
 
 #include <cxmodel/Status.h>
-
-#include "IView.h"
-#include "Gtkmm3Window.h"
+#include <cxgui/Gtkmm3Window.h>
+#include <cxgui/IView.h>
 
 namespace cxmodel
 {
@@ -78,7 +77,7 @@ public:
      ********************************************************************************************/
     NewGameView(INewGameViewPresenter& p_presenter,
                 INewGameViewController& p_controller,
-                Gtk::Window& p_parentWindow,
+                IWindow& p_parentWindow,
                 cxgui::ILayout& p_mainLayout,
                 const cxmodel::Column& p_viewLeft,
                 const cxmodel::Row& p_viewTop);
@@ -104,7 +103,7 @@ private:
     INewGameViewPresenter& m_presenter;
     INewGameViewController& m_controller;
 
-    Gtk::Window& m_parentWindow;
+    IWindow& m_parentWindow;
 
     cxgui::ILayout& m_mainLayout;
 

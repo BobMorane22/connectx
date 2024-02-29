@@ -21,6 +21,7 @@
  *
  *************************************************************************************************/
 
+#include "cxgui/IWindow.h"
 #include <glibmm/fileutils.h>
 
 #include <cxgui/Gtkmm3Window.h>
@@ -57,6 +58,22 @@ int cxgui::Gtkmm3Window::Show()
     show_all();
 
     return EXIT_SUCCESS;
+}
+
+void cxgui::Gtkmm3Window::ShrinkToContents(IWindow::Orientation p_orientation)
+{
+    if(p_orientation == IWindow::Orientation::HORIZONTAL)
+    {
+        int minimumHeight, naturalHeight;
+        get_preferred_height(minimumHeight, naturalHeight);
+
+        set_size_request(get_width(), minimumHeight);
+
+        resize(get_width(), naturalHeight);
+        return;
+    }
+
+    ASSERT_ERROR_MSG("Not yet implemented");
 }
 
 void cxgui::Gtkmm3Window::Init()
