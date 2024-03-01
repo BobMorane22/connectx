@@ -76,6 +76,12 @@ public:
                    const cxmodel::Column& p_viewLeft,
                    const cxmodel::Row& p_viewTop);
 
+    /*****************************************************************************************//**
+     * @brief Destructor.
+     *
+     ********************************************************************************************/
+    ~Gtkmm3GameView() override;
+    
     // cxgui::IView:
     void Activate() override;
     void DeActivate() override;

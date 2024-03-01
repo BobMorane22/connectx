@@ -93,6 +93,11 @@ cxgui::Gtkmm3GameView::Gtkmm3GameView(IGameViewPresenter& p_presenter,
     m_board->UserActionSubject::Attach(this);
 }
 
+cxgui::Gtkmm3GameView::~Gtkmm3GameView()
+{
+    DisableKeyHandlers();
+}
+
 void cxgui::Gtkmm3GameView::Activate()
 {
     EnableKeyHandlers();

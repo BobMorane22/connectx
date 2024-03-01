@@ -303,7 +303,7 @@ cxgui::NewPlayerRow::NewPlayerRow(const cxgui::INewGameViewPresenter& p_presente
     m_layout->Register(*m_playerName,      {row, rowSpan}, {cxmodel::Column{1u}, columnSpan});
     m_layout->Register(*m_playerDiscColor, {row, rowSpan}, {cxmodel::Column{2u}, columnSpan});
 
-    auto* gtkLayout = dynamic_cast<Gtk::Grid*>(m_layout.release());
+    auto* gtkLayout = dynamic_cast<Gtk::Grid*>(m_layout.get());
     ASSERT(gtkLayout);
     add(*gtkLayout);
 
