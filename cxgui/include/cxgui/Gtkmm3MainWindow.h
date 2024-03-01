@@ -26,10 +26,10 @@
 
 #include <memory>
 
-#include "IStatusBar.h"
-#include "IStatusBarPresenter.h"
-#include "IView.h"
-#include "Gtkmm3Window.h"
+#include <cxgui/IStatusBar.h>
+#include <cxgui/IStatusBarPresenter.h>
+#include <cxgui/IView.h>
+#include <cxgui/Gtkmm3Window.h>
 
 namespace cxgui
 {

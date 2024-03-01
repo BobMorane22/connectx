@@ -26,7 +26,6 @@
 set(TARGET_NAME cxgui)
 
 add_library(${TARGET_NAME}
-  src/Gtkmm3AboutWindow.cpp
   src/AboutWindowPresenter.cpp
   src/AnimatedBoard.cpp
   src/AnimatedBoardModel.cpp
@@ -42,16 +41,19 @@ add_library(${TARGET_NAME}
   src/GameResolutionDialogController.cpp
   src/Gtkmm3GameResolutionDialog.cpp
   src/GameResolutionDialogPresenterFactory.cpp
-  src/GameView.cpp
   src/GameViewKeyHandlerStrategyFactory.cpp
+  src/Gtkmm3AboutWindow.cpp
   src/Gtkmm3Button.cpp
   src/Gtkmm3Dialog.cpp
+  src/Gtkmm3GameView.cpp
   src/Gtkmm3Label.cpp
   src/Gtkmm3Layout.cpp
   src/Gtkmm3MainWindow.cpp
   src/Gtkmm3Menu.cpp
   src/Gtkmm3MenuBar.cpp
   src/Gtkmm3MenuItem.cpp
+  src/Gtkmm3NewGameView.cpp
+  src/Gtkmm3NewPlayersList.cpp
   src/Gtkmm3OnOffSwitch.cpp
   src/Gtkmm3SpinBox.cpp
   src/Gtkmm3WidgetDelegate.cpp
@@ -62,8 +64,6 @@ add_library(${TARGET_NAME}
   src/MainWindowController.cpp
   src/MainWindowPresenter.cpp
   src/MenuItem.cpp
-  src/NewGameView.cpp
-  src/Gtkmm3NewPlayersList.cpp
   src/pathHelpers.cpp
   src/StatusBar.cpp
   src/StatusBarPresenter.cpp

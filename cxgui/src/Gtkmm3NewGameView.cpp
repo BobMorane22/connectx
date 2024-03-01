@@ -16,7 +16,7 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file NewGameView.cpp
+ * @file Gtkmm3NewGameView.cpp
  * @date 2020
  *
  *************************************************************************************************/
@@ -37,6 +37,7 @@
 #include <cxgui/Gtkmm3Dialog.h>
 #include <cxgui/Gtkmm3Label.h>
 #include <cxgui/Gtkmm3Layout.h>
+#include <cxgui/Gtkmm3NewGameView.h>
 #include <cxgui/Gtkmm3NewPlayersList.h>
 #include <cxgui/Gtkmm3SpinBox.h>
 #include <cxgui/Gtkmm3WidgetDelegate.h>
@@ -44,7 +45,6 @@
 #include <cxgui/INewGameViewPresenter.h>
 #include <cxgui/ISpinBox.h>
 #include <cxgui/Margins.h>
-#include <cxgui/NewGameView.h>
 #include <cxgui/widgetUtilities.h>
 
 namespace
@@ -66,12 +66,12 @@ void DisplayWarningDialog(cxgui::IWindow& p_parent, const std::string& p_message
 
 } // namespace
 
-cxgui::NewGameView::NewGameView(INewGameViewPresenter& p_presenter,
-                                INewGameViewController& p_controller,
-                                IWindow& p_parentWindow,
-                                cxgui::ILayout& p_mainLayout,
-                                const cxmodel::Column& p_viewLeft,
-                                const cxmodel::Row& p_viewTop)
+cxgui::Gtkmm3NewGameView::Gtkmm3NewGameView(INewGameViewPresenter& p_presenter,
+                                            INewGameViewController& p_controller,
+                                            IWindow& p_parentWindow,
+                                            cxgui::ILayout& p_mainLayout,
+                                            const cxmodel::Column& p_viewLeft,
+                                            const cxmodel::Row& p_viewTop)
  : m_presenter{p_presenter}
  , m_controller{p_controller}
  , m_parentWindow{p_parentWindow}
@@ -145,24 +145,49 @@ cxgui::NewGameView::NewGameView(INewGameViewPresenter& p_presenter,
     m_playersList->RowUpdatedSignalConnect([this](){OnNewGameParameterUpdated();});
 }
 
-void cxgui::NewGameView::Activate()
+void cxgui::Gtkmm3NewGameView::Activate()
 {
    m_mainLayout.Register(*m_viewLayout,
                          {m_viewTop, ILayout::RowSpan{1u}},
                          {m_viewLeft, ILayout::ColumnSpan{2u}});
 }
 
-void cxgui::NewGameView::DeActivate()
+void cxgui::Gtkmm3NewGameView::DeActivate()
 {
     // Nothing to do...
 }
 
-void cxgui::NewGameView::Update(cxmodel::ModelNotificationContext /*p_context*/)
+void cxgui::Gtkmm3NewGameView::Update(cxmodel::ModelNotificationContext /*p_context*/)
 {
     // Noting to do...
 }
 
-void cxgui::NewGameView::SetLayout()
+size_t cxgui::Gtkmm3NewGameView::GetWidth() const 
+{
+    return m_viewLayout->GetWidth();
+}
+
+size_t cxgui::Gtkmm3NewGameView::GetHeight() const 
+{
+    return m_viewLayout->GetHeight();
+}
+
+void cxgui::Gtkmm3NewGameView::SetEnabled(EnabledState p_enabled) 
+{
+    return m_viewLayout->SetEnabled(p_enabled);
+}
+
+void cxgui::Gtkmm3NewGameView::SetMargins(const Margins& p_newMarginSizes) 
+{
+    return m_viewLayout->SetMargins(p_newMarginSizes);
+}
+
+void cxgui::Gtkmm3NewGameView::SetTooltip(const std::string& p_tooltipContents)
+{
+    return m_viewLayout->SetTooltip(p_tooltipContents);
+}
+
+void cxgui::Gtkmm3NewGameView::SetLayout()
 {
     constexpr cxmodel::Column column0{0u};
     constexpr cxmodel::Column column1{1u};
@@ -204,7 +229,7 @@ void cxgui::NewGameView::SetLayout()
     m_viewLayout->Register(*m_startButton,         {row9,  singleRowSpan}, {column0, fullColumnSpan}              );
 }
 
-void cxgui::NewGameView::PopulateWidgets()
+void cxgui::Gtkmm3NewGameView::PopulateWidgets()
 {
     m_title->UpdateContents(m_presenter.GetNewGameViewTitle());
 
@@ -218,7 +243,7 @@ void cxgui::NewGameView::PopulateWidgets()
     m_playersSectionTitle->UpdateContents(m_presenter.GetNewGameViewPlayersSectionTitle());
 }
 
-void cxgui::NewGameView::ConfigureWidgets()
+void cxgui::Gtkmm3NewGameView::ConfigureWidgets()
 {
     // Window margin:
     m_mainLayout.SetMargins({
@@ -269,7 +294,7 @@ void cxgui::NewGameView::ConfigureWidgets()
     m_startButton->SetMargins({TopMargin{0u}, BottomMargin{CONTROL_BOTTOM_MARGIN}, LeftMargin{0u}, RightMargin{0u}});
 }
 
-void cxgui::NewGameView::OnStart()
+void cxgui::Gtkmm3NewGameView::OnStart()
 {
     cxmodel::NewGameInformation gameInformation;
     const auto extractionStatus = ExtractGameInformation(gameInformation);
@@ -290,7 +315,7 @@ void cxgui::NewGameView::OnStart()
     m_controller.OnStart(std::move(gameInformation));
 }
 
-void cxgui::NewGameView::OnAddPlayer()
+void cxgui::Gtkmm3NewGameView::OnAddPlayer()
 {
     if(m_presenter.CanAddAnotherPlayer(m_playersList->GetSize()))
     {
@@ -302,7 +327,7 @@ void cxgui::NewGameView::OnAddPlayer()
     EnabledStateUpdate(*m_addPlayerButton, m_presenter.CanAddAnotherPlayer(m_playersList->GetSize()));
 }
 
-void cxgui::NewGameView::OnRemovePlayer()
+void cxgui::Gtkmm3NewGameView::OnRemovePlayer()
 {
     if(m_presenter.CanRemoveAnotherPlayer(m_playersList->GetSize()))
     {
@@ -316,7 +341,7 @@ void cxgui::NewGameView::OnRemovePlayer()
     EnabledStateUpdate(*m_addPlayerButton, m_presenter.CanAddAnotherPlayer(m_playersList->GetSize()));
 }
 
-void cxgui::NewGameView::OnNewGameParameterUpdated()
+void cxgui::Gtkmm3NewGameView::OnNewGameParameterUpdated()
 {
     m_startButton->SetEnabled(cxgui::EnabledState::Disabled);
 
@@ -341,7 +366,7 @@ void cxgui::NewGameView::OnNewGameParameterUpdated()
     m_startButton->SetTooltip("");
 }
 
-cxmodel::Status cxgui::NewGameView::ExtractGameInformation(cxmodel::NewGameInformation& p_gameInformation) const
+cxmodel::Status cxgui::Gtkmm3NewGameView::ExtractGameInformation(cxmodel::NewGameInformation& p_gameInformation) const
 {
     // Extracting game parameters from the GUI:
     const int valueInARow = m_inARowSpinBox->GetValue();

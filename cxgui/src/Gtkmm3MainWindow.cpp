@@ -33,18 +33,19 @@
 #include <cxmodel/IConnectXGameInformation.h>
 #include <cxmodel/IVersioning.h>
 #include <cxmodel/GameResolutionStrategyFactory.h>
-#include <cxgui/Gtkmm3AboutWindow.h>
 #include <cxgui/AboutWindowPresenter.h>
 #include <cxgui/EnabledState.h>
 #include <cxgui/GameResolutionDialogController.h>
 #include <cxgui/GameResolutionDialogPresenterFactory.h>
-#include <cxgui/GameView.h>
+#include <cxgui/Gtkmm3AboutWindow.h>
 #include <cxgui/Gtkmm3GameResolutionDialog.h>
+#include <cxgui/Gtkmm3GameView.h>
 #include <cxgui/Gtkmm3Layout.h>
 #include <cxgui/Gtkmm3MainWindow.h>
 #include <cxgui/Gtkmm3Menu.h>
 #include <cxgui/Gtkmm3MenuBar.h>
 #include <cxgui/Gtkmm3MenuItem.h>
+#include <cxgui/Gtkmm3NewGameView.h>
 #include <cxgui/IAnimatedBoardPresenter.h>
 #include <cxgui/IButton.h>
 #include <cxgui/ILabel.h>
@@ -54,7 +55,6 @@
 #include <cxgui/IMainWindowPresenter.h>
 #include <cxgui/ISpinBox.h>
 #include <cxgui/KeyboardShortcut.h>
-#include <cxgui/NewGameView.h>
 #include <cxgui/StatusBar.h>
 #include <cxgui/StatusBarPresenter.h>
 #include <cxgui/StdActionIcon.h>
@@ -136,7 +136,7 @@ void cxgui::Gtkmm3MainWindow::RegisterWidgets()
 
     RegisterMenuBar();
 
-    m_newGameView = std::make_unique<NewGameView>(m_presenter, m_controller, *this, *m_mainLayout, m_viewLeft, m_viewTop);
+    m_newGameView = std::make_unique<Gtkmm3NewGameView>(m_presenter, m_controller, *this, *m_mainLayout, m_viewLeft, m_viewTop);
     m_newGameView->Activate();
 
     RegisterStatusBar();
@@ -444,7 +444,7 @@ void cxgui::Gtkmm3MainWindow::ActivateNewGameView()
 
     if(!m_newGameView)
     {
-        m_newGameView = std::make_unique<NewGameView>(m_presenter, m_controller, *this, *m_mainLayout, m_viewLeft, m_viewTop);
+        m_newGameView = std::make_unique<Gtkmm3NewGameView>(m_presenter, m_controller, *this, *m_mainLayout, m_viewLeft, m_viewTop);
     }
 
     m_newGameView->Activate();
@@ -467,7 +467,7 @@ void cxgui::Gtkmm3MainWindow::ActivateGameView()
 
     if(!m_gameView)
     {
-        m_gameView = std::make_unique<GameView>(m_presenter, m_controller, *this, *m_mainLayout, m_viewLeft, m_viewTop);
+        m_gameView = std::make_unique<Gtkmm3GameView>(m_presenter, m_controller, *this, *m_mainLayout, m_viewLeft, m_viewTop);
         IF_CONDITION_NOT_MET_DO(m_gameView, return;);
     }
 

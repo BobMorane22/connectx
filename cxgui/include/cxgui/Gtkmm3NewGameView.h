@@ -1,8 +1,7 @@
 /**************************************************************************************************
  *  This file is part of Connect X.
  *
- *  Connect X is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
+ *  Connect X is free software: you can redistribute it and/or modify *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation, either version 3 of the License, or
  *  (at your option) any later version.
  *
@@ -16,18 +15,17 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file NewGameView.h
+ * @file Gtkmm3NewGameView.h
  * @date 2020
  *
  *************************************************************************************************/
 
-#ifndef NEWGAMEVIEW_H_C5E65447_64C6_4DFE_B0F7_E6E9DB14BEAF
-#define NEWGAMEVIEW_H_C5E65447_64C6_4DFE_B0F7_E6E9DB14BEAF
+#ifndef GTKMM3NEWGAMEVIEW_H_C5E65447_64C6_4DFE_B0F7_E6E9DB14BEAF
+#define GTKMM3NEWGAMEVIEW_H_C5E65447_64C6_4DFE_B0F7_E6E9DB14BEAF
 
 #include <optional>
 
 #include <cxmodel/Status.h>
-#include <cxgui/Gtkmm3Window.h>
 #include <cxgui/IView.h>
 
 namespace cxmodel
@@ -44,16 +42,17 @@ namespace cxgui
     class INewGameViewPresenter;
     class INewPlayersList;
     class ISpinBox;
+    class IWindow;
 }
 
 namespace cxgui
 {
 
 /*********************************************************************************************//**
- * @brief View for creating new games.
+ * @brief Gtkmm 3 implementation of the view for creating new games.
  *
  ************************************************************************************************/
-class NewGameView : public cxgui::IView
+class Gtkmm3NewGameView : public cxgui::IView
 {
 
 public:
@@ -75,17 +74,24 @@ public:
      *      The top position of the new game view within the main window's top level layout.
      *
      ********************************************************************************************/
-    NewGameView(INewGameViewPresenter& p_presenter,
-                INewGameViewController& p_controller,
-                IWindow& p_parentWindow,
-                cxgui::ILayout& p_mainLayout,
-                const cxmodel::Column& p_viewLeft,
-                const cxmodel::Row& p_viewTop);
+    Gtkmm3NewGameView(INewGameViewPresenter& p_presenter,
+                      INewGameViewController& p_controller,
+                      IWindow& p_parentWindow,
+                      cxgui::ILayout& p_mainLayout,
+                      const cxmodel::Column& p_viewLeft,
+                      const cxmodel::Row& p_viewTop);
 
     // IView:
     void Activate() override;
     void DeActivate() override;
     void Update(cxmodel::ModelNotificationContext p_context) override;
+
+    // IWidget:
+    [[nodiscard]] size_t GetWidth() const override;
+    [[nodiscard]] size_t GetHeight() const override;
+    void SetEnabled(EnabledState p_enabled) override;
+    void SetMargins(const Margins& p_newMarginSizes) override;
+    void SetTooltip(const std::string& p_tooltipContents) override;
 
 private:
 
@@ -99,6 +105,8 @@ private:
     void OnNewGameParameterUpdated();
 
     [[nodiscard]] cxmodel::Status ExtractGameInformation(cxmodel::NewGameInformation& p_gameInformation) const;
+
+private:
 
     INewGameViewPresenter& m_presenter;
     INewGameViewController& m_controller;
@@ -136,4 +144,4 @@ private:
 
 } // namespace cxgui
 
-#endif // NEWGAMEVIEW_H_C5E65447_64C6_4DFE_B0F7_E6E9DB14BEAF
+#endif // GTKMM3NEWGAMEVIEW_H_C5E65447_64C6_4DFE_B0F7_E6E9DB14BEAF

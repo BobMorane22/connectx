@@ -170,7 +170,6 @@ private:
 private:
 
     std::unique_ptr<IWidget> m_delegate;
-
 };
 
 } // namespace cxgui

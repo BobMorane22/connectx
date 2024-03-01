@@ -24,6 +24,8 @@
 #ifndef IVIEW_H_DADC38E4_6E1F_4DED_A6F9_5D66F1558C89
 #define IVIEW_H_DADC38E4_6E1F_4DED_A6F9_5D66F1558C89
 
+#include <cxgui/IWidget.h>
+
 namespace cxmodel
 {
     enum class ModelNotificationContext;
@@ -40,7 +42,7 @@ namespace cxgui
  * the application. The visible view is the last onw that was activated.
  *
  ************************************************************************************************/
-class IView
+class IView : public IWidget
 {
 
 public:

@@ -4,8 +4,7 @@
  *  Connect X is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
+ *  (at your option) any later version.  *
  *  Connect X is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -16,38 +15,39 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file GameView.h
+ * @file Gtkmm3GameView.h
  * @date 2020
  *
  *************************************************************************************************/
 
-#ifndef GAMEVIEW_H_AA8C282C_9CC4_45F4_BE91_C8840160BA1B
-#define GAMEVIEW_H_AA8C282C_9CC4_45F4_BE91_C8840160BA1B
+#ifndef GTKMM3GAMEVIEW_H_AA8C282C_9CC4_45F4_BE91_C8840160BA1B
+#define GTKMM3GAMEVIEW_H_AA8C282C_9CC4_45F4_BE91_C8840160BA1B
 
-#include "AnimatedBoard.h"
-#include "Chip.h"
-#include "GameViewKeyHandlerStrategyFactory.h"
-#include "IGameViewController.h"
-#include "IGameViewPresenter.h"
-#include "IView.h"
+#include <cxgui/AnimatedBoard.h>
+#include <cxgui/Chip.h>
+#include <cxgui/GameViewKeyHandlerStrategyFactory.h>
+#include <cxgui/IView.h>
 
 namespace cxgui
 {
+    class IGameViewController;
+    class IGameViewPresenter;
     class ILabel;
     class ILayout;
+    class IWindow;
 }
 
 namespace cxgui
 {
 
 /*********************************************************************************************//**
- * @brief View for playing the game.
+ * @brief Gtkmm3 implementation of the view for playing the game.
  *
  ************************************************************************************************/
-class GameView : public IView,
-                 public cxgui::IBoardAnimationObserver,
-                 public cxgui::IUserActionObserver,
-                 public cxgui::BoardAnimationSubject
+class Gtkmm3GameView : public IView,
+                       private cxgui::IBoardAnimationObserver,
+                       private cxgui::IUserActionObserver,
+                       private cxgui::BoardAnimationSubject
 {
 
 public:
@@ -69,25 +69,32 @@ public:
      *      The top position of the view in the layout.
      *
      ********************************************************************************************/
-    GameView(IGameViewPresenter& p_presenter,
-             IGameViewController& p_controller,
-             Gtk::Window& p_parentWindow,
-             cxgui::ILayout& p_mainLayout,
-             const cxmodel::Column& p_viewLeft,
-             const cxmodel::Row& p_viewTop);
-
-    // cxgui::IBoardAnimationObserver:
-    void Update(cxgui::BoardAnimationNotificationContext p_context, cxgui::BoardAnimationSubject* p_subject) override;
-
-    // cxgui::IUserActionObserver:
-    void Update(cxgui::UserAction p_context, cxgui::UserActionSubject* p_subject) override;
+    Gtkmm3GameView(IGameViewPresenter& p_presenter,
+                   IGameViewController& p_controller,
+                   IWindow& p_parentWindow,
+                   cxgui::ILayout& p_mainLayout,
+                   const cxmodel::Column& p_viewLeft,
+                   const cxmodel::Row& p_viewTop);
 
     // cxgui::IView:
     void Activate() override;
     void DeActivate() override;
     void Update(cxmodel::ModelNotificationContext p_context) override;
 
+    // IWidget:
+    [[nodiscard]] size_t GetWidth() const override;
+    [[nodiscard]] size_t GetHeight() const override;
+    void SetEnabled(EnabledState p_enabled) override;
+    void SetMargins(const Margins& p_newMarginSizes) override;
+    void SetTooltip(const std::string& p_tooltipContents)override;
+
 private:
+
+    // cxgui::IBoardAnimationObserver:
+    void Update(cxgui::BoardAnimationNotificationContext p_context, cxgui::BoardAnimationSubject* p_subject) override;
+
+    // cxgui::IUserActionObserver:
+    void Update(cxgui::UserAction p_context, cxgui::UserActionSubject* p_subject) override;
 
     void SetLayout();
     void PopulateWidgets();
@@ -109,11 +116,13 @@ private:
 
     void SyncPlayers();
 
+private:
+
     IGameViewPresenter& m_presenter;
     IGameViewController& m_controller;
 
     // The window containing the view in its main layout.
-    Gtk::Window& m_parentWindow;
+    IWindow& m_parentWindow;
 
     cxgui::ILayout& m_mainLayout;
 
@@ -137,10 +146,10 @@ private:
 
     std::unique_ptr<cxgui::AnimatedBoard> m_board;
 
-    // Signals:
+    // Connexions.
     sigc::connection m_keysPressedConnection;
 };
 
 } // namespace cxgui
 
-#endif // GAMEVIEW_H_AA8C282C_9CC4_45F4_BE91_C8840160BA1B
+#endif // GTKMM3GAMEVIEW_H_AA8C282C_9CC4_45F4_BE91_C8840160BA1B
