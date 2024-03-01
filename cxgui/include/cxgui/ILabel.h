@@ -57,7 +57,7 @@ public:
      * @brief Get the label's contents.
      *
      * @return
-     *      The label's actuel contents.
+     *      The label's actual contents.
      *
      *********************************************************************************************/
     [[nodiscard]] virtual std::string GetContents() const = 0;

@@ -46,8 +46,11 @@ inline constexpr int TITLE_BOTTOM_MARGIN = 20;
 /** Section titles bottom margin space. */
 inline constexpr int SECTION_BOTTOM_MARGIN = 10;
 
-/** Controls botton margin space. */
+/** Controls bottom margin space. */
 inline constexpr int CONTROL_BOTTOM_MARGIN = 5;
+
+/** Controls side margin space. */
+inline constexpr int CONTROL_SIDE_MARGIN = 5;
 
 /** Indentation space in a dialog. For example, add this to control text to indent it once. */
 inline constexpr char INDENT_MARK[] = "    ";

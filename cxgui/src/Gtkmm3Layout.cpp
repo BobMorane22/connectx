@@ -86,6 +86,9 @@ void cxgui::Gtkmm3Layout::Register(cxgui::IWidget& p_widget,
     gtkWidget->set_valign(ToGtk(p_alignement.m_vertical));
     gtkWidget->set_halign(ToGtk(p_alignement.m_horizontal));
 
+    gtkWidget->set_hexpand(true);
+    gtkWidget->set_vexpand(true);
+
     attach(*gtkWidget, left, top, width, height );
 }
 
@@ -101,6 +104,9 @@ void cxgui::Gtkmm3Layout::Register(Gtk::Widget& p_gtkWidget,
 
     p_gtkWidget.set_valign(ToGtk(p_alignement.m_vertical));
     p_gtkWidget.set_halign(ToGtk(p_alignement.m_horizontal));
+
+    p_gtkWidget.set_hexpand(true);
+    p_gtkWidget.set_vexpand(true);
 
     attach(p_gtkWidget, left, top, width, height );
 }

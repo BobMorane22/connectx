@@ -21,7 +21,6 @@
  *
  *************************************************************************************************/
 
-#include <gtkmm/entry.h>
 #include <gtkmm/grid.h>
 
 #include <cxinv/assertion.h>
@@ -30,6 +29,7 @@
 #include <cxgui/ColorComboBox.h>
 #include <cxgui/common.h>
 #include <cxgui/EnabledState.h>
+#include <cxgui/Gtkmm3EditBox.h>
 #include <cxgui/Gtkmm3Layout.h>
 #include <cxgui/Gtkmm3OnOffSwitch.h>
 #include <cxgui/Gtkmm3WidgetDelegate.h>
@@ -180,10 +180,10 @@ private:
     void CheckInvariants() const;
     void RetreiveColumnDimensions(Gtkmm3NewPlayersList& parent_) const;
 
-    std::unique_ptr<cxgui::ILayout> m_layout;
-    std::unique_ptr<cxgui::IOnOffSwitch> m_typeSwitch;
-    Gtk::Entry m_playerName;
-    std::unique_ptr<cxgui::ColorComboBox> m_playerDiscColor;
+    std::unique_ptr<ILayout> m_layout;
+    std::unique_ptr<IOnOffSwitch> m_typeSwitch;
+    std::unique_ptr<IEditBox> m_playerName;
+    std::unique_ptr<ColorComboBox> m_playerDiscColor;
 
 };
 
@@ -259,11 +259,13 @@ cxgui::NewPlayerRow::NewPlayerRow(const cxgui::INewGameViewPresenter& p_presente
         PRECONDITION(p_presenter.CanAddAnotherPlayer(p_rowIndex - 1u));
     }
 
-    m_layout = std::make_unique<cxgui::Gtkmm3Layout>();
+    m_layout = CreateWidget<cxgui::Gtkmm3Layout>();
     ASSERT(m_layout);
 
-    m_playerName.set_text(p_presenter.GetDefaultPlayerName(p_rowIndex));
-    m_playerName.set_margin_end(cxgui::CONTROL_BOTTOM_MARGIN);
+    m_playerName = CreateWidget<Gtkmm3EditBox>();
+    ASSERT(m_playerName);
+    m_playerName->UpdateContents(p_presenter.GetDefaultPlayerName(p_rowIndex));
+    m_playerName->SetMargins({TopMargin{0}, BottomMargin{0}, LeftMargin{0}, RightMargin{CONTROL_SIDE_MARGIN}});
 
     const auto defaultColors = cxgui::GetRemainingDefaultColors(p_alreadyChosenColors, p_presenter);
     IF_CONDITION_NOT_MET_DO(!defaultColors.empty(), return;);
@@ -273,7 +275,8 @@ cxgui::NewPlayerRow::NewPlayerRow(const cxgui::INewGameViewPresenter& p_presente
 
     m_playerDiscColor->SetCurrentSelection(defaultColors.front());
 
-    m_typeSwitch = CreateWidget<cxgui::Gtkmm3OnOffSwitch>();
+    m_typeSwitch = CreateWidget<Gtkmm3OnOffSwitch>();
+    ASSERT(m_typeSwitch);
     if(p_presenter.GetDefaultPlayerType(p_rowIndex) == cxmodel::PlayerType::BOT) 
     {
         m_typeSwitch->SetState(cxgui::OnOffState::ON);
@@ -284,13 +287,7 @@ cxgui::NewPlayerRow::NewPlayerRow(const cxgui::INewGameViewPresenter& p_presente
     }
 
     m_typeSwitch->SetEnabled(p_enabled);
-
-    m_typeSwitch->SetMargins({
-        TopMargin{0},
-        BottomMargin{0},
-        LeftMargin{0},
-        RightMargin{cxgui::CONTROL_BOTTOM_MARGIN}
-    });
+    m_typeSwitch->SetMargins({TopMargin{0}, BottomMargin{0}, LeftMargin{0}, RightMargin{cxgui::CONTROL_SIDE_MARGIN}});
 
     auto* gtkSwitch = dynamic_cast<Gtk::Switch*>(m_typeSwitch.get());
     ASSERT(gtkSwitch);
@@ -303,11 +300,8 @@ cxgui::NewPlayerRow::NewPlayerRow(const cxgui::INewGameViewPresenter& p_presente
     constexpr cxmodel::Row row{0u};
     constexpr cxgui::ILayout::Alignement alignCenter{cxgui::ILayout::VerticalAlignement::CENTER, cxgui::ILayout::HorizontalAlignement::CENTER};
     m_layout->Register(*m_typeSwitch,      {row, rowSpan}, {cxmodel::Column{0u}, columnSpan}, alignCenter);
-    m_layout->Register(m_playerName,       {row, rowSpan}, {cxmodel::Column{1u}, columnSpan});
+    m_layout->Register(*m_playerName,      {row, rowSpan}, {cxmodel::Column{1u}, columnSpan});
     m_layout->Register(*m_playerDiscColor, {row, rowSpan}, {cxmodel::Column{2u}, columnSpan});
-
-    m_playerName.set_hexpand(true);
-    m_playerDiscColor->set_hexpand(true);
 
     auto* gtkLayout = dynamic_cast<Gtk::Grid*>(m_layout.release());
     ASSERT(gtkLayout);
@@ -334,7 +328,7 @@ void cxgui::NewPlayerRow::Update(const std::string& p_playerNewName,
         m_typeSwitch->SetState(cxgui::OnOffState::OFF);
     }
 
-    m_playerName.set_text(p_playerNewName);
+    m_playerName->UpdateContents(p_playerNewName);
     m_playerDiscColor->SetCurrentSelection(p_playerNewDiscColor);
 
     CheckInvariants();
@@ -342,7 +336,7 @@ void cxgui::NewPlayerRow::Update(const std::string& p_playerNewName,
 
 std::string cxgui::NewPlayerRow::GetPlayerName() const
 {
-    return m_playerName.get_text();
+    return m_playerName->GetContents();
 }
 
 cxmodel::ChipColor cxgui::NewPlayerRow::GetPlayerDiscColor() const
@@ -368,7 +362,7 @@ void cxgui::NewPlayerRow::RowUpdatedSignalConnect(const std::function<void()>& p
     RETURN_IF(!p_slot,);
 
     m_typeSwitch->OnStateChanged()->Connect(p_slot);
-    m_playerName.signal_changed().connect(p_slot);
+    m_playerName->OnContentsChanged()->Connect(p_slot);
     m_playerDiscColor->signal_changed().connect(p_slot);
 
     CheckInvariants();
@@ -376,13 +370,13 @@ void cxgui::NewPlayerRow::RowUpdatedSignalConnect(const std::function<void()>& p
 
 void cxgui::NewPlayerRow::CheckInvariants() const
 {
-    INVARIANT(!m_playerName.get_text().empty());
+    INVARIANT(!m_playerName->GetContents().empty());
 }
 
 void cxgui::NewPlayerRow::RetreiveColumnDimensions(Gtkmm3NewPlayersList& parent_) const
 {
     parent_.m_columnWidths.m_first = m_typeSwitch->GetWidth();
-    parent_.m_columnWidths.m_second = m_playerName.get_width();
+    parent_.m_columnWidths.m_second = m_playerName->GetWidth();
     parent_.m_columnWidths.m_third = m_playerDiscColor->get_width();
 }
 

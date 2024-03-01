@@ -45,6 +45,7 @@ add_library(${TARGET_NAME}
   src/Gtkmm3AboutWindow.cpp
   src/Gtkmm3Button.cpp
   src/Gtkmm3Dialog.cpp
+  src/Gtkmm3EditBox.cpp
   src/Gtkmm3GameView.cpp
   src/Gtkmm3Label.cpp
   src/Gtkmm3Layout.cpp

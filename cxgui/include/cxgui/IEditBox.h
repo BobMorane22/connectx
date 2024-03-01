@@ -16,13 +16,13 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file IButton.h
+ * @file IEditBox.h
  * @date 2024
  *
  *************************************************************************************************/
 
-#ifndef IBUTTON_H_1C2926A8_3089_41A9_A788_6E72D152DB1D
-#define IBUTTON_H_1C2926A8_3089_41A9_A788_6E72D152DB1D
+#ifndef IEDITBOX_H_D31E12BC_892F_4930_BF5C_41C904B92362
+#define IEDITBOX_H_D31E12BC_892F_4930_BF5C_41C904B92362
 
 #include <cxgui/ISignal.h>
 #include <cxgui/IWidget.h>
@@ -30,11 +30,7 @@
 namespace cxgui
 {
 
-/**********************************************************************************************//**
- * @brief A clickable button.
- *
- *************************************************************************************************/
-class IButton : public IWidget
+class IEditBox : public IWidget
 {
 
 public:
@@ -43,19 +39,37 @@ public:
      * @brief Destructor.
      *
      *********************************************************************************************/
-    virtual ~IButton() = default;
-
+    virtual ~IEditBox() = default;
+    
     /******************************************************************************************//**
-     * @brief Get the signal for when the button is clicked by the user.
+     * @brief Updates the edit box's contents.
      *
-     * @return
-     *      A signal to connect to for when the button is clicked.
+     * @param p_newContents
+     *      The contents to update the edit box with.
      *
      *********************************************************************************************/
-    [[nodiscard]] virtual std::unique_ptr<ISignal<void>> OnClicked() = 0;
+    virtual void UpdateContents(const std::string& p_newContents) = 0;
+
+    /******************************************************************************************//**
+     * @brief Get the edit box's contents.
+     *
+     * @return
+     *      The edit's actual contents.
+     *
+     *********************************************************************************************/
+    [[nodiscard]] virtual std::string GetContents() const = 0;
+
+    /******************************************************************************************//**
+     * @brief Get the signal for when the edit box contents is changed by the user.
+     *
+     * @return
+     *      A signal to connect to for when the edit box's contents is changed.
+     *
+     *********************************************************************************************/
+    [[nodiscard]] virtual std::unique_ptr<ISignal<void>> OnContentsChanged() = 0;
 
 };
 
 } // namespace cxgui
 
-#endif // IBUTTON_H_1C2926A8_3089_41A9_A788_6E72D152DB1D
+#endif // IEDITBOX_H_D31E12BC_892F_4930_BF5C_41C904B92362

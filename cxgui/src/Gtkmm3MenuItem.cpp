@@ -132,7 +132,6 @@ cxgui::Gtkmm3MenuItem::Gtkmm3MenuItem(const std::string& p_label,
     ASSERT(m_accelerator);
     m_accelerator->set_xalign(0.0);
     m_accelerator->set_accel_widget(*this);
-    m_accelerator->set_hexpand(true); // Necessary otherwise the key shortcut is not displayed.
 
     // We register the icon and the label in the container:
     m_layout = CreateWidget<Gtkmm3Layout>();
@@ -147,6 +146,9 @@ cxgui::Gtkmm3MenuItem::Gtkmm3MenuItem(const std::string& p_label,
 
     m_layout->Register(*m_icon,        {row0, oneRowSpan}, {column0, oneColumnSpan});
     m_layout->Register(*m_accelerator, {row0, oneRowSpan}, {column1, oneColumnSpan});
+
+    m_icon->set_hexpand(false);       // Necessary otherwise the blank icon space is too large.
+    m_accelerator->set_hexpand(true); // Necessary otherwise the  shortcut is not displayed.
 
     // Finally, we set up the actual menu item:
     // TG-355 : this cast is needed until Gtk::MenuItem is abstracted away:
