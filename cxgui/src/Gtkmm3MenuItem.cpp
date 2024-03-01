@@ -23,10 +23,10 @@
 
 #include <gdk/gdkkeysyms.h>
 #include <gdkmm/types.h>
+#include <gtkmm/grid.h>
 
 #include <cxinv/assertion.h>
 #include <cxgui/Gtkmm3Connection.h>
-#include <cxgui/Gtkmm3Layout.h>
 #include <cxgui/Gtkmm3MenuItem.h>
 #include <cxgui/Gtkmm3WidgetDelegate.h>
 #include <cxgui/KeyboardShortcut.h>
@@ -134,28 +134,13 @@ cxgui::Gtkmm3MenuItem::Gtkmm3MenuItem(const std::string& p_label,
     m_accelerator->set_accel_widget(*this);
 
     // We register the icon and the label in the container:
-    m_layout = CreateWidget<Gtkmm3Layout>();
+    m_layout = std::make_unique<Gtk::Grid>();
     ASSERT(m_layout);
 
-    constexpr cxmodel::Row row0{0u};
-    constexpr cxgui::ILayout::RowSpan oneRowSpan{1u};
+    m_layout->attach(*m_icon,        0, 0, 1, 1);
+    m_layout->attach(*m_accelerator, 1, 0, 1, 1);
 
-    constexpr cxmodel::Column column0{0u};
-    constexpr cxmodel::Column column1{1u};
-    constexpr cxgui::ILayout::ColumnSpan oneColumnSpan{1u};
-
-    m_layout->Register(*m_icon,        {row0, oneRowSpan}, {column0, oneColumnSpan});
-    m_layout->Register(*m_accelerator, {row0, oneRowSpan}, {column1, oneColumnSpan});
-
-    m_icon->set_hexpand(false);       // Necessary otherwise the blank icon space is too large.
-    m_accelerator->set_hexpand(true); // Necessary otherwise the  shortcut is not displayed.
-
-    // Finally, we set up the actual menu item:
-    // TG-355 : this cast is needed until Gtk::MenuItem is abstracted away:
-    auto* layoutAsGtk = dynamic_cast<Gtk::Widget*>(m_layout.get());
-    ASSERT(layoutAsGtk);
-
-    add(*layoutAsGtk);
+    add(*m_layout);
 }
 
 cxgui::Gtkmm3MenuItem::~Gtkmm3MenuItem()

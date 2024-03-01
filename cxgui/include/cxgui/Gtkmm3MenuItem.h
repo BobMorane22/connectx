@@ -30,8 +30,12 @@
 #include <gtkmm/image.h>
 #include <gtkmm/menuitem.h>
 
-#include <cxgui/ILayout.h>
 #include <cxgui/IMenuItem.h>
+
+namespace Gtk
+{
+    class Grid;
+}
 
 namespace cxgui::FreeDesktop
 {
@@ -102,7 +106,7 @@ public:
 
 private:
 
-    std::unique_ptr<cxgui::ILayout> m_layout;
+    std::unique_ptr<Gtk::Grid> m_layout;
     std::unique_ptr<Gtk::Image> m_icon;
     std::unique_ptr<Gtk::AccelLabel> m_accelerator;
 
