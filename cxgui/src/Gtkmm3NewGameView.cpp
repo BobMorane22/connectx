@@ -29,7 +29,7 @@
 #include <cxinv/assertion.h>
 #include <cxmodel/IChip.h>
 #include <cxmodel/NewGameInformation.h>
-#include <cxgui/ColorComboBox.h>
+#include <cxgui/common.h>
 #include <cxgui/DialogRole.h>
 #include <cxgui/EnabledState.h>
 #include <cxgui/extractRawUserInput.h>

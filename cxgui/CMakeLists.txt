@@ -33,19 +33,19 @@ add_library(${TARGET_NAME}
   src/AnimatedBoardTimerRAII.cpp
   src/BoardElementCache.cpp
   src/Chip.cpp
-  src/ColorComboBox.cpp
   src/ContextRestoreRAII.cpp
   src/DiscChip.cpp
   src/extractRawUserInput.cpp
   src/FrameAnimationStrategy.cpp
   src/GameResolutionDialogController.cpp
-  src/Gtkmm3GameResolutionDialog.cpp
   src/GameResolutionDialogPresenterFactory.cpp
   src/GameViewKeyHandlerStrategyFactory.cpp
+  src/Gtkmm3ColorPicker.cpp
   src/Gtkmm3AboutWindow.cpp
   src/Gtkmm3Button.cpp
   src/Gtkmm3Dialog.cpp
   src/Gtkmm3EditBox.cpp
+  src/Gtkmm3GameResolutionDialog.cpp
   src/Gtkmm3GameView.cpp
   src/Gtkmm3Label.cpp
   src/Gtkmm3Layout.cpp

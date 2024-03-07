@@ -21,14 +21,15 @@
  *
  *************************************************************************************************/
 
+#include "cxgui/IColorPicker.h"
 #include <gtkmm/grid.h>
 
 #include <cxinv/assertion.h>
 #include <cxstd/helpers.h>
 #include <cxmodel/IPlayer.h>
-#include <cxgui/ColorComboBox.h>
 #include <cxgui/common.h>
 #include <cxgui/EnabledState.h>
+#include <cxgui/Gtkmm3ColorPicker.h>
 #include <cxgui/Gtkmm3EditBox.h>
 #include <cxgui/Gtkmm3Layout.h>
 #include <cxgui/Gtkmm3OnOffSwitch.h>
@@ -183,7 +184,7 @@ private:
     std::unique_ptr<ILayout> m_layout;
     std::unique_ptr<IOnOffSwitch> m_typeSwitch;
     std::unique_ptr<IEditBox> m_playerName;
-    std::unique_ptr<ColorComboBox> m_playerDiscColor;
+    std::unique_ptr<IColorPicker> m_playerDiscColor;
 
 };
 
@@ -270,7 +271,7 @@ cxgui::NewPlayerRow::NewPlayerRow(const cxgui::INewGameViewPresenter& p_presente
     const auto defaultColors = cxgui::GetRemainingDefaultColors(p_alreadyChosenColors, p_presenter);
     IF_CONDITION_NOT_MET_DO(!defaultColors.empty(), return;);
 
-    m_playerDiscColor = std::make_unique<ColorComboBox>(defaultColors);
+    m_playerDiscColor = CreateWidget<Gtkmm3ColorPicker>(defaultColors);
     ASSERT(m_playerDiscColor);
 
     m_playerDiscColor->SetCurrentSelection(defaultColors.front());
@@ -363,7 +364,7 @@ void cxgui::NewPlayerRow::RowUpdatedSignalConnect(const std::function<void()>& p
 
     m_typeSwitch->OnStateChanged()->Connect(p_slot);
     m_playerName->OnContentsChanged()->Connect(p_slot);
-    m_playerDiscColor->signal_changed().connect(p_slot);
+    m_playerDiscColor->OnSelectionChanged()->Connect(p_slot);
 
     CheckInvariants();
 }
@@ -377,7 +378,7 @@ void cxgui::NewPlayerRow::RetreiveColumnDimensions(Gtkmm3NewPlayersList& parent_
 {
     parent_.m_columnWidths.m_first = m_typeSwitch->GetWidth();
     parent_.m_columnWidths.m_second = m_playerName->GetWidth();
-    parent_.m_columnWidths.m_third = m_playerDiscColor->get_width();
+    parent_.m_columnWidths.m_third = m_playerDiscColor->GetWidth();
 }
 
 bool cxgui::operator==(const cxgui::NewPlayerRow& p_lhs, const cxgui::NewPlayerRow& p_rhs)
