@@ -371,7 +371,7 @@ void cxgui::Gtkmm3MainWindow::OnCreateAboutWindow()
     }
 
     const int result = m_about->Show();
-    ASSERT(result == EXIT_SUCCESS);
+    IF_CONDITION_NOT_MET_DO(result == EXIT_SUCCESS, return;);
 }
 
 void cxgui::Gtkmm3MainWindow::OnNewGame()
@@ -435,7 +435,7 @@ void cxgui::Gtkmm3MainWindow::CreateGameResolutionWindow(cxmodel::ModelNotificat
     }
 
     const int result = m_gameResolution->Show();
-    ASSERT(result == EXIT_SUCCESS);
+    IF_CONDITION_NOT_MET_DO(result == EXIT_SUCCESS, return;);
 }
 
 void cxgui::Gtkmm3MainWindow::ActivateNewGameView()

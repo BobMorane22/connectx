@@ -61,7 +61,7 @@ void DisplayWarningDialog(cxgui::IWindow& p_parent, const std::string& p_message
 
     // Blocks the main loop:
     const int result = errorDialog->Show();
-    ASSERT(result == EXIT_SUCCESS);
+    IF_PRECONDITION_NOT_MET_DO(result == EXIT_SUCCESS, return;);
 }
 
 } // namespace
