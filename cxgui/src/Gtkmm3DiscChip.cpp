@@ -16,20 +16,24 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file DiscChip.cpp
+ * @file Gtkmm3DiscChip.cpp
  * @date 2020
  *
  *************************************************************************************************/
 
-#include <cxgui/DiscChip.h>
+#include <cxgui/Gtkmm3DiscChip.h>
 
-cxgui::DiscChip::DiscChip(const cxmodel::ChipColor& p_fillColor, const cxmodel::ChipColor& p_backgroundColor, int p_dimension)
-: Chip{p_fillColor, p_backgroundColor, p_dimension, p_dimension}
+cxgui::Gtkmm3DiscChip::Gtkmm3DiscChip(const cxmodel::ChipColor& p_fillColor,
+                                      const cxmodel::ChipColor& p_backgroundColor,
+                                      int p_dimension)
+: Gtkmm3Chip{p_fillColor,
+             p_backgroundColor,
+             p_dimension,
+             p_dimension}
 {
-
 }
 
-void cxgui::DiscChip::DrawBorder(const Cairo::RefPtr<Cairo::Context>& p_context) const
+void cxgui::Gtkmm3DiscChip::DrawBorder(const Cairo::RefPtr<Cairo::Context>& p_context) const
 {
     const Gtk::Allocation allocation{get_allocation()};
 

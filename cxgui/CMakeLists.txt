@@ -34,16 +34,17 @@ add_library(${TARGET_NAME}
   src/BoardElementCache.cpp
   src/Chip.cpp
   src/ContextRestoreRAII.cpp
-  src/DiscChip.cpp
   src/extractRawUserInput.cpp
   src/FrameAnimationStrategy.cpp
   src/GameResolutionDialogController.cpp
   src/GameResolutionDialogPresenterFactory.cpp
   src/GameViewKeyHandlerStrategyFactory.cpp
-  src/Gtkmm3ColorPicker.cpp
   src/Gtkmm3AboutWindow.cpp
   src/Gtkmm3Button.cpp
+  src/Gtkmm3Chip.cpp
+  src/Gtkmm3ColorPicker.cpp
   src/Gtkmm3Dialog.cpp
+  src/Gtkmm3DiscChip.cpp
   src/Gtkmm3EditBox.cpp
   src/Gtkmm3GameResolutionDialog.cpp
   src/Gtkmm3GameView.cpp

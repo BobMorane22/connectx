@@ -28,8 +28,8 @@
 #include <cxmodel/ModelNotificationContext.h>
 #include <cxgui/BoardAnimation.h>
 #include <cxgui/common.h>
-#include <cxgui/DiscChip.h>
 #include <cxgui/GameViewKeyHandlerStrategyFactory.h>
+#include <cxgui/Gtkmm3DiscChip.h>
 #include <cxgui/Gtkmm3GameView.h>
 #include <cxgui/Gtkmm3Label.h>
 #include <cxgui/Gtkmm3Layout.h>
@@ -59,12 +59,13 @@ cxgui::Gtkmm3GameView::Gtkmm3GameView(IGameViewPresenter& p_presenter,
 , m_mainLayout{p_mainLayout}
 , m_viewLeft{p_viewLeft}
 , m_viewTop{p_viewTop}
-, m_activePlayerChip{std::make_unique<cxgui::DiscChip>(cxmodel::MakeTransparent(), cxmodel::MakeTransparent(), cxgui::DEFAULT_CHIP_SIZE / 4)}
-, m_nextPlayerChip{std::make_unique<cxgui::DiscChip>(cxmodel::MakeTransparent(), cxmodel::MakeTransparent(), cxgui::DEFAULT_CHIP_SIZE / 4)}
 , m_board{std::make_unique<cxgui::AnimatedBoard>(m_presenter, cxgui::AnimationSpeed{NUMBER_CHIPS_MOVED_PER_SECOND})}
 {
-    PRECONDITION(m_activePlayerChip);
-    PRECONDITION(m_nextPlayerChip);
+
+    m_activePlayerChip = CreateWidget<Gtkmm3DiscChip>(cxmodel::MakeTransparent(), cxmodel::MakeTransparent(), cxgui::DEFAULT_CHIP_SIZE / 4);
+    ASSERT(m_activePlayerChip);
+    m_nextPlayerChip = CreateWidget<cxgui::Gtkmm3DiscChip>(cxmodel::MakeTransparent(), cxmodel::MakeTransparent(), cxgui::DEFAULT_CHIP_SIZE / 4);
+    ASSERT(m_nextPlayerChip);
 
     m_viewLayout = CreateWidget<Gtkmm3Layout>();
     ASSERT(m_viewLayout);

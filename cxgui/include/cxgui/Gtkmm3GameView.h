@@ -24,12 +24,12 @@
 #define GTKMM3GAMEVIEW_H_AA8C282C_9CC4_45F4_BE91_C8840160BA1B
 
 #include <cxgui/AnimatedBoard.h>
-#include <cxgui/Chip.h>
 #include <cxgui/GameViewKeyHandlerStrategyFactory.h>
 #include <cxgui/IView.h>
 
 namespace cxgui
 {
+    class IChip;
     class IGameViewController;
     class IGameViewPresenter;
     class ILabel;
@@ -144,11 +144,11 @@ private:
 
     std::unique_ptr<ILabel> m_activePlayerLabel;
     std::unique_ptr<ILabel> m_activePlayerName;
-    std::unique_ptr<cxgui::Chip> m_activePlayerChip;
+    std::unique_ptr<cxgui::IChip> m_activePlayerChip;
 
     std::unique_ptr<ILabel> m_nextPlayerLabel;
     std::unique_ptr<ILabel> m_nextPlayerName;
-    std::unique_ptr<cxgui::Chip> m_nextPlayerChip;
+    std::unique_ptr<cxgui::IChip> m_nextPlayerChip;
 
     std::unique_ptr<cxgui::AnimatedBoard> m_board;
 

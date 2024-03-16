@@ -16,25 +16,24 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file DiscChip.h
+ * @file Gtkmm3DiscChip.h
  * @date 2020
  *
  *************************************************************************************************/
 
-#ifndef DISCCHIP_H_E87685D6_F889_4EC1_982F_1496DBD37A28
-#define DISCCHIP_H_E87685D6_F889_4EC1_982F_1496DBD37A28
+#ifndef GTKMM3DISCCHIP_H_62BF81A1_A9D1_400E_83C5_2B8FE8CF5B34
+#define GTKMM3DISCCHIP_H_62BF81A1_A9D1_400E_83C5_2B8FE8CF5B34
 
-#include "Chip.h"
-#include "common.h"
+#include <cxgui/Gtkmm3Chip.h>
 
 namespace cxgui
 {
 
-/*********************************************************************************************//**
- * @brief A disc shaped chip.
+/**********************************************************************************************//**
+ * @brief Gtkmm3 implementation of a chip which has a disc shape.
  *
- ************************************************************************************************/
-class DiscChip : public cxgui::Chip
+ *************************************************************************************************/
+class Gtkmm3DiscChip : public Gtkmm3Chip
 {
 
 public:
@@ -42,20 +41,25 @@ public:
     /******************************************************************************************//**
      * @brief Constructor.
      *
-     * @param p_fillColor       The color filling the center of the disc (inside its border).
-     * @param p_backgroundColor The color around the disc (outside its border).
-     * @param p_dimension       The disc dimension (both width and height, in pixels).
+     * @param p_fillColor
+     *      The color filling the center of the disc (inside its border).
+     * @param p_backgroundColor
+     *      The color around the disc (outside its border).
+     * @param p_dimension
+     *      The disc dimension (both width and height, in pixels).
      *
      ********************************************************************************************/
-    DiscChip(const cxmodel::ChipColor& p_fillColor, const cxmodel::ChipColor& p_backgroundColor, int p_dimension);
+    Gtkmm3DiscChip(const cxmodel::ChipColor& p_fillColor,
+                   const cxmodel::ChipColor& p_backgroundColor,
+                   int p_dimension);
 
 private:
 
-    // Disc shape:
-    virtual void DrawBorder(const Cairo::RefPtr<Cairo::Context>& p_context) const override;
+    // cxgui::Gtkmm3Chip:
+    void DrawBorder(const Cairo::RefPtr<Cairo::Context>& p_context) const override final;
 
 };
 
 } // namespace cxgui
 
-#endif // DISCCHIP_H_E87685D6_F889_4EC1_982F_1496DBD37A28
+#endif // GTKMM3DISCCHIP_H_62BF81A1_A9D1_400E_83C5_2B8FE8CF5B34
