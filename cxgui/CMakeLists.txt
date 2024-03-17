@@ -27,7 +27,6 @@ set(TARGET_NAME cxgui)
 
 add_library(${TARGET_NAME}
   src/AboutWindowPresenter.cpp
-  src/AnimatedBoard.cpp
   src/AnimatedBoardModel.cpp
   src/AnimatedBoardPresenter.cpp
   src/AnimatedBoardTimerRAII.cpp
@@ -40,6 +39,7 @@ add_library(${TARGET_NAME}
   src/GameResolutionDialogPresenterFactory.cpp
   src/GameViewKeyHandlerStrategyFactory.cpp
   src/Gtkmm3AboutWindow.cpp
+  src/Gtkmm3AnimatedBoard.cpp
   src/Gtkmm3Button.cpp
   src/Gtkmm3Chip.cpp
   src/Gtkmm3ColorPicker.cpp

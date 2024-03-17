@@ -29,6 +29,7 @@
 #include <cxgui/BoardAnimation.h>
 #include <cxgui/common.h>
 #include <cxgui/GameViewKeyHandlerStrategyFactory.h>
+#include <cxgui/Gtkmm3AnimatedBoard.h>
 #include <cxgui/Gtkmm3DiscChip.h>
 #include <cxgui/Gtkmm3GameView.h>
 #include <cxgui/Gtkmm3Label.h>
@@ -43,7 +44,7 @@
 namespace
 {
 
-constexpr size_t NUMBER_CHIPS_MOVED_PER_SECOND = 3u;
+constexpr cxgui::AnimationSpeed NUMBER_CHIPS_MOVED_PER_SECOND{3u};
 
 } // namespace
 
@@ -59,8 +60,9 @@ cxgui::Gtkmm3GameView::Gtkmm3GameView(IGameViewPresenter& p_presenter,
 , m_mainLayout{p_mainLayout}
 , m_viewLeft{p_viewLeft}
 , m_viewTop{p_viewTop}
-, m_board{std::make_unique<cxgui::AnimatedBoard>(m_presenter, cxgui::AnimationSpeed{NUMBER_CHIPS_MOVED_PER_SECOND})}
 {
+    m_board = CreateWidget<cxgui::Gtkmm3AnimatedBoard>(m_presenter, NUMBER_CHIPS_MOVED_PER_SECOND);
+    ASSERT(m_board);
 
     m_activePlayerChip = CreateWidget<Gtkmm3DiscChip>(cxmodel::MakeTransparent(), cxmodel::MakeTransparent(), cxgui::DEFAULT_CHIP_SIZE / 4);
     ASSERT(m_activePlayerChip);

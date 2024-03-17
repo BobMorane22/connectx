@@ -16,63 +16,41 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file AnimatedBoard.h
+ * @file Gtkmm3AnimatedBoard.h
  * @date 2021
  *
  *************************************************************************************************/
 
-#ifndef ANIMATEDBOARD_H_AD051257_1B19_403D_88A6_1C3EFBAC0A08
-#define ANIMATEDBOARD_H_AD051257_1B19_403D_88A6_1C3EFBAC0A08
+#ifndef GTKMM3ANIMATEDBOARD_H_5A2F73E1_EAC4_4C34_9F79_7540148552C2
+#define GTKMM3ANIMATEDBOARD_H_5A2F73E1_EAC4_4C34_9F79_7540148552C2
 
 #include <gtkmm/drawingarea.h>
 
-#include <cxmath/math.h>
-
-#include "AnimatedBoardTimerRAII.h"
-#include "AnimationInformation.h"
-#include "BoardAnimation.h"
-#include "BoardAnimationNotificationContext.h"
-#include "BoardElementCache.h"
-#include "IAnimatedBoardModel.h"
-#include "IBoardInformation.h"
+#include <cxmath/Dimensions.h>
+#include <cxgui/AnimatedBoardTimerRAII.h>            // GTK related...
+#include <cxgui/AnimationInformation.h>
+#include <cxgui/BoardElementCache.h>                 // Gtk related...
+#include <cxgui/IAnimatedBoard.h>
 
 namespace cxgui
 {
 
+enum class BoardAnimation;
+class IAnimatedBoardModel;
 class IAnimatedBoardPresenter;
 class IGameViewPresenter;
 
-enum class UserAction
+}
+
+namespace cxgui
 {
-    MOUSE_CLICKED,
-};
-
-using UserActionSubject = cxmodel::Subject<UserAction>;
-using IUserActionObserver = cxmodel::IObserver<UserAction>;
-
 
 /**********************************************************************************************//**
- * @brief Connect X animated game board widget.
- *
- * Represents a customizable game board for Connect X. The game board is composed of the actual
- * board in which chips are actually droped, but also an extra row, at the top, to visualize
- * the chip of the player that is currently playing. We will refer to this chip as "the chip".
- *
- * With this widget, chip movements are animated (moving left, right, etc). Board animation
- * events are handled through a subject/observer system in which a user can, for example,
- * start an animation and then be notified when the animation finishes to resume the game.
- *
- * Mouse clicks are also events that can be handled through a subject/observer system.
- *
- * For now, animations are assumed to be synchronous, which means that during animations, the
- * game must not go on and the user should not be able to interract with the board.
+ * @brief Gtkmm3 implementation of an animated game board.
  *
  *************************************************************************************************/
-class AnimatedBoard : public cxgui::IBoardInformation,
-                      public cxgui::IBoardAnimationObserver,
-                      public cxgui::BoardAnimationSubject,
-                      public cxgui::UserActionSubject,
-                      public Gtk::DrawingArea
+class Gtkmm3AnimatedBoard : public IAnimatedBoard,
+                            public Gtk::DrawingArea
 {
 
 public:
@@ -87,17 +65,41 @@ public:
      *      would mean that a chip will move three columns (or rows) per second when animated.
      *
      *********************************************************************************************/
-    AnimatedBoard(const IGameViewPresenter& p_presenter, const cxgui::AnimationSpeed& p_speed);
+    Gtkmm3AnimatedBoard(const IGameViewPresenter& p_presenter, const cxgui::AnimationSpeed& p_speed);
 
     /******************************************************************************************//**
      * @brief Destructor.
      *
      *********************************************************************************************/
-    ~AnimatedBoard() = default;
+    ~Gtkmm3AnimatedBoard() override = default;
 
-    // cxgui::IBoardInformation:
+    /*******************************************************************************************//**
+     * @brief Sets the delegate for widget common facilities.
+     *
+     * The delegate is reponsible to carry the implementation for generic `cxgui::IWidget` operations.
+     * It is meant to avoid implementation duplication.
+     *
+     * @param p_delegate
+     *      The widget delegate.
+     *
+     * @pre
+     *      The widget delegate instance given as an argument is valid.
+     * @post
+     *      The registered widget delegate is valid.
+     *
+     **********************************************************************************************/
+    void SetDelegate(std::unique_ptr<IWidget> p_delegate);
+
+    // cxgui::IAnimatedBoard:
     [[nodiscard]] const cxmodel::Column& GetCurrentColumn() const override;
     [[nodiscard]] cxmodel::ChipColor GetCurrentChipColor() const override;
+
+    // cxgui::IWidget:
+    [[nodiscard]] size_t GetWidth() const override;
+    [[nodiscard]] size_t GetHeight() const override;
+    void SetEnabled(EnabledState p_enabled) override;
+    void SetMargins(const Margins& p_newMarginSizes) override;
+    void SetTooltip(const std::string& p_tooltipContents) override;
 
 private:
 
@@ -111,13 +113,17 @@ private:
 
     bool OnResize(const cxmath::Dimensions& p_newDimensions);
 
-    void Update(cxgui::BoardAnimationNotificationContext p_context, BoardAnimationSubject* p_subject) override;
+    void Update(BoardAnimationNotificationContext p_context, BoardAnimationSubject* p_subject) override;
 
     void CustomizeHeightAccordingToMonitorDimensions();
 
     // Handlers:
     bool OnMouseButtonPressed(GdkEventButton* p_event);
     bool OnMouseMotion(GdkEventMotion* p_event);
+
+private:
+
+    std::unique_ptr<IWidget> m_delegate;
 
     // A Game View presenter cache:
     std::unique_ptr<IAnimatedBoardPresenter> m_presenter;
@@ -143,8 +149,9 @@ private:
     sigc::connection m_mouseButtonPressedConnection;
     sigc::connection m_mouseMotionConnection;
     sigc::connection m_initialSizeAllocationConnection;
+
 };
 
 } // namespace cxgui
 
-#endif // ANIMATEDBOARD_H_AD051257_1B19_403D_88A6_1C3EFBAC0A08
+#endif // GTKMM3ANIMATEDBOARD_H_5A2F73E1_EAC4_4C34_9F79_7540148552C2

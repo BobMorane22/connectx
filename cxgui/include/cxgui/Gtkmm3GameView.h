@@ -23,7 +23,7 @@
 #ifndef GTKMM3GAMEVIEW_H_AA8C282C_9CC4_45F4_BE91_C8840160BA1B
 #define GTKMM3GAMEVIEW_H_AA8C282C_9CC4_45F4_BE91_C8840160BA1B
 
-#include <cxgui/AnimatedBoard.h>
+#include <cxgui/IAnimatedBoard.h>
 #include <cxgui/GameViewKeyHandlerStrategyFactory.h>
 #include <cxgui/IView.h>
 
@@ -150,7 +150,7 @@ private:
     std::unique_ptr<ILabel> m_nextPlayerName;
     std::unique_ptr<cxgui::IChip> m_nextPlayerChip;
 
-    std::unique_ptr<cxgui::AnimatedBoard> m_board;
+    std::unique_ptr<cxgui::IAnimatedBoard> m_board;
 
     // Connexions.
     sigc::connection m_keysPressedConnection;
