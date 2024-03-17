@@ -16,7 +16,7 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file BoardElementCache.cpp
+ * @file Gtkmm3BoardElementCache.cpp
  * @date 2021
  *
  *************************************************************************************************/
@@ -26,9 +26,9 @@
 #include <gdkmm/pixbuf.h>
 
 #include <cxinv/assertion.h>
-#include <cxgui/BoardElementCache.h>
+#include <cxgui/Gtkmm3BoardElementCache.h>
 
-void cxgui::BoardElementCache::Add(const cxmodel::ChipColor& p_color, const Cairo::RefPtr<Cairo::Surface>& p_surface)
+void cxgui::Gtkmm3BoardElementCache::Add(const cxmodel::ChipColor& p_color, const Cairo::RefPtr<Cairo::Surface>& p_surface)
 {
     // Only add if not already present:
     const bool isNewKey = (std::find(m_keys.cbegin(), m_keys.cend(), p_color) == m_keys.cend());
@@ -41,7 +41,7 @@ void cxgui::BoardElementCache::Add(const cxmodel::ChipColor& p_color, const Cair
     }
 }
 
-const Cairo::RefPtr<Cairo::Surface>& cxgui::BoardElementCache::Get(const cxmodel::ChipColor& p_color) const
+const Cairo::RefPtr<Cairo::Surface>& cxgui::Gtkmm3BoardElementCache::Get(const cxmodel::ChipColor& p_color) const
 {
     size_t index = 0;
 
@@ -61,13 +61,13 @@ const Cairo::RefPtr<Cairo::Surface>& cxgui::BoardElementCache::Get(const cxmodel
     return m_surfaces[0];
 }
 
-void cxgui::BoardElementCache::Clear()
+void cxgui::Gtkmm3BoardElementCache::Clear()
 {
     m_keys.clear();
     m_surfaces.clear();
 }
 
-bool cxgui::BoardElementCache::HasElement(const cxmodel::ChipColor& p_color)
+bool cxgui::Gtkmm3BoardElementCache::HasElement(const cxmodel::ChipColor& p_color)
 {
     return (std::find(m_keys.cbegin(), m_keys.cend(), p_color) != m_keys.cend());
 }

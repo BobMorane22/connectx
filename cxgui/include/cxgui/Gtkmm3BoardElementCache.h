@@ -16,13 +16,13 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file BoardElementCache.h
+ * @file Gtkmm3BoardElementCache.h
  * @date 2021
  *
  *************************************************************************************************/
 
-#ifndef BOARDELEMENTCACHE_H_04E2F9C3_26E9_49C3_99BB_A2D2F75C3DC5
-#define BOARDELEMENTCACHE_H_04E2F9C3_26E9_49C3_99BB_A2D2F75C3DC5
+#ifndef GTKMM3BOARDELEMENTCACHE_H_04E2F9C3_26E9_49C3_99BB_A2D2F75C3DC5
+#define GTKMM3BOARDELEMENTCACHE_H_04E2F9C3_26E9_49C3_99BB_A2D2F75C3DC5
 
 #include <vector>
 
@@ -73,7 +73,7 @@ namespace cxgui
  * user to look if the key is already in the cache.
  *
  *************************************************************************************************/
-class BoardElementCache
+class Gtkmm3BoardElementCache
 {
 
 public:
@@ -133,4 +133,4 @@ private:
 
 } // namespace cxgui
 
-#endif // BOARDELEMENTCACHE_H_04E2F9C3_26E9_49C3_99BB_A2D2F75C3DC5
+#endif // GTKMM3BOARDELEMENTCACHE_H_04E2F9C3_26E9_49C3_99BB_A2D2F75C3DC5

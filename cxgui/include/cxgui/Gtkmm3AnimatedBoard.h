@@ -28,8 +28,8 @@
 
 #include <cxmath/Dimensions.h>
 #include <cxgui/AnimationInformation.h>
-#include <cxgui/BoardElementCache.h>                 // Gtk related...
 #include <cxgui/Gtkmm3AnimatedBoardTimerRAII.h>
+#include <cxgui/Gtkmm3BoardElementCache.h>
 #include <cxgui/IAnimatedBoard.h>
 
 namespace cxgui
@@ -141,7 +141,7 @@ private:
     // Surfaces in RAM on which to perform the drawing, in memory, before effectively
     // drawing on the screen. Caching these surfaces here avoids recreating them on every
     // frame draw, which helps performancewise:
-    BoardElementCache m_boardElementsCache;             // For individual discs.
+    Gtkmm3BoardElementCache m_boardElementsCache;       // For individual discs.
     Cairo::RefPtr<Cairo::Surface> m_columnHilightCache; // For the column hilight.
     Cairo::RefPtr<Cairo::Surface> m_surfaceCache;       // For the whole drawn surface.
 
