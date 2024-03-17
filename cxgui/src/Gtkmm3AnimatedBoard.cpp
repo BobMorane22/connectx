@@ -32,9 +32,9 @@
 #include <cxgui/AnimatedBoardModel.h>
 #include <cxgui/AnimatedBoardPresenter.h>
 #include <cxgui/common.h>
-#include <cxgui/ContextRestoreRAII.h>
 #include <cxgui/FrameAnimationStrategy.h>
 #include <cxgui/Gtkmm3AnimatedBoard.h>
+#include <cxgui/Gtkmm3ContextRestoreRAII.h>
 #include <cxgui/IGameViewPresenter.h>
 #include <cxgui/pathHelpers.h>
 
@@ -83,7 +83,7 @@ void DrawChip(const Cairo::RefPtr<Cairo::Context>& p_context,
               double p_radius,
               const cxmodel::ChipColor& p_backgroundColor)
 {
-    cxgui::ContextRestoreRAII contextRestoreRAII{p_context};
+    const cxgui::Gtkmm3ContextRestoreRAII contextRestoreRAII{p_context};
 
     cxgui::MakeCircularPath(p_context, p_centerPosition, p_radius);
 
@@ -252,7 +252,7 @@ bool cxgui::Gtkmm3AnimatedBoard::on_draw(const Cairo::RefPtr<Cairo::Context>& p_
     
     // We clear the surface:
     {
-        const cxgui::ContextRestoreRAII contextRestoreRAII{bufferContext};
+        const Gtkmm3ContextRestoreRAII contextRestoreRAII{bufferContext};
 
         cxgui::MakeRectanglarPath(bufferContext,
                                   {0.0, 0.0},
@@ -307,7 +307,7 @@ void cxgui::Gtkmm3AnimatedBoard::DrawActiveColumnHighlight(const Cairo::RefPtr<C
     const double cellWidth = cellDimensions.m_width.Get();
     const double cellHeight = cellDimensions.m_height.Get();
 
-    const cxgui::ContextRestoreRAII contextRestoreRAII{p_context};
+    const Gtkmm3ContextRestoreRAII contextRestoreRAII{p_context};
 
     if(m_columnHilightCache)
     {
@@ -322,7 +322,7 @@ void cxgui::Gtkmm3AnimatedBoard::DrawActiveColumnHighlight(const Cairo::RefPtr<C
 
     const auto bufferContext = Cairo::Context::create(m_columnHilightCache);
     {
-        const cxgui::ContextRestoreRAII bufferContextRestoreRAII{bufferContext};
+        const Gtkmm3ContextRestoreRAII bufferContextRestoreRAII{bufferContext};
 
         cxgui::MakeRectanglarPath(bufferContext, {0.0, 0.0}, m_animationModel->GetAnimatedAreaDimensions().m_height.Get() - cellHeight, cellWidth);
         SetSourceColor(bufferContext, m_presenter->GetGameViewColumnHighlightColor());
@@ -347,7 +347,7 @@ void cxgui::Gtkmm3AnimatedBoard::DrawBoardElement(const Cairo::RefPtr<Cairo::Con
     const IGameViewPresenter::ChipColors& chipColors = m_presenter->GetBoardChipColors();
     const cxmodel::ChipColor chipColor = chipColors[p_row.Get()][p_column.Get()];
 
-    const cxgui::ContextRestoreRAII contextRestoreRAII{p_context};
+    const Gtkmm3ContextRestoreRAII contextRestoreRAII{p_context};
 
     if(m_boardElementsCache.HasElement(chipColor))
     {
@@ -366,7 +366,7 @@ void cxgui::Gtkmm3AnimatedBoard::DrawBoardElement(const Cairo::RefPtr<Cairo::Con
                                               cellHeight + m_animationModel->GetLineWidth(cxgui::Feature::CELL).Get());
     const auto bufferContext = Cairo::Context::create(buffer);
     {
-        cxgui::ContextRestoreRAII bufferContextRestoreRAII{bufferContext};
+        const Gtkmm3ContextRestoreRAII bufferContextRestoreRAII{bufferContext};
 
         // Draw paths for chip space and the cell contour:
         cxgui::MakeCircularPath(bufferContext, {cellWidth / 2.0, cellHeight / 2.0}, radius);
@@ -383,7 +383,7 @@ void cxgui::Gtkmm3AnimatedBoard::DrawBoardElement(const Cairo::RefPtr<Cairo::Con
 
     // Add border and draw model chips:
     {
-        cxgui::ContextRestoreRAII bufferContextRestoreRAII{bufferContext};
+        Gtkmm3ContextRestoreRAII bufferContextRestoreRAII{bufferContext};
 
         cxgui::MakeCircularPath(bufferContext, {cellWidth / 2.0, cellHeight / 2.0}, radius);
 

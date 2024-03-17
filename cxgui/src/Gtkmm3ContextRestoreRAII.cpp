@@ -16,7 +16,7 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file ContextRestoreRAII.cpp
+ * @file Gtkmm3ContextRestoreRAII.cpp
  * @date 2021
  *
  *************************************************************************************************/
@@ -24,16 +24,16 @@
 #include <cairomm/context.h>
 
 #include <cxinv/assertion.h>
-#include <cxgui/ContextRestoreRAII.h>
+#include <cxgui/Gtkmm3ContextRestoreRAII.h>
 
-cxgui::ContextRestoreRAII::ContextRestoreRAII(const Cairo::RefPtr<Cairo::Context>& p_context)
+cxgui::Gtkmm3ContextRestoreRAII::Gtkmm3ContextRestoreRAII(const Cairo::RefPtr<Cairo::Context>& p_context)
 : m_context{p_context}
 {
     ASSERT_MSG(bool(m_context), "Invalid context.");
     m_context->save();
 }
 
-cxgui::ContextRestoreRAII:: ~ContextRestoreRAII()
+cxgui::Gtkmm3ContextRestoreRAII::~Gtkmm3ContextRestoreRAII()
 {
     ASSERT_MSG(bool(m_context), "Invalid context.");
     m_context->restore();

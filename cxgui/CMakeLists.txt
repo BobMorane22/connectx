@@ -29,7 +29,6 @@ add_library(${TARGET_NAME}
   src/AboutWindowPresenter.cpp
   src/AnimatedBoardModel.cpp
   src/AnimatedBoardPresenter.cpp
-  src/ContextRestoreRAII.cpp
   src/extractRawUserInput.cpp
   src/FrameAnimationStrategy.cpp
   src/GameResolutionDialogController.cpp
@@ -42,6 +41,7 @@ add_library(${TARGET_NAME}
   src/Gtkmm3Button.cpp
   src/Gtkmm3Chip.cpp
   src/Gtkmm3ColorPicker.cpp
+  src/Gtkmm3ContextRestoreRAII.cpp
   src/Gtkmm3Dialog.cpp
   src/Gtkmm3DiscChip.cpp
   src/Gtkmm3EditBox.cpp

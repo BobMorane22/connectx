@@ -16,13 +16,13 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file ContextRestoreRAII.h
+ * @file Gtkmm3ContextRestoreRAII.h
  * @date 2021
  *
  *************************************************************************************************/
 
-#ifndef CONTEXTRESTORERAII_H_43F10A87_2AAA_4ED9_86C2_B27FD5590BE7
-#define CONTEXTRESTORERAII_H_43F10A87_2AAA_4ED9_86C2_B27FD5590BE7
+#ifndef GTKMM3CONTEXTRESTORERAII_H_43F10A87_2AAA_4ED9_86C2_B27FD5590BE7
+#define GTKMM3CONTEXTRESTORERAII_H_43F10A87_2AAA_4ED9_86C2_B27FD5590BE7
 
 #include <cairomm/refptr.h>
 
@@ -49,24 +49,25 @@ namespace cxgui
  * Cairo::Context::restore() (upon destruction) on the given context.
  *
  *************************************************************************************************/
-class ContextRestoreRAII
+class Gtkmm3ContextRestoreRAII
 {
 
 public:
 
-    /**********************************************************************************************//**
+    /******************************************************************************************//**
      * @brief Constructor.
      *
-     * @param p_context The Cairo context to save and restore.
+     * @param p_context
+     *      The Cairo context to save and restore.
      *
-     *************************************************************************************************/
-    explicit ContextRestoreRAII(const Cairo::RefPtr<Cairo::Context>& p_context);
+     *********************************************************************************************/
+    explicit Gtkmm3ContextRestoreRAII(const Cairo::RefPtr<Cairo::Context>& p_context);
 
-    /**********************************************************************************************//**
+    /******************************************************************************************//**
      * @brief Destructor.
      *
-     *************************************************************************************************/
-    ~ContextRestoreRAII();
+     *********************************************************************************************/
+    ~Gtkmm3ContextRestoreRAII();
 
 private:
 
@@ -76,5 +77,4 @@ private:
 
 } // namespace cxgui
 
-
-#endif // CONTEXTRESTORERAII_H_43F10A87_2AAA_4ED9_86C2_B27FD5590BE7
+#endif // GTKMM3CONTEXTRESTORERAII_H_43F10A87_2AAA_4ED9_86C2_B27FD5590BE7
