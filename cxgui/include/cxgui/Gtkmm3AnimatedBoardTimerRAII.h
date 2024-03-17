@@ -16,19 +16,19 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file AnimatedBoardTimerRAII.h
+ * @file Gtkmm3AnimatedBoardTimerRAII.h
  * @date 2022
  *
  *************************************************************************************************/
 
-#ifndef ANIMATEDBOARDTIMERRAII_H_059D3527_FB5A_4FF2_9A36_2786BDA81BDC
-#define ANIMATEDBOARDTIMERRAII_H_059D3527_FB5A_4FF2_9A36_2786BDA81BDC
+#ifndef GTKMM3ANIMATEDBOARDTIMERRAII_H_059D3527_FB5A_4FF2_9A36_2786BDA81BDC
+#define GTKMM3ANIMATEDBOARDTIMERRAII_H_059D3527_FB5A_4FF2_9A36_2786BDA81BDC
 
 #include <memory>
 
 #include <glibmm/main.h>
 
-#include "ITimer.h"
+#include <cxgui/ITimer.h>
 
 namespace cxgui
 {
@@ -39,7 +39,7 @@ namespace cxgui
  * With this RAII, the timer is automatically started at creation and stopped at destruction.
  *
  *************************************************************************************************/
-class AnimatedBoardTimerRAII
+class Gtkmm3AnimatedBoardTimerRAII
 {
 
 public:
@@ -61,7 +61,7 @@ public:
      *      The period is greater than 0 ms.
      *
      *************************************************************************************************/
-    AnimatedBoardTimerRAII(ITimer::Callback&& p_callback, Period&& p_period);
+    Gtkmm3AnimatedBoardTimerRAII(ITimer::Callback&& p_callback, Period&& p_period);
 
     /**********************************************************************************************//**
      * @brief Destructor.
@@ -69,19 +69,19 @@ public:
      * Stops the underlying timer.
      *
      *************************************************************************************************/
-    ~AnimatedBoardTimerRAII();
+    ~Gtkmm3AnimatedBoardTimerRAII();
 
 private:
 
     // Specific implementation of a timer using the Glib technology.
     // This timer is used specifically in the animations of the game
     // board, for frames drawing.
-    class AnimatedBoardTimer : public ITimer
+    class Gtkmm3AnimatedBoardTimer : public ITimer
     {
 
     public:
 
-        AnimatedBoardTimer();
+        Gtkmm3AnimatedBoardTimer();
 
         void SetCallback(Callback&& p_callback) override;
         void SetPeriod(Period&& p_period) override;
@@ -102,4 +102,4 @@ private:
 
 } // namespace cxgui
 
-#endif // ANIMATEDBOARDTIMERRAII_H_059D3527_FB5A_4FF2_9A36_2786BDA81BDC
+#endif // GTKMM3ANIMATEDBOARDTIMERRAII_H_059D3527_FB5A_4FF2_9A36_2786BDA81BDC

@@ -27,9 +27,9 @@
 #include <gtkmm/drawingarea.h>
 
 #include <cxmath/Dimensions.h>
-#include <cxgui/AnimatedBoardTimerRAII.h>            // GTK related...
 #include <cxgui/AnimationInformation.h>
 #include <cxgui/BoardElementCache.h>                 // Gtk related...
+#include <cxgui/Gtkmm3AnimatedBoardTimerRAII.h>
 #include <cxgui/IAnimatedBoard.h>
 
 namespace cxgui
@@ -130,7 +130,7 @@ private:
     std::unique_ptr<IAnimatedBoardModel> m_animationModel;
 
     // Clock (ticks m_FPS times per second):
-    std::unique_ptr<AnimatedBoardTimerRAII> m_timer;
+    std::unique_ptr<Gtkmm3AnimatedBoardTimerRAII> m_timer;
 
     AnimationInformations<cxmath::Width> m_moveLeftAnimationInfo;
     AnimationInformations<cxmath::Width> m_moveRightAnimationInfo;

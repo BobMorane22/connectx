@@ -110,7 +110,7 @@ cxgui::Gtkmm3AnimatedBoard::Gtkmm3AnimatedBoard(const IGameViewPresenter& p_pres
     set_vexpand(true);
     set_hexpand(true);
 
-    m_timer = std::make_unique<AnimatedBoardTimerRAII>(
+    m_timer = std::make_unique<Gtkmm3AnimatedBoardTimerRAII>(
        [this](){return Redraw();},
        Period{1000.0/m_animationModel->GetFPS().Get()});
 
