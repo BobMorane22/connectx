@@ -27,15 +27,20 @@
 #include <string>
 
 #include <cxmodel/ModelNotificationContext.h>
+#include <cxgui/IWidget.h>
 
 namespace cxgui
 {
 
 /*********************************************************************************************//**
- * @brief Interface for status bars.
+ * @brief Status bar.
+ *
+ * Status bars often appear at the bottom of an application's main window and display some
+ * informations about the application state to the user.
  *
  ************************************************************************************************/
-class IStatusBar : public cxmodel::IModelObserver
+class IStatusBar : public IWidget,
+                   public cxmodel::IModelObserver
 {
 
 public:

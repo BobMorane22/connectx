@@ -16,13 +16,13 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file StatusBar.h
+ * @file Gtkmm3StatusBar.h
  * @date 2020
  *
  *************************************************************************************************/
 
-#ifndef STATUSBAR_H_DDBD40E5_28B4_47C2_8550_C0F49082EFBF
-#define STATUSBAR_H_DDBD40E5_28B4_47C2_8550_C0F49082EFBF
+#ifndef GTKMM3STATUSBAR_H_DDBD40E5_28B4_47C2_8550_C0F49082EFBF
+#define GTKMM3STATUSBAR_H_DDBD40E5_28B4_47C2_8550_C0F49082EFBF
 
 #include <gtkmm/statusbar.h>
 
@@ -36,7 +36,8 @@ namespace cxgui
  * @brief Main window status bar.
  *
  *************************************************************************************************/
-class StatusBar : public IStatusBar
+class Gtkmm3StatusBar : public IStatusBar,
+                        public Gtk::Statusbar
 {
 
 public:
@@ -48,30 +49,47 @@ public:
      *      A status bar presenter.
      *
      *********************************************************************************************/
-    StatusBar(IStatusBarPresenter& p_presenter);
+    explicit Gtkmm3StatusBar(IStatusBarPresenter& p_presenter);
+
+    /*******************************************************************************************//**
+     * @brief Sets the delegate for widget common facilities.
+     *
+     * The delegate is reponsible to carry the implementation for generic `cxgui::IWidget` operations.
+     * It is meant to avoid implementation duplication.
+     *
+     * @param p_delegate
+     *      The widget delegate.
+     *
+     * @pre
+     *      The widget delegate instance given as an argument is valid.
+     * @post
+     *      The registered widget delegate is valid.
+     *
+     **********************************************************************************************/
+    void SetDelegate(std::unique_ptr<IWidget> p_delegate);
 
     // cxgui::IStatusBar:
-    ~StatusBar() override;
     void SetLastUserActionStatus(const std::string& p_lastUserActionDescription) override;
 
-    /******************************************************************************************//**
-     * @brief Get the underlying Gtkmm status bar instance.
-     *
-     * @return
-     *      The underlying Gtkmm status bar instance.
-     *
-     *********************************************************************************************/
-    Gtk::Statusbar& GetGtkStatusBar();
+    // cxgui::IWidget:
+    [[nodiscard]] size_t GetWidth() const override;
+    [[nodiscard]] size_t GetHeight() const override;
+    void SetEnabled(EnabledState p_enabled) override;
+    void SetMargins(const Margins& p_newMarginSizes) override;
+    void SetTooltip(const std::string& p_tooltipContents) override;
 
 private:
 
     virtual void Update(cxmodel::ModelNotificationContext p_context, cxmodel::ModelSubject* p_subject) override;
 
+private:
+
+    std::unique_ptr<IWidget> m_delegate;
+
     IStatusBarPresenter& m_presenter;
-    Gtk::Statusbar m_statusbar;
 
 };
 
 } // namespace cxgui
 
-#endif // STATUSBAR_H_DDBD40E5_28B4_47C2_8550_C0F49082EFBF
+#endif // GTKMM3STATUSBAR_H_DDBD40E5_28B4_47C2_8550_C0F49082EFBF

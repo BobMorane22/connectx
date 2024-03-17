@@ -46,6 +46,7 @@
 #include <cxgui/Gtkmm3MenuBar.h>
 #include <cxgui/Gtkmm3MenuItem.h>
 #include <cxgui/Gtkmm3NewGameView.h>
+#include <cxgui/Gtkmm3StatusBar.h>
 #include <cxgui/IAnimatedBoardPresenter.h>
 #include <cxgui/IButton.h>
 #include <cxgui/ILabel.h>
@@ -54,8 +55,9 @@
 #include <cxgui/IMainWindowController.h>
 #include <cxgui/IMainWindowPresenter.h>
 #include <cxgui/ISpinBox.h>
+#include <cxgui/IStatusBar.h>
+#include <cxgui/IStatusBarPresenter.h>
 #include <cxgui/KeyboardShortcut.h>
-#include <cxgui/StatusBar.h>
 #include <cxgui/StatusBarPresenter.h>
 #include <cxgui/StdActionIcon.h>
 #include <cxgui/widgetUtilities.h>
@@ -149,8 +151,8 @@ void cxgui::Gtkmm3MainWindow::ConfigureLayouts()
 
 void cxgui::Gtkmm3MainWindow::ConfigureWidgets()
 {
-    m_model.Attach(m_statusbarPresenter.get());
-    m_statusbarPresenter->Attach(m_statusbar.get());
+    m_model.Attach(m_statusBarPresenter.get());
+    m_statusBarPresenter->Attach(m_statusBar.get());
 }
 
 void cxgui::Gtkmm3MainWindow::ConfigureSignalHandlers()
@@ -316,18 +318,18 @@ void cxgui::Gtkmm3MainWindow::RegisterMenuBar()
 
 void cxgui::Gtkmm3MainWindow::RegisterStatusBar()
 {
-    m_statusbarPresenter = std::make_unique<StatusBarPresenter>();
-    std::unique_ptr<StatusBar> concreteStatusBar = std::make_unique<StatusBar>(*m_statusbarPresenter);
+    m_statusBarPresenter = std::make_unique<StatusBarPresenter>();
+    m_statusBar = CreateWidget<Gtkmm3StatusBar>(*m_statusBarPresenter);
+    IF_CONDITION_NOT_MET_DO(m_statusBar, return;);
 
     m_mainLayout->Register(
-        concreteStatusBar->GetGtkStatusBar(),
+        *m_statusBar,
         {m_viewTop + cxmodel::Row{1u},cxgui::ILayout::RowSpan{1u}},
-        {cxmodel::Column{0u}, cxgui::ILayout::ColumnSpan{2u}});
+        {cxmodel::Column{0u}, cxgui::ILayout::ColumnSpan{2u}}
+    );
 
-    m_statusbar = std::move(concreteStatusBar);
-
-    POSTCONDITION(m_statusbarPresenter);
-    POSTCONDITION(m_statusbar);
+    POSTCONDITION(m_statusBarPresenter);
+    POSTCONDITION(m_statusBar);
 }
 
 void cxgui::Gtkmm3MainWindow::OnHelpContentsRequested()

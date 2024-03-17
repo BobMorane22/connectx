@@ -26,8 +26,6 @@
 
 #include <memory>
 
-#include <cxgui/IStatusBar.h>
-#include <cxgui/IStatusBarPresenter.h>
 #include <cxgui/IView.h>
 #include <cxgui/Gtkmm3Window.h>
 
@@ -38,6 +36,8 @@ namespace cxgui
     class IMenuItem;
     class IMainWindowController;
     class IMainWindowPresenter;
+    class IStatusBar;
+    class IStatusBarPresenter;
 }
 
 namespace Gtk
@@ -147,10 +147,10 @@ private:
 
     IMainWindowController& m_controller;
     IMainWindowPresenter& m_presenter;
-    std::unique_ptr<IStatusBarPresenter> m_statusbarPresenter;
+    std::unique_ptr<IStatusBarPresenter> m_statusBarPresenter;
 
     // Status bar:
-    std::unique_ptr<IStatusBar> m_statusbar;
+    std::unique_ptr<IStatusBar> m_statusBar;
 
     // Menu bar:
     std::unique_ptr<IMenuBar> m_menuBar;

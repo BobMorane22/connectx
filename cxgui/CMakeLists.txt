@@ -57,6 +57,7 @@ add_library(${TARGET_NAME}
   src/Gtkmm3NewPlayersList.cpp
   src/Gtkmm3OnOffSwitch.cpp
   src/Gtkmm3SpinBox.cpp
+  src/Gtkmm3StatusBar.cpp
   src/Gtkmm3WidgetDelegate.cpp
   src/Gtkmm3Window.cpp
   src/IAnimatedBoardModel.cpp
@@ -66,7 +67,6 @@ add_library(${TARGET_NAME}
   src/MainWindowPresenter.cpp
   src/MenuItem.cpp
   src/pathHelpers.cpp
-  src/StatusBar.cpp
   src/StatusBarPresenter.cpp
   src/StdActionIcon.cpp
   src/TieGameResolutionDialogPresenter.cpp
