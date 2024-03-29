@@ -42,7 +42,7 @@ namespace cxgui
 
 namespace Gtk
 {
- class Application;
+    class Application;
 }
 
 namespace cxgui

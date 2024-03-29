@@ -16,41 +16,43 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file CmdArgMainStrategy.cpp
- * @date 2019
+ * @file WidgetsFactories.cpp
+ * @date 2024
  *
  *************************************************************************************************/
 
-#include <cstdlib>
-
 #include <cxinv/assertion.h>
-#include <cxgui/IWindow.h>
-#include <cxgui/WidgetsToolkit.h>
-#include <cxexec/CmdArgMainStrategy.h>
-#include <cxexec/IUIManager.h>
-#include <cxexec/UIManagerFactory.h>
+#include <cxgui/IAbstractWidgetsFactory.h>
+#include <cxgui/IAbstractConnectXWidgetsFactory.h>
+#include <cxgui/WidgetsFactories.h>
 
-cx::CmdArgMainStrategy::CmdArgMainStrategy(int argc, char *argv[], cx::ModelReferences& p_model)
+cxgui::WidgetsFactories::WidgetsFactories(
+    std::unique_ptr<IAbstractWidgetsFactory> p_stdFactory,
+    std::unique_ptr<IAbstractConnectXWidgetsFactory> p_connectxFactory)
 {
-    PRECONDITION(argc > 0);
-    PRECONDITION(argv);
+    PRECONDITION(p_stdFactory != nullptr);
+    PRECONDITION(p_connectxFactory != nullptr);
 
-    argc = 1;
+    m_stdFactory = std::move(p_stdFactory);
+    m_connectxFactory = std::move(p_connectxFactory);
 
-    const UIManagerFactory factory{argc, argv, p_model};
-    m_uiMgr = factory.Create(cxgui::WidgetsToolkit::GTKMM3);
+    POSTCONDITION(m_stdFactory != nullptr);
+    POSTCONDITION(m_connectxFactory != nullptr);
 
-    POSTCONDITION(m_uiMgr);
+    INVARIANT(m_stdFactory != nullptr);
+    INVARIANT(m_connectxFactory != nullptr);
 }
 
-int cx::CmdArgMainStrategy::Handle()
+const cxgui::IAbstractWidgetsFactory& cxgui::WidgetsFactories::GetStandardWidgetsFactory() const
 {
-    INVARIANT(m_uiMgr);
+    INVARIANT(m_stdFactory != nullptr);
 
-    if(m_uiMgr)
-    {
-        return m_uiMgr->Manage();
-    }
+    return *m_stdFactory;
+}
 
-    return EXIT_FAILURE;
+const cxgui::IAbstractConnectXWidgetsFactory& cxgui::WidgetsFactories::GetConnectXWidgetsFactory() const
+{
+    INVARIANT(m_connectxFactory != nullptr);
+
+    return *m_connectxFactory;
 }

@@ -16,25 +16,40 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file GtkmmUIManager.cpp
+ * @file Gtkmm3UIManager.cpp
  * @date 2019
  *
  *************************************************************************************************/
 
 #include <cxinv/assertion.h>
+#include <cxgui/Gtkmm3AbstractWidgetsFactory.h>
+#include <cxgui/Gtkmm3AbstractConnectXWidgetsFactory.h>
 #include <cxgui/Gtkmm3MainWindow.h>
 #include <cxgui/IWindow.h>
 #include <cxgui/MainWindowController.h>
 #include <cxgui/MainWindowPresenter.h>
-#include <cxexec/GtkmmUIManager.h>
+#include <cxgui/WidgetsFactories.h>
+#include <cxexec/Gtkmm3UIManager.h>
 #include <cxexec/ModelReferences.h>
 
-cx::GtkmmUIManager::GtkmmUIManager(int argc, char *argv[], cx::ModelReferences& p_model)
+cx::Gtkmm3UIManager::Gtkmm3UIManager(int argc, char *argv[], cx::ModelReferences& p_model)
 {
     PRECONDITION(argc > 0);
     PRECONDITION(argv);
 
-    InitializeGtkmm(argc, argv);
+    {
+        Glib::RefPtr<Gtk::Application> gtkApplication = Gtk::Application::create(argc, argv, "bobmorane.connectx");
+        ASSERT(gtkApplication);
+
+        auto stdWidgetsFactory = std::make_unique<cxgui::Gtkmm3AbstractWidgetsFactory>(gtkApplication);
+        ASSERT(stdWidgetsFactory);
+        auto connectXWidgetsFactory = std::make_unique<cxgui::Gtkmm3AbstractConnectXWidgetsFactory>(*stdWidgetsFactory, gtkApplication);
+        ASSERT(connectXWidgetsFactory);
+
+        m_widgetsFactories = std::make_unique<cxgui::WidgetsFactories>(
+            std::move(stdWidgetsFactory),
+            std::move(connectXWidgetsFactory));
+    }
 
     // At this point, the Gtkmm engine is initialized. This means that Gtkmm widgets can safely be
     // instantiated...
@@ -42,15 +57,9 @@ cx::GtkmmUIManager::GtkmmUIManager(int argc, char *argv[], cx::ModelReferences& 
     m_controller = std::make_unique<cxgui::MainWindowController>(p_model.m_asGameActions, p_model.m_asUndoRedo);
     m_presenter = std::make_unique<cxgui::MainWindowPresenter>(p_model.m_asLimits, p_model.m_asGameInformation, p_model.m_asUndoRedo, p_model.m_asAi);
 
-    // Note: we must use the 'get' method with the 'operator*' because Gtk::RefPtr does not
-    // support, like most smart pointers, accessing the underlying instance through 'operator*':
-    {
-        auto mainWindow = cxgui::CreateWidget<cxgui::Gtkmm3MainWindow>(*(m_app.get()), p_model.m_asSubject, *m_controller, *m_presenter);
-        ASSERT(mainWindow);
-        mainWindow->Init();
-
-        m_mainWindow = std::move(mainWindow);
-    }
+    const cxgui::IAbstractConnectXWidgetsFactory& factory = m_widgetsFactories->GetConnectXWidgetsFactory();
+    m_mainWindow = factory.CreateMainWindow(p_model.m_asSubject, *m_controller, *m_presenter);
+    ASSERT(m_mainWindow);
 
     p_model.m_asSubject.Attach(m_presenter.get());
     m_presenter->Attach(m_mainWindow.get());
@@ -60,7 +69,7 @@ cx::GtkmmUIManager::GtkmmUIManager(int argc, char *argv[], cx::ModelReferences& 
     CheckInvariants();
 }
 
-int cx::GtkmmUIManager::Manage()
+int cx::Gtkmm3UIManager::Manage()
 {
     CheckInvariants();
 
@@ -72,14 +81,7 @@ int cx::GtkmmUIManager::Manage()
     return EXIT_FAILURE;
 }
 
-void cx::GtkmmUIManager::InitializeGtkmm(int argc, char *argv[])
-{
-    m_app = Gtk::Application::create(argc, argv, "bobmorane.connectx");
-
-    POSTCONDITION(bool(m_app));
-}
-
-void cx::GtkmmUIManager::CheckInvariants()
+void cx::Gtkmm3UIManager::CheckInvariants()
 {
     INVARIANT(m_controller);
     INVARIANT(m_presenter);

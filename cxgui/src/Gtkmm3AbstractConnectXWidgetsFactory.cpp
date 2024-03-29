@@ -16,41 +16,40 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file CmdArgMainStrategy.cpp
- * @date 2019
+ * @file Gtkmm3AbstractConnectXWidgetsFactory.cpp
+ * @date 2024
  *
  *************************************************************************************************/
 
-#include <cstdlib>
-
 #include <cxinv/assertion.h>
-#include <cxgui/IWindow.h>
-#include <cxgui/WidgetsToolkit.h>
-#include <cxexec/CmdArgMainStrategy.h>
-#include <cxexec/IUIManager.h>
-#include <cxexec/UIManagerFactory.h>
+#include <cxgui/Gtkmm3AbstractConnectXWidgetsFactory.h>
+#include <cxgui/Gtkmm3MainWindow.h>
+#include <cxgui/IMainWindowController.h>
+#include <cxgui/IMainWindowPresenter.h>
 
-cx::CmdArgMainStrategy::CmdArgMainStrategy(int argc, char *argv[], cx::ModelReferences& p_model)
+cxgui::Gtkmm3AbstractConnectXWidgetsFactory::Gtkmm3AbstractConnectXWidgetsFactory(
+    IAbstractWidgetsFactory& p_stdWidgetsFactory,
+    Glib::RefPtr<Gtk::Application> p_gtkApplication)
+: m_stdWidgetsFactory{p_stdWidgetsFactory}
 {
-    PRECONDITION(argc > 0);
-    PRECONDITION(argv);
+    PRECONDITION(bool(p_gtkApplication));
 
-    argc = 1;
+    m_gtkApplication = p_gtkApplication;
 
-    const UIManagerFactory factory{argc, argv, p_model};
-    m_uiMgr = factory.Create(cxgui::WidgetsToolkit::GTKMM3);
-
-    POSTCONDITION(m_uiMgr);
+    POSTCONDITION(bool(m_gtkApplication));
 }
 
-int cx::CmdArgMainStrategy::Handle()
+std::unique_ptr<cxgui::IWindow> cxgui::Gtkmm3AbstractConnectXWidgetsFactory::CreateMainWindow(
+    cxmodel::ModelSubject& p_model,
+    IMainWindowController& p_controller,
+    IMainWindowPresenter& p_presenter) const
 {
-    INVARIANT(m_uiMgr);
+    auto mainWindow = cxgui::CreateWidget<cxgui::Gtkmm3MainWindow>(*(m_gtkApplication.get()), p_model, p_controller, p_presenter);
+    IF_CONDITION_NOT_MET_DO(mainWindow, return nullptr;);
 
-    if(m_uiMgr)
-    {
-        return m_uiMgr->Manage();
-    }
+    mainWindow->Init();
 
-    return EXIT_FAILURE;
+    POSTCONDITION(mainWindow);
+
+    return mainWindow;
 }

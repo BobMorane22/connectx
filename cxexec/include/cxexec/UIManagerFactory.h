@@ -16,48 +16,77 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file IUIManager.h
- * @date 2019
+ * @file UIManagerFactory.h
+ * @date 2024
  *
  *************************************************************************************************/
 
-#ifndef IUIMANAGER_H_C426182A_242D_4305_A936_DCF78C10A9F8
-#define IUIMANAGER_H_C426182A_242D_4305_A936_DCF78C10A9F8
+#ifndef UIMANAGERFACTORY_H_0F42DD83_2399_4359_B3B2_904735C690AE
+#define UIMANAGERFACTORY_H_0F42DD83_2399_4359_B3B2_904735C690AE
+
+#include <memory>
+
+namespace cxgui
+{
+    enum class WidgetsToolkit;
+}
+
+namespace cx
+{
+    class IUIManager;
+    class ModelReferences;
+}
 
 namespace cx
 {
 
-/*********************************************************************************************//**
- * @brief Interface for creating UI managers.
+/**********************************************************************************************//**
+ * @brief Factory for User Interface (UI) managers.
  *
- * Inherit from this to implement a dependent specific UI. The main should be blind to the UI
- * implementation.
- *
- ************************************************************************************************/
-class IUIManager
+ *************************************************************************************************/
+class UIManagerFactory final
 {
 
 public:
 
     /******************************************************************************************//**
-     * @brief Default destructor.
+     * @brief Constructor.
+     *
+     * @param argc
+     *      Command line argument count.
+     * @param argv
+     *      A C-style array of arguments.
+     * @param p_model
+     *      References to a Connect X compatible model.
+     *
+     * @pre
+     *      The argument count is at least 1.
+     * @pre
+     *      The argument list is not @c nullptr.
      *
      ********************************************************************************************/
-    virtual ~IUIManager() = default;
+    UIManagerFactory(int argc, char *argv[], cx::ModelReferences& p_model);
 
     /******************************************************************************************//**
-     * @brief Manages the execution of the user interface.
+     * @brief Create a UI manager related to some UI toolkit.
      *
-     * Manages the execution of the user interface in an implementation independent fashion.
+     * @param p_toolkit
+     *      The UI toolkit for which to create a manager.
      *
-     * @return The application return code. @c EXIT_SUCCESS if the execution had no error,
-     *         @c EXIT_FAILURE otherwise.
+     * @return
+     *      The manager.
      *
      ********************************************************************************************/
-    [[nodiscard]] virtual int Manage() = 0;
+    [[nodiscard]] std::unique_ptr<IUIManager> Create(cxgui::WidgetsToolkit p_toolkit) const;
+
+private:
+
+    int m_argc;
+    char** m_argv;
+    cx::ModelReferences& m_model;
 
 };
 
 } // namespace cx
 
-#endif // IUIMANAGER_H_C426182A_242D_4305_A936_DCF78C10A9F8
+#endif // UIMANAGERFACTORY_H_0F42DD83_2399_4359_B3B2_904735C690AE

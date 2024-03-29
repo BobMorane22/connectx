@@ -16,41 +16,37 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file CmdArgMainStrategy.cpp
- * @date 2019
+ * @file IAbstractWidgetsFactory.h
+ * @date 2024
  *
  *************************************************************************************************/
 
-#include <cstdlib>
+#ifndef IABSTRACTWIDGETSFACTORY_H_FE309A25_8E9C_4F60_852F_0ADD5750890F
+#define IABSTRACTWIDGETSFACTORY_H_FE309A25_8E9C_4F60_852F_0ADD5750890F
 
-#include <cxinv/assertion.h>
-#include <cxgui/IWindow.h>
-#include <cxgui/WidgetsToolkit.h>
-#include <cxexec/CmdArgMainStrategy.h>
-#include <cxexec/IUIManager.h>
-#include <cxexec/UIManagerFactory.h>
-
-cx::CmdArgMainStrategy::CmdArgMainStrategy(int argc, char *argv[], cx::ModelReferences& p_model)
+namespace cxgui
 {
-    PRECONDITION(argc > 0);
-    PRECONDITION(argv);
 
-    argc = 1;
-
-    const UIManagerFactory factory{argc, argv, p_model};
-    m_uiMgr = factory.Create(cxgui::WidgetsToolkit::GTKMM3);
-
-    POSTCONDITION(m_uiMgr);
-}
-
-int cx::CmdArgMainStrategy::Handle()
+/**********************************************************************************************//**
+ * @brief Abstract widgets factory.
+ *
+ * Create standard widgets (i.e. buttons, labels, textboxes, etc.) without dealing with the
+ * underlying toolkit.
+ *
+ *************************************************************************************************/
+class IAbstractWidgetsFactory
 {
-    INVARIANT(m_uiMgr);
 
-    if(m_uiMgr)
-    {
-        return m_uiMgr->Manage();
-    }
+public:
 
-    return EXIT_FAILURE;
-}
+    /******************************************************************************************//**
+     * @brief Destructor.
+     *
+     *********************************************************************************************/
+    virtual ~IAbstractWidgetsFactory() = default;
+
+};
+
+} // namespace cxgui
+
+#endif // IABSTRACTWIDGETSFACTORY_H_FE309A25_8E9C_4F60_852F_0ADD5750890F

@@ -16,24 +16,17 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file GtkmmUIManager.h
+ * @file Gtkmm3UIManager.h
  * @date 2019
  *
  *************************************************************************************************/
 
-#ifndef GTKMMUIMANAGER_H_E1DB88FF_B8D0_4340_B32B_E1970564E266
-#define GTKMMUIMANAGER_H_E1DB88FF_B8D0_4340_B32B_E1970564E266
+#ifndef GTKMM3UIMANAGER_H_E1DB88FF_B8D0_4340_B32B_E1970564E266
+#define GTKMM3UIMANAGER_H_E1DB88FF_B8D0_4340_B32B_E1970564E266
 
 #include <memory>
 
-#include <gtkmm/application.h>
-
-#include <cxmodel/ModelNotificationContext.h>
-
-#include <cxgui/IMainWindowController.h>
-#include <cxgui/IMainWindowPresenter.h>
-
-#include "IUIManager.h"
+#include <cxexec/IUIManager.h>
 
 namespace cx
 {
@@ -42,19 +35,22 @@ namespace cx
 
 namespace cxgui
 {
+    class IMainWindowController;
+    class IMainWindowPresenter;
     class IWindow;
+    class WidgetsFactories;
 }
 
 namespace cx
 {
 
 /*********************************************************************************************//**
- * @brief A Gtkmm UI manager.
+ * @brief A Gtkmm UI manager compatible with Gtkmm 3.24.5.
  *
  * Manages a Gtkmm implemented UI. For more information, see: https://www.gtkmm.org/en/
  *
  ************************************************************************************************/
-class GtkmmUIManager : public cx::IUIManager
+class Gtkmm3UIManager : public cx::IUIManager
 {
 
 public:
@@ -75,24 +71,22 @@ public:
      *      The argument list is not @c nullptr.
      *
      ********************************************************************************************/
-    GtkmmUIManager(int argc, char *argv[], cx::ModelReferences& p_model);
+    Gtkmm3UIManager(int argc, char *argv[], cx::ModelReferences& p_model);
 
-    int Manage() override;
+    // cx::IUIManager:
+    [[nodiscard]] int Manage() override;
 
 
 private:
 
-    void InitializeGtkmm(int argc, char *argv[]);
-
     void CheckInvariants();
-
-    Glib::RefPtr<Gtk::Application> m_app;
 
     std::unique_ptr<cxgui::IMainWindowController> m_controller;
     std::unique_ptr<cxgui::IMainWindowPresenter> m_presenter;
+    std::unique_ptr<cxgui::WidgetsFactories> m_widgetsFactories;
     std::unique_ptr<cxgui::IWindow> m_mainWindow;
 };
 
 } // namespace cx
 
-#endif // GTKMMUIMANAGER_H_E1DB88FF_B8D0_4340_B32B_E1970564E266
+#endif // GTKMM3UIMANAGER_H_E1DB88FF_B8D0_4340_B32B_E1970564E266

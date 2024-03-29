@@ -16,41 +16,27 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file CmdArgMainStrategy.cpp
- * @date 2019
+ * @file WidgetsToolkit.h
+ * @date 2024
  *
  *************************************************************************************************/
 
-#include <cstdlib>
+#ifndef WIDGETSTOOLKIT_H_81EC1061_C97C_4782_A92B_08EC4035F477
+#define WIDGETSTOOLKIT_H_81EC1061_C97C_4782_A92B_08EC4035F477
 
-#include <cxinv/assertion.h>
-#include <cxgui/IWindow.h>
-#include <cxgui/WidgetsToolkit.h>
-#include <cxexec/CmdArgMainStrategy.h>
-#include <cxexec/IUIManager.h>
-#include <cxexec/UIManagerFactory.h>
-
-cx::CmdArgMainStrategy::CmdArgMainStrategy(int argc, char *argv[], cx::ModelReferences& p_model)
+namespace cxgui
 {
-    PRECONDITION(argc > 0);
-    PRECONDITION(argv);
 
-    argc = 1;
-
-    const UIManagerFactory factory{argc, argv, p_model};
-    m_uiMgr = factory.Create(cxgui::WidgetsToolkit::GTKMM3);
-
-    POSTCONDITION(m_uiMgr);
-}
-
-int cx::CmdArgMainStrategy::Handle()
+/**********************************************************************************************//**
+ * @brief Available widget toolkits.
+ *
+ *************************************************************************************************/
+enum class WidgetsToolkit
 {
-    INVARIANT(m_uiMgr);
+    /** Compatible with Gtkmm 3.24.5 */
+    GTKMM3,
+};
 
-    if(m_uiMgr)
-    {
-        return m_uiMgr->Manage();
-    }
+} // namespace cxgui
 
-    return EXIT_FAILURE;
-}
+#endif // WIDGETSTOOLKIT_H_81EC1061_C97C_4782_A92B_08EC4035F477

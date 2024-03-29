@@ -31,6 +31,7 @@
 #include <cxlog/ISO8601TimestampFormatter.h>
 #include <cxexec/CmdArgMainStrategy.h>
 #include <cxexec/CmdArgVerboseStrategy.h>
+#include <cxexec/IUIManager.h>
 
 /******************************************************************************************//**
  * @brief Creates a logger for the standard output.

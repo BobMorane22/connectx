@@ -35,6 +35,7 @@
 #include <cxexec/CmdArgVerboseStrategy.h>
 #include <cxexec/CmdArgVersionStrategy.h>
 #include <cxexec/ModelReferences.h>
+#include <cxexec/IUIManager.h>
 
 namespace
 {

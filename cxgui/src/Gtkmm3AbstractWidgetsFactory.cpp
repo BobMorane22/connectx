@@ -16,41 +16,19 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file CmdArgMainStrategy.cpp
- * @date 2019
+ * @file Gtkmm3AbstractWidgetsFactory.cpp
+ * @date 2024
  *
  *************************************************************************************************/
 
-#include <cstdlib>
-
 #include <cxinv/assertion.h>
-#include <cxgui/IWindow.h>
-#include <cxgui/WidgetsToolkit.h>
-#include <cxexec/CmdArgMainStrategy.h>
-#include <cxexec/IUIManager.h>
-#include <cxexec/UIManagerFactory.h>
+#include <cxgui/Gtkmm3AbstractWidgetsFactory.h>
 
-cx::CmdArgMainStrategy::CmdArgMainStrategy(int argc, char *argv[], cx::ModelReferences& p_model)
+cxgui::Gtkmm3AbstractWidgetsFactory::Gtkmm3AbstractWidgetsFactory(Glib::RefPtr<Gtk::Application> p_gtkApplication)
 {
-    PRECONDITION(argc > 0);
-    PRECONDITION(argv);
+    PRECONDITION(bool(p_gtkApplication));
 
-    argc = 1;
+    m_gtkApplication = p_gtkApplication;
 
-    const UIManagerFactory factory{argc, argv, p_model};
-    m_uiMgr = factory.Create(cxgui::WidgetsToolkit::GTKMM3);
-
-    POSTCONDITION(m_uiMgr);
-}
-
-int cx::CmdArgMainStrategy::Handle()
-{
-    INVARIANT(m_uiMgr);
-
-    if(m_uiMgr)
-    {
-        return m_uiMgr->Manage();
-    }
-
-    return EXIT_FAILURE;
+    POSTCONDITION(bool(m_gtkApplication));
 }

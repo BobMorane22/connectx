@@ -35,6 +35,8 @@ add_library(${TARGET_NAME}
   src/GameResolutionDialogPresenterFactory.cpp
   src/GameViewKeyHandlerStrategyFactory.cpp
   src/Gtkmm3AboutWindow.cpp
+  src/Gtkmm3AbstractWidgetsFactory.cpp
+  src/Gtkmm3AbstractConnectXWidgetsFactory.cpp
   src/Gtkmm3AnimatedBoard.cpp
   src/Gtkmm3AnimatedBoardTimerRAII.cpp
   src/Gtkmm3BoardElementCache.cpp
@@ -70,6 +72,7 @@ add_library(${TARGET_NAME}
   src/StatusBarPresenter.cpp
   src/StdActionIcon.cpp
   src/TieGameResolutionDialogPresenter.cpp
+  src/WidgetsFactories.cpp
   src/widgetUtilities.cpp
   src/WinGameResolutionDialogPresenter.cpp
 )

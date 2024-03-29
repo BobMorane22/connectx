@@ -16,41 +16,66 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file CmdArgMainStrategy.cpp
- * @date 2019
+ * @file UIManagerFactory.cpp
+ * @date 2024
  *
  *************************************************************************************************/
 
 #include <cstdlib>
-
 #include <cxinv/assertion.h>
+#include <cxgui/IAbstractWidgetsFactory.h>
+#include <cxgui/IAbstractConnectXWidgetsFactory.h>
+#include <cxgui/IMainWindowController.h>
+#include <cxgui/IMainWindowPresenter.h>
 #include <cxgui/IWindow.h>
+#include <cxgui/WidgetsFactories.h>
 #include <cxgui/WidgetsToolkit.h>
-#include <cxexec/CmdArgMainStrategy.h>
+#include <cxexec/Gtkmm3UIManager.h>
 #include <cxexec/IUIManager.h>
 #include <cxexec/UIManagerFactory.h>
 
-cx::CmdArgMainStrategy::CmdArgMainStrategy(int argc, char *argv[], cx::ModelReferences& p_model)
+namespace
+{
+
+// Represents no manager. Used to return an error to the caller
+// without having to deal with `nullptr`.
+class NoUIManager : public cx::IUIManager
+{
+
+public:
+
+    // cx::IUIManager:
+    [[nodiscard]] int Manage() override
+    {
+        ASSERT_ERROR_MSG("Unknown widget toolkit");
+        return EXIT_FAILURE;
+    }
+};
+
+} // namespace
+
+cx::UIManagerFactory::UIManagerFactory(int argc, char *argv[], cx::ModelReferences& p_model)
+: m_argc{argc}
+, m_argv{argv}
+, m_model{p_model}
 {
     PRECONDITION(argc > 0);
     PRECONDITION(argv);
 
-    argc = 1;
-
-    const UIManagerFactory factory{argc, argv, p_model};
-    m_uiMgr = factory.Create(cxgui::WidgetsToolkit::GTKMM3);
-
-    POSTCONDITION(m_uiMgr);
+    POSTCONDITION(m_argc > 0);
+    POSTCONDITION(m_argv);
 }
 
-int cx::CmdArgMainStrategy::Handle()
+std::unique_ptr<cx::IUIManager> cx::UIManagerFactory::Create(cxgui::WidgetsToolkit p_toolkit) const
 {
-    INVARIANT(m_uiMgr);
-
-    if(m_uiMgr)
+    switch(p_toolkit)
     {
-        return m_uiMgr->Manage();
+        case cxgui::WidgetsToolkit::GTKMM3:
+            return std::make_unique<cx::Gtkmm3UIManager>(m_argc, m_argv, m_model);
+
+        default:
+            break;
     }
 
-    return EXIT_FAILURE;
+    return std::make_unique<NoUIManager>();
 }

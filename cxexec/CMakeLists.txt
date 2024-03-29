@@ -33,7 +33,8 @@ add_library(${TARGET_NAME}
   src/CmdArgVerboseStrategy.cpp
   src/CmdArgVersionStrategy.cpp
   src/CmdArgWorkflowFactory.cpp
-  src/GtkmmUIManager.cpp
+  src/Gtkmm3UIManager.cpp
+  src/UIManagerFactory.cpp
 )
 
 target_include_directories(${TARGET_NAME}
