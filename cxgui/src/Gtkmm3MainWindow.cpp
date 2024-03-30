@@ -23,10 +23,6 @@
 
 #include <string>
 
-#include <gtkmm/application.h>
-#include <gtkmm/statusbar.h>
-#include <gtkmm/stock.h>
-
 #include <cxinv/assertion.h>
 #include <cxmodel/common.h>
 #include <cxmodel/IConnectXGameActions.h>
@@ -57,9 +53,11 @@
 #include <cxgui/ISpinBox.h>
 #include <cxgui/IStatusBar.h>
 #include <cxgui/IStatusBarPresenter.h>
+#include <cxgui/IView.h>
 #include <cxgui/KeyboardShortcut.h>
 #include <cxgui/StatusBarPresenter.h>
 #include <cxgui/StdActionIcon.h>
+#include <cxgui/WidgetsFactories.h>
 #include <cxgui/widgetUtilities.h>
 
 cxgui::Gtkmm3MainWindow::Gtkmm3MainWindow(Gtk::Application& p_gtkApplication,
@@ -117,6 +115,12 @@ cxgui::Gtkmm3MainWindow::~Gtkmm3MainWindow()
     {
         m_mainLayout->Unregister(*currentViewLayout);
     }
+}
+
+void cxgui::Gtkmm3MainWindow::RegisterWidgetsFactories(cxgui::WidgetsFactories* p_widgetsFactories)
+{
+    PRECONDITION(p_widgetsFactories);
+    m_widgetsFactories = p_widgetsFactories;
 }
 
 void cxgui::Gtkmm3MainWindow::ConfigureWindow()

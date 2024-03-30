@@ -41,14 +41,21 @@ cx::Gtkmm3UIManager::Gtkmm3UIManager(int argc, char *argv[], cx::ModelReferences
         Glib::RefPtr<Gtk::Application> gtkApplication = Gtk::Application::create(argc, argv, "bobmorane.connectx");
         ASSERT(gtkApplication);
 
-        auto stdWidgetsFactory = std::make_unique<cxgui::Gtkmm3AbstractWidgetsFactory>(gtkApplication);
-        ASSERT(stdWidgetsFactory);
-        auto connectXWidgetsFactory = std::make_unique<cxgui::Gtkmm3AbstractConnectXWidgetsFactory>(*stdWidgetsFactory, gtkApplication);
-        ASSERT(connectXWidgetsFactory);
+        m_abstractWidgetsFactory = std::make_unique<cxgui::Gtkmm3AbstractWidgetsFactory>(gtkApplication);
+        ASSERT(m_abstractWidgetsFactory);
 
-        m_widgetsFactories = std::make_unique<cxgui::WidgetsFactories>(
-            std::move(stdWidgetsFactory),
-            std::move(connectXWidgetsFactory));
+        {
+            auto abstractConnectXWidgetsFactory = std::make_unique<cxgui::Gtkmm3AbstractConnectXWidgetsFactory>(gtkApplication);
+            ASSERT(abstractConnectXWidgetsFactory);
+
+            abstractConnectXWidgetsFactory->RegisterStandardWidgetsFactory(*m_abstractWidgetsFactory);
+
+            m_abstractConnectXWidgetsFactory = std::move(abstractConnectXWidgetsFactory);
+            ASSERT(m_abstractConnectXWidgetsFactory);
+        }
+
+        m_widgetsFactories = std::make_unique<cxgui::WidgetsFactories>(*m_abstractWidgetsFactory, *m_abstractConnectXWidgetsFactory);
+        ASSERT(m_widgetsFactories);
     }
 
     // At this point, the Gtkmm engine is initialized. This means that Gtkmm widgets can safely be
@@ -57,13 +64,15 @@ cx::Gtkmm3UIManager::Gtkmm3UIManager(int argc, char *argv[], cx::ModelReferences
     m_controller = std::make_unique<cxgui::MainWindowController>(p_model.m_asGameActions, p_model.m_asUndoRedo);
     m_presenter = std::make_unique<cxgui::MainWindowPresenter>(p_model.m_asLimits, p_model.m_asGameInformation, p_model.m_asUndoRedo, p_model.m_asAi);
 
-    const cxgui::IAbstractConnectXWidgetsFactory& factory = m_widgetsFactories->GetConnectXWidgetsFactory();
-    m_mainWindow = factory.CreateMainWindow(p_model.m_asSubject, *m_controller, *m_presenter);
+    m_mainWindow = m_abstractConnectXWidgetsFactory->CreateMainWindow(p_model.m_asSubject, *m_controller, *m_presenter);
     ASSERT(m_mainWindow);
 
     p_model.m_asSubject.Attach(m_presenter.get());
     m_presenter->Attach(m_mainWindow.get());
 
+    POSTCONDITION(m_abstractWidgetsFactory);
+    POSTCONDITION(m_abstractConnectXWidgetsFactory);
+    POSTCONDITION(m_widgetsFactories);
     POSTCONDITION(m_mainWindow);
 
     CheckInvariants();

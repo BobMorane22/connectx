@@ -24,13 +24,11 @@
 #ifndef WIDGETSFACTORIES_H_4652F2EE_88BE_4042_8BF4_67A223339FF7
 #define WIDGETSFACTORIES_H_4652F2EE_88BE_4042_8BF4_67A223339FF7
 
-#include <memory>
-
 namespace cxgui
 {
 
 class IAbstractWidgetsFactory;
-class IConnectXAbstractWidgetsFactory;
+class IAbstractConnectXWidgetsFactory;
 
 }
 
@@ -56,15 +54,13 @@ public:
      * @brief Constructor.
      *
      * @param p_stdFactory
-     * @param p_connectxFactory
+     *      Standard widgets abstract factory.
      *
-     * @pre Both factories given as arguments are valid.
-     * @post Both stored factories are valid.
+     * @param p_connectxFactory
+     *      Connect X specific widgets abstract factory.
      *
      *********************************************************************************************/
-    WidgetsFactories(
-        std::unique_ptr<IAbstractWidgetsFactory> p_stdFactory,
-        std::unique_ptr<IAbstractConnectXWidgetsFactory> p_connectxFactory);
+    WidgetsFactories(IAbstractWidgetsFactory& p_stdFactory, IAbstractConnectXWidgetsFactory& p_connectxFactory);
 
     /******************************************************************************************//**
      * @brief Get the standard widgets factory.
@@ -80,8 +76,8 @@ public:
 
 private:
 
-    std::unique_ptr<IAbstractWidgetsFactory> m_stdFactory;
-    std::unique_ptr<IAbstractConnectXWidgetsFactory> m_connectxFactory;
+    IAbstractWidgetsFactory& m_stdFactory;
+    IAbstractConnectXWidgetsFactory& m_connectxFactory;
 };
 
 } // namespace cxgui

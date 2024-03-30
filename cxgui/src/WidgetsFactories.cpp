@@ -27,32 +27,19 @@
 #include <cxgui/WidgetsFactories.h>
 
 cxgui::WidgetsFactories::WidgetsFactories(
-    std::unique_ptr<IAbstractWidgetsFactory> p_stdFactory,
-    std::unique_ptr<IAbstractConnectXWidgetsFactory> p_connectxFactory)
+    IAbstractWidgetsFactory& p_stdFactory,
+    IAbstractConnectXWidgetsFactory& p_connectxFactory)
+: m_stdFactory{p_stdFactory}
+, m_connectxFactory{p_connectxFactory}
 {
-    PRECONDITION(p_stdFactory != nullptr);
-    PRECONDITION(p_connectxFactory != nullptr);
-
-    m_stdFactory = std::move(p_stdFactory);
-    m_connectxFactory = std::move(p_connectxFactory);
-
-    POSTCONDITION(m_stdFactory != nullptr);
-    POSTCONDITION(m_connectxFactory != nullptr);
-
-    INVARIANT(m_stdFactory != nullptr);
-    INVARIANT(m_connectxFactory != nullptr);
 }
 
 const cxgui::IAbstractWidgetsFactory& cxgui::WidgetsFactories::GetStandardWidgetsFactory() const
 {
-    INVARIANT(m_stdFactory != nullptr);
-
-    return *m_stdFactory;
+    return m_stdFactory;
 }
 
 const cxgui::IAbstractConnectXWidgetsFactory& cxgui::WidgetsFactories::GetConnectXWidgetsFactory() const
 {
-    INVARIANT(m_connectxFactory != nullptr);
-
-    return *m_connectxFactory;
+    return m_connectxFactory;
 }

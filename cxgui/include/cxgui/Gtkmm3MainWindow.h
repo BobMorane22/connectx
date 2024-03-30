@@ -26,7 +26,6 @@
 
 #include <memory>
 
-#include <cxgui/IView.h>
 #include <cxgui/Gtkmm3Window.h>
 
 namespace cxgui
@@ -38,6 +37,8 @@ namespace cxgui
     class IMainWindowPresenter;
     class IStatusBar;
     class IStatusBarPresenter;
+    class IView;
+    class WidgetsFactories;
 }
 
 namespace Gtk
@@ -87,10 +88,14 @@ public:
     /******************************************************************************************//**
      * @brief Constructor.
      *
-     * @param p_gtkApplication The Gtkmm application object
-     * @param p_model      The Connect X compatible model.
-     * @param p_controller The main window controller.
-     * @param p_presenter  The main window presenter.
+     * @param p_gtkApplication
+     *      The Gtkmm application object
+     * @param p_model
+     *      The Connect X compatible model.
+     * @param p_controller
+     *      The main window controller.
+     * @param p_presenter
+     *      The main window presenter.
      *
      ********************************************************************************************/
     Gtkmm3MainWindow(Gtk::Application& p_gtkApplication,
@@ -102,6 +107,7 @@ public:
 
     [[nodiscard]] int Show() override;
 
+    void RegisterWidgetsFactories(WidgetsFactories* p_widgetsFactories);
 
 private:
 
@@ -141,6 +147,8 @@ private:
     void ActivateGameView();
     void DeactivateGameView();
 
+private:
+
     Gtk::Application& m_gtkApplication;
 
     cxmodel::ModelSubject& m_model;
@@ -148,6 +156,9 @@ private:
     IMainWindowController& m_controller;
     IMainWindowPresenter& m_presenter;
     std::unique_ptr<IStatusBarPresenter> m_statusBarPresenter;
+
+    // Widgets factories:
+    WidgetsFactories* m_widgetsFactories = nullptr;
 
     // Status bar:
     std::unique_ptr<IStatusBar> m_statusBar;

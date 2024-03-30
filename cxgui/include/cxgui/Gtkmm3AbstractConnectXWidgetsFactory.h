@@ -31,6 +31,7 @@
 namespace cxgui
 {
     class IAbstractWidgetsFactory;
+    class WidgetsFactories;
 }
 
 namespace cxgui
@@ -40,6 +41,9 @@ namespace cxgui
  * @brief Abstract widgets factory for Gtkmm 3.24.5.
  *
  * This factory handles the Connect X specific widgets.
+ *
+ * @invariant
+ *       The stored `Gtk::Application` instance is valid.
  *
  *************************************************************************************************/
 class Gtkmm3AbstractConnectXWidgetsFactory final : public IAbstractConnectXWidgetsFactory
@@ -62,37 +66,34 @@ public:
     *      The `Gtk::Application` instance given as an argument is valid.
     *
     *********************************************************************************************/
-    Gtkmm3AbstractConnectXWidgetsFactory(
-        IAbstractWidgetsFactory& p_stdWidgetsFactory,
-        Glib::RefPtr<Gtk::Application> p_gtkApplication);
+    explicit Gtkmm3AbstractConnectXWidgetsFactory(Glib::RefPtr<Gtk::Application> p_gtkApplication);
 
    /******************************************************************************************//**
-    * @brief Creates a main Connect X window instance.
+    * @brief Sets a standard widgets factory.
     *
-    * @param p_model
-    *      A Connect X compatible model.
-    *
-    * @param p_controller
-    *      A main window controller.
-    *
-    * @param p_presenter
-    *      A main window presenter.
+    * Whenever possible, this factory should be used when creating Connect X specific widgets
+    * to avoid multiple maintance point for equivalent widget types.
     *
     * @post
-    *     The returned instance is valid.
-    *
-    * @return
-    *     A valid Connect X main window instance.
+    *      The stored widget factories are valid.
     *
     *********************************************************************************************/
-    [[nodiscard]] std::unique_ptr<IWindow> CreateMainWindow(cxmodel::ModelSubject& p_model, IMainWindowController& p_controller, IMainWindowPresenter& p_presenter) const override;
+    void RegisterStandardWidgetsFactory(IAbstractWidgetsFactory& p_stdAbstractWidgetsFactory);
+
+    // cxgui::IAbstractConnectXWidgetsFactory:
+    [[nodiscard]] std::unique_ptr<IWindow> CreateMainWindow(cxmodel::ModelSubject& p_model,
+        IMainWindowController& p_controller,
+        IMainWindowPresenter& p_presenter) const override;
 
 private:
 
-    // Use this whenever possible instead of plain Gtkmm.
-    IAbstractWidgetsFactory& m_stdWidgetsFactory;
+    void InvariantsCheck() const;
+
+private:
 
     Glib::RefPtr<Gtk::Application> m_gtkApplication;
+
+    std::unique_ptr<WidgetsFactories> m_widgetsFactories;
 
 };
 

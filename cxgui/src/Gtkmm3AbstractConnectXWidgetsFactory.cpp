@@ -26,17 +26,24 @@
 #include <cxgui/Gtkmm3MainWindow.h>
 #include <cxgui/IMainWindowController.h>
 #include <cxgui/IMainWindowPresenter.h>
+#include <cxgui/WidgetsFactories.h>
 
-cxgui::Gtkmm3AbstractConnectXWidgetsFactory::Gtkmm3AbstractConnectXWidgetsFactory(
-    IAbstractWidgetsFactory& p_stdWidgetsFactory,
-    Glib::RefPtr<Gtk::Application> p_gtkApplication)
-: m_stdWidgetsFactory{p_stdWidgetsFactory}
+cxgui::Gtkmm3AbstractConnectXWidgetsFactory::Gtkmm3AbstractConnectXWidgetsFactory(Glib::RefPtr<Gtk::Application> p_gtkApplication)
 {
     PRECONDITION(bool(p_gtkApplication));
 
     m_gtkApplication = p_gtkApplication;
 
     POSTCONDITION(bool(m_gtkApplication));
+    InvariantsCheck();
+}
+
+void cxgui::Gtkmm3AbstractConnectXWidgetsFactory::RegisterStandardWidgetsFactory(IAbstractWidgetsFactory& p_stdAbstractWidgetsFactory)
+{
+    m_widgetsFactories = std::make_unique<WidgetsFactories>(p_stdAbstractWidgetsFactory, *this);
+
+    POSTCONDITION(m_widgetsFactories);
+    InvariantsCheck();
 }
 
 std::unique_ptr<cxgui::IWindow> cxgui::Gtkmm3AbstractConnectXWidgetsFactory::CreateMainWindow(
@@ -44,12 +51,26 @@ std::unique_ptr<cxgui::IWindow> cxgui::Gtkmm3AbstractConnectXWidgetsFactory::Cre
     IMainWindowController& p_controller,
     IMainWindowPresenter& p_presenter) const
 {
-    auto mainWindow = cxgui::CreateWidget<cxgui::Gtkmm3MainWindow>(*(m_gtkApplication.get()), p_model, p_controller, p_presenter);
+    IF_PRECONDITION_NOT_MET_DO(m_widgetsFactories, return nullptr;);
+
+    auto mainWindow = cxgui::CreateWidget<cxgui::Gtkmm3MainWindow>(
+        *(m_gtkApplication.get()),
+        p_model,
+        p_controller,
+        p_presenter);
+
     IF_CONDITION_NOT_MET_DO(mainWindow, return nullptr;);
 
+    mainWindow->RegisterWidgetsFactories(m_widgetsFactories.get());
     mainWindow->Init();
 
     POSTCONDITION(mainWindow);
+    InvariantsCheck();
 
     return mainWindow;
+}
+
+void cxgui::Gtkmm3AbstractConnectXWidgetsFactory::InvariantsCheck() const 
+{
+    INVARIANT(m_gtkApplication);
 }

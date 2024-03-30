@@ -35,6 +35,8 @@ namespace cx
 
 namespace cxgui
 {
+    class IAbstractWidgetsFactory;
+    class IAbstractConnectCWidgetsFactory;
     class IMainWindowController;
     class IMainWindowPresenter;
     class IWindow;
@@ -68,7 +70,19 @@ public:
      * @pre
      *      The argument count is at least 1.
      * @pre
-     *      The argument list is not @c nullptr.
+     *      The argument list is valid.
+     *
+     * @post
+     *      The standard widgets abstract factory is valid.
+     *
+     * @post
+     *      The Connect X specific widgets abstract factory is valid.
+     *
+     * @post
+     *     The widget factories container is valid.
+     *
+     * @post
+     *     The main window is valid.
      *
      ********************************************************************************************/
     Gtkmm3UIManager(int argc, char *argv[], cx::ModelReferences& p_model);
@@ -81,10 +95,18 @@ private:
 
     void CheckInvariants();
 
+private:
+
+    // Widgets factories.
+    std::unique_ptr<cxgui::IAbstractWidgetsFactory> m_abstractWidgetsFactory;
+    std::unique_ptr<cxgui::IAbstractConnectXWidgetsFactory> m_abstractConnectXWidgetsFactory;
+    std::unique_ptr<cxgui::WidgetsFactories> m_widgetsFactories;
+
+    // Main window.
+    std::unique_ptr<cxgui::IWindow> m_mainWindow;
     std::unique_ptr<cxgui::IMainWindowController> m_controller;
     std::unique_ptr<cxgui::IMainWindowPresenter> m_presenter;
-    std::unique_ptr<cxgui::WidgetsFactories> m_widgetsFactories;
-    std::unique_ptr<cxgui::IWindow> m_mainWindow;
+
 };
 
 } // namespace cx
