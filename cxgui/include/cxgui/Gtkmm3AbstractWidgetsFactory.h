@@ -61,6 +61,9 @@ public:
     // cxgui::IAbstractWidgetsFactory:
     [[nodiscard]] std::unique_ptr<cxgui::IMenuBar> CreateMenuBar() const override;
     [[nodiscard]] std::unique_ptr<cxgui::IMenu> CreateMenu(const std::string p_title) const override;
+    [[nodiscard]] std::unique_ptr<cxgui::IMenuItem> CreateMenuItem(
+        const std::string p_label,
+        const std::optional<FreeDesktop::StdActionIcon>& p_icon = std::nullopt) const override;
 
 private:
 

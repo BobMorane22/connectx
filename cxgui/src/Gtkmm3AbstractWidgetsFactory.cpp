@@ -22,9 +22,11 @@
  *************************************************************************************************/
 
 #include <cxinv/assertion.h>
+#include <cxgui/StdActionIcon.h>
 #include <cxgui/Gtkmm3AbstractWidgetsFactory.h>
 #include <cxgui/Gtkmm3Menu.h>
 #include <cxgui/Gtkmm3MenuBar.h>
+#include <cxgui/Gtkmm3MenuItem.h>
 #include <cxgui/Gtkmm3WidgetDelegate.h>
 
 cxgui::Gtkmm3AbstractWidgetsFactory::Gtkmm3AbstractWidgetsFactory(Glib::RefPtr<Gtk::Application> p_gtkApplication)
@@ -52,4 +54,16 @@ std::unique_ptr<cxgui::IMenu> cxgui::Gtkmm3AbstractWidgetsFactory::CreateMenu(co
     POSTCONDITION(menu);
 
     return menu;
+}
+
+std::unique_ptr<cxgui::IMenuItem> cxgui::Gtkmm3AbstractWidgetsFactory::CreateMenuItem(
+    const std::string p_label,
+    const std::optional<FreeDesktop::StdActionIcon>& p_icon) const
+{
+    IF_PRECONDITION_NOT_MET_DO(!p_label.empty(), return nullptr;);
+
+    auto menuItem = CreateWidget<Gtkmm3MenuItem>(p_label, p_icon);
+    POSTCONDITION(menuItem);
+
+    return menuItem;
 }

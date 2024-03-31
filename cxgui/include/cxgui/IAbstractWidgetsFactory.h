@@ -25,11 +25,18 @@
 #define IABSTRACTWIDGETSFACTORY_H_FE309A25_8E9C_4F60_852F_0ADD5750890F
 
 #include <memory>
+#include <optional>
 
 namespace cxgui
 {
-    class IMenuBar;
     class IMenu;
+    class IMenuBar;
+    class IMenuItem;
+
+    namespace FreeDesktop
+    {
+        enum class StdActionIcon;
+    }
 }
 
 namespace cxgui
@@ -52,6 +59,10 @@ public:
      *
      *********************************************************************************************/
     virtual ~IAbstractWidgetsFactory() = default;
+
+// ================================================================================================
+///@{ @name Menu bar
+// ================================================================================================
 
     /******************************************************************************************//**
      * @brief Creates a menu bar instance.
@@ -89,6 +100,38 @@ public:
      *
      *********************************************************************************************/
     [[nodiscard]] virtual std::unique_ptr<cxgui::IMenu> CreateMenu(const std::string p_title) const = 0;
+
+    /******************************************************************************************//**
+     * Creates a menu item instance.
+     *
+     * Menu items are used in a `cxgui::IMenu`, which compose a `cxgui::IMenuBar`. They are the
+     * elements with which the user interacts to activate features.
+     *
+     * Menu items have a mandatory textual label and an optional icon representing the feature
+     * the menu item activates. If present, the icon is drawn to the left of the textual label.
+     * Items with and without icons can be mixed in a single `cxgui::IMenu`. In this case, all
+     * texual labels are aligned to the left.
+     *
+     * @param p_label
+     *      The text to appear on the menu item.
+     * @param p_icon
+     *      The optional icon to appear on the menu item.
+     *
+     * @pre
+     *      The label text is not empty.
+     *
+     * @post
+     *      The returned menu item instance is valid.
+     *
+     * @return
+     *      A menu item instance.
+     *
+     *********************************************************************************************/
+    [[nodiscard]] virtual std::unique_ptr<cxgui::IMenuItem> CreateMenuItem(
+        const std::string p_label,
+        const std::optional<FreeDesktop::StdActionIcon>& p_icon = std::nullopt) const = 0;
+
+///@}
 
 };
 

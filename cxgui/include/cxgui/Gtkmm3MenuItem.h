@@ -63,7 +63,7 @@ public:
      * @param p_icon
      *      The optional icon to appear on the menu item.
      *
-     * @precondition
+     * @pre
      *      The text is not empty.
      *
      *********************************************************************************************/

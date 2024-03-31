@@ -38,7 +38,6 @@
 #include <cxgui/Gtkmm3GameView.h>
 #include <cxgui/Gtkmm3Layout.h>
 #include <cxgui/Gtkmm3MainWindow.h>
-#include <cxgui/Gtkmm3MenuItem.h>
 #include <cxgui/Gtkmm3NewGameView.h>
 #include <cxgui/Gtkmm3StatusBar.h>
 #include <cxgui/IAbstractWidgetsFactory.h>
@@ -51,6 +50,7 @@
 #include <cxgui/IMainWindowPresenter.h>
 #include <cxgui/IMenu.h>
 #include <cxgui/IMenuBar.h>
+#include <cxgui/IMenuItem.h>
 #include <cxgui/ISpinBox.h>
 #include <cxgui/IStatusBar.h>
 #include <cxgui/IStatusBarPresenter.h>
@@ -72,29 +72,7 @@ cxgui::Gtkmm3MainWindow::Gtkmm3MainWindow(Gtk::Application& p_gtkApplication,
  , m_viewLeft{0}
  , m_viewTop{1}
 {
-    // This should be located elsewhere. For now, I don't have a choice to locate it
-    // here because of the pointer nature of the attribute. To be moved when passing
-    // to popover menus.
-    m_newGameMenuItem = CreateWidget<Gtkmm3MenuItem>(m_presenter.GetMenuLabel(MenuItem::NEW_GAME));
-    ASSERT(m_newGameMenuItem);
-
-    m_reinitializeMenuItem = CreateWidget<Gtkmm3MenuItem>(m_presenter.GetMenuLabel(MenuItem::REINITIALIZE_GAME));
-    ASSERT(m_reinitializeMenuItem);
-
-    m_undoMenuItem = CreateWidget<Gtkmm3MenuItem>(m_presenter.GetMenuLabel(MenuItem::UNDO), cxgui::FreeDesktop::StdActionIcon::EDIT_UNDO);
-    ASSERT(m_undoMenuItem);
-
-    m_redoMenuItem = CreateWidget<Gtkmm3MenuItem>(m_presenter.GetMenuLabel(MenuItem::REDO), cxgui::FreeDesktop::StdActionIcon::EDIT_REDO);
-    ASSERT(m_redoMenuItem);
-
-    m_quitMenuItem = CreateWidget<Gtkmm3MenuItem>(m_presenter.GetMenuLabel(MenuItem::QUIT), cxgui::FreeDesktop::StdActionIcon::APPLICATION_EXIT);
-    ASSERT(m_quitMenuItem);
-
-    m_contentsMenuItem = CreateWidget<Gtkmm3MenuItem>(m_presenter.GetMenuLabel(MenuItem::CONTENTS), cxgui::FreeDesktop::StdActionIcon::HELP_CONTENTS);
-    ASSERT(m_contentsMenuItem);
-
-    m_aboutMenuItem = CreateWidget<Gtkmm3MenuItem>(m_presenter.GetMenuLabel(MenuItem::ABOUT), cxgui::FreeDesktop::StdActionIcon::HELP_ABOUT);
-    ASSERT(m_aboutMenuItem);
+    // Nothing to do.
 }
 
 cxgui::Gtkmm3MainWindow::~Gtkmm3MainWindow()
@@ -122,6 +100,13 @@ void cxgui::Gtkmm3MainWindow::InitializeWidgets()
     m_menuBar = standardWidgetsFactory.CreateMenuBar();
     m_gameMenu = standardWidgetsFactory.CreateMenu(m_presenter.GetMenuLabel(MenuItem::GAME));
     m_helpMenu = standardWidgetsFactory.CreateMenu(m_presenter.GetMenuLabel(MenuItem::HELP));
+    m_newGameMenuItem = standardWidgetsFactory.CreateMenuItem(m_presenter.GetMenuLabel(MenuItem::NEW_GAME));
+    m_reinitializeMenuItem = standardWidgetsFactory.CreateMenuItem(m_presenter.GetMenuLabel(MenuItem::REINITIALIZE_GAME));
+    m_undoMenuItem = standardWidgetsFactory.CreateMenuItem(m_presenter.GetMenuLabel(MenuItem::UNDO), cxgui::FreeDesktop::StdActionIcon::EDIT_UNDO);
+    m_redoMenuItem = standardWidgetsFactory.CreateMenuItem(m_presenter.GetMenuLabel(MenuItem::REDO), cxgui::FreeDesktop::StdActionIcon::EDIT_REDO);
+    m_quitMenuItem = standardWidgetsFactory.CreateMenuItem(m_presenter.GetMenuLabel(MenuItem::QUIT), cxgui::FreeDesktop::StdActionIcon::APPLICATION_EXIT);
+    m_contentsMenuItem = standardWidgetsFactory.CreateMenuItem(m_presenter.GetMenuLabel(MenuItem::CONTENTS), cxgui::FreeDesktop::StdActionIcon::HELP_CONTENTS);
+    m_aboutMenuItem = standardWidgetsFactory.CreateMenuItem(m_presenter.GetMenuLabel(MenuItem::ABOUT), cxgui::FreeDesktop::StdActionIcon::HELP_ABOUT);
 }
 
 void cxgui::Gtkmm3MainWindow::ConfigureWindow()
