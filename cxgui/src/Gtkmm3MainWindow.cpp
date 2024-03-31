@@ -36,7 +36,6 @@
 #include <cxgui/Gtkmm3AboutWindow.h>
 #include <cxgui/Gtkmm3GameResolutionDialog.h>
 #include <cxgui/Gtkmm3GameView.h>
-#include <cxgui/Gtkmm3Layout.h>
 #include <cxgui/Gtkmm3MainWindow.h>
 #include <cxgui/Gtkmm3NewGameView.h>
 #include <cxgui/IAbstractWidgetsFactory.h>
