@@ -23,6 +23,7 @@
 
 #include <cxinv/assertion.h>
 #include <cxgui/Gtkmm3AbstractWidgetsFactory.h>
+#include <cxgui/Gtkmm3Menu.h>
 #include <cxgui/Gtkmm3MenuBar.h>
 #include <cxgui/Gtkmm3WidgetDelegate.h>
 
@@ -41,4 +42,14 @@ std::unique_ptr<cxgui::IMenuBar> cxgui::Gtkmm3AbstractWidgetsFactory::CreateMenu
     POSTCONDITION(menuBar);
 
     return menuBar;
+}
+
+std::unique_ptr<cxgui::IMenu> cxgui::Gtkmm3AbstractWidgetsFactory::CreateMenu(const std::string p_title) const
+{
+    IF_PRECONDITION_NOT_MET_DO(!p_title.empty(), return nullptr;);
+
+    auto menu = cxgui::CreateWidget<cxgui::Gtkmm3Menu>(p_title);
+    POSTCONDITION(menu);
+
+    return menu;
 }

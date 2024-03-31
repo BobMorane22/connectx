@@ -60,6 +60,7 @@ public:
 
     // cxgui::IAbstractWidgetsFactory:
     [[nodiscard]] std::unique_ptr<cxgui::IMenuBar> CreateMenuBar() const override;
+    [[nodiscard]] std::unique_ptr<cxgui::IMenu> CreateMenu(const std::string p_title) const override;
 
 private:
 

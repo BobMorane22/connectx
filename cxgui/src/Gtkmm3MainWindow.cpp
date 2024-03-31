@@ -38,7 +38,6 @@
 #include <cxgui/Gtkmm3GameView.h>
 #include <cxgui/Gtkmm3Layout.h>
 #include <cxgui/Gtkmm3MainWindow.h>
-#include <cxgui/Gtkmm3Menu.h>
 #include <cxgui/Gtkmm3MenuItem.h>
 #include <cxgui/Gtkmm3NewGameView.h>
 #include <cxgui/Gtkmm3StatusBar.h>
@@ -50,6 +49,7 @@
 #include <cxgui/INewPlayersList.h>
 #include <cxgui/IMainWindowController.h>
 #include <cxgui/IMainWindowPresenter.h>
+#include <cxgui/IMenu.h>
 #include <cxgui/IMenuBar.h>
 #include <cxgui/ISpinBox.h>
 #include <cxgui/IStatusBar.h>
@@ -75,9 +75,6 @@ cxgui::Gtkmm3MainWindow::Gtkmm3MainWindow(Gtk::Application& p_gtkApplication,
     // This should be located elsewhere. For now, I don't have a choice to locate it
     // here because of the pointer nature of the attribute. To be moved when passing
     // to popover menus.
-    m_gameMenu = CreateWidget<Gtkmm3Menu>(m_presenter.GetMenuLabel(MenuItem::GAME));
-    ASSERT(m_gameMenu);
-
     m_newGameMenuItem = CreateWidget<Gtkmm3MenuItem>(m_presenter.GetMenuLabel(MenuItem::NEW_GAME));
     ASSERT(m_newGameMenuItem);
 
@@ -92,9 +89,6 @@ cxgui::Gtkmm3MainWindow::Gtkmm3MainWindow(Gtk::Application& p_gtkApplication,
 
     m_quitMenuItem = CreateWidget<Gtkmm3MenuItem>(m_presenter.GetMenuLabel(MenuItem::QUIT), cxgui::FreeDesktop::StdActionIcon::APPLICATION_EXIT);
     ASSERT(m_quitMenuItem);
-
-    m_helpMenu = CreateWidget<Gtkmm3Menu>(m_presenter.GetMenuLabel(MenuItem::HELP));
-    ASSERT(m_helpMenu);
 
     m_contentsMenuItem = CreateWidget<Gtkmm3MenuItem>(m_presenter.GetMenuLabel(MenuItem::CONTENTS), cxgui::FreeDesktop::StdActionIcon::HELP_CONTENTS);
     ASSERT(m_contentsMenuItem);
@@ -126,8 +120,8 @@ void cxgui::Gtkmm3MainWindow::InitializeWidgets()
     const cxgui::IAbstractWidgetsFactory& standardWidgetsFactory = m_widgetsFactories->GetStandardWidgetsFactory();
 
     m_menuBar = standardWidgetsFactory.CreateMenuBar();
-
-    POSTCONDITION(m_menuBar);
+    m_gameMenu = standardWidgetsFactory.CreateMenu(m_presenter.GetMenuLabel(MenuItem::GAME));
+    m_helpMenu = standardWidgetsFactory.CreateMenu(m_presenter.GetMenuLabel(MenuItem::HELP));
 }
 
 void cxgui::Gtkmm3MainWindow::ConfigureWindow()

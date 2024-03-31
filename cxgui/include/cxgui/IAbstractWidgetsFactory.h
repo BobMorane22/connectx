@@ -29,6 +29,7 @@
 namespace cxgui
 {
     class IMenuBar;
+    class IMenu;
 }
 
 namespace cxgui
@@ -53,7 +54,11 @@ public:
     virtual ~IAbstractWidgetsFactory() = default;
 
     /******************************************************************************************//**
-     * @brief Create a menu bar instance.
+     * @brief Creates a menu bar instance.
+     *
+     * Menu bars hold different `cxgui::IMenu` elements, often divided into thematics. Each menu
+     * contains one or more `cxgui::IMenuItem`, which the user can use to activate features by
+     * clicking on them.
      *
      * @post
      *      The returned menu bar instance is valid.
@@ -63,6 +68,27 @@ public:
      *
      *********************************************************************************************/
     [[nodiscard]] virtual std::unique_ptr<cxgui::IMenuBar> CreateMenuBar() const = 0;
+
+    /******************************************************************************************//**
+     * Creates a menu instance.
+     *
+     * Menus are used in a `cxgui::IMenuBar`. They hold `cxgui::IMenuItem`, which are the elements
+     * the user interacts with to activate features.
+     *
+     * @param p_title
+     *      The menu title, as shown to the user.
+     *
+     * @pre
+     *      The menu title is not empty.
+     *
+     * @post
+     *      The returned menu instance is valid.
+     *
+     * @return
+     *      A menu instance.
+     *
+     *********************************************************************************************/
+    [[nodiscard]] virtual std::unique_ptr<cxgui::IMenu> CreateMenu(const std::string p_title) const = 0;
 
 };
 
