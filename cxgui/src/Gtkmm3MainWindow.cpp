@@ -39,10 +39,10 @@
 #include <cxgui/Gtkmm3Layout.h>
 #include <cxgui/Gtkmm3MainWindow.h>
 #include <cxgui/Gtkmm3Menu.h>
-#include <cxgui/Gtkmm3MenuBar.h>
 #include <cxgui/Gtkmm3MenuItem.h>
 #include <cxgui/Gtkmm3NewGameView.h>
 #include <cxgui/Gtkmm3StatusBar.h>
+#include <cxgui/IAbstractWidgetsFactory.h>
 #include <cxgui/IAnimatedBoardPresenter.h>
 #include <cxgui/IButton.h>
 #include <cxgui/ILabel.h>
@@ -50,6 +50,7 @@
 #include <cxgui/INewPlayersList.h>
 #include <cxgui/IMainWindowController.h>
 #include <cxgui/IMainWindowPresenter.h>
+#include <cxgui/IMenuBar.h>
 #include <cxgui/ISpinBox.h>
 #include <cxgui/IStatusBar.h>
 #include <cxgui/IStatusBarPresenter.h>
@@ -74,9 +75,6 @@ cxgui::Gtkmm3MainWindow::Gtkmm3MainWindow(Gtk::Application& p_gtkApplication,
     // This should be located elsewhere. For now, I don't have a choice to locate it
     // here because of the pointer nature of the attribute. To be moved when passing
     // to popover menus.
-    m_menuBar = CreateWidget<Gtkmm3MenuBar>();
-    ASSERT(m_menuBar);
-
     m_gameMenu = CreateWidget<Gtkmm3Menu>(m_presenter.GetMenuLabel(MenuItem::GAME));
     ASSERT(m_gameMenu);
 
@@ -125,6 +123,11 @@ void cxgui::Gtkmm3MainWindow::RegisterWidgetsFactories(cxgui::WidgetsFactories* 
 
 void cxgui::Gtkmm3MainWindow::InitializeWidgets()
 {
+    const cxgui::IAbstractWidgetsFactory& standardWidgetsFactory = m_widgetsFactories->GetStandardWidgetsFactory();
+
+    m_menuBar = standardWidgetsFactory.CreateMenuBar();
+
+    POSTCONDITION(m_menuBar);
 }
 
 void cxgui::Gtkmm3MainWindow::ConfigureWindow()

@@ -58,6 +58,9 @@ public:
     *********************************************************************************************/
     explicit Gtkmm3AbstractWidgetsFactory(Glib::RefPtr<Gtk::Application> p_gtkApplication);
 
+    // cxgui::IAbstractWidgetsFactory:
+    [[nodiscard]] std::unique_ptr<cxgui::IMenuBar> CreateMenuBar() const override;
+
 private:
 
     Glib::RefPtr<Gtk::Application> m_gtkApplication;

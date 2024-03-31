@@ -24,6 +24,13 @@
 #ifndef IABSTRACTWIDGETSFACTORY_H_FE309A25_8E9C_4F60_852F_0ADD5750890F
 #define IABSTRACTWIDGETSFACTORY_H_FE309A25_8E9C_4F60_852F_0ADD5750890F
 
+#include <memory>
+
+namespace cxgui
+{
+    class IMenuBar;
+}
+
 namespace cxgui
 {
 
@@ -44,6 +51,18 @@ public:
      *
      *********************************************************************************************/
     virtual ~IAbstractWidgetsFactory() = default;
+
+    /******************************************************************************************//**
+     * @brief Create a menu bar instance.
+     *
+     * @post
+     *      The returned menu bar instance is valid.
+     *
+     * @return
+     *      A menu bar instance.
+     *
+     *********************************************************************************************/
+    [[nodiscard]] virtual std::unique_ptr<cxgui::IMenuBar> CreateMenuBar() const = 0;
 
 };
 

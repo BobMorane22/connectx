@@ -23,6 +23,8 @@
 
 #include <cxinv/assertion.h>
 #include <cxgui/Gtkmm3AbstractWidgetsFactory.h>
+#include <cxgui/Gtkmm3MenuBar.h>
+#include <cxgui/Gtkmm3WidgetDelegate.h>
 
 cxgui::Gtkmm3AbstractWidgetsFactory::Gtkmm3AbstractWidgetsFactory(Glib::RefPtr<Gtk::Application> p_gtkApplication)
 {
@@ -31,4 +33,12 @@ cxgui::Gtkmm3AbstractWidgetsFactory::Gtkmm3AbstractWidgetsFactory(Glib::RefPtr<G
     m_gtkApplication = p_gtkApplication;
 
     POSTCONDITION(bool(m_gtkApplication));
+}
+
+std::unique_ptr<cxgui::IMenuBar> cxgui::Gtkmm3AbstractWidgetsFactory::CreateMenuBar() const
+{
+    auto menuBar = cxgui::CreateWidget<cxgui::Gtkmm3MenuBar>();
+    POSTCONDITION(menuBar);
+
+    return menuBar;
 }
