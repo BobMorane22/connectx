@@ -58,12 +58,13 @@ public:
     *********************************************************************************************/
     explicit Gtkmm3AbstractWidgetsFactory(Glib::RefPtr<Gtk::Application> p_gtkApplication);
 
-    // cxgui::IAbstractWidgetsFactory:
-    [[nodiscard]] std::unique_ptr<cxgui::IMenuBar> CreateMenuBar() const override;
-    [[nodiscard]] std::unique_ptr<cxgui::IMenu> CreateMenu(const std::string p_title) const override;
-    [[nodiscard]] std::unique_ptr<cxgui::IMenuItem> CreateMenuItem(
+    // IAbstractWidgetsFactory:
+    [[nodiscard]] std::unique_ptr<IMenuBar> CreateMenuBar() const override;
+    [[nodiscard]] std::unique_ptr<IMenu> CreateMenu(const std::string p_title) const override;
+    [[nodiscard]] std::unique_ptr<IMenuItem> CreateMenuItem(
         const std::string p_label,
         const std::optional<FreeDesktop::StdActionIcon>& p_icon = std::nullopt) const override;
+    [[nodiscard]] std::unique_ptr<IStatusBar> CreateStatusBar(IStatusBarPresenter& p_presenter) const override;
 
 private:
 

@@ -27,7 +27,9 @@
 #include <cxgui/Gtkmm3Menu.h>
 #include <cxgui/Gtkmm3MenuBar.h>
 #include <cxgui/Gtkmm3MenuItem.h>
+#include <cxgui/Gtkmm3StatusBar.h>
 #include <cxgui/Gtkmm3WidgetDelegate.h>
+#include <cxgui/IStatusBarPresenter.h>
 
 cxgui::Gtkmm3AbstractWidgetsFactory::Gtkmm3AbstractWidgetsFactory(Glib::RefPtr<Gtk::Application> p_gtkApplication)
 {
@@ -66,4 +68,12 @@ std::unique_ptr<cxgui::IMenuItem> cxgui::Gtkmm3AbstractWidgetsFactory::CreateMen
     POSTCONDITION(menuItem);
 
     return menuItem;
+}
+
+std::unique_ptr<cxgui::IStatusBar> cxgui::Gtkmm3AbstractWidgetsFactory::CreateStatusBar(cxgui::IStatusBarPresenter& p_presenter) const
+{
+    auto statusBar = CreateWidget<Gtkmm3StatusBar>(p_presenter);
+    POSTCONDITION(statusBar);
+
+    return statusBar;
 }

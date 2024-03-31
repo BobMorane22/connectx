@@ -39,7 +39,6 @@
 #include <cxgui/Gtkmm3Layout.h>
 #include <cxgui/Gtkmm3MainWindow.h>
 #include <cxgui/Gtkmm3NewGameView.h>
-#include <cxgui/Gtkmm3StatusBar.h>
 #include <cxgui/IAbstractWidgetsFactory.h>
 #include <cxgui/IAnimatedBoardPresenter.h>
 #include <cxgui/IButton.h>
@@ -53,7 +52,6 @@
 #include <cxgui/IMenuItem.h>
 #include <cxgui/ISpinBox.h>
 #include <cxgui/IStatusBar.h>
-#include <cxgui/IStatusBarPresenter.h>
 #include <cxgui/IView.h>
 #include <cxgui/KeyboardShortcut.h>
 #include <cxgui/StatusBarPresenter.h>
@@ -308,8 +306,11 @@ void cxgui::Gtkmm3MainWindow::RegisterMenuBar()
 
 void cxgui::Gtkmm3MainWindow::RegisterStatusBar()
 {
+    const IAbstractWidgetsFactory& standardWidgetsFactory = m_widgetsFactories->GetStandardWidgetsFactory();
+
     m_statusBarPresenter = std::make_unique<StatusBarPresenter>();
-    m_statusBar = CreateWidget<Gtkmm3StatusBar>(*m_statusBarPresenter);
+    IF_CONDITION_NOT_MET_DO(m_statusBarPresenter, return;);
+    m_statusBar = standardWidgetsFactory.CreateStatusBar(*m_statusBarPresenter);
     IF_CONDITION_NOT_MET_DO(m_statusBar, return;);
 
     m_mainLayout->Register(

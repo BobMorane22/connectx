@@ -33,6 +33,9 @@ namespace cxgui
     class IMenuBar;
     class IMenuItem;
 
+    class IStatusBar;
+    class IStatusBarPresenter;
+
     namespace FreeDesktop
     {
         enum class StdActionIcon;
@@ -67,8 +70,8 @@ public:
     /******************************************************************************************//**
      * @brief Creates a menu bar instance.
      *
-     * Menu bars hold different `cxgui::IMenu` elements, often divided into thematics. Each menu
-     * contains one or more `cxgui::IMenuItem`, which the user can use to activate features by
+     * Menu bars hold different `IMenu` elements, often divided into thematics. Each menu
+     * contains one or more `IMenuItem`, which the user can use to activate features by
      * clicking on them.
      *
      * @post
@@ -78,12 +81,12 @@ public:
      *      A menu bar instance.
      *
      *********************************************************************************************/
-    [[nodiscard]] virtual std::unique_ptr<cxgui::IMenuBar> CreateMenuBar() const = 0;
+    [[nodiscard]] virtual std::unique_ptr<IMenuBar> CreateMenuBar() const = 0;
 
     /******************************************************************************************//**
      * Creates a menu instance.
      *
-     * Menus are used in a `cxgui::IMenuBar`. They hold `cxgui::IMenuItem`, which are the elements
+     * Menus are used in a `IMenuBar`. They hold `IMenuItem`, which are the elements
      * the user interacts with to activate features.
      *
      * @param p_title
@@ -99,17 +102,17 @@ public:
      *      A menu instance.
      *
      *********************************************************************************************/
-    [[nodiscard]] virtual std::unique_ptr<cxgui::IMenu> CreateMenu(const std::string p_title) const = 0;
+    [[nodiscard]] virtual std::unique_ptr<IMenu> CreateMenu(const std::string p_title) const = 0;
 
     /******************************************************************************************//**
      * Creates a menu item instance.
      *
-     * Menu items are used in a `cxgui::IMenu`, which compose a `cxgui::IMenuBar`. They are the
+     * Menu items are used in a `IMenu`, which compose a `IMenuBar`. They are the
      * elements with which the user interacts to activate features.
      *
      * Menu items have a mandatory textual label and an optional icon representing the feature
      * the menu item activates. If present, the icon is drawn to the left of the textual label.
-     * Items with and without icons can be mixed in a single `cxgui::IMenu`. In this case, all
+     * Items with and without icons can be mixed in a single `IMenu`. In this case, all
      * texual labels are aligned to the left.
      *
      * @param p_label
@@ -127,9 +130,34 @@ public:
      *      A menu item instance.
      *
      *********************************************************************************************/
-    [[nodiscard]] virtual std::unique_ptr<cxgui::IMenuItem> CreateMenuItem(
+    [[nodiscard]] virtual std::unique_ptr<IMenuItem> CreateMenuItem(
         const std::string p_label,
         const std::optional<FreeDesktop::StdActionIcon>& p_icon = std::nullopt) const = 0;
+
+///@}
+
+
+// ================================================================================================
+///@{ @name Status bar
+// ================================================================================================
+
+    /******************************************************************************************//**
+     * Creates a status bar instance.
+     *
+     * Status bars are typically used at the bottom of windows to print information about the
+     * application's status.
+     *
+     * @param p_presenter
+     *      A status bar presenter.
+     *
+     * @post
+     *      The returned status bar instance is valid.
+     *
+     * @return
+     *      A status bar instance.
+     *
+     *********************************************************************************************/
+    [[nodiscard]] virtual std::unique_ptr<IStatusBar> CreateStatusBar(IStatusBarPresenter& p_presenter) const = 0;
 
 ///@}
 
