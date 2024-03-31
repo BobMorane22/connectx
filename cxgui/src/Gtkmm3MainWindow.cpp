@@ -33,12 +33,12 @@
 #include <cxgui/EnabledState.h>
 #include <cxgui/GameResolutionDialogController.h>
 #include <cxgui/GameResolutionDialogPresenterFactory.h>
-#include <cxgui/Gtkmm3AboutWindow.h>
 #include <cxgui/Gtkmm3GameResolutionDialog.h>
 #include <cxgui/Gtkmm3GameView.h>
 #include <cxgui/Gtkmm3MainWindow.h>
 #include <cxgui/Gtkmm3NewGameView.h>
 #include <cxgui/IAbstractWidgetsFactory.h>
+#include <cxgui/IAbstractConnectXWidgetsFactory.h>
 #include <cxgui/IAnimatedBoardPresenter.h>
 #include <cxgui/IButton.h>
 #include <cxgui/ILabel.h>
@@ -345,7 +345,7 @@ void cxgui::Gtkmm3MainWindow::OnHelpContentsRequested()
 
 void cxgui::Gtkmm3MainWindow::OnCreateAboutWindow()
 {
-    if(!m_about)
+    if(!m_aboutWindow)
     {
         cxmodel::IVersioning* versionModel = dynamic_cast<cxmodel::IVersioning*>(&m_model);
         IF_CONDITION_NOT_MET_DO(versionModel, return;);
@@ -354,15 +354,13 @@ void cxgui::Gtkmm3MainWindow::OnCreateAboutWindow()
         IF_CONDITION_NOT_MET_DO(aboutPresenter, return;);
 
         {
-            auto aboutWindow = CreateWidget<Gtkmm3AboutWindow>(std::move(aboutPresenter));
-            ASSERT(aboutWindow);
-            aboutWindow->Init();
-
-            m_about = std::move(aboutWindow);
+            const IAbstractConnectXWidgetsFactory& connectXWidgetsFactory = m_widgetsFactories->GetConnectXWidgetsFactory();
+            m_aboutWindow = connectXWidgetsFactory.CreateAboutWindow(std::move(aboutPresenter));
+            IF_CONDITION_NOT_MET_DO(m_aboutWindow, return;);
         }
     }
 
-    const int result = m_about->Show();
+    const int result = m_aboutWindow->Show();
     IF_CONDITION_NOT_MET_DO(result == EXIT_SUCCESS, return;);
 }
 

@@ -183,7 +183,7 @@ private:
     std::unique_ptr<IView> m_gameView;
 
     // Other windows:
-    std::unique_ptr<IWindow> m_about;
+    std::unique_ptr<IWindow> m_aboutWindow;
     std::unique_ptr<IWindow> m_gameResolution;
 };
 

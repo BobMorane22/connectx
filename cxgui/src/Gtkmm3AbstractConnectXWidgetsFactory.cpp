@@ -22,8 +22,11 @@
  *************************************************************************************************/
 
 #include <cxinv/assertion.h>
+#include <cxgui/Gtkmm3AboutWindow.h>
 #include <cxgui/Gtkmm3AbstractConnectXWidgetsFactory.h>
 #include <cxgui/Gtkmm3MainWindow.h>
+#include <cxgui/IButton.h>
+#include <cxgui/ILabel.h>
 #include <cxgui/IMainWindowController.h>
 #include <cxgui/IMainWindowPresenter.h>
 #include <cxgui/WidgetsFactories.h>
@@ -68,6 +71,19 @@ std::unique_ptr<cxgui::IWindow> cxgui::Gtkmm3AbstractConnectXWidgetsFactory::Cre
     InvariantsCheck();
 
     return mainWindow;
+}
+
+std::unique_ptr<cxgui::IWindow> cxgui::Gtkmm3AbstractConnectXWidgetsFactory::CreateAboutWindow(
+        std::unique_ptr<IAboutWindowPresenter> p_presenter) const
+{
+    IF_PRECONDITION_NOT_MET_DO(p_presenter, return nullptr;);
+
+    auto aboutWindow = CreateWidget<Gtkmm3AboutWindow>(std::move(p_presenter));
+    POSTCONDITION(aboutWindow);
+
+    aboutWindow->Init();
+
+    return aboutWindow;
 }
 
 void cxgui::Gtkmm3AbstractConnectXWidgetsFactory::InvariantsCheck() const 

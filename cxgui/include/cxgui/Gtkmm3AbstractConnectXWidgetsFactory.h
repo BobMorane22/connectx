@@ -30,6 +30,7 @@
 
 namespace cxgui
 {
+    class IAboutWindowPresenter;
     class IAbstractWidgetsFactory;
     class WidgetsFactories;
 }
@@ -84,6 +85,8 @@ public:
     [[nodiscard]] std::unique_ptr<IWindow> CreateMainWindow(cxmodel::ModelSubject& p_model,
         IMainWindowController& p_controller,
         IMainWindowPresenter& p_presenter) const override;
+    [[nodiscard]] virtual std::unique_ptr<IWindow> CreateAboutWindow(
+        std::unique_ptr<IAboutWindowPresenter> p_presenter) const override;
 
 private:
 

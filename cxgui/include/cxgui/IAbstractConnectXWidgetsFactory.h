@@ -30,8 +30,10 @@
 
 namespace cxgui
 {
+    class IAboutWindowPresenter;
     class IMainWindowController;
     class IMainWindowPresenter;
+
     class IWindow;
 }
 
@@ -50,8 +52,21 @@ class IAbstractConnectXWidgetsFactory
 
 public:
 
+// ================================================================================================
+///@{ @name Windows.
+// ================================================================================================
+
     /******************************************************************************************//**
-     * @brief Connect X specific widgets abstract factory.
+     * @brief Creates the Connect X main window.
+     *
+     * The Connect X main window is where everything happens. It is composed of a menu on top,
+     * a view on the middle and a status bar at the bottom.
+     *
+     * Once Connect X is launched, everything happens on the main window and only the view is
+     * updated to reflect the application's mode.
+     *
+     * @warning
+     *      There should only be one Connect X main window instance by application.
      *
      * @param p_model
      *      A Connect X compatible model.
@@ -63,13 +78,35 @@ public:
      * @post
      *      The returned main window instance is valid.
      *
-     * @return A main window instance.
+     * @return
+     *      A Connect X main window instance.
      *
      *********************************************************************************************/
     [[nodiscard]] virtual std::unique_ptr<IWindow> CreateMainWindow(
         cxmodel::ModelSubject& p_model,
         IMainWindowController& p_controller,
         IMainWindowPresenter& p_presenter) const = 0;
+
+    /******************************************************************************************//**
+     * @brief Creates the Connect X about window.
+     *
+     * @param p_presenter
+     *      An about window presenter.
+     *
+     * @pre
+     *      The about window presenter is valid.
+     *
+     * @post
+     *      The returned about window instance is valid.
+     *
+     * @return
+     *      An about window instance.
+     *
+     *********************************************************************************************/
+    [[nodiscard]] virtual std::unique_ptr<IWindow> CreateAboutWindow(
+        std::unique_ptr<IAboutWindowPresenter> p_presenter) const = 0;
+
+///@}
 
 };
 
