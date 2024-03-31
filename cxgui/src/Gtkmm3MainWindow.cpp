@@ -123,6 +123,10 @@ void cxgui::Gtkmm3MainWindow::RegisterWidgetsFactories(cxgui::WidgetsFactories* 
     m_widgetsFactories = p_widgetsFactories;
 }
 
+void cxgui::Gtkmm3MainWindow::InitializeWidgets()
+{
+}
+
 void cxgui::Gtkmm3MainWindow::ConfigureWindow()
 {
     set_title(m_presenter.GetWindowTitle());

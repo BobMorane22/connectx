@@ -59,6 +59,10 @@ void cxgui::Gtkmm3AboutWindow::Update(cxmodel::ModelNotificationContext /*p_cont
     // Nothing to do...
 }
 
+void cxgui::Gtkmm3AboutWindow::InitializeWidgets()
+{
+}
+
 void cxgui::Gtkmm3AboutWindow::ConfigureWindow()
 {
     set_title(m_presenter->GetWindowTitle());

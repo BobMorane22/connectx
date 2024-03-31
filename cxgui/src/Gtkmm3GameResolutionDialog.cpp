@@ -52,6 +52,10 @@ void cxgui::Gtkmm3GameResolutionDialog::Update(cxmodel::ModelNotificationContext
     // Nothing to do...
 }
 
+void cxgui::Gtkmm3GameResolutionDialog::InitializeWidgets()
+{
+}
+
 void cxgui::Gtkmm3GameResolutionDialog::ConfigureWindow()
 {
     // We do now want the user to simply close the window by pressing the

@@ -116,6 +116,14 @@ private:
     void ConfigureWindowIcon();
 
     /*******************************************************************************************//**
+     * @brief Initializes every widget needed to create the initial window.
+     *
+     * Override this method to create all the necessary widgets for creating the window.
+     *
+     **********************************************************************************************/
+    virtual void InitializeWidgets() = 0;
+
+    /*******************************************************************************************//**
      * @brief Configures the window.
      *
      * Override this method to configure window properties.

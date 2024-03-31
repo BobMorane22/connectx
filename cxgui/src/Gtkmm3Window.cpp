@@ -79,6 +79,7 @@ void cxgui::Gtkmm3Window::ShrinkToContents(IWindow::Orientation p_orientation)
 void cxgui::Gtkmm3Window::Init()
 {
     ConfigureWindowIcon();
+    InitializeWidgets();
     ConfigureWindow();
     RegisterLayouts();
     RegisterWidgets();
