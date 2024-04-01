@@ -33,9 +33,7 @@
 #include <cxgui/EnabledState.h>
 #include <cxgui/GameResolutionDialogController.h>
 #include <cxgui/GameResolutionDialogPresenterFactory.h>
-#include <cxgui/Gtkmm3GameView.h>
 #include <cxgui/Gtkmm3MainWindow.h>
-#include <cxgui/Gtkmm3NewGameView.h>
 #include <cxgui/IAbstractWidgetsFactory.h>
 #include <cxgui/IAbstractConnectXWidgetsFactory.h>
 #include <cxgui/IAnimatedBoardPresenter.h>
@@ -124,7 +122,16 @@ void cxgui::Gtkmm3MainWindow::RegisterWidgets()
 
     RegisterMenuBar();
 
-    m_newGameView = std::make_unique<Gtkmm3NewGameView>(m_presenter, m_controller, *this, *m_mainLayout, m_viewLeft, m_viewTop);
+    const IAbstractConnectXWidgetsFactory& connectXWidgetsFactory = m_widgetsFactories->GetConnectXWidgetsFactory();
+    m_newGameView = connectXWidgetsFactory.CreateNewGameView(
+        m_presenter,
+        m_controller,
+        *this,
+        *m_mainLayout,
+        m_viewLeft,
+        m_viewTop);
+    IF_PRECONDITION_NOT_MET_DO(m_newGameView, return;);
+
     m_newGameView->Activate();
 
     RegisterStatusBar();
@@ -432,7 +439,15 @@ void cxgui::Gtkmm3MainWindow::ActivateNewGameView()
 
     if(!m_newGameView)
     {
-        m_newGameView = std::make_unique<Gtkmm3NewGameView>(m_presenter, m_controller, *this, *m_mainLayout, m_viewLeft, m_viewTop);
+        const IAbstractConnectXWidgetsFactory& connectXWidgetsFactory = m_widgetsFactories->GetConnectXWidgetsFactory();
+        m_newGameView = connectXWidgetsFactory.CreateNewGameView(
+            m_presenter,
+            m_controller,
+            *this,
+            *m_mainLayout,
+            m_viewLeft,
+            m_viewTop);
+        IF_PRECONDITION_NOT_MET_DO(m_newGameView, return;);
     }
 
     m_newGameView->Activate();
@@ -455,7 +470,14 @@ void cxgui::Gtkmm3MainWindow::ActivateGameView()
 
     if(!m_gameView)
     {
-        m_gameView = std::make_unique<Gtkmm3GameView>(m_presenter, m_controller, *this, *m_mainLayout, m_viewLeft, m_viewTop);
+        const IAbstractConnectXWidgetsFactory& connectXWidgetsFactory = m_widgetsFactories->GetConnectXWidgetsFactory();
+        m_gameView = connectXWidgetsFactory.CreateGameView(
+            m_presenter,
+            m_controller,
+            *this,
+            *m_mainLayout,
+            m_viewLeft,
+            m_viewTop);
         IF_CONDITION_NOT_MET_DO(m_gameView, return;);
     }
 

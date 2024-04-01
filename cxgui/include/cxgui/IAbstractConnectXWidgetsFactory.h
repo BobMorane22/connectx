@@ -26,6 +26,7 @@
 
 #include <memory>
 
+#include <cxmodel/common.h>
 #include <cxmodel/ModelNotificationContext.h>
 
 namespace cxgui
@@ -33,9 +34,15 @@ namespace cxgui
     class IAboutWindowPresenter;
     class IGameResolutionDialogPresenter;
     class IGameResolutionDialogController;
+    class IGameViewController;
+    class IGameViewPresenter;
     class IMainWindowController;
     class IMainWindowPresenter;
+    class INewGameViewController;
+    class INewGameViewPresenter;
 
+    class ILayout;
+    class IView;
     class IWindow;
 }
 
@@ -134,6 +141,74 @@ public:
     [[nodiscard]] virtual std::unique_ptr<IWindow> CreateGameResolutionDialog(
         std::unique_ptr<IGameResolutionDialogPresenter> p_presenter,
         std::unique_ptr<IGameResolutionDialogController> p_controller) const = 0;
+
+///@}
+
+// ================================================================================================
+///@{ @name Views.
+// ================================================================================================
+
+    /*****************************************************************************************//**
+     * @brief Creates a view for configuring new games.
+     *
+     * @param p_presenter
+     *      A new game view presenter.
+     * @param p_controller
+     *      A new game view controller.
+     * @param p_parentWindow
+     *      The window containing the view.
+     * @param p_mainLayout
+     *      The main window's top level layout.
+     * @param p_viewLeft
+     *      The left position of the new game view within the main window's top level layout.
+     * @param p_viewTop
+     *      The top position of the new game view within the main window's top level layout.
+     *
+     * @post
+     *      The returned new game view instance is valid.
+     *
+     * @return
+     *      A new game view instance.
+     *
+     ********************************************************************************************/
+    [[nodiscard]] virtual std::unique_ptr<IView> CreateNewGameView(
+        INewGameViewPresenter& p_presenter,
+        INewGameViewController& p_controller,
+        IWindow& p_parentWindow,
+        cxgui::ILayout& p_mainLayout,
+        const cxmodel::Column& p_viewLeft,
+        const cxmodel::Row& p_viewTop) const = 0;
+
+    /*****************************************************************************************//**
+     * @brief Creates a view for playing a Connect X game.
+     *
+     * @param p_presenter
+     *      A game view presenter.
+     * @param p_controller
+     *      A game view controller.
+     * @param p_parentWindow
+     *      The window containing the view.
+     * @param p_mainLayout
+     *      The main window's top level layout.
+     * @param p_viewLeft
+     *      The left position of the view in the layout within the main window's top level layout.
+     * @param p_viewTop
+     *      The top position of the view in the layout within the main window's top level layout..
+     *
+     * @post
+     *      The returned game view instance is valid.
+     *
+     * @return
+     *      A game view instance.
+     *
+     ********************************************************************************************/
+    [[nodiscard]] virtual std::unique_ptr<IView> CreateGameView(
+        IGameViewPresenter& p_presenter,
+        IGameViewController& p_controller,
+        IWindow& p_parentWindow,
+        cxgui::ILayout& p_mainLayout,
+        const cxmodel::Column& p_viewLeft,
+        const cxmodel::Row& p_viewTop) const = 0;
 
 ///@}
 

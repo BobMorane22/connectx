@@ -25,13 +25,21 @@
 #include <cxgui/Gtkmm3AboutWindow.h>
 #include <cxgui/Gtkmm3AbstractConnectXWidgetsFactory.h>
 #include <cxgui/Gtkmm3GameResolutionDialog.h>
+#include <cxgui/Gtkmm3GameView.h>
 #include <cxgui/Gtkmm3MainWindow.h>
+#include <cxgui/Gtkmm3NewGameView.h>
 #include <cxgui/IButton.h>
 #include <cxgui/IGameResolutionDialogController.h>
 #include <cxgui/IGameResolutionDialogPresenter.h>
+#include <cxgui/IGameViewController.h>
+#include <cxgui/IGameViewPresenter.h>
 #include <cxgui/ILabel.h>
 #include <cxgui/IMainWindowController.h>
 #include <cxgui/IMainWindowPresenter.h>
+#include <cxgui/INewGameViewController.h>
+#include <cxgui/INewGameViewPresenter.h>
+#include <cxgui/INewPlayersList.h>
+#include <cxgui/ISpinBox.h>
 #include <cxgui/WidgetsFactories.h>
 
 cxgui::Gtkmm3AbstractConnectXWidgetsFactory::Gtkmm3AbstractConnectXWidgetsFactory(Glib::RefPtr<Gtk::Application> p_gtkApplication)
@@ -108,6 +116,50 @@ std::unique_ptr<cxgui::IWindow> cxgui::Gtkmm3AbstractConnectXWidgetsFactory::Cre
     InvariantsCheck();
 
     return gameResolutionDialog;
+}
+
+std::unique_ptr<cxgui::IView> cxgui::Gtkmm3AbstractConnectXWidgetsFactory::CreateNewGameView(
+    INewGameViewPresenter& p_presenter,
+    INewGameViewController& p_controller,
+    IWindow& p_parentWindow,
+    cxgui::ILayout& p_mainLayout,
+    const cxmodel::Column& p_viewLeft,
+    const cxmodel::Row& p_viewTop) const
+{
+    auto newGameView = std::make_unique<Gtkmm3NewGameView>(
+        p_presenter,
+        p_controller,
+        p_parentWindow,
+        p_mainLayout,
+        p_viewLeft,
+        p_viewTop);
+
+    InvariantsCheck();
+    POSTCONDITION(newGameView);
+
+    return newGameView;
+}
+
+std::unique_ptr<cxgui::IView> cxgui::Gtkmm3AbstractConnectXWidgetsFactory::CreateGameView(
+    IGameViewPresenter& p_presenter,
+    IGameViewController& p_controller,
+    IWindow& p_parentWindow,
+    cxgui::ILayout& p_mainLayout,
+    const cxmodel::Column& p_viewLeft,
+    const cxmodel::Row& p_viewTop) const
+{
+    auto gameView = std::make_unique<Gtkmm3GameView>(
+        p_presenter,
+        p_controller,
+        p_parentWindow,
+        p_mainLayout,
+        p_viewLeft,
+        p_viewTop);
+
+    InvariantsCheck();
+    POSTCONDITION(gameView);
+
+    return gameView;
 }
 
 void cxgui::Gtkmm3AbstractConnectXWidgetsFactory::InvariantsCheck() const 

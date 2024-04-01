@@ -92,6 +92,20 @@ public:
     [[nodiscard]] virtual std::unique_ptr<IWindow> CreateGameResolutionDialog(
         std::unique_ptr<IGameResolutionDialogPresenter> p_presenter,
         std::unique_ptr<IGameResolutionDialogController> p_controller) const override;
+    [[nodiscard]] virtual std::unique_ptr<IView> CreateNewGameView(
+        INewGameViewPresenter& p_presenter,
+        INewGameViewController& p_controller,
+        IWindow& p_parentWindow,
+        cxgui::ILayout& p_mainLayout,
+        const cxmodel::Column& p_viewLeft,
+        const cxmodel::Row& p_viewTop) const override;
+    [[nodiscard]] virtual std::unique_ptr<IView> CreateGameView(
+        IGameViewPresenter& p_presenter,
+        IGameViewController& p_controller,
+        IWindow& p_parentWindow,
+        cxgui::ILayout& p_mainLayout,
+        const cxmodel::Column& p_viewLeft,
+        const cxmodel::Row& p_viewTop) const override;
 
 private:
 
