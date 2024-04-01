@@ -31,6 +31,8 @@
 namespace cxgui
 {
     class IAboutWindowPresenter;
+    class IGameResolutionDialogPresenter;
+    class IGameResolutionDialogController;
     class IMainWindowController;
     class IMainWindowPresenter;
 
@@ -105,6 +107,33 @@ public:
      *********************************************************************************************/
     [[nodiscard]] virtual std::unique_ptr<IWindow> CreateAboutWindow(
         std::unique_ptr<IAboutWindowPresenter> p_presenter) const = 0;
+
+    /******************************************************************************************//**
+     * @brief Creates a Connect X game resolution dialog.
+     *
+     * The resolution dialog's appearance and behavior can be customized through the presenter
+     * and the controller.
+     *
+     * @param p_presenter
+     *      A game resolution presenter.
+     * @param p_controller
+     *      A game resolution controller.
+     *
+     * @pre
+     *      The specified game resolution dialog presenter is valid.
+     * @pre
+     *      The specified game resolution dialog controller is valid.
+     *
+     * @post
+     *      The returned game resolution dialog instance is valid.
+     *
+     * @return
+     *      A game resolution dialog instance.
+     *
+     *********************************************************************************************/
+    [[nodiscard]] virtual std::unique_ptr<IWindow> CreateGameResolutionDialog(
+        std::unique_ptr<IGameResolutionDialogPresenter> p_presenter,
+        std::unique_ptr<IGameResolutionDialogController> p_controller) const = 0;
 
 ///@}
 

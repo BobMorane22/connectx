@@ -23,6 +23,8 @@
 #ifndef GTKMM3GAMEVIEW_H_AA8C282C_9CC4_45F4_BE91_C8840160BA1B
 #define GTKMM3GAMEVIEW_H_AA8C282C_9CC4_45F4_BE91_C8840160BA1B
 
+#include <sigc++/connection.h>
+
 #include <cxgui/IAnimatedBoard.h>
 #include <cxgui/GameViewKeyHandlerStrategyFactory.h>
 #include <cxgui/IView.h>

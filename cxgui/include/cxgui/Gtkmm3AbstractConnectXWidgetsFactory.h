@@ -32,6 +32,8 @@ namespace cxgui
 {
     class IAboutWindowPresenter;
     class IAbstractWidgetsFactory;
+    class IGameResolutionDialogPresenter;
+    class IGameResolutionDialogController;
     class WidgetsFactories;
 }
 
@@ -87,6 +89,9 @@ public:
         IMainWindowPresenter& p_presenter) const override;
     [[nodiscard]] virtual std::unique_ptr<IWindow> CreateAboutWindow(
         std::unique_ptr<IAboutWindowPresenter> p_presenter) const override;
+    [[nodiscard]] virtual std::unique_ptr<IWindow> CreateGameResolutionDialog(
+        std::unique_ptr<IGameResolutionDialogPresenter> p_presenter,
+        std::unique_ptr<IGameResolutionDialogController> p_controller) const override;
 
 private:
 

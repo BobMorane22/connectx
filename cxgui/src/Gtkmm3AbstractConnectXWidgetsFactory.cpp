@@ -24,8 +24,11 @@
 #include <cxinv/assertion.h>
 #include <cxgui/Gtkmm3AboutWindow.h>
 #include <cxgui/Gtkmm3AbstractConnectXWidgetsFactory.h>
+#include <cxgui/Gtkmm3GameResolutionDialog.h>
 #include <cxgui/Gtkmm3MainWindow.h>
 #include <cxgui/IButton.h>
+#include <cxgui/IGameResolutionDialogController.h>
+#include <cxgui/IGameResolutionDialogPresenter.h>
 #include <cxgui/ILabel.h>
 #include <cxgui/IMainWindowController.h>
 #include <cxgui/IMainWindowPresenter.h>
@@ -74,7 +77,7 @@ std::unique_ptr<cxgui::IWindow> cxgui::Gtkmm3AbstractConnectXWidgetsFactory::Cre
 }
 
 std::unique_ptr<cxgui::IWindow> cxgui::Gtkmm3AbstractConnectXWidgetsFactory::CreateAboutWindow(
-        std::unique_ptr<IAboutWindowPresenter> p_presenter) const
+    std::unique_ptr<IAboutWindowPresenter> p_presenter) const
 {
     IF_PRECONDITION_NOT_MET_DO(p_presenter, return nullptr;);
 
@@ -83,7 +86,28 @@ std::unique_ptr<cxgui::IWindow> cxgui::Gtkmm3AbstractConnectXWidgetsFactory::Cre
 
     aboutWindow->Init();
 
+    POSTCONDITION(aboutWindow);
+    InvariantsCheck();
+
     return aboutWindow;
+}
+
+std::unique_ptr<cxgui::IWindow> cxgui::Gtkmm3AbstractConnectXWidgetsFactory::CreateGameResolutionDialog(
+    std::unique_ptr<IGameResolutionDialogPresenter> p_presenter,
+    std::unique_ptr<IGameResolutionDialogController> p_controller) const
+{
+    IF_PRECONDITION_NOT_MET_DO(p_presenter, return nullptr;);
+    IF_PRECONDITION_NOT_MET_DO(p_controller, return nullptr;);
+
+    auto gameResolutionDialog = std::make_unique<Gtkmm3GameResolutionDialog>(
+        std::move(p_presenter),
+        std::move(p_controller));
+    gameResolutionDialog->Init();
+
+    POSTCONDITION(gameResolutionDialog);
+    InvariantsCheck();
+
+    return gameResolutionDialog;
 }
 
 void cxgui::Gtkmm3AbstractConnectXWidgetsFactory::InvariantsCheck() const 
