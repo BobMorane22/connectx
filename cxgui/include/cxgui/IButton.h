@@ -46,6 +46,24 @@ public:
     virtual ~IButton() = default;
 
     /******************************************************************************************//**
+     * @brief Updates the button's contents.
+     *
+     * @param p_newContents
+     *      The contents to update the button with.
+     *
+     *********************************************************************************************/
+    virtual void UpdateContents(const std::string& p_newContents) = 0;
+
+    /******************************************************************************************//**
+     * @brief Get the button's contents.
+     *
+     * @return
+     *      The button's actual contents.
+     *
+     *********************************************************************************************/
+    [[nodiscard]] virtual std::string GetContents() const = 0;
+
+    /******************************************************************************************//**
      * @brief Get the signal for when the button is clicked by the user.
      *
      * @return

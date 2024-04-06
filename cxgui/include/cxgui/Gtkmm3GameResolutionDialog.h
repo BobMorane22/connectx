@@ -25,6 +25,7 @@
 #define GTKMM3GAMERESOLUTIONDIALOG_H_E524D346_789D_4165_ABD3_4B876F7FBBD7
 
 #include "Gtkmm3Window.h"
+#include "cxgui/WidgetsFactories.h"
 
 namespace cxgui
 {
@@ -32,6 +33,7 @@ namespace cxgui
     class IGameResolutionDialogController;
     class IGameResolutionDialogPresenter;
     class ILabel;
+    class WidgetsFactories;
 }
 
 namespace cxgui
@@ -57,14 +59,18 @@ public:
      * @pre
      *     The presenter is valid.
      *
+     * @param p_widgetsFactories
+     *     The necessary factories to instanciate widgets.
      * @param p_presenter
      *     The window presenter.
      * @param p_controller
      *     The window presenter.
      *
      ********************************************************************************************/
-    Gtkmm3GameResolutionDialog(std::unique_ptr<IGameResolutionDialogPresenter> p_presenter,
-                               std::unique_ptr<IGameResolutionDialogController> p_controller);
+    Gtkmm3GameResolutionDialog(
+       WidgetsFactories& p_widgetsFactories,
+       std::unique_ptr<IGameResolutionDialogPresenter> p_presenter,
+       std::unique_ptr<IGameResolutionDialogController> p_controller);
 
 private:
 
@@ -81,6 +87,7 @@ private:
     const std::unique_ptr<IGameResolutionDialogPresenter> m_presenter;
     const std::unique_ptr<IGameResolutionDialogController> m_controller;
 
+    cxgui::WidgetsFactories& m_widgetsFactories;
     std::unique_ptr<ILabel> m_title;
     std::unique_ptr<ILabel> m_message;
     std::unique_ptr<IButton> m_startNewGame;

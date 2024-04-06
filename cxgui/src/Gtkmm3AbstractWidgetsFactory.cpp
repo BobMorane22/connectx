@@ -24,6 +24,8 @@
 #include <cxinv/assertion.h>
 #include <cxgui/StdActionIcon.h>
 #include <cxgui/Gtkmm3AbstractWidgetsFactory.h>
+#include <cxgui/Gtkmm3Button.h>
+#include <cxgui/Gtkmm3Label.h>
 #include <cxgui/Gtkmm3Menu.h>
 #include <cxgui/Gtkmm3MenuBar.h>
 #include <cxgui/Gtkmm3MenuItem.h>
@@ -38,6 +40,38 @@ cxgui::Gtkmm3AbstractWidgetsFactory::Gtkmm3AbstractWidgetsFactory(Glib::RefPtr<G
     m_gtkApplication = p_gtkApplication;
 
     POSTCONDITION(bool(m_gtkApplication));
+}
+
+std::unique_ptr<cxgui::IButton> cxgui::Gtkmm3AbstractWidgetsFactory::CreateButton() const 
+{
+    auto button = cxgui::CreateWidget<cxgui::Gtkmm3Button>();
+    POSTCONDITION(button);
+
+    return button;
+}
+
+std::unique_ptr<cxgui::IButton> cxgui::Gtkmm3AbstractWidgetsFactory::CreateButton(const std::string& p_contents) const 
+{
+    auto button = cxgui::CreateWidget<cxgui::Gtkmm3Button>(p_contents);
+    POSTCONDITION(button);
+
+    return button;
+}
+
+std::unique_ptr<cxgui::ILabel> cxgui::Gtkmm3AbstractWidgetsFactory::CreateLabel() const 
+{
+    auto label = cxgui::CreateWidget<cxgui::Gtkmm3Label>();
+    POSTCONDITION(label);
+
+    return label;
+}
+
+std::unique_ptr<cxgui::ILabel> cxgui::Gtkmm3AbstractWidgetsFactory::CreateLabel(const std::string& p_contents) const 
+{
+    auto label = cxgui::CreateWidget<cxgui::Gtkmm3Label>(p_contents);
+    POSTCONDITION(label);
+
+    return label;
 }
 
 std::unique_ptr<cxgui::IMenuBar> cxgui::Gtkmm3AbstractWidgetsFactory::CreateMenuBar() const

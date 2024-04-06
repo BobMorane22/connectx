@@ -24,6 +24,11 @@
 #include <cxinv/assertion.h>
 #include <cxgui/Gtkmm3Label.h>
 
+cxgui::Gtkmm3Label::Gtkmm3Label()
+: Gtkmm3Label("")
+{
+}
+
 cxgui::Gtkmm3Label::Gtkmm3Label(const std::string& p_contents)
 : Gtk::Label{p_contents}
 {

@@ -56,9 +56,13 @@ private:
 
 } // namespace
 
+cxgui::Gtkmm3Button::Gtkmm3Button()
+: cxgui::Gtkmm3Button("")
+{
+}
+
 cxgui::Gtkmm3Button::Gtkmm3Button(const std::string& p_label)
 {
-    PRECONDITION(!p_label.empty());
     set_label(p_label);
 }
 
@@ -69,6 +73,16 @@ void cxgui::Gtkmm3Button::SetDelegate(std::unique_ptr<IWidget> p_delegate)
     m_delegate = std::move(p_delegate);
 
     POSTCONDITION(m_delegate);
+}
+
+void cxgui::Gtkmm3Button::UpdateContents(const std::string& p_newContents)
+{
+    set_label(p_newContents);
+}
+
+std::string cxgui::Gtkmm3Button::GetContents() const
+{
+    return get_label();
 }
 
 std::unique_ptr<cxgui::ISignal<void>> cxgui::Gtkmm3Button::OnClicked()

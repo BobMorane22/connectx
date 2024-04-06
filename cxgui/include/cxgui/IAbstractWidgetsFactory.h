@@ -26,9 +26,12 @@
 
 #include <memory>
 #include <optional>
+#include <string>
 
 namespace cxgui
 {
+    class IButton;
+    class ILabel;
     class IMenu;
     class IMenuBar;
     class IMenuItem;
@@ -62,6 +65,74 @@ public:
      *
      *********************************************************************************************/
     virtual ~IAbstractWidgetsFactory() = default;
+
+// ================================================================================================
+///@{ @name Common widgets
+// ================================================================================================
+
+    /******************************************************************************************//**
+     * @brief Creates a button instance with no initial contents.
+     *
+     * Buttons show contents and can be clicked on.
+     *
+     * @post
+     *      The returned button instance is valid.
+     *
+     * @return
+     *      A button instance.
+     *
+     *********************************************************************************************/
+    [[nodiscard]] virtual std::unique_ptr<IButton> CreateButton() const = 0;
+
+    /******************************************************************************************//**
+     * @brief Creates a button instance with initial contents.
+     *
+     * Buttons show contents and can be clicked on.
+     *
+     * @param p_contents
+     *      The button's intial contents.
+     *
+     * @post
+     *      The returned button instance is valid.
+     *
+     * @return
+     *      A button instance.
+     *
+     *********************************************************************************************/
+    [[nodiscard]] virtual std::unique_ptr<IButton> CreateButton(const std::string& p_contents) const = 0;
+
+    /******************************************************************************************//**
+     * @brief Creates a label instance with no initial contents.
+     *
+     * Labels show contents.
+     *
+     * @post
+     *      The returned label instance is valid.
+     *
+     * @return
+     *      A label instance.
+     *
+     *********************************************************************************************/
+    [[nodiscard]] virtual std::unique_ptr<ILabel> CreateLabel() const = 0;
+
+    /******************************************************************************************//**
+     * @brief Creates a label instance with initial contents.
+     *
+     * Labels show contents.
+     *
+     * @param p_contents
+     *      The label's intial contents.
+     *
+     * @post
+     *      The returned label instance is valid.
+     *
+     * @return
+     *      A label instance.
+     *
+     *********************************************************************************************/
+    [[nodiscard]] virtual std::unique_ptr<ILabel> CreateLabel(const std::string& p_contents) const = 0;
+
+///@}
 
 // ================================================================================================
 ///@{ @name Menu bar

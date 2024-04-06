@@ -108,6 +108,7 @@ std::unique_ptr<cxgui::IWindow> cxgui::Gtkmm3AbstractConnectXWidgetsFactory::Cre
     IF_PRECONDITION_NOT_MET_DO(p_controller, return nullptr;);
 
     auto gameResolutionDialog = std::make_unique<Gtkmm3GameResolutionDialog>(
+        *m_widgetsFactories,
         std::move(p_presenter),
         std::move(p_controller));
     gameResolutionDialog->Init();

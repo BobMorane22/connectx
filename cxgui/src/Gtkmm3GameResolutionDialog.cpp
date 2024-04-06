@@ -16,33 +16,30 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//** * @file GameResolutionDialog.cpp
+ * @file Gtkmm3GameResolutionDialog.cpp
  * @date 2020
  *
  *************************************************************************************************/
 
 #include <cxgui/common.h>
-#include <cxgui/Gtkmm3Button.h>
 #include <cxgui/Gtkmm3GameResolutionDialog.h>
-#include <cxgui/Gtkmm3Label.h>
+#include <cxgui/IAbstractConnectXWidgetsFactory.h>
+#include <cxgui/IAbstractWidgetsFactory.h>
 #include <cxgui/IButton.h>
 #include <cxgui/IGameResolutionDialogController.h>
 #include <cxgui/IGameResolutionDialogPresenter.h>
 #include <cxgui/ILabel.h>
 #include <cxgui/Margins.h>
+#include <cxgui/WidgetsFactories.h>
 
-cxgui::Gtkmm3GameResolutionDialog::Gtkmm3GameResolutionDialog(std::unique_ptr<IGameResolutionDialogPresenter> p_presenter,
-                                                              std::unique_ptr<IGameResolutionDialogController> p_controller)
+cxgui::Gtkmm3GameResolutionDialog::Gtkmm3GameResolutionDialog(
+    cxgui::WidgetsFactories& p_widgetsFactories,
+    std::unique_ptr<IGameResolutionDialogPresenter> p_presenter,
+    std::unique_ptr<IGameResolutionDialogController> p_controller)
 : m_presenter{std::move(p_presenter)}
 , m_controller{std::move(p_controller)}
+, m_widgetsFactories{p_widgetsFactories}
 {
-    m_title = CreateWidget<Gtkmm3Label>("");
-    ASSERT(m_title);
-    m_message = CreateWidget<Gtkmm3Label>("");
-    ASSERT(m_message);
-
-    m_startNewGame = CreateWidget<Gtkmm3Button>(m_presenter->GetStartNewGameButtonText());
-    ASSERT(m_startNewGame);
-
     POSTCONDITION(m_presenter);
     POSTCONDITION(m_controller);
 }
@@ -54,12 +51,20 @@ void cxgui::Gtkmm3GameResolutionDialog::Update(cxmodel::ModelNotificationContext
 
 void cxgui::Gtkmm3GameResolutionDialog::InitializeWidgets()
 {
+    const IAbstractWidgetsFactory& stdWidgetsFactory =  m_widgetsFactories.GetStandardWidgetsFactory();
+
+    m_title = stdWidgetsFactory.CreateLabel();
+    m_message = stdWidgetsFactory.CreateLabel();
+    m_startNewGame = stdWidgetsFactory.CreateButton();
+
+    POSTCONDITION(m_title);
+    POSTCONDITION(m_message);
+    POSTCONDITION(m_startNewGame);
 }
 
 void cxgui::Gtkmm3GameResolutionDialog::ConfigureWindow()
 {
-    // We do now want the user to simply close the window by pressing the
-    // 'X' button.
+    // We do now want the user to simply close the window by pressing the 'X' button.
     set_deletable(false);
     set_modal(true);
 }
@@ -98,6 +103,7 @@ void cxgui::Gtkmm3GameResolutionDialog::ConfigureWidgets()
     // Populate widgets:
     m_title->UpdateContents(m_presenter->GetTitle());
     m_message->UpdateContents(m_presenter->GetResolutionMessage());
+    m_startNewGame->UpdateContents(m_presenter->GetStartNewGameButtonText());
 
     // Window title:
     m_title->UpdateContents("<big><b>" + m_title->GetContents() + "</b></big>");

@@ -45,6 +45,14 @@ class Gtkmm3Button : public IButton,
 public:
 
     /******************************************************************************************//**
+     * @brief Default constructor.
+     *
+     * Creates a button with no contents.
+     *
+     *********************************************************************************************/
+     Gtkmm3Button();
+
+    /******************************************************************************************//**
      * @brief Constructor.
      *
      * @param p_label
@@ -72,6 +80,8 @@ public:
     void SetDelegate(std::unique_ptr<IWidget> p_delegate);
 
     // cxgui::IButton:
+    void UpdateContents(const std::string& p_newContents) override;
+    [[nodiscard]] std::string GetContents() const override;
     [[nodiscard]] std::unique_ptr<ISignal<void>> OnClicked() override;
 
     // cxgui::IWidget:
