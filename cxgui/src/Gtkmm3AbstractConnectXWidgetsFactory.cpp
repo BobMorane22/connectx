@@ -89,7 +89,7 @@ std::unique_ptr<cxgui::IWindow> cxgui::Gtkmm3AbstractConnectXWidgetsFactory::Cre
 {
     IF_PRECONDITION_NOT_MET_DO(p_presenter, return nullptr;);
 
-    auto aboutWindow = CreateWidget<Gtkmm3AboutWindow>(std::move(p_presenter));
+    auto aboutWindow = CreateWidget<Gtkmm3AboutWindow>(*m_widgetsFactories, std::move(p_presenter));
     POSTCONDITION(aboutWindow);
 
     aboutWindow->Init();

@@ -31,6 +31,7 @@ namespace cxgui
 {
     class IButton;
     class ILabel;
+    class WidgetsFactories;
 }
 
 namespace cxgui
@@ -48,11 +49,20 @@ public:
     /******************************************************************************************//**
      * @brief Constructor.
      *
+     * @param p_widgetsFactories
+     *      The factories to create widget instances.
      * @param p_presenter
      *      An about window presenter implemetation.
      *
+     * @pre
+     *      The specified presenter is valid.
+     * @post
+     *      The stored presenter is valid.
+     *
      *********************************************************************************************/
-    explicit Gtkmm3AboutWindow(std::unique_ptr<IAboutWindowPresenter> p_presenter);
+     Gtkmm3AboutWindow(
+        WidgetsFactories& p_widgetsFactories,
+        std::unique_ptr<IAboutWindowPresenter> p_presenter);
 
 private:
 
@@ -69,6 +79,7 @@ private:
 
     std::unique_ptr<IAboutWindowPresenter> m_presenter;
 
+    WidgetsFactories& m_widgetsFactories;
     std::unique_ptr<ILabel> m_name;
     std::unique_ptr<ILabel> m_version;
     std::unique_ptr<ILabel> m_description;

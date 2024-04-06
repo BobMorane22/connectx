@@ -22,36 +22,23 @@
  *************************************************************************************************/
 
 #include <cxgui/Gtkmm3AboutWindow.h>
-#include <cxgui/Gtkmm3Button.h>
-#include <cxgui/Gtkmm3Label.h>
 #include <cxgui/IAboutWindowPresenter.h>
+#include <cxgui/IAbstractConnectXWidgetsFactory.h>
+#include <cxgui/IAbstractWidgetsFactory.h>
 #include <cxgui/IButton.h>
 #include <cxgui/ILabel.h>
 #include <cxgui/Margins.h>
+#include <cxgui/WidgetsFactories.h>
 
-cxgui::Gtkmm3AboutWindow::Gtkmm3AboutWindow(std::unique_ptr<IAboutWindowPresenter> p_presenter)
+cxgui::Gtkmm3AboutWindow::Gtkmm3AboutWindow(
+    cxgui::WidgetsFactories& p_widgetsFactories,
+    std::unique_ptr<IAboutWindowPresenter> p_presenter)
  : Gtkmm3Window()
- , m_presenter{std::move(p_presenter)}
+ , m_widgetsFactories{p_widgetsFactories}
 {
+    PRECONDITION(p_presenter);
+    m_presenter = std::move(p_presenter);
     POSTCONDITION(m_presenter);
-
-    set_title(m_presenter->GetWindowTitle());
-
-    m_name = CreateWidget<Gtkmm3Label>("");
-    ASSERT(m_name);
-    m_version = CreateWidget<Gtkmm3Label>("");
-    ASSERT(m_version);
-    m_description = CreateWidget<Gtkmm3Label>("");
-    ASSERT(m_description);
-    m_website = CreateWidget<Gtkmm3Label>("");
-    ASSERT(m_website);
-    m_license = CreateWidget<Gtkmm3Label>("");
-    ASSERT(m_license);
-    m_copyright = CreateWidget<Gtkmm3Label>("");
-    ASSERT(m_copyright);
-
-    m_close = CreateWidget<Gtkmm3Button>(m_presenter->GetCloseText());
-    ASSERT(m_close);
 }
 
 void cxgui::Gtkmm3AboutWindow::Update(cxmodel::ModelNotificationContext /*p_context*/, cxmodel::ModelSubject* /*p_subject*/)
@@ -61,6 +48,23 @@ void cxgui::Gtkmm3AboutWindow::Update(cxmodel::ModelNotificationContext /*p_cont
 
 void cxgui::Gtkmm3AboutWindow::InitializeWidgets()
 {
+    const IAbstractWidgetsFactory& standardWidgetsFactory = m_widgetsFactories.GetStandardWidgetsFactory();
+
+    m_name = standardWidgetsFactory.CreateLabel();
+    m_version = standardWidgetsFactory.CreateLabel();
+    m_description = standardWidgetsFactory.CreateLabel();
+    m_website = standardWidgetsFactory.CreateLabel();
+    m_license = standardWidgetsFactory.CreateLabel();
+    m_copyright = standardWidgetsFactory.CreateLabel();
+    m_close = standardWidgetsFactory.CreateButton();
+
+    POSTCONDITION(m_name);
+    POSTCONDITION(m_version);
+    POSTCONDITION(m_description);
+    POSTCONDITION(m_website);
+    POSTCONDITION(m_license);
+    POSTCONDITION(m_copyright);
+    POSTCONDITION(m_close);
 }
 
 void cxgui::Gtkmm3AboutWindow::ConfigureWindow()
@@ -107,6 +111,8 @@ void cxgui::Gtkmm3AboutWindow::ConfigureLayouts()
 
 void cxgui::Gtkmm3AboutWindow::ConfigureWidgets()
 {
+    set_title(m_presenter->GetWindowTitle());
+
     m_name->SetMargins({TopMargin{0}, BottomMargin{15}, LeftMargin{0}, RightMargin{0}});
     m_description->SetMargins({TopMargin{5}, BottomMargin{5}, LeftMargin{5}, RightMargin{5}});
     m_copyright->SetMargins({TopMargin{0}, BottomMargin{5}, LeftMargin{0}, RightMargin{0}});
@@ -117,6 +123,8 @@ void cxgui::Gtkmm3AboutWindow::ConfigureWidgets()
     m_website->UpdateContents(m_presenter->GetWebsiteLinkContents());
     m_license->UpdateContents(m_presenter->GetLicenseDescription());
     m_copyright->UpdateContents(m_presenter->GetCopyrightNotice());
+
+    m_close->UpdateContents(m_presenter->GetCloseText());
 }
 
 void cxgui::Gtkmm3AboutWindow::ConfigureSignalHandlers()
