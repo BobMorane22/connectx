@@ -33,14 +33,16 @@
 #include <cxgui/DialogRole.h>
 #include <cxgui/EnabledState.h>
 #include <cxgui/extractRawUserInput.h>
-#include <cxgui/Gtkmm3Button.h>
 #include <cxgui/Gtkmm3Dialog.h>
-#include <cxgui/Gtkmm3Label.h>
 #include <cxgui/Gtkmm3Layout.h>
 #include <cxgui/Gtkmm3NewGameView.h>
 #include <cxgui/Gtkmm3NewPlayersList.h>
 #include <cxgui/Gtkmm3SpinBox.h>
 #include <cxgui/Gtkmm3WidgetDelegate.h>
+#include <cxgui/IAbstractConnectXWidgetsFactory.h>
+#include <cxgui/IAbstractWidgetsFactory.h>
+#include <cxgui/IButton.h>
+#include <cxgui/ILabel.h>
 #include <cxgui/INewGameViewController.h>
 #include <cxgui/INewGameViewPresenter.h>
 #include <cxgui/ISpinBox.h>
@@ -89,6 +91,8 @@ cxgui::Gtkmm3NewGameView::Gtkmm3NewGameView(
     m_playersList = CreateWidget<Gtkmm3NewPlayersList>(p_presenter);
     ASSERT(m_playersList);
 
+    const IAbstractWidgetsFactory& standardWidgetsFactory = m_widgetsFactories.GetStandardWidgetsFactory();
+
     const size_t inARowMinValue = p_presenter.GetNewGameViewMinInARowValue();
     const size_t inARowMaxValue = p_presenter.GetNewGameViewMaxInARowValue();
     m_inARowSpinBox = CreateWidget<Gtkmm3SpinBox>(m_presenter.GetDefaultInARowValue(),
@@ -113,27 +117,17 @@ cxgui::Gtkmm3NewGameView::Gtkmm3NewGameView(
                                                                        ISpinBox::Maximum{static_cast<int>(boardHeightMaxValue)}});
     ASSERT(m_boardHeightSpinBox);
 
-    m_addPlayerButton = CreateWidget<Gtkmm3Button>(m_presenter.GetNewGameViewAddPlayerButtonText());
-    ASSERT(m_addPlayerButton);
-    m_removePlayerButton = CreateWidget<Gtkmm3Button>(m_presenter.GetNewGameViewRemovePlayerButtonText());
-    ASSERT(m_removePlayerButton);
-    m_startButton = CreateWidget<Gtkmm3Button>(m_presenter.GetNewGameViewStartButtonText());
-    ASSERT(m_startButton);
+    m_addPlayerButton = standardWidgetsFactory.CreateButton(m_presenter.GetNewGameViewAddPlayerButtonText());
+    m_removePlayerButton = standardWidgetsFactory.CreateButton(m_presenter.GetNewGameViewRemovePlayerButtonText());
+    m_startButton = standardWidgetsFactory.CreateButton(m_presenter.GetNewGameViewStartButtonText());
 
-    m_title = CreateWidget<Gtkmm3Label>("");
-    ASSERT(m_title);
-    m_gameSectionTitle = CreateWidget<Gtkmm3Label>("");
-    ASSERT(m_gameSectionTitle);
-    m_inARowLabel = CreateWidget<Gtkmm3Label>("");
-    ASSERT(m_inARowLabel);
-    m_gridSectionTitle = CreateWidget<Gtkmm3Label>("");
-    ASSERT(m_gridSectionTitle);
-    m_gridWidthLabel = CreateWidget<Gtkmm3Label>("");
-    ASSERT(m_gridWidthLabel);
-    m_gridHeightLabel = CreateWidget<Gtkmm3Label>("");
-    ASSERT(m_gridHeightLabel);
-    m_playersSectionTitle = CreateWidget<Gtkmm3Label>("");
-    ASSERT(m_playersSectionTitle);
+    m_title = standardWidgetsFactory.CreateLabel();
+    m_gameSectionTitle = standardWidgetsFactory.CreateLabel();
+    m_inARowLabel = standardWidgetsFactory.CreateLabel();
+    m_gridSectionTitle = standardWidgetsFactory.CreateLabel();
+    m_gridWidthLabel = standardWidgetsFactory.CreateLabel();
+    m_gridHeightLabel = standardWidgetsFactory.CreateLabel();
+    m_playersSectionTitle = standardWidgetsFactory.CreateLabel();
 
     SetLayout();
     PopulateWidgets();
@@ -147,6 +141,17 @@ cxgui::Gtkmm3NewGameView::Gtkmm3NewGameView(
     m_removePlayerButton->OnClicked()->Connect([this](){OnNewGameParameterUpdated();});
     m_addPlayerButton->OnClicked()->Connect([this](){OnNewGameParameterUpdated();});
     m_playersList->RowUpdatedSignalConnect([this](){OnNewGameParameterUpdated();});
+
+    POSTCONDITION(m_addPlayerButton);
+    POSTCONDITION(m_removePlayerButton);
+    POSTCONDITION(m_startButton);
+    POSTCONDITION(m_title);
+    POSTCONDITION(m_gameSectionTitle);
+    POSTCONDITION(m_inARowLabel);
+    POSTCONDITION(m_gridSectionTitle);
+    POSTCONDITION(m_gridWidthLabel);
+    POSTCONDITION(m_gridHeightLabel);
+    POSTCONDITION(m_playersSectionTitle);
 }
 
 void cxgui::Gtkmm3NewGameView::Activate()
