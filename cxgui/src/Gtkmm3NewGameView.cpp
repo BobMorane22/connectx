@@ -37,7 +37,6 @@
 #include <cxgui/Gtkmm3Layout.h>
 #include <cxgui/Gtkmm3NewGameView.h>
 #include <cxgui/Gtkmm3NewPlayersList.h>
-#include <cxgui/Gtkmm3SpinBox.h>
 #include <cxgui/Gtkmm3WidgetDelegate.h>
 #include <cxgui/IAbstractConnectXWidgetsFactory.h>
 #include <cxgui/IAbstractWidgetsFactory.h>
@@ -93,29 +92,28 @@ cxgui::Gtkmm3NewGameView::Gtkmm3NewGameView(
 
     const IAbstractWidgetsFactory& standardWidgetsFactory = m_widgetsFactories.GetStandardWidgetsFactory();
 
-    const size_t inARowMinValue = p_presenter.GetNewGameViewMinInARowValue();
-    const size_t inARowMaxValue = p_presenter.GetNewGameViewMaxInARowValue();
-    m_inARowSpinBox = CreateWidget<Gtkmm3SpinBox>(m_presenter.GetDefaultInARowValue(),
-                                                  ISpinBox::ClimbRate{1u},
-                                                  ISpinBox::Range{ISpinBox::Minimum{static_cast<int>(inARowMinValue)},
-                                                                  ISpinBox::Maximum{static_cast<int>(inARowMaxValue)}});
-    ASSERT(m_inARowSpinBox);
-
-    const int boardWidthMinValue = p_presenter.GetNewGameViewMinBoardWidthValue();
-    const int boardWidthMaxValue = p_presenter.GetNewGameViewMaxBoardWidthValue();
-    m_boardWidthSpinBox = CreateWidget<Gtkmm3SpinBox>(m_presenter.GetDefaultBoardWidthValue(),
-                                                      ISpinBox::ClimbRate{1u},
-                                                      ISpinBox::Range{ISpinBox::Minimum{static_cast<int>(boardWidthMinValue)},
-                                                                      ISpinBox::Maximum{static_cast<int>(boardWidthMaxValue)}});
-    ASSERT(m_boardWidthSpinBox);
-
-    const int boardHeightMinValue = p_presenter.GetNewGameViewMinBoardHeightValue();
-    const int boardHeightMaxValue = p_presenter.GetNewGameViewMaxBoardHeightValue();
-    m_boardHeightSpinBox = CreateWidget<Gtkmm3SpinBox>(m_presenter.GetDefaultBoardHeightValue(),
-                                                       ISpinBox::ClimbRate{1u},
-                                                       ISpinBox::Range{ISpinBox::Minimum{static_cast<int>(boardHeightMinValue)},
-                                                                       ISpinBox::Maximum{static_cast<int>(boardHeightMaxValue)}});
-    ASSERT(m_boardHeightSpinBox);
+    constexpr ISpinBox::ClimbRate climbRate{1u};
+    {
+        const int inARowMinValue = p_presenter.GetNewGameViewMinInARowValue();
+        const int inARowMaxValue = p_presenter.GetNewGameViewMaxInARowValue();
+        const int inARowDefaultValue = m_presenter.GetDefaultInARowValue();
+        const ISpinBox::Range inARowValidRange{ISpinBox::Minimum{inARowMinValue}, ISpinBox::Maximum{inARowMaxValue}};
+        m_inARowSpinBox = standardWidgetsFactory.CreateSpinBox(inARowDefaultValue, climbRate, inARowValidRange);
+    }
+    {
+        const int boardWidthMinValue = p_presenter.GetNewGameViewMinBoardWidthValue();
+        const int boardWidthMaxValue = p_presenter.GetNewGameViewMaxBoardWidthValue();
+        const int boardWidthDefaultValue = m_presenter.GetDefaultBoardWidthValue();
+        const ISpinBox::Range boardWidthValidRange{ISpinBox::Minimum{boardWidthMinValue}, ISpinBox::Maximum{boardWidthMaxValue}};
+        m_boardWidthSpinBox = standardWidgetsFactory.CreateSpinBox(boardWidthDefaultValue, climbRate, boardWidthValidRange);
+    }
+    {
+        const int boardHeightMinValue = p_presenter.GetNewGameViewMinBoardHeightValue();
+        const int boardHeightMaxValue = p_presenter.GetNewGameViewMaxBoardHeightValue();
+        const int boardHeightDefaultValue = m_presenter.GetDefaultBoardHeightValue();
+        const ISpinBox::Range boardHeightValidRange{ISpinBox::Minimum{boardHeightMinValue}, ISpinBox::Maximum{boardHeightMaxValue}};
+        m_boardHeightSpinBox = standardWidgetsFactory.CreateSpinBox(boardHeightDefaultValue, climbRate, boardHeightValidRange);
+    }
 
     m_addPlayerButton = standardWidgetsFactory.CreateButton(m_presenter.GetNewGameViewAddPlayerButtonText());
     m_removePlayerButton = standardWidgetsFactory.CreateButton(m_presenter.GetNewGameViewRemovePlayerButtonText());
@@ -142,6 +140,9 @@ cxgui::Gtkmm3NewGameView::Gtkmm3NewGameView(
     m_addPlayerButton->OnClicked()->Connect([this](){OnNewGameParameterUpdated();});
     m_playersList->RowUpdatedSignalConnect([this](){OnNewGameParameterUpdated();});
 
+    POSTCONDITION(m_inARowSpinBox);
+    POSTCONDITION(m_boardWidthSpinBox);
+    POSTCONDITION(m_boardHeightSpinBox);
     POSTCONDITION(m_addPlayerButton);
     POSTCONDITION(m_removePlayerButton);
     POSTCONDITION(m_startButton);

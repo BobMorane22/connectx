@@ -28,6 +28,9 @@
 #include <optional>
 #include <string>
 
+// Can't forward declare because the interfaces contains nested classes used by this factory.
+#include <cxgui/ISpinBox.h>
+
 namespace cxgui
 {
     class IButton;
@@ -131,6 +134,25 @@ public:
      *
      *********************************************************************************************/
     [[nodiscard]] virtual std::unique_ptr<ILabel> CreateLabel(const std::string& p_contents) const = 0;
+
+    /******************************************************************************************//**
+     * @brief Creates a spin box instance.
+     *
+     * @param p_initialValue
+     *      The initialValue for the spin box.
+     *
+     * @param p_climbRate
+     *      The spin box's climb rate. The climb rate is the amount added of subsracted to the
+     *      current value when the user interacts with the spin box's spin buttons.
+     *
+     * @param p_range
+     *      The spin box's valid value range.
+     *
+     *********************************************************************************************/
+    [[nodiscard]] virtual std::unique_ptr<ISpinBox> CreateSpinBox(
+        int p_initialValue,
+        const ISpinBox::ClimbRate& p_climbRate,
+        const ISpinBox::Range& p_range) const = 0;
 
 ///@}
 

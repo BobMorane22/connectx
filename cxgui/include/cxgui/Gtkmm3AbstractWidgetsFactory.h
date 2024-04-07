@@ -63,6 +63,10 @@ public:
     [[nodiscard]] std::unique_ptr<IButton> CreateButton(const std::string& p_contents) const override;
     [[nodiscard]] std::unique_ptr<ILabel> CreateLabel() const override;
     [[nodiscard]] std::unique_ptr<ILabel> CreateLabel(const std::string& p_contents) const override;
+    [[nodiscard]] std::unique_ptr<ISpinBox> CreateSpinBox(
+        int p_initialValue,
+        const ISpinBox::ClimbRate& p_climbRate,
+        const ISpinBox::Range& p_range) const override;
     [[nodiscard]] std::unique_ptr<IMenuBar> CreateMenuBar() const override;
     [[nodiscard]] std::unique_ptr<IMenu> CreateMenu(const std::string p_title) const override;
     [[nodiscard]] std::unique_ptr<IMenuItem> CreateMenuItem(

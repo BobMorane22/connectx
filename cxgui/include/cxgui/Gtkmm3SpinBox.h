@@ -56,9 +56,10 @@ public:
      *      The spin box's value range.
      *
      *********************************************************************************************/
-    Gtkmm3SpinBox(int p_initialValue,
-                  const ClimbRate& p_climbRate,
-                  const Range& p_range);
+    Gtkmm3SpinBox(
+        int p_initialValue,
+        const ClimbRate& p_climbRate,
+        const Range& p_range);
 
     /*******************************************************************************************//**
      * @brief Sets the delegate for widget common facilities.

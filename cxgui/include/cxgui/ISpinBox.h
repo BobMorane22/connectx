@@ -41,14 +41,6 @@ class ISpinBox : public cxgui::IWidget
 {
 
 public:
-
-    // cxgui::IWidget:
-    [[nodiscard]] size_t GetWidth() const override = 0;
-    [[nodiscard]] size_t GetHeight() const override = 0;
-    void SetEnabled(EnabledState p_enabled) override = 0;
-    void SetMargins(const Margins& p_newMarginSizes) override = 0;
-    
-public:
     
     /******************************************************************************************//**
     * @brief Climb rate for the value in a spin box.
@@ -113,6 +105,15 @@ public:
      *
      *********************************************************************************************/
     [[nodiscard]] virtual int GetValue() const = 0;
+
+public:
+
+    // cxgui::IWidget:
+    [[nodiscard]] size_t GetWidth() const override = 0;
+    [[nodiscard]] size_t GetHeight() const override = 0;
+    void SetEnabled(EnabledState p_enabled) override = 0;
+    void SetMargins(const Margins& p_newMarginSizes) override = 0;
+    
 };
 
 } // namespace cxgui
