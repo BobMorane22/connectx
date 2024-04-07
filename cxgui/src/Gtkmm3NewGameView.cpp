@@ -45,6 +45,7 @@
 #include <cxgui/INewGameViewPresenter.h>
 #include <cxgui/ISpinBox.h>
 #include <cxgui/Margins.h>
+#include <cxgui/WidgetsFactories.h>
 #include <cxgui/widgetUtilities.h>
 
 namespace
@@ -66,13 +67,16 @@ void DisplayWarningDialog(cxgui::IWindow& p_parent, const std::string& p_message
 
 } // namespace
 
-cxgui::Gtkmm3NewGameView::Gtkmm3NewGameView(INewGameViewPresenter& p_presenter,
-                                            INewGameViewController& p_controller,
-                                            IWindow& p_parentWindow,
-                                            cxgui::ILayout& p_mainLayout,
-                                            const cxmodel::Column& p_viewLeft,
-                                            const cxmodel::Row& p_viewTop)
- : m_presenter{p_presenter}
+cxgui::Gtkmm3NewGameView::Gtkmm3NewGameView(
+    WidgetsFactories& p_widgetsFactories,
+    INewGameViewPresenter& p_presenter,
+    INewGameViewController& p_controller,
+    IWindow& p_parentWindow,
+    cxgui::ILayout& p_mainLayout,
+    const cxmodel::Column& p_viewLeft,
+    const cxmodel::Row& p_viewTop)
+ : m_widgetsFactories{p_widgetsFactories}
+ , m_presenter{p_presenter}
  , m_controller{p_controller}
  , m_parentWindow{p_parentWindow}
  , m_mainLayout{p_mainLayout}

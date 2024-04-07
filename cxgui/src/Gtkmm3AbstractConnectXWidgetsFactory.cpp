@@ -128,6 +128,7 @@ std::unique_ptr<cxgui::IView> cxgui::Gtkmm3AbstractConnectXWidgetsFactory::Creat
     const cxmodel::Row& p_viewTop) const
 {
     auto newGameView = std::make_unique<Gtkmm3NewGameView>(
+        *m_widgetsFactories,
         p_presenter,
         p_controller,
         p_parentWindow,

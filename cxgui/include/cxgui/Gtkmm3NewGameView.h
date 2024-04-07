@@ -25,6 +25,7 @@
 
 #include <optional>
 
+#include <cxmodel/common.h>
 #include <cxmodel/Status.h>
 #include <cxgui/IView.h>
 
@@ -43,6 +44,7 @@ namespace cxgui
     class INewPlayersList;
     class ISpinBox;
     class IWindow;
+    class WidgetsFactories;
 }
 
 namespace cxgui
@@ -60,6 +62,8 @@ public:
     /*****************************************************************************************//**
      * @brief Constructor.
      *
+     * @param p_widgetsFactory
+     *      Factories to instantiate widgets.
      * @param p_presenter
      *      A main window presenter (new game view).
      * @param p_controller
@@ -74,14 +78,16 @@ public:
      *      The top position of the new game view within the main window's top level layout.
      *
      ********************************************************************************************/
-    Gtkmm3NewGameView(INewGameViewPresenter& p_presenter,
-                      INewGameViewController& p_controller,
-                      IWindow& p_parentWindow,
-                      cxgui::ILayout& p_mainLayout,
-                      const cxmodel::Column& p_viewLeft,
-                      const cxmodel::Row& p_viewTop);
+    Gtkmm3NewGameView(
+       WidgetsFactories& p_widgetsFactories,
+       INewGameViewPresenter& p_presenter,
+       INewGameViewController& p_controller,
+       IWindow& p_parentWindow,
+       cxgui::ILayout& p_mainLayout,
+       const cxmodel::Column& p_viewLeft,
+       const cxmodel::Row& p_viewTop);
 
-    // IView:
+    // cxgui::IView:
     void Activate() override;
     void DeActivate() override;
     void Update(cxmodel::ModelNotificationContext p_context) override;
@@ -107,6 +113,8 @@ private:
     [[nodiscard]] cxmodel::Status ExtractGameInformation(cxmodel::NewGameInformation& p_gameInformation) const;
 
 private:
+
+    WidgetsFactories& m_widgetsFactories;
 
     INewGameViewPresenter& m_presenter;
     INewGameViewController& m_controller;
