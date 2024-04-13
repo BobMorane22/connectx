@@ -35,6 +35,7 @@ namespace cxgui
 {
     class IButton;
     class ILabel;
+    class ILayout;
     class IMenu;
     class IMenuBar;
     class IMenuItem;
@@ -68,6 +69,26 @@ public:
      *
      *********************************************************************************************/
     virtual ~IAbstractWidgetsFactory() = default;
+
+// ================================================================================================
+///@{ @name Layouts
+// ================================================================================================
+
+    /******************************************************************************************//**
+     * @brief Creates a layout instance with no initial contents.
+     *
+     * Layouts are used as a means to visually arrange widgets on the screen.
+     *
+     * @post
+     *      The returned layout instance is valid.
+     *
+     * @return
+     *      A layout instance.
+     *
+     *********************************************************************************************/
+    [[nodiscard]] virtual std::unique_ptr<ILayout> CreateLayout() const = 0;
+
+///@}
 
 // ================================================================================================
 ///@{ @name Common widgets

@@ -59,6 +59,7 @@ public:
     explicit Gtkmm3AbstractWidgetsFactory(Glib::RefPtr<Gtk::Application> p_gtkApplication);
 
     // IAbstractWidgetsFactory:
+    [[nodiscard]] std::unique_ptr<ILayout> CreateLayout() const override;
     [[nodiscard]] std::unique_ptr<IButton> CreateButton() const override;
     [[nodiscard]] std::unique_ptr<IButton> CreateButton(const std::string& p_contents) const override;
     [[nodiscard]] std::unique_ptr<ILabel> CreateLabel() const override;

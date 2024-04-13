@@ -34,13 +34,13 @@
 #include <cxgui/EnabledState.h>
 #include <cxgui/extractRawUserInput.h>
 #include <cxgui/Gtkmm3Dialog.h>
-#include <cxgui/Gtkmm3Layout.h>
 #include <cxgui/Gtkmm3NewGameView.h>
 #include <cxgui/Gtkmm3WidgetDelegate.h>
 #include <cxgui/IAbstractConnectXWidgetsFactory.h>
 #include <cxgui/IAbstractWidgetsFactory.h>
 #include <cxgui/IButton.h>
 #include <cxgui/ILabel.h>
+#include <cxgui/ILayout.h>
 #include <cxgui/INewGameViewController.h>
 #include <cxgui/INewGameViewPresenter.h>
 #include <cxgui/INewPlayersList.h>
@@ -87,9 +87,7 @@ cxgui::Gtkmm3NewGameView::Gtkmm3NewGameView(
     const IAbstractConnectXWidgetsFactory& connectXWidgetsFactory = m_widgetsFactories.GetConnectXWidgetsFactory();
     const IAbstractWidgetsFactory& standardWidgetsFactory = m_widgetsFactories.GetStandardWidgetsFactory();
 
-    m_viewLayout = CreateWidget<Gtkmm3Layout>();
-    ASSERT(m_viewLayout);
-
+    m_viewLayout = standardWidgetsFactory.CreateLayout();
     m_playersList = connectXWidgetsFactory.CreateNewPlayersList(m_presenter);
 
     constexpr ISpinBox::ClimbRate climbRate{1u};
@@ -140,6 +138,7 @@ cxgui::Gtkmm3NewGameView::Gtkmm3NewGameView(
     m_addPlayerButton->OnClicked()->Connect([this](){OnNewGameParameterUpdated();});
     m_playersList->RowUpdatedSignalConnect([this](){OnNewGameParameterUpdated();});
 
+    POSTCONDITION(m_viewLayout);
     POSTCONDITION(m_playersList);
     POSTCONDITION(m_inARowSpinBox);
     POSTCONDITION(m_boardWidthSpinBox);

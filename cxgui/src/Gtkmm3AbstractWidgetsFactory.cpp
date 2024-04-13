@@ -26,6 +26,7 @@
 #include <cxgui/Gtkmm3AbstractWidgetsFactory.h>
 #include <cxgui/Gtkmm3Button.h>
 #include <cxgui/Gtkmm3Label.h>
+#include <cxgui/Gtkmm3Layout.h>
 #include <cxgui/Gtkmm3Menu.h>
 #include <cxgui/Gtkmm3MenuBar.h>
 #include <cxgui/Gtkmm3MenuItem.h>
@@ -41,6 +42,14 @@ cxgui::Gtkmm3AbstractWidgetsFactory::Gtkmm3AbstractWidgetsFactory(Glib::RefPtr<G
     m_gtkApplication = p_gtkApplication;
 
     POSTCONDITION(bool(m_gtkApplication));
+}
+
+std::unique_ptr<cxgui::ILayout> cxgui::Gtkmm3AbstractWidgetsFactory::CreateLayout() const
+{
+    auto layout = CreateWidget<Gtkmm3Layout>();
+    POSTCONDITION(layout);
+
+    return layout;
 }
 
 std::unique_ptr<cxgui::IButton> cxgui::Gtkmm3AbstractWidgetsFactory::CreateButton() const 
