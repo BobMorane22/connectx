@@ -42,6 +42,7 @@ namespace cxgui
     class INewGameViewPresenter;
 
     class ILayout;
+    class INewPlayersList;
     class IView;
     class IWindow;
 }
@@ -141,6 +142,25 @@ public:
     [[nodiscard]] virtual std::unique_ptr<IWindow> CreateGameResolutionDialog(
         std::unique_ptr<IGameResolutionDialogPresenter> p_presenter,
         std::unique_ptr<IGameResolutionDialogController> p_controller) const = 0;
+
+    /******************************************************************************************//**
+     * @brief Creates a Connect X new players list.
+     *
+     * The new players list is the widgets from which the setup of players which will participate
+     * in the next Connect X game is done. It can be customized through a presenter.
+     *
+     * @param p_presenter
+     *      A new game view presenter.
+     *
+     * @post
+     *      The returned new players list instance is valid.
+     *
+     * @return
+     *      A new players list instance.
+     *
+     *********************************************************************************************/
+    [[nodiscard]] virtual std::unique_ptr<INewPlayersList> CreateNewPlayersList(
+        const INewGameViewPresenter& p_presenter) const = 0;
 
 ///@}
 

@@ -106,6 +106,8 @@ public:
         cxgui::ILayout& p_mainLayout,
         const cxmodel::Column& p_viewLeft,
         const cxmodel::Row& p_viewTop) const override;
+    [[nodiscard]] std::unique_ptr<INewPlayersList> CreateNewPlayersList(
+        const INewGameViewPresenter& p_presenter) const override;
 
 private:
 

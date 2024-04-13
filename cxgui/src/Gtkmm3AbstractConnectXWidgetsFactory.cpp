@@ -28,6 +28,7 @@
 #include <cxgui/Gtkmm3GameView.h>
 #include <cxgui/Gtkmm3MainWindow.h>
 #include <cxgui/Gtkmm3NewGameView.h>
+#include <cxgui/Gtkmm3NewPlayersList.h>
 #include <cxgui/IButton.h>
 #include <cxgui/IGameResolutionDialogController.h>
 #include <cxgui/IGameResolutionDialogPresenter.h>
@@ -162,6 +163,17 @@ std::unique_ptr<cxgui::IView> cxgui::Gtkmm3AbstractConnectXWidgetsFactory::Creat
     POSTCONDITION(gameView);
 
     return gameView;
+}
+
+std::unique_ptr<cxgui::INewPlayersList> cxgui::Gtkmm3AbstractConnectXWidgetsFactory::CreateNewPlayersList(
+    const cxgui::INewGameViewPresenter& p_presenter) const
+{
+    auto newPlayersList = CreateWidget<Gtkmm3NewPlayersList>(p_presenter);
+
+    InvariantsCheck();
+    POSTCONDITION(newPlayersList);
+
+    return newPlayersList;
 }
 
 void cxgui::Gtkmm3AbstractConnectXWidgetsFactory::InvariantsCheck() const 
