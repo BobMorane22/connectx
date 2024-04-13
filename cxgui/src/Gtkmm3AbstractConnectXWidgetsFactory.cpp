@@ -55,7 +55,9 @@ cxgui::Gtkmm3AbstractConnectXWidgetsFactory::Gtkmm3AbstractConnectXWidgetsFactor
 
 void cxgui::Gtkmm3AbstractConnectXWidgetsFactory::RegisterStandardWidgetsFactory(IAbstractWidgetsFactory& p_stdAbstractWidgetsFactory)
 {
-    m_widgetsFactories = std::make_unique<WidgetsFactories>(p_stdAbstractWidgetsFactory, *this);
+    m_widgetsFactories = std::make_unique<WidgetsFactories>(
+        p_stdAbstractWidgetsFactory,
+        *this);
 
     POSTCONDITION(m_widgetsFactories);
     InvariantsCheck();
@@ -68,7 +70,7 @@ std::unique_ptr<cxgui::IWindow> cxgui::Gtkmm3AbstractConnectXWidgetsFactory::Cre
 {
     IF_PRECONDITION_NOT_MET_DO(m_widgetsFactories, return nullptr;);
 
-    auto mainWindow = cxgui::CreateWidget<cxgui::Gtkmm3MainWindow>(
+    auto mainWindow = cxgui::CreateWidget<Gtkmm3MainWindow>(
         *(m_gtkApplication.get()),
         p_model,
         p_controller,
@@ -90,7 +92,9 @@ std::unique_ptr<cxgui::IWindow> cxgui::Gtkmm3AbstractConnectXWidgetsFactory::Cre
 {
     IF_PRECONDITION_NOT_MET_DO(p_presenter, return nullptr;);
 
-    auto aboutWindow = CreateWidget<Gtkmm3AboutWindow>(*m_widgetsFactories, std::move(p_presenter));
+    auto aboutWindow = CreateWidget<Gtkmm3AboutWindow>(
+        *m_widgetsFactories,
+        std::move(p_presenter));
     POSTCONDITION(aboutWindow);
 
     aboutWindow->Init();
@@ -108,7 +112,7 @@ std::unique_ptr<cxgui::IWindow> cxgui::Gtkmm3AbstractConnectXWidgetsFactory::Cre
     IF_PRECONDITION_NOT_MET_DO(p_presenter, return nullptr;);
     IF_PRECONDITION_NOT_MET_DO(p_controller, return nullptr;);
 
-    auto gameResolutionDialog = std::make_unique<Gtkmm3GameResolutionDialog>(
+    auto gameResolutionDialog = CreateWidget<Gtkmm3GameResolutionDialog>(
         *m_widgetsFactories,
         std::move(p_presenter),
         std::move(p_controller));
