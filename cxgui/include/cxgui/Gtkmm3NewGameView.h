@@ -62,7 +62,7 @@ public:
     /*****************************************************************************************//**
      * @brief Constructor.
      *
-     * @param p_widgetsFactory
+     * @param p_widgetsFactories
      *      Factories to instantiate widgets.
      * @param p_presenter
      *      A main window presenter (new game view).

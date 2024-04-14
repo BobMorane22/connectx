@@ -43,7 +43,8 @@
 #include <cxgui/ISpinBox.h>
 #include <cxgui/WidgetsFactories.h>
 
-cxgui::Gtkmm3AbstractConnectXWidgetsFactory::Gtkmm3AbstractConnectXWidgetsFactory(Glib::RefPtr<Gtk::Application> p_gtkApplication)
+cxgui::Gtkmm3AbstractConnectXWidgetsFactory::Gtkmm3AbstractConnectXWidgetsFactory(
+    Glib::RefPtr<Gtk::Application> p_gtkApplication)
 {
     PRECONDITION(bool(p_gtkApplication));
 
@@ -53,7 +54,8 @@ cxgui::Gtkmm3AbstractConnectXWidgetsFactory::Gtkmm3AbstractConnectXWidgetsFactor
     InvariantsCheck();
 }
 
-void cxgui::Gtkmm3AbstractConnectXWidgetsFactory::RegisterStandardWidgetsFactory(IAbstractWidgetsFactory& p_stdAbstractWidgetsFactory)
+void cxgui::Gtkmm3AbstractConnectXWidgetsFactory::RegisterStandardWidgetsFactory(
+    IAbstractWidgetsFactory& p_stdAbstractWidgetsFactory)
 {
     m_widgetsFactories = std::make_unique<WidgetsFactories>(
         p_stdAbstractWidgetsFactory,
@@ -156,6 +158,7 @@ std::unique_ptr<cxgui::IView> cxgui::Gtkmm3AbstractConnectXWidgetsFactory::Creat
     const cxmodel::Row& p_viewTop) const
 {
     auto gameView = std::make_unique<Gtkmm3GameView>(
+        *m_widgetsFactories,
         p_presenter,
         p_controller,
         p_parentWindow,

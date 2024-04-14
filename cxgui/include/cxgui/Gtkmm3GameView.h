@@ -37,6 +37,7 @@ namespace cxgui
     class ILabel;
     class ILayout;
     class IWindow;
+    class WidgetsFactories;
 }
 
 namespace cxgui
@@ -57,6 +58,8 @@ public:
     /*****************************************************************************************//**
      * @brief Constructor.
      *
+     * @param p_widgetsFactories
+     *      Factories to instantiate widgets.
      * @param p_presenter
      *      The game view presenter.
      * @param p_controller
@@ -71,12 +74,14 @@ public:
      *      The top position of the view in the layout.
      *
      ********************************************************************************************/
-    Gtkmm3GameView(IGameViewPresenter& p_presenter,
-                   IGameViewController& p_controller,
-                   IWindow& p_parentWindow,
-                   cxgui::ILayout& p_mainLayout,
-                   const cxmodel::Column& p_viewLeft,
-                   const cxmodel::Row& p_viewTop);
+    Gtkmm3GameView(
+        WidgetsFactories& p_widgetsFactories,
+        IGameViewPresenter& p_presenter,
+        IGameViewController& p_controller,
+        IWindow& p_parentWindow,
+        cxgui::ILayout& p_mainLayout,
+        const cxmodel::Column& p_viewLeft,
+        const cxmodel::Row& p_viewTop);
 
     /*****************************************************************************************//**
      * @brief Destructor.
@@ -126,6 +131,8 @@ private:
 
 private:
 
+    WidgetsFactories& m_widgetsFactories;
+
     IGameViewPresenter& m_presenter;
     IGameViewController& m_controller;
 
@@ -146,13 +153,13 @@ private:
 
     std::unique_ptr<ILabel> m_activePlayerLabel;
     std::unique_ptr<ILabel> m_activePlayerName;
-    std::unique_ptr<cxgui::IChip> m_activePlayerChip;
+    std::unique_ptr<IChip> m_activePlayerChip;
 
     std::unique_ptr<ILabel> m_nextPlayerLabel;
     std::unique_ptr<ILabel> m_nextPlayerName;
-    std::unique_ptr<cxgui::IChip> m_nextPlayerChip;
+    std::unique_ptr<IChip> m_nextPlayerChip;
 
-    std::unique_ptr<cxgui::IAnimatedBoard> m_board;
+    std::unique_ptr<IAnimatedBoard> m_board;
 
     // Connexions.
     sigc::connection m_keysPressedConnection;

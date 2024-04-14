@@ -40,6 +40,7 @@
 #include <cxgui/IGameViewPresenter.h>
 #include <cxgui/IWindow.h>
 #include <cxgui/Margins.h>
+#include <cxgui/WidgetsFactories.h>
 
 namespace
 {
@@ -48,13 +49,16 @@ constexpr cxgui::AnimationSpeed NUMBER_CHIPS_MOVED_PER_SECOND{3u};
 
 } // namespace
 
-cxgui::Gtkmm3GameView::Gtkmm3GameView(IGameViewPresenter& p_presenter,
-                                      IGameViewController& p_controller,
-                                      IWindow& p_parentWindow,
-                                      cxgui::ILayout& p_mainLayout,
-                                      const cxmodel::Column& p_viewLeft,
-                                      const cxmodel::Row& p_viewTop)
-: m_presenter{p_presenter}
+cxgui::Gtkmm3GameView::Gtkmm3GameView(
+    WidgetsFactories& p_widgetsFactories,
+    IGameViewPresenter& p_presenter,
+    IGameViewController& p_controller,
+    IWindow& p_parentWindow,
+    cxgui::ILayout& p_mainLayout,
+    const cxmodel::Column& p_viewLeft,
+    const cxmodel::Row& p_viewTop)
+: m_widgetsFactories{p_widgetsFactories}
+, m_presenter{p_presenter}
 , m_controller{p_controller}
 , m_parentWindow{p_parentWindow}
 , m_mainLayout{p_mainLayout}
