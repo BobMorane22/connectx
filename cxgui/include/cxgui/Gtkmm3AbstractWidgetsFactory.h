@@ -68,6 +68,10 @@ public:
         int p_initialValue,
         const ISpinBox::ClimbRate& p_climbRate,
         const ISpinBox::Range& p_range) const override;
+    [[nodiscard]] std::unique_ptr<IWindow> CreateDialog(
+        IWindow& p_parent,
+        DialogRole p_dialogRole,
+        const std::string& p_message) const override;
     [[nodiscard]] std::unique_ptr<IMenuBar> CreateMenuBar() const override;
     [[nodiscard]] std::unique_ptr<IMenu> CreateMenu(const std::string p_title) const override;
     [[nodiscard]] std::unique_ptr<IMenuItem> CreateMenuItem(

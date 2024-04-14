@@ -33,12 +33,11 @@
 #include <cxgui/DialogRole.h>
 #include <cxgui/EnabledState.h>
 #include <cxgui/extractRawUserInput.h>
-#include <cxgui/Gtkmm3Dialog.h>
 #include <cxgui/Gtkmm3NewGameView.h>
-#include <cxgui/Gtkmm3WidgetDelegate.h>
 #include <cxgui/IAbstractConnectXWidgetsFactory.h>
 #include <cxgui/IAbstractWidgetsFactory.h>
 #include <cxgui/IButton.h>
+#include <cxgui/IWindow.h>
 #include <cxgui/ILabel.h>
 #include <cxgui/ILayout.h>
 #include <cxgui/INewGameViewController.h>
@@ -52,14 +51,17 @@
 namespace
 {
 
-void DisplayWarningDialog(cxgui::IWindow& p_parent, const std::string& p_message)
+void DisplayWarningDialog(
+    const cxgui::IAbstractWidgetsFactory& p_widgetsFactory,
+    cxgui::IWindow& p_parent,
+    const std::string& p_message)
 {
     using namespace cxgui;
 
     IF_PRECONDITION_NOT_MET_DO(!p_message.empty(), return;);
 
-    std::unique_ptr<IWindow> errorDialog = CreateWidget<Gtkmm3Dialog>(p_parent, DialogRole::WARNING, p_message);
-    ASSERT(errorDialog);
+    std::unique_ptr<IWindow> errorDialog = p_widgetsFactory.CreateDialog(p_parent, DialogRole::WARNING, p_message);
+    IF_CONDITION_NOT_MET_DO(errorDialog, return;);
 
     // Blocks the main loop:
     const int result = errorDialog->Show();
@@ -310,14 +312,20 @@ void cxgui::Gtkmm3NewGameView::OnStart()
     const auto extractionStatus = ExtractGameInformation(gameInformation);
     if(!extractionStatus.IsSuccess())
     {
-        DisplayWarningDialog(m_parentWindow, extractionStatus.GetMessage());
+        DisplayWarningDialog(
+            m_widgetsFactories.GetStandardWidgetsFactory(),
+            m_parentWindow,
+            extractionStatus.GetMessage());
         return;
     }
 
     const auto inputValidationStatus = Validate(gameInformation, m_presenter);
     if(!inputValidationStatus.IsSuccess())
     {
-        DisplayWarningDialog(m_parentWindow, inputValidationStatus.GetMessage());
+        DisplayWarningDialog(
+            m_widgetsFactories.GetStandardWidgetsFactory(),
+            m_parentWindow,
+            inputValidationStatus.GetMessage());
         return;
     }
 

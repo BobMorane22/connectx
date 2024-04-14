@@ -25,6 +25,7 @@
 #include <cxgui/StdActionIcon.h>
 #include <cxgui/Gtkmm3AbstractWidgetsFactory.h>
 #include <cxgui/Gtkmm3Button.h>
+#include <cxgui/Gtkmm3Dialog.h>
 #include <cxgui/Gtkmm3Label.h>
 #include <cxgui/Gtkmm3Layout.h>
 #include <cxgui/Gtkmm3Menu.h>
@@ -93,6 +94,22 @@ std::unique_ptr<cxgui::ISpinBox> cxgui::Gtkmm3AbstractWidgetsFactory::CreateSpin
     POSTCONDITION(spinBox);
 
     return spinBox;
+}
+
+std::unique_ptr<cxgui::IWindow> cxgui::Gtkmm3AbstractWidgetsFactory::CreateDialog(
+    IWindow& p_parent,
+    DialogRole p_dialogRole,
+    const std::string& p_message) const
+{
+    PRECONDITION(!p_message.empty());
+
+    auto dialog = CreateWidget<Gtkmm3Dialog>(
+        p_parent,
+        p_dialogRole,
+        p_message);
+    POSTCONDITION(dialog);
+
+    return dialog;
 }
 
 std::unique_ptr<cxgui::IMenuBar> cxgui::Gtkmm3AbstractWidgetsFactory::CreateMenuBar() const

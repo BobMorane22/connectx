@@ -33,12 +33,14 @@
 
 namespace cxgui
 {
+    enum class DialogRole;
     class IButton;
     class ILabel;
     class ILayout;
     class IMenu;
     class IMenuBar;
     class IMenuItem;
+    class IWindow;
 
     class IStatusBar;
     class IStatusBarPresenter;
@@ -169,11 +171,44 @@ public:
      * @param p_range
      *      The spin box's valid value range.
      *
+     * @post
+     *      The returned spin box instance is valid.
+     * 
+     * @return
+     *      A spin box instance.
+     *
      *********************************************************************************************/
     [[nodiscard]] virtual std::unique_ptr<ISpinBox> CreateSpinBox(
         int p_initialValue,
         const ISpinBox::ClimbRate& p_climbRate,
         const ISpinBox::Range& p_range) const = 0;
+
+    /******************************************************************************************//**
+     * @brief Creates dialog instance.
+     *
+     * @param p_parent
+     *      The dialog's parent window. This is the window over which the dialog shows.
+     *
+     * @param p_dialogRole
+     *      The role of the dialog (e.g. warning, question, ...).
+     *
+     * @param p_message
+     *      The message to show on the dialog.
+     *
+     * @pre
+     *      The message is not empty.
+     *
+     * @post
+     *      The returned dialog instance is valid.
+     * 
+     * @return
+     *      A dialog instance.
+     *
+     *********************************************************************************************/
+    [[nodiscard]] virtual std::unique_ptr<IWindow> CreateDialog(
+        IWindow& p_parent,
+        DialogRole p_dialogRole,
+        const std::string& p_message) const = 0;
 
 ///@}
 
