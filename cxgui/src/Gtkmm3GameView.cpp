@@ -32,12 +32,13 @@
 #include <cxgui/Gtkmm3AnimatedBoard.h>
 #include <cxgui/Gtkmm3DiscChip.h>
 #include <cxgui/Gtkmm3GameView.h>
-#include <cxgui/Gtkmm3Label.h>
-#include <cxgui/Gtkmm3Layout.h>
 #include <cxgui/Gtkmm3WidgetDelegate.h>
+#include <cxgui/IAbstractWidgetsFactory.h>
 #include <cxgui/IAnimatedBoardPresenter.h>
 #include <cxgui/IGameViewController.h>
 #include <cxgui/IGameViewPresenter.h>
+#include <cxgui/ILabel.h>
+#include <cxgui/ILayout.h>
 #include <cxgui/IWindow.h>
 #include <cxgui/Margins.h>
 #include <cxgui/WidgetsFactories.h>
@@ -65,6 +66,8 @@ cxgui::Gtkmm3GameView::Gtkmm3GameView(
 , m_viewLeft{p_viewLeft}
 , m_viewTop{p_viewTop}
 {
+    const IAbstractWidgetsFactory& standardWidgetsFactory = m_widgetsFactories.GetStandardWidgetsFactory();
+
     m_board = CreateWidget<cxgui::Gtkmm3AnimatedBoard>(m_presenter, NUMBER_CHIPS_MOVED_PER_SECOND);
     ASSERT(m_board);
 
@@ -73,22 +76,14 @@ cxgui::Gtkmm3GameView::Gtkmm3GameView(
     m_nextPlayerChip = CreateWidget<cxgui::Gtkmm3DiscChip>(cxmodel::MakeTransparent(), cxmodel::MakeTransparent(), cxgui::DEFAULT_CHIP_SIZE / 4);
     ASSERT(m_nextPlayerChip);
 
-    m_viewLayout = CreateWidget<Gtkmm3Layout>();
-    ASSERT(m_viewLayout);
+    m_viewLayout = standardWidgetsFactory.CreateLayout();
+    m_playersInfoLayout = standardWidgetsFactory.CreateLayout();
 
-    m_playersInfoLayout = CreateWidget<Gtkmm3Layout>();
-    ASSERT(m_playersInfoLayout);
-
-    m_title = CreateWidget<Gtkmm3Label>("");
-    ASSERT(m_title);
-    m_activePlayerLabel = CreateWidget<Gtkmm3Label>("");
-    ASSERT(m_activePlayerLabel);
-    m_activePlayerName = CreateWidget<Gtkmm3Label>("");
-    ASSERT(m_activePlayerName);
-    m_nextPlayerLabel = CreateWidget<Gtkmm3Label>("");
-    ASSERT(m_nextPlayerLabel);
-    m_nextPlayerName = CreateWidget<Gtkmm3Label>("");
-    ASSERT(m_nextPlayerName);
+    m_title = standardWidgetsFactory.CreateLabel();
+    m_activePlayerLabel = standardWidgetsFactory.CreateLabel();
+    m_activePlayerName = standardWidgetsFactory.CreateLabel();
+    m_nextPlayerLabel = standardWidgetsFactory.CreateLabel();
+    m_nextPlayerName = standardWidgetsFactory.CreateLabel();
 
     SetLayout();
     PopulateWidgets();
@@ -98,6 +93,14 @@ cxgui::Gtkmm3GameView::Gtkmm3GameView(
     Attach(m_board.get());
     m_board->BoardAnimationSubject::Attach(this);
     m_board->UserActionSubject::Attach(this);
+
+    POSTCONDITION(m_viewLayout);
+    POSTCONDITION(m_playersInfoLayout);
+    POSTCONDITION(m_title);
+    POSTCONDITION(m_activePlayerLabel);
+    POSTCONDITION(m_activePlayerName);
+    POSTCONDITION(m_nextPlayerLabel);
+    POSTCONDITION(m_nextPlayerName);
 }
 
 cxgui::Gtkmm3GameView::~Gtkmm3GameView()

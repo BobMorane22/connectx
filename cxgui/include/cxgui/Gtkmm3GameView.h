@@ -25,9 +25,7 @@
 
 #include <sigc++/connection.h>
 
-// Can't forward declare because of gui specific subject/observer.
-#include <cxgui/IAnimatedBoard.h>
-
+#include <cxgui/IAnimatedBoard.h> // Can't forward declare because of gui specific subject/observer.  #include <cxgui/IView.h>
 #include <cxgui/IView.h>
 
 namespace cxgui
@@ -100,7 +98,7 @@ public:
     [[nodiscard]] size_t GetHeight() const override;
     void SetEnabled(EnabledState p_enabled) override;
     void SetMargins(const Margins& p_newMarginSizes) override;
-    void SetTooltip(const std::string& p_tooltipContents)override;
+    void SetTooltip(const std::string& p_tooltipContents) override;
 
 private:
 
