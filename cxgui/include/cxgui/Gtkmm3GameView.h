@@ -25,8 +25,9 @@
 
 #include <sigc++/connection.h>
 
+// Can't forward declare because of gui specific subject/observer.
 #include <cxgui/IAnimatedBoard.h>
-#include <cxgui/GameViewKeyHandlerStrategyFactory.h>
+
 #include <cxgui/IView.h>
 
 namespace cxgui
