@@ -29,13 +29,12 @@
 #include <cxgui/BoardAnimation.h>
 #include <cxgui/common.h>
 #include <cxgui/GameViewKeyHandlerStrategyFactory.h>
-#include <cxgui/Gtkmm3DiscChip.h>
 #include <cxgui/Gtkmm3GameView.h>
-#include <cxgui/Gtkmm3WidgetDelegate.h>
 #include <cxgui/IAbstractConnectXWidgetsFactory.h>
 #include <cxgui/IAbstractWidgetsFactory.h>
 #include <cxgui/IAnimatedBoard.h>
 #include <cxgui/IAnimatedBoardPresenter.h>
+#include <cxgui/IChip.h>
 #include <cxgui/IGameViewController.h>
 #include <cxgui/IGameViewPresenter.h>
 #include <cxgui/ILabel.h>
@@ -72,10 +71,8 @@ cxgui::Gtkmm3GameView::Gtkmm3GameView(
 
     m_board = connectXWidgetsFactory.CreateGameBoard(m_presenter, NUMBER_CHIPS_MOVED_PER_SECOND);
 
-    m_activePlayerChip = CreateWidget<Gtkmm3DiscChip>(cxmodel::MakeTransparent(), cxmodel::MakeTransparent(), cxgui::DEFAULT_CHIP_SIZE / 4);
-    ASSERT(m_activePlayerChip);
-    m_nextPlayerChip = CreateWidget<cxgui::Gtkmm3DiscChip>(cxmodel::MakeTransparent(), cxmodel::MakeTransparent(), cxgui::DEFAULT_CHIP_SIZE / 4);
-    ASSERT(m_nextPlayerChip);
+    m_activePlayerChip = connectXWidgetsFactory.CreateChip(cxmodel::MakeTransparent(), cxmodel::MakeTransparent(), cxgui::DEFAULT_CHIP_SIZE / 4);
+    m_nextPlayerChip = connectXWidgetsFactory.CreateChip(cxmodel::MakeTransparent(), cxmodel::MakeTransparent(), cxgui::DEFAULT_CHIP_SIZE / 4);
 
     m_viewLayout = standardWidgetsFactory.CreateLayout();
     m_playersInfoLayout = standardWidgetsFactory.CreateLayout();
@@ -99,6 +96,8 @@ cxgui::Gtkmm3GameView::Gtkmm3GameView(
     }
 
     POSTCONDITION(m_board);
+    POSTCONDITION(m_activePlayerChip);
+    POSTCONDITION(m_nextPlayerChip);
     POSTCONDITION(m_viewLayout);
     POSTCONDITION(m_playersInfoLayout);
     POSTCONDITION(m_title);

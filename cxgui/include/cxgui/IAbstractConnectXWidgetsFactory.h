@@ -43,6 +43,7 @@ namespace cxgui
     class INewGameViewController;
     class INewGameViewPresenter;
 
+    class IChip;
     class ILayout;
     class INewPlayersList;
     class IView;
@@ -239,7 +240,7 @@ public:
 // ================================================================================================
 
     /*****************************************************************************************//**
-     * @brief Creates a view for playing a Connect X game.
+     * @brief Creates a game bord for playing a Connect X game.
      *
      * @param p_presenter
      *      A game view presenter.
@@ -256,6 +257,28 @@ public:
     [[nodiscard]] virtual std::unique_ptr<IAnimatedBoard> CreateGameBoard(
         const IGameViewPresenter& p_presenter,
         const AnimationSpeed& p_speed) const = 0;
+
+    /******************************************************************************************//**
+     * @brief Creates a Connect X chip which can be drawn on the screen.
+     *
+     * @param p_fillColor
+     *     The color filling the center of the chip (inside its border).
+     * @param p_backgroundColor
+     *     The color around the chip (outside its border).
+     * @param p_radius
+     *     The chip's diameter (in pixels).
+     *
+     * @post
+     *     The returned chip is valid.
+     *
+     * @return
+     *     A Connect X chip instance.
+     *
+     ********************************************************************************************/
+    [[nodiscard]] virtual std::unique_ptr<IChip> CreateChip(
+        const cxmodel::ChipColor& p_fillColor,
+        const cxmodel::ChipColor& p_backgroundColor,
+        int p_diameter) const = 0;
 
 ///@}
 

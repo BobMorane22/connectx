@@ -26,6 +26,7 @@
 #include <cxgui/Gtkmm3AboutWindow.h>
 #include <cxgui/Gtkmm3AbstractConnectXWidgetsFactory.h>
 #include <cxgui/Gtkmm3AnimatedBoard.h>
+#include <cxgui/Gtkmm3DiscChip.h>
 #include <cxgui/Gtkmm3GameResolutionDialog.h>
 #include <cxgui/Gtkmm3GameView.h>
 #include <cxgui/Gtkmm3MainWindow.h>
@@ -197,6 +198,22 @@ std::unique_ptr<cxgui::IAnimatedBoard> cxgui::Gtkmm3AbstractConnectXWidgetsFacto
     POSTCONDITION(animatedBoard);
 
     return animatedBoard;
+}
+
+std::unique_ptr<cxgui::IChip> cxgui::Gtkmm3AbstractConnectXWidgetsFactory::CreateChip(
+   const cxmodel::ChipColor& p_fillColor,
+   const cxmodel::ChipColor& p_backgroundColor,
+   int p_diameter) const
+{
+    auto chip = CreateWidget<Gtkmm3DiscChip>(
+        p_fillColor,
+        p_backgroundColor,
+        p_diameter);
+
+    InvariantsCheck();
+    POSTCONDITION(chip);
+
+    return chip;
 }
 
 void cxgui::Gtkmm3AbstractConnectXWidgetsFactory::InvariantsCheck() const 

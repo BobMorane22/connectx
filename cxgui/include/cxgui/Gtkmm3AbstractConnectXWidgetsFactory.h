@@ -111,6 +111,10 @@ public:
     [[nodiscard]] std::unique_ptr<IAnimatedBoard> CreateGameBoard(
         const IGameViewPresenter& p_presenter,
         const AnimationSpeed& p_speed) const override;
+    [[nodiscard]] std::unique_ptr<IChip> CreateChip(
+        const cxmodel::ChipColor& p_fillColor,
+        const cxmodel::ChipColor& p_backgroundColor,
+        int p_diameter) const override;
 
 private:
 
