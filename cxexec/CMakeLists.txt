@@ -45,6 +45,7 @@ target_include_directories(${TARGET_NAME}
 target_link_libraries(${TARGET_NAME}
   PRIVATE cxstd
   PRIVATE cxinv
+  PRIVATE cxmath
   PRIVATE cxlog
   PRIVATE cxmodel
   PRIVATE cxgui

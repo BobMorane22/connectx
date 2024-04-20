@@ -28,9 +28,11 @@
 
 #include <cxmodel/common.h>
 #include <cxmodel/ModelNotificationContext.h>
+#include <cxgui/IAnimatedBoardModel.h>
 
 namespace cxgui
 {
+    class IAnimatedBoard;
     class IAboutWindowPresenter;
     class IGameResolutionDialogPresenter;
     class IGameResolutionDialogController;
@@ -229,6 +231,31 @@ public:
         cxgui::ILayout& p_mainLayout,
         const cxmodel::Column& p_viewLeft,
         const cxmodel::Row& p_viewTop) const = 0;
+
+///@}
+
+// ================================================================================================
+///@{ @name Game board
+// ================================================================================================
+
+    /*****************************************************************************************//**
+     * @brief Creates a view for playing a Connect X game.
+     *
+     * @param p_presenter
+     *      A game view presenter.
+     * @param p_speed
+     *      The number of chip widths travelled by second.
+     *
+     * @post
+     *      The returned game board instance is valid.
+     *
+     * @return
+     *      A game board instance.
+     *
+     ********************************************************************************************/
+    [[nodiscard]] virtual std::unique_ptr<IAnimatedBoard> CreateGameBoard(
+        const IGameViewPresenter& p_presenter,
+        const AnimationSpeed& p_speed) const = 0;
 
 ///@}
 

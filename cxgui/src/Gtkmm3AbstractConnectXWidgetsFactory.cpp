@@ -22,13 +22,17 @@
  *************************************************************************************************/
 
 #include <cxinv/assertion.h>
+#include <cxgui/BoardAnimation.h>
 #include <cxgui/Gtkmm3AboutWindow.h>
 #include <cxgui/Gtkmm3AbstractConnectXWidgetsFactory.h>
+#include <cxgui/Gtkmm3AnimatedBoard.h>
 #include <cxgui/Gtkmm3GameResolutionDialog.h>
 #include <cxgui/Gtkmm3GameView.h>
 #include <cxgui/Gtkmm3MainWindow.h>
 #include <cxgui/Gtkmm3NewGameView.h>
 #include <cxgui/Gtkmm3NewPlayersList.h>
+#include <cxgui/IAnimatedBoardModel.h>
+#include <cxgui/IAnimatedBoardPresenter.h>
 #include <cxgui/IButton.h>
 #include <cxgui/IGameResolutionDialogController.h>
 #include <cxgui/IGameResolutionDialogPresenter.h>
@@ -181,6 +185,18 @@ std::unique_ptr<cxgui::INewPlayersList> cxgui::Gtkmm3AbstractConnectXWidgetsFact
     POSTCONDITION(newPlayersList);
 
     return newPlayersList;
+}
+
+std::unique_ptr<cxgui::IAnimatedBoard> cxgui::Gtkmm3AbstractConnectXWidgetsFactory::CreateGameBoard(
+    const cxgui::IGameViewPresenter& p_presenter,
+    const cxgui::AnimationSpeed& p_speed) const
+{
+    auto animatedBoard = CreateWidget<Gtkmm3AnimatedBoard>(p_presenter, p_speed);
+
+    InvariantsCheck();
+    POSTCONDITION(animatedBoard);
+
+    return animatedBoard;
 }
 
 void cxgui::Gtkmm3AbstractConnectXWidgetsFactory::InvariantsCheck() const 
