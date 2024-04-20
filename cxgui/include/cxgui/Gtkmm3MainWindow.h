@@ -96,18 +96,20 @@ public:
      *      The main window controller.
      * @param p_presenter
      *      The main window presenter.
+     * @param p_widgetsFactories
+     *      The widgets factories.
      *
      ********************************************************************************************/
-    Gtkmm3MainWindow(Gtk::Application& p_gtkApplication,
-                     cxmodel::ModelSubject& p_model,
-                     IMainWindowController& p_controller,
-                     IMainWindowPresenter& p_presenter);
+    Gtkmm3MainWindow(
+        Gtk::Application& p_gtkApplication,
+        cxmodel::ModelSubject& p_model,
+        IMainWindowController& p_controller,
+        IMainWindowPresenter& p_presenter,
+        WidgetsFactories& p_widgetsFactories);
 
+    // cxgui::IWindow:
     ~Gtkmm3MainWindow() override;
-
     [[nodiscard]] int Show() override;
-
-    void RegisterWidgetsFactories(WidgetsFactories* p_widgetsFactories);
 
 private:
 
@@ -159,7 +161,7 @@ private:
     std::unique_ptr<IStatusBarPresenter> m_statusBarPresenter;
 
     // Widgets factories:
-    WidgetsFactories* m_widgetsFactories = nullptr;
+    WidgetsFactories& m_widgetsFactories;
 
     // Status bar:
     std::unique_ptr<IStatusBar> m_statusBar;

@@ -81,11 +81,10 @@ std::unique_ptr<cxgui::IWindow> cxgui::Gtkmm3AbstractConnectXWidgetsFactory::Cre
         *(m_gtkApplication.get()),
         p_model,
         p_controller,
-        p_presenter);
-
+        p_presenter,
+        *m_widgetsFactories);
     IF_CONDITION_NOT_MET_DO(mainWindow, return nullptr;);
 
-    mainWindow->RegisterWidgetsFactories(m_widgetsFactories.get());
     mainWindow->Init();
 
     POSTCONDITION(mainWindow);

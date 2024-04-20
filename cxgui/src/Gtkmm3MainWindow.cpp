@@ -55,14 +55,17 @@
 #include <cxgui/WidgetsFactories.h>
 #include <cxgui/widgetUtilities.h>
 
-cxgui::Gtkmm3MainWindow::Gtkmm3MainWindow(Gtk::Application& p_gtkApplication,
-                              cxmodel::ModelSubject& p_model,
-                              cxgui::IMainWindowController& p_controller,
-                              cxgui::IMainWindowPresenter& p_presenter)
+cxgui::Gtkmm3MainWindow::Gtkmm3MainWindow(
+    Gtk::Application& p_gtkApplication,
+    cxmodel::ModelSubject& p_model,
+    cxgui::IMainWindowController& p_controller,
+    cxgui::IMainWindowPresenter& p_presenter,
+    cxgui::WidgetsFactories& p_widgetsFactories)
  : m_gtkApplication{p_gtkApplication}
  , m_model{p_model}
  , m_controller{p_controller}
  , m_presenter{p_presenter}
+ , m_widgetsFactories{p_widgetsFactories}
  , m_viewLeft{0}
  , m_viewTop{1}
 {
@@ -81,15 +84,9 @@ cxgui::Gtkmm3MainWindow::~Gtkmm3MainWindow()
     }
 }
 
-void cxgui::Gtkmm3MainWindow::RegisterWidgetsFactories(cxgui::WidgetsFactories* p_widgetsFactories)
-{
-    PRECONDITION(p_widgetsFactories);
-    m_widgetsFactories = p_widgetsFactories;
-}
-
 void cxgui::Gtkmm3MainWindow::InitializeWidgets()
 {
-    const cxgui::IAbstractWidgetsFactory& standardWidgetsFactory = m_widgetsFactories->GetStandardWidgetsFactory();
+    const cxgui::IAbstractWidgetsFactory& standardWidgetsFactory = m_widgetsFactories.GetStandardWidgetsFactory();
 
     m_menuBar = standardWidgetsFactory.CreateMenuBar();
     m_gameMenu = standardWidgetsFactory.CreateMenu(m_presenter.GetMenuLabel(MenuItem::GAME));
@@ -122,7 +119,7 @@ void cxgui::Gtkmm3MainWindow::RegisterWidgets()
 
     RegisterMenuBar();
 
-    const IAbstractConnectXWidgetsFactory& connectXWidgetsFactory = m_widgetsFactories->GetConnectXWidgetsFactory();
+    const IAbstractConnectXWidgetsFactory& connectXWidgetsFactory = m_widgetsFactories.GetConnectXWidgetsFactory();
     m_newGameView = connectXWidgetsFactory.CreateNewGameView(
         m_presenter,
         m_controller,
@@ -311,7 +308,7 @@ void cxgui::Gtkmm3MainWindow::RegisterMenuBar()
 
 void cxgui::Gtkmm3MainWindow::RegisterStatusBar()
 {
-    const IAbstractWidgetsFactory& standardWidgetsFactory = m_widgetsFactories->GetStandardWidgetsFactory();
+    const IAbstractWidgetsFactory& standardWidgetsFactory = m_widgetsFactories.GetStandardWidgetsFactory();
 
     m_statusBarPresenter = std::make_unique<StatusBarPresenter>();
     IF_CONDITION_NOT_MET_DO(m_statusBarPresenter, return;);
@@ -360,7 +357,7 @@ void cxgui::Gtkmm3MainWindow::OnCreateAboutWindow()
         IF_CONDITION_NOT_MET_DO(aboutPresenter, return;);
 
         {
-            const IAbstractConnectXWidgetsFactory& connectXWidgetsFactory = m_widgetsFactories->GetConnectXWidgetsFactory();
+            const IAbstractConnectXWidgetsFactory& connectXWidgetsFactory = m_widgetsFactories.GetConnectXWidgetsFactory();
             m_aboutWindow = connectXWidgetsFactory.CreateAboutWindow(std::move(aboutPresenter));
             IF_CONDITION_NOT_MET_DO(m_aboutWindow, return;);
         }
@@ -422,7 +419,7 @@ void cxgui::Gtkmm3MainWindow::CreateGameResolutionWindow(cxmodel::ModelNotificat
         std::unique_ptr<IGameResolutionDialogController> gameResolutionController = std::make_unique<GameResolutionDialogController>(*gameActionsModel);
         IF_CONDITION_NOT_MET_DO(gameResolutionController, return;);
 
-        const IAbstractConnectXWidgetsFactory& connectXWidgetsFactory = m_widgetsFactories->GetConnectXWidgetsFactory();
+        const IAbstractConnectXWidgetsFactory& connectXWidgetsFactory = m_widgetsFactories.GetConnectXWidgetsFactory();
         m_gameResolution = connectXWidgetsFactory.CreateGameResolutionDialog(
             std::move(gameResolutionPresenter),
             std::move(gameResolutionController));
@@ -439,7 +436,7 @@ void cxgui::Gtkmm3MainWindow::ActivateNewGameView()
 
     if(!m_newGameView)
     {
-        const IAbstractConnectXWidgetsFactory& connectXWidgetsFactory = m_widgetsFactories->GetConnectXWidgetsFactory();
+        const IAbstractConnectXWidgetsFactory& connectXWidgetsFactory = m_widgetsFactories.GetConnectXWidgetsFactory();
         m_newGameView = connectXWidgetsFactory.CreateNewGameView(
             m_presenter,
             m_controller,
@@ -470,7 +467,7 @@ void cxgui::Gtkmm3MainWindow::ActivateGameView()
 
     if(!m_gameView)
     {
-        const IAbstractConnectXWidgetsFactory& connectXWidgetsFactory = m_widgetsFactories->GetConnectXWidgetsFactory();
+        const IAbstractConnectXWidgetsFactory& connectXWidgetsFactory = m_widgetsFactories.GetConnectXWidgetsFactory();
         m_gameView = connectXWidgetsFactory.CreateGameView(
             m_presenter,
             m_controller,
