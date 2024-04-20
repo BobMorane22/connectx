@@ -29,6 +29,7 @@
 #include <cxgui/IGameResolutionDialogController.h>
 #include <cxgui/IGameResolutionDialogPresenter.h>
 #include <cxgui/ILabel.h>
+#include <cxgui/ILayout.h>
 #include <cxgui/Margins.h>
 #include <cxgui/WidgetsFactories.h>
 
@@ -36,7 +37,8 @@ cxgui::Gtkmm3GameResolutionDialog::Gtkmm3GameResolutionDialog(
     cxgui::WidgetsFactories& p_widgetsFactories,
     std::unique_ptr<IGameResolutionDialogPresenter> p_presenter,
     std::unique_ptr<IGameResolutionDialogController> p_controller)
-: m_presenter{std::move(p_presenter)}
+: cxgui::Gtkmm3Window{p_widgetsFactories}
+, m_presenter{std::move(p_presenter)}
 , m_controller{std::move(p_controller)}
 , m_widgetsFactories{p_widgetsFactories}
 {

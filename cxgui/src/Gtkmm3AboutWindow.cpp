@@ -27,13 +27,14 @@
 #include <cxgui/IAbstractWidgetsFactory.h>
 #include <cxgui/IButton.h>
 #include <cxgui/ILabel.h>
+#include <cxgui/ILayout.h>
 #include <cxgui/Margins.h>
 #include <cxgui/WidgetsFactories.h>
 
 cxgui::Gtkmm3AboutWindow::Gtkmm3AboutWindow(
     cxgui::WidgetsFactories& p_widgetsFactories,
     std::unique_ptr<IAboutWindowPresenter> p_presenter)
- : Gtkmm3Window()
+ : Gtkmm3Window(p_widgetsFactories)
  , m_widgetsFactories{p_widgetsFactories}
 {
     PRECONDITION(p_presenter);

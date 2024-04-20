@@ -21,10 +21,12 @@
  *
  *************************************************************************************************/
 
-#include "cxgui/IWindow.h"
 #include <glibmm/fileutils.h>
 
 #include <cxgui/Gtkmm3Window.h>
+#include <cxgui/IAbstractWidgetsFactory.h>
+#include <cxgui/ILayout.h>
+#include <cxgui/WidgetsFactories.h>
 
 void cxgui::Gtkmm3Window::ConfigureWindowIcon()
 {
@@ -41,16 +43,19 @@ void cxgui::Gtkmm3Window::ConfigureWindowIcon()
     }
 }
 
-cxgui::Gtkmm3Window::Gtkmm3Window()
+cxgui::Gtkmm3Window::Gtkmm3Window(WidgetsFactories& p_widgetsFactories)
+: m_widgetsFactories{p_widgetsFactories}
 {
-    m_mainLayout = CreateWidget<Gtkmm3Layout>();
-    ASSERT(m_mainLayout);
+    const IAbstractWidgetsFactory& standardWidgetsFactory = m_widgetsFactories.GetStandardWidgetsFactory();
+    m_mainLayout = standardWidgetsFactory.CreateLayout();
 
     Gtk::Widget* mainLayoutAsGtk = dynamic_cast<Gtk::Widget*>(m_mainLayout.get());
     if(INL_ASSERT(mainLayoutAsGtk))
     {
         add(*mainLayoutAsGtk);
     }
+
+    POSTCONDITION(m_mainLayout);
 }
 
 int cxgui::Gtkmm3Window::Show()

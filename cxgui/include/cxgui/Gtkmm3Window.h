@@ -28,10 +28,14 @@
 
 #include <cxinv/assertion.h>
 #include <cxgui/generated/ressources.h>
-#include <cxgui/Gtkmm3Layout.h>
-#include <cxgui/ILayout.h>
 #include <cxgui/IWindow.h>
-#include <cxgui/Gtkmm3WidgetDelegate.h>
+
+namespace cxgui
+{
+    class ILayout;
+    class IWidget;
+    class WidgetsFactories;
+}
 
 namespace cxgui
 {
@@ -61,8 +65,14 @@ public:
     /******************************************************************************************//**
      * @brief Constructor.
      *
+     * @param p_widgetsFactories
+     *      Factories for creating widgets.
+     *
+     * @post
+     *      The window's main layout is valid.
+     *
      ********************************************************************************************/
-    Gtkmm3Window();
+    explicit Gtkmm3Window(WidgetsFactories& p_widgetsFactories);
 
     /******************************************************************************************//**
      * @brief Initializes the window widgets.
@@ -177,6 +187,7 @@ private:
 
 private:
 
+    WidgetsFactories& m_widgetsFactories;
     std::unique_ptr<IWidget> m_delegate;
 };
 

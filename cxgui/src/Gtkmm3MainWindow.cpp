@@ -61,7 +61,8 @@ cxgui::Gtkmm3MainWindow::Gtkmm3MainWindow(
     cxgui::IMainWindowController& p_controller,
     cxgui::IMainWindowPresenter& p_presenter,
     cxgui::WidgetsFactories& p_widgetsFactories)
- : m_gtkApplication{p_gtkApplication}
+ : cxgui::Gtkmm3Window{p_widgetsFactories}
+ , m_gtkApplication{p_gtkApplication}
  , m_model{p_model}
  , m_controller{p_controller}
  , m_presenter{p_presenter}

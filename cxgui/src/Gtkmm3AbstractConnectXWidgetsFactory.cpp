@@ -32,6 +32,7 @@
 #include <cxgui/Gtkmm3MainWindow.h>
 #include <cxgui/Gtkmm3NewGameView.h>
 #include <cxgui/Gtkmm3NewPlayersList.h>
+#include <cxgui/Gtkmm3WidgetDelegate.h>
 #include <cxgui/IAnimatedBoardModel.h>
 #include <cxgui/IAnimatedBoardPresenter.h>
 #include <cxgui/IButton.h>
@@ -40,6 +41,7 @@
 #include <cxgui/IGameViewController.h>
 #include <cxgui/IGameViewPresenter.h>
 #include <cxgui/ILabel.h>
+#include <cxgui/ILayout.h>
 #include <cxgui/IMainWindowController.h>
 #include <cxgui/IMainWindowPresenter.h>
 #include <cxgui/INewGameViewController.h>
