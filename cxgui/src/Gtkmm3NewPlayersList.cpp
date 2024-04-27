@@ -21,25 +21,26 @@
  *
  *************************************************************************************************/
 
-#include "cxgui/IColorPicker.h"
 #include <gtkmm/grid.h>
+#include <gtkmm/label.h>
 
 #include <cxinv/assertion.h>
 #include <cxstd/helpers.h>
 #include <cxmodel/IPlayer.h>
 #include <cxgui/common.h>
 #include <cxgui/EnabledState.h>
-#include <cxgui/Gtkmm3ColorPicker.h>
-#include <cxgui/Gtkmm3EditBox.h>
-#include <cxgui/Gtkmm3Layout.h>
-#include <cxgui/Gtkmm3OnOffSwitch.h>
-#include <cxgui/Gtkmm3WidgetDelegate.h>
+#include <cxgui/Gtkmm3NewPlayersList.h>
+#include <cxgui/IAbstractConnectXWidgetsFactory.h>
+#include <cxgui/IAbstractWidgetsFactory.h>
+#include <cxgui/IColorPicker.h>
+#include <cxgui/IOnOffSwitch.h>
+#include <cxgui/IEditBox.h>
 #include <cxgui/ILayout.h>
 #include <cxgui/INewGameViewPresenter.h>
 #include <cxgui/ISignal.h>
 #include <cxgui/Margins.h>
 #include <cxgui/OnOffState.h>
-#include <cxgui/Gtkmm3NewPlayersList.h>
+#include <cxgui/WidgetsFactories.h>
 
 namespace cxgui
 {
@@ -99,6 +100,9 @@ public:
      * Creates a new player row, according to default values from the presenter. These default values
      * can vary according to how many players already are registered in the game.
      *
+     * @param p_widgetsFactories
+     *      Factories to create widgets.
+     *
      * @param p_presenter
      *      A New Game view compatible presenter.
      *
@@ -115,10 +119,12 @@ public:
      *      The row number does not exceed the maximum number of players allowed in the game.
      *
      **********************************************************************************************/
-    NewPlayerRow(const cxgui::INewGameViewPresenter& p_presenter,
-                 size_t p_rowIndex,
-                 const std::vector<cxmodel::ChipColor>& p_alreadyChosenColors,
-                 EnabledState p_enabled);
+    NewPlayerRow(
+        const WidgetsFactories& p_widgetsFactories,
+        const cxgui::INewGameViewPresenter& p_presenter,
+        size_t p_rowIndex,
+        const std::vector<cxmodel::ChipColor>& p_alreadyChosenColors,
+        EnabledState p_enabled);
 
     /***********************************************************************************************
      * @brief Default destructor.
@@ -134,9 +140,10 @@ public:
      * @param p_newType             The new flag indicating if the player is human, or managed.
      *
      **********************************************************************************************/
-    void Update(const std::string& p_playerNewName,
-                const cxmodel::ChipColor& p_playerNewDiscColor,
-                const cxmodel::PlayerType p_newType);
+    void Update(
+        const std::string& p_playerNewName,
+        const cxmodel::ChipColor& p_playerNewDiscColor,
+        const cxmodel::PlayerType p_newType);
 
     /*******************************************************************************************//**
      * @brief  Accessor for the player's name.
@@ -181,6 +188,8 @@ private:
     void CheckInvariants() const;
     void RetreiveColumnDimensions(Gtkmm3NewPlayersList& parent_) const;
 
+private:
+    
     std::unique_ptr<ILayout> m_layout;
     std::unique_ptr<IOnOffSwitch> m_typeSwitch;
     std::unique_ptr<IEditBox> m_playerName;
@@ -250,34 +259,36 @@ void cxgui::NewPlayerTitleRow::SetDiscColorTitleWidth(int p_newWidth)
     m_discColorTitle.set_size_request(p_newWidth);
 }
 
-cxgui::NewPlayerRow::NewPlayerRow(const cxgui::INewGameViewPresenter& p_presenter,
-                                  size_t p_rowIndex,
-                                  const std::vector<cxmodel::ChipColor>& p_alreadyChosenColors,
-                                  EnabledState p_enabled)
+cxgui::NewPlayerRow::NewPlayerRow(
+    const WidgetsFactories& p_widgetsFactories,
+    const cxgui::INewGameViewPresenter& p_presenter,
+    size_t p_rowIndex,
+    const std::vector<cxmodel::ChipColor>& p_alreadyChosenColors,
+    EnabledState p_enabled)
 {
     if(p_rowIndex > 0u)
     {
         PRECONDITION(p_presenter.CanAddAnotherPlayer(p_rowIndex - 1u));
     }
 
-    m_layout = CreateWidget<cxgui::Gtkmm3Layout>();
-    ASSERT(m_layout);
+    // Creating the widgets:
+    const IAbstractWidgetsFactory& standardWidgetsFactory = p_widgetsFactories.GetStandardWidgetsFactory();
+    const IAbstractConnectXWidgetsFactory& connectXWidgetsFactory = p_widgetsFactories.GetConnectXWidgetsFactory();
+    m_layout = standardWidgetsFactory.CreateLayout();
+    m_playerName = standardWidgetsFactory.CreateEditBox();
 
-    m_playerName = CreateWidget<Gtkmm3EditBox>();
-    ASSERT(m_playerName);
+    const auto defaultColors = GetRemainingDefaultColors(p_alreadyChosenColors, p_presenter);
+    IF_CONDITION_NOT_MET_DO(!defaultColors.empty(), return;);
+    m_playerDiscColor = connectXWidgetsFactory.CreateColorPicker(defaultColors);
+
+    m_typeSwitch = standardWidgetsFactory.CreateOnOffSwitch();
+
+    // Configuring the widgets:
     m_playerName->UpdateContents(p_presenter.GetDefaultPlayerName(p_rowIndex));
     m_playerName->SetMargins({TopMargin{0}, BottomMargin{0}, LeftMargin{0}, RightMargin{CONTROL_SIDE_MARGIN}});
 
-    const auto defaultColors = cxgui::GetRemainingDefaultColors(p_alreadyChosenColors, p_presenter);
-    IF_CONDITION_NOT_MET_DO(!defaultColors.empty(), return;);
-
-    m_playerDiscColor = CreateWidget<Gtkmm3ColorPicker>(defaultColors);
-    ASSERT(m_playerDiscColor);
-
     m_playerDiscColor->SetCurrentSelection(defaultColors.front());
 
-    m_typeSwitch = CreateWidget<Gtkmm3OnOffSwitch>();
-    ASSERT(m_typeSwitch);
     if(p_presenter.GetDefaultPlayerType(p_rowIndex) == cxmodel::PlayerType::BOT) 
     {
         m_typeSwitch->SetState(cxgui::OnOffState::ON);
@@ -290,12 +301,7 @@ cxgui::NewPlayerRow::NewPlayerRow(const cxgui::INewGameViewPresenter& p_presente
     m_typeSwitch->SetEnabled(p_enabled);
     m_typeSwitch->SetMargins({TopMargin{0}, BottomMargin{0}, LeftMargin{0}, RightMargin{cxgui::CONTROL_SIDE_MARGIN}});
 
-    auto* gtkSwitch = dynamic_cast<Gtk::Switch*>(m_typeSwitch.get());
-    ASSERT(gtkSwitch);
-
-    gtkSwitch->set_valign(Gtk::Align::ALIGN_CENTER);
-    gtkSwitch->set_halign(Gtk::Align::ALIGN_CENTER);
-
+    // Registering the widgets:
     constexpr cxgui::ILayout::RowSpan rowSpan{1u};
     constexpr cxgui::ILayout::ColumnSpan columnSpan{1u};
     constexpr cxmodel::Row row{0u};
@@ -307,6 +313,11 @@ cxgui::NewPlayerRow::NewPlayerRow(const cxgui::INewGameViewPresenter& p_presente
     auto* gtkLayout = dynamic_cast<Gtk::Grid*>(m_layout.get());
     ASSERT(gtkLayout);
     add(*gtkLayout);
+
+    POSTCONDITION(m_playerName);
+    POSTCONDITION(m_layout);
+    POSTCONDITION(m_playerDiscColor);
+    POSTCONDITION(m_typeSwitch);
 
     CheckInvariants();
 }
@@ -393,14 +404,28 @@ bool cxgui::operator!=(const NewPlayerRow& p_lhs, const NewPlayerRow& p_rhs)
     return !(p_lhs == p_rhs);
 }
 
-cxgui::Gtkmm3NewPlayersList::Gtkmm3NewPlayersList(const INewGameViewPresenter& p_presenter)
+cxgui::Gtkmm3NewPlayersList::Gtkmm3NewPlayersList(
+   const INewGameViewPresenter& p_presenter,
+   const WidgetsFactories& p_widgetsFactories)
+: m_widgetsFactories{p_widgetsFactories}
 {
     m_titleRow = std::make_unique<NewPlayerTitleRow>(p_presenter);
     ASSERT(m_titleRow);
 
-    m_rows.push_back(std::make_unique<NewPlayerRow>(p_presenter, 1u, GetAllColors(), EnabledState::Enabled));
+    m_rows.push_back(std::make_unique<NewPlayerRow>(
+        m_widgetsFactories,
+        p_presenter,
+        1u,
+        GetAllColors(),
+        EnabledState::Enabled));
     add(*m_rows.back());
-    m_rows.push_back(std::make_unique<NewPlayerRow>(p_presenter, 2u, GetAllColors(), EnabledState::Enabled));
+
+    m_rows.push_back(std::make_unique<NewPlayerRow>(
+        m_widgetsFactories,
+        p_presenter,
+        2u,
+        GetAllColors(),
+        EnabledState::Enabled));
     add(*m_rows.back());
 
     AddColumnHeaders();
@@ -518,7 +543,12 @@ bool cxgui::Gtkmm3NewPlayersList::AddRow(const cxgui::INewGameViewPresenter& p_p
     const size_t sizeBefore{GetSize()};
 
     {
-        auto row = std::make_unique<NewPlayerRow>(p_presenter, p_rowIndex, GetAllColors(), EnabledState::Enabled);
+        auto row = std::make_unique<NewPlayerRow>(
+            m_widgetsFactories,
+            p_presenter,
+            p_rowIndex,
+            GetAllColors(),
+            EnabledState::Enabled);
         IF_CONDITION_NOT_MET_DO(row, return false;);
         
         IF_CONDITION_NOT_MET_DO(m_rowUpdatedSlot, return false;);

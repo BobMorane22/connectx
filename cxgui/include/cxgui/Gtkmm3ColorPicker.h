@@ -58,7 +58,8 @@ public:
      * @param p_colors
      *      List of colors to display in the combo box.
      *
-     * @pre The list of colors is not empty.
+     * @pre
+     *      The list of colors is not empty.
      *
      *********************************************************************************************/
     explicit Gtkmm3ColorPicker(const std::vector<Color>& p_colors);

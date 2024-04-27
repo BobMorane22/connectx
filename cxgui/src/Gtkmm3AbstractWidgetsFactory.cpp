@@ -26,11 +26,13 @@
 #include <cxgui/Gtkmm3AbstractWidgetsFactory.h>
 #include <cxgui/Gtkmm3Button.h>
 #include <cxgui/Gtkmm3Dialog.h>
+#include <cxgui/Gtkmm3EditBox.h>
 #include <cxgui/Gtkmm3Label.h>
 #include <cxgui/Gtkmm3Layout.h>
 #include <cxgui/Gtkmm3Menu.h>
 #include <cxgui/Gtkmm3MenuBar.h>
 #include <cxgui/Gtkmm3MenuItem.h>
+#include <cxgui/Gtkmm3OnOffSwitch.h>
 #include <cxgui/Gtkmm3SpinBox.h>
 #include <cxgui/Gtkmm3StatusBar.h>
 #include <cxgui/Gtkmm3WidgetDelegate.h>
@@ -85,6 +87,14 @@ std::unique_ptr<cxgui::ILabel> cxgui::Gtkmm3AbstractWidgetsFactory::CreateLabel(
     return label;
 }
 
+std::unique_ptr<cxgui::IEditBox> cxgui::Gtkmm3AbstractWidgetsFactory::CreateEditBox() const
+{
+    auto editBox = CreateWidget<Gtkmm3EditBox>();
+    POSTCONDITION(editBox);
+
+    return editBox;
+}
+
 std::unique_ptr<cxgui::ISpinBox> cxgui::Gtkmm3AbstractWidgetsFactory::CreateSpinBox(
     int p_initialValue,
     const ISpinBox::ClimbRate& p_climbRate,
@@ -94,6 +104,14 @@ std::unique_ptr<cxgui::ISpinBox> cxgui::Gtkmm3AbstractWidgetsFactory::CreateSpin
     POSTCONDITION(spinBox);
 
     return spinBox;
+}
+
+std::unique_ptr<cxgui::IOnOffSwitch> cxgui::Gtkmm3AbstractWidgetsFactory::CreateOnOffSwitch() const
+{
+    auto onOffSwitch = CreateWidget<Gtkmm3OnOffSwitch>();
+    POSTCONDITION(onOffSwitch);
+
+    return onOffSwitch;
 }
 
 std::unique_ptr<cxgui::IWindow> cxgui::Gtkmm3AbstractWidgetsFactory::CreateDialog(

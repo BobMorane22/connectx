@@ -108,6 +108,8 @@ public:
         const cxmodel::Row& p_viewTop) const override;
     [[nodiscard]] std::unique_ptr<INewPlayersList> CreateNewPlayersList(
         const INewGameViewPresenter& p_presenter) const override;
+    [[nodiscard]] std::unique_ptr<IColorPicker> CreateColorPicker(
+        const std::vector<cxmodel::ChipColor>& p_colors) const override;
     [[nodiscard]] std::unique_ptr<IAnimatedBoard> CreateGameBoard(
         const IGameViewPresenter& p_presenter,
         const AnimationSpeed& p_speed) const override;

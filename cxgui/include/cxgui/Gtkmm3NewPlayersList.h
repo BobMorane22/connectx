@@ -33,6 +33,7 @@ namespace cxgui
 class INewGameViewPresenter;
 class NewPlayerRow;
 class NewPlayerTitleRow;
+class WidgetsFactories;
 
 }
 
@@ -55,15 +56,21 @@ class Gtkmm3NewPlayersList final : public INewPlayersList,
 public:
 
     /*******************************************************************************************//**
-     * @brief Default constructor.
+     * @brief Constructor.
      *
      * Constructs a list of two players with different colors. This is the basic Connect X
      * configuration, and is equivalent to the classic Connect 4 requirements.
      *
-     * @param p_presenter A new game view presenter.
+     * @param
+     *      Factories to create widgets.
+     *
+     * @param p_presenter
+     *      A new game view presenter.
      *
      **********************************************************************************************/
-    explicit Gtkmm3NewPlayersList(const INewGameViewPresenter& p_presenter);
+    Gtkmm3NewPlayersList(
+        const INewGameViewPresenter& p_presenter,
+        const WidgetsFactories& p_widgetsFactories);
 
     /*******************************************************************************************//**
      * @brief Default destructor.
@@ -111,6 +118,9 @@ public:
     void SetTooltip(const std::string& p_tooltipContents) override;
 
 private:
+
+    // Widgets factories:
+    const WidgetsFactories& m_widgetsFactories;
 
     // This friendship is needed because the top row needs to make its child widgets'
     // dimensions available to the list so they can be passed on the the list titles.

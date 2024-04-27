@@ -64,10 +64,12 @@ public:
     [[nodiscard]] std::unique_ptr<IButton> CreateButton(const std::string& p_contents) const override;
     [[nodiscard]] std::unique_ptr<ILabel> CreateLabel() const override;
     [[nodiscard]] std::unique_ptr<ILabel> CreateLabel(const std::string& p_contents) const override;
+    [[nodiscard]] std::unique_ptr<IEditBox> CreateEditBox() const override;
     [[nodiscard]] std::unique_ptr<ISpinBox> CreateSpinBox(
         int p_initialValue,
         const ISpinBox::ClimbRate& p_climbRate,
         const ISpinBox::Range& p_range) const override;
+    [[nodiscard]] std::unique_ptr<IOnOffSwitch> CreateOnOffSwitch() const override;
     [[nodiscard]] std::unique_ptr<IWindow> CreateDialog(
         IWindow& p_parent,
         DialogRole p_dialogRole,

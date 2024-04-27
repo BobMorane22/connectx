@@ -26,6 +26,7 @@
 #include <cxgui/Gtkmm3AboutWindow.h>
 #include <cxgui/Gtkmm3AbstractConnectXWidgetsFactory.h>
 #include <cxgui/Gtkmm3AnimatedBoard.h>
+#include <cxgui/Gtkmm3ColorPicker.h>
 #include <cxgui/Gtkmm3DiscChip.h>
 #include <cxgui/Gtkmm3GameResolutionDialog.h>
 #include <cxgui/Gtkmm3GameView.h>
@@ -181,12 +182,25 @@ std::unique_ptr<cxgui::IView> cxgui::Gtkmm3AbstractConnectXWidgetsFactory::Creat
 std::unique_ptr<cxgui::INewPlayersList> cxgui::Gtkmm3AbstractConnectXWidgetsFactory::CreateNewPlayersList(
     const cxgui::INewGameViewPresenter& p_presenter) const
 {
-    auto newPlayersList = CreateWidget<Gtkmm3NewPlayersList>(p_presenter);
+    IF_CONDITION_NOT_MET_DO(m_widgetsFactories, return nullptr;);
+
+    auto newPlayersList = CreateWidget<Gtkmm3NewPlayersList>(p_presenter, *m_widgetsFactories);
 
     InvariantsCheck();
     POSTCONDITION(newPlayersList);
 
     return newPlayersList;
+}
+
+std::unique_ptr<cxgui::IColorPicker> cxgui::Gtkmm3AbstractConnectXWidgetsFactory::CreateColorPicker(
+    const std::vector<cxmodel::ChipColor>& p_colors) const
+{
+    IF_PRECONDITION_NOT_MET_DO(!p_colors.empty(), return nullptr;);
+
+    auto picker = CreateWidget<Gtkmm3ColorPicker>(p_colors);
+    POSTCONDITION(picker);
+
+    return picker;
 }
 
 std::unique_ptr<cxgui::IAnimatedBoard> cxgui::Gtkmm3AbstractConnectXWidgetsFactory::CreateGameBoard(

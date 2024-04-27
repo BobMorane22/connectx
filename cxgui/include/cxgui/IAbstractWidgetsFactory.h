@@ -35,11 +35,13 @@ namespace cxgui
 {
     enum class DialogRole;
     class IButton;
+    class IEditBox;
     class ILabel;
     class ILayout;
     class IMenu;
     class IMenuBar;
     class IMenuItem;
+    class IOnOffSwitch;
     class IWindow;
 
     class IStatusBar;
@@ -159,6 +161,18 @@ public:
     [[nodiscard]] virtual std::unique_ptr<ILabel> CreateLabel(const std::string& p_contents) const = 0;
 
     /******************************************************************************************//**
+     * @brief Creates an edit box instance.
+     *
+     * @post
+     *      The returned edit box instance is valid.
+     * 
+     * @return
+     *      An edit box instance.
+     *
+     *********************************************************************************************/
+    [[nodiscard]] virtual std::unique_ptr<IEditBox> CreateEditBox() const = 0;
+
+    /******************************************************************************************//**
      * @brief Creates a spin box instance.
      *
      * @param p_initialValue
@@ -182,6 +196,18 @@ public:
         int p_initialValue,
         const ISpinBox::ClimbRate& p_climbRate,
         const ISpinBox::Range& p_range) const = 0;
+
+    /******************************************************************************************//**
+     * @brief Creates a on/off switch instance.
+     *
+     * @post
+     *      The returned on/off switch instance is valid.
+     * 
+     * @return
+     *      A on/off switch instance.
+     *
+     *********************************************************************************************/
+    [[nodiscard]] virtual std::unique_ptr<IOnOffSwitch> CreateOnOffSwitch() const = 0;
 
     /******************************************************************************************//**
      * @brief Creates dialog instance.
