@@ -102,12 +102,16 @@ public:
     [[nodiscard]] std::vector<cxmodel::ChipColor> GetAllColors() const override;
     [[nodiscard]] std::vector<std::string> GetAllPlayerNames() const override;
     [[nodiscard]] std::vector<cxmodel::PlayerType> GetAllPlayerTypes() const override;
-    [[nodiscard]] bool AddRow(const INewGameViewPresenter& p_presenter, size_t p_rowIndex) override;
-    [[nodiscard]] bool RemoveRow(const std::size_t p_index) override;
-    [[nodiscard]] bool UpdateRow(const std::size_t p_index,
-                                 const std::string& p_newPlayerNewName,
-                                 const cxmodel::ChipColor& p_newPlayerNewDiscColor,
-                                 cxmodel::PlayerType p_newPlayerType) override;
+    [[nodiscard]] bool AddPlayer(
+        const INewGameViewPresenter& p_presenter,
+        size_t p_rowIndex) override;
+    [[nodiscard]] bool RemovePlayer(
+        const std::size_t p_index) override;
+    [[nodiscard]] bool UpdatePlayer(
+        const std::size_t p_index,
+        const std::string& p_newPlayerNewName,
+        const cxmodel::ChipColor& p_newPlayerNewDiscColor,
+        cxmodel::PlayerType p_newPlayerType) override;
     void RowUpdatedSignalConnect(const std::function<void()>& p_slot) override;
 
     // cxgui::IWidget:

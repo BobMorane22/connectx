@@ -338,7 +338,7 @@ void cxgui::Gtkmm3NewGameView::OnAddPlayer()
     if(m_presenter.CanAddAnotherPlayer(m_playersList->GetSize()))
     {
         const size_t nextColumnIndex = m_playersList->GetSize() + 1u;
-        IF_CONDITION_NOT_MET_DO(m_playersList->AddRow(m_presenter, nextColumnIndex), return;);
+        IF_CONDITION_NOT_MET_DO(m_playersList->AddPlayer(m_presenter, nextColumnIndex), return;);
     }
 
     EnabledStateUpdate(*m_removePlayerButton, m_presenter.CanRemoveAnotherPlayer(m_playersList->GetSize()));
@@ -349,7 +349,7 @@ void cxgui::Gtkmm3NewGameView::OnRemovePlayer()
 {
     if(m_presenter.CanRemoveAnotherPlayer(m_playersList->GetSize()))
     {
-        IF_CONDITION_NOT_MET_DO(m_playersList->RemoveRow(m_playersList->GetSize() - 1), return;);
+        IF_CONDITION_NOT_MET_DO(m_playersList->RemovePlayer(m_playersList->GetSize() - 1), return;);
 
         // One row is gone. We need to resize the window as to leave no extra space.
         m_parentWindow.ShrinkToContents(cxgui::IWindow::Orientation::HORIZONTAL);

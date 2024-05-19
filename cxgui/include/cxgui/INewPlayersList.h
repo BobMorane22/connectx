@@ -127,54 +127,76 @@ public:
     [[nodiscard]] virtual std::vector<cxmodel::PlayerType> GetAllPlayerTypes() const = 0;
 
     /*******************************************************************************************//**
-     * @brief Adds a row to the list.
+     * @brief Adds a player to the list.
      *
-     * Adds a row to the list. The row is appended at the end of the list.
+     * Adds a player to the list. The player is appended at the end of the list.
      *
-     * @param p_presenter A New Game view compatible presenter.
-     * @param p_rowIndex The new row index.
+     * @param p_presenter
+     *      A New Game view compatible presenter.
      *
-     * @pre The new row index is not bigger than the maximum players allowed.
+     * @param p_rowIndex
+     *      The new row index.
      *
-     * @return `true` if the row could be added, `false` otherwise.
+     * @pre
+     *      The player's row index is not bigger than the maximum players allowed.
+     *
+     * @return
+     *      `true` if the row could be added, `false` otherwise.
      *
      **********************************************************************************************/
-    [[nodiscard]] virtual bool AddRow(const INewGameViewPresenter& p_presenter, size_t p_rowIndex) = 0;
+    [[nodiscard]] virtual bool AddPlayer(
+        const INewGameViewPresenter& p_presenter,
+        size_t p_rowIndex) = 0;
 
     /*******************************************************************************************//**
-     * @brief Removes a row from the list by its index.
+     * @brief Removes a player from the list, by index.
      *
-     * @param p_index The row index.
+     * @param p_index
+     *      The player's row index in the list.
      *
-     * @pre p_index The row index is at most the number of players in the list,
-     *              minus one (zero-based).
+     * @pre
+     *      The row index is at most the number of players in the list, minus one (zero-based).
      *
-     * @return `true` if the specified row was successfully removed, `false` otherwise.
+     * @return
+     *      `true` if the specified player was successfully removed, `false` otherwise.
      *
      **********************************************************************************************/
-    [[nodiscard]] virtual bool RemoveRow(const std::size_t p_index) = 0;
+    [[nodiscard]] virtual bool RemovePlayer(
+        const std::size_t p_index) = 0;
 
     /*******************************************************************************************//**
-     * @brief Updates a row from its index.
+     * @brief Updates a player, by index.
      *
-     * Updates row information from its index. You can update the player name and the player disc
-     * color.
+     * Updates player information from its index in the list. You can update the player name and
+     * the player disc color.
      *
-     * @param p_index                 The row index.
-     * @param p_newPlayerNewName      The player name.
-     * @param p_newPlayerNewDiscColor The player disc color.
-     * @param p_newPlayerType         The player type (human or bot).
+     * @param p_index
+     *      The row index.
      *
-     * @pre The row index is at most the number of players in the list, minus one (zero-based).
-     * @pre The player name is not an empty string.
+     * @param p_newPlayerNewName
+     *      The player name.
      *
-     * @return `true` if the specified row was successfully updated, `false` otherwise.
+     * @param p_newPlayerNewDiscColor
+     *      The player disc color.
+     *
+     * @param p_newPlayerType
+     *      The player type (human or bot).
+     *
+     * @pre
+     *      The row index is at most the number of players in the list, minus one (zero-based).
+     *
+     * @pre
+     *      The player name is not an empty string.
+     *
+     * @return
+     *      `true` if the specified row was successfully updated, `false` otherwise.
      *
      **********************************************************************************************/
-    [[nodiscard]] virtual bool UpdateRow(const std::size_t p_index,
-                                         const std::string& p_newPlayerNewName,
-                                         const cxmodel::ChipColor& p_newPlayerNewDiscColor,
-                                         cxmodel::PlayerType p_newPlayerType) = 0;
+    [[nodiscard]] virtual bool UpdatePlayer(
+        const std::size_t p_index,
+        const std::string& p_newPlayerNewName,
+        const cxmodel::ChipColor& p_newPlayerNewDiscColor,
+        cxmodel::PlayerType p_newPlayerType) = 0;
 
     /***********************************************************************************************
      * @brief Connects a slot to be called when the row is updated.

@@ -533,7 +533,9 @@ std::vector<cxmodel::PlayerType> cxgui::Gtkmm3NewPlayersList::GetAllPlayerTypes(
     return types;
 }
 
-bool cxgui::Gtkmm3NewPlayersList::AddRow(const cxgui::INewGameViewPresenter& p_presenter, size_t p_rowIndex)
+bool cxgui::Gtkmm3NewPlayersList::AddPlayer(
+    const cxgui::INewGameViewPresenter& p_presenter,
+    size_t p_rowIndex)
 {
     if(p_rowIndex > 0u)
     {
@@ -567,7 +569,8 @@ bool cxgui::Gtkmm3NewPlayersList::AddRow(const cxgui::INewGameViewPresenter& p_p
     return true;
 }
 
-bool cxgui::Gtkmm3NewPlayersList::RemoveRow(const std::size_t p_index)
+bool cxgui::Gtkmm3NewPlayersList::RemovePlayer(
+    const std::size_t p_index)
 {
     PRECONDITION(p_index < GetSize());
 
@@ -580,10 +583,11 @@ bool cxgui::Gtkmm3NewPlayersList::RemoveRow(const std::size_t p_index)
     return true;
 }
 
-bool cxgui::Gtkmm3NewPlayersList::UpdateRow(const std::size_t p_index,
-                                      const std::string& p_playerNewName,
-                                      const cxmodel::ChipColor& p_playerNewDiscColor,
-                                      const cxmodel::PlayerType p_playerNewType)
+bool cxgui::Gtkmm3NewPlayersList::UpdatePlayer(
+    const std::size_t p_index,
+    const std::string& p_playerNewName,
+    const cxmodel::ChipColor& p_playerNewDiscColor,
+    const cxmodel::PlayerType p_playerNewType)
 {
     PRECONDITION(p_index < GetSize());
     PRECONDITION(!p_playerNewName.empty());
