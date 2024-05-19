@@ -96,7 +96,7 @@ public:
     void SetDelegate(std::unique_ptr<cxgui::IWidget> p_delegate);
 
     // cxgui::INewPlayersList:
-    [[nodiscard]] std::size_t GetSize() const override;
+    [[nodiscard]] std::size_t GetNbPlayers() const override;
     [[nodiscard]] cxmodel::ChipColor GetRowPlayerDiscColor(const std::size_t p_index) const override;
     [[nodiscard]] std::string GetPlayerNameAtRow(const std::size_t p_index) const override;
     [[nodiscard]] std::vector<cxmodel::ChipColor> GetAllColors() const override;

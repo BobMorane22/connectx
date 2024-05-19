@@ -64,48 +64,55 @@ public:
     virtual ~INewPlayersList() = default;
 
     /*******************************************************************************************//**
-     * @brief Accesses the size of the list.
+     * @brief Accesses the number of players in the list.
      *
-     * The size of the list is the number of players (visually, the number of rows) contained
-     * in the widget.
-     *
-     * @return The size of the list.
+     * @return
+     *      The number of players in the list.
      *
      **********************************************************************************************/
-    [[nodiscard]] virtual std::size_t GetSize() const = 0;
+    [[nodiscard]] virtual size_t GetNbPlayers() const = 0;
 
     /*******************************************************************************************//**
      * @brief Accesses a specific row's player disc color.
      *
      * For a given row index, gets the specific row's player disc color.
      *
-     * @param p_index The row index.
+     * @param p_index
+     *      The row index.
      *
-     * @pre The row index is at most the number of players in the list, minus one (zero-based).
+     * @pre
+     *      The row index is at most the number of players in the list, minus one (zero-based).
      *
-     * @return The row's player disc color.
+     * @return
+     *      The row's player disc color.
      *
      **********************************************************************************************/
-    [[nodiscard]] virtual cxmodel::ChipColor GetRowPlayerDiscColor(const std::size_t p_index) const = 0;
+    [[nodiscard]] virtual cxmodel::ChipColor GetRowPlayerDiscColor(
+        const size_t p_index) const = 0;
 
     /*******************************************************************************************//**
      * @brief Accesses a specific row's player name.
      *
      * For a given row index, gets the specific row's player name.
      *
-     * @param p_index The row index.
+     * @param p_index
+     *      The row index.
      *
-     * @pre The row index is at most the number of players in the list, minus one (zero-based).
+     * @pre
+     *      The row index is at most the number of players in the list, minus one (zero-based).
      *
-     * @return The row's player name.
+     * @return
+     *      The row's player name.
      *
      **********************************************************************************************/
-    [[nodiscard]] virtual std::string GetPlayerNameAtRow(const std::size_t p_index) const = 0;
+    [[nodiscard]] virtual std::string GetPlayerNameAtRow(
+        const size_t p_index) const = 0;
 
     /*******************************************************************************************//**
      * @brief Accesses all player disc colors in the list.
      *
-     * @return An @c std::vector containing all the player disc colors in the list.
+     * @return
+     *      An @c std::vector containing all the player disc colors in the list.
      *
      **********************************************************************************************/
     [[nodiscard]] virtual std::vector<cxmodel::ChipColor> GetAllColors() const = 0;
@@ -113,7 +120,8 @@ public:
     /*******************************************************************************************//**
      * @brief Accesses all player names in the list.
      *
-     * @return An @c std::vector containing all the player names in the list.
+     * @return
+     *      An @c std::vector containing all the player names in the list.
      *
      **********************************************************************************************/
     [[nodiscard]] virtual std::vector<std::string> GetAllPlayerNames() const = 0;
@@ -121,7 +129,8 @@ public:
     /*******************************************************************************************//**
      * @brief Accesses all player types in the list.
      *
-     * @return An @c std::vector containing all the player types in the list.
+     * @return
+     *      An @c std::vector containing all the player types in the list.
      *
      **********************************************************************************************/
     [[nodiscard]] virtual std::vector<cxmodel::PlayerType> GetAllPlayerTypes() const = 0;
@@ -162,7 +171,7 @@ public:
      *
      **********************************************************************************************/
     [[nodiscard]] virtual bool RemovePlayer(
-        const std::size_t p_index) = 0;
+        const size_t p_index) = 0;
 
     /*******************************************************************************************//**
      * @brief Updates a player, by index.
@@ -193,7 +202,7 @@ public:
      *
      **********************************************************************************************/
     [[nodiscard]] virtual bool UpdatePlayer(
-        const std::size_t p_index,
+        const size_t p_index,
         const std::string& p_newPlayerNewName,
         const cxmodel::ChipColor& p_newPlayerNewDiscColor,
         cxmodel::PlayerType p_newPlayerType) = 0;
@@ -201,10 +210,12 @@ public:
     /***********************************************************************************************
      * @brief Connects a slot to be called when the row is updated.
      *
-     * @param p_slot The slot to call.
+     * @param p_slot
+     *      The slot to call.
      *
      **********************************************************************************************/
-    virtual void RowUpdatedSignalConnect(const std::function<void()>& p_slot) = 0;
+    virtual void RowUpdatedSignalConnect(
+        const std::function<void()>& p_slot) = 0;
 
 };
 

@@ -299,8 +299,8 @@ void cxgui::Gtkmm3NewGameView::ConfigureWidgets()
     // Add/Remove player buttons:
     m_removePlayerButton->SetMargins({TopMargin{0u}, BottomMargin{CONTROL_BOTTOM_MARGIN}, LeftMargin{0u}, RightMargin{0u}});
     m_addPlayerButton->SetMargins({cxgui::TopMargin{0u}, cxgui::BottomMargin{CONTROL_BOTTOM_MARGIN}, cxgui::LeftMargin{0u}, cxgui::RightMargin{0u}});
-    EnabledStateUpdate(*m_removePlayerButton, m_presenter.CanRemoveAnotherPlayer(m_playersList->GetSize()));
-    EnabledStateUpdate(*m_addPlayerButton, m_presenter.CanAddAnotherPlayer(m_playersList->GetSize()));
+    EnabledStateUpdate(*m_removePlayerButton, m_presenter.CanRemoveAnotherPlayer(m_playersList->GetNbPlayers()));
+    EnabledStateUpdate(*m_addPlayerButton, m_presenter.CanAddAnotherPlayer(m_playersList->GetNbPlayers()));
 
     // Start button:
     m_startButton->SetMargins({TopMargin{0u}, BottomMargin{CONTROL_BOTTOM_MARGIN}, LeftMargin{0u}, RightMargin{0u}});
@@ -335,28 +335,28 @@ void cxgui::Gtkmm3NewGameView::OnStart()
 
 void cxgui::Gtkmm3NewGameView::OnAddPlayer()
 {
-    if(m_presenter.CanAddAnotherPlayer(m_playersList->GetSize()))
+    if(m_presenter.CanAddAnotherPlayer(m_playersList->GetNbPlayers()))
     {
-        const size_t nextColumnIndex = m_playersList->GetSize() + 1u;
+        const size_t nextColumnIndex = m_playersList->GetNbPlayers() + 1u;
         IF_CONDITION_NOT_MET_DO(m_playersList->AddPlayer(m_presenter, nextColumnIndex), return;);
     }
 
-    EnabledStateUpdate(*m_removePlayerButton, m_presenter.CanRemoveAnotherPlayer(m_playersList->GetSize()));
-    EnabledStateUpdate(*m_addPlayerButton, m_presenter.CanAddAnotherPlayer(m_playersList->GetSize()));
+    EnabledStateUpdate(*m_removePlayerButton, m_presenter.CanRemoveAnotherPlayer(m_playersList->GetNbPlayers()));
+    EnabledStateUpdate(*m_addPlayerButton, m_presenter.CanAddAnotherPlayer(m_playersList->GetNbPlayers()));
 }
 
 void cxgui::Gtkmm3NewGameView::OnRemovePlayer()
 {
-    if(m_presenter.CanRemoveAnotherPlayer(m_playersList->GetSize()))
+    if(m_presenter.CanRemoveAnotherPlayer(m_playersList->GetNbPlayers()))
     {
-        IF_CONDITION_NOT_MET_DO(m_playersList->RemovePlayer(m_playersList->GetSize() - 1), return;);
+        IF_CONDITION_NOT_MET_DO(m_playersList->RemovePlayer(m_playersList->GetNbPlayers() - 1), return;);
 
         // One row is gone. We need to resize the window as to leave no extra space.
         m_parentWindow.ShrinkToContents(cxgui::IWindow::Orientation::HORIZONTAL);
     }
 
-    EnabledStateUpdate(*m_removePlayerButton, m_presenter.CanRemoveAnotherPlayer(m_playersList->GetSize()));
-    EnabledStateUpdate(*m_addPlayerButton, m_presenter.CanAddAnotherPlayer(m_playersList->GetSize()));
+    EnabledStateUpdate(*m_removePlayerButton, m_presenter.CanRemoveAnotherPlayer(m_playersList->GetNbPlayers()));
+    EnabledStateUpdate(*m_addPlayerButton, m_presenter.CanAddAnotherPlayer(m_playersList->GetNbPlayers()));
 }
 
 void cxgui::Gtkmm3NewGameView::OnNewGameParameterUpdated()
@@ -409,7 +409,7 @@ cxmodel::Status cxgui::Gtkmm3NewGameView::ExtractGameInformation(cxmodel::NewGam
     p_gameInformation.m_inARowValue = inARowValue;
     p_gameInformation.m_gridHeight = boardHeight;
     p_gameInformation.m_gridWidth = boardWidth;
-    for(size_t index = 0u; index < m_playersList->GetSize(); ++index)
+    for(size_t index = 0u; index < m_playersList->GetNbPlayers(); ++index)
     {
         p_gameInformation.m_players.push_back(cxmodel::CreatePlayer(playerNames[index], playerChipColors[index], playerTypes[index]));
     }

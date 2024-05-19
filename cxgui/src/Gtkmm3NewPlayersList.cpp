@@ -472,14 +472,14 @@ void cxgui::Gtkmm3NewPlayersList::SetTooltip(const std::string& p_tooltipContent
     m_delegate->SetTooltip(p_tooltipContents);
 }
 
-std::size_t cxgui::Gtkmm3NewPlayersList::GetSize() const
+std::size_t cxgui::Gtkmm3NewPlayersList::GetNbPlayers() const
 {
     return get_children().size();
 }
 
 cxmodel::ChipColor cxgui::Gtkmm3NewPlayersList::GetRowPlayerDiscColor(const std::size_t p_index) const
 {
-    PRECONDITION(p_index < GetSize());
+    PRECONDITION(p_index < GetNbPlayers());
 
     auto& specificRow = m_rows[p_index];
     IF_CONDITION_NOT_MET_DO(specificRow, return cxmodel::MakeTransparent(););
@@ -489,7 +489,7 @@ cxmodel::ChipColor cxgui::Gtkmm3NewPlayersList::GetRowPlayerDiscColor(const std:
 
 std::string cxgui::Gtkmm3NewPlayersList::GetPlayerNameAtRow(const std::size_t p_index) const
 {
-    PRECONDITION(p_index < GetSize());
+    PRECONDITION(p_index < GetNbPlayers());
 
     auto& specificRow = m_rows[p_index];
     IF_CONDITION_NOT_MET_DO(specificRow, return {};);
@@ -542,7 +542,7 @@ bool cxgui::Gtkmm3NewPlayersList::AddPlayer(
         IF_PRECONDITION_NOT_MET_DO(p_presenter.CanAddAnotherPlayer(p_rowIndex - 1u), return false;);
     }
 
-    const size_t sizeBefore{GetSize()};
+    const size_t sizeBefore{GetNbPlayers()};
 
     {
         auto row = std::make_unique<NewPlayerRow>(
@@ -559,7 +559,7 @@ bool cxgui::Gtkmm3NewPlayersList::AddPlayer(
         m_rows.push_back(std::move(row));
     }
 
-    const std::size_t sizeAfter{GetSize()};
+    const std::size_t sizeAfter{GetNbPlayers()};
 
     // We check if the new row has indeed been added:
     IF_CONDITION_NOT_MET_DO(sizeAfter == sizeBefore + 1, return false;);
@@ -572,7 +572,7 @@ bool cxgui::Gtkmm3NewPlayersList::AddPlayer(
 bool cxgui::Gtkmm3NewPlayersList::RemovePlayer(
     const std::size_t p_index)
 {
-    PRECONDITION(p_index < GetSize());
+    PRECONDITION(p_index < GetNbPlayers());
 
     auto& specificRow = m_rows[p_index];
     IF_CONDITION_NOT_MET_DO(specificRow, return false;);
@@ -589,7 +589,7 @@ bool cxgui::Gtkmm3NewPlayersList::UpdatePlayer(
     const cxmodel::ChipColor& p_playerNewDiscColor,
     const cxmodel::PlayerType p_playerNewType)
 {
-    PRECONDITION(p_index < GetSize());
+    PRECONDITION(p_index < GetNbPlayers());
     PRECONDITION(!p_playerNewName.empty());
 
     // All is fine, we can proceed with the update:
