@@ -23,6 +23,8 @@
  * @todo Replace `bool` by `Status` in return types for success/fail.
  * @todo Review all contracts, and all assertions to make sure everything is caught.
  * @todo Make sure all parameters follow the same order: type/name/color.
+ * @todo Simplify calls by using attributes instead of arguments (see private section).
+ * @todo Use classic signal to expose the `RowUpdatedSignalConnect` functionnality.
  *
  *************************************************************************************************/
 
@@ -249,9 +251,6 @@ void cxgui::Gtkmm3NewPlayersList::RowUpdatedSignalConnect(
     const std::function<void()>& p_slot)
 {
     RETURN_IF(!p_slot,);
-
-    // We save the slot for all new rows:
-    m_rowUpdatedSlot = p_slot;
 
     // We apply the slot on all existing rows:
     for(std::unique_ptr<IOnOffSwitch>& control : m_playerTypes)

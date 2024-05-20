@@ -162,6 +162,8 @@ private:
 
 private:
 
+    std::unique_ptr<cxgui::IWidget> m_delegate;
+
     // Widgets factories:
     const WidgetsFactories& m_widgetsFactories;
 
@@ -178,9 +180,6 @@ private:
     std::vector<std::unique_ptr<IEditBox>> m_playerNames;
     std::vector<std::unique_ptr<IColorPicker>> m_playerChipColors;
 
-    std::unique_ptr<cxgui::IWidget> m_delegate;
-
-    std::function<void()> m_rowUpdatedSlot = [](){};
 };
 
 } // namespace cxgui
