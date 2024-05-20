@@ -19,10 +19,12 @@
  * @file Gtkmm3NewPlayersList.cpp
  * @date 2020
  *
+ * @todo Check remove all references to "Disc".
+ * @todo Replace `bool` by `Status` in return types for success/fail.
+ * @todo Review all contracts, and all assertions to make sure everything is caught.
+ * @todo Make sure all parameters follow the same order: type/name/color.
+ *
  *************************************************************************************************/
-
-#include <gtkmm/grid.h>
-#include <gtkmm/label.h>
 
 #include <cxinv/assertion.h>
 #include <cxstd/helpers.h>
@@ -35,6 +37,7 @@
 #include <cxgui/IColorPicker.h>
 #include <cxgui/IOnOffSwitch.h>
 #include <cxgui/IEditBox.h>
+#include <cxgui/ILabel.h>
 #include <cxgui/ILayout.h>
 #include <cxgui/INewGameViewPresenter.h>
 #include <cxgui/ISignal.h>
@@ -42,393 +45,39 @@
 #include <cxgui/OnOffState.h>
 #include <cxgui/WidgetsFactories.h>
 
-namespace cxgui
-{
-
-/***************************************************************************************************
- * @class NewPlayerTitleRow
- *
- * @brief Title row for the new players list.
- *
- **************************************************************************************************/
-class NewPlayerTitleRow : public Gtk::Grid
-{
-
-public:
-
-    NewPlayerTitleRow(const INewGameViewPresenter& p_presenter);
-
-    void SetIsBotTitleWidth(int p_newWidth);
-    void SetPlayerNameTitleWidth(int p_newWidth);
-    void SetDiscColorTitleWidth(int p_newWidth);
-
-private:
-
-    Gtk::Label m_isBotTitle;
-    Gtk::Label m_playerNameTitle;
-    Gtk::Label m_discColorTitle;
-};
-
-/***************************************************************************************************
- * @class NewPlayerRow
- *
- * @brief This widget represents the new information needed by the application to register a
- *        new player.
- *
- * The informations needed are:
- *
- *   - The player's type.
- *   - The player's name.
- *   - The player's disc color.
- *
- * This widget is not intended to be used by itself. Rather, it should be bundled together in
- * some `Gtk::ListBox` widget with others like it. `cxexec::Gtkmm3NewPlayersList` is an example.
- *
- * @invariant The member variable `m_playerName` does not contain an empty string.
- *
- * @see cxexec::Gtkmm3NewPlayersList
- *
- **************************************************************************************************/
-class NewPlayerRow final : public Gtk::ListBoxRow
-{
-
-public:
-
-    /***********************************************************************************************
-     * @brief Constructor.
-     *
-     * Creates a new player row, according to default values from the presenter. These default values
-     * can vary according to how many players already are registered in the game.
-     *
-     * @param p_widgetsFactories
-     *      Factories to create widgets.
-     *
-     * @param p_presenter
-     *      A New Game view compatible presenter.
-     *
-     * @param p_rowIndex
-     *      The row index for this new row.
-     *
-     * @param p_alreadyChosenColors
-     *      A list of colors that cannot be picked from.
-     *
-     * @param p_enabled
-     *      A flag indicating is a user can iterract with the row.
-     *
-     * @pre
-     *      The row number does not exceed the maximum number of players allowed in the game.
-     *
-     **********************************************************************************************/
-    NewPlayerRow(
-        const WidgetsFactories& p_widgetsFactories,
-        const cxgui::INewGameViewPresenter& p_presenter,
-        size_t p_rowIndex,
-        const std::vector<cxmodel::ChipColor>& p_alreadyChosenColors,
-        EnabledState p_enabled);
-
-    /***********************************************************************************************
-     * @brief Default destructor.
-     *
-     **********************************************************************************************/
-    virtual ~NewPlayerRow();
-
-    /***********************************************************************************************
-     * @brief Updates the player's information. The name and the disc color can be changed.
-     *
-     * @param p_playerNewName       The new name of the player.
-     * @param p_playerNewDiscColor  The new color chosen by or for the player's disc.
-     * @param p_newType             The new flag indicating if the player is human, or managed.
-     *
-     **********************************************************************************************/
-    void Update(
-        const std::string& p_playerNewName,
-        const cxmodel::ChipColor& p_playerNewDiscColor,
-        const cxmodel::PlayerType p_newType);
-
-    /*******************************************************************************************//**
-     * @brief  Accessor for the player's name.
-     *
-     * @return The player's actual name as a string.
-     *
-     **********************************************************************************************/
-    [[nodiscard]] std::string GetPlayerName() const;
-
-    /***********************************************************************************************
-     * @brief Accessor for the player's disc color.
-     *
-     * @return The player's actual disc color.
-     *
-     **********************************************************************************************/
-    [[nodiscard]] cxmodel::ChipColor GetPlayerDiscColor() const;
-
-    /***********************************************************************************************
-     * @brief Accessor for the player type (human or bot).
-     *
-     * @return The player's actual type.
-     *
-     **********************************************************************************************/
-    [[nodiscard]] cxmodel::PlayerType GetPlayerType() const;
-
-    /***********************************************************************************************
-     * @brief Connects a slot to be called when the row is updated.
-     *
-     * @param p_slot The slot to call.
-     *
-     **********************************************************************************************/
-    void RowUpdatedSignalConnect(const std::function<void()>& p_slot);
-
-private:
-
-    // This friendship is needed because the list has to be able to ask its top
-    // row to compute the dimensions of its child widgets. These dimensions are
-    // later used to resize the column titles appropriately, so that their dimensions
-    // match the colum contents.
-    friend Gtkmm3NewPlayersList;
-
-    void CheckInvariants() const;
-    void RetreiveColumnDimensions(Gtkmm3NewPlayersList& parent_) const;
-
-private:
-    
-    std::unique_ptr<ILayout> m_layout;
-    std::unique_ptr<IOnOffSwitch> m_typeSwitch;
-    std::unique_ptr<IEditBox> m_playerName;
-    std::unique_ptr<IColorPicker> m_playerDiscColor;
-
-};
-
-/***************************************************************************************************
- * @brief Equality operator.
- *
- * Checks if two `NewPlayerRow, are equal. Two `NewPlayerRow` are equal *if and only if*
- * they share the same player name and the same player disc color.
- *
- * @param p_lhs The first `NewPlayerRow` object to compare against.
- * @param p_rhs The second `NewPlayerRow` object to compare against.
- *
- * @return Returns `true` if both objects are considered equal and `false` otherwise.
- *
- **************************************************************************************************/
-[[nodiscard]] bool operator==(const NewPlayerRow& p_lhs, const NewPlayerRow& p_rhs);
-
-/***************************************************************************************************
- * @brief Non-equality operator.
- *
- * Checks if two `NewPlayerRow`s are NOT equal. Two `NewPlayerRow`s are NOT equal if they differ
- * in their player names and/or in their player disc colors.
- *
- * @param p_lhs The first `NewPlayerRow` object to compare against.
- * @param p_rhs The second `NewPlayerRow` object to compare against.
- *
- * @return Returns `true` if both objects are considered NOT equal and `false` otherwise.
- *
- **************************************************************************************************/
-[[nodiscard]] bool operator!=(const NewPlayerRow& p_lhs, const NewPlayerRow& p_rhs);
-
-} // namespace cxgui
-
-cxgui::NewPlayerTitleRow::NewPlayerTitleRow(const INewGameViewPresenter& p_presenter)
-: m_isBotTitle{p_presenter.GetNewGameViewIsManagedColumnHeaderText()}
-, m_playerNameTitle{p_presenter.GetNewGameViewNameColumnHeaderText()}
-, m_discColorTitle{p_presenter.GetNewGameViewDiscColumnHeaderText()}
-{
-    m_isBotTitle.set_valign(Gtk::Align::ALIGN_CENTER);
-    m_isBotTitle.set_halign(Gtk::Align::ALIGN_CENTER);
-    m_isBotTitle.set_margin_end(cxgui::CONTROL_BOTTOM_MARGIN);
-
-    m_playerNameTitle.set_hexpand(true);
-    m_discColorTitle.set_hexpand(true);
-
-    attach(m_isBotTitle,      0, 0, 1, 1);
-    attach(m_playerNameTitle, 1, 0, 1, 1);
-    attach(m_discColorTitle,  2, 0, 1, 1);
-}
-
-void cxgui::NewPlayerTitleRow::SetIsBotTitleWidth(int p_newWidth)
-{
-    m_isBotTitle.set_size_request(p_newWidth);
-}
-
-void cxgui::NewPlayerTitleRow::SetPlayerNameTitleWidth(int p_newWidth)
-{
-    m_playerNameTitle.set_size_request(p_newWidth);
-}
-
-void cxgui::NewPlayerTitleRow::SetDiscColorTitleWidth(int p_newWidth)
-{
-    m_discColorTitle.set_size_request(p_newWidth);
-}
-
-cxgui::NewPlayerRow::NewPlayerRow(
-    const WidgetsFactories& p_widgetsFactories,
-    const cxgui::INewGameViewPresenter& p_presenter,
-    size_t p_rowIndex,
-    const std::vector<cxmodel::ChipColor>& p_alreadyChosenColors,
-    EnabledState p_enabled)
-{
-    if(p_rowIndex > 0u)
-    {
-        PRECONDITION(p_presenter.CanAddAnotherPlayer(p_rowIndex - 1u));
-    }
-
-    // Creating the widgets:
-    const IAbstractWidgetsFactory& standardWidgetsFactory = p_widgetsFactories.GetStandardWidgetsFactory();
-    const IAbstractConnectXWidgetsFactory& connectXWidgetsFactory = p_widgetsFactories.GetConnectXWidgetsFactory();
-    m_layout = standardWidgetsFactory.CreateLayout();
-    m_playerName = standardWidgetsFactory.CreateEditBox();
-
-    const auto defaultColors = GetRemainingDefaultColors(p_alreadyChosenColors, p_presenter);
-    IF_CONDITION_NOT_MET_DO(!defaultColors.empty(), return;);
-    m_playerDiscColor = connectXWidgetsFactory.CreateColorPicker(defaultColors);
-
-    m_typeSwitch = standardWidgetsFactory.CreateOnOffSwitch();
-
-    // Configuring the widgets:
-    m_playerName->UpdateContents(p_presenter.GetDefaultPlayerName(p_rowIndex));
-    m_playerName->SetMargins({TopMargin{0}, BottomMargin{0}, LeftMargin{0}, RightMargin{CONTROL_SIDE_MARGIN}});
-
-    m_playerDiscColor->SetCurrentSelection(defaultColors.front());
-
-    if(p_presenter.GetDefaultPlayerType(p_rowIndex) == cxmodel::PlayerType::BOT) 
-    {
-        m_typeSwitch->SetState(cxgui::OnOffState::ON);
-    }
-    else
-    {
-        m_typeSwitch->SetState(cxgui::OnOffState::OFF);
-    }
-
-    m_typeSwitch->SetEnabled(p_enabled);
-    m_typeSwitch->SetMargins({TopMargin{0}, BottomMargin{0}, LeftMargin{0}, RightMargin{cxgui::CONTROL_SIDE_MARGIN}});
-
-    // Registering the widgets:
-    constexpr cxgui::ILayout::RowSpan rowSpan{1u};
-    constexpr cxgui::ILayout::ColumnSpan columnSpan{1u};
-    constexpr cxmodel::Row row{0u};
-    constexpr cxgui::ILayout::Alignement alignCenter{cxgui::ILayout::VerticalAlignement::CENTER, cxgui::ILayout::HorizontalAlignement::CENTER};
-    m_layout->Register(*m_typeSwitch,      {row, rowSpan}, {cxmodel::Column{0u}, columnSpan}, alignCenter);
-    m_layout->Register(*m_playerName,      {row, rowSpan}, {cxmodel::Column{1u}, columnSpan});
-    m_layout->Register(*m_playerDiscColor, {row, rowSpan}, {cxmodel::Column{2u}, columnSpan});
-
-    auto* gtkLayout = dynamic_cast<Gtk::Grid*>(m_layout.get());
-    ASSERT(gtkLayout);
-    add(*gtkLayout);
-
-    POSTCONDITION(m_playerName);
-    POSTCONDITION(m_layout);
-    POSTCONDITION(m_playerDiscColor);
-    POSTCONDITION(m_typeSwitch);
-
-    CheckInvariants();
-}
-
-cxgui::NewPlayerRow::~NewPlayerRow() = default;
-
-void cxgui::NewPlayerRow::Update(const std::string& p_playerNewName,
-                                 const cxmodel::ChipColor& p_playerNewDiscColor,
-                                 const cxmodel::PlayerType p_newType)
-{
-    IF_PRECONDITION_NOT_MET_DO(m_playerDiscColor, return;);
-    PRECONDITION(!p_playerNewName.empty());
-
-    if(p_newType == cxmodel::PlayerType::BOT) 
-    {
-        m_typeSwitch->SetState(cxgui::OnOffState::ON);
-    }
-    else
-    {
-        m_typeSwitch->SetState(cxgui::OnOffState::OFF);
-    }
-
-    m_playerName->UpdateContents(p_playerNewName);
-    m_playerDiscColor->SetCurrentSelection(p_playerNewDiscColor);
-
-    CheckInvariants();
-}
-
-std::string cxgui::NewPlayerRow::GetPlayerName() const
-{
-    return m_playerName->GetContents();
-}
-
-cxmodel::ChipColor cxgui::NewPlayerRow::GetPlayerDiscColor() const
-{
-    IF_PRECONDITION_NOT_MET_DO(m_playerDiscColor, return cxmodel::MakeTransparent(););
-
-    return m_playerDiscColor->GetCurrentSelection();
-}
-
-cxmodel::PlayerType cxgui::NewPlayerRow::GetPlayerType() const
-{
-    if(m_typeSwitch->GetState() == cxgui::OnOffState::ON)
-    {
-        return cxmodel::PlayerType::BOT;
-    }
-
-    return cxmodel::PlayerType::HUMAN;
-}
-
-void cxgui::NewPlayerRow::RowUpdatedSignalConnect(const std::function<void()>& p_slot)
-{
-    IF_CONDITION_NOT_MET_DO(m_typeSwitch, return;);
-    RETURN_IF(!p_slot,);
-
-    m_typeSwitch->OnStateChanged()->Connect(p_slot);
-    m_playerName->OnContentsChanged()->Connect(p_slot);
-    m_playerDiscColor->OnSelectionChanged()->Connect(p_slot);
-
-    CheckInvariants();
-}
-
-void cxgui::NewPlayerRow::CheckInvariants() const
-{
-    INVARIANT(!m_playerName->GetContents().empty());
-}
-
-void cxgui::NewPlayerRow::RetreiveColumnDimensions(Gtkmm3NewPlayersList& parent_) const
-{
-    parent_.m_columnWidths.m_first = m_typeSwitch->GetWidth();
-    parent_.m_columnWidths.m_second = m_playerName->GetWidth();
-    parent_.m_columnWidths.m_third = m_playerDiscColor->GetWidth();
-}
-
-bool cxgui::operator==(const cxgui::NewPlayerRow& p_lhs, const cxgui::NewPlayerRow& p_rhs)
-{
-    return (p_lhs.GetPlayerName() == p_rhs.GetPlayerName()) &&
-           (p_lhs.GetPlayerDiscColor() == p_rhs.GetPlayerDiscColor()) &&
-           (p_lhs.GetPlayerType() == p_rhs.GetPlayerType());
-}
-
-bool cxgui::operator!=(const NewPlayerRow& p_lhs, const NewPlayerRow& p_rhs)
-{
-    return !(p_lhs == p_rhs);
-}
-
 cxgui::Gtkmm3NewPlayersList::Gtkmm3NewPlayersList(
-   const INewGameViewPresenter& p_presenter,
-   const WidgetsFactories& p_widgetsFactories)
+    const INewGameViewPresenter& p_presenter,
+    const WidgetsFactories& p_widgetsFactories)
 : m_widgetsFactories{p_widgetsFactories}
 {
-    m_titleRow = std::make_unique<NewPlayerTitleRow>(p_presenter);
-    ASSERT(m_titleRow);
+    const IAbstractWidgetsFactory& standardWidgetsFactory = p_widgetsFactories.GetStandardWidgetsFactory();
+    m_layout = standardWidgetsFactory.CreateLayout();
 
-    m_rows.push_back(std::make_unique<NewPlayerRow>(
+    {
+        auto* widgetAsGtk = dynamic_cast<Gtk::Widget*>(m_layout.get());
+        ASSERT(widgetAsGtk);
+        attach(*widgetAsGtk, 0, 0, 1, 1);
+    }
+
+    RegisterTitleRow(
+        p_widgetsFactories.GetStandardWidgetsFactory(),
+        p_presenter);
+
+    RegisterNewPlayerRow(
         m_widgetsFactories,
         p_presenter,
         1u,
         GetAllColors(),
-        EnabledState::Enabled));
-    add(*m_rows.back());
+        EnabledState::Enabled);
 
-    m_rows.push_back(std::make_unique<NewPlayerRow>(
+    RegisterNewPlayerRow(
         m_widgetsFactories,
         p_presenter,
         2u,
         GetAllColors(),
-        EnabledState::Enabled));
-    add(*m_rows.back());
+        EnabledState::Enabled);
 
-    AddColumnHeaders();
+    POSTCONDITION(m_layout);
 }
 
 cxgui::Gtkmm3NewPlayersList::~Gtkmm3NewPlayersList() = default;
@@ -454,56 +103,62 @@ size_t cxgui::Gtkmm3NewPlayersList::GetHeight() const
     return m_delegate->GetHeight();
 }
 
-void cxgui::Gtkmm3NewPlayersList::SetEnabled(EnabledState p_enabled)
+void cxgui::Gtkmm3NewPlayersList::SetEnabled(
+    EnabledState p_enabled)
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return;);
     m_delegate->SetEnabled(p_enabled);
 }
 
-void cxgui::Gtkmm3NewPlayersList::SetMargins(const Margins& p_newMarginSizes)
+void cxgui::Gtkmm3NewPlayersList::SetMargins(
+    const Margins& p_newMarginSizes)
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return;);
     m_delegate->SetMargins(p_newMarginSizes);
 }
 
-void cxgui::Gtkmm3NewPlayersList::SetTooltip(const std::string& p_tooltipContents)
+void cxgui::Gtkmm3NewPlayersList::SetTooltip(
+    const std::string& p_tooltipContents)
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return;);
     m_delegate->SetTooltip(p_tooltipContents);
 }
 
-std::size_t cxgui::Gtkmm3NewPlayersList::GetNbPlayers() const
+size_t cxgui::Gtkmm3NewPlayersList::GetNbPlayers() const
 {
-    return get_children().size();
+    return m_playerNames.size();
 }
 
-cxmodel::ChipColor cxgui::Gtkmm3NewPlayersList::GetRowPlayerDiscColor(const std::size_t p_index) const
+cxmodel::ChipColor cxgui::Gtkmm3NewPlayersList::GetRowPlayerDiscColor(
+    const size_t p_index) const
 {
     PRECONDITION(p_index < GetNbPlayers());
 
-    auto& specificRow = m_rows[p_index];
-    IF_CONDITION_NOT_MET_DO(specificRow, return cxmodel::MakeTransparent(););
+    const std::unique_ptr<IColorPicker>& control = m_playerChipColors[p_index];
+    IF_CONDITION_NOT_MET_DO(control, return cxmodel::MakeTransparent(););
 
-    return specificRow->GetPlayerDiscColor();
+    return control->GetCurrentSelection();
 }
 
-std::string cxgui::Gtkmm3NewPlayersList::GetPlayerNameAtRow(const std::size_t p_index) const
+std::string cxgui::Gtkmm3NewPlayersList::GetPlayerNameAtRow(
+    const size_t p_index) const
 {
     PRECONDITION(p_index < GetNbPlayers());
 
-    auto& specificRow = m_rows[p_index];
-    IF_CONDITION_NOT_MET_DO(specificRow, return {};);
+    const std::unique_ptr<IEditBox>& control = m_playerNames[p_index];
+    IF_CONDITION_NOT_MET_DO(control, return {};);
 
-    return specificRow->GetPlayerName();
+    return control->GetContents();
 }
 
 std::vector<cxmodel::ChipColor> cxgui::Gtkmm3NewPlayersList::GetAllColors() const
 {
     std::vector<cxmodel::ChipColor> colors;
 
-    for(const auto& row : m_rows)
+    for(const std::unique_ptr<IColorPicker>& control : m_playerChipColors)
     {
-        colors.push_back(row->GetPlayerDiscColor());
+        IF_CONDITION_NOT_MET_DO(control, return {};);
+        colors.push_back(control->GetCurrentSelection());
     }
 
     return colors;
@@ -513,9 +168,10 @@ std::vector<std::string> cxgui::Gtkmm3NewPlayersList::GetAllPlayerNames() const
 {
     std::vector<std::string> names;
 
-    for(const auto& row : m_rows)
+    for(const std::unique_ptr<IEditBox>& control : m_playerNames)
     {
-        names.push_back(row->GetPlayerName());
+        IF_CONDITION_NOT_MET_DO(control, return {};);
+        names.push_back(control->GetContents());
     }
 
     return names;
@@ -525,9 +181,17 @@ std::vector<cxmodel::PlayerType> cxgui::Gtkmm3NewPlayersList::GetAllPlayerTypes(
 {
     std::vector<cxmodel::PlayerType> types;
 
-    for(const auto& row : m_rows)
+    for(const std::unique_ptr<IOnOffSwitch>& control : m_playerTypes)
     {
-        types.push_back(row->GetPlayerType());
+        IF_CONDITION_NOT_MET_DO(control, return {};);
+
+        auto playerType = cxmodel::PlayerType::HUMAN;
+        if(control->GetState() == cxgui::OnOffState::ON)
+        {
+            playerType = cxmodel::PlayerType::BOT;
+        }
+
+        types.push_back(playerType);
     }
 
     return types;
@@ -544,22 +208,14 @@ bool cxgui::Gtkmm3NewPlayersList::AddPlayer(
 
     const size_t sizeBefore{GetNbPlayers()};
 
-    {
-        auto row = std::make_unique<NewPlayerRow>(
-            m_widgetsFactories,
-            p_presenter,
-            p_rowIndex,
-            GetAllColors(),
-            EnabledState::Enabled);
-        IF_CONDITION_NOT_MET_DO(row, return false;);
+    RegisterNewPlayerRow(
+        m_widgetsFactories,
+        p_presenter,
+        p_rowIndex,
+        GetAllColors(),
+        EnabledState::Enabled);
         
-        IF_CONDITION_NOT_MET_DO(m_rowUpdatedSlot, return false;);
-        row->RowUpdatedSignalConnect(m_rowUpdatedSlot);
-        add(*row);
-        m_rows.push_back(std::move(row));
-    }
-
-    const std::size_t sizeAfter{GetNbPlayers()};
+    const size_t sizeAfter{GetNbPlayers()};
 
     // We check if the new row has indeed been added:
     IF_CONDITION_NOT_MET_DO(sizeAfter == sizeBefore + 1, return false;);
@@ -570,92 +226,210 @@ bool cxgui::Gtkmm3NewPlayersList::AddPlayer(
 }
 
 bool cxgui::Gtkmm3NewPlayersList::RemovePlayer(
-    const std::size_t p_index)
+    const size_t p_index)
 {
-    PRECONDITION(p_index < GetNbPlayers());
+    IF_PRECONDITION_NOT_MET_DO(p_index < GetNbPlayers(), return false;);
 
-    auto& specificRow = m_rows[p_index];
-    IF_CONDITION_NOT_MET_DO(specificRow, return false;);
-
-    remove(*specificRow);
-    m_rows.erase(m_rows.begin() + p_index);
-    
-    return true;
+    return RemovePlayerRow(p_index);
 }
 
 bool cxgui::Gtkmm3NewPlayersList::UpdatePlayer(
-    const std::size_t p_index,
+    const size_t p_index,
     const std::string& p_playerNewName,
     const cxmodel::ChipColor& p_playerNewDiscColor,
     const cxmodel::PlayerType p_playerNewType)
 {
-    PRECONDITION(p_index < GetNbPlayers());
-    PRECONDITION(!p_playerNewName.empty());
+    IF_PRECONDITION_NOT_MET_DO(p_index < GetNbPlayers(), return false;);
+    IF_PRECONDITION_NOT_MET_DO(!p_playerNewName.empty(), return false;);
 
-    // All is fine, we can proceed with the update:
-    auto& rowToUpdate = m_rows[p_index];
-    IF_CONDITION_NOT_MET_DO(rowToUpdate, return false;);
-
-    rowToUpdate->Update(p_playerNewName, p_playerNewDiscColor, p_playerNewType);
-
-    return true;
+    return UpdatePlayerRow(p_index, p_playerNewName, p_playerNewDiscColor, p_playerNewType);
 }
 
-// The Gtk::ListBoxRow widget does not have column headers, since on each row,
-// the widget contents may vary. However, each row of a cxgui::Gtkmm3NewPlayersList
-// will contain the same widgets, and we want to simulate column headers.
-//
-// If the Gtk::ListBoxRow cannot have column headers, it can have row headers,
-// that is, each row can have its own header. We exploit this feature and
-// add a header to the first row only. We then resize it on the realize
-// signal. At this point, the row widgets' sizes have been allocated and we
-// can retreive them to update the header to fit them.
-void cxgui::Gtkmm3NewPlayersList::AddColumnHeaders()
+void cxgui::Gtkmm3NewPlayersList::RowUpdatedSignalConnect(
+    const std::function<void()>& p_slot)
 {
-    // Each row of 
-    set_header_func([this](Gtk::ListBoxRow* p_row, Gtk::ListBoxRow* /*p_before*/)
-                    {
-                        IF_PRECONDITION_NOT_MET_DO(p_row != nullptr, return;);
-
-                        if(p_row->get_index() == 0u)
-                        {
-                            p_row->set_header(*m_titleRow);
-                            m_titleRow->show_all();
-
-                            m_titleRow->signal_realize().connect([this](){FitColumnHeaders();});
-                        }
-                    });
-}
-
-// Fit the dimensions of the header widgets with the contents of the column
-// widgets. This should only be called on the first row, since we do not
-// want headers of other rows.
-void cxgui::Gtkmm3NewPlayersList::FitColumnHeaders()
-{
-    auto& topRow = m_rows[0u];
-    IF_CONDITION_NOT_MET_DO(topRow != nullptr, return;);
-
-    topRow->RetreiveColumnDimensions(*this);
-
-    m_titleRow->SetIsBotTitleWidth(m_columnWidths.m_first);
-    m_titleRow->SetPlayerNameTitleWidth(m_columnWidths.m_second);
-    m_titleRow->SetDiscColorTitleWidth(m_columnWidths.m_third);
-}
-
-void cxgui::Gtkmm3NewPlayersList::RowUpdatedSignalConnect(const std::function<void()>& p_slot)
-{
-    if(!p_slot)
-    {
-        return;
-    }
+    RETURN_IF(!p_slot,);
 
     // We save the slot for all new rows:
     m_rowUpdatedSlot = p_slot;
 
     // We apply the slot on all existing rows:
-    for(auto& row : m_rows)
+    for(std::unique_ptr<IOnOffSwitch>& control : m_playerTypes)
     {
-        IF_CONDITION_NOT_MET_DO(row, continue;);
-        row->RowUpdatedSignalConnect(m_rowUpdatedSlot);
+        IF_CONDITION_NOT_MET_DO(control, continue;);
+        control->OnStateChanged()->Connect(p_slot);
     }
+
+    for(std::unique_ptr<IEditBox>& control : m_playerNames)
+    {
+        IF_CONDITION_NOT_MET_DO(control, continue;);
+        control->OnContentsChanged()->Connect(p_slot);
+    }
+
+    for(std::unique_ptr<IColorPicker>& control : m_playerChipColors)
+    {
+        IF_CONDITION_NOT_MET_DO(control, continue;);
+        control->OnSelectionChanged()->Connect(p_slot);
+    }
+}
+
+void cxgui::Gtkmm3NewPlayersList::RegisterTitleRow(
+    const cxgui::IAbstractWidgetsFactory& p_widgetsFactory,
+    const cxgui::INewGameViewPresenter& p_presenter)
+{
+    m_isBotTitle = p_widgetsFactory.CreateLabel(p_presenter.GetNewGameViewIsManagedColumnHeaderText());
+    m_playerNameTitle = p_widgetsFactory.CreateLabel(p_presenter.GetNewGameViewNameColumnHeaderText());
+    m_chipColorTitle = p_widgetsFactory.CreateLabel(p_presenter.GetNewGameViewDiscColumnHeaderText());
+
+    m_layout->Register(
+        *m_isBotTitle,
+        {cxmodel::Row{0u}, ILayout::RowSpan{1u}},
+        {cxmodel::Column{0u}, ILayout::ColumnSpan{1u}},
+        {ILayout::VerticalAlignement::CENTER, ILayout::HorizontalAlignement::CENTER});
+
+    m_layout->Register(
+        *m_playerNameTitle,
+        {cxmodel::Row{0u}, ILayout::RowSpan{1u}},
+        {cxmodel::Column{1u}, ILayout::ColumnSpan{1u}});
+
+    m_layout->Register(
+        *m_chipColorTitle,
+        {cxmodel::Row{0u}, ILayout::RowSpan{1u}},
+        {cxmodel::Column{2u}, ILayout::ColumnSpan{1u}});
+
+    POSTCONDITION(m_isBotTitle);
+    POSTCONDITION(m_playerNameTitle);
+    POSTCONDITION(m_chipColorTitle);
+}
+
+void cxgui::Gtkmm3NewPlayersList::RegisterNewPlayerRow(
+    const WidgetsFactories& p_widgetsFactories,
+    const cxgui::INewGameViewPresenter& p_presenter,
+    size_t p_rowIndex,
+    const std::vector<cxmodel::ChipColor>& p_alreadyChosenColors,
+    EnabledState p_enabled)
+{
+    if(p_rowIndex > 0u)
+    {
+        PRECONDITION(p_presenter.CanAddAnotherPlayer(p_rowIndex - 1u));
+    }
+
+    // Creating the widgets:
+    const IAbstractWidgetsFactory& standardWidgetsFactory = p_widgetsFactories.GetStandardWidgetsFactory();
+    const IAbstractConnectXWidgetsFactory& connectXWidgetsFactory = p_widgetsFactories.GetConnectXWidgetsFactory();
+
+    std::unique_ptr<IEditBox> playerName = standardWidgetsFactory.CreateEditBox();
+
+    const auto defaultColors = GetRemainingDefaultColors(p_alreadyChosenColors, p_presenter);
+    IF_CONDITION_NOT_MET_DO(!defaultColors.empty(), return;);
+    std::unique_ptr<IColorPicker> playerChipColor = connectXWidgetsFactory.CreateColorPicker(defaultColors);
+
+    std::unique_ptr<IOnOffSwitch> playerType = standardWidgetsFactory.CreateOnOffSwitch();
+
+    // Configuring the widgets:
+    playerName->UpdateContents(p_presenter.GetDefaultPlayerName(p_rowIndex));
+    playerName->SetMargins({TopMargin{0}, BottomMargin{0}, LeftMargin{0}, RightMargin{CONTROL_SIDE_MARGIN}});
+
+    playerChipColor->SetCurrentSelection(defaultColors.front());
+
+    if(p_presenter.GetDefaultPlayerType(p_rowIndex) == cxmodel::PlayerType::BOT) 
+    {
+        playerType->SetState(cxgui::OnOffState::ON);
+    }
+    else
+    {
+        playerType->SetState(cxgui::OnOffState::OFF);
+    }
+
+    playerType->SetEnabled(p_enabled);
+    playerType->SetMargins({TopMargin{0}, BottomMargin{0}, LeftMargin{0}, RightMargin{cxgui::CONTROL_SIDE_MARGIN}});
+
+    // Registering the widgets:
+    constexpr cxgui::ILayout::RowSpan rowSpan{1u};
+    constexpr cxgui::ILayout::ColumnSpan columnSpan{1u};
+    const cxmodel::Row row{m_playerNames.size() + 1u};
+    constexpr cxgui::ILayout::Alignement alignCenter{cxgui::ILayout::VerticalAlignement::CENTER, cxgui::ILayout::HorizontalAlignement::CENTER};
+    m_layout->Register(*playerType,      {row, rowSpan}, {cxmodel::Column{0u}, columnSpan}, alignCenter);
+    m_layout->Register(*playerName,      {row, rowSpan}, {cxmodel::Column{1u}, columnSpan});
+    m_layout->Register(*playerChipColor, {row, rowSpan}, {cxmodel::Column{2u}, columnSpan});
+
+    m_playerTypes.push_back(std::move(playerType));
+    m_playerNames.push_back(std::move(playerName));
+    m_playerChipColors.push_back(std::move(playerChipColor));
+}
+
+bool cxgui::Gtkmm3NewPlayersList::RemovePlayerRow(
+    const size_t p_index)
+{
+    IF_PRECONDITION_NOT_MET_DO(p_index < GetNbPlayers(), return false;);
+
+    // Remove the row from the rows container:
+    {
+        const std::unique_ptr<IOnOffSwitch>& control = m_playerTypes[p_index];
+        IF_CONDITION_NOT_MET_DO(control, return false;);
+        m_layout->Unregister(*control);
+    }
+    {
+        const std::unique_ptr<IEditBox>& control = m_playerNames[p_index];
+        IF_CONDITION_NOT_MET_DO(control, return false;);
+        m_layout->Unregister(*control);
+    }
+    {
+        const std::unique_ptr<IColorPicker>& control = m_playerChipColors[p_index];
+        IF_CONDITION_NOT_MET_DO(control, return false;);
+        m_layout->Unregister(*control);
+    }
+
+    // Remove the row data from memory:
+    m_playerTypes.erase(m_playerTypes.begin() + p_index);
+    m_playerNames.erase(m_playerNames.begin() + p_index);
+    m_playerChipColors.erase(m_playerChipColors.begin() + p_index);
+    
+    return true;
+}
+
+bool cxgui::Gtkmm3NewPlayersList::UpdatePlayerRow(
+    const size_t p_index,
+    const std::string& p_playerNewName,
+    const cxmodel::ChipColor& p_playerNewDiscColor,
+    const cxmodel::PlayerType p_playerNewType)
+{
+    IF_PRECONDITION_NOT_MET_DO(p_index < GetNbPlayers(), return false;);
+    IF_PRECONDITION_NOT_MET_DO(!p_playerNewName.empty(), return false;);
+
+    const cxmodel::Row row{p_index};
+    constexpr cxmodel::Column column0{0u};
+    {
+        IWidget* widget = m_layout->GetWidgetAtPosition(row, column0);
+        auto* control = dynamic_cast<IOnOffSwitch*>(widget);
+        IF_CONDITION_NOT_MET_DO(control, return false;);
+
+        auto newState = OnOffState::ON;
+        if(p_playerNewType == cxmodel::PlayerType::HUMAN)
+        {
+            newState = OnOffState::OFF;
+        }
+
+        control->SetState(newState);
+    }
+
+    constexpr cxmodel::Column column1{1u};
+    {
+        IWidget* widget = m_layout->GetWidgetAtPosition(row, column1);
+        auto* control = dynamic_cast<IEditBox*>(widget);
+        IF_CONDITION_NOT_MET_DO(control, return false;);
+
+        control->UpdateContents(p_playerNewName);
+    }
+
+    constexpr cxmodel::Column column2{2u};
+    {
+        IWidget* widget = m_layout->GetWidgetAtPosition(row, column2);
+        auto* control = dynamic_cast<IColorPicker*>(widget);
+        IF_CONDITION_NOT_MET_DO(control, return false;);
+
+        control->SetCurrentSelection(p_playerNewDiscColor);
+    }
+
+    return true;
 }

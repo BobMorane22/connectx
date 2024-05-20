@@ -23,17 +23,28 @@
 #ifndef GTKMM3NEWPLAYERSLIST_H_FDB93AF1_A5AC_4484_9857_0B207BAE8724
 #define GTKMM3NEWPLAYERSLIST_H_FDB93AF1_A5AC_4484_9857_0B207BAE8724
 
-#include <gtkmm/listbox.h>
+#include <gtkmm/grid.h>
 
 #include <cxgui/INewPlayersList.h>
+
+namespace cxmodel
+{
+    enum class PlayerType;
+}
 
 namespace cxgui
 {
 
-class INewGameViewPresenter;
-class NewPlayerRow;
-class NewPlayerTitleRow;
-class WidgetsFactories;
+    class IAbstractWidgetsFactory;
+    class IColorPicker;
+    class IEditBox;
+    class ILabel;
+    class ILayout;
+    class INewGameViewPresenter;
+    class NewPlayerRow;
+    class NewPlayerTitleRow;
+    class IOnOffSwitch;
+    class WidgetsFactories;
 
 }
 
@@ -50,7 +61,7 @@ namespace cxgui
  *
  **************************************************************************************************/
 class Gtkmm3NewPlayersList final : public INewPlayersList,
-                                   public Gtk::ListBox
+                                   public Gtk::Grid
 {
 
 public:
@@ -96,9 +107,11 @@ public:
     void SetDelegate(std::unique_ptr<cxgui::IWidget> p_delegate);
 
     // cxgui::INewPlayersList:
-    [[nodiscard]] std::size_t GetNbPlayers() const override;
-    [[nodiscard]] cxmodel::ChipColor GetRowPlayerDiscColor(const std::size_t p_index) const override;
-    [[nodiscard]] std::string GetPlayerNameAtRow(const std::size_t p_index) const override;
+    [[nodiscard]] size_t GetNbPlayers() const override;
+    [[nodiscard]] cxmodel::ChipColor GetRowPlayerDiscColor(
+        const size_t p_index) const override;
+    [[nodiscard]] std::string GetPlayerNameAtRow(
+        const size_t p_index) const override;
     [[nodiscard]] std::vector<cxmodel::ChipColor> GetAllColors() const override;
     [[nodiscard]] std::vector<std::string> GetAllPlayerNames() const override;
     [[nodiscard]] std::vector<cxmodel::PlayerType> GetAllPlayerTypes() const override;
@@ -106,53 +119,68 @@ public:
         const INewGameViewPresenter& p_presenter,
         size_t p_rowIndex) override;
     [[nodiscard]] bool RemovePlayer(
-        const std::size_t p_index) override;
+        const size_t p_index) override;
     [[nodiscard]] bool UpdatePlayer(
-        const std::size_t p_index,
+        const size_t p_index,
         const std::string& p_newPlayerNewName,
         const cxmodel::ChipColor& p_newPlayerNewDiscColor,
         cxmodel::PlayerType p_newPlayerType) override;
-    void RowUpdatedSignalConnect(const std::function<void()>& p_slot) override;
+    void RowUpdatedSignalConnect(
+        const std::function<void()>& p_slot) override;
 
     // cxgui::IWidget:
     [[nodiscard]] size_t GetWidth() const override;
     [[nodiscard]] size_t GetHeight() const override;
-    void SetEnabled(EnabledState p_enabled) override;
-    void SetMargins(const Margins& p_newMarginSizes) override;
-    void SetTooltip(const std::string& p_tooltipContents) override;
+    void SetEnabled(
+        EnabledState p_enabled) override;
+    void SetMargins(
+        const Margins& p_newMarginSizes) override;
+    void SetTooltip(
+        const std::string& p_tooltipContents) override;
+
+private:
+
+    void RegisterTitleRow(
+        const IAbstractWidgetsFactory& p_widgetsFactory,
+        const INewGameViewPresenter& p_presenter);
+
+    void RegisterNewPlayerRow(
+        const WidgetsFactories& p_widgetsFactories,
+        const cxgui::INewGameViewPresenter& p_presenter,
+        size_t p_rowIndex,
+        const std::vector<cxmodel::ChipColor>& p_alreadyChosenColors,
+        EnabledState p_enabled);
+
+    bool RemovePlayerRow(
+        const size_t p_index);
+
+    bool UpdatePlayerRow(
+        const size_t p_index,
+        const std::string& p_playerNewName,
+        const cxmodel::ChipColor& p_playerNewDiscColor,
+        const cxmodel::PlayerType p_playerNewType);
 
 private:
 
     // Widgets factories:
     const WidgetsFactories& m_widgetsFactories;
 
-    // This friendship is needed because the top row needs to make its child widgets'
-    // dimensions available to the list so they can be passed on the the list titles.
-    // Otherwise, it is impossible for the list titles to fit with the column contents.
-    friend NewPlayerRow;
+    // Widget's main layout:
+    std::unique_ptr<ILayout> m_layout;
 
-    struct ColumnWidth
-    {
-        int m_first = 0u;
-        int m_second = 0u;
-        int m_third = 0u;
-    };
+    // Title row:
+    std::unique_ptr<ILabel> m_isBotTitle;
+    std::unique_ptr<ILabel> m_playerNameTitle;
+    std::unique_ptr<ILabel> m_chipColorTitle;
 
-    ColumnWidth m_columnWidths;
+    // Player rows:
+    std::vector<std::unique_ptr<IOnOffSwitch>> m_playerTypes;
+    std::vector<std::unique_ptr<IEditBox>> m_playerNames;
+    std::vector<std::unique_ptr<IColorPicker>> m_playerChipColors;
 
     std::unique_ptr<cxgui::IWidget> m_delegate;
 
-    void AddColumnHeaders();
-    void FitColumnHeaders();
-
     std::function<void()> m_rowUpdatedSlot = [](){};
-
-    // Rows defined in the list are owned here. Every time a row is either
-    // added or removed from the list container, it must also be added or
-    // removed from here.
-    std::unique_ptr<NewPlayerTitleRow> m_titleRow;
-    std::vector<std::unique_ptr<NewPlayerRow>> m_rows;
-
 };
 
 } // namespace cxgui

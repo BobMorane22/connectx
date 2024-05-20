@@ -352,7 +352,7 @@ void cxgui::Gtkmm3NewGameView::OnRemovePlayer()
         IF_CONDITION_NOT_MET_DO(m_playersList->RemovePlayer(m_playersList->GetNbPlayers() - 1), return;);
 
         // One row is gone. We need to resize the window as to leave no extra space.
-        m_parentWindow.ShrinkToContents(cxgui::IWindow::Orientation::HORIZONTAL);
+        m_parentWindow.ShrinkToContents(cxgui::IWindow::Orientation::VERTICAL);
     }
 
     EnabledStateUpdate(*m_removePlayerButton, m_presenter.CanRemoveAnotherPlayer(m_playersList->GetNbPlayers()));

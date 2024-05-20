@@ -67,18 +67,18 @@ int cxgui::Gtkmm3Window::Show()
 
 void cxgui::Gtkmm3Window::ShrinkToContents(IWindow::Orientation p_orientation)
 {
-    if(p_orientation == IWindow::Orientation::HORIZONTAL)
+    if(p_orientation == IWindow::Orientation::VERTICAL)
     {
-        int minimumHeight, naturalHeight;
-        get_preferred_height(minimumHeight, naturalHeight);
-
-        set_size_request(get_width(), minimumHeight);
-
-        resize(get_width(), naturalHeight);
-        return;
+        resize(get_width(), 1);
     }
-
-    ASSERT_ERROR_MSG("Not yet implemented");
+    else if(p_orientation == IWindow::Orientation::VERTICAL)
+    {
+        resize(1, get_height());
+    }
+    else
+    {
+        ASSERT_ERROR_MSG("Not yet implemented");
+    }
 }
 
 void cxgui::Gtkmm3Window::Init()
