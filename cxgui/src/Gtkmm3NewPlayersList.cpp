@@ -69,20 +69,9 @@ cxgui::Gtkmm3NewPlayersList::Gtkmm3NewPlayersList(
         attach(*widgetAsGtk, 0, 0, 1, 1);
     }
 
-    RegisterTitleRow(
-        p_widgetsFactories.GetStandardWidgetsFactory());
-
-    RegisterNewPlayerRow(
-        m_widgetsFactories,
-        1u,
-        GetAllColors(),
-        EnabledState::Enabled);
-
-    RegisterNewPlayerRow(
-        m_widgetsFactories,
-        2u,
-        GetAllColors(),
-        EnabledState::Enabled);
+    RegisterTitleRow();
+    RegisterNewPlayerRow(1u, GetAllColors(), EnabledState::Enabled);
+    RegisterNewPlayerRow(2u, GetAllColors(), EnabledState::Enabled);
 
     POSTCONDITION(m_layout);
 
@@ -186,11 +175,7 @@ bool cxgui::Gtkmm3NewPlayersList::AddPlayer(
 
     const size_t sizeBefore{GetNbPlayers()};
 
-    RegisterNewPlayerRow(
-        m_widgetsFactories,
-        p_rowIndex,
-        GetAllColors(),
-        EnabledState::Enabled);
+    RegisterNewPlayerRow(p_rowIndex, GetAllColors(), EnabledState::Enabled);
         
     const size_t sizeAfter{GetNbPlayers()};
 
@@ -259,12 +244,13 @@ void cxgui::Gtkmm3NewPlayersList::RowUpdatedSignalConnect(
     InvariantsCheck();
 }
 
-void cxgui::Gtkmm3NewPlayersList::RegisterTitleRow(
-    const cxgui::IAbstractWidgetsFactory& p_widgetsFactory)
+void cxgui::Gtkmm3NewPlayersList::RegisterTitleRow()
 {
-    m_isBotTitle = p_widgetsFactory.CreateLabel(m_presenter.GetNewGameViewIsManagedColumnHeaderText());
-    m_playerNameTitle = p_widgetsFactory.CreateLabel(m_presenter.GetNewGameViewNameColumnHeaderText());
-    m_chipColorTitle = p_widgetsFactory.CreateLabel(m_presenter.GetNewGameViewDiscColumnHeaderText());
+    const IAbstractWidgetsFactory& widgetsFactory = m_widgetsFactories.GetStandardWidgetsFactory();
+
+    m_isBotTitle = widgetsFactory.CreateLabel(m_presenter.GetNewGameViewIsManagedColumnHeaderText());
+    m_playerNameTitle = widgetsFactory.CreateLabel(m_presenter.GetNewGameViewNameColumnHeaderText());
+    m_chipColorTitle = widgetsFactory.CreateLabel(m_presenter.GetNewGameViewDiscColumnHeaderText());
 
     m_layout->Register(
         *m_isBotTitle,
@@ -290,7 +276,6 @@ void cxgui::Gtkmm3NewPlayersList::RegisterTitleRow(
 }
 
 void cxgui::Gtkmm3NewPlayersList::RegisterNewPlayerRow(
-    const WidgetsFactories& p_widgetsFactories,
     size_t p_rowIndex,
     const std::vector<cxmodel::ChipColor>& p_alreadyChosenColors,
     EnabledState p_enabled)
@@ -301,8 +286,8 @@ void cxgui::Gtkmm3NewPlayersList::RegisterNewPlayerRow(
     }
 
     // Creating the widgets:
-    const IAbstractWidgetsFactory& standardWidgetsFactory = p_widgetsFactories.GetStandardWidgetsFactory();
-    const IAbstractConnectXWidgetsFactory& connectXWidgetsFactory = p_widgetsFactories.GetConnectXWidgetsFactory();
+    const IAbstractWidgetsFactory& standardWidgetsFactory = m_widgetsFactories.GetStandardWidgetsFactory();
+    const IAbstractConnectXWidgetsFactory& connectXWidgetsFactory = m_widgetsFactories.GetConnectXWidgetsFactory();
 
     std::unique_ptr<IEditBox> playerName = standardWidgetsFactory.CreateEditBox();
 

@@ -136,11 +136,9 @@ public:
 
 private:
 
-    void RegisterTitleRow(
-        const IAbstractWidgetsFactory& p_widgetsFactory);
+    void RegisterTitleRow();
 
     void RegisterNewPlayerRow(
-        const WidgetsFactories& p_widgetsFactories,
         size_t p_rowIndex,
         const std::vector<cxmodel::ChipColor>& p_alreadyChosenColors,
         EnabledState p_enabled);
