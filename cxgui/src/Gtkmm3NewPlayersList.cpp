@@ -20,7 +20,6 @@
  * @date 2020
  *
  * @todo Replace `bool` by `Status` in return types for success/fail.
- * @todo Review all contracts, and all assertions to make sure everything is caught.
  * @todo Simplify calls by using attributes instead of arguments (see private section).
  * @todo Use classic signal to expose the `RowUpdatedSignalConnect` functionnality.
  *
@@ -28,7 +27,6 @@
 
 #include <cxinv/assertion.h>
 #include <cxstd/helpers.h>
-#include <cxmodel/IPlayer.h>
 #include <cxgui/common.h>
 #include <cxgui/EnabledState.h>
 #include <cxgui/Gtkmm3NewPlayersList.h>
@@ -44,6 +42,17 @@
 #include <cxgui/Margins.h>
 #include <cxgui/OnOffState.h>
 #include <cxgui/WidgetsFactories.h>
+
+namespace
+{
+
+template<typename T>
+bool IsNullptr(const std::unique_ptr<T>& p_item)
+{
+    return (p_item == nullptr);
+}
+
+} // namespace
 
 cxgui::Gtkmm3NewPlayersList::Gtkmm3NewPlayersList(
     const INewGameViewPresenter& p_presenter,
@@ -78,50 +87,22 @@ cxgui::Gtkmm3NewPlayersList::Gtkmm3NewPlayersList(
         EnabledState::Enabled);
 
     POSTCONDITION(m_layout);
+
+    InvariantsCheck();
 }
 
 cxgui::Gtkmm3NewPlayersList::~Gtkmm3NewPlayersList() = default;
 
-void cxgui::Gtkmm3NewPlayersList::SetDelegate(std::unique_ptr<cxgui::IWidget> p_delegate)
+void cxgui::Gtkmm3NewPlayersList::SetDelegate(
+    std::unique_ptr<cxgui::IWidget> p_delegate)
 {
     IF_PRECONDITION_NOT_MET_DO(p_delegate, return;);
 
     m_delegate = std::move(p_delegate);
 
     POSTCONDITION(m_delegate);
-}
 
-size_t cxgui::Gtkmm3NewPlayersList::GetWidth() const
-{
-    IF_CONDITION_NOT_MET_DO(m_delegate, return 0u;);
-    return m_delegate->GetWidth();
-}
-
-size_t cxgui::Gtkmm3NewPlayersList::GetHeight() const
-{
-    IF_CONDITION_NOT_MET_DO(m_delegate, return 0u;);
-    return m_delegate->GetHeight();
-}
-
-void cxgui::Gtkmm3NewPlayersList::SetEnabled(
-    EnabledState p_enabled)
-{
-    IF_CONDITION_NOT_MET_DO(m_delegate, return;);
-    m_delegate->SetEnabled(p_enabled);
-}
-
-void cxgui::Gtkmm3NewPlayersList::SetMargins(
-    const Margins& p_newMarginSizes)
-{
-    IF_CONDITION_NOT_MET_DO(m_delegate, return;);
-    m_delegate->SetMargins(p_newMarginSizes);
-}
-
-void cxgui::Gtkmm3NewPlayersList::SetTooltip(
-    const std::string& p_tooltipContents)
-{
-    IF_CONDITION_NOT_MET_DO(m_delegate, return;);
-    m_delegate->SetTooltip(p_tooltipContents);
+    InvariantsCheck();
 }
 
 size_t cxgui::Gtkmm3NewPlayersList::GetNbPlayers() const
@@ -222,6 +203,8 @@ bool cxgui::Gtkmm3NewPlayersList::AddPlayer(
 
     show_all();
 
+    InvariantsCheck();
+
     return true;
 }
 
@@ -230,7 +213,11 @@ bool cxgui::Gtkmm3NewPlayersList::RemovePlayer(
 {
     IF_PRECONDITION_NOT_MET_DO(p_index < GetNbPlayers(), return false;);
 
-    return RemovePlayerRow(p_index);
+    const bool result = RemovePlayerRow(p_index);
+
+    InvariantsCheck();
+
+    return result;
 }
 
 bool cxgui::Gtkmm3NewPlayersList::UpdatePlayer(
@@ -242,7 +229,11 @@ bool cxgui::Gtkmm3NewPlayersList::UpdatePlayer(
     IF_PRECONDITION_NOT_MET_DO(p_index < GetNbPlayers(), return false;);
     IF_PRECONDITION_NOT_MET_DO(!p_playerNewName.empty(), return false;);
 
-    return UpdatePlayerRow(p_index, p_playerNewType, p_playerNewName, p_playerNewChipColor);
+    const bool result = UpdatePlayerRow(p_index, p_playerNewType, p_playerNewName, p_playerNewChipColor);
+
+    InvariantsCheck();
+
+    return result;
 }
 
 void cxgui::Gtkmm3NewPlayersList::RowUpdatedSignalConnect(
@@ -268,6 +259,8 @@ void cxgui::Gtkmm3NewPlayersList::RowUpdatedSignalConnect(
         IF_CONDITION_NOT_MET_DO(control, continue;);
         control->OnSelectionChanged()->Connect(p_slot);
     }
+
+    InvariantsCheck();
 }
 
 void cxgui::Gtkmm3NewPlayersList::RegisterTitleRow(
@@ -297,6 +290,8 @@ void cxgui::Gtkmm3NewPlayersList::RegisterTitleRow(
     POSTCONDITION(m_isBotTitle);
     POSTCONDITION(m_playerNameTitle);
     POSTCONDITION(m_chipColorTitle);
+
+    InvariantsCheck();
 }
 
 void cxgui::Gtkmm3NewPlayersList::RegisterNewPlayerRow(
@@ -353,6 +348,8 @@ void cxgui::Gtkmm3NewPlayersList::RegisterNewPlayerRow(
     m_playerTypes.push_back(std::move(playerType));
     m_playerNames.push_back(std::move(playerName));
     m_playerChipColors.push_back(std::move(playerChipColor));
+
+    InvariantsCheck();
 }
 
 bool cxgui::Gtkmm3NewPlayersList::RemovePlayerRow(
@@ -382,6 +379,8 @@ bool cxgui::Gtkmm3NewPlayersList::RemovePlayerRow(
     m_playerNames.erase(m_playerNames.begin() + p_index);
     m_playerChipColors.erase(m_playerChipColors.begin() + p_index);
     
+    InvariantsCheck();
+
     return true;
 }
 
@@ -428,5 +427,62 @@ bool cxgui::Gtkmm3NewPlayersList::UpdatePlayerRow(
         control->SetCurrentSelection(p_playerNewChipColor);
     }
 
+    InvariantsCheck();
+
     return true;
+}
+
+void cxgui::Gtkmm3NewPlayersList::InvariantsCheck() const
+{
+    INVARIANT(m_layout);
+
+    INVARIANT(m_isBotTitle);
+    INVARIANT(m_playerNameTitle);
+    INVARIANT(m_chipColorTitle);
+
+    INVARIANT(std::none_of(std::cbegin(m_playerTypes),      std::cend(m_playerTypes),      IsNullptr<IOnOffSwitch>));
+    INVARIANT(std::none_of(std::cbegin(m_playerNames),      std::cend(m_playerNames),      IsNullptr<IEditBox>));
+    INVARIANT(std::none_of(std::cbegin(m_playerChipColors), std::cend(m_playerChipColors), IsNullptr<IColorPicker>));
+
+    INVARIANT(m_playerTypes.size() == m_playerNames.size());
+    INVARIANT(m_playerNames.size() == m_playerChipColors.size());
+}
+
+size_t cxgui::Gtkmm3NewPlayersList::GetWidth() const
+{
+    IF_CONDITION_NOT_MET_DO(m_delegate, return 0u;);
+    return m_delegate->GetWidth();
+}
+
+size_t cxgui::Gtkmm3NewPlayersList::GetHeight() const
+{
+    IF_CONDITION_NOT_MET_DO(m_delegate, return 0u;);
+    return m_delegate->GetHeight();
+}
+
+void cxgui::Gtkmm3NewPlayersList::SetEnabled(
+    EnabledState p_enabled)
+{
+    IF_CONDITION_NOT_MET_DO(m_delegate, return;);
+    m_delegate->SetEnabled(p_enabled);
+
+    InvariantsCheck();
+}
+
+void cxgui::Gtkmm3NewPlayersList::SetMargins(
+    const Margins& p_newMarginSizes)
+{
+    IF_CONDITION_NOT_MET_DO(m_delegate, return;);
+    m_delegate->SetMargins(p_newMarginSizes);
+
+    InvariantsCheck();
+}
+
+void cxgui::Gtkmm3NewPlayersList::SetTooltip(
+    const std::string& p_tooltipContents)
+{
+    IF_CONDITION_NOT_MET_DO(m_delegate, return;);
+    m_delegate->SetTooltip(p_tooltipContents);
+
+    InvariantsCheck();
 }

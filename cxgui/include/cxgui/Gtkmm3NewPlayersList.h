@@ -157,6 +157,8 @@ private:
         const std::string& p_playerNewName,
         const cxmodel::ChipColor& p_playerNewChipColor);
 
+    void InvariantsCheck() const;
+
 private:
 
     std::unique_ptr<cxgui::IWidget> m_delegate;
