@@ -19,7 +19,6 @@
  * @file Gtkmm3NewPlayersList.cpp
  * @date 2020
  *
- * @todo Check remove all references to "Disc".
  * @todo Replace `bool` by `Status` in return types for success/fail.
  * @todo Review all contracts, and all assertions to make sure everything is caught.
  * @todo Make sure all parameters follow the same order: type/name/color.
@@ -131,7 +130,7 @@ size_t cxgui::Gtkmm3NewPlayersList::GetNbPlayers() const
     return m_playerNames.size();
 }
 
-cxmodel::ChipColor cxgui::Gtkmm3NewPlayersList::GetRowPlayerDiscColor(
+cxmodel::ChipColor cxgui::Gtkmm3NewPlayersList::GetRowPlayerChipColor(
     const size_t p_index) const
 {
     PRECONDITION(p_index < GetNbPlayers());
@@ -238,13 +237,13 @@ bool cxgui::Gtkmm3NewPlayersList::RemovePlayer(
 bool cxgui::Gtkmm3NewPlayersList::UpdatePlayer(
     const size_t p_index,
     const std::string& p_playerNewName,
-    const cxmodel::ChipColor& p_playerNewDiscColor,
+    const cxmodel::ChipColor& p_playerNewChipColor,
     const cxmodel::PlayerType p_playerNewType)
 {
     IF_PRECONDITION_NOT_MET_DO(p_index < GetNbPlayers(), return false;);
     IF_PRECONDITION_NOT_MET_DO(!p_playerNewName.empty(), return false;);
 
-    return UpdatePlayerRow(p_index, p_playerNewName, p_playerNewDiscColor, p_playerNewType);
+    return UpdatePlayerRow(p_index, p_playerNewName, p_playerNewChipColor, p_playerNewType);
 }
 
 void cxgui::Gtkmm3NewPlayersList::RowUpdatedSignalConnect(
@@ -390,7 +389,7 @@ bool cxgui::Gtkmm3NewPlayersList::RemovePlayerRow(
 bool cxgui::Gtkmm3NewPlayersList::UpdatePlayerRow(
     const size_t p_index,
     const std::string& p_playerNewName,
-    const cxmodel::ChipColor& p_playerNewDiscColor,
+    const cxmodel::ChipColor& p_playerNewChipColor,
     const cxmodel::PlayerType p_playerNewType)
 {
     IF_PRECONDITION_NOT_MET_DO(p_index < GetNbPlayers(), return false;);
@@ -427,7 +426,7 @@ bool cxgui::Gtkmm3NewPlayersList::UpdatePlayerRow(
         auto* control = dynamic_cast<IColorPicker*>(widget);
         IF_CONDITION_NOT_MET_DO(control, return false;);
 
-        control->SetCurrentSelection(p_playerNewDiscColor);
+        control->SetCurrentSelection(p_playerNewChipColor);
     }
 
     return true;

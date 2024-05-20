@@ -49,7 +49,7 @@ namespace cxgui
  * @brief Interface for a widget to list players.
  *
  * Widget containing rows of players to be registered for a Connect X game, as well as the color
- * they have chosen for their discs.
+ * they have chosen for their chips.
  *
  **************************************************************************************************/
 class INewPlayersList : public cxgui::IWidget
@@ -73,9 +73,9 @@ public:
     [[nodiscard]] virtual size_t GetNbPlayers() const = 0;
 
     /*******************************************************************************************//**
-     * @brief Accesses a specific row's player disc color.
+     * @brief Accesses a specific row's player chip color.
      *
-     * For a given row index, gets the specific row's player disc color.
+     * For a given row index, gets the specific row's player chip color.
      *
      * @param p_index
      *      The row index.
@@ -84,10 +84,10 @@ public:
      *      The row index is at most the number of players in the list, minus one (zero-based).
      *
      * @return
-     *      The row's player disc color.
+     *      The row's player chip color.
      *
      **********************************************************************************************/
-    [[nodiscard]] virtual cxmodel::ChipColor GetRowPlayerDiscColor(
+    [[nodiscard]] virtual cxmodel::ChipColor GetRowPlayerChipColor(
         const size_t p_index) const = 0;
 
     /*******************************************************************************************//**
@@ -109,10 +109,10 @@ public:
         const size_t p_index) const = 0;
 
     /*******************************************************************************************//**
-     * @brief Accesses all player disc colors in the list.
+     * @brief Accesses all player chip colors in the list.
      *
      * @return
-     *      An @c std::vector containing all the player disc colors in the list.
+     *      An @c std::vector containing all the player chip colors in the list.
      *
      **********************************************************************************************/
     [[nodiscard]] virtual std::vector<cxmodel::ChipColor> GetAllColors() const = 0;
@@ -177,7 +177,7 @@ public:
      * @brief Updates a player, by index.
      *
      * Updates player information from its index in the list. You can update the player name and
-     * the player disc color.
+     * the player chip color.
      *
      * @param p_index
      *      The row index.
@@ -185,8 +185,8 @@ public:
      * @param p_newPlayerNewName
      *      The player name.
      *
-     * @param p_newPlayerNewDiscColor
-     *      The player disc color.
+     * @param p_newPlayerNewChipColor
+     *      The player chip color.
      *
      * @param p_newPlayerType
      *      The player type (human or bot).
@@ -204,7 +204,7 @@ public:
     [[nodiscard]] virtual bool UpdatePlayer(
         const size_t p_index,
         const std::string& p_newPlayerNewName,
-        const cxmodel::ChipColor& p_newPlayerNewDiscColor,
+        const cxmodel::ChipColor& p_newPlayerNewChipColor,
         cxmodel::PlayerType p_newPlayerType) = 0;
 
     /***********************************************************************************************

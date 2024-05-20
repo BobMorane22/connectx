@@ -55,7 +55,7 @@ namespace cxgui
  * @brief Widget to list players.
  *
  * Widget containing rows of players to be registered for a Connect X game, as well as the color
- * they have chosen for their discs.
+ * they have chosen for their chips.
  *
  * @see cxgui::NewPlayerRow
  *
@@ -108,7 +108,7 @@ public:
 
     // cxgui::INewPlayersList:
     [[nodiscard]] size_t GetNbPlayers() const override;
-    [[nodiscard]] cxmodel::ChipColor GetRowPlayerDiscColor(
+    [[nodiscard]] cxmodel::ChipColor GetRowPlayerChipColor(
         const size_t p_index) const override;
     [[nodiscard]] std::string GetPlayerNameAtRow(
         const size_t p_index) const override;
@@ -123,7 +123,7 @@ public:
     [[nodiscard]] bool UpdatePlayer(
         const size_t p_index,
         const std::string& p_newPlayerNewName,
-        const cxmodel::ChipColor& p_newPlayerNewDiscColor,
+        const cxmodel::ChipColor& p_newPlayerNewChipColor,
         cxmodel::PlayerType p_newPlayerType) override;
     void RowUpdatedSignalConnect(
         const std::function<void()>& p_slot) override;
@@ -157,7 +157,7 @@ private:
     bool UpdatePlayerRow(
         const size_t p_index,
         const std::string& p_playerNewName,
-        const cxmodel::ChipColor& p_playerNewDiscColor,
+        const cxmodel::ChipColor& p_playerNewChipColor,
         const cxmodel::PlayerType p_playerNewType);
 
 private:
