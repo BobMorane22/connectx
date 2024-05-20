@@ -57,7 +57,8 @@ bool IsNullptr(const std::unique_ptr<T>& p_item)
 cxgui::Gtkmm3NewPlayersList::Gtkmm3NewPlayersList(
     const INewGameViewPresenter& p_presenter,
     const WidgetsFactories& p_widgetsFactories)
-: m_widgetsFactories{p_widgetsFactories}
+: m_presenter{p_presenter}
+, m_widgetsFactories{p_widgetsFactories}
 {
     const IAbstractWidgetsFactory& standardWidgetsFactory = p_widgetsFactories.GetStandardWidgetsFactory();
     m_layout = standardWidgetsFactory.CreateLayout();
@@ -69,19 +70,16 @@ cxgui::Gtkmm3NewPlayersList::Gtkmm3NewPlayersList(
     }
 
     RegisterTitleRow(
-        p_widgetsFactories.GetStandardWidgetsFactory(),
-        p_presenter);
+        p_widgetsFactories.GetStandardWidgetsFactory());
 
     RegisterNewPlayerRow(
         m_widgetsFactories,
-        p_presenter,
         1u,
         GetAllColors(),
         EnabledState::Enabled);
 
     RegisterNewPlayerRow(
         m_widgetsFactories,
-        p_presenter,
         2u,
         GetAllColors(),
         EnabledState::Enabled);
@@ -179,19 +177,17 @@ std::vector<cxmodel::PlayerType> cxgui::Gtkmm3NewPlayersList::GetAllPlayerTypes(
 }
 
 bool cxgui::Gtkmm3NewPlayersList::AddPlayer(
-    const cxgui::INewGameViewPresenter& p_presenter,
     size_t p_rowIndex)
 {
     if(p_rowIndex > 0u)
     {
-        IF_PRECONDITION_NOT_MET_DO(p_presenter.CanAddAnotherPlayer(p_rowIndex - 1u), return false;);
+        IF_PRECONDITION_NOT_MET_DO(m_presenter.CanAddAnotherPlayer(p_rowIndex - 1u), return false;);
     }
 
     const size_t sizeBefore{GetNbPlayers()};
 
     RegisterNewPlayerRow(
         m_widgetsFactories,
-        p_presenter,
         p_rowIndex,
         GetAllColors(),
         EnabledState::Enabled);
@@ -264,12 +260,11 @@ void cxgui::Gtkmm3NewPlayersList::RowUpdatedSignalConnect(
 }
 
 void cxgui::Gtkmm3NewPlayersList::RegisterTitleRow(
-    const cxgui::IAbstractWidgetsFactory& p_widgetsFactory,
-    const cxgui::INewGameViewPresenter& p_presenter)
+    const cxgui::IAbstractWidgetsFactory& p_widgetsFactory)
 {
-    m_isBotTitle = p_widgetsFactory.CreateLabel(p_presenter.GetNewGameViewIsManagedColumnHeaderText());
-    m_playerNameTitle = p_widgetsFactory.CreateLabel(p_presenter.GetNewGameViewNameColumnHeaderText());
-    m_chipColorTitle = p_widgetsFactory.CreateLabel(p_presenter.GetNewGameViewDiscColumnHeaderText());
+    m_isBotTitle = p_widgetsFactory.CreateLabel(m_presenter.GetNewGameViewIsManagedColumnHeaderText());
+    m_playerNameTitle = p_widgetsFactory.CreateLabel(m_presenter.GetNewGameViewNameColumnHeaderText());
+    m_chipColorTitle = p_widgetsFactory.CreateLabel(m_presenter.GetNewGameViewDiscColumnHeaderText());
 
     m_layout->Register(
         *m_isBotTitle,
@@ -296,14 +291,13 @@ void cxgui::Gtkmm3NewPlayersList::RegisterTitleRow(
 
 void cxgui::Gtkmm3NewPlayersList::RegisterNewPlayerRow(
     const WidgetsFactories& p_widgetsFactories,
-    const cxgui::INewGameViewPresenter& p_presenter,
     size_t p_rowIndex,
     const std::vector<cxmodel::ChipColor>& p_alreadyChosenColors,
     EnabledState p_enabled)
 {
     if(p_rowIndex > 0u)
     {
-        PRECONDITION(p_presenter.CanAddAnotherPlayer(p_rowIndex - 1u));
+        PRECONDITION(m_presenter.CanAddAnotherPlayer(p_rowIndex - 1u));
     }
 
     // Creating the widgets:
@@ -312,19 +306,19 @@ void cxgui::Gtkmm3NewPlayersList::RegisterNewPlayerRow(
 
     std::unique_ptr<IEditBox> playerName = standardWidgetsFactory.CreateEditBox();
 
-    const auto defaultColors = GetRemainingDefaultColors(p_alreadyChosenColors, p_presenter);
+    const auto defaultColors = GetRemainingDefaultColors(p_alreadyChosenColors, m_presenter);
     IF_CONDITION_NOT_MET_DO(!defaultColors.empty(), return;);
     std::unique_ptr<IColorPicker> playerChipColor = connectXWidgetsFactory.CreateColorPicker(defaultColors);
 
     std::unique_ptr<IOnOffSwitch> playerType = standardWidgetsFactory.CreateOnOffSwitch();
 
     // Configuring the widgets:
-    playerName->UpdateContents(p_presenter.GetDefaultPlayerName(p_rowIndex));
+    playerName->UpdateContents(m_presenter.GetDefaultPlayerName(p_rowIndex));
     playerName->SetMargins({TopMargin{0}, BottomMargin{0}, LeftMargin{0}, RightMargin{CONTROL_SIDE_MARGIN}});
 
     playerChipColor->SetCurrentSelection(defaultColors.front());
 
-    if(p_presenter.GetDefaultPlayerType(p_rowIndex) == cxmodel::PlayerType::BOT) 
+    if(m_presenter.GetDefaultPlayerType(p_rowIndex) == cxmodel::PlayerType::BOT) 
     {
         playerType->SetState(cxgui::OnOffState::ON);
     }

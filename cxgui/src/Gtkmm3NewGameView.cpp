@@ -338,7 +338,7 @@ void cxgui::Gtkmm3NewGameView::OnAddPlayer()
     if(m_presenter.CanAddAnotherPlayer(m_playersList->GetNbPlayers()))
     {
         const size_t nextColumnIndex = m_playersList->GetNbPlayers() + 1u;
-        IF_CONDITION_NOT_MET_DO(m_playersList->AddPlayer(m_presenter, nextColumnIndex), return;);
+        IF_CONDITION_NOT_MET_DO(m_playersList->AddPlayer(nextColumnIndex), return;);
     }
 
     EnabledStateUpdate(*m_removePlayerButton, m_presenter.CanRemoveAnotherPlayer(m_playersList->GetNbPlayers()));

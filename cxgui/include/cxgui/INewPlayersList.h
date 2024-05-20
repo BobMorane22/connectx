@@ -39,11 +39,6 @@ namespace cxmodel
 
 namespace cxgui
 {
-    class INewGameViewPresenter;
-}
-
-namespace cxgui
-{
 
 /***********************************************************************************************//**
  * @brief Interface for a widget to list players.
@@ -140,9 +135,6 @@ public:
      *
      * Adds a player to the list. The player is appended at the end of the list.
      *
-     * @param p_presenter
-     *      A New Game view compatible presenter.
-     *
      * @param p_rowIndex
      *      The new row index.
      *
@@ -154,7 +146,6 @@ public:
      *
      **********************************************************************************************/
     [[nodiscard]] virtual bool AddPlayer(
-        const INewGameViewPresenter& p_presenter,
         size_t p_rowIndex) = 0;
 
     /*******************************************************************************************//**

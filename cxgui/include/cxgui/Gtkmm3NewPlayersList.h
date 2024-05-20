@@ -114,7 +114,6 @@ public:
     [[nodiscard]] std::vector<std::string> GetAllPlayerNames() const override;
     [[nodiscard]] std::vector<cxmodel::PlayerType> GetAllPlayerTypes() const override;
     [[nodiscard]] bool AddPlayer(
-        const INewGameViewPresenter& p_presenter,
         size_t p_rowIndex) override;
     [[nodiscard]] bool RemovePlayer(
         const size_t p_index) override;
@@ -138,12 +137,10 @@ public:
 private:
 
     void RegisterTitleRow(
-        const IAbstractWidgetsFactory& p_widgetsFactory,
-        const INewGameViewPresenter& p_presenter);
+        const IAbstractWidgetsFactory& p_widgetsFactory);
 
     void RegisterNewPlayerRow(
         const WidgetsFactories& p_widgetsFactories,
-        const cxgui::INewGameViewPresenter& p_presenter,
         size_t p_rowIndex,
         const std::vector<cxmodel::ChipColor>& p_alreadyChosenColors,
         EnabledState p_enabled);
@@ -162,8 +159,7 @@ private:
 private:
 
     std::unique_ptr<cxgui::IWidget> m_delegate;
-
-    // Widgets factories:
+    const INewGameViewPresenter& m_presenter;
     const WidgetsFactories& m_widgetsFactories;
 
     // Widget's main layout:
