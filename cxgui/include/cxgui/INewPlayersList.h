@@ -109,31 +109,31 @@ public:
         const size_t p_index) const = 0;
 
     /*******************************************************************************************//**
-     * @brief Accesses all player chip colors in the list.
+     * @brief Accesses all player types in the list.
      *
      * @return
-     *      An @c std::vector containing all the player chip colors in the list.
+     *      An `std::vector` containing all the player types in the list.
      *
      **********************************************************************************************/
-    [[nodiscard]] virtual std::vector<cxmodel::ChipColor> GetAllColors() const = 0;
+    [[nodiscard]] virtual std::vector<cxmodel::PlayerType> GetAllPlayerTypes() const = 0;
 
     /*******************************************************************************************//**
      * @brief Accesses all player names in the list.
      *
      * @return
-     *      An @c std::vector containing all the player names in the list.
+     *      An `std::vector` containing all the player names in the list.
      *
      **********************************************************************************************/
     [[nodiscard]] virtual std::vector<std::string> GetAllPlayerNames() const = 0;
 
     /*******************************************************************************************//**
-     * @brief Accesses all player types in the list.
+     * @brief Accesses all player chip colors in the list.
      *
      * @return
-     *      An @c std::vector containing all the player types in the list.
+     *      An `std::vector` containing all the player chip colors in the list.
      *
      **********************************************************************************************/
-    [[nodiscard]] virtual std::vector<cxmodel::PlayerType> GetAllPlayerTypes() const = 0;
+    [[nodiscard]] virtual std::vector<cxmodel::ChipColor> GetAllColors() const = 0;
 
     /*******************************************************************************************//**
      * @brief Adds a player to the list.
@@ -182,14 +182,14 @@ public:
      * @param p_index
      *      The row index.
      *
+     * @param p_newPlayerType
+     *      The player type (human or bot).
+     *
      * @param p_newPlayerNewName
      *      The player name.
      *
      * @param p_newPlayerNewChipColor
      *      The player chip color.
-     *
-     * @param p_newPlayerType
-     *      The player type (human or bot).
      *
      * @pre
      *      The row index is at most the number of players in the list, minus one (zero-based).
@@ -203,9 +203,9 @@ public:
      **********************************************************************************************/
     [[nodiscard]] virtual bool UpdatePlayer(
         const size_t p_index,
+        cxmodel::PlayerType p_newPlayerType,
         const std::string& p_newPlayerNewName,
-        const cxmodel::ChipColor& p_newPlayerNewChipColor,
-        cxmodel::PlayerType p_newPlayerType) = 0;
+        const cxmodel::ChipColor& p_newPlayerNewChipColor) = 0;
 
     /***********************************************************************************************
      * @brief Connects a slot to be called when the row is updated.

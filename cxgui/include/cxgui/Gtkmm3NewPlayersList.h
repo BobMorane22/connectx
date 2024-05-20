@@ -34,7 +34,6 @@ namespace cxmodel
 
 namespace cxgui
 {
-
     class IAbstractWidgetsFactory;
     class IColorPicker;
     class IEditBox;
@@ -45,7 +44,6 @@ namespace cxgui
     class NewPlayerTitleRow;
     class IOnOffSwitch;
     class WidgetsFactories;
-
 }
 
 namespace cxgui
@@ -122,11 +120,10 @@ public:
         const size_t p_index) override;
     [[nodiscard]] bool UpdatePlayer(
         const size_t p_index,
+        cxmodel::PlayerType p_newPlayerType,
         const std::string& p_newPlayerNewName,
-        const cxmodel::ChipColor& p_newPlayerNewChipColor,
-        cxmodel::PlayerType p_newPlayerType) override;
-    void RowUpdatedSignalConnect(
-        const std::function<void()>& p_slot) override;
+        const cxmodel::ChipColor& p_newPlayerNewChipColor) override;
+    void RowUpdatedSignalConnect( const std::function<void()>& p_slot) override;
 
     // cxgui::IWidget:
     [[nodiscard]] size_t GetWidth() const override;
@@ -156,9 +153,9 @@ private:
 
     bool UpdatePlayerRow(
         const size_t p_index,
+        cxmodel::PlayerType p_playerNewType,
         const std::string& p_playerNewName,
-        const cxmodel::ChipColor& p_playerNewChipColor,
-        const cxmodel::PlayerType p_playerNewType);
+        const cxmodel::ChipColor& p_playerNewChipColor);
 
 private:
 

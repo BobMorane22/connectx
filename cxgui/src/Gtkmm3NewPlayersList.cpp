@@ -21,7 +21,6 @@
  *
  * @todo Replace `bool` by `Status` in return types for success/fail.
  * @todo Review all contracts, and all assertions to make sure everything is caught.
- * @todo Make sure all parameters follow the same order: type/name/color.
  * @todo Simplify calls by using attributes instead of arguments (see private section).
  * @todo Use classic signal to expose the `RowUpdatedSignalConnect` functionnality.
  *
@@ -236,14 +235,14 @@ bool cxgui::Gtkmm3NewPlayersList::RemovePlayer(
 
 bool cxgui::Gtkmm3NewPlayersList::UpdatePlayer(
     const size_t p_index,
+    cxmodel::PlayerType p_playerNewType,
     const std::string& p_playerNewName,
-    const cxmodel::ChipColor& p_playerNewChipColor,
-    const cxmodel::PlayerType p_playerNewType)
+    const cxmodel::ChipColor& p_playerNewChipColor)
 {
     IF_PRECONDITION_NOT_MET_DO(p_index < GetNbPlayers(), return false;);
     IF_PRECONDITION_NOT_MET_DO(!p_playerNewName.empty(), return false;);
 
-    return UpdatePlayerRow(p_index, p_playerNewName, p_playerNewChipColor, p_playerNewType);
+    return UpdatePlayerRow(p_index, p_playerNewType, p_playerNewName, p_playerNewChipColor);
 }
 
 void cxgui::Gtkmm3NewPlayersList::RowUpdatedSignalConnect(
@@ -388,9 +387,9 @@ bool cxgui::Gtkmm3NewPlayersList::RemovePlayerRow(
 
 bool cxgui::Gtkmm3NewPlayersList::UpdatePlayerRow(
     const size_t p_index,
+    cxmodel::PlayerType p_playerNewType,
     const std::string& p_playerNewName,
-    const cxmodel::ChipColor& p_playerNewChipColor,
-    const cxmodel::PlayerType p_playerNewType)
+    const cxmodel::ChipColor& p_playerNewChipColor)
 {
     IF_PRECONDITION_NOT_MET_DO(p_index < GetNbPlayers(), return false;);
     IF_PRECONDITION_NOT_MET_DO(!p_playerNewName.empty(), return false;);
