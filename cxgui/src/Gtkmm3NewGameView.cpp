@@ -138,7 +138,7 @@ cxgui::Gtkmm3NewGameView::Gtkmm3NewGameView(
     // Start button validations:
     m_removePlayerButton->OnClicked()->Connect([this](){OnNewGameParameterUpdated();});
     m_addPlayerButton->OnClicked()->Connect([this](){OnNewGameParameterUpdated();});
-    m_playersList->RowUpdatedSignalConnect([this](){OnNewGameParameterUpdated();});
+    m_playersList->OnPlayerUpdated()->Connect([this](){OnNewGameParameterUpdated();});
 
     POSTCONDITION(m_viewLayout);
     POSTCONDITION(m_playersList);

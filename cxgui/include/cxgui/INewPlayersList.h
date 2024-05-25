@@ -30,6 +30,7 @@
 
 #include <cxmodel/ChipColor.h>
 #include <cxmodel/IPlayer.h>
+#include <cxgui/ISignal.h>
 #include <cxgui/IWidget.h>
 
 namespace cxmodel
@@ -199,14 +200,13 @@ public:
         const cxmodel::ChipColor& p_newPlayerNewChipColor) = 0;
 
     /***********************************************************************************************
-     * @brief Connects a slot to be called when the row is updated.
+     * @brief Get the signal for when a player is updated in the list.
      *
-     * @param p_slot
-     *      The slot to call.
+     * @return
+     *      A signal to connect to for when a player is updated in the list.
      *
      **********************************************************************************************/
-    virtual void RowUpdatedSignalConnect(
-        const std::function<void()>& p_slot) = 0;
+    [[nodiscard]] virtual std::unique_ptr<ISignal<void>> OnPlayerUpdated() = 0;
 
 };
 

@@ -19,11 +19,12 @@
  * @file Gtkmm3NewPlayersList.cpp
  * @date 2020
  *
- * @todo Replace `bool` by `Status` in return types for success/fail.
  * @todo Simplify calls by using attributes instead of arguments (see private section).
- * @todo Use classic signal to expose the `RowUpdatedSignalConnect` functionnality.
  *
  *************************************************************************************************/
+
+#include <algorithm>
+#include <functional>
 
 #include <cxinv/assertion.h>
 #include <cxstd/helpers.h>
@@ -38,7 +39,6 @@
 #include <cxgui/ILabel.h>
 #include <cxgui/ILayout.h>
 #include <cxgui/INewGameViewPresenter.h>
-#include <cxgui/ISignal.h>
 #include <cxgui/Margins.h>
 #include <cxgui/OnOffState.h>
 #include <cxgui/WidgetsFactories.h>
@@ -47,10 +47,122 @@ namespace
 {
 
 template<typename T>
-bool IsNullptr(const std::unique_ptr<T>& p_item)
+[[nodiscard]] bool IsNullptr(const std::unique_ptr<T>& p_item)
 {
     return (p_item == nullptr);
 }
+
+const auto IS_CONNECTED = 
+    [](const std::unique_ptr<cxgui::IConnection>& p_connection)
+    { 
+        RETURN_IF(!p_connection, false);
+        RETURN_IF(!p_connection->IsConnected(), false);
+    
+        return true;
+    };
+
+/**************************************************************************************************
+ * @brief Gtkmm3 implementation of a connection for when a player is updated.
+ *
+ * This deals with all player related widgets connections at once, as a single entity.
+ *
+ *************************************************************************************************/
+class Gtkmm3OnPlayerUpdatedConnection : public cxgui::IConnection
+{
+
+public:
+
+    explicit Gtkmm3OnPlayerUpdatedConnection(std::vector<std::unique_ptr<cxgui::IConnection>> p_connections)
+    {
+        PRECONDITION(!p_connections.empty());
+        PRECONDITION(std::all_of(std::cbegin(p_connections), std::cend(p_connections), IS_CONNECTED));
+
+        m_connections = std::move(p_connections);
+        m_isConnected = true;
+    }
+
+    [[nodiscard]] bool IsConnected() const override
+    {
+        return m_isConnected;
+    }
+
+    void Disconnect() override
+    {
+        for(auto&& connection : m_connections)
+        {
+            IF_CONDITION_NOT_MET_DO(!connection, continue;);
+
+            connection->Disconnect();
+        }
+
+        m_isConnected = false;
+
+        POSTCONDITION(std::none_of(std::cbegin(m_connections), std::cend(m_connections), IS_CONNECTED));
+    }
+
+private:
+
+    // All connexions from signals related to an updated player.
+    std::vector<std::unique_ptr<cxgui::IConnection>> m_connections;
+
+    bool m_isConnected = false;
+
+};
+
+/**************************************************************************************************
+ * @brief Gtkmm3 implementation of a signal for when a player is updated.
+ *
+ * This deals with all player related widgets signals at once, as a single entity.
+ *
+ *************************************************************************************************/
+class Gtkmm3OnPlayerUpdatedSignal : public cxgui::ISignal<void> 
+{
+
+public:
+
+    Gtkmm3OnPlayerUpdatedSignal(
+        std::vector<std::unique_ptr<cxgui::IOnOffSwitch>>& p_playerTypes,
+        std::vector<std::unique_ptr<cxgui::IEditBox>>& p_playerNames,
+        std::vector<std::unique_ptr<cxgui::IColorPicker>>& p_playerChipColors)
+    : m_playerTypes{p_playerTypes}
+    , m_playerNames{p_playerNames}
+    , m_playerChipColors{p_playerChipColors}
+    {
+    }
+
+    [[nodiscard]] std::unique_ptr<cxgui::IConnection> Connect(const std::function<void()>& p_slot) override
+    {
+        std::vector<std::unique_ptr<cxgui::IConnection>> connections;
+
+        // We apply the slot on all existing rows:
+        for(std::unique_ptr<cxgui::IOnOffSwitch>& control : m_playerTypes)
+        {
+            IF_CONDITION_NOT_MET_DO(control, continue;);
+            connections.push_back(control->OnStateChanged()->Connect(p_slot));
+        }
+
+        for(std::unique_ptr<cxgui::IEditBox>& control : m_playerNames)
+        {
+            IF_CONDITION_NOT_MET_DO(control, continue;);
+            connections.push_back(control->OnContentsChanged()->Connect(p_slot));
+        }
+
+        for(std::unique_ptr<cxgui::IColorPicker>& control : m_playerChipColors)
+        {
+            IF_CONDITION_NOT_MET_DO(control, continue;);
+            connections.push_back(control->OnSelectionChanged()->Connect(p_slot));
+        }
+
+        return std::make_unique<Gtkmm3OnPlayerUpdatedConnection>(std::move(connections));
+    }
+
+private:
+
+    std::vector<std::unique_ptr<cxgui::IOnOffSwitch>>& m_playerTypes;
+    std::vector<std::unique_ptr<cxgui::IEditBox>>& m_playerNames;
+    std::vector<std::unique_ptr<cxgui::IColorPicker>>& m_playerChipColors;
+
+};
 
 } // namespace
 
@@ -217,31 +329,16 @@ bool cxgui::Gtkmm3NewPlayersList::UpdatePlayer(
     return result;
 }
 
-void cxgui::Gtkmm3NewPlayersList::RowUpdatedSignalConnect(
-    const std::function<void()>& p_slot)
+std::unique_ptr<cxgui::ISignal<void>> cxgui::Gtkmm3NewPlayersList::OnPlayerUpdated()
 {
-    RETURN_IF(!p_slot,);
+    auto signal = std::make_unique<Gtkmm3OnPlayerUpdatedSignal>(
+                      m_playerTypes,
+                      m_playerNames,
+                      m_playerChipColors);
 
-    // We apply the slot on all existing rows:
-    for(std::unique_ptr<IOnOffSwitch>& control : m_playerTypes)
-    {
-        IF_CONDITION_NOT_MET_DO(control, continue;);
-        control->OnStateChanged()->Connect(p_slot);
-    }
+     InvariantsCheck();
 
-    for(std::unique_ptr<IEditBox>& control : m_playerNames)
-    {
-        IF_CONDITION_NOT_MET_DO(control, continue;);
-        control->OnContentsChanged()->Connect(p_slot);
-    }
-
-    for(std::unique_ptr<IColorPicker>& control : m_playerChipColors)
-    {
-        IF_CONDITION_NOT_MET_DO(control, continue;);
-        control->OnSelectionChanged()->Connect(p_slot);
-    }
-
-    InvariantsCheck();
+     return signal;
 }
 
 void cxgui::Gtkmm3NewPlayersList::RegisterTitleRow()

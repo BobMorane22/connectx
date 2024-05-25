@@ -122,7 +122,7 @@ public:
         cxmodel::PlayerType p_newPlayerType,
         const std::string& p_newPlayerNewName,
         const cxmodel::ChipColor& p_newPlayerNewChipColor) override;
-    void RowUpdatedSignalConnect( const std::function<void()>& p_slot) override;
+    [[nodiscard]] std::unique_ptr<ISignal<void>> OnPlayerUpdated() override;
 
     // cxgui::IWidget:
     [[nodiscard]] size_t GetWidth() const override;
