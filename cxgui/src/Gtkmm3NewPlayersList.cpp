@@ -19,8 +19,6 @@
  * @file Gtkmm3NewPlayersList.cpp
  * @date 2020
  *
- * @todo Simplify calls by using attributes instead of arguments (see private section).
- *
  *************************************************************************************************/
 
 #include <algorithm>
@@ -415,7 +413,7 @@ void cxgui::Gtkmm3NewPlayersList::RegisterNewPlayerRow(
     // Registering the widgets:
     constexpr cxgui::ILayout::RowSpan rowSpan{1u};
     constexpr cxgui::ILayout::ColumnSpan columnSpan{1u};
-    const cxmodel::Row row{m_playerNames.size() + 1u};
+    const cxmodel::Row row{p_rowIndex};
     constexpr cxgui::ILayout::Alignement alignCenter{cxgui::ILayout::VerticalAlignement::CENTER, cxgui::ILayout::HorizontalAlignement::CENTER};
     m_layout->Register(*playerType,      {row, rowSpan}, {cxmodel::Column{0u}, columnSpan}, alignCenter);
     m_layout->Register(*playerName,      {row, rowSpan}, {cxmodel::Column{1u}, columnSpan});
