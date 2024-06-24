@@ -45,6 +45,7 @@
 #include <cxgui/INewPlayersList.h>
 #include <cxgui/ISpinBox.h>
 #include <cxgui/Margins.h>
+#include <cxgui/NotSupported.h>
 #include <cxgui/WidgetsFactories.h>
 #include <cxgui/widgetUtilities.h>
 
@@ -197,6 +198,11 @@ void cxgui::Gtkmm3NewGameView::SetMargins(const Margins& p_newMarginSizes)
 void cxgui::Gtkmm3NewGameView::SetTooltip(const std::string& p_tooltipContents)
 {
     return m_viewLayout->SetTooltip(p_tooltipContents);
+}
+
+std::unique_ptr<cxgui::ISignal<cxgui::EventPropagation, cxgui::KeyboardKeyPressedEvent>> cxgui::Gtkmm3NewGameView::OnKeyPressed()
+{
+    return std::make_unique<NotSupported<EventPropagation, KeyboardKeyPressedEvent>>();
 }
 
 void cxgui::Gtkmm3NewGameView::SetLayout()

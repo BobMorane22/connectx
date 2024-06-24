@@ -23,9 +23,10 @@
 
 #include <cxinv/assertion.h>
 #include <cxstd/helpers.h>
-
+#include <cxgui/EventPropagation.h>
 #include <cxgui/Gtkmm3Layout.h>
 #include <cxgui/IWidget.h>
+#include <cxgui/KeyboardKeyPressedEvent.h>
 #include <cxgui/Margins.h>
 
 namespace
@@ -195,4 +196,10 @@ void cxgui::Gtkmm3Layout::SetTooltip(const std::string& p_tooltipContents)
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return;);
     m_delegate->SetTooltip(p_tooltipContents);
+}
+
+std::unique_ptr<cxgui::ISignal<cxgui::EventPropagation, cxgui::KeyboardKeyPressedEvent>> cxgui::Gtkmm3Layout::OnKeyPressed()
+{
+    IF_CONDITION_NOT_MET_DO(m_delegate, return nullptr;);
+    return m_delegate->OnKeyPressed();
 }

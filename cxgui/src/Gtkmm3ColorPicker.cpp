@@ -21,10 +21,11 @@
  *
  *************************************************************************************************/
 
-#include "gtkmm/combobox.h"
 #include <cxinv/assertion.h>
+#include <cxgui/EventPropagation.h>
 #include <cxgui/Gtkmm3ColorPicker.h>
 #include <cxgui/Gtkmm3Connection.h>
+#include <cxgui/KeyboardKeyPressedEvent.h>
 #include <cxgui/Margins.h>
 
 namespace
@@ -169,6 +170,12 @@ void cxgui::Gtkmm3ColorPicker::SetTooltip(const std::string& p_tooltipContents)
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return;);
     m_delegate->SetTooltip(p_tooltipContents);
+}
+
+std::unique_ptr<cxgui::ISignal<cxgui::EventPropagation, cxgui::KeyboardKeyPressedEvent>> cxgui::Gtkmm3ColorPicker::OnKeyPressed()
+{
+    IF_CONDITION_NOT_MET_DO(m_delegate, return nullptr;);
+    return m_delegate->OnKeyPressed();
 }
 
 void cxgui::Gtkmm3ColorPicker::AddElement(const cxgui::Color& p_color, bool p_setActive)

@@ -24,8 +24,10 @@
 #include <gtkmm/menuitem.h>
 
 #include <cxinv/assertion.h>
+#include <cxgui/EventPropagation.h>
 #include <cxgui/Gtkmm3Menu.h>
 #include <cxgui/Gtkmm3MenuBar.h>
+#include <cxgui/KeyboardKeyPressedEvent.h>
 #include <cxgui/IMenu.h>
 
 void cxgui::Gtkmm3MenuBar::Register(cxgui::IMenu& p_menu)
@@ -75,4 +77,10 @@ void cxgui::Gtkmm3MenuBar::SetTooltip(const std::string& p_tooltipContents)
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return;);
     m_delegate->SetTooltip(p_tooltipContents);
+}
+
+std::unique_ptr<cxgui::ISignal<cxgui::EventPropagation, cxgui::KeyboardKeyPressedEvent>> cxgui::Gtkmm3MenuBar::OnKeyPressed()
+{
+    IF_CONDITION_NOT_MET_DO(m_delegate, return nullptr;);
+    return m_delegate->OnKeyPressed();
 }

@@ -133,6 +133,7 @@ public:
         const Margins& p_newMarginSizes) override;
     void SetTooltip(
         const std::string& p_tooltipContents) override;
+    [[nodiscard]] std::unique_ptr<ISignal<EventPropagation, KeyboardKeyPressedEvent>> OnKeyPressed() override;
 
 private:
 

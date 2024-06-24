@@ -22,9 +22,11 @@
  *************************************************************************************************/
 
 #include <cxinv/assertion.h>
+#include <cxgui/EventPropagation.h>
 #include <cxgui/GameViewKeyHandlerStrategyFactory.h>
 #include <cxgui/IBoardInformation.h>
 #include <cxgui/IGameViewController.h>
+#include <cxgui/KeyboardKeyPressedEvent.h>
 
 namespace cxgui
 {
@@ -34,18 +36,18 @@ class GameViewDownKeyHandlerStrategy : public cxgui::IGameViewKeyHandlerStrategy
 
 public:
 
-    bool Handle(IGameViewController& p_controller, IBoardInformation& p_gameBoard) override;
+    [[nodiscard]] EventPropagation Handle(IGameViewController& p_controller, IBoardInformation& p_gameBoard) override;
 
 };
 
-bool GameViewDownKeyHandlerStrategy::Handle(IGameViewController& p_controller, IBoardInformation& p_gameBoard)
+cxgui::EventPropagation GameViewDownKeyHandlerStrategy::Handle(IGameViewController& p_controller, IBoardInformation& p_gameBoard)
 {
     const cxmodel::ChipColor chipColor = p_gameBoard.GetCurrentChipColor();
-    IF_CONDITION_NOT_MET_DO(chipColor != cxmodel::MakeTransparent(), return false;);
+    IF_CONDITION_NOT_MET_DO(chipColor != cxmodel::MakeTransparent(), return cxgui::EventPropagation::PROPAGATE;);
 
     p_controller.OnDown(chipColor, p_gameBoard.GetCurrentColumn().Get());
 
-    return true;
+    return EventPropagation::STOP;
 }
 
 class GameViewLeftKeyHandlerStrategy : public cxgui::IGameViewKeyHandlerStrategy
@@ -53,15 +55,15 @@ class GameViewLeftKeyHandlerStrategy : public cxgui::IGameViewKeyHandlerStrategy
 
 public:
 
-    bool Handle(IGameViewController& p_controller, IBoardInformation& p_gameBoard) override;
+    [[nodiscard]] EventPropagation Handle(IGameViewController& p_controller, IBoardInformation& p_gameBoard) override;
 
 };
 
-bool GameViewLeftKeyHandlerStrategy::Handle(IGameViewController& p_controller, IBoardInformation& /*p_gameBoard*/)
+cxgui::EventPropagation GameViewLeftKeyHandlerStrategy::Handle(IGameViewController& p_controller, IBoardInformation& /*p_gameBoard*/)
 {
     p_controller.OnMoveLeftOneColumn();
 
-    return true;
+    return EventPropagation::STOP;
 }
 
 class GameViewRightKeyHandlerStrategy : public cxgui::IGameViewKeyHandlerStrategy
@@ -69,32 +71,30 @@ class GameViewRightKeyHandlerStrategy : public cxgui::IGameViewKeyHandlerStrateg
 
 public:
 
-    bool Handle(IGameViewController& p_controller, IBoardInformation& p_gameBoard) override;
+    [[nodiscard]] EventPropagation Handle(IGameViewController& p_controller, IBoardInformation& p_gameBoard) override;
 
 };
 
-bool GameViewRightKeyHandlerStrategy::Handle(IGameViewController& p_controller, IBoardInformation& /*p_gameBoard*/)
+cxgui::EventPropagation GameViewRightKeyHandlerStrategy::Handle(IGameViewController& p_controller, IBoardInformation& /*p_gameBoard*/)
 {
     p_controller.OnMoveRightOneColumn();
 
-    return true;
+    return EventPropagation::STOP;
 }
 
 } // namespace cxgui
 
-std::unique_ptr<cxgui::IGameViewKeyHandlerStrategy> cxgui::GameViewKeyHandlerStrategyFactory::Create(GdkEventKey* p_event)
+std::unique_ptr<cxgui::IGameViewKeyHandlerStrategy> cxgui::GameViewKeyHandlerStrategyFactory::Create(cxgui::KeyboardKeyPressedEvent p_event)
 {
-    IF_PRECONDITION_NOT_MET_DO(p_event, return nullptr;);
-
-    switch(p_event->keyval)
+    switch(p_event)
     {
-        case GDK_KEY_Left:
+        case cxgui::KeyboardKeyPressedEvent::KEY_LEFT:
             return std::make_unique<cxgui::GameViewLeftKeyHandlerStrategy>();
 
-        case GDK_KEY_Right:
+        case cxgui::KeyboardKeyPressedEvent::KEY_RIGHT:
             return std::make_unique<cxgui::GameViewRightKeyHandlerStrategy>();
 
-        case GDK_KEY_Down:
+        case cxgui::KeyboardKeyPressedEvent::KEY_DOWN:
             return std::make_unique<cxgui::GameViewDownKeyHandlerStrategy>();
 
         default:

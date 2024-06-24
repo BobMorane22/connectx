@@ -14,8 +14,7 @@
  *  along with Connect X. If not, see <https://www.gnu.org/licenses/>.
  *
  *************************************************************************************************/
-/**********************************************************************************************//**
- * @file IWidget.h
+/**********************************************************************************************//** * @file IWidget.h
  * @date 2022
  *
  *************************************************************************************************/
@@ -27,12 +26,14 @@
 #include <memory>
 #include <string>
 
+#include <cxgui/ISignal.h>
+
 namespace cxgui
 {
-
     enum class EnabledState;
+    enum class EventPropagation;
+    enum class KeyboardKeyPressedEvent;
     struct Margins;
-
 }
 
 namespace cxgui
@@ -109,6 +110,21 @@ public:
      *
      *********************************************************************************************/
     virtual void SetTooltip(const std::string& p_tooltipContents) = 0;
+
+///@}
+
+///@{ @name Signals
+
+    /******************************************************************************************//**
+     * @brief Gets a signal for when a key is pressed on the widget.
+     *
+     * A key is presed on the widget when the widget has focus while the key is pressed.
+     *
+     * @return
+     *      A signal for when a key is pressed on the widget.
+     *
+     *********************************************************************************************/
+    [[nodiscard]] virtual std::unique_ptr<ISignal<EventPropagation, KeyboardKeyPressedEvent>> OnKeyPressed() = 0;
 
 ///@}
 

@@ -27,6 +27,7 @@
 #include <gtkmm/menu.h>
 
 #include <cxgui/IMenu.h>
+#include <cxgui/ISignal.h>
 
 namespace cxgui
 {
@@ -92,6 +93,7 @@ public:
     void SetEnabled(EnabledState p_enabled) override;
     void SetMargins(const Margins& p_newMarginSizes) override;
     void SetTooltip(const std::string& p_tooltipContents) override;
+    [[nodiscard]] std::unique_ptr<ISignal<EventPropagation, KeyboardKeyPressedEvent>> OnKeyPressed() override;
 
 private:
 

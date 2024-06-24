@@ -26,7 +26,7 @@
 
 #include <memory>
 
-#include <gdk/gdk.h>
+#include <cxgui/KeyboardKeyPressedEvent.h>
 
 #include "IGameViewKeyHandlerStrategy.h"
 
@@ -37,8 +37,7 @@ namespace cxgui
  * @brief Factory for key handling strategies.
  *
  * Creates the right strategy for the given keyboard key (GdkKey).
- *
- ************************************************************************************************/
+ * ************************************************************************************************/
 class GameViewKeyHandlerStrategyFactory final
 {
 
@@ -49,12 +48,10 @@ public:
      *
      * @param p_event Describes a key press/release event.
 
-     * @pre `p_event` is valid.
-     *
      * @return The strategy, `nullptr` otherwise.
      *
      ********************************************************************************************/
-    static std::unique_ptr<cxgui::IGameViewKeyHandlerStrategy> Create(GdkEventKey* p_event);
+    [[nodiscard]] static std::unique_ptr<cxgui::IGameViewKeyHandlerStrategy> Create(KeyboardKeyPressedEvent p_event);
 
 };
 

@@ -23,13 +23,15 @@
 #ifndef GTKMM3GAMEVIEW_H_AA8C282C_9CC4_45F4_BE91_C8840160BA1B
 #define GTKMM3GAMEVIEW_H_AA8C282C_9CC4_45F4_BE91_C8840160BA1B
 
-#include <sigc++/connection.h>
 
 #include <cxgui/IAnimatedBoard.h> // Can't forward declare because of gui specific subject/observer.  #include <cxgui/IView.h>
+#include <cxgui/ISignal.h>
 #include <cxgui/IView.h>
+#include <cxgui/KeyboardKeyPressedEvent.h>
 
 namespace cxgui
 {
+    enum class EventPropagation;
     class IChip;
     class IGameViewController;
     class IGameViewPresenter;
@@ -75,8 +77,7 @@ public:
      ********************************************************************************************/
     Gtkmm3GameView(
         WidgetsFactories& p_widgetsFactories,
-        IGameViewPresenter& p_presenter,
-        IGameViewController& p_controller,
+        IGameViewPresenter& p_presenter, IGameViewController& p_controller,
         IWindow& p_parentWindow,
         cxgui::ILayout& p_mainLayout,
         const cxmodel::Column& p_viewLeft,
@@ -99,6 +100,7 @@ public:
     void SetEnabled(EnabledState p_enabled) override;
     void SetMargins(const Margins& p_newMarginSizes) override;
     void SetTooltip(const std::string& p_tooltipContents) override;
+    [[nodiscard]] std::unique_ptr<ISignal<EventPropagation, KeyboardKeyPressedEvent>> OnKeyPressed() override;
 
 private:
 
@@ -112,7 +114,7 @@ private:
     void PopulateWidgets();
     void ConfigureWidgets();
 
-    bool OnKeyPressed(GdkEventKey* p_event);
+    EventPropagation OnKeyPressed(KeyboardKeyPressedEvent p_event);
     void EnableKeyHandlers();
     void DisableKeyHandlers();
 
@@ -161,7 +163,7 @@ private:
     std::unique_ptr<IAnimatedBoard> m_board;
 
     // Connexions.
-    sigc::connection m_keysPressedConnection;
+    std::unique_ptr<IConnection> m_keysPressedConnection;
 };
 
 } // namespace cxgui

@@ -21,13 +21,126 @@
  *
  *************************************************************************************************/
 
+#include <optional>
+#include <type_traits>
+
 #include <gtkmm/widget.h>
 
 #include <cxinv/assertion.h>
 #include <cxgui/EnabledState.h>
+#include <cxgui/EventPropagation.h>
+#include <cxgui/Gtkmm3Connection.h>
 #include <cxgui/Gtkmm3WidgetDelegate.h>
+#include <cxgui/KeyboardKeyPressedEvent.h>
 #include <cxgui/Margins.h>
 
+namespace
+{
+
+template<typename T>
+struct DependantFalse : std::false_type
+{};
+
+template<typename Target, typename GtkSource>
+[[nodiscard]] std::optional<Target> FromGtk(const GtkSource& /*p_source*/)
+{
+    // This should be explicitely specialized.
+    static_assert(DependantFalse<Target>::value && DependantFalse<GtkSource>::value);
+    return std::nullopt;
+}
+
+template<> 
+[[nodiscard]] std::optional<cxgui::KeyboardKeyPressedEvent> FromGtk(const GdkEventKey& p_event)
+{
+    RETURN_IF(p_event.type != GdkEventType::GDK_KEY_PRESS, std::nullopt);
+
+    switch(p_event.keyval)
+    {
+        case GDK_KEY_Left:
+            return cxgui::KeyboardKeyPressedEvent::KEY_LEFT;
+
+        case GDK_KEY_Right:
+            return cxgui::KeyboardKeyPressedEvent::KEY_RIGHT;
+
+        case GDK_KEY_Down:
+            return cxgui::KeyboardKeyPressedEvent::KEY_DOWN;
+
+        default:
+            break;
+    }
+
+    return std::nullopt;
+}
+
+template<typename GtkTarget, typename Source>
+[[nodiscard]] std::optional<GtkTarget> ToGtk(const Source& /*p_source*/)
+{
+    // This should be explicitely specialized.
+    static_assert(DependantFalse<GtkTarget>::value && DependantFalse<Source>::value);
+    return std::nullopt;
+}
+
+template<>
+[[nodiscard]] std::optional<bool> ToGtk<bool, cxgui::EventPropagation>(const cxgui::EventPropagation& p_propagate)
+{
+    switch(p_propagate)
+    {
+        case cxgui::EventPropagation::PROPAGATE:
+        {
+            // Not handled, so we propagate.
+            return false;
+        }
+        case cxgui::EventPropagation::STOP:
+        {
+            // Handled here, do not propagate.
+            return true;
+        }
+        default:
+            break;
+    };
+
+    return std::nullopt;
+}
+
+class Gtkmm3KeyboardOnKeyPressedEventSignal : public cxgui::ISignal<cxgui::EventPropagation, cxgui::KeyboardKeyPressedEvent>
+{
+
+public:
+
+    explicit Gtkmm3KeyboardOnKeyPressedEventSignal(Gtk::Widget& p_widget)
+    : m_widget{p_widget}
+    {
+    }
+
+    [[nodiscard]] std::unique_ptr<cxgui::IConnection> Connect(const std::function<cxgui::EventPropagation(cxgui::KeyboardKeyPressedEvent)>& p_slot)
+    {
+        const auto gtkSlot = [p_slot](GdkEventKey* p_event)
+        {
+            IF_PRECONDITION_NOT_MET_DO(p_event, return true;);
+
+            const auto event = FromGtk<cxgui::KeyboardKeyPressedEvent>(*p_event);
+            RETURN_IF(!event.has_value(), true);
+
+            const cxgui::EventPropagation propagate = p_slot(event.value());
+
+            const auto isHandled = ToGtk<bool>(propagate);
+            IF_CONDITION_NOT_MET_DO(isHandled.has_value(), return true;);
+
+            return isHandled.value();
+        };
+
+        sigc::connection gtkConnection = m_widget.signal_key_press_event().connect(gtkSlot, false);
+        IF_CONDITION_NOT_MET_DO(gtkConnection.connected(), return nullptr;);
+
+        return std::make_unique<cxgui::Gtkmm3Connection>(gtkConnection);
+    }
+
+private:
+
+    Gtk::Widget& m_widget;
+};
+
+} // namespace
 
 void cxgui::Gtkmm3WidgetDelegate::SetUnderlying(Gtk::Widget* p_underlying)
 {
@@ -48,8 +161,7 @@ size_t cxgui::Gtkmm3WidgetDelegate::GetWidth() const
     return static_cast<size_t>(width);
 }
 
-size_t cxgui::Gtkmm3WidgetDelegate::GetHeight() const
-{
+size_t cxgui::Gtkmm3WidgetDelegate::GetHeight() const {
     IF_PRECONDITION_NOT_MET_DO(m_underlying, return 0u;);
 
     const int height = m_underlying->get_height();
@@ -85,4 +197,11 @@ void cxgui::Gtkmm3WidgetDelegate::SetTooltip(const std::string& p_tooltipContent
     IF_PRECONDITION_NOT_MET_DO(m_underlying, return;);
 
     m_underlying->set_tooltip_text(p_tooltipContents);
+}
+
+std::unique_ptr<cxgui::ISignal<cxgui::EventPropagation, cxgui::KeyboardKeyPressedEvent>> cxgui::Gtkmm3WidgetDelegate::OnKeyPressed()
+{
+    IF_PRECONDITION_NOT_MET_DO(m_underlying, return nullptr;);
+
+    return std::make_unique<Gtkmm3KeyboardOnKeyPressedEventSignal>(*m_underlying);
 }

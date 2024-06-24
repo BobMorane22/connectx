@@ -32,10 +32,12 @@
 #include <cxgui/AnimatedBoardModel.h>
 #include <cxgui/AnimatedBoardPresenter.h>
 #include <cxgui/common.h>
+#include <cxgui/EventPropagation.h>
 #include <cxgui/FrameAnimationStrategy.h>
 #include <cxgui/Gtkmm3AnimatedBoard.h>
 #include <cxgui/Gtkmm3ContextRestoreRAII.h>
 #include <cxgui/IGameViewPresenter.h>
+#include <cxgui/KeyboardKeyPressedEvent.h>
 #include <cxgui/pathHelpers.h>
 
 namespace
@@ -221,6 +223,12 @@ void cxgui::Gtkmm3AnimatedBoard::SetTooltip(const std::string& p_tooltipContents
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return;);
     m_delegate->SetTooltip(p_tooltipContents);
+}
+
+std::unique_ptr<cxgui::ISignal<cxgui::EventPropagation, cxgui::KeyboardKeyPressedEvent>> cxgui::Gtkmm3AnimatedBoard::OnKeyPressed()
+{
+    IF_CONDITION_NOT_MET_DO(m_delegate, return nullptr;);
+    return m_delegate->OnKeyPressed();
 }
 
 // Does the actual drawing. Be careful it mofifying this, it is performance

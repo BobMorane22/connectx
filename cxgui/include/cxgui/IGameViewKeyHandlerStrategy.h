@@ -26,6 +26,7 @@
 
 namespace cxgui
 {
+    enum class EventPropagation;
     class IBoardInformation;
     class IGameViewController;
 }
@@ -56,10 +57,10 @@ public:
      * @param p_controller The Game View controller.
      * @param p_gameBoard  The board to act on.
      *
-     * @return `true` if the handling must stop propagating, `false` otherwise.
+     * @return The event propagation status.
      *
      ********************************************************************************************/
-    virtual bool Handle(IGameViewController& p_controller, IBoardInformation& p_gameBoard) = 0;
+    [[nodiscard]] virtual EventPropagation Handle(IGameViewController& p_controller, IBoardInformation& p_gameBoard) = 0;
 
 };
 

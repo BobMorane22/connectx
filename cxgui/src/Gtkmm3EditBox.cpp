@@ -22,8 +22,10 @@
  *************************************************************************************************/
 
 #include <cxinv/assertion.h>
+#include <cxgui/EventPropagation.h>
 #include <cxgui/Gtkmm3Connection.h>
 #include <cxgui/Gtkmm3EditBox.h>
+#include <cxgui/KeyboardKeyPressedEvent.h>
 
 namespace
 {
@@ -106,4 +108,10 @@ void cxgui::Gtkmm3EditBox::SetTooltip(const std::string& p_tooltipContents)
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return;);
     m_delegate->SetTooltip(p_tooltipContents);
+}
+
+std::unique_ptr<cxgui::ISignal<cxgui::EventPropagation, cxgui::KeyboardKeyPressedEvent>> cxgui::Gtkmm3EditBox::OnKeyPressed()
+{
+    IF_CONDITION_NOT_MET_DO(m_delegate, return nullptr;);
+    return m_delegate->OnKeyPressed();
 }

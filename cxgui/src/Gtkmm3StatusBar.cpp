@@ -22,7 +22,9 @@
  *************************************************************************************************/
 
 #include <cxinv/assertion.h>
+#include <cxgui/EventPropagation.h>
 #include <cxgui/Gtkmm3StatusBar.h>
+#include <cxgui/KeyboardKeyPressedEvent.h>
 #include <cxgui/Margins.h>
 
 cxgui::Gtkmm3StatusBar::Gtkmm3StatusBar(IStatusBarPresenter& p_presenter)
@@ -80,4 +82,10 @@ void cxgui::Gtkmm3StatusBar::SetTooltip(const std::string& p_tooltipContents)
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return;);
     m_delegate->SetTooltip(p_tooltipContents);
+}
+
+std::unique_ptr<cxgui::ISignal<cxgui::EventPropagation, cxgui::KeyboardKeyPressedEvent>> cxgui::Gtkmm3StatusBar::OnKeyPressed()
+{
+    IF_CONDITION_NOT_MET_DO(m_delegate, return nullptr;);
+    return m_delegate->OnKeyPressed();
 }

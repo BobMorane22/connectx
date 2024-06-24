@@ -28,6 +28,7 @@
 #include <cxmodel/ModelNotificationContext.h>
 #include <cxgui/BoardAnimation.h>
 #include <cxgui/common.h>
+#include <cxgui/EventPropagation.h>
 #include <cxgui/GameViewKeyHandlerStrategyFactory.h>
 #include <cxgui/Gtkmm3GameView.h>
 #include <cxgui/IAbstractConnectXWidgetsFactory.h>
@@ -40,7 +41,9 @@
 #include <cxgui/ILabel.h>
 #include <cxgui/ILayout.h>
 #include <cxgui/IWindow.h>
+#include <cxgui/KeyboardKeyPressedEvent.h>
 #include <cxgui/Margins.h>
+#include <cxgui/NotSupported.h>
 #include <cxgui/WidgetsFactories.h>
 
 namespace
@@ -225,6 +228,10 @@ void cxgui::Gtkmm3GameView::SetTooltip(const std::string& p_tooltipContents)
     return m_viewLayout->SetTooltip(p_tooltipContents);
 }
 
+std::unique_ptr<cxgui::ISignal<cxgui::EventPropagation, cxgui::KeyboardKeyPressedEvent>> cxgui::Gtkmm3GameView::OnKeyPressed()
+{
+    return std::make_unique<NotSupported<EventPropagation, KeyboardKeyPressedEvent>>();
+}
 
 void cxgui::Gtkmm3GameView::Update(cxgui::BoardAnimationNotificationContext p_context, cxgui::BoardAnimationSubject* p_subject)
 {
@@ -384,10 +391,9 @@ void cxgui::Gtkmm3GameView::ConfigureWidgets()
     });
 }
 
-bool cxgui::Gtkmm3GameView::OnKeyPressed(GdkEventKey* p_event)
+cxgui::EventPropagation cxgui::Gtkmm3GameView::OnKeyPressed(KeyboardKeyPressedEvent p_event)
 {
-    IF_PRECONDITION_NOT_MET_DO(p_event, return STOP_EVENT_PROPAGATION;);
-    IF_PRECONDITION_NOT_MET_DO(m_board, return STOP_EVENT_PROPAGATION;);
+    IF_PRECONDITION_NOT_MET_DO(m_board, return cxgui::EventPropagation::STOP;);
 
     // We do not want the user to be able to request another animation
     // while one is already running:
@@ -402,7 +408,7 @@ bool cxgui::Gtkmm3GameView::OnKeyPressed(GdkEventKey* p_event)
         // If we stop the propagation, the main window never gets the event
         // and bugs can occur:
         EnableKeyHandlers();
-        return PROPAGATE_EVENT;
+        return cxgui::EventPropagation::PROPAGATE;
     }
 
     return strategy->Handle(m_controller, *m_board);
@@ -414,20 +420,21 @@ void cxgui::Gtkmm3GameView::EnableKeyHandlers()
     IF_CONDITION_NOT_MET_DO(gtkWindow, return;);
 
     gtkWindow->add_events(Gdk::KEY_PRESS_MASK);
-    m_keysPressedConnection = gtkWindow->signal_key_press_event().connect(
-        [this](GdkEventKey* p_event)
+    m_keysPressedConnection = m_parentWindow.OnKeyPressed()->Connect(
+        [this](KeyboardKeyPressedEvent p_event)
         {
             return OnKeyPressed(p_event);
-        },
-        false);
+        });
 }
 
 void cxgui::Gtkmm3GameView::DisableKeyHandlers()
 {
+    IF_CONDITION_NOT_MET_DO(m_keysPressedConnection, return;);
+
     auto* gtkWindow = dynamic_cast<Gtk::Window*>(&m_parentWindow);
     IF_CONDITION_NOT_MET_DO(gtkWindow, return;);
 
-    m_keysPressedConnection.disconnect();
+    m_keysPressedConnection->Disconnect();
     gtkWindow->add_events(gtkWindow->get_events() & ~Gdk::KEY_PRESS_MASK);
 }
 

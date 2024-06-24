@@ -28,6 +28,7 @@
 #include <cxstd/helpers.h>
 #include <cxgui/common.h>
 #include <cxgui/EnabledState.h>
+#include <cxgui/EventPropagation.h>
 #include <cxgui/Gtkmm3NewPlayersList.h>
 #include <cxgui/IAbstractConnectXWidgetsFactory.h>
 #include <cxgui/IAbstractWidgetsFactory.h>
@@ -37,6 +38,7 @@
 #include <cxgui/ILabel.h>
 #include <cxgui/ILayout.h>
 #include <cxgui/INewGameViewPresenter.h>
+#include <cxgui/KeyboardKeyPressedEvent.h>
 #include <cxgui/Margins.h>
 #include <cxgui/OnOffState.h>
 #include <cxgui/WidgetsFactories.h>
@@ -559,4 +561,10 @@ void cxgui::Gtkmm3NewPlayersList::SetTooltip(
     m_delegate->SetTooltip(p_tooltipContents);
 
     InvariantsCheck();
+}
+
+std::unique_ptr<cxgui::ISignal<cxgui::EventPropagation, cxgui::KeyboardKeyPressedEvent>> cxgui::Gtkmm3NewPlayersList::OnKeyPressed()
+{
+    IF_CONDITION_NOT_MET_DO(m_delegate, return nullptr;);
+    return m_delegate->OnKeyPressed();
 }

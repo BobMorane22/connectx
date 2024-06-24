@@ -23,9 +23,11 @@
 
 #include <glibmm/fileutils.h>
 
+#include <cxgui/EventPropagation.h>
 #include <cxgui/Gtkmm3Window.h>
 #include <cxgui/IAbstractWidgetsFactory.h>
 #include <cxgui/ILayout.h>
+#include <cxgui/KeyboardKeyPressedEvent.h>
 #include <cxgui/WidgetsFactories.h>
 
 void cxgui::Gtkmm3Window::ConfigureWindowIcon()
@@ -130,4 +132,10 @@ void cxgui::Gtkmm3Window::SetTooltip(const std::string& p_tooltipContents)
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return;);
     m_delegate->SetTooltip(p_tooltipContents);
+}
+
+std::unique_ptr<cxgui::ISignal<cxgui::EventPropagation, cxgui::KeyboardKeyPressedEvent>> cxgui::Gtkmm3Window::OnKeyPressed()
+{
+    IF_CONDITION_NOT_MET_DO(m_delegate, return nullptr;);
+    return m_delegate->OnKeyPressed();
 }

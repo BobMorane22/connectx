@@ -49,6 +49,7 @@ public:
     void SetEnabled(cxgui::EnabledState p_enabled) override;
     void SetMargins(const cxgui::Margins& p_newMarginSizes) override;
     void SetTooltip(const std::string& p_tooltipContents) override;
+    std::unique_ptr<cxgui::ISignal<cxgui::EventPropagation, cxgui::KeyboardKeyPressedEvent>> OnKeyPressed() override;
 
     // Mocking:
     [[nodiscard]] const MethodCallSpy<cxgui::EnabledState>& GetSetEnabledSpy() const {return m_setEnabledSpy;}
@@ -61,12 +62,12 @@ private:
 
 size_t WidgetMock::GetWidth() const
 {
-    throw cxunit::NotImplementedException();    
+    throw cxunit::NotImplementedException();
 }
 
 size_t WidgetMock::GetHeight() const
 {
-    throw cxunit::NotImplementedException();    
+    throw cxunit::NotImplementedException();
 }
 
 void WidgetMock::SetEnabled(cxgui::EnabledState p_enabled)
@@ -77,12 +78,17 @@ void WidgetMock::SetEnabled(cxgui::EnabledState p_enabled)
 
 void WidgetMock::SetMargins(const cxgui::Margins& /*p_newMarginSizes*/)
 {
-    throw cxunit::NotImplementedException();    
+    throw cxunit::NotImplementedException();
 }
 
 void WidgetMock::SetTooltip(const std::string& /*p_tooltipContents*/)
 {
-    throw cxunit::NotImplementedException();    
+    throw cxunit::NotImplementedException();
+}
+
+std::unique_ptr<cxgui::ISignal<cxgui::EventPropagation, cxgui::KeyboardKeyPressedEvent>> WidgetMock::OnKeyPressed()
+{
+    throw cxunit::NotImplementedException();
 }
 
 TEST(EnabledStateUpdate, EnabledStateUpdate_ConditionFalse_WidgetDisabled)

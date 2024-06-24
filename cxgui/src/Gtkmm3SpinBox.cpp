@@ -24,7 +24,9 @@
 #include <cxinv/assertion.h>
 #include <cxstd/helpers.h>
 #include <cxgui/EnabledState.h>
+#include <cxgui/EventPropagation.h>
 #include <cxgui/Gtkmm3SpinBox.h>
+#include <cxgui/KeyboardKeyPressedEvent.h>
 #include <cxgui/Margins.h>
 
 cxgui::ISpinBox::Range::Range(const cxgui::ISpinBox::Minimum& p_min,
@@ -65,6 +67,16 @@ void cxgui::Gtkmm3SpinBox::SetDelegate(std::unique_ptr<cxgui::IWidget> p_delegat
     POSTCONDITION(m_delegate);
 }
 
+int cxgui::Gtkmm3SpinBox::GetValue() const
+{
+    const int value = get_value_as_int();
+
+    POSTCONDITION(m_limits.m_min.Get() <= value);
+    POSTCONDITION(m_limits.m_max.Get() >= value);
+
+    return value;
+}
+
 size_t cxgui::Gtkmm3SpinBox::GetWidth() const
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return 0u;);
@@ -95,12 +107,8 @@ void cxgui::Gtkmm3SpinBox::SetTooltip(const std::string& p_tooltipContents)
     m_delegate->SetTooltip(p_tooltipContents);
 }
 
-int cxgui::Gtkmm3SpinBox::GetValue() const
+std::unique_ptr<cxgui::ISignal<cxgui::EventPropagation, cxgui::KeyboardKeyPressedEvent>> cxgui::Gtkmm3SpinBox::OnKeyPressed()
 {
-    const int value = get_value_as_int();
-
-    POSTCONDITION(m_limits.m_min.Get() <= value);
-    POSTCONDITION(m_limits.m_max.Get() >= value);
-
-    return value;
+    IF_CONDITION_NOT_MET_DO(m_delegate, return nullptr;);
+    return m_delegate->OnKeyPressed();
 }

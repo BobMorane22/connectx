@@ -91,6 +91,7 @@ public:
     void SetEnabled(EnabledState p_enabled) override final;
     void SetMargins(const Margins& p_newMarginSizes) override final;
     void SetTooltip(const std::string& p_tooltipContents) override final;
+    [[nodiscard]] std::unique_ptr<ISignal<EventPropagation, KeyboardKeyPressedEvent>> OnKeyPressed() override;
 
 private:
 
