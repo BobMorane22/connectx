@@ -21,8 +21,6 @@
  *
  *************************************************************************************************/
 
-#include <gtkmm/window.h> // Still in use for keyboard events.
-
 #include <cxinv/assertion.h>
 #include <cxmodel/IChip.h>
 #include <cxmodel/ModelNotificationContext.h>
@@ -416,10 +414,8 @@ cxgui::EventPropagation cxgui::Gtkmm3GameView::OnKeyPressed(KeyboardKeyPressedEv
 
 void cxgui::Gtkmm3GameView::EnableKeyHandlers()
 {
-    auto* gtkWindow = dynamic_cast<Gtk::Window*>(&m_parentWindow);
-    IF_CONDITION_NOT_MET_DO(gtkWindow, return;);
+    m_areKeyboardEventsAccepted = true;
 
-    gtkWindow->add_events(Gdk::KEY_PRESS_MASK);
     m_keysPressedConnection = m_parentWindow.OnKeyPressed()->Connect(
         [this](KeyboardKeyPressedEvent p_event)
         {
@@ -431,11 +427,9 @@ void cxgui::Gtkmm3GameView::DisableKeyHandlers()
 {
     IF_CONDITION_NOT_MET_DO(m_keysPressedConnection, return;);
 
-    auto* gtkWindow = dynamic_cast<Gtk::Window*>(&m_parentWindow);
-    IF_CONDITION_NOT_MET_DO(gtkWindow, return;);
-
     m_keysPressedConnection->Disconnect();
-    gtkWindow->add_events(gtkWindow->get_events() & ~Gdk::KEY_PRESS_MASK);
+
+    m_areKeyboardEventsAccepted = false;
 }
 
 void cxgui::Gtkmm3GameView::UpdateChipDropped()

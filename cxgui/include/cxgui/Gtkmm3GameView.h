@@ -137,8 +137,7 @@ private:
     IGameViewPresenter& m_presenter;
     IGameViewController& m_controller;
 
-    // The window containing the view in its main layout.
-    IWindow& m_parentWindow;
+    IWindow& m_parentWindow;                  // The window containing the view in its main layout.
 
     cxgui::ILayout& m_mainLayout;
 
@@ -146,6 +145,8 @@ private:
     const cxmodel::Row m_viewTop;
 
     std::unique_ptr<ILayout> m_viewLayout;
+
+    bool m_areKeyboardEventsAccepted = false;  // Indicates if the window accepts keyboard events or not.
 
     // Controls:
     std::unique_ptr<ILabel> m_title;
@@ -162,7 +163,7 @@ private:
 
     std::unique_ptr<IAnimatedBoard> m_board;
 
-    // Connexions.
+    // Connections:
     std::unique_ptr<IConnection> m_keysPressedConnection;
 };
 
