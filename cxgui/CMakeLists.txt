@@ -34,6 +34,7 @@ add_library(${TARGET_NAME}
   src/GameResolutionDialogController.cpp
   src/GameResolutionDialogPresenterFactory.cpp
   src/GameViewKeyHandlerStrategyFactory.cpp
+  src/gtkmmConversions.cpp
   src/Gtkmm3AboutWindow.cpp
   src/Gtkmm3AbstractWidgetsFactory.cpp
   src/Gtkmm3AbstractConnectXWidgetsFactory.cpp

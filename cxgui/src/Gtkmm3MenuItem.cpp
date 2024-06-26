@@ -27,6 +27,7 @@
 
 #include <cxinv/assertion.h>
 #include <cxgui/EventPropagation.h>
+#include <cxgui/gtkmmConversions.h>
 #include <cxgui/Gtkmm3Connection.h>
 #include <cxgui/Gtkmm3MenuItem.h>
 #include <cxgui/Gtkmm3WidgetDelegate.h>
@@ -37,48 +38,6 @@
 
 namespace
 {
-
-// From a `cxgui::Key`, generate a Gdk key (which is used by Gtkmm).
-// Those keys are carries throuhg a naked `guint` type.
-[[nodiscard]] constexpr guint ToGtkmmKey(const cxgui::Key& p_key)
-{
-    switch(p_key)
-    {
-        case cxgui::Key::F1:
-            return GDK_KEY_F1;
-
-        case cxgui::Key::Q:
-            return GDK_KEY_q;
-
-        case cxgui::Key::Y:
-            return GDK_KEY_y;
-
-        case cxgui::Key::Z:
-            return GDK_KEY_z;
-
-        default:
-            ASSERT_ERROR_MSG("Unknown action key.");
-            break;
-    }
-
-    return GDK_KEY_VoidSymbol;
-}
-
-// From a `cxgui::Key`, generate a Gtk modifier type (which is used by Gtkmm).
-[[nodiscard]]  constexpr Gdk::ModifierType ToGtkmmModifierType(const cxgui::Key& p_key)
-{
-    switch(p_key)
-    {
-        case cxgui::Key::CTRL:
-            return Gdk::ModifierType::CONTROL_MASK;
-
-        default:
-            ASSERT_ERROR_MSG("Unknown modifier key.");
-            break;
-    }
-
-    return ~Gdk::ModifierType::MODIFIER_MASK; // No modifer (all modifiers off).
-}
 
 class Gtkmm3OnTriggeredSignal : public cxgui::ISignal<void>
 {
@@ -174,13 +133,17 @@ void cxgui::Gtkmm3MenuItem::RegisterKeyboardShortcut(const cxgui::KeyboardShortc
     {
         // In this case, we have a modifier as the first key, and an action key
         // as the second key.
-        modifier = ToGtkmmModifierType(p_shortcut.m_first);
-        key = ToGtkmmKey(*p_shortcut.m_second);
+        auto modifierConversion = cxgui::ToGtk<Gdk::ModifierType>(p_shortcut.m_first);
+        modifierConversion.value_or(~Gdk::ModifierType::MODIFIER_MASK);
+
+        auto keyConversion = cxgui::ToGtk<guint>(*p_shortcut.m_second);
+        key = keyConversion.value_or(GDK_KEY_VoidSymbol);
     }
     else
     {
         // In this case, we do not have a modifier. The shortcut consitsts of a single key.
-        key = ToGtkmmKey(p_shortcut.m_first);
+        auto keyConversion = cxgui::ToGtk<guint>(p_shortcut.m_first);
+        key = keyConversion.value_or(GDK_KEY_VoidSymbol);
     }
 
     const Gtk::AccelKey gtkKeyboardShortcut(key, modifier);

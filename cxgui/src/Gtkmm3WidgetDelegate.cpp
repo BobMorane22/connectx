@@ -21,14 +21,12 @@
  *
  *************************************************************************************************/
 
-#include <optional>
-#include <type_traits>
-
 #include <gtkmm/widget.h>
 
 #include <cxinv/assertion.h>
 #include <cxgui/EnabledState.h>
 #include <cxgui/EventPropagation.h>
+#include <cxgui/gtkmmConversions.h>
 #include <cxgui/Gtkmm3Connection.h>
 #include <cxgui/Gtkmm3WidgetDelegate.h>
 #include <cxgui/KeyboardKeyPressedEvent.h>
@@ -36,71 +34,6 @@
 
 namespace
 {
-
-template<typename T>
-struct DependantFalse : std::false_type
-{};
-
-template<typename Target, typename GtkSource>
-[[nodiscard]] std::optional<Target> FromGtk(const GtkSource& /*p_source*/)
-{
-    // This should be explicitely specialized.
-    static_assert(DependantFalse<Target>::value && DependantFalse<GtkSource>::value);
-    return std::nullopt;
-}
-
-template<> 
-[[nodiscard]] std::optional<cxgui::KeyboardKeyPressedEvent> FromGtk(const GdkEventKey& p_event)
-{
-    RETURN_IF(p_event.type != GdkEventType::GDK_KEY_PRESS, std::nullopt);
-
-    switch(p_event.keyval)
-    {
-        case GDK_KEY_Left:
-            return cxgui::KeyboardKeyPressedEvent::KEY_LEFT;
-
-        case GDK_KEY_Right:
-            return cxgui::KeyboardKeyPressedEvent::KEY_RIGHT;
-
-        case GDK_KEY_Down:
-            return cxgui::KeyboardKeyPressedEvent::KEY_DOWN;
-
-        default:
-            break;
-    }
-
-    return std::nullopt;
-}
-
-template<typename GtkTarget, typename Source>
-[[nodiscard]] std::optional<GtkTarget> ToGtk(const Source& /*p_source*/)
-{
-    // This should be explicitely specialized.
-    static_assert(DependantFalse<GtkTarget>::value && DependantFalse<Source>::value);
-    return std::nullopt;
-}
-
-template<>
-[[nodiscard]] std::optional<bool> ToGtk<bool, cxgui::EventPropagation>(const cxgui::EventPropagation& p_propagate)
-{
-    switch(p_propagate)
-    {
-        case cxgui::EventPropagation::PROPAGATE:
-        {
-            // Not handled, so we propagate.
-            return false;
-        }
-        case cxgui::EventPropagation::STOP:
-        {
-            // Handled here, do not propagate.
-            return true;
-        }
-        default:
-            break;
-    };
-
-    return std::nullopt;
-}
 
 class Gtkmm3KeyboardOnKeyPressedEventSignal : public cxgui::ISignal<cxgui::EventPropagation, cxgui::KeyboardKeyPressedEvent>
 {
@@ -118,12 +51,12 @@ public:
         {
             IF_PRECONDITION_NOT_MET_DO(p_event, return true;);
 
-            const auto event = FromGtk<cxgui::KeyboardKeyPressedEvent>(*p_event);
+            const auto event = cxgui::FromGtk<cxgui::KeyboardKeyPressedEvent>(*p_event);
             RETURN_IF(!event.has_value(), true);
 
             const cxgui::EventPropagation propagate = p_slot(event.value());
 
-            const auto isHandled = ToGtk<bool>(propagate);
+            const auto isHandled = cxgui::ToGtk<bool>(propagate);
             IF_CONDITION_NOT_MET_DO(isHandled.has_value(), return true;);
 
             return isHandled.value();

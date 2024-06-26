@@ -21,38 +21,23 @@
  *
  *************************************************************************************************/
 
-#include "gtkmm/messagedialog.h"
 #include <gtkmm/enums.h>
+#include <gtkmm/messagedialog.h>
 
 #include <cxinv/assertion.h>
 #include <cxgui/DialogRole.h>
+#include <cxgui/gtkmmConversions.h>
 #include <cxgui/Gtkmm3Dialog.h>
 
-namespace
-{
-
-[[nodiscard]] Gtk::MessageType ToGtk(cxgui::DialogRole p_role)
-{
-    using namespace cxgui;
-
-    switch(p_role)
-    {
-        case DialogRole::INFORMATION: return Gtk::MESSAGE_INFO;
-        case DialogRole::QUESTION:    return Gtk::MESSAGE_QUESTION;
-        case DialogRole::WARNING:     return Gtk::MESSAGE_WARNING;
-        case DialogRole::ERROR:       return Gtk::MESSAGE_ERROR;
-    }
-
-    ASSERT_ERROR_MSG("Unknown role");
-    return Gtk::MESSAGE_OTHER;
-}
-
-} //namespace
 
 cxgui::Gtkmm3Dialog::Gtkmm3Dialog(cxgui::IWindow& p_parent, DialogRole p_role, const std::string& p_message)
-: Gtk::MessageDialog(dynamic_cast<Gtk::Window&>(p_parent), p_message, true, ToGtk(p_role), Gtk::ButtonsType::BUTTONS_OK, true)
+: Gtk::MessageDialog(dynamic_cast<Gtk::Window&>(p_parent), p_message, true, Gtk::MESSAGE_INFO, Gtk::ButtonsType::BUTTONS_OK, true)
 {
     PRECONDITION(!p_message.empty());
+
+    const auto messageTypeConversion = cxgui::ToGtk<Gtk::MessageType>(p_role);
+    Glib::PropertyProxy<Gtk::MessageType> messageType = property_message_type();
+    messageType.set_value(messageTypeConversion.value_or(Gtk::MESSAGE_OTHER));
 }
 
 int cxgui::Gtkmm3Dialog::Show()

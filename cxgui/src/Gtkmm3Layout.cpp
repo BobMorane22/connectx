@@ -24,43 +24,11 @@
 #include <cxinv/assertion.h>
 #include <cxstd/helpers.h>
 #include <cxgui/EventPropagation.h>
+#include <cxgui/gtkmmConversions.h>
 #include <cxgui/Gtkmm3Layout.h>
 #include <cxgui/IWidget.h>
 #include <cxgui/KeyboardKeyPressedEvent.h>
 #include <cxgui/Margins.h>
-
-namespace
-{
-
-[[nodiscard]] Gtk::Align ToGtk(cxgui::ILayout::VerticalAlignement p_alignement)
-{
-    switch(p_alignement)
-    {
-        case cxgui::ILayout::VerticalAlignement::TOP:    return Gtk::Align::ALIGN_START;
-        case cxgui::ILayout::VerticalAlignement::CENTER: return Gtk::Align::ALIGN_CENTER;
-        case cxgui::ILayout::VerticalAlignement::BOTTOM: return Gtk::Align::ALIGN_END;
-        case cxgui::ILayout::VerticalAlignement::FILL:   return Gtk::Align::ALIGN_FILL;
-    }
-
-    ASSERT_ERROR_MSG("Unknown alignement value");
-    return Gtk::Align::ALIGN_FILL;
-}
-
-[[nodiscard]] Gtk::Align ToGtk(cxgui::ILayout::HorizontalAlignement p_alignement)
-{
-    switch(p_alignement)
-    {
-        case cxgui::ILayout::HorizontalAlignement::LEFT:   return Gtk::Align::ALIGN_START;
-        case cxgui::ILayout::HorizontalAlignement::CENTER: return Gtk::Align::ALIGN_CENTER;
-        case cxgui::ILayout::HorizontalAlignement::RIGHT:  return Gtk::Align::ALIGN_END;
-        case cxgui::ILayout::HorizontalAlignement::FILL:   return Gtk::Align::ALIGN_FILL;
-    }
-
-    ASSERT_ERROR_MSG("Unknown alignement value");
-    return Gtk::Align::ALIGN_FILL;
-}
-
-} // namespace
 
 void cxgui::Gtkmm3Layout::SetDelegate(std::unique_ptr<IWidget> p_delegate)
 {
@@ -84,8 +52,10 @@ void cxgui::Gtkmm3Layout::Register(cxgui::IWidget& p_widget,
     auto* gtkWidget = dynamic_cast<Gtk::Widget*>(&p_widget);
     ASSERT(gtkWidget);
 
-    gtkWidget->set_valign(ToGtk(p_alignement.m_vertical));
-    gtkWidget->set_halign(ToGtk(p_alignement.m_horizontal));
+    const auto verticalAlignementConversion = cxgui::ToGtk<Gtk::Align>(p_alignement.m_vertical);
+    gtkWidget->set_valign(verticalAlignementConversion.value_or(Gtk::ALIGN_FILL));
+    const auto horizontalAlignementConversion = cxgui::ToGtk<Gtk::Align>(p_alignement.m_horizontal);
+    gtkWidget->set_halign(horizontalAlignementConversion.value_or(Gtk::ALIGN_FILL));
 
     gtkWidget->set_hexpand(true);
     gtkWidget->set_vexpand(true);
@@ -103,8 +73,10 @@ void cxgui::Gtkmm3Layout::Register(Gtk::Widget& p_gtkWidget,
     const int width = static_cast<int>(p_column.m_span.Get());
     const int height = static_cast<int>(p_row.m_span.Get());
 
-    p_gtkWidget.set_valign(ToGtk(p_alignement.m_vertical));
-    p_gtkWidget.set_halign(ToGtk(p_alignement.m_horizontal));
+    const auto verticalAlignementConversion = cxgui::ToGtk<Gtk::Align>(p_alignement.m_vertical);
+    p_gtkWidget.set_valign(verticalAlignementConversion.value_or(Gtk::ALIGN_FILL));
+    const auto horizontalAlignementConversion = cxgui::ToGtk<Gtk::Align>(p_alignement.m_horizontal);
+    p_gtkWidget.set_halign(horizontalAlignementConversion.value_or(Gtk::ALIGN_FILL));
 
     p_gtkWidget.set_hexpand(true);
     p_gtkWidget.set_vexpand(true);
