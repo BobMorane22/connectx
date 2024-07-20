@@ -36,14 +36,14 @@ void AbortIfNeeded()
 #endif // ABORT_ON_ERROR
 }
 
-const char* GetLabelAsString(cxinv::AssertLabel p_label)
+const char* GetLabelAsString(cx::inv::AssertLabel p_label)
 {
     switch(p_label)
     {
-        case cxinv::AssertLabel::ASSERTION:     return "Assertion";
-        case cxinv::AssertLabel::PRECONDITION:  return "Precondition";
-        case cxinv::AssertLabel::POSTCONDITION: return "Postcondition";
-        case cxinv::AssertLabel::INVARIANT:     return "Invariant";
+        case cx::inv::AssertLabel::ASSERTION:     return "Assertion";
+        case cx::inv::AssertLabel::PRECONDITION:  return "Precondition";
+        case cx::inv::AssertLabel::POSTCONDITION: return "Postcondition";
+        case cx::inv::AssertLabel::INVARIANT:     return "Invariant";
         default:                                        // LCOV_EXCL_LINE
             std::abort(); // Label type unknown...      // LCOV_EXCL_LINE
     }
@@ -51,7 +51,7 @@ const char* GetLabelAsString(cxinv::AssertLabel p_label)
 
 } // namespace
 
-bool cxinv::HandleAssert(const cxinv::AssertLabel  p_label,
+bool cx::inv::HandleAssert(const cx::inv::AssertLabel  p_label,
                          const bool                p_conditionRes,
                          const char*               p_conditionExpr,
                          const char*               p_fileName,
@@ -66,7 +66,7 @@ bool cxinv::HandleAssert(const cxinv::AssertLabel  p_label,
        !p_fileName      ||
        !p_functionName)
     {
-        std::cerr << __FILE__ << ": Assertion error. Invalid arguments given to cxinv::handleAssert.";
+        std::cerr << __FILE__ << ": Assertion error. Invalid arguments given to cx::inv::handleAssert.";
 
         std::abort();
     }

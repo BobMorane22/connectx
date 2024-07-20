@@ -27,7 +27,7 @@
 #include <memory>
 
 #ifndef NDEBUG
-namespace cxinv
+namespace cx::inv
 {
 
 /*********************************************************************************************//**
@@ -198,7 +198,7 @@ bool HandleAssert(const AssertLabel         p_label,
                         p_message);
 }
 
-} // namespace cxinv
+} // namespace cx::inv
 
 #endif // NDEBUG
 
@@ -215,7 +215,7 @@ bool HandleAssert(const AssertLabel         p_label,
  *      The condition to assert.
  *
  *************************************************************************************************/
-#define ASSERT(p_condition) cxinv::HandleAssert(cxinv::AssertLabel::ASSERTION,  \
+#define ASSERT(p_condition) cx::inv::HandleAssert(cx::inv::AssertLabel::ASSERTION,  \
                                                 static_cast<bool>(p_condition), \
                                                 #p_condition,                   \
                                                 __FILE__,                       \
@@ -243,7 +243,7 @@ bool HandleAssert(const AssertLabel         p_label,
  *      The message to print.
  *
  *************************************************************************************************/
-#define ASSERT_MSG(p_condition, p_message) cxinv::HandleAssert(cxinv::AssertLabel::ASSERTION,  \
+#define ASSERT_MSG(p_condition, p_message) cx::inv::HandleAssert(cx::inv::AssertLabel::ASSERTION,  \
                                                                static_cast<bool>(p_condition), \
                                                                #p_condition,                   \
                                                                __FILE__,                       \
@@ -305,7 +305,7 @@ bool HandleAssert(const AssertLabel         p_label,
  *      The condition to assert.
  *
  *************************************************************************************************/
-#define INL_ASSERT(p_condition) cxinv::HandleAssert(cxinv::AssertLabel::ASSERTION,  \
+#define INL_ASSERT(p_condition) cx::inv::HandleAssert(cx::inv::AssertLabel::ASSERTION,  \
                                                     static_cast<bool>(p_condition), \
                                                     #p_condition,                   \
                                                     __FILE__,                       \
@@ -330,7 +330,7 @@ bool HandleAssert(const AssertLabel         p_label,
  *      The precondition to assert.
  *
  ************************************************************************************************/
-#define PRECONDITION(p_preCondition) cxinv::HandleAssert(cxinv::AssertLabel::PRECONDITION,  \
+#define PRECONDITION(p_preCondition) cx::inv::HandleAssert(cx::inv::AssertLabel::PRECONDITION,  \
                                                          static_cast<bool>(p_preCondition), \
                                                          #p_preCondition,                   \
                                                          __FILE__,                          \
@@ -356,7 +356,7 @@ bool HandleAssert(const AssertLabel         p_label,
  *      The precondition to assert.
  *
  *************************************************************************************************/
-#define INL_PRECONDITION(p_preCondition) cxinv::HandleAssert(cxinv::AssertLabel::PRECONDITION,  \
+#define INL_PRECONDITION(p_preCondition) cx::inv::HandleAssert(cx::inv::AssertLabel::PRECONDITION,  \
                                                              static_cast<bool>(p_preCondition), \
                                                              #p_preCondition,                   \
                                                              __FILE__,                          \
@@ -380,7 +380,7 @@ bool HandleAssert(const AssertLabel         p_label,
  *      The postcondition to assert.
  *
  ************************************************************************************************/
-#define POSTCONDITION(p_postCondition) cxinv::HandleAssert(cxinv::AssertLabel::POSTCONDITION,  \
+#define POSTCONDITION(p_postCondition) cx::inv::HandleAssert(cx::inv::AssertLabel::POSTCONDITION,  \
                                                            static_cast<bool>(p_postCondition), \
                                                            #p_postCondition,                   \
                                                            __FILE__,                           \
@@ -404,7 +404,7 @@ bool HandleAssert(const AssertLabel         p_label,
  *      The invariant to assert.
  *
  ************************************************************************************************/
-#define INVARIANT(p_invariant) cxinv::HandleAssert(cxinv::AssertLabel::INVARIANT,  \
+#define INVARIANT(p_invariant) cx::inv::HandleAssert(cx::inv::AssertLabel::INVARIANT,  \
                                                    static_cast<bool>(p_invariant), \
                                                    #p_invariant,                   \
                                                    __FILE__,                       \

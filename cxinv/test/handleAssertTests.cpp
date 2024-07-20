@@ -31,7 +31,7 @@
 
 TEST_F(HandleAssertTestFixture, /*DISABLED_*/HandleAssert_TrueCondition_ReturnsTrue)
 {
-    ASSERT_TRUE(cxinv::HandleAssert(cxinv::AssertLabel::ASSERTION,
+    ASSERT_TRUE(cx::inv::HandleAssert(cx::inv::AssertLabel::ASSERTION,
                                     (5 > 3),
                                     m_CONDITION_EXPRESSION,
                                     m__FILE_,
@@ -42,7 +42,7 @@ TEST_F(HandleAssertTestFixture, /*DISABLED_*/HandleAssert_TrueCondition_ReturnsT
 
 TEST_F(HandleAssertTestFixture, /*DISABLED_*/HandleAssert_FalseCondition_ReturnsFalse)
 {
-    ASSERT_FALSE(cxinv::HandleAssert(cxinv::AssertLabel::ASSERTION,
+    ASSERT_FALSE(cx::inv::HandleAssert(cx::inv::AssertLabel::ASSERTION,
                                     (3 > 5),
                                      m_CONDITION_EXPRESSION,
                                      m__FILE_,
@@ -52,7 +52,7 @@ TEST_F(HandleAssertTestFixture, /*DISABLED_*/HandleAssert_FalseCondition_Returns
 
 TEST_F(HandleAssertTestFixture, /*DISABLED_*/HandleAssert_AllValidInputsNoMessageAssertion_ValidMessages)
 {
-    cxinv::HandleAssert(cxinv::AssertLabel::ASSERTION,
+    cx::inv::HandleAssert(cx::inv::AssertLabel::ASSERTION,
                         (3 > 5),
                         m_CONDITION_EXPRESSION,
                         m__FILE_,
@@ -60,7 +60,7 @@ TEST_F(HandleAssertTestFixture, /*DISABLED_*/HandleAssert_AllValidInputsNoMessag
                         m__LINE_);
 
     const std::string result = GetStdErrContents();
-    const std::string expected = MakeExpectedMessage(cxinv::AssertLabel::ASSERTION);
+    const std::string expected = MakeExpectedMessage(cx::inv::AssertLabel::ASSERTION);
 
     ASSERT_EQ(result, expected);
 
@@ -70,7 +70,7 @@ TEST_F(HandleAssertTestFixture, /*DISABLED_*/HandleAssert_AllValidInputsNoMessag
 
 TEST_F(HandleAssertTestFixture, /*DISABLED_*/HandleAssert_AllValidInputsNoMessagePrecondition_ValidMessages)
 {
-    cxinv::HandleAssert(cxinv::AssertLabel::PRECONDITION,
+    cx::inv::HandleAssert(cx::inv::AssertLabel::PRECONDITION,
                         (3 > 5),
                         m_CONDITION_EXPRESSION,
                         m__FILE_,
@@ -78,7 +78,7 @@ TEST_F(HandleAssertTestFixture, /*DISABLED_*/HandleAssert_AllValidInputsNoMessag
                         m__LINE_);
 
     const std::string result = GetStdErrContents();
-    const std::string expected = MakeExpectedMessage(cxinv::AssertLabel::PRECONDITION);
+    const std::string expected = MakeExpectedMessage(cx::inv::AssertLabel::PRECONDITION);
 
     ASSERT_EQ(result, expected);
 
@@ -88,7 +88,7 @@ TEST_F(HandleAssertTestFixture, /*DISABLED_*/HandleAssert_AllValidInputsNoMessag
 
 TEST_F(HandleAssertTestFixture, /*DISABLED_*/HandleAssert_AllValidInputsNoMessagePostcondition_ValidMessages)
 {
-    cxinv::HandleAssert(cxinv::AssertLabel::POSTCONDITION,
+    cx::inv::HandleAssert(cx::inv::AssertLabel::POSTCONDITION,
                         (3 > 5),
                         m_CONDITION_EXPRESSION,
                         m__FILE_,
@@ -96,7 +96,7 @@ TEST_F(HandleAssertTestFixture, /*DISABLED_*/HandleAssert_AllValidInputsNoMessag
                         m__LINE_);
 
     const std::string result = GetStdErrContents();
-    const std::string expected = MakeExpectedMessage(cxinv::AssertLabel::POSTCONDITION);
+    const std::string expected = MakeExpectedMessage(cx::inv::AssertLabel::POSTCONDITION);
 
     ASSERT_EQ(result, expected);
 
@@ -106,7 +106,7 @@ TEST_F(HandleAssertTestFixture, /*DISABLED_*/HandleAssert_AllValidInputsNoMessag
 
 TEST_F(HandleAssertTestFixture, /*DISABLED_*/HandleAssert_AllValidInputsNoMessageInvariant_ValidMessages)
 {
-    cxinv::HandleAssert(cxinv::AssertLabel::INVARIANT,
+    cx::inv::HandleAssert(cx::inv::AssertLabel::INVARIANT,
                         (3 > 5),
                         m_CONDITION_EXPRESSION,
                         m__FILE_,
@@ -114,7 +114,7 @@ TEST_F(HandleAssertTestFixture, /*DISABLED_*/HandleAssert_AllValidInputsNoMessag
                         m__LINE_);
 
     const std::string result = GetStdErrContents();
-    const std::string expected = MakeExpectedMessage(cxinv::AssertLabel::INVARIANT);
+    const std::string expected = MakeExpectedMessage(cx::inv::AssertLabel::INVARIANT);
 
     ASSERT_EQ(result, expected);
 
@@ -124,7 +124,7 @@ TEST_F(HandleAssertTestFixture, /*DISABLED_*/HandleAssert_AllValidInputsNoMessag
 
 TEST_F(HandleAssertTestFixture, /*DISABLED_*/HandleAssert_AllValidInputsWithMessageAssertion_ValidMessages)
 {
-    cxinv::HandleAssert(cxinv::AssertLabel::ASSERTION,
+    cx::inv::HandleAssert(cx::inv::AssertLabel::ASSERTION,
                         (3 > 5),
                         m_CONDITION_EXPRESSION,
                         m__FILE_,
@@ -133,7 +133,7 @@ TEST_F(HandleAssertTestFixture, /*DISABLED_*/HandleAssert_AllValidInputsWithMess
                         m_VALID_MESSAGE);
 
     const std::string result = GetStdErrContents();
-    const std::string expected = MakeExpectedMessage(cxinv::AssertLabel::ASSERTION, m_VALID_MESSAGE);
+    const std::string expected = MakeExpectedMessage(cx::inv::AssertLabel::ASSERTION, m_VALID_MESSAGE);
 
     ASSERT_EQ(result, expected);
 
@@ -143,7 +143,7 @@ TEST_F(HandleAssertTestFixture, /*DISABLED_*/HandleAssert_AllValidInputsWithMess
 
 TEST_F(HandleAssertTestFixture, /*DISABLED_*/HandleAssert_AllValidInputsWithMessagePrecondition_ValidMessages)
 {
-    cxinv::HandleAssert(cxinv::AssertLabel::PRECONDITION,
+    cx::inv::HandleAssert(cx::inv::AssertLabel::PRECONDITION,
                         (3 > 5),
                         m_CONDITION_EXPRESSION,
                         m__FILE_,
@@ -152,7 +152,7 @@ TEST_F(HandleAssertTestFixture, /*DISABLED_*/HandleAssert_AllValidInputsWithMess
                         m_VALID_MESSAGE);
 
     const std::string result = GetStdErrContents();
-    const std::string expected = MakeExpectedMessage(cxinv::AssertLabel::PRECONDITION, m_VALID_MESSAGE);
+    const std::string expected = MakeExpectedMessage(cx::inv::AssertLabel::PRECONDITION, m_VALID_MESSAGE);
 
     ASSERT_EQ(result, expected);
 
@@ -162,7 +162,7 @@ TEST_F(HandleAssertTestFixture, /*DISABLED_*/HandleAssert_AllValidInputsWithMess
 
 TEST_F(HandleAssertTestFixture, /*DISABLED_*/HandleAssert_AllValidInputsWithMessagePostcondition_ValidMessages)
 {
-    cxinv::HandleAssert(cxinv::AssertLabel::POSTCONDITION,
+    cx::inv::HandleAssert(cx::inv::AssertLabel::POSTCONDITION,
                         (3 > 5),
                         m_CONDITION_EXPRESSION,
                         m__FILE_,
@@ -171,7 +171,7 @@ TEST_F(HandleAssertTestFixture, /*DISABLED_*/HandleAssert_AllValidInputsWithMess
                         m_VALID_MESSAGE);
 
     const std::string result = GetStdErrContents();
-    const std::string expected = MakeExpectedMessage(cxinv::AssertLabel::POSTCONDITION, m_VALID_MESSAGE);
+    const std::string expected = MakeExpectedMessage(cx::inv::AssertLabel::POSTCONDITION, m_VALID_MESSAGE);
 
     ASSERT_EQ(result, expected);
 
@@ -181,7 +181,7 @@ TEST_F(HandleAssertTestFixture, /*DISABLED_*/HandleAssert_AllValidInputsWithMess
 
 TEST_F(HandleAssertTestFixture, /*DISABLED_*/HandleAssert_AllValidInputsWithMessageInvariant_ValidMessages)
 {
-    cxinv::HandleAssert(cxinv::AssertLabel::INVARIANT,
+    cx::inv::HandleAssert(cx::inv::AssertLabel::INVARIANT,
                         (3 > 5),
                         m_CONDITION_EXPRESSION,
                         m__FILE_,
@@ -190,7 +190,7 @@ TEST_F(HandleAssertTestFixture, /*DISABLED_*/HandleAssert_AllValidInputsWithMess
                         m_VALID_MESSAGE);
 
     const std::string result = GetStdErrContents();
-    const std::string expected = MakeExpectedMessage(cxinv::AssertLabel::INVARIANT, m_VALID_MESSAGE);
+    const std::string expected = MakeExpectedMessage(cx::inv::AssertLabel::INVARIANT, m_VALID_MESSAGE);
 
     ASSERT_EQ(result, expected);
 
@@ -200,7 +200,7 @@ TEST_F(HandleAssertTestFixture, /*DISABLED_*/HandleAssert_AllValidInputsWithMess
 
 TEST_F(HandleAssertTestFixture, /*DISABLED_*/HandleAssert_invalidConditionExpression_ExecutionAborted)
 {
-    ASSERT_DEATH(cxinv::HandleAssert(cxinv::AssertLabel::INVARIANT,
+    ASSERT_DEATH(cx::inv::HandleAssert(cx::inv::AssertLabel::INVARIANT,
                                      (3 > 5),
                                      nullptr,
                                      m__FILE_,
@@ -211,7 +211,7 @@ TEST_F(HandleAssertTestFixture, /*DISABLED_*/HandleAssert_invalidConditionExpres
 
 TEST_F(HandleAssertTestFixture, /*DISABLED_*/HandleAssert_invalidFileName_ExecutionAborted)
 {
-    ASSERT_DEATH(cxinv::HandleAssert(cxinv::AssertLabel::INVARIANT,
+    ASSERT_DEATH(cx::inv::HandleAssert(cx::inv::AssertLabel::INVARIANT,
                                      (3 > 5),
                                      m_CONDITION_EXPRESSION,
                                      nullptr,
@@ -222,7 +222,7 @@ TEST_F(HandleAssertTestFixture, /*DISABLED_*/HandleAssert_invalidFileName_Execut
 
 TEST_F(HandleAssertTestFixture, /*DISABLED_*/HandleAssert_invalidFunctionName_ExecutionAborted)
 {
-    ASSERT_DEATH(cxinv::HandleAssert(cxinv::AssertLabel::INVARIANT,
+    ASSERT_DEATH(cx::inv::HandleAssert(cx::inv::AssertLabel::INVARIANT,
                                      (3 > 5),
                                      m_CONDITION_EXPRESSION,
                                      m__FILE_,

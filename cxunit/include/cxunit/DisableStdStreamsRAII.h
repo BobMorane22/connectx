@@ -127,7 +127,7 @@ private:
 /*************************************************************************************************
  * @brief Test assertions occured.
  *
- * Assertions types are defined in cxinv. In release, this does nothing.
+ * Assertions types are defined in `cx::inv`. In release, this does nothing.
  *
  * @param p_streamRedirector
  *      A stream redirector. This class must implement the `GetStdErrContents` method. As

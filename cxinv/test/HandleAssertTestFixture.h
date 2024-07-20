@@ -32,7 +32,7 @@
 #include <cxinv/assertion.h>
 
 /*********************************************************************************************//**
- * @brief Test fixture for the class @c cxinv::HandleAssert function.
+ * @brief Test fixture for the class @c cx::inv::HandleAssert function.
  *
  * This fixture guarantees correct disabling/enabling of the standard streams through RAII.
  *
@@ -45,7 +45,7 @@ public:
     std::string GetStdOutContents() const;
     std::string GetStdErrContents() const;
 
-    std::string MakeExpectedMessage(cxinv::AssertLabel p_label, const char* p_message = nullptr) const;
+    std::string MakeExpectedMessage(cx::inv::AssertLabel p_label, const char* p_message = nullptr) const;
 
 
 protected:

@@ -25,11 +25,11 @@
  * @ingroup assertmacros
  * @ingroup contractmacros
 
- * @namespace cxinv
+ * @namespace cx::inv
  *
  * @brief Defensive programming facilities.
  *
- * The `cxinv` namespace contains facilities related to defensing programming. @ref contractmacros
+ * The `cx::inv` namespace contains facilities related to defensing programming. @ref contractmacros
  * "Contract checking macros", and various types of other @ref assertmacros "Defensive programming macros".
  *
  *************************************************************************************************/

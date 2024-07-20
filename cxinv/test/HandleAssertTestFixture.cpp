@@ -35,11 +35,11 @@ std::string HandleAssertTestFixture::GetStdErrContents() const
     return m_disableStreamsRAII.GetStdErrContents();
 }
 
-std::string HandleAssertTestFixture::MakeExpectedMessage(cxinv::AssertLabel p_label, const char* p_message) const
+std::string HandleAssertTestFixture::MakeExpectedMessage(cx::inv::AssertLabel p_label, const char* p_message) const
 {
     std::ostringstream stream;
 
-    if(p_label == cxinv::AssertLabel::ASSERTION)
+    if(p_label == cx::inv::AssertLabel::ASSERTION)
     {
         stream << "Assertion failed at ";
     }
@@ -47,15 +47,15 @@ std::string HandleAssertTestFixture::MakeExpectedMessage(cxinv::AssertLabel p_la
     {
         switch(p_label)
         {
-            case cxinv::AssertLabel::PRECONDITION:
+            case cx::inv::AssertLabel::PRECONDITION:
                 stream << "Precondition";
                 break;
 
-            case cxinv::AssertLabel::POSTCONDITION:
+            case cx::inv::AssertLabel::POSTCONDITION:
                 stream << "Postcondition";
                 break;
 
-            case cxinv::AssertLabel::INVARIANT:
+            case cx::inv::AssertLabel::INVARIANT:
                 stream << "Invariant";
                 break;
 
