@@ -17,7 +17,7 @@
 #---------------------------------------------------------------------------------------------------
 
 if [ -z "$1" ]; then
-    echo "Error : mo replacement value has been specified."
+    echo "Error : no replacement value has been specified."
     return;
 fi
 
@@ -29,8 +29,9 @@ fi
 oldValue=$1
 newValue=$2
 
-find . -name *.cpp | xargs sed -i "s/${oldValue}/${newValue}/"
-find . -name *.cc | xargs sed -i "s/${oldValue}/${newValue}/"
-find . -name *.h | xargs sed -i "s/${oldValue}/${newValue}/"
-find . -name *.hpp | xargs sed -i "s/${oldValue}/${newValue}/"
-find . -name *.ipp | xargs sed -i "s/${oldValue}/${newValue}/"
+cx -f "cpp" "${oldValue}" "${newValue}"
+cx -f "cc"  "${oldValue}" "${newValue}"
+cx -f "h"   "${oldValue}" "${newValue}"
+cx -f "hpp" "${oldValue}" "${newValue}"
+cx -f "ipp" "${oldValue}" "${newValue}"
+cx -f "dox" "${oldValue}" "${newValue}"
