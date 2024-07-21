@@ -35,7 +35,7 @@
 namespace
 {
 
-class Gtkmm3KeyboardOnKeyPressedEventSignal : public cxgui::ISignal<cxgui::EventPropagation, cxgui::KeyboardKeyPressedEvent>
+class Gtkmm3KeyboardOnKeyPressedEventSignal : public cx::gui::ISignal<cx::gui::EventPropagation, cx::gui::KeyboardKeyPressedEvent>
 {
 
 public:
@@ -45,18 +45,18 @@ public:
     {
     }
 
-    [[nodiscard]] std::unique_ptr<cxgui::IConnection> Connect(const std::function<cxgui::EventPropagation(cxgui::KeyboardKeyPressedEvent)>& p_slot)
+    [[nodiscard]] std::unique_ptr<cx::gui::IConnection> Connect(const std::function<cx::gui::EventPropagation(cx::gui::KeyboardKeyPressedEvent)>& p_slot)
     {
         const auto gtkSlot = [p_slot](GdkEventKey* p_event)
         {
             IF_PRECONDITION_NOT_MET_DO(p_event, return true;);
 
-            const auto event = cxgui::FromGtk<cxgui::KeyboardKeyPressedEvent>(*p_event);
+            const auto event = cx::gui::FromGtk<cx::gui::KeyboardKeyPressedEvent>(*p_event);
             RETURN_IF(!event.has_value(), true);
 
-            const cxgui::EventPropagation propagate = p_slot(event.value());
+            const cx::gui::EventPropagation propagate = p_slot(event.value());
 
-            const auto isHandled = cxgui::ToGtk<bool>(propagate);
+            const auto isHandled = cx::gui::ToGtk<bool>(propagate);
             IF_CONDITION_NOT_MET_DO(isHandled.has_value(), return true;);
 
             return isHandled.value();
@@ -65,7 +65,7 @@ public:
         sigc::connection gtkConnection = m_widget.signal_key_press_event().connect(gtkSlot, false);
         IF_CONDITION_NOT_MET_DO(gtkConnection.connected(), return nullptr;);
 
-        return std::make_unique<cxgui::Gtkmm3Connection>(gtkConnection);
+        return std::make_unique<cx::gui::Gtkmm3Connection>(gtkConnection);
     }
 
 private:
@@ -75,7 +75,7 @@ private:
 
 } // namespace
 
-void cxgui::Gtkmm3WidgetDelegate::SetUnderlying(Gtk::Widget* p_underlying)
+void cx::gui::Gtkmm3WidgetDelegate::SetUnderlying(Gtk::Widget* p_underlying)
 {
     PRECONDITION(p_underlying);
 
@@ -84,7 +84,7 @@ void cxgui::Gtkmm3WidgetDelegate::SetUnderlying(Gtk::Widget* p_underlying)
     POSTCONDITION(m_underlying);
 }
 
-size_t cxgui::Gtkmm3WidgetDelegate::GetWidth() const
+size_t cx::gui::Gtkmm3WidgetDelegate::GetWidth() const
 {
     IF_PRECONDITION_NOT_MET_DO(m_underlying, return 0u;);
 
@@ -94,7 +94,7 @@ size_t cxgui::Gtkmm3WidgetDelegate::GetWidth() const
     return static_cast<size_t>(width);
 }
 
-size_t cxgui::Gtkmm3WidgetDelegate::GetHeight() const {
+size_t cx::gui::Gtkmm3WidgetDelegate::GetHeight() const {
     IF_PRECONDITION_NOT_MET_DO(m_underlying, return 0u;);
 
     const int height = m_underlying->get_height();
@@ -103,14 +103,14 @@ size_t cxgui::Gtkmm3WidgetDelegate::GetHeight() const {
     return static_cast<size_t>(height);
 }
 
-void cxgui::Gtkmm3WidgetDelegate::SetEnabled(EnabledState p_enabled)
+void cx::gui::Gtkmm3WidgetDelegate::SetEnabled(EnabledState p_enabled)
 {
     IF_PRECONDITION_NOT_MET_DO(m_underlying, return;);
 
     m_underlying->set_sensitive(p_enabled == EnabledState::Enabled ? true : false);
 }
 
-void cxgui::Gtkmm3WidgetDelegate::SetMargins(const Margins& p_newMarginSizes)
+void cx::gui::Gtkmm3WidgetDelegate::SetMargins(const Margins& p_newMarginSizes)
 {
     IF_PRECONDITION_NOT_MET_DO(m_underlying, return;);
 
@@ -125,14 +125,14 @@ void cxgui::Gtkmm3WidgetDelegate::SetMargins(const Margins& p_newMarginSizes)
     m_underlying->set_margin_bottom(bottom);
 }
 
-void cxgui::Gtkmm3WidgetDelegate::SetTooltip(const std::string& p_tooltipContents)
+void cx::gui::Gtkmm3WidgetDelegate::SetTooltip(const std::string& p_tooltipContents)
 {
     IF_PRECONDITION_NOT_MET_DO(m_underlying, return;);
 
     m_underlying->set_tooltip_text(p_tooltipContents);
 }
 
-std::unique_ptr<cxgui::ISignal<cxgui::EventPropagation, cxgui::KeyboardKeyPressedEvent>> cxgui::Gtkmm3WidgetDelegate::OnKeyPressed()
+std::unique_ptr<cx::gui::ISignal<cx::gui::EventPropagation, cx::gui::KeyboardKeyPressedEvent>> cx::gui::Gtkmm3WidgetDelegate::OnKeyPressed()
 {
     IF_PRECONDITION_NOT_MET_DO(m_underlying, return nullptr;);
 

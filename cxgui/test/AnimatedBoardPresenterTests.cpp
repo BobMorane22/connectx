@@ -31,7 +31,7 @@
 namespace
 {
 
-class GameViewPresenterMock : public cxgui::IGameViewPresenter
+class GameViewPresenterMock : public cx::gui::IGameViewPresenter
 {
 
 public:
@@ -50,7 +50,7 @@ public:
         m_botTarget = 5u;
     }
 
-    // cxgui::IGameViewPresenter (not used):
+    // cx::gui::IGameViewPresenter (not used):
     std::string GetGameViewTitle() const override {throw cx::unit::NotImplementedException();}
     cxmodel::ChipColor GetGameViewNextPlayerChipColor() const override {throw cx::unit::NotImplementedException();}
     std::string GetGameViewActivePlayerLabelText() const override {throw cx::unit::NotImplementedException();}
@@ -58,12 +58,12 @@ public:
     std::string GetGameViewActivePlayerName() const override {throw cx::unit::NotImplementedException();}
     std::string GetGameViewNextPlayerName() const override {throw cx::unit::NotImplementedException();}
 
-    // cxgui::IGameViewPresenter (wrapped by the cxgui::AnimatedBoardPresenter):
+    // cx::gui::IGameViewPresenter (wrapped by the cx::gui::AnimatedBoardPresenter):
     cxmodel::ChipColor GetGameViewActivePlayerChipColor() const override {return m_activePlayerChipColor;}
     size_t GetGameViewBoardWidth() const override {return m_boardWidth;}
     size_t GetGameViewBoardHeight() const override {return m_boardHeight;}
-    [[nodiscard]] cxgui::Color GetGameViewBoardColor() const override {return cxgui::Color{8481u, 8481u, 51143u};}
-    [[nodiscard]] cxgui::Color GetGameViewColumnHighlightColor() const override {return cxgui::Color{19660u, 19660u, 19660u, 32767u};}
+    [[nodiscard]] cx::gui::Color GetGameViewBoardColor() const override {return cx::gui::Color{8481u, 8481u, 51143u};}
+    [[nodiscard]] cx::gui::Color GetGameViewColumnHighlightColor() const override {return cx::gui::Color{19660u, 19660u, 19660u, 32767u};}
     const ChipColors& GetGameViewChipColors() const override {return m_boardColors;}
     [[nodiscard]] virtual bool IsCurrentPlayerABot() const {return false;};
     [[nodiscard]] virtual size_t GetBotTarget() const {return m_botTarget;};
@@ -102,11 +102,11 @@ public:
         m_underlyingPresenter = std::make_unique<GameViewPresenterMock>();
         EXPECT_TRUE(m_underlyingPresenter);
 
-        m_presenter = std::make_unique<cxgui::AnimatedBoardPresenter>(*m_underlyingPresenter);
+        m_presenter = std::make_unique<cx::gui::AnimatedBoardPresenter>(*m_underlyingPresenter);
         EXPECT_TRUE(m_presenter);
     }
 
-    cxgui::AnimatedBoardPresenter& GetPresenter()
+    cx::gui::AnimatedBoardPresenter& GetPresenter()
     {
         EXPECT_TRUE(m_presenter);
         return *m_presenter;
@@ -120,7 +120,7 @@ public:
 
 private:
 
-    std::unique_ptr<cxgui::AnimatedBoardPresenter> m_presenter;
+    std::unique_ptr<cx::gui::AnimatedBoardPresenter> m_presenter;
     std::unique_ptr<GameViewPresenterMock> m_underlyingPresenter;
 
 };
@@ -135,7 +135,7 @@ TEST_F(AnimatedBoardPresenterTestFixture, /*DISABLED_*/Sync_NoChangeToModel_Sync
     const cxmodel::Height boardHeightBefore = presenter.GetBoardHeight();
     const cxmodel::Width boardWidthBefore = presenter.GetBoardWidth();
     const cxmodel::ChipColor activePlayerChipColorBefore = presenter.GetActivePlayerChipColor();
-    const cxgui::IGameViewPresenter::ChipColors boardColorsBefore = presenter.GetBoardChipColors();
+    const cx::gui::IGameViewPresenter::ChipColors boardColorsBefore = presenter.GetBoardChipColors();
     const cxmodel::Column botTargetBefore = presenter.GetBotTarget();
 
     // No changes were made to the underlying presenter, but we sync anyway:
@@ -145,7 +145,7 @@ TEST_F(AnimatedBoardPresenterTestFixture, /*DISABLED_*/Sync_NoChangeToModel_Sync
     const cxmodel::Height boardHeightAfter = presenter.GetBoardHeight();
     const cxmodel::Width boardWidthAfter = presenter.GetBoardWidth();
     const cxmodel::ChipColor activePlayerChipColorAfter = presenter.GetActivePlayerChipColor();
-    const cxgui::IGameViewPresenter::ChipColors boardColorsAfter = presenter.GetBoardChipColors();
+    const cx::gui::IGameViewPresenter::ChipColors boardColorsAfter = presenter.GetBoardChipColors();
     const cxmodel::Column botTargetAfter = presenter.GetBotTarget();
 
     // Everything should match:
@@ -170,7 +170,7 @@ TEST_F(AnimatedBoardPresenterTestFixture, /*DISABLED_*/Sync_ChangesToModel_Syncs
     const cxmodel::Height boardHeightBefore = presenter.GetBoardHeight();
     const cxmodel::Width boardWidthBefore = presenter.GetBoardWidth();
     const cxmodel::ChipColor activePlayerChipColorBefore = presenter.GetActivePlayerChipColor();
-    const cxgui::IGameViewPresenter::ChipColors boardColorsBefore = presenter.GetBoardChipColors();
+    const cx::gui::IGameViewPresenter::ChipColors boardColorsBefore = presenter.GetBoardChipColors();
     const cxmodel::Column botTargetBefore = presenter.GetBotTarget();
 
     // We update the underlying presenter and sync:
@@ -181,7 +181,7 @@ TEST_F(AnimatedBoardPresenterTestFixture, /*DISABLED_*/Sync_ChangesToModel_Syncs
     const cxmodel::Height boardHeightAfter = presenter.GetBoardHeight();
     const cxmodel::Width boardWidthAfter = presenter.GetBoardWidth();
     const cxmodel::ChipColor activePlayerChipColorAfter = presenter.GetActivePlayerChipColor();
-    const cxgui::IGameViewPresenter::ChipColors boardColorsAfter = presenter.GetBoardChipColors();
+    const cx::gui::IGameViewPresenter::ChipColors boardColorsAfter = presenter.GetBoardChipColors();
     const cxmodel::Column botTargetAfter = presenter.GetBotTarget();
 
     // Returned values should be updated:
@@ -210,12 +210,12 @@ TEST_F(AnimatedBoardPresenterTestFixture, /*DISABLED_*/GetBoardWidth_ValidPresen
 
 TEST_F(AnimatedBoardPresenterTestFixture, /*DISABLED_*/GetGameViewBoardColor_ValidPresenter_BoardColorReturned)
 {
-    ASSERT_TRUE((GetPresenter().GetGameViewBoardColor() == cxgui::Color{8481u, 8481u, 51143u}));
+    ASSERT_TRUE((GetPresenter().GetGameViewBoardColor() == cx::gui::Color{8481u, 8481u, 51143u}));
 }
 
 TEST_F(AnimatedBoardPresenterTestFixture, /*DISABLED_*/GetGameViewColumnHighlightColor_ValidPresenter_ColumnHighlightColorReturned)
 {
-    ASSERT_TRUE((GetPresenter().GetGameViewColumnHighlightColor() == cxgui::Color{19660u, 19660u, 19660u, 32767u}));
+    ASSERT_TRUE((GetPresenter().GetGameViewColumnHighlightColor() == cx::gui::Color{19660u, 19660u, 19660u, 32767u}));
 }
 
 TEST_F(AnimatedBoardPresenterTestFixture, /*DISABLED_*/GetActivePlayerChipColor_ValidPresenter_ActivePlayerChipColorReturned)

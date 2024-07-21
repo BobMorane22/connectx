@@ -53,11 +53,11 @@ namespace
 {
 
 void DisplayWarningDialog(
-    const cxgui::IAbstractWidgetsFactory& p_widgetsFactory,
-    cxgui::IWindow& p_parent,
+    const cx::gui::IAbstractWidgetsFactory& p_widgetsFactory,
+    cx::gui::IWindow& p_parent,
     const std::string& p_message)
 {
-    using namespace cxgui;
+    using namespace cx::gui;
 
     IF_PRECONDITION_NOT_MET_DO(!p_message.empty(), return;);
 
@@ -71,12 +71,12 @@ void DisplayWarningDialog(
 
 } // namespace
 
-cxgui::Gtkmm3NewGameView::Gtkmm3NewGameView(
+cx::gui::Gtkmm3NewGameView::Gtkmm3NewGameView(
     WidgetsFactories& p_widgetsFactories,
     INewGameViewPresenter& p_presenter,
     INewGameViewController& p_controller,
     IWindow& p_parentWindow,
-    cxgui::ILayout& p_mainLayout,
+    cx::gui::ILayout& p_mainLayout,
     const cxmodel::Column& p_viewLeft,
     const cxmodel::Row& p_viewTop)
  : m_widgetsFactories{p_widgetsFactories}
@@ -158,59 +158,59 @@ cxgui::Gtkmm3NewGameView::Gtkmm3NewGameView(
     POSTCONDITION(m_playersSectionTitle);
 }
 
-void cxgui::Gtkmm3NewGameView::Activate()
+void cx::gui::Gtkmm3NewGameView::Activate()
 {
    m_mainLayout.Register(*m_viewLayout,
                          {m_viewTop, ILayout::RowSpan{1u}},
                          {m_viewLeft, ILayout::ColumnSpan{2u}});
 }
 
-void cxgui::Gtkmm3NewGameView::DeActivate()
+void cx::gui::Gtkmm3NewGameView::DeActivate()
 {
     // Nothing to do...
 }
 
-void cxgui::Gtkmm3NewGameView::Update(cxmodel::ModelNotificationContext /*p_context*/)
+void cx::gui::Gtkmm3NewGameView::Update(cxmodel::ModelNotificationContext /*p_context*/)
 {
     // Noting to do...
 }
 
-size_t cxgui::Gtkmm3NewGameView::GetWidth() const 
+size_t cx::gui::Gtkmm3NewGameView::GetWidth() const 
 {
     return m_viewLayout->GetWidth();
 }
 
-size_t cxgui::Gtkmm3NewGameView::GetHeight() const 
+size_t cx::gui::Gtkmm3NewGameView::GetHeight() const 
 {
     return m_viewLayout->GetHeight();
 }
 
-void cxgui::Gtkmm3NewGameView::SetEnabled(EnabledState p_enabled) 
+void cx::gui::Gtkmm3NewGameView::SetEnabled(EnabledState p_enabled) 
 {
     return m_viewLayout->SetEnabled(p_enabled);
 }
 
-void cxgui::Gtkmm3NewGameView::SetMargins(const Margins& p_newMarginSizes) 
+void cx::gui::Gtkmm3NewGameView::SetMargins(const Margins& p_newMarginSizes) 
 {
     return m_viewLayout->SetMargins(p_newMarginSizes);
 }
 
-void cxgui::Gtkmm3NewGameView::SetTooltip(const std::string& p_tooltipContents)
+void cx::gui::Gtkmm3NewGameView::SetTooltip(const std::string& p_tooltipContents)
 {
     return m_viewLayout->SetTooltip(p_tooltipContents);
 }
 
-std::unique_ptr<cxgui::ISignal<cxgui::EventPropagation, cxgui::KeyboardKeyPressedEvent>> cxgui::Gtkmm3NewGameView::OnKeyPressed()
+std::unique_ptr<cx::gui::ISignal<cx::gui::EventPropagation, cx::gui::KeyboardKeyPressedEvent>> cx::gui::Gtkmm3NewGameView::OnKeyPressed()
 {
     return std::make_unique<NotSupported<EventPropagation, KeyboardKeyPressedEvent>>();
 }
 
-void cxgui::Gtkmm3NewGameView::SetLayout()
+void cx::gui::Gtkmm3NewGameView::SetLayout()
 {
     constexpr cxmodel::Column column0{0u};
     constexpr cxmodel::Column column1{1u};
-    constexpr cxgui::ILayout::ColumnSpan singleColumnSpan{1u};
-    constexpr cxgui::ILayout::ColumnSpan fullColumnSpan{2u};
+    constexpr cx::gui::ILayout::ColumnSpan singleColumnSpan{1u};
+    constexpr cx::gui::ILayout::ColumnSpan fullColumnSpan{2u};
 
     constexpr cxmodel::Row row0{0u};
     constexpr cxmodel::Row row1{1u};
@@ -222,14 +222,14 @@ void cxgui::Gtkmm3NewGameView::SetLayout()
     constexpr cxmodel::Row row7{7u};
     constexpr cxmodel::Row row8{8u};
     constexpr cxmodel::Row row9{9u};
-    constexpr cxgui::ILayout::RowSpan singleRowSpan{1u};
+    constexpr cx::gui::ILayout::RowSpan singleRowSpan{1u};
 
     constexpr ILayout::Alignement hAlignLeft{
         ILayout::VerticalAlignement::FILL,
         ILayout::HorizontalAlignement::LEFT
     };
 
-    m_viewLayout->SetColumnSpacingMode(cxgui::ILayout::ColumnSpacingMode::EQUAL);
+    m_viewLayout->SetColumnSpacingMode(cx::gui::ILayout::ColumnSpacingMode::EQUAL);
 
     m_viewLayout->Register(*m_title,               {row0,  singleRowSpan}, {column0, fullColumnSpan}              );
     m_viewLayout->Register(*m_gameSectionTitle,    {row1,  singleRowSpan}, {column0, fullColumnSpan},   hAlignLeft);
@@ -247,7 +247,7 @@ void cxgui::Gtkmm3NewGameView::SetLayout()
     m_viewLayout->Register(*m_startButton,         {row9,  singleRowSpan}, {column0, fullColumnSpan}              );
 }
 
-void cxgui::Gtkmm3NewGameView::PopulateWidgets()
+void cx::gui::Gtkmm3NewGameView::PopulateWidgets()
 {
     m_title->UpdateContents(m_presenter.GetNewGameViewTitle());
 
@@ -261,7 +261,7 @@ void cxgui::Gtkmm3NewGameView::PopulateWidgets()
     m_playersSectionTitle->UpdateContents(m_presenter.GetNewGameViewPlayersSectionTitle());
 }
 
-void cxgui::Gtkmm3NewGameView::ConfigureWidgets()
+void cx::gui::Gtkmm3NewGameView::ConfigureWidgets()
 {
     // Window margin:
     m_mainLayout.SetMargins({
@@ -304,7 +304,7 @@ void cxgui::Gtkmm3NewGameView::ConfigureWidgets()
 
     // Add/Remove player buttons:
     m_removePlayerButton->SetMargins({TopMargin{0u}, BottomMargin{CONTROL_BOTTOM_MARGIN}, LeftMargin{0u}, RightMargin{0u}});
-    m_addPlayerButton->SetMargins({cxgui::TopMargin{0u}, cxgui::BottomMargin{CONTROL_BOTTOM_MARGIN}, cxgui::LeftMargin{0u}, cxgui::RightMargin{0u}});
+    m_addPlayerButton->SetMargins({cx::gui::TopMargin{0u}, cx::gui::BottomMargin{CONTROL_BOTTOM_MARGIN}, cx::gui::LeftMargin{0u}, cx::gui::RightMargin{0u}});
     EnabledStateUpdate(*m_removePlayerButton, m_presenter.CanRemoveAnotherPlayer(m_playersList->GetNbPlayers()));
     EnabledStateUpdate(*m_addPlayerButton, m_presenter.CanAddAnotherPlayer(m_playersList->GetNbPlayers()));
 
@@ -312,7 +312,7 @@ void cxgui::Gtkmm3NewGameView::ConfigureWidgets()
     m_startButton->SetMargins({TopMargin{0u}, BottomMargin{CONTROL_BOTTOM_MARGIN}, LeftMargin{0u}, RightMargin{0u}});
 }
 
-void cxgui::Gtkmm3NewGameView::OnStart()
+void cx::gui::Gtkmm3NewGameView::OnStart()
 {
     cxmodel::NewGameInformation gameInformation;
     const auto extractionStatus = ExtractGameInformation(gameInformation);
@@ -339,7 +339,7 @@ void cxgui::Gtkmm3NewGameView::OnStart()
     m_controller.OnStart(std::move(gameInformation));
 }
 
-void cxgui::Gtkmm3NewGameView::OnAddPlayer()
+void cx::gui::Gtkmm3NewGameView::OnAddPlayer()
 {
     if(m_presenter.CanAddAnotherPlayer(m_playersList->GetNbPlayers()))
     {
@@ -351,23 +351,23 @@ void cxgui::Gtkmm3NewGameView::OnAddPlayer()
     EnabledStateUpdate(*m_addPlayerButton, m_presenter.CanAddAnotherPlayer(m_playersList->GetNbPlayers()));
 }
 
-void cxgui::Gtkmm3NewGameView::OnRemovePlayer()
+void cx::gui::Gtkmm3NewGameView::OnRemovePlayer()
 {
     if(m_presenter.CanRemoveAnotherPlayer(m_playersList->GetNbPlayers()))
     {
         IF_CONDITION_NOT_MET_DO(m_playersList->RemovePlayer(m_playersList->GetNbPlayers() - 1), return;);
 
         // One row is gone. We need to resize the window as to leave no extra space.
-        m_parentWindow.ShrinkToContents(cxgui::IWindow::Orientation::VERTICAL);
+        m_parentWindow.ShrinkToContents(cx::gui::IWindow::Orientation::VERTICAL);
     }
 
     EnabledStateUpdate(*m_removePlayerButton, m_presenter.CanRemoveAnotherPlayer(m_playersList->GetNbPlayers()));
     EnabledStateUpdate(*m_addPlayerButton, m_presenter.CanAddAnotherPlayer(m_playersList->GetNbPlayers()));
 }
 
-void cxgui::Gtkmm3NewGameView::OnNewGameParameterUpdated()
+void cx::gui::Gtkmm3NewGameView::OnNewGameParameterUpdated()
 {
-    m_startButton->SetEnabled(cxgui::EnabledState::Disabled);
+    m_startButton->SetEnabled(cx::gui::EnabledState::Disabled);
 
     cxmodel::NewGameInformation gameInformation;
     const auto extractionStatus = ExtractGameInformation(gameInformation);
@@ -386,11 +386,11 @@ void cxgui::Gtkmm3NewGameView::OnNewGameParameterUpdated()
 
     // At this points all user inputs have been validated and a new game can be started.
     // We make the start button sensitive:
-    m_startButton->SetEnabled(cxgui::EnabledState::Enabled);
+    m_startButton->SetEnabled(cx::gui::EnabledState::Enabled);
     m_startButton->SetTooltip("");
 }
 
-cxmodel::Status cxgui::Gtkmm3NewGameView::ExtractGameInformation(cxmodel::NewGameInformation& p_gameInformation) const
+cxmodel::Status cx::gui::Gtkmm3NewGameView::ExtractGameInformation(cxmodel::NewGameInformation& p_gameInformation) const
 {
     // Extracting game parameters from the GUI:
     const int valueInARow = m_inARowSpinBox->GetValue();

@@ -34,7 +34,7 @@
  * it possible to only override the necessary members.
  *
  ************************************************************************************************/
-class NewGameViewPresenterMock : public cxgui::INewGameViewPresenter
+class NewGameViewPresenterMock : public cx::gui::INewGameViewPresenter
 {
 
 public:

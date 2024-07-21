@@ -31,7 +31,7 @@ namespace cxmodel
     enum class ModelNotificationContext;
 }
 
-namespace cxgui
+namespace cx::gui
 {
 
 /*********************************************************************************************//**
@@ -86,6 +86,6 @@ public:
 
 };
 
-} // namespace cxgui
+} // namespace cx::gui
 
 #endif // IVIEW_H_DADC38E4_6E1F_4DED_A6F9_5D66F1558C89

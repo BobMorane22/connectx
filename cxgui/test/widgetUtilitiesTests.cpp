@@ -38,25 +38,25 @@ struct MethodCallSpy
     std::vector<std::tuple<MethodArgumentTypes...>> m_arguments;
 };
 
-class WidgetMock : public cxgui::IWidget
+class WidgetMock : public cx::gui::IWidget
 {
 
 public:
 
-    // cxgui::IWidget:
+    // cx::gui::IWidget:
     [[nodiscard]] size_t GetWidth() const override;
     [[nodiscard]] size_t GetHeight() const override;
-    void SetEnabled(cxgui::EnabledState p_enabled) override;
-    void SetMargins(const cxgui::Margins& p_newMarginSizes) override;
+    void SetEnabled(cx::gui::EnabledState p_enabled) override;
+    void SetMargins(const cx::gui::Margins& p_newMarginSizes) override;
     void SetTooltip(const std::string& p_tooltipContents) override;
-    std::unique_ptr<cxgui::ISignal<cxgui::EventPropagation, cxgui::KeyboardKeyPressedEvent>> OnKeyPressed() override;
+    std::unique_ptr<cx::gui::ISignal<cx::gui::EventPropagation, cx::gui::KeyboardKeyPressedEvent>> OnKeyPressed() override;
 
     // Mocking:
-    [[nodiscard]] const MethodCallSpy<cxgui::EnabledState>& GetSetEnabledSpy() const {return m_setEnabledSpy;}
+    [[nodiscard]] const MethodCallSpy<cx::gui::EnabledState>& GetSetEnabledSpy() const {return m_setEnabledSpy;}
 
 private:
 
-    MethodCallSpy<cxgui::EnabledState> m_setEnabledSpy;
+    MethodCallSpy<cx::gui::EnabledState> m_setEnabledSpy;
 
 };
 
@@ -70,13 +70,13 @@ size_t WidgetMock::GetHeight() const
     throw cx::unit::NotImplementedException();
 }
 
-void WidgetMock::SetEnabled(cxgui::EnabledState p_enabled)
+void WidgetMock::SetEnabled(cx::gui::EnabledState p_enabled)
 {
     m_setEnabledSpy.m_numberOfCalls += 1u;
-    m_setEnabledSpy.m_arguments.emplace_back(std::tuple<cxgui::EnabledState>(p_enabled));
+    m_setEnabledSpy.m_arguments.emplace_back(std::tuple<cx::gui::EnabledState>(p_enabled));
 }
 
-void WidgetMock::SetMargins(const cxgui::Margins& /*p_newMarginSizes*/)
+void WidgetMock::SetMargins(const cx::gui::Margins& /*p_newMarginSizes*/)
 {
     throw cx::unit::NotImplementedException();
 }
@@ -86,7 +86,7 @@ void WidgetMock::SetTooltip(const std::string& /*p_tooltipContents*/)
     throw cx::unit::NotImplementedException();
 }
 
-std::unique_ptr<cxgui::ISignal<cxgui::EventPropagation, cxgui::KeyboardKeyPressedEvent>> WidgetMock::OnKeyPressed()
+std::unique_ptr<cx::gui::ISignal<cx::gui::EventPropagation, cx::gui::KeyboardKeyPressedEvent>> WidgetMock::OnKeyPressed()
 {
     throw cx::unit::NotImplementedException();
 }
@@ -98,10 +98,10 @@ TEST(EnabledStateUpdate, EnabledStateUpdate_ConditionFalse_WidgetDisabled)
 
     ASSERT_TRUE(spy.m_numberOfCalls == 0u);
 
-    cxgui::EnabledStateUpdate(widget, false);
+    cx::gui::EnabledStateUpdate(widget, false);
 
     ASSERT_TRUE(spy.m_numberOfCalls == 1u);
-    ASSERT_TRUE(std::get<0>(spy.m_arguments[0u]) == cxgui::EnabledState::Disabled);
+    ASSERT_TRUE(std::get<0>(spy.m_arguments[0u]) == cx::gui::EnabledState::Disabled);
 }
 
 TEST(EnabledStateUpdate, EnabledStateUpdate_ConditionTrue_WidgetEnabled)
@@ -111,8 +111,8 @@ TEST(EnabledStateUpdate, EnabledStateUpdate_ConditionTrue_WidgetEnabled)
 
     ASSERT_TRUE(spy.m_numberOfCalls == 0u);
 
-    cxgui::EnabledStateUpdate(widget, true);
+    cx::gui::EnabledStateUpdate(widget, true);
 
     ASSERT_TRUE(spy.m_numberOfCalls == 1u);
-    ASSERT_TRUE(std::get<0>(spy.m_arguments[0u]) == cxgui::EnabledState::Enabled);
+    ASSERT_TRUE(std::get<0>(spy.m_arguments[0u]) == cx::gui::EnabledState::Enabled);
 }

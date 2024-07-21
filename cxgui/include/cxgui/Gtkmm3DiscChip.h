@@ -26,7 +26,7 @@
 
 #include <cxgui/Gtkmm3Chip.h>
 
-namespace cxgui
+namespace cx::gui
 {
 
 /**********************************************************************************************//**
@@ -55,11 +55,11 @@ public:
 
 private:
 
-    // cxgui::Gtkmm3Chip:
+    // cx::gui::Gtkmm3Chip:
     void DrawBorder(const Cairo::RefPtr<Cairo::Context>& p_context) const override final;
 
 };
 
-} // namespace cxgui
+} // namespace cx::gui
 
 #endif // GTKMM3DISCCHIP_H_62BF81A1_A9D1_400E_83C5_2B8FE8CF5B34

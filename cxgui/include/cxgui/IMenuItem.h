@@ -30,14 +30,14 @@
 #include <cxgui/ISignal.h>
 #include <cxgui/IWidget.h>
 
-namespace cxgui
+namespace cx::gui
 {
 
 class KeyboardShortcut;
 
 }
 
-namespace cxgui
+namespace cx::gui
 {
 
 /**********************************************************************************************//**
@@ -47,8 +47,8 @@ namespace cxgui
  * carry out actions. Note that if registered, the keyboard shortcut will appear to the right of
  * the menu item.
  *
- * @see cxgui::IMenuBar
- * @see cxgui::IMenu
+ * @see cx::gui::IMenuBar
+ * @see cx::gui::IMenu
  *
  *************************************************************************************************/
 class IMenuItem : public IWidget
@@ -87,6 +87,6 @@ public:
 
 };
 
-} // namespace cxgui
+} // namespace cx::gui
 
 #endif // IMENUITEM_H_6ADCF292_5D13_4DC8_8DE9_542AD2F0602B

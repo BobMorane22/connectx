@@ -31,7 +31,7 @@
 namespace
 {
 
-class Gtkmm3OnSelectionChangedSignal : public cxgui::ISignal<void>
+class Gtkmm3OnSelectionChangedSignal : public cx::gui::ISignal<void>
 {
 
 public:
@@ -41,12 +41,12 @@ public:
     {
     }
 
-    [[nodiscard]] std::unique_ptr<cxgui::IConnection> Connect(const std::function<void()>& p_slot) override
+    [[nodiscard]] std::unique_ptr<cx::gui::IConnection> Connect(const std::function<void()>& p_slot) override
     {
         sigc::connection gtkConnection = m_comboBox.signal_changed().connect(p_slot);
         IF_CONDITION_NOT_MET_DO(gtkConnection.connected(), return nullptr;);
 
-        return std::make_unique<cxgui::Gtkmm3Connection>(gtkConnection);
+        return std::make_unique<cx::gui::Gtkmm3Connection>(gtkConnection);
     }
 
 private:
@@ -57,12 +57,12 @@ private:
 
 } // namespace
 
-cxgui::Gtkmm3ColorPicker::Record::Record()
+cx::gui::Gtkmm3ColorPicker::Record::Record()
 {
     add(m_color);
 }
 
-cxgui::Gtkmm3ColorPicker::Gtkmm3ColorPicker(const std::vector<Color>& p_colors)
+cx::gui::Gtkmm3ColorPicker::Gtkmm3ColorPicker(const std::vector<Color>& p_colors)
 {
     PRECONDITION(!p_colors.empty());
 
@@ -76,14 +76,14 @@ cxgui::Gtkmm3ColorPicker::Gtkmm3ColorPicker(const std::vector<Color>& p_colors)
         AddElement(color, true);
     }
 
-    set_cell_data_func(m_renderer, sigc::mem_fun(*this, &cxgui::Gtkmm3ColorPicker::OnRenderCell));
+    set_cell_data_func(m_renderer, sigc::mem_fun(*this, &cx::gui::Gtkmm3ColorPicker::OnRenderCell));
     pack_start(m_renderer);
 
     // Connect signal handler:
     signal_changed().connect([this](){OnComboChanged();});
 }
 
-void cxgui::Gtkmm3ColorPicker::SetDelegate(std::unique_ptr<IWidget> p_delegate)
+void cx::gui::Gtkmm3ColorPicker::SetDelegate(std::unique_ptr<IWidget> p_delegate)
 {
     IF_PRECONDITION_NOT_MET_DO(p_delegate, return;);
 
@@ -92,9 +92,9 @@ void cxgui::Gtkmm3ColorPicker::SetDelegate(std::unique_ptr<IWidget> p_delegate)
     POSTCONDITION(m_delegate);
 }
 
-cxgui::Color cxgui::Gtkmm3ColorPicker::GetCurrentSelection() const 
+cx::gui::Color cx::gui::Gtkmm3ColorPicker::GetCurrentSelection() const 
 {
-    cxgui::Color currentColor{0, 0, 0, 0}; // Transparent...
+    cx::gui::Color currentColor{0, 0, 0, 0}; // Transparent...
 
     Gtk::TreeModel::iterator iter = get_active();
 
@@ -107,7 +107,7 @@ cxgui::Color cxgui::Gtkmm3ColorPicker::GetCurrentSelection() const
             // Get the data for the selected row, using our knowledge of the tree model:
             const Gdk::RGBA color = row[m_records.m_color];
 
-            currentColor = cxgui::Color{color.get_red_u(), color.get_green_u(), color.get_blue_u()};
+            currentColor = cx::gui::Color{color.get_red_u(), color.get_green_u(), color.get_blue_u()};
         }
     }
 
@@ -116,7 +116,7 @@ cxgui::Color cxgui::Gtkmm3ColorPicker::GetCurrentSelection() const
     return currentColor;
 }
 
-void cxgui::Gtkmm3ColorPicker::SetCurrentSelection(const cxgui::Color& p_color) 
+void cx::gui::Gtkmm3ColorPicker::SetCurrentSelection(const cx::gui::Color& p_color) 
 {
     IF_PRECONDITION_NOT_MET_DO(bool(m_treeModel), return;);
 
@@ -137,48 +137,48 @@ void cxgui::Gtkmm3ColorPicker::SetCurrentSelection(const cxgui::Color& p_color)
     }
 }
 
-std::unique_ptr<cxgui::ISignal<void>> cxgui::Gtkmm3ColorPicker::OnSelectionChanged()
+std::unique_ptr<cx::gui::ISignal<void>> cx::gui::Gtkmm3ColorPicker::OnSelectionChanged()
 {
     return std::make_unique<Gtkmm3OnSelectionChangedSignal>(*this);
 }
 
-size_t cxgui::Gtkmm3ColorPicker::GetWidth() const 
+size_t cx::gui::Gtkmm3ColorPicker::GetWidth() const 
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return 0u;);
     return m_delegate->GetWidth();
 }
 
-size_t cxgui::Gtkmm3ColorPicker::GetHeight() const 
+size_t cx::gui::Gtkmm3ColorPicker::GetHeight() const 
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return 0u;);
     return m_delegate->GetHeight();
 }
 
-void cxgui::Gtkmm3ColorPicker::SetEnabled(EnabledState p_enabled) 
+void cx::gui::Gtkmm3ColorPicker::SetEnabled(EnabledState p_enabled) 
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return;);
     m_delegate->SetEnabled(p_enabled);
 }
 
-void cxgui::Gtkmm3ColorPicker::SetMargins(const Margins& p_newMarginSizes) 
+void cx::gui::Gtkmm3ColorPicker::SetMargins(const Margins& p_newMarginSizes) 
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return;);
     m_delegate->SetMargins(p_newMarginSizes);
 }
 
-void cxgui::Gtkmm3ColorPicker::SetTooltip(const std::string& p_tooltipContents)
+void cx::gui::Gtkmm3ColorPicker::SetTooltip(const std::string& p_tooltipContents)
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return;);
     m_delegate->SetTooltip(p_tooltipContents);
 }
 
-std::unique_ptr<cxgui::ISignal<cxgui::EventPropagation, cxgui::KeyboardKeyPressedEvent>> cxgui::Gtkmm3ColorPicker::OnKeyPressed()
+std::unique_ptr<cx::gui::ISignal<cx::gui::EventPropagation, cx::gui::KeyboardKeyPressedEvent>> cx::gui::Gtkmm3ColorPicker::OnKeyPressed()
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return nullptr;);
     return m_delegate->OnKeyPressed();
 }
 
-void cxgui::Gtkmm3ColorPicker::AddElement(const cxgui::Color& p_color, bool p_setActive)
+void cx::gui::Gtkmm3ColorPicker::AddElement(const cx::gui::Color& p_color, bool p_setActive)
 {
     IF_PRECONDITION_NOT_MET_DO(bool(m_treeModel), return;);
 
@@ -197,7 +197,7 @@ void cxgui::Gtkmm3ColorPicker::AddElement(const cxgui::Color& p_color, bool p_se
     INVARIANT(bool(m_treeModel));
 }
 
-void cxgui::Gtkmm3ColorPicker::OnRenderCell(const Gtk::TreeModel::const_iterator& iter)
+void cx::gui::Gtkmm3ColorPicker::OnRenderCell(const Gtk::TreeModel::const_iterator& iter)
 {
     auto row = *iter;
     const Gdk::RGBA color = row[m_records.m_color];
@@ -212,9 +212,9 @@ void cxgui::Gtkmm3ColorPicker::OnRenderCell(const Gtk::TreeModel::const_iterator
     INVARIANT(bool(m_treeModel));
 }
 
-void cxgui::Gtkmm3ColorPicker::OnComboChanged()
+void cx::gui::Gtkmm3ColorPicker::OnComboChanged()
 {
-    const cxgui::Color currentColor = GetCurrentSelection();
+    const cx::gui::Color currentColor = GetCurrentSelection();
     Gdk::RGBA currentGdkColor;
     currentGdkColor.set_rgba_u(currentColor.R(), currentColor.G(), currentColor.B());
 

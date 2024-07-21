@@ -27,7 +27,7 @@
 #include "Gtkmm3Window.h"
 #include "cxgui/WidgetsFactories.h"
 
-namespace cxgui
+namespace cx::gui
 {
     class IButton;
     class IGameResolutionDialogController;
@@ -36,7 +36,7 @@ namespace cxgui
     class WidgetsFactories;
 }
 
-namespace cxgui
+namespace cx::gui
 {
 
 /*********************************************************************************************//**
@@ -87,13 +87,13 @@ private:
     const std::unique_ptr<IGameResolutionDialogPresenter> m_presenter;
     const std::unique_ptr<IGameResolutionDialogController> m_controller;
 
-    cxgui::WidgetsFactories& m_widgetsFactories;
+    cx::gui::WidgetsFactories& m_widgetsFactories;
     std::unique_ptr<ILabel> m_title;
     std::unique_ptr<ILabel> m_message;
     std::unique_ptr<IButton> m_startNewGame;
 
 };
 
-} // namespace cxgui
+} // namespace cx::gui
 
 #endif // GTKMM3GAMERESOLUTIONDIALOG_H_E524D346_789D_4165_ABD3_4B876F7FBBD7

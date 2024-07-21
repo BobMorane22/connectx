@@ -27,12 +27,12 @@ namespace
     const std::string NO_MESSAGE = "";
 }
 
-std::string cxgui::StatusBarPresenter::GetStatusBarMessage() const
+std::string cx::gui::StatusBarPresenter::GetStatusBarMessage() const
 {
     return m_statusBarMessage;
 }
 
-void cxgui::StatusBarPresenter::Update(cxmodel::ModelNotificationContext p_context, cxmodel::ModelSubject* p_subject)
+void cx::gui::StatusBarPresenter::Update(cxmodel::ModelNotificationContext p_context, cxmodel::ModelSubject* p_subject)
 {
     if(p_subject)
     {
@@ -42,7 +42,7 @@ void cxgui::StatusBarPresenter::Update(cxmodel::ModelNotificationContext p_conte
     }
 }
 
-std::string cxgui::MakeStatusBarContextString(cxmodel::ModelNotificationContext p_context)
+std::string cx::gui::MakeStatusBarContextString(cxmodel::ModelNotificationContext p_context)
 {
     switch(p_context)
     {

@@ -31,7 +31,7 @@ namespace cxmodel
 
 #include "IAboutWindowPresenter.h"
 
-namespace cxgui
+namespace cx::gui
 {
 
 /*********************************************************************************************//**
@@ -53,7 +53,7 @@ public:
 
     ~AboutWindowPresenter() override = default;
 
-    // cxgui::IAboutWindowPresenter:
+    // cx::gui::IAboutWindowPresenter:
     std::string GetWindowTitle() const override;
     std::string GetApplicationName() const override;
     std::string GetVersionNumber() const override;
@@ -70,6 +70,6 @@ private:
     std::string m_versionNumber;
 };
 
-} // namespace cxgui
+} // namespace cx::gui
 
 #endif // ABOUTWINDOWPRESENTER_H_FF0579FF_28AC_4A2E_8900_B3D1A73C3E38

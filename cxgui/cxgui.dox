@@ -22,11 +22,11 @@
  *************************************************************************************************/
 
 /**********************************************************************************************//**
- * @namespace cxgui
+ * @namespace cx::gui
  *
  * @brief Connect X related widgets.
  *
- * The `cxgui` namespace contains all widgets specific to Connect X, as well as facilities to
+ * The `cx::gui` namespace contains all widgets specific to Connect X, as well as facilities to
  * work with them.
  *
  *************************************************************************************************/

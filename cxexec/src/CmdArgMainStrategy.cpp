@@ -38,7 +38,7 @@ cx::CmdArgMainStrategy::CmdArgMainStrategy(int argc, char *argv[], cx::ModelRefe
     argc = 1;
 
     const UIManagerFactory factory{argc, argv, p_model};
-    m_uiMgr = factory.Create(cxgui::WidgetsToolkit::GTKMM3);
+    m_uiMgr = factory.Create(cx::gui::WidgetsToolkit::GTKMM3);
 
     POSTCONDITION(m_uiMgr);
 }

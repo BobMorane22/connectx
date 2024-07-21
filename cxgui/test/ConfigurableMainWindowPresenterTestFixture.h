@@ -59,7 +59,7 @@ public:
      * @return The presenter.
      *
      ********************************************************************************************/
-    cxgui::IMainWindowPresenter& GetPresenter();
+    cx::gui::IMainWindowPresenter& GetPresenter();
 
     /******************************************************************************************//**
      * @brief Sets a new `IConnectXGameInformation` compatible model.
@@ -127,7 +127,7 @@ public:
 
 private:
 
-    std::unique_ptr<cxgui::IMainWindowPresenter> m_presenter;
+    std::unique_ptr<cx::gui::IMainWindowPresenter> m_presenter;
 
     std::unique_ptr<cxmodel::IConnectXGameInformation> m_modelAsGameInformation;
     std::unique_ptr<cxmodel::IConnectXLimits> m_modelAsLimits;

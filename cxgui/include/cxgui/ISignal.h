@@ -27,7 +27,7 @@
 #include <functional>
 #include <memory>
 
-namespace cxgui
+namespace cx::gui
 {
 
 /**********************************************************************************************//**
@@ -36,7 +36,7 @@ namespace cxgui
  * When a signal handler is "connected" to a signal, it means that when the signal is triggered,
  * the connected signal handler will be executed.
  *
- * @see cxgui::ISignal
+ * @see cx::gui::ISignal
  *
  *************************************************************************************************/
 class IConnection
@@ -80,7 +80,7 @@ public:
  * @tparam Arguments
  *      The associated signal handler's arguments' types.
  *
- * @see cxgui::IConnection
+ * @see cx::gui::IConnection
  *
  *************************************************************************************************/
 template<typename ReturnType, typename... Arguments>
@@ -109,6 +109,6 @@ public:
 
 };
 
-} // namespace cxgui
+} // namespace cx::gui
 
 #endif // ISIGNAL_H_8B7B8C55_0270_4508_9512_C441816FBCAE

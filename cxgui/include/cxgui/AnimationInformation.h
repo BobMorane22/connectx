@@ -29,7 +29,7 @@
 #include "BoardAnimation.h"
 #include "IAnimatedBoardModel.h"
 
-namespace cxgui
+namespace cx::gui
 {
 
 /**********************************************************************************************//**
@@ -91,10 +91,10 @@ struct AnimationInformations
     T m_currentDisplacement = T{0.0};
 
     /** Indicates the current animation (if any). */
-    std::optional<cxgui::BoardAnimation> m_currentAnimation = std::nullopt;
+    std::optional<cx::gui::BoardAnimation> m_currentAnimation = std::nullopt;
 
 };
 
-} // namespace cxgui
+} // namespace cx::gui
 
 #endif // ANIMATIONINFORMATION_H_DB49E138_EC0C_4907_8C76_6E11A5CED74D

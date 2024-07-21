@@ -24,7 +24,7 @@
 #ifndef BOARDANIMATION_H_6A5C10D5_BDB2_4709_8B3F_3493764805CC
 #define BOARDANIMATION_H_6A5C10D5_BDB2_4709_8B3F_3493764805CC
 
-namespace cxgui
+namespace cx::gui
 {
 
 /******************************************************************************************//**
@@ -44,6 +44,6 @@ enum class BoardAnimation
     REINITIALIZE,
 };
 
-} // namespace cxgui
+} // namespace cx::gui
 
 #endif // BOARDANIMATION_H_6A5C10D5_BDB2_4709_8B3F_3493764805CC

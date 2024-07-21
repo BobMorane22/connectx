@@ -26,7 +26,7 @@
 
 #include <cxmodel/ChipColor.h>
 
-namespace cxgui
+namespace cx::gui
 {
 
 /******************************************************************************************//**
@@ -35,7 +35,7 @@ namespace cxgui
  ********************************************************************************************/
 using Color = cxmodel::Color<unsigned short int>;
 
-static_assert(sizeof(cxgui::Color) == sizeof(cxmodel::ChipColor));
+static_assert(sizeof(cx::gui::Color) == sizeof(cxmodel::ChipColor));
 
 /** Dialog global margin (on each sides). */
 inline constexpr int DIALOG_SIDE_MARGIN = 10;
@@ -64,6 +64,6 @@ inline constexpr bool STOP_EVENT_PROPAGATION = true;
 /** Handler event propagation (top level entities are aware of the event). */
 inline constexpr bool PROPAGATE_EVENT = false;
 
-} // namespace cxgui
+} // namespace cx::gui
 
 #endif // COMMON_H_E38DC86D_677A_4508_9D75_1B9C3C899679

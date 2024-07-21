@@ -28,7 +28,7 @@
 
 #include <cxgui/IWidget.h>
 
-namespace cxgui
+namespace cx::gui
 {
     enum class OnOffState;
 
@@ -36,7 +36,7 @@ namespace cxgui
     class ISignal;
 }
 
-namespace cxgui
+namespace cx::gui
 {
 
 /**********************************************************************************************//**
@@ -46,7 +46,7 @@ namespace cxgui
  * are not possible.
  *
  *************************************************************************************************/
-class IOnOffSwitch : public cxgui::IWidget
+class IOnOffSwitch : public cx::gui::IWidget
 {
 
 public:
@@ -77,6 +77,6 @@ public:
 
 };
 
-} // namespace cxgui
+} // namespace cx::gui
 
 #endif // IONOFFSWITCH_H_19A0A6E4_FA1D_4E24_B071_BB06B97181AC

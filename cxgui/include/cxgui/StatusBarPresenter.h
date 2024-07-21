@@ -26,7 +26,7 @@
 
 #include "IStatusBarPresenter.h"
 
-namespace cxgui
+namespace cx::gui
 {
 
 /*********************************************************************************************//**
@@ -65,7 +65,7 @@ private:
  *************************************************************************************************/
 [[nodiscard]] std::string MakeStatusBarContextString(cxmodel::ModelNotificationContext p_context);
 
-} // namespace cxgui
+} // namespace cx::gui
 
 
 

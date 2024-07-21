@@ -33,7 +33,7 @@ MainWindowPresenterTestFixture::MainWindowPresenterTestFixture()
     m_model = std::make_unique<MainWindowPresenterModelMock>();
     EXPECT_TRUE(m_model);
 
-    m_presenter = std::make_unique<cxgui::MainWindowPresenter>(*m_model, *m_model, *m_model, *m_model);
+    m_presenter = std::make_unique<cx::gui::MainWindowPresenter>(*m_model, *m_model, *m_model, *m_model);
     EXPECT_TRUE(m_presenter);
 
     m_model->Attach(m_presenter.get());
@@ -45,19 +45,19 @@ void MainWindowPresenterTestFixture::SendNotification(cxmodel::ModelNotification
     m_model->SendNotification(p_context);
 }
 
-cxgui::IMainWindowPresenter& MainWindowPresenterTestFixture::GetPresenter()
+cx::gui::IMainWindowPresenter& MainWindowPresenterTestFixture::GetPresenter()
 {
     EXPECT_TRUE(m_presenter);
     return *m_presenter;
 }
 
-cxgui::IGameViewPresenter& MainWindowPresenterTestFixture::GetGameViewPresenter()
+cx::gui::IGameViewPresenter& MainWindowPresenterTestFixture::GetGameViewPresenter()
 {
     EXPECT_TRUE(m_presenter);
     return *m_presenter;
 }
 
-cxgui::INewGameViewPresenter& MainWindowPresenterTestFixture::GetNewGameViewPresenter()
+cx::gui::INewGameViewPresenter& MainWindowPresenterTestFixture::GetNewGameViewPresenter()
 {
     EXPECT_TRUE(m_presenter);
     return *m_presenter;

@@ -30,7 +30,7 @@ TEST(ExtractRawUserInput, ExtractRawUserInputUL_ValidInput_ReturnsSuccess)
     const std::string raw = "1";
 
     size_t result = 0u;
-    const auto status = cxgui::extractRawUserInput(raw, result);
+    const auto status = cx::gui::extractRawUserInput(raw, result);
 
     ASSERT_TRUE(status.IsSuccess());
 }
@@ -40,7 +40,7 @@ TEST(ExtractRawUserInput, ExtractRawUserInputUL_ValidInput_ValueExtracted)
     const std::string raw = "1";
 
     size_t result = 0u;
-    const auto status = cxgui::extractRawUserInput(raw, result);
+    const auto status = cx::gui::extractRawUserInput(raw, result);
 
     ASSERT_EQ(1u, result);
 }
@@ -50,7 +50,7 @@ TEST(ExtractRawUserInput, ExtractRawUserInputUL_InvalidAlphaInput_ErrorReturned)
     const std::string raw = "a";
 
     size_t result = 0u;
-    const auto status = cxgui::extractRawUserInput(raw, result);
+    const auto status = cx::gui::extractRawUserInput(raw, result);
 
     ASSERT_FALSE(status.IsSuccess());
     ASSERT_EQ("Numerical values expected.", status.GetMessage());
@@ -61,7 +61,7 @@ TEST(ExtractRawUserInput, ExtractRawUserInputUL_InvalidNumericalInput_ErrorRetur
     const std::string raw = "99999999999999999999999";
 
     size_t result = 0u;
-    const auto status = cxgui::extractRawUserInput(raw, result);
+    const auto status = cx::gui::extractRawUserInput(raw, result);
 
     ASSERT_FALSE(status.IsSuccess());
     ASSERT_EQ("Numerical values out of range.", status.GetMessage());

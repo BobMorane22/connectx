@@ -85,9 +85,9 @@ void DrawChip(const Cairo::RefPtr<Cairo::Context>& p_context,
               double p_radius,
               const cxmodel::ChipColor& p_backgroundColor)
 {
-    const cxgui::Gtkmm3ContextRestoreRAII contextRestoreRAII{p_context};
+    const cx::gui::Gtkmm3ContextRestoreRAII contextRestoreRAII{p_context};
 
-    cxgui::MakeCircularPath(p_context, p_centerPosition, p_radius);
+    cx::gui::MakeCircularPath(p_context, p_centerPosition, p_radius);
 
     // Set background color:
     SetSourceColor(p_context, p_backgroundColor);
@@ -98,10 +98,10 @@ void DrawChip(const Cairo::RefPtr<Cairo::Context>& p_context,
 
 } // namespace
 
-cxgui::Gtkmm3AnimatedBoard::Gtkmm3AnimatedBoard(const IGameViewPresenter& p_presenter, const cxgui::AnimationSpeed& p_speed)
+cx::gui::Gtkmm3AnimatedBoard::Gtkmm3AnimatedBoard(const IGameViewPresenter& p_presenter, const cx::gui::AnimationSpeed& p_speed)
 {
-    m_presenter = std::make_unique<cxgui::AnimatedBoardPresenter>(p_presenter);
-    m_animationModel = std::make_unique<cxgui::AnimatedBoardModel>(*m_presenter, p_speed);
+    m_presenter = std::make_unique<cx::gui::AnimatedBoardPresenter>(p_presenter);
+    m_animationModel = std::make_unique<cx::gui::AnimatedBoardModel>(*m_presenter, p_speed);
 
     // Customize width and height according to window dimension.
     signal_realize().connect([this](){
@@ -125,7 +125,7 @@ cxgui::Gtkmm3AnimatedBoard::Gtkmm3AnimatedBoard(const IGameViewPresenter& p_pres
         m_animationModel->Update({height, width}, true);
         m_animationModel->ResetChipPositions();
 
-        BoardAnimationSubject::Notify(cxgui::BoardAnimationNotificationContext::ANIMATION_MODEL_VALID);
+        BoardAnimationSubject::Notify(cx::gui::BoardAnimationNotificationContext::ANIMATION_MODEL_VALID);
 
         // We no longer need this handler since it is only useful to initialize the model
         // before using it.
@@ -152,15 +152,15 @@ cxgui::Gtkmm3AnimatedBoard::Gtkmm3AnimatedBoard(const IGameViewPresenter& p_pres
 
 // Performs an "frame increment". This is called on every tick (m_FPS times/sec) and
 // keeps track of all displacements. It also notifies when the animation completes.
-void cxgui::Gtkmm3AnimatedBoard::PerformChipAnimation(BoardAnimation p_animation)
+void cx::gui::Gtkmm3AnimatedBoard::PerformChipAnimation(BoardAnimation p_animation)
 {
     AnimationInformations<cx::math::Width>* horizontalAnimationInfo = &m_moveRightAnimationInfo;
-    if(p_animation == cxgui::BoardAnimation::MOVE_CHIP_LEFT_ONE_COLUMN)
+    if(p_animation == cx::gui::BoardAnimation::MOVE_CHIP_LEFT_ONE_COLUMN)
     {
         horizontalAnimationInfo = &m_moveLeftAnimationInfo;
     }
 
-    if(p_animation == cxgui::BoardAnimation::REINITIALIZE)
+    if(p_animation == cx::gui::BoardAnimation::REINITIALIZE)
     {
         m_boardElementsCache.Clear();
     }
@@ -176,7 +176,7 @@ void cxgui::Gtkmm3AnimatedBoard::PerformChipAnimation(BoardAnimation p_animation
     }
 }
 
-void cxgui::Gtkmm3AnimatedBoard::SetDelegate(std::unique_ptr<IWidget> p_delegate)
+void cx::gui::Gtkmm3AnimatedBoard::SetDelegate(std::unique_ptr<IWidget> p_delegate)
 {
     IF_PRECONDITION_NOT_MET_DO(p_delegate, return;);
 
@@ -185,47 +185,47 @@ void cxgui::Gtkmm3AnimatedBoard::SetDelegate(std::unique_ptr<IWidget> p_delegate
     POSTCONDITION(m_delegate);
 }
 
-const cxmodel::Column& cxgui::Gtkmm3AnimatedBoard::GetCurrentColumn() const
+const cxmodel::Column& cx::gui::Gtkmm3AnimatedBoard::GetCurrentColumn() const
 {
     return m_animationModel->GetCurrentColumn();
 }
 
-cxmodel::ChipColor cxgui::Gtkmm3AnimatedBoard::GetCurrentChipColor() const
+cxmodel::ChipColor cx::gui::Gtkmm3AnimatedBoard::GetCurrentChipColor() const
 {
     return m_presenter->GetActivePlayerChipColor();
 }
 
-size_t cxgui::Gtkmm3AnimatedBoard::GetWidth() const 
+size_t cx::gui::Gtkmm3AnimatedBoard::GetWidth() const 
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return 0u;);
     return m_delegate->GetWidth();
 }
 
-size_t cxgui::Gtkmm3AnimatedBoard::GetHeight() const 
+size_t cx::gui::Gtkmm3AnimatedBoard::GetHeight() const 
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return 0u;);
     return m_delegate->GetHeight();
 }
 
-void cxgui::Gtkmm3AnimatedBoard::SetEnabled(EnabledState p_enabled) 
+void cx::gui::Gtkmm3AnimatedBoard::SetEnabled(EnabledState p_enabled) 
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return;);
     m_delegate->SetEnabled(p_enabled);
 }
 
-void cxgui::Gtkmm3AnimatedBoard::SetMargins(const Margins& p_newMarginSizes) 
+void cx::gui::Gtkmm3AnimatedBoard::SetMargins(const Margins& p_newMarginSizes) 
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return;);
     m_delegate->SetMargins(p_newMarginSizes);
 }
 
-void cxgui::Gtkmm3AnimatedBoard::SetTooltip(const std::string& p_tooltipContents)
+void cx::gui::Gtkmm3AnimatedBoard::SetTooltip(const std::string& p_tooltipContents)
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return;);
     m_delegate->SetTooltip(p_tooltipContents);
 }
 
-std::unique_ptr<cxgui::ISignal<cxgui::EventPropagation, cxgui::KeyboardKeyPressedEvent>> cxgui::Gtkmm3AnimatedBoard::OnKeyPressed()
+std::unique_ptr<cx::gui::ISignal<cx::gui::EventPropagation, cx::gui::KeyboardKeyPressedEvent>> cx::gui::Gtkmm3AnimatedBoard::OnKeyPressed()
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return nullptr;);
     return m_delegate->OnKeyPressed();
@@ -238,7 +238,7 @@ std::unique_ptr<cxgui::ISignal<cxgui::EventPropagation, cxgui::KeyboardKeyPresse
 //  2. Cache the results to avoid redrawing the same things every time.
 //
 // Make sure that if you change this, the performance is not decreased.
-bool cxgui::Gtkmm3AnimatedBoard::on_draw(const Cairo::RefPtr<Cairo::Context>& p_context)
+bool cx::gui::Gtkmm3AnimatedBoard::on_draw(const Cairo::RefPtr<Cairo::Context>& p_context)
 {
     // Get window dimensions. We keep track of previous frame dimensions to allow
     // calculating a scaling factor in the case of a resize:
@@ -262,7 +262,7 @@ bool cxgui::Gtkmm3AnimatedBoard::on_draw(const Cairo::RefPtr<Cairo::Context>& p_
     {
         const Gtkmm3ContextRestoreRAII contextRestoreRAII{bufferContext};
 
-        cxgui::MakeRectanglarPath(bufferContext,
+        cx::gui::MakeRectanglarPath(bufferContext,
                                   {0.0, 0.0},
                                   m_animationModel->GetAnimatedAreaDimensions().m_height.Get(),
                                   m_animationModel->GetAnimatedAreaDimensions().m_width.Get());
@@ -280,14 +280,14 @@ bool cxgui::Gtkmm3AnimatedBoard::on_draw(const Cairo::RefPtr<Cairo::Context>& p_
     const cxmodel::ChipColor chipColor = m_presenter->GetActivePlayerChipColor();
     DrawChip(bufferContext,
              m_animationModel->GetChipPosition(),
-             m_animationModel->GetChipRadius().Get() + m_animationModel->GetLineWidth(cxgui::Feature::CHIP).Get(),
+             m_animationModel->GetChipRadius().Get() + m_animationModel->GetLineWidth(cx::gui::Feature::CHIP).Get(),
              chipColor);
 
     if(m_animationModel->IsMirrorChipNeeded())
     {
         DrawChip(bufferContext,
                  m_animationModel->GetMirrorChipPosition(),
-                 m_animationModel->GetChipRadius().Get() + m_animationModel->GetLineWidth(cxgui::Feature::CHIP).Get(),
+                 m_animationModel->GetChipRadius().Get() + m_animationModel->GetLineWidth(cx::gui::Feature::CHIP).Get(),
                  chipColor);
     }
 
@@ -309,7 +309,7 @@ bool cxgui::Gtkmm3AnimatedBoard::on_draw(const Cairo::RefPtr<Cairo::Context>& p_
 
 // Draws a "column highlight" that follows the current chip. This helps the user locate the
 // current column. Especially helpful on larger boards.
-void cxgui::Gtkmm3AnimatedBoard::DrawActiveColumnHighlight(const Cairo::RefPtr<Cairo::Context>& p_context)
+void cx::gui::Gtkmm3AnimatedBoard::DrawActiveColumnHighlight(const Cairo::RefPtr<Cairo::Context>& p_context)
 {
     const cx::math::Dimensions cellDimensions = m_animationModel->GetCellDimensions();
     const double cellWidth = cellDimensions.m_width.Get();
@@ -332,7 +332,7 @@ void cxgui::Gtkmm3AnimatedBoard::DrawActiveColumnHighlight(const Cairo::RefPtr<C
     {
         const Gtkmm3ContextRestoreRAII bufferContextRestoreRAII{bufferContext};
 
-        cxgui::MakeRectanglarPath(bufferContext, {0.0, 0.0}, m_animationModel->GetAnimatedAreaDimensions().m_height.Get() - cellHeight, cellWidth);
+        cx::gui::MakeRectanglarPath(bufferContext, {0.0, 0.0}, m_animationModel->GetAnimatedAreaDimensions().m_height.Get() - cellHeight, cellWidth);
         SetSourceColor(bufferContext, m_presenter->GetGameViewColumnHighlightColor());
         bufferContext->fill_preserve();
         bufferContext->stroke();
@@ -345,12 +345,12 @@ void cxgui::Gtkmm3AnimatedBoard::DrawActiveColumnHighlight(const Cairo::RefPtr<C
 
 // See `on_draw()`. Basically draws a chip and the rectangular space around it (which has the board color). All
 // these elements together make the board.
-void cxgui::Gtkmm3AnimatedBoard::DrawBoardElement(const Cairo::RefPtr<Cairo::Context>& p_context, const cxmodel::Row& p_row, const cxmodel::Column& p_column)
+void cx::gui::Gtkmm3AnimatedBoard::DrawBoardElement(const Cairo::RefPtr<Cairo::Context>& p_context, const cxmodel::Row& p_row, const cxmodel::Column& p_column)
 {
     const cx::math::Dimensions cellDimensions = m_animationModel->GetCellDimensions();
     const double cellWidth = cellDimensions.m_width.Get();
     const double cellHeight = cellDimensions.m_height.Get();
-    const double radius = m_animationModel->GetChipRadius().Get() + m_animationModel->GetLineWidth(cxgui::Feature::CHIP).Get();
+    const double radius = m_animationModel->GetChipRadius().Get() + m_animationModel->GetLineWidth(cx::gui::Feature::CHIP).Get();
 
     const IGameViewPresenter::ChipColors& chipColors = m_presenter->GetBoardChipColors();
     const cxmodel::ChipColor chipColor = chipColors[p_row.Get()][p_column.Get()];
@@ -370,15 +370,15 @@ void cxgui::Gtkmm3AnimatedBoard::DrawBoardElement(const Cairo::RefPtr<Cairo::Con
 
     // Add a little extra to cover everything...
     auto buffer = Cairo::ImageSurface::create(Cairo::Format::FORMAT_ARGB32,
-                                              cellWidth + m_animationModel->GetLineWidth(cxgui::Feature::CELL).Get(),
-                                              cellHeight + m_animationModel->GetLineWidth(cxgui::Feature::CELL).Get());
+                                              cellWidth + m_animationModel->GetLineWidth(cx::gui::Feature::CELL).Get(),
+                                              cellHeight + m_animationModel->GetLineWidth(cx::gui::Feature::CELL).Get());
     const auto bufferContext = Cairo::Context::create(buffer);
     {
         const Gtkmm3ContextRestoreRAII bufferContextRestoreRAII{bufferContext};
 
         // Draw paths for chip space and the cell contour:
-        cxgui::MakeCircularPath(bufferContext, {cellWidth / 2.0, cellHeight / 2.0}, radius);
-        cxgui::MakeRectanglarPath(bufferContext, {0.0, 0.0}, cellHeight, cellWidth);
+        cx::gui::MakeCircularPath(bufferContext, {cellWidth / 2.0, cellHeight / 2.0}, radius);
+        cx::gui::MakeRectanglarPath(bufferContext, {0.0, 0.0}, cellHeight, cellWidth);
 
         // Set background color:
         SetSourceColor(bufferContext, m_presenter->GetGameViewBoardColor());
@@ -393,7 +393,7 @@ void cxgui::Gtkmm3AnimatedBoard::DrawBoardElement(const Cairo::RefPtr<Cairo::Con
     {
         Gtkmm3ContextRestoreRAII bufferContextRestoreRAII{bufferContext};
 
-        cxgui::MakeCircularPath(bufferContext, {cellWidth / 2.0, cellHeight / 2.0}, radius);
+        cx::gui::MakeCircularPath(bufferContext, {cellWidth / 2.0, cellHeight / 2.0}, radius);
 
         SetSourceColor(bufferContext, chipColor);
 
@@ -416,7 +416,7 @@ void cxgui::Gtkmm3AnimatedBoard::DrawBoardElement(const Cairo::RefPtr<Cairo::Con
 // (ex.: redraw the whole widget every time) can be very costly, especially
 // with lots of board elements and in full screen. Be careful when modifying
 // this.
-bool cxgui::Gtkmm3AnimatedBoard::Redraw()
+bool cx::gui::Gtkmm3AnimatedBoard::Redraw()
 {
     const double chipHorizontalPosition = m_animationModel->GetChipPosition().m_x;
     const cx::math::Dimensions cellDimensions = m_animationModel->GetCellDimensions();
@@ -440,14 +440,14 @@ bool cxgui::Gtkmm3AnimatedBoard::Redraw()
             queue_draw_area(chipHorizontalPosition - cellWidth / 2.0 - delta, 0.0, cellWidth + 3 * delta, m_animationModel->GetAnimatedAreaDimensions().m_height.Get());
         }
 
-        PerformChipAnimation(cxgui::BoardAnimation::MOVE_CHIP_LEFT_ONE_COLUMN);
+        PerformChipAnimation(cx::gui::BoardAnimation::MOVE_CHIP_LEFT_ONE_COLUMN);
     }
 
     if(m_moveRightAnimationInfo.m_isAnimating)
     {
         IF_CONDITION_NOT_MET_DO(m_moveRightAnimationInfo.m_animation.has_value(), return true;);
 
-        if(m_moveRightAnimationInfo.m_animation == cxgui::BoardAnimation::MOVE_CHIP_RIGHT_ONE_COLUMN)
+        if(m_moveRightAnimationInfo.m_animation == cx::gui::BoardAnimation::MOVE_CHIP_RIGHT_ONE_COLUMN)
         {
             const double nbFramesPerChip = fps / speed;
             const double delta = cellWidth / nbFramesPerChip;
@@ -462,7 +462,7 @@ bool cxgui::Gtkmm3AnimatedBoard::Redraw()
                 queue_draw_area(chipHorizontalPosition - cellWidth / 2.0 - delta, 0.0, cellWidth + 3 * delta, m_animationModel->GetAnimatedAreaDimensions().m_height.Get());
             }
         }
-        else if(m_moveRightAnimationInfo.m_animation == cxgui::BoardAnimation::MOVE_CHIP_RIGHT_TO_TARGET)
+        else if(m_moveRightAnimationInfo.m_animation == cx::gui::BoardAnimation::MOVE_CHIP_RIGHT_TO_TARGET)
         {
             // Could be optimized...
             queue_draw();
@@ -474,7 +474,7 @@ bool cxgui::Gtkmm3AnimatedBoard::Redraw()
     if(m_dropAnimationInfo.m_isAnimating)
     {
         queue_draw();
-        PerformChipAnimation(cxgui::BoardAnimation::DROP_CHIP);
+        PerformChipAnimation(cx::gui::BoardAnimation::DROP_CHIP);
     }
 
     return true;
@@ -482,11 +482,11 @@ bool cxgui::Gtkmm3AnimatedBoard::Redraw()
 
 // Called when the window is resized. Positions are updated to fit the
 // new ratio.
-bool cxgui::Gtkmm3AnimatedBoard::OnResize(const cx::math::Dimensions& p_newDimensions)
+bool cx::gui::Gtkmm3AnimatedBoard::OnResize(const cx::math::Dimensions& p_newDimensions)
 {
     // Handling initial values to avoid division by zero:
-    RETURN_IF(m_lastFrameDimensions.m_height == cx::math::Height{0.0}, cxgui::STOP_EVENT_PROPAGATION);
-    RETURN_IF(m_lastFrameDimensions.m_width == cx::math::Width{0.0}, cxgui::STOP_EVENT_PROPAGATION);
+    RETURN_IF(m_lastFrameDimensions.m_height == cx::math::Height{0.0}, cx::gui::STOP_EVENT_PROPAGATION);
+    RETURN_IF(m_lastFrameDimensions.m_width == cx::math::Width{0.0}, cx::gui::STOP_EVENT_PROPAGATION);
 
     m_boardElementsCache.Clear();
     m_columnHilightCache.clear();
@@ -494,59 +494,59 @@ bool cxgui::Gtkmm3AnimatedBoard::OnResize(const cx::math::Dimensions& p_newDimen
 
     if(!cx::math::AreLogicallyEqual(p_newDimensions.m_height.Get(), m_lastFrameDimensions.m_height.Get()))
     {
-        const cxgui::ScalingRatios ratios{cxgui::VerticalScalingRatio{p_newDimensions.m_height.Get() / m_lastFrameDimensions.m_height.Get()}};
+        const cx::gui::ScalingRatios ratios{cx::gui::VerticalScalingRatio{p_newDimensions.m_height.Get() / m_lastFrameDimensions.m_height.Get()}};
         m_animationModel->Resize(ratios);
     }
 
     if(!cx::math::AreLogicallyEqual(p_newDimensions.m_width.Get(), m_lastFrameDimensions.m_width.Get()))
     {
-        const cxgui::ScalingRatios ratios{cxgui::HorizontalScalingRatio{p_newDimensions.m_width.Get() / m_lastFrameDimensions.m_width.Get()}};
+        const cx::gui::ScalingRatios ratios{cx::gui::HorizontalScalingRatio{p_newDimensions.m_width.Get() / m_lastFrameDimensions.m_width.Get()}};
         m_animationModel->Resize(ratios);
         m_moveLeftAnimationInfo.m_currentDisplacement.Get() *= ratios.m_horizontalRatio.Get();
         m_moveRightAnimationInfo.m_currentDisplacement.Get() *= ratios.m_horizontalRatio.Get();
     }
 
-    return cxgui::STOP_EVENT_PROPAGATION;
+    return cx::gui::STOP_EVENT_PROPAGATION;
 }
 
 // Called in repetition until the animation completes.
-void cxgui::Gtkmm3AnimatedBoard::Update(cxgui::BoardAnimationNotificationContext p_context, BoardAnimationSubject* p_subject)
+void cx::gui::Gtkmm3AnimatedBoard::Update(cx::gui::BoardAnimationNotificationContext p_context, BoardAnimationSubject* p_subject)
 {
     IF_CONDITION_NOT_MET_DO(p_subject, return;);
 
     switch(p_context)
     {
-        case cxgui::BoardAnimationNotificationContext::ANIMATE_MOVE_LEFT_ONE_COLUMN:
+        case cx::gui::BoardAnimationNotificationContext::ANIMATE_MOVE_LEFT_ONE_COLUMN:
         {
-            const auto animation = cxgui::BoardAnimation::MOVE_CHIP_LEFT_ONE_COLUMN;
+            const auto animation = cx::gui::BoardAnimation::MOVE_CHIP_LEFT_ONE_COLUMN;
             m_moveLeftAnimationInfo.Start(animation);
             PerformChipAnimation(animation);
             break;
         }
-        case cxgui::BoardAnimationNotificationContext::ANIMATE_MOVE_RIGHT_ONE_COLUMN:
+        case cx::gui::BoardAnimationNotificationContext::ANIMATE_MOVE_RIGHT_ONE_COLUMN:
         {
-            const auto animation = cxgui::BoardAnimation::MOVE_CHIP_RIGHT_ONE_COLUMN;
+            const auto animation = cx::gui::BoardAnimation::MOVE_CHIP_RIGHT_ONE_COLUMN;
             m_moveRightAnimationInfo.Start(animation);
             PerformChipAnimation(animation);
             break;
         }
-        case cxgui::BoardAnimationNotificationContext::ANIMATE_MOVE_RIGHT_TO_TARGET:
+        case cx::gui::BoardAnimationNotificationContext::ANIMATE_MOVE_RIGHT_TO_TARGET:
         {
-            const auto animation = cxgui::BoardAnimation::MOVE_CHIP_RIGHT_TO_TARGET;
+            const auto animation = cx::gui::BoardAnimation::MOVE_CHIP_RIGHT_TO_TARGET;
             m_moveRightAnimationInfo.Start(animation);
             PerformChipAnimation(animation);
             break;
         }
-        case cxgui::BoardAnimationNotificationContext::ANIMATE_MOVE_DROP_CHIP:
+        case cx::gui::BoardAnimationNotificationContext::ANIMATE_MOVE_DROP_CHIP:
         {
-            const auto animation = cxgui::BoardAnimation::DROP_CHIP;
+            const auto animation = cx::gui::BoardAnimation::DROP_CHIP;
             m_dropAnimationInfo.Start(animation);
             PerformChipAnimation(animation);
             break;
         }
-        case cxgui::BoardAnimationNotificationContext::ANIMATE_UNDO_DROP_CHIP:
+        case cx::gui::BoardAnimationNotificationContext::ANIMATE_UNDO_DROP_CHIP:
         {
-            PerformChipAnimation(cxgui::BoardAnimation::UNDO_DROP_CHIP);
+            PerformChipAnimation(cx::gui::BoardAnimation::UNDO_DROP_CHIP);
 
             // Because there is no real animation associated with an undo
             // (the chip simply diseapears, PerformChipAnimation only updates
@@ -554,9 +554,9 @@ void cxgui::Gtkmm3AnimatedBoard::Update(cxgui::BoardAnimationNotificationContext
             queue_draw();
             break;
         }
-        case cxgui::BoardAnimationNotificationContext::ANIMATE_REDO_DROP_CHIP:
+        case cx::gui::BoardAnimationNotificationContext::ANIMATE_REDO_DROP_CHIP:
         {
-            PerformChipAnimation(cxgui::BoardAnimation::REDO_DROP_CHIP);
+            PerformChipAnimation(cx::gui::BoardAnimation::REDO_DROP_CHIP);
 
             // Because there is no real animation associated with a redo
             // (the chip simply reapears, PerformChipAnimation only updates
@@ -564,9 +564,9 @@ void cxgui::Gtkmm3AnimatedBoard::Update(cxgui::BoardAnimationNotificationContext
             queue_draw();
             break;
         }
-        case cxgui::BoardAnimationNotificationContext::ANIMATE_REINITIALIZE_BOARD:
+        case cx::gui::BoardAnimationNotificationContext::ANIMATE_REINITIALIZE_BOARD:
         {
-            PerformChipAnimation(cxgui::BoardAnimation::REINITIALIZE);
+            PerformChipAnimation(cx::gui::BoardAnimation::REINITIALIZE);
             // Because there is no real animation associated with reinitializing
             // (the board simply clears, PerformChipAnimation only updates
             // the model data), we request a redraw directly here:
@@ -583,7 +583,7 @@ void cxgui::Gtkmm3AnimatedBoard::Update(cxgui::BoardAnimationNotificationContext
 // Computes the best chip dimension so that the game view, when the board is present with all
 // chips drawn, is entirely viewable on the user's screen.
 
-void cxgui::Gtkmm3AnimatedBoard::CustomizeHeightAccordingToMonitorDimensions()
+void cx::gui::Gtkmm3AnimatedBoard::CustomizeHeightAccordingToMonitorDimensions()
 {
     // Get the window containing the widget. The casting is necessary to get a
     // non const reference on the window, in order to satisfy the Gdk::Display API:
@@ -616,11 +616,11 @@ void cxgui::Gtkmm3AnimatedBoard::CustomizeHeightAccordingToMonitorDimensions()
     const int nbRows = static_cast<int>(m_presenter->GetBoardHeight().Get());
     const int nbColumns = static_cast<int>(m_presenter->GetBoardWidth().Get());
 
-    if(nbRows * cxgui::DEFAULT_CHIP_SIZE < (2 * monitorHeight) / 3)
+    if(nbRows * cx::gui::DEFAULT_CHIP_SIZE < (2 * monitorHeight) / 3)
     {
-        if(nbColumns * cxgui::DEFAULT_CHIP_SIZE < (2 * monitorWidth) / 3)
+        if(nbColumns * cx::gui::DEFAULT_CHIP_SIZE < (2 * monitorWidth) / 3)
         {
-            const int chipDimension = cxgui::DEFAULT_CHIP_SIZE;
+            const int chipDimension = cx::gui::DEFAULT_CHIP_SIZE;
             set_size_request(nbColumns * chipDimension, nbRows * chipDimension);
             return;
         }
@@ -639,7 +639,7 @@ void cxgui::Gtkmm3AnimatedBoard::CustomizeHeightAccordingToMonitorDimensions()
     set_size_request(nbColumns * chipDimension, nbRows * chipDimension);
 }
 
-bool cxgui::Gtkmm3AnimatedBoard::OnMouseButtonPressed(GdkEventButton* p_event)
+bool cx::gui::Gtkmm3AnimatedBoard::OnMouseButtonPressed(GdkEventButton* p_event)
 {
     IF_PRECONDITION_NOT_MET_DO(p_event, return PROPAGATE_EVENT;);
     IF_PRECONDITION_NOT_MET_DO(m_animationModel, return PROPAGATE_EVENT;);
@@ -656,8 +656,8 @@ bool cxgui::Gtkmm3AnimatedBoard::OnMouseButtonPressed(GdkEventButton* p_event)
     if(p_event->type == GDK_BUTTON_PRESS && p_event->button == 1)
     {
         // We update the model with the necessary information:
-        const cxmodel::Column columnUnderMousePointer = cxgui::ComputeColumnFromPosition(*m_animationModel, {p_event->x, p_event->y});
-        const cx::math::Position targetChipPosition = cxgui::ComputeChipPositionFromColumn(*m_animationModel, columnUnderMousePointer);
+        const cxmodel::Column columnUnderMousePointer = cx::gui::ComputeColumnFromPosition(*m_animationModel, {p_event->x, p_event->y});
+        const cx::math::Position targetChipPosition = cx::gui::ComputeChipPositionFromColumn(*m_animationModel, columnUnderMousePointer);
 
         m_animationModel->UpdateCurrentColumn(columnUnderMousePointer);
 
@@ -668,7 +668,7 @@ bool cxgui::Gtkmm3AnimatedBoard::OnMouseButtonPressed(GdkEventButton* p_event)
         );
 
         // We notify the observers a valid click has been performed on the board:
-        UserActionSubject::Notify(cxgui::UserAction::MOUSE_CLICKED);
+        UserActionSubject::Notify(cx::gui::UserAction::MOUSE_CLICKED);
 
         return STOP_EVENT_PROPAGATION;
     }
@@ -676,7 +676,7 @@ bool cxgui::Gtkmm3AnimatedBoard::OnMouseButtonPressed(GdkEventButton* p_event)
     return PROPAGATE_EVENT;
 }
 
-bool cxgui::Gtkmm3AnimatedBoard::OnMouseMotion(GdkEventMotion* p_event)
+bool cx::gui::Gtkmm3AnimatedBoard::OnMouseMotion(GdkEventMotion* p_event)
 {
     IF_PRECONDITION_NOT_MET_DO(p_event, return PROPAGATE_EVENT;);
     IF_PRECONDITION_NOT_MET_DO(m_animationModel, return PROPAGATE_EVENT;);
@@ -692,7 +692,7 @@ bool cxgui::Gtkmm3AnimatedBoard::OnMouseMotion(GdkEventMotion* p_event)
     // The board is not animated at the moment. We catch the event:
     if(p_event->type == GDK_MOTION_NOTIFY)
     {
-        const cxmodel::Column columnUnderMousePointer = cxgui::ComputeColumnFromPosition(*m_animationModel, {p_event->x, p_event->y});
+        const cxmodel::Column columnUnderMousePointer = cx::gui::ComputeColumnFromPosition(*m_animationModel, {p_event->x, p_event->y});
 
         if(columnUnderMousePointer == m_animationModel->GetCurrentColumn())
         {
@@ -701,7 +701,7 @@ bool cxgui::Gtkmm3AnimatedBoard::OnMouseMotion(GdkEventMotion* p_event)
 
         // The mouse points over another column. For this column, we compute new chip
         // coordinates and update the model consequently:
-        const cx::math::Position targetChipPosition = cxgui::ComputeChipPositionFromColumn(*m_animationModel, columnUnderMousePointer);
+        const cx::math::Position targetChipPosition = cx::gui::ComputeChipPositionFromColumn(*m_animationModel, columnUnderMousePointer);
 
         m_animationModel->UpdateCurrentColumn(columnUnderMousePointer);
 

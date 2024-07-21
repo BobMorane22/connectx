@@ -28,11 +28,11 @@
 
 #include <sigc++/connection.h>
 
-namespace cxgui
+namespace cx::gui
 {
 
 /**********************************************************************************************//**
- * @brief Gtkmm 3 implementation of the `cxgui::IConnection` interface.
+ * @brief Gtkmm 3 implementation of the `cx::gui::IConnection` interface.
  *
  *************************************************************************************************/
 class Gtkmm3Connection : public IConnection
@@ -61,7 +61,7 @@ private:
 
 };
 
-} // namespace cxgui
+} // namespace cx::gui
 
 #endif // GTKMM3CONNECTION_H_3A2FD5EA_6019_469D_AF00_EAD02B3C68E7
 

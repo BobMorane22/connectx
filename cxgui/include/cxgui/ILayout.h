@@ -28,7 +28,7 @@
 #include <cxmodel/common.h>
 #include <cxgui/IWidget.h>
 
-namespace cxgui
+namespace cx::gui
 {
     struct Margins;
 }
@@ -38,7 +38,7 @@ namespace Gtk
     class Widget;
 }
 
-namespace cxgui
+namespace cx::gui
 {
 
 /**********************************************************************************************//**
@@ -349,7 +349,7 @@ public:
     [[nodiscard]] virtual const IWidget* GetWidgetAtPosition(const cxmodel::Row& p_row, const cxmodel::Column& p_column) const = 0;
 
     /******************************************************************************************//**
-     * @copydoc cxgui::ILayout::GetWidgetAtPosition
+     * @copydoc cx::gui::ILayout::GetWidgetAtPosition
      *
      *********************************************************************************************/
     [[nodiscard]] virtual IWidget* GetWidgetAtPosition(const cxmodel::Row& p_row, const cxmodel::Column& p_column) = 0;
@@ -374,6 +374,6 @@ public:
 
 };
 
-} // namespace cxgui
+} // namespace cx::gui
 
 #endif // ILAYOUT_H_D6AEBC20_3580_4018_B083_08451439CC56

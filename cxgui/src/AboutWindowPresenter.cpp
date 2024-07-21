@@ -25,49 +25,49 @@
 #include <cxmodel/ModelNotificationContext.h>
 #include <cxgui/AboutWindowPresenter.h>
 
-cxgui::AboutWindowPresenter::AboutWindowPresenter(const cxmodel::IVersioning& p_model)
+cx::gui::AboutWindowPresenter::AboutWindowPresenter(const cxmodel::IVersioning& p_model)
  : m_applicationName{p_model.GetName()}
  , m_versionNumber{p_model.GetVersionNumber()}
 {
     // Nothing to do...
 }
 
-std::string cxgui::AboutWindowPresenter::GetWindowTitle() const
+std::string cx::gui::AboutWindowPresenter::GetWindowTitle() const
 {
     return "About";
 }
 
-std::string cxgui::AboutWindowPresenter::GetApplicationName() const
+std::string cx::gui::AboutWindowPresenter::GetApplicationName() const
 {
     return m_applicationName;
 }
 
-std::string cxgui::AboutWindowPresenter::GetVersionNumber() const
+std::string cx::gui::AboutWindowPresenter::GetVersionNumber() const
 {
     return m_versionNumber;
 }
 
-std::string cxgui::AboutWindowPresenter::GetApplicationDescription() const
+std::string cx::gui::AboutWindowPresenter::GetApplicationDescription() const
 {
     return "Connect X is a scalable Four-In-A-Row clone";
 }
 
-std::string cxgui::AboutWindowPresenter::GetWebsiteLinkContents() const
+std::string cx::gui::AboutWindowPresenter::GetWebsiteLinkContents() const
 {
     return "<a href=\"https://github.com/BobMorane22/connectx\">Website</a>";
 }
 
-std::string cxgui::AboutWindowPresenter::GetLicenseDescription() const
+std::string cx::gui::AboutWindowPresenter::GetLicenseDescription() const
 {
     return "License: GNU GPL v3";
 }
 
-std::string cxgui::AboutWindowPresenter::GetCopyrightNotice() const
+std::string cx::gui::AboutWindowPresenter::GetCopyrightNotice() const
 {
     return "Copyright © 2020 - Éric Poirier";
 }
 
-std::string cxgui::AboutWindowPresenter::GetCloseText() const
+std::string cx::gui::AboutWindowPresenter::GetCloseText() const
 {
     return "Close";
 }

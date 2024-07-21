@@ -40,7 +40,7 @@ public:
 
     AboutWindowPresenterTestFixture();
 
-    cxgui::IAboutWindowPresenter& GetPresenter();
+    cx::gui::IAboutWindowPresenter& GetPresenter();
     cxmodel::IVersioning& GetModel();
 
 private:
@@ -66,7 +66,7 @@ private:
         }
     };
 
-    std::unique_ptr<cxgui::IAboutWindowPresenter> m_presenter;
+    std::unique_ptr<cx::gui::IAboutWindowPresenter> m_presenter;
     std::unique_ptr<AboutWindowPresenterModelMock> m_model;
 
 };

@@ -24,14 +24,14 @@
 #ifndef IGAMEKEYHANDLERSTRATEGY_H_31AC17A9_F085_49C8_A86E_543E65DC78DC
 #define IGAMEKEYHANDLERSTRATEGY_H_31AC17A9_F085_49C8_A86E_543E65DC78DC
 
-namespace cxgui
+namespace cx::gui
 {
     enum class EventPropagation;
     class IBoardInformation;
     class IGameViewController;
 }
 
-namespace cxgui
+namespace cx::gui
 {
 
 /*********************************************************************************************//**
@@ -64,6 +64,6 @@ public:
 
 };
 
-} // namespace cxgui
+} // namespace cx::gui
 
 #endif // IGAMEKEYHANDLERSTRATEGY_H_31AC17A9_F085_49C8_A86E_543E65DC78DC

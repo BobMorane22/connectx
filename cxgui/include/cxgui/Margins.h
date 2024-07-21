@@ -26,7 +26,7 @@
 
 #include <cxcmn/StrongType.h>
 
-namespace cxgui
+namespace cx::gui
 {
 
 /******************************************************************************************//**
@@ -88,6 +88,6 @@ struct Margins
     RightMargin m_right;
 };
 
-} // namespace cxgui
+} // namespace cx::gui
 
 #endif // MARGINS_H_D69C1309_AC7D_4008_8139_04EE2888BFF6

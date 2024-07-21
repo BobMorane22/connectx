@@ -29,11 +29,11 @@
 #include <cxgui/IMenu.h>
 #include <cxgui/ISignal.h>
 
-namespace cxgui
+namespace cx::gui
 {
 
 /***********************************************************************************************//**
- * @brief Gtkmm 3 implementation of the `cxgui::IMenu` interface.
+ * @brief Gtkmm 3 implementation of the `cx::gui::IMenu` interface.
  *
  **************************************************************************************************/
 class Gtkmm3Menu : public IMenu,
@@ -57,7 +57,7 @@ public:
     /*******************************************************************************************//**
      * @brief Sets the delegate for widget common facilities.
      *
-     * The delegate is reponsible to carry the implementation for generic `cxgui::IWidget` operations.
+     * The delegate is reponsible to carry the implementation for generic `cx::gui::IWidget` operations.
      * It is meant to avoid implementation duplication.
      *
      * @param p_delegate
@@ -84,10 +84,10 @@ public:
      **********************************************************************************************/
     [[nodiscard]] Gtk::MenuItem& GetTitleMenuItem();
 
-    // cxgui::IMenu:
+    // cx::gui::IMenu:
     void Register(IMenuItem& p_item) override;
 
-    // cxgui::IWidget:
+    // cx::gui::IWidget:
     [[nodiscard]] size_t GetWidth() const override;
     [[nodiscard]] size_t GetHeight() const override;
     void SetEnabled(EnabledState p_enabled) override;
@@ -102,6 +102,6 @@ private:
 
 };
 
-} // namespace cxgui
+} // namespace cx::gui
 
 #endif // GTKMM3MENU_H_8F6908BA_083B_4C86_A927_97A375555E22

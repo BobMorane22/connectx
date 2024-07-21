@@ -35,7 +35,7 @@ class NewGameInformation;
 
 }
 
-namespace cxgui
+namespace cx::gui
 {
 
 /*********************************************************************************************//**
@@ -396,7 +396,7 @@ public:
  *
  ************************************************************************************************/
 [[nodiscard]] cxmodel::Status Validate(const cxmodel::NewGameInformation& p_gameInformation,
-                                       const cxgui::INewGameViewPresenter& p_presenter);
+                                       const cx::gui::INewGameViewPresenter& p_presenter);
 
 /*********************************************************************************************//**
  * @brief Gets the remainding default colors available, from a current chip color selection.
@@ -415,7 +415,7 @@ public:
  *
  ************************************************************************************************/
 [[nodiscard]] std::vector<cxmodel::ChipColor> GetRemainingDefaultColors(const std::vector<cxmodel::ChipColor>& p_alreadyChosenColors,
-                                                                        const cxgui::INewGameViewPresenter& p_presenter);
+                                                                        const cx::gui::INewGameViewPresenter& p_presenter);
 
 }
 

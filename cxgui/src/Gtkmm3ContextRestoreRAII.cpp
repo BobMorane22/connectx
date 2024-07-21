@@ -26,14 +26,14 @@
 #include <cxinv/assertion.h>
 #include <cxgui/Gtkmm3ContextRestoreRAII.h>
 
-cxgui::Gtkmm3ContextRestoreRAII::Gtkmm3ContextRestoreRAII(const Cairo::RefPtr<Cairo::Context>& p_context)
+cx::gui::Gtkmm3ContextRestoreRAII::Gtkmm3ContextRestoreRAII(const Cairo::RefPtr<Cairo::Context>& p_context)
 : m_context{p_context}
 {
     ASSERT_MSG(bool(m_context), "Invalid context.");
     m_context->save();
 }
 
-cxgui::Gtkmm3ContextRestoreRAII::~Gtkmm3ContextRestoreRAII()
+cx::gui::Gtkmm3ContextRestoreRAII::~Gtkmm3ContextRestoreRAII()
 {
     ASSERT_MSG(bool(m_context), "Invalid context.");
     m_context->restore();

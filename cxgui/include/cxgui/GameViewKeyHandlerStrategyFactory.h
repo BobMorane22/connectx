@@ -30,7 +30,7 @@
 
 #include "IGameViewKeyHandlerStrategy.h"
 
-namespace cxgui
+namespace cx::gui
 {
 
 /*********************************************************************************************//**
@@ -51,10 +51,10 @@ public:
      * @return The strategy, `nullptr` otherwise.
      *
      ********************************************************************************************/
-    [[nodiscard]] static std::unique_ptr<cxgui::IGameViewKeyHandlerStrategy> Create(KeyboardKeyPressedEvent p_event);
+    [[nodiscard]] static std::unique_ptr<cx::gui::IGameViewKeyHandlerStrategy> Create(KeyboardKeyPressedEvent p_event);
 
 };
 
-} // namespace cxgui
+} // namespace cx::gui
 
 #endif // GAMEKEYHANDLERSTRATEGYFACTORY_H_77F63BBC_46CA_4EF9_99A9_D6A93968231C

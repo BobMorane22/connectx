@@ -29,21 +29,21 @@
 #include "BoardAnimation.h"
 #include "IAnimatedBoardModel.h"
 
-namespace cxgui
+namespace cx::gui
 {
 
 class IAnimatedBoardPresenter;
 
 }
 
-namespace cxgui
+namespace cx::gui
 {
 
 /**********************************************************************************************//**
  * @brief Concrete animated board model.
  *
  *************************************************************************************************/
-class AnimatedBoardModel : public cxgui::IAnimatedBoardModel
+class AnimatedBoardModel : public cx::gui::IAnimatedBoardModel
 {
 
 public:
@@ -57,10 +57,10 @@ public:
      *      The animation speed (i.e. the number of chips travelled per second).
      *
      *************************************************************************************************/
-    AnimatedBoardModel(const cxgui::IAnimatedBoardPresenter& p_presenter, const cxgui::AnimationSpeed& p_animationSpeed);
+    AnimatedBoardModel(const cx::gui::IAnimatedBoardPresenter& p_presenter, const cx::gui::AnimationSpeed& p_animationSpeed);
 
     void Update(const cx::math::Dimensions& p_widgetDimensions, bool p_isChipMovingHorizontally) override;
-    void Resize(const cxgui::ScalingRatios& p_scalingRatios) override;
+    void Resize(const cx::gui::ScalingRatios& p_scalingRatios) override;
     void AddChipDisplacement(const cx::math::Height& p_vertical, const cx::math::Width& p_horizontal) override;
     void ResetChipPositions() override;
     void UpdateCurrentColumn(const cxmodel::Column& p_newCurrentColumn) override;
@@ -85,9 +85,9 @@ private:
     [[nodiscard]] bool ComputeChipRightPosition(double p_windowWidth, const cx::math::Radius& p_discRadius, double p_horizontalMargin);
     void ComputeChipVerticalPosition(const cx::math::Radius& p_discRadius, double p_height);
 
-    const cxgui::IAnimatedBoardPresenter& m_presenter;
+    const cx::gui::IAnimatedBoardPresenter& m_presenter;
 
-    cxgui::AnimationSpeed m_animationSpeed;
+    cx::gui::AnimationSpeed m_animationSpeed;
 
     cx::math::Dimensions m_widgetDimensions{cx::math::Height{0.0}, cx::math::Width{0.0}};
     cx::math::Dimensions m_cellDimensions{cx::math::Height{0.0}, cx::math::Width{0.0}};
@@ -107,6 +107,6 @@ private:
     cxmodel::Column m_currentColumn{0u};
 };
 
-} // namespace cxgui
+} // namespace cx::gui
 
 #endif // ANIMATEDBOARDMODEL_H_71B2242B_9840_4520_818A_DC44B21E2307

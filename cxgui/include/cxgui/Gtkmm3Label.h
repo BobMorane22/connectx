@@ -27,7 +27,7 @@
 
 #include <cxgui/ILabel.h>
 
-namespace cxgui
+namespace cx::gui
 {
 
 class Gtkmm3Label : public ILabel,
@@ -56,7 +56,7 @@ public:
     /*******************************************************************************************//**
      * @brief Sets the delegate for widget common facilities.
      *
-     * The delegate is reponsible to carry the implementation for generic `cxgui::IWidget` operations.
+     * The delegate is reponsible to carry the implementation for generic `cx::gui::IWidget` operations.
      * It is meant to avoid implementation duplication.
      *
      * @param p_delegate
@@ -70,11 +70,11 @@ public:
      **********************************************************************************************/
     void SetDelegate(std::unique_ptr<IWidget> p_delegate);
 
-    // cxgui::Ilabel:
+    // cx::gui::Ilabel:
     void UpdateContents(const std::string& p_newContents) override;
     [[nodiscard]] std::string GetContents() const override;
 
-    // cxgui::IWidget:
+    // cx::gui::IWidget:
     [[nodiscard]] size_t GetWidth() const override;
     [[nodiscard]] size_t GetHeight() const override;
     void SetEnabled(EnabledState p_enabled) override;
@@ -88,6 +88,6 @@ private:
 
 };
 
-} // namespace cxgui
+} // namespace cx::gui
 
 #endif // _H_B84CA49F_51D9_4CCA_944E_42D742A18DDD

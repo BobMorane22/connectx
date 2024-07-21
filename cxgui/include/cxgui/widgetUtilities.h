@@ -24,13 +24,13 @@
 #ifndef WIDGETUTILITIES_H_CAE6AA9C_9245_4128_9D61_28A6A021CE6E
 #define WIDGETUTILITIES_H_CAE6AA9C_9245_4128_9D61_28A6A021CE6E
 
-namespace cxgui
+namespace cx::gui
 {
     enum class EnabledState;
     class IWidget;
 }
 
-namespace cxgui
+namespace cx::gui
 {
 
 /**********************************************************************************************//**

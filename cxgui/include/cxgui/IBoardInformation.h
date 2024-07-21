@@ -29,7 +29,7 @@
 #include <cxmodel/common.h>
 #include <cxmodel/ChipColor.h>
 
-namespace cxgui
+namespace cx::gui
 {
 
 /**********************************************************************************************//**
@@ -66,6 +66,6 @@ public:
 
 };
 
-} // namespace cxgui
+} // namespace cx::gui
 
 #endif // IBOARDINFORMATION_H_363CE7FD_F741_40F0_829D_6868F6B77EFE

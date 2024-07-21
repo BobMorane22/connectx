@@ -27,11 +27,11 @@
 #include <gtkmm/menubar.h>
 #include <cxgui/IMenuBar.h>
 
-namespace cxgui
+namespace cx::gui
 {
 
 /***********************************************************************************************//**
- * @brief Gtkmm 3 implementation of the `cxgui::IMenuBar` interface.
+ * @brief Gtkmm 3 implementation of the `cx::gui::IMenuBar` interface.
  *
  **************************************************************************************************/
 class Gtkmm3MenuBar : public IMenuBar,
@@ -43,7 +43,7 @@ public:
     /*******************************************************************************************//**
      * @brief Sets the delegate for widget common facilities.
      *
-     * The delegate is reponsible to carry the implementation for generic `cxgui::IWidget` operations.
+     * The delegate is reponsible to carry the implementation for generic `cx::gui::IWidget` operations.
      * It is meant to avoid implementation duplication.
      *
      * @param p_delegate
@@ -57,10 +57,10 @@ public:
      **********************************************************************************************/
     void SetDelegate(std::unique_ptr<IWidget> p_delegate);
 
-    // cxgui::IMenuBar:
+    // cx::gui::IMenuBar:
     void Register(IMenu& p_menu) override;
 
-    // cxgui::IWidget:
+    // cx::gui::IWidget:
     [[nodiscard]] size_t GetWidth() const override;
     [[nodiscard]] size_t GetHeight() const override;
     void SetEnabled(EnabledState p_enabled) override;
@@ -74,6 +74,6 @@ private:
 
 };
 
-} // namespace cxgui
+} // namespace cx::gui
 
 #endif // GTKMM3MENUBAR_H_B09C49CF_EA28_4DBB_8ED7_BA7E8CEC3CC6

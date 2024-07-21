@@ -28,7 +28,7 @@ void AnimatedBoardModelMock::Update(const cx::math::Dimensions& /*p_widgetDimens
     m_updateCalled = true;
 }
 
-void AnimatedBoardModelMock::Resize(const cxgui::ScalingRatios& /*p_scalingRatios*/)
+void AnimatedBoardModelMock::Resize(const cx::gui::ScalingRatios& /*p_scalingRatios*/)
 {
     m_resizeCalled = true;
 }
@@ -53,12 +53,12 @@ void AnimatedBoardModelMock::UpdateCurrentColumn(const cxmodel::Column& p_newCur
     m_currentColumn = p_newCurrentColumn;
 }
 
-cxgui::FPS AnimatedBoardModelMock::GetFPS() const
+cx::gui::FPS AnimatedBoardModelMock::GetFPS() const
 {
     return m_fps;
 }
 
-cxgui::AnimationSpeed AnimatedBoardModelMock::GetAnimationSpeed() const
+cx::gui::AnimationSpeed AnimatedBoardModelMock::GetAnimationSpeed() const
 {
     return m_animationSpeed;
 }
@@ -98,7 +98,7 @@ bool AnimatedBoardModelMock::IsMirrorChipNeeded() const
     return false;
 }
 
-cx::math::Width AnimatedBoardModelMock::GetLineWidth(cxgui::Feature /*p_feature*/) const
+cx::math::Width AnimatedBoardModelMock::GetLineWidth(cx::gui::Feature /*p_feature*/) const
 {
     return cx::math::Width{0.0};
 }
@@ -113,12 +113,12 @@ void AnimatedBoardModelMock::SetAnimatedAreaDimensions(const cx::math::Dimension
     m_widgetDimensions = p_widgetDimensions;
 }
 
-void AnimatedBoardModelMock::SetFPS(const cxgui::FPS& p_fps)
+void AnimatedBoardModelMock::SetFPS(const cx::gui::FPS& p_fps)
 {
     m_fps = p_fps;
 }
 
-void AnimatedBoardModelMock::SetAnimationSpeed(const cxgui::AnimationSpeed& p_animationSpeed)
+void AnimatedBoardModelMock::SetAnimationSpeed(const cx::gui::AnimationSpeed& p_animationSpeed)
 {
     m_animationSpeed = p_animationSpeed;
 }

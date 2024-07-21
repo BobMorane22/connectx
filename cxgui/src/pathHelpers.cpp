@@ -4,7 +4,7 @@
 #include <cxmath/Position.h>
 #include <cxgui/pathHelpers.h>
 
-void cxgui::MakeRectanglarPath(const Cairo::RefPtr<Cairo::Context>& p_context,
+void cx::gui::MakeRectanglarPath(const Cairo::RefPtr<Cairo::Context>& p_context,
                                const cx::math::Position& p_topLeft,
                                double p_height,
                                double p_width)
@@ -16,7 +16,7 @@ void cxgui::MakeRectanglarPath(const Cairo::RefPtr<Cairo::Context>& p_context,
     p_context->line_to(p_topLeft.m_x, p_topLeft.m_y);
 }
 
-void cxgui::MakeCircularPath(const Cairo::RefPtr<Cairo::Context>& p_context,
+void cx::gui::MakeCircularPath(const Cairo::RefPtr<Cairo::Context>& p_context,
                              const cx::math::Position& p_centerPosition,
                              double p_radius)
 {

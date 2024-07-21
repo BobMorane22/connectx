@@ -28,7 +28,7 @@
 #include <cxgui/ISignal.h>
 #include <cxgui/IWidget.h>
 
-namespace cxgui
+namespace cx::gui
 {
 
 class IColorPicker : public IWidget
@@ -52,7 +52,7 @@ public:
      *      The color to make visible in the combo box.
      *
      ********************************************************************************************/
-    virtual void SetCurrentSelection(const cxgui::Color& p_color) = 0;
+    virtual void SetCurrentSelection(const cx::gui::Color& p_color) = 0;
 
     /******************************************************************************************//**
      * @brief Get the signal for when the color selection is changed by the user.
@@ -64,6 +64,6 @@ public:
     [[nodiscard]] virtual std::unique_ptr<ISignal<void>> OnSelectionChanged() = 0;
 };
 
-} // namespace cxgui
+} // namespace cx::gui
 
 #endif // ICOLORPICKER_H_FC678E04_F896_472E_A3A9_769E584E01FF

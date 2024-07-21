@@ -28,7 +28,7 @@
 
 #include <cxmodel/ModelNotificationContext.h>
 
-namespace cxgui
+namespace cx::gui
 {
 
 /*********************************************************************************************//**
@@ -114,6 +114,6 @@ public:
     virtual std::string GetCloseText() const = 0;
 };
 
-} // namespace cxgui
+} // namespace cx::gui
 
 #endif // IABOUTWINDOWPRESENTER_H_D80BCE23_D0F8_42C9_BB00_E4AB9DD557F5

@@ -29,7 +29,7 @@
 #include <cxmodel/ModelNotificationContext.h>
 #include <cxgui/IWidget.h>
 
-namespace cxgui
+namespace cx::gui
 {
 
 /*********************************************************************************************//**
@@ -67,6 +67,6 @@ public:
 
 };
 
-} // namespace cxgui
+} // namespace cx::gui
 
 #endif // ISTATUSBAR_H_B9E6A5FA_CB18_4646_9BD1_F38CE15F1A62

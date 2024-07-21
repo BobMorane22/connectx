@@ -26,7 +26,7 @@
 
 #include "IAnimatedBoardPresenter.h"
 
-namespace cxgui
+namespace cx::gui
 {
 
 /**********************************************************************************************//**
@@ -41,7 +41,7 @@ namespace cxgui
  * cached values in between animations.
  *
  *************************************************************************************************/
-class AnimatedBoardPresenter : public cxgui::IAnimatedBoardPresenter
+class AnimatedBoardPresenter : public cx::gui::IAnimatedBoardPresenter
 {
 
 public:
@@ -54,12 +54,12 @@ public:
      *********************************************************************************************/
     explicit AnimatedBoardPresenter(const IGameViewPresenter& p_presenter);
 
-    // cxgui::IAnimatedBoardPresenter:
+    // cx::gui::IAnimatedBoardPresenter:
     void Sync() override;
     [[nodiscard]] cxmodel::Height GetBoardHeight() const override;
     [[nodiscard]] cxmodel::Width GetBoardWidth() const override;
-    [[nodiscard]] cxgui::Color GetGameViewBoardColor() const override;
-    [[nodiscard]] cxgui::Color GetGameViewColumnHighlightColor() const override;
+    [[nodiscard]] cx::gui::Color GetGameViewBoardColor() const override;
+    [[nodiscard]] cx::gui::Color GetGameViewColumnHighlightColor() const override;
     [[nodiscard]] cxmodel::ChipColor GetActivePlayerChipColor() const override;
     [[nodiscard]] const IGameViewPresenter::ChipColors& GetBoardChipColors() const override;
     [[nodiscard]] cxmodel::Column GetBotTarget() const override;
@@ -81,6 +81,6 @@ private:
 
 };
 
-} // namespace cxgui
+} // namespace cx::gui
 
 #endif // ANIMATEDBOARDPRESENTER_H_CEED52F8_D734_4808_A833_448D61C817D9

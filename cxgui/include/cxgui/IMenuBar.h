@@ -26,21 +26,21 @@
 
 #include <cxgui/IWidget.h>
 
-namespace cxgui
+namespace cx::gui
 {
 
 class IMenu;
 
 }
 
-namespace cxgui
+namespace cx::gui
 {
 
 /**********************************************************************************************//**
  * @brief Widgets for displaying menus.
  *
- * @see cxgui::IMenu
- * @see cxgui::IMenuItem
+ * @see cx::gui::IMenu
+ * @see cx::gui::IMenuItem
  *
  *************************************************************************************************/
 class IMenuBar : public IWidget
@@ -67,6 +67,6 @@ public:
 
 };
 
-} // namespace cxgui
+} // namespace cx::gui
 
 #endif // IMENUBAR_H_7283BF86_D1E9_4A7D_8935_A46FD2DAC73F

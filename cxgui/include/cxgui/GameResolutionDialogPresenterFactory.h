@@ -34,7 +34,7 @@ namespace cxmodel
     class IConnectXGameInformation;
 }
 
-namespace cxgui
+namespace cx::gui
 {
 
 /*********************************************************************************************//**
@@ -60,6 +60,6 @@ public:
 
 };
 
-} // namespace cxgui
+} // namespace cx::gui
 
 #endif // GAMERESOLUTIONDIALOGPRESENTERFACTORY_H_0DEB58AF_5E6C_41B3_BDA0_DE2C38CE8416

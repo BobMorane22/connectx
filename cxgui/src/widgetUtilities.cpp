@@ -25,12 +25,12 @@
 #include <cxgui/IWidget.h>
 #include <cxgui/widgetUtilities.h>
 
-cxgui::EnabledState cxgui::EnabledStateUpdate(cxgui::IWidget& p_widget, bool p_condition)
+cx::gui::EnabledState cx::gui::EnabledStateUpdate(cx::gui::IWidget& p_widget, bool p_condition)
 {
-    auto state = cxgui::EnabledState::Disabled;
+    auto state = cx::gui::EnabledState::Disabled;
     if(p_condition)
     {
-        state = cxgui::EnabledState::Enabled;
+        state = cx::gui::EnabledState::Enabled;
     }
 
     p_widget.SetEnabled(state);

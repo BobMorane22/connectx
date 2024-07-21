@@ -26,7 +26,7 @@
 #include <cxgui/Gtkmm3Chip.h>
 #include <cxgui/KeyboardKeyPressedEvent.h>
 
-cxgui::Gtkmm3Chip::Gtkmm3Chip(const cxmodel::ChipColor& p_fillColor,
+cx::gui::Gtkmm3Chip::Gtkmm3Chip(const cxmodel::ChipColor& p_fillColor,
                               const cxmodel::ChipColor& p_backgroundColor,
                               int p_width,
                               int p_height)
@@ -37,7 +37,7 @@ cxgui::Gtkmm3Chip::Gtkmm3Chip(const cxmodel::ChipColor& p_fillColor,
     set_size_request(p_width, p_height);
 }
 
-void cxgui::Gtkmm3Chip::SetDelegate(std::unique_ptr<IWidget> p_delegate)
+void cx::gui::Gtkmm3Chip::SetDelegate(std::unique_ptr<IWidget> p_delegate)
 {
     IF_PRECONDITION_NOT_MET_DO(p_delegate, return;);
 
@@ -46,7 +46,7 @@ void cxgui::Gtkmm3Chip::SetDelegate(std::unique_ptr<IWidget> p_delegate)
     POSTCONDITION(m_delegate);
 }
 
-void cxgui::Gtkmm3Chip::ChangeColor(const cxmodel::ChipColor& p_newFillColor)
+void cx::gui::Gtkmm3Chip::ChangeColor(const cxmodel::ChipColor& p_newFillColor)
 {
     if(m_fillColor != p_newFillColor)
     {
@@ -55,12 +55,12 @@ void cxgui::Gtkmm3Chip::ChangeColor(const cxmodel::ChipColor& p_newFillColor)
     }
 }
 
-cxmodel::ChipColor cxgui::Gtkmm3Chip::GetColor() const
+cxmodel::ChipColor cx::gui::Gtkmm3Chip::GetColor() const
 {
     return m_fillColor;
 }
 
-void cxgui::Gtkmm3Chip::Highlight()
+void cx::gui::Gtkmm3Chip::Highlight()
 {
     const double hue = cxmodel::ComputeHue(m_backgroundColor);
     const double saturation = cxmodel::ComputeSaturation(m_backgroundColor);
@@ -72,61 +72,61 @@ void cxgui::Gtkmm3Chip::Highlight()
     Redraw();
 }
 
-void cxgui::Gtkmm3Chip::UnHighlight()
+void cx::gui::Gtkmm3Chip::UnHighlight()
 {
     m_backgroundColor = m_initialBackgroundColor;
     Redraw();
 }
 
-size_t cxgui::Gtkmm3Chip::GetWidth() const 
+size_t cx::gui::Gtkmm3Chip::GetWidth() const 
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return 0u;);
     return m_delegate->GetWidth();
 }
 
-size_t cxgui::Gtkmm3Chip::GetHeight() const 
+size_t cx::gui::Gtkmm3Chip::GetHeight() const 
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return 0u;);
     return m_delegate->GetHeight();
 }
 
-void cxgui::Gtkmm3Chip::SetEnabled(EnabledState p_enabled) 
+void cx::gui::Gtkmm3Chip::SetEnabled(EnabledState p_enabled) 
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return;);
     m_delegate->SetEnabled(p_enabled);
 }
 
-void cxgui::Gtkmm3Chip::SetMargins(const Margins& p_newMarginSizes) 
+void cx::gui::Gtkmm3Chip::SetMargins(const Margins& p_newMarginSizes) 
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return;);
     m_delegate->SetMargins(p_newMarginSizes);
 }
 
-void cxgui::Gtkmm3Chip::SetTooltip(const std::string& p_tooltipContents)
+void cx::gui::Gtkmm3Chip::SetTooltip(const std::string& p_tooltipContents)
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return;);
     m_delegate->SetTooltip(p_tooltipContents);
 }
 
-std::unique_ptr<cxgui::ISignal<cxgui::EventPropagation, cxgui::KeyboardKeyPressedEvent>> cxgui::Gtkmm3Chip::OnKeyPressed()
+std::unique_ptr<cx::gui::ISignal<cx::gui::EventPropagation, cx::gui::KeyboardKeyPressedEvent>> cx::gui::Gtkmm3Chip::OnKeyPressed()
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return nullptr;);
     return m_delegate->OnKeyPressed();
 }
 
-void cxgui::Gtkmm3Chip::Redraw()
+void cx::gui::Gtkmm3Chip::Redraw()
 {
     queue_draw();
 }
 
-bool cxgui::Gtkmm3Chip::on_draw(const Cairo::RefPtr<Cairo::Context>& p_context)
+bool cx::gui::Gtkmm3Chip::on_draw(const Cairo::RefPtr<Cairo::Context>& p_context)
 {
     Draw(p_context);
 
     return true;
 }
 
-void cxgui::Gtkmm3Chip::Draw(const Cairo::RefPtr<Cairo::Context>& p_context) const
+void cx::gui::Gtkmm3Chip::Draw(const Cairo::RefPtr<Cairo::Context>& p_context) const
 {
     const Gtk::Allocation allocation{get_allocation()};
 
@@ -152,7 +152,7 @@ void cxgui::Gtkmm3Chip::Draw(const Cairo::RefPtr<Cairo::Context>& p_context) con
     p_context->restore();
 }
 
-void cxgui::Gtkmm3Chip::DrawBackgroundColor(const Cairo::RefPtr<Cairo::Context>& p_context) const
+void cx::gui::Gtkmm3Chip::DrawBackgroundColor(const Cairo::RefPtr<Cairo::Context>& p_context) const
 {
     p_context->save();
     DrawBorder(p_context);
@@ -178,7 +178,7 @@ void cxgui::Gtkmm3Chip::DrawBackgroundColor(const Cairo::RefPtr<Cairo::Context>&
     p_context->restore();
 }
 
-void cxgui::Gtkmm3Chip::DrawFillColor(const Cairo::RefPtr<Cairo::Context>& p_context) const
+void cx::gui::Gtkmm3Chip::DrawFillColor(const Cairo::RefPtr<Cairo::Context>& p_context) const
 {
     p_context->set_source_rgba(cxmodel::NormalizedR(m_fillColor),
                                cxmodel::NormalizedG(m_fillColor),

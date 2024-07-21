@@ -24,7 +24,7 @@
 #ifndef WIDGETSTOOLKIT_H_81EC1061_C97C_4782_A92B_08EC4035F477
 #define WIDGETSTOOLKIT_H_81EC1061_C97C_4782_A92B_08EC4035F477
 
-namespace cxgui
+namespace cx::gui
 {
 
 /**********************************************************************************************//**
@@ -37,6 +37,6 @@ enum class WidgetsToolkit
     GTKMM3,
 };
 
-} // namespace cxgui
+} // namespace cx::gui
 
 #endif // WIDGETSTOOLKIT_H_81EC1061_C97C_4782_A92B_08EC4035F477

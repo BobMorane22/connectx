@@ -32,7 +32,7 @@ MainWindowControllerTestFixture::MainWindowControllerTestFixture()
     m_model = std::make_unique<MainWindowControllerMockModel>(*this);
     EXPECT_TRUE(m_model);
 
-    m_controller = std::make_unique<cxgui::MainWindowController>(*m_model, *m_model);
+    m_controller = std::make_unique<cx::gui::MainWindowController>(*m_model, *m_model);
     EXPECT_TRUE(m_controller);
 }
 
@@ -83,14 +83,14 @@ cxmodel::IConnectXGameActions& MainWindowControllerTestFixture::GetModel()
     return *m_model;
 }
 
-cxgui::IMainWindowController& MainWindowControllerTestFixture::GetController()
+cx::gui::IMainWindowController& MainWindowControllerTestFixture::GetController()
 {
     EXPECT_TRUE(m_controller != nullptr);
 
     return *m_controller;
 }
 
-cxgui::INewGameViewController& MainWindowControllerTestFixture::GetNewGameViewController()
+cx::gui::INewGameViewController& MainWindowControllerTestFixture::GetNewGameViewController()
 {
     EXPECT_TRUE(m_controller != nullptr);
 

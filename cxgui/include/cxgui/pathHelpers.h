@@ -39,7 +39,7 @@ namespace cx::math
     class Position;
 }
 
-namespace cxgui
+namespace cx::gui
 {
 
 /**********************************************************************************************//**
@@ -97,6 +97,6 @@ void MakeCircularPath(const Cairo::RefPtr<Cairo::Context>& p_context,
                       const cx::math::Position& p_centerPosition,
                       double p_radius);
 
-} // namespace cxgui
+} // namespace cx::gui
 
 #endif // PATHHELPERS_H_5305E912_5A6B_41D9_8FEA_1ADBFC3DDF86

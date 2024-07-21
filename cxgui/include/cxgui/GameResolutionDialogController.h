@@ -31,7 +31,7 @@ namespace cxmodel
     class IConnectXGameActions;
 }
 
-namespace cxgui
+namespace cx::gui
 {
 
 /*********************************************************************************************//**
@@ -59,6 +59,6 @@ private:
 
 };
 
-} // namespace cxgui
+} // namespace cx::gui
 
 #endif // GAMERESOLUTIONDIALOGCONTROLLER_H_021D83A0_55DA_4155_B5F6_3AA46D5A6BF8

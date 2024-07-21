@@ -27,14 +27,14 @@
 #include "IAboutWindowPresenter.h"
 #include "Gtkmm3Window.h"
 
-namespace cxgui
+namespace cx::gui
 {
     class IButton;
     class ILabel;
     class WidgetsFactories;
 }
 
-namespace cxgui
+namespace cx::gui
 {
 
 /**********************************************************************************************//**
@@ -91,6 +91,6 @@ private:
 
 };
 
-} // namespace cxgui
+} // namespace cx::gui
 
 #endif // GTKMM3ABOUTWINDOW_H_396864CD_88A3_43F2_B08B_3F9FEBE89DE1

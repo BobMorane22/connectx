@@ -33,11 +33,11 @@
 #include <cxgui/Margins.h>
 #include <cxgui/WidgetsFactories.h>
 
-cxgui::Gtkmm3GameResolutionDialog::Gtkmm3GameResolutionDialog(
-    cxgui::WidgetsFactories& p_widgetsFactories,
+cx::gui::Gtkmm3GameResolutionDialog::Gtkmm3GameResolutionDialog(
+    cx::gui::WidgetsFactories& p_widgetsFactories,
     std::unique_ptr<IGameResolutionDialogPresenter> p_presenter,
     std::unique_ptr<IGameResolutionDialogController> p_controller)
-: cxgui::Gtkmm3Window{p_widgetsFactories}
+: cx::gui::Gtkmm3Window{p_widgetsFactories}
 , m_presenter{std::move(p_presenter)}
 , m_controller{std::move(p_controller)}
 , m_widgetsFactories{p_widgetsFactories}
@@ -46,12 +46,12 @@ cxgui::Gtkmm3GameResolutionDialog::Gtkmm3GameResolutionDialog(
     POSTCONDITION(m_controller);
 }
 
-void cxgui::Gtkmm3GameResolutionDialog::Update(cxmodel::ModelNotificationContext /*p_context*/, cxmodel::ModelSubject* /*p_subject*/)
+void cx::gui::Gtkmm3GameResolutionDialog::Update(cxmodel::ModelNotificationContext /*p_context*/, cxmodel::ModelSubject* /*p_subject*/)
 {
     // Nothing to do...
 }
 
-void cxgui::Gtkmm3GameResolutionDialog::InitializeWidgets()
+void cx::gui::Gtkmm3GameResolutionDialog::InitializeWidgets()
 {
     const IAbstractWidgetsFactory& stdWidgetsFactory =  m_widgetsFactories.GetStandardWidgetsFactory();
 
@@ -64,43 +64,43 @@ void cxgui::Gtkmm3GameResolutionDialog::InitializeWidgets()
     POSTCONDITION(m_startNewGame);
 }
 
-void cxgui::Gtkmm3GameResolutionDialog::ConfigureWindow()
+void cx::gui::Gtkmm3GameResolutionDialog::ConfigureWindow()
 {
     // We do now want the user to simply close the window by pressing the 'X' button.
     set_deletable(false);
     set_modal(true);
 }
 
-void cxgui::Gtkmm3GameResolutionDialog::RegisterLayouts()
+void cx::gui::Gtkmm3GameResolutionDialog::RegisterLayouts()
 {
     // Nothing to do...
 }
 
-void cxgui::Gtkmm3GameResolutionDialog::RegisterWidgets()
+void cx::gui::Gtkmm3GameResolutionDialog::RegisterWidgets()
 {
     IF_CONDITION_NOT_MET_DO(m_mainLayout, return;);
 
     constexpr cxmodel::Row row0{0u};
     constexpr cxmodel::Row row1{1u};
     constexpr cxmodel::Row row2{2u};
-    constexpr cxgui::ILayout::RowSpan rowSpan1{1u};
+    constexpr cx::gui::ILayout::RowSpan rowSpan1{1u};
 
     constexpr cxmodel::Column column0{0u};
-    constexpr cxgui::ILayout::ColumnSpan columnSpan1{1u};
+    constexpr cx::gui::ILayout::ColumnSpan columnSpan1{1u};
 
     m_mainLayout->Register(*m_title,        {row0, rowSpan1}, {column0, columnSpan1});
     m_mainLayout->Register(*m_message,      {row1, rowSpan1}, {column0, columnSpan1});
     m_mainLayout->Register(*m_startNewGame, {row2, rowSpan1}, {column0, columnSpan1});
 }
 
-void cxgui::Gtkmm3GameResolutionDialog::ConfigureLayouts()
+void cx::gui::Gtkmm3GameResolutionDialog::ConfigureLayouts()
 {
     IF_CONDITION_NOT_MET_DO(m_mainLayout, return;);
     
     m_mainLayout->SetMargins({ TopMargin{DIALOG_SIDE_MARGIN}, BottomMargin{DIALOG_SIDE_MARGIN}, LeftMargin{DIALOG_SIDE_MARGIN}, RightMargin{DIALOG_SIDE_MARGIN}});
 }
 
-void cxgui::Gtkmm3GameResolutionDialog::ConfigureWidgets()
+void cx::gui::Gtkmm3GameResolutionDialog::ConfigureWidgets()
 {
     // Populate widgets:
     m_title->UpdateContents(m_presenter->GetTitle());
@@ -115,7 +115,7 @@ void cxgui::Gtkmm3GameResolutionDialog::ConfigureWidgets()
     m_message->SetMargins({TopMargin{0}, BottomMargin{CONTROL_BOTTOM_MARGIN}, LeftMargin{0}, RightMargin{0}});
 }
 
-void cxgui::Gtkmm3GameResolutionDialog::ConfigureSignalHandlers()
+void cx::gui::Gtkmm3GameResolutionDialog::ConfigureSignalHandlers()
 {
     m_startNewGame->OnClicked()->Connect(
         [this]()

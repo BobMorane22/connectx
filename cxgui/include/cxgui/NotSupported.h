@@ -27,7 +27,7 @@
 #include <cxinv/assertion.h>
 #include <cxgui/ISignal.h>
 
-namespace cxgui
+namespace cx::gui
 {
 
 /**********************************************************************************************//**
@@ -85,6 +85,6 @@ private:
 
 };
 
-} // namespace cxgui
+} // namespace cx::gui
 
 #endif // NOTSUPPORTED_H_1D4D06A8_C263_42FA_A117_3DDD243AEAF2

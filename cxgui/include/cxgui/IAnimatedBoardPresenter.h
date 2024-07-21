@@ -27,7 +27,7 @@
 #include <cxmodel/common.h>
 #include <cxgui/IGameViewPresenter.h>
 
-namespace cxgui
+namespace cx::gui
 {
 
 /**********************************************************************************************//**
@@ -69,7 +69,7 @@ public:
      * @return The board color.
      *
      ********************************************************************************************/
-    [[nodiscard]] virtual cxgui::Color GetGameViewBoardColor() const = 0;
+    [[nodiscard]] virtual cx::gui::Color GetGameViewBoardColor() const = 0;
 
     /******************************************************************************************//**
      * @brief Retreive the column highlight color (not cached).
@@ -80,7 +80,7 @@ public:
      * @return The column highlight color.
      *
      ********************************************************************************************/
-    [[nodiscard]] virtual cxgui::Color GetGameViewColumnHighlightColor() const = 0;
+    [[nodiscard]] virtual cx::gui::Color GetGameViewColumnHighlightColor() const = 0;
 
     /******************************************************************************************//**
      * @brief Retreive the cached active player chip color.
@@ -108,6 +108,6 @@ public:
 
 };
 
-} // namespace cxgui
+} // namespace cx::gui
 
 #endif // IANIMATEDBOARDPRESENTER_H_A2048E6E_9B10_4BE6_93E7_CD07D492BE33
