@@ -44,9 +44,9 @@ public:
     size_t GetMinimumNumberOfPlayers() const {return m_model.GetMinimumNumberOfPlayers();};
     size_t GetMaximumNumberOfPlayers() const {return m_model.GetMaximumNumberOfPlayers();};
 
-    std::unique_ptr<cxmodel::IBoard> GetClassicBoard() const
+    std::unique_ptr<cx::model::IBoard> GetClassicBoard() const
     {
-        std::unique_ptr<cxmodel::IBoard> board = std::make_unique<cxmodel::Board>(6u, 7u, m_model);
+        std::unique_ptr<cx::model::IBoard> board = std::make_unique<cx::model::Board>(6u, 7u, m_model);
         EXPECT_TRUE(board);
 
         return board;
@@ -83,12 +83,12 @@ TEST_F(BoardTestFixture, /*DISABLED_*/GetNbPositions_ValidGameBoard_ReturnsNbPos
 TEST_F(BoardTestFixture, /*DISABLED_*/DropChip_ValidDiscAsParameter_DiscInsertedInGameboard)
 {
     const auto board = GetClassicBoard();
-    const cxmodel::Disc NO_CHIP{cxmodel::MakeTransparent()};
+    const cx::model::Disc NO_CHIP{cx::model::MakeTransparent()};
 
     ASSERT_EQ(board->GetChip({0u, 0u}), NO_CHIP);
 
-    cxmodel::IBoard::Position dummy;
-    const cxmodel::Disc RED_CHIP{cxmodel::MakeRed()};
+    cx::model::IBoard::Position dummy;
+    const cx::model::Disc RED_CHIP{cx::model::MakeRed()};
     ASSERT_TRUE(board->DropChip(0u, RED_CHIP, dummy));
 
     ASSERT_EQ(board->GetChip({0u, 0u}), RED_CHIP);
@@ -98,14 +98,14 @@ TEST_F(BoardTestFixture, /*DISABLED_*/DropChip_ValidDiscAsParameter_DiscInserted
 {
     const auto board = GetClassicBoard();
 
-    const cxmodel::Disc NO_CHIP{cxmodel::MakeTransparent()};
-    const cxmodel::Disc RED_CHIP{cxmodel::MakeRed()};
-    const cxmodel::Disc BLUE_CHIP{cxmodel::MakeBlue()};
+    const cx::model::Disc NO_CHIP{cx::model::MakeTransparent()};
+    const cx::model::Disc RED_CHIP{cx::model::MakeRed()};
+    const cx::model::Disc BLUE_CHIP{cx::model::MakeBlue()};
 
     ASSERT_EQ(board->GetChip({0, 0}), NO_CHIP);
     ASSERT_EQ(board->GetChip({1, 0}), NO_CHIP);
 
-    cxmodel::IBoard::Position dummy;
+    cx::model::IBoard::Position dummy;
     ASSERT_TRUE(board->DropChip(0, RED_CHIP, dummy));
     ASSERT_TRUE(board->DropChip(0, BLUE_CHIP, dummy));
 
@@ -117,15 +117,15 @@ TEST_F(BoardTestFixture, /*DISABLED_*/DropChip_ValidDiscAsParameter_DiscInserted
 {
     const auto board = GetClassicBoard();
 
-    const cxmodel::Disc NO_CHIP{cxmodel::MakeTransparent()};
-    const cxmodel::Disc RED_CHIP{cxmodel::MakeRed()};
-    const cxmodel::Disc BLUE_CHIP{cxmodel::MakeBlue()};
+    const cx::model::Disc NO_CHIP{cx::model::MakeTransparent()};
+    const cx::model::Disc RED_CHIP{cx::model::MakeRed()};
+    const cx::model::Disc BLUE_CHIP{cx::model::MakeBlue()};
 
     ASSERT_EQ(board->GetChip({0, 0}), NO_CHIP);
     ASSERT_EQ(board->GetChip({1, 0}), NO_CHIP);
     ASSERT_EQ(board->GetChip({2, 0}), NO_CHIP);
 
-    cxmodel::IBoard::Position dummy;
+    cx::model::IBoard::Position dummy;
     ASSERT_TRUE(board->DropChip(0, RED_CHIP, dummy));
     ASSERT_TRUE(board->DropChip(0, BLUE_CHIP, dummy));
     ASSERT_TRUE(board->DropChip(0, RED_CHIP, dummy));
@@ -139,16 +139,16 @@ TEST_F(BoardTestFixture, /*DISABLED_*/DropChip_ValidDiscAsParameter_DiscInserted
 {
     const auto board = GetClassicBoard();
 
-    const cxmodel::Disc NO_CHIP{cxmodel::MakeTransparent()};
-    const cxmodel::Disc RED_CHIP{cxmodel::MakeRed()};
-    const cxmodel::Disc BLUE_CHIP{cxmodel::MakeBlue()};
+    const cx::model::Disc NO_CHIP{cx::model::MakeTransparent()};
+    const cx::model::Disc RED_CHIP{cx::model::MakeRed()};
+    const cx::model::Disc BLUE_CHIP{cx::model::MakeBlue()};
 
     ASSERT_EQ(board->GetChip({0, 0}), NO_CHIP);
     ASSERT_EQ(board->GetChip({1, 0}), NO_CHIP);
     ASSERT_EQ(board->GetChip({2, 0}), NO_CHIP);
     ASSERT_EQ(board->GetChip({3, 0}), NO_CHIP);
 
-    cxmodel::IBoard::Position dummy;
+    cx::model::IBoard::Position dummy;
     ASSERT_TRUE(board->DropChip(0, RED_CHIP, dummy));
     ASSERT_TRUE(board->DropChip(0, BLUE_CHIP, dummy));
     ASSERT_TRUE(board->DropChip(0, RED_CHIP, dummy));
@@ -164,9 +164,9 @@ TEST_F(BoardTestFixture, /*DISABLED_*/DropChip_ValidDiscAsParameter_DiscInserted
 {
     const auto board = GetClassicBoard();
 
-    const cxmodel::Disc NO_CHIP{cxmodel::MakeTransparent()};
-    const cxmodel::Disc RED_CHIP{cxmodel::MakeRed()};
-    const cxmodel::Disc BLUE_CHIP{cxmodel::MakeBlue()};
+    const cx::model::Disc NO_CHIP{cx::model::MakeTransparent()};
+    const cx::model::Disc RED_CHIP{cx::model::MakeRed()};
+    const cx::model::Disc BLUE_CHIP{cx::model::MakeBlue()};
 
     ASSERT_EQ(board->GetChip({0, 0}), NO_CHIP);
     ASSERT_EQ(board->GetChip({1, 0}), NO_CHIP);
@@ -174,7 +174,7 @@ TEST_F(BoardTestFixture, /*DISABLED_*/DropChip_ValidDiscAsParameter_DiscInserted
     ASSERT_EQ(board->GetChip({3, 0}), NO_CHIP);
     ASSERT_EQ(board->GetChip({4, 0}), NO_CHIP);
 
-    cxmodel::IBoard::Position dummy;
+    cx::model::IBoard::Position dummy;
     ASSERT_TRUE(board->DropChip(0, RED_CHIP, dummy));
     ASSERT_TRUE(board->DropChip(0, BLUE_CHIP, dummy));
     ASSERT_TRUE(board->DropChip(0, RED_CHIP, dummy));
@@ -192,9 +192,9 @@ TEST_F(BoardTestFixture, /*DISABLED_*/DropChip_ValidDiscAsParameter_DiscInserted
 {
     const auto board = GetClassicBoard();
 
-    const cxmodel::Disc NO_CHIP{cxmodel::MakeTransparent()};
-    const cxmodel::Disc RED_CHIP{cxmodel::MakeRed()};
-    const cxmodel::Disc BLUE_CHIP{cxmodel::MakeBlue()};
+    const cx::model::Disc NO_CHIP{cx::model::MakeTransparent()};
+    const cx::model::Disc RED_CHIP{cx::model::MakeRed()};
+    const cx::model::Disc BLUE_CHIP{cx::model::MakeBlue()};
 
     ASSERT_EQ(board->GetChip({0, 0}), NO_CHIP);
     ASSERT_EQ(board->GetChip({1, 0}), NO_CHIP);
@@ -203,7 +203,7 @@ TEST_F(BoardTestFixture, /*DISABLED_*/DropChip_ValidDiscAsParameter_DiscInserted
     ASSERT_EQ(board->GetChip({4, 0}), NO_CHIP);
     ASSERT_EQ(board->GetChip({5, 0}), NO_CHIP);
 
-    cxmodel::IBoard::Position dummy;
+    cx::model::IBoard::Position dummy;
     ASSERT_TRUE(board->DropChip(0, RED_CHIP, dummy));
     ASSERT_TRUE(board->DropChip(0, BLUE_CHIP, dummy));
     ASSERT_TRUE(board->DropChip(0, RED_CHIP, dummy));
@@ -223,9 +223,9 @@ TEST_F(BoardTestFixture, /*DISABLED_*/DropChip_ValidDiscAsParameter_DiscInserted
 {
     const auto board = GetClassicBoard();
 
-    const cxmodel::Disc NO_CHIP{cxmodel::MakeTransparent()};
-    const cxmodel::Disc RED_CHIP{cxmodel::MakeRed()};
-    const cxmodel::Disc BLUE_CHIP{cxmodel::MakeBlue()};
+    const cx::model::Disc NO_CHIP{cx::model::MakeTransparent()};
+    const cx::model::Disc RED_CHIP{cx::model::MakeRed()};
+    const cx::model::Disc BLUE_CHIP{cx::model::MakeBlue()};
 
     ASSERT_EQ(board->GetChip({0, 0}), NO_CHIP);
     ASSERT_EQ(board->GetChip({1, 0}), NO_CHIP);
@@ -234,7 +234,7 @@ TEST_F(BoardTestFixture, /*DISABLED_*/DropChip_ValidDiscAsParameter_DiscInserted
     ASSERT_EQ(board->GetChip({4, 0}), NO_CHIP);
     ASSERT_EQ(board->GetChip({5, 0}), NO_CHIP);
 
-    cxmodel::IBoard::Position dummy;
+    cx::model::IBoard::Position dummy;
     ASSERT_TRUE(board->DropChip(0, RED_CHIP, dummy));
     ASSERT_TRUE(board->DropChip(0, BLUE_CHIP, dummy));
     ASSERT_TRUE(board->DropChip(0, RED_CHIP, dummy));
@@ -257,24 +257,24 @@ TEST_F(BoardTestFixture, /*DISABLED_*/DropChip_ValidDiscAsParameter_ReturnedPosi
 {
     const auto board = GetClassicBoard();
 
-    const cxmodel::Disc NO_CHIP{cxmodel::MakeTransparent()};
-    const cxmodel::Disc RED_CHIP{cxmodel::MakeRed()};
-    const cxmodel::Disc BLUE_CHIP{cxmodel::MakeBlue()};
+    const cx::model::Disc NO_CHIP{cx::model::MakeTransparent()};
+    const cx::model::Disc RED_CHIP{cx::model::MakeRed()};
+    const cx::model::Disc BLUE_CHIP{cx::model::MakeBlue()};
 
     ASSERT_EQ(board->GetChip({0, 0}), NO_CHIP);
     ASSERT_EQ(board->GetChip({1, 0}), NO_CHIP);
     ASSERT_EQ(board->GetChip({2, 0}), NO_CHIP);
     ASSERT_EQ(board->GetChip({3, 0}), NO_CHIP);
 
-    cxmodel::IBoard::Position dummy;
+    cx::model::IBoard::Position dummy;
     ASSERT_TRUE(board->DropChip(4, RED_CHIP, dummy));
     ASSERT_TRUE(board->DropChip(4, BLUE_CHIP, dummy));
     ASSERT_TRUE(board->DropChip(4, RED_CHIP, dummy));
 
-    cxmodel::IBoard::Position position;
+    cx::model::IBoard::Position position;
     ASSERT_TRUE(board->DropChip(4, BLUE_CHIP, position));
 
-    constexpr cxmodel::IBoard::Position expected{3, 4};
+    constexpr cx::model::IBoard::Position expected{3, 4};
     ASSERT_EQ(expected.m_row, position.m_row);
     ASSERT_EQ(expected.m_column, position.m_column);
 }
@@ -283,12 +283,12 @@ TEST_F(BoardTestFixture, /*DISABLED_*/GetChip_ExistingPositionAsParameter_Return
 {
     const auto board = GetClassicBoard();
 
-    const cxmodel::Disc NO_CHIP{cxmodel::MakeTransparent()};
-    const cxmodel::Disc BLUE_CHIP{cxmodel::MakeBlue()};
+    const cx::model::Disc NO_CHIP{cx::model::MakeTransparent()};
+    const cx::model::Disc BLUE_CHIP{cx::model::MakeBlue()};
 
-    const cxmodel::IBoard::Position position{0, 2};
+    const cx::model::IBoard::Position position{0, 2};
 
-    cxmodel::IBoard::Position dummy;
+    cx::model::IBoard::Position dummy;
     board->DropChip(2, BLUE_CHIP, dummy);
 
     ASSERT_EQ(BLUE_CHIP, board->GetChip(position));
@@ -298,9 +298,9 @@ TEST_F(BoardTestFixtureStdErrStreamRedirector, /*DISABLED_*/GetChip_InputPositio
 {
     const auto board = GetClassicBoard();
 
-    const cxmodel::Disc RED_CHIP{cxmodel::MakeRed()};
+    const cx::model::Disc RED_CHIP{cx::model::MakeRed()};
 
-    cxmodel::IBoard::Position dummy;
+    cx::model::IBoard::Position dummy;
     ASSERT_TRUE(board->DropChip(0, RED_CHIP, dummy));
     ASSERT_EQ(board->GetChip({0, 0}), RED_CHIP);
 

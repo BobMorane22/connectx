@@ -66,8 +66,8 @@ public:
 
 private:
 
-    // cxmodel::IModelObserver:
-    void Update(cxmodel::ModelNotificationContext p_context, cxmodel::ModelSubject* p_subject) final;
+    // cx::model::IModelObserver:
+    void Update(cx::model::ModelNotificationContext p_context, cx::model::ModelSubject* p_subject) final;
 
     void InitializeWidgets() final;
     void ConfigureWindow() final;

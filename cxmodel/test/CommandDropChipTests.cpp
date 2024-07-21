@@ -32,14 +32,14 @@
 #include <cxmodel/Disc.h>
 #include <cxmodel/IConnectXLimits.h>
 
-static const cxmodel::Disc NO_CHIP{cxmodel::MakeTransparent()};
+static const cx::model::Disc NO_CHIP{cx::model::MakeTransparent()};
 
 class CommandDropChipTestFixture : public ::testing::Test
 {
 
 public:
 
-    [[nodiscard]] cxmodel::IConnectXLimits& GetModelAsLimits()
+    [[nodiscard]] cx::model::IConnectXLimits& GetModelAsLimits()
     {
         return m_model;
     }
@@ -51,7 +51,7 @@ public:
 
 private:
 
-    class ModelMock final : public cxmodel::IConnectXLimits
+    class ModelMock final : public cx::model::IConnectXLimits
     {
         size_t GetMinimumGridHeight() const override {return 6u;}
         size_t GetMinimumGridWidth() const override {return 7u;}
@@ -78,29 +78,29 @@ private:
 TEST_F(CommandDropChipTestFixture, /*DISABLED_*/Execute_EmptyRowAndTwoPlayers_AllDataUpdated)
 {
     // Data setup:
-    cxmodel::Board board{6u, 7u, GetModelAsLimits()};
+    cx::model::Board board{6u, 7u, GetModelAsLimits()};
     ASSERT_TRUE(board.GetChip({0u, 0u}) == NO_CHIP);
 
-    cxmodel::PlayerInformation playerInfo{
+    cx::model::PlayerInformation playerInfo{
         {
-            cxmodel::CreatePlayer("John Doe", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN),
-            cxmodel::CreatePlayer("Jane Doe", cxmodel::MakeBlue(), cxmodel::PlayerType::HUMAN)
+            cx::model::CreatePlayer("John Doe", cx::model::MakeRed(), cx::model::PlayerType::HUMAN),
+            cx::model::CreatePlayer("Jane Doe", cx::model::MakeBlue(), cx::model::PlayerType::HUMAN)
         },
         0u,
         1u
     };
 
-    cxmodel::Disc droppedDisc{cxmodel::MakeRed()};
+    cx::model::Disc droppedDisc{cx::model::MakeRed()};
 
     ASSERT_TRUE(droppedDisc == playerInfo.m_players[playerInfo.m_activePlayerIndex]->GetChip());
 
-    std::vector<cxmodel::IBoard::Position> takenPositions;
+    std::vector<cx::model::IBoard::Position> takenPositions;
     ASSERT_TRUE(takenPositions.empty());
 
     // The command is created and executed:
-    const auto cmd = std::make_unique<cxmodel::CommandDropChip>(board,
+    const auto cmd = std::make_unique<cx::model::CommandDropChip>(board,
                                                                 playerInfo,
-                                                                std::make_unique<cxmodel::Disc>(droppedDisc),
+                                                                std::make_unique<cx::model::Disc>(droppedDisc),
                                                                 0u,
                                                                 takenPositions,
                                                                 GetLogger());
@@ -108,40 +108,40 @@ TEST_F(CommandDropChipTestFixture, /*DISABLED_*/Execute_EmptyRowAndTwoPlayers_Al
     cmd->Execute();
 
     // Data is now checked for valid updates:
-    ASSERT_TRUE(board.GetChip({0u, 0u}) == cxmodel::Disc(cxmodel::MakeRed()));
+    ASSERT_TRUE(board.GetChip({0u, 0u}) == cx::model::Disc(cx::model::MakeRed()));
     ASSERT_TRUE(playerInfo.m_activePlayerIndex == 1u);
     ASSERT_TRUE(playerInfo.m_nextPlayerIndex == 0u);
     ASSERT_TRUE(takenPositions.size() == 1);
-    ASSERT_TRUE(takenPositions[0] == cxmodel::IBoard::Position(0u, 0u));
+    ASSERT_TRUE(takenPositions[0] == cx::model::IBoard::Position(0u, 0u));
 }
 
 TEST_F(CommandDropChipTestFixture, /*DISABLED_*/Execute_EmptyRowAndThreePlayers_AllDataUpdated)
 {
     // Data setup:
-    cxmodel::Board board{6u, 7u, GetModelAsLimits()};
+    cx::model::Board board{6u, 7u, GetModelAsLimits()};
     ASSERT_TRUE(board.GetChip({0u, 0u}) == NO_CHIP);
 
-    cxmodel::PlayerInformation playerInfo{
+    cx::model::PlayerInformation playerInfo{
         {
-            cxmodel::CreatePlayer("John Doe", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN),
-            cxmodel::CreatePlayer("Jane Doe", cxmodel::MakeBlue(), cxmodel::PlayerType::HUMAN),
-            cxmodel::CreatePlayer("Stacy Cooper", cxmodel::MakeYellow(), cxmodel::PlayerType::HUMAN)
+            cx::model::CreatePlayer("John Doe", cx::model::MakeRed(), cx::model::PlayerType::HUMAN),
+            cx::model::CreatePlayer("Jane Doe", cx::model::MakeBlue(), cx::model::PlayerType::HUMAN),
+            cx::model::CreatePlayer("Stacy Cooper", cx::model::MakeYellow(), cx::model::PlayerType::HUMAN)
         },
         0u,
         1u
     };
 
-    cxmodel::Disc droppedDisc{cxmodel::MakeRed()};
+    cx::model::Disc droppedDisc{cx::model::MakeRed()};
 
     ASSERT_TRUE(droppedDisc == playerInfo.m_players[playerInfo.m_activePlayerIndex]->GetChip());
 
-    std::vector<cxmodel::IBoard::Position> takenPositions;
+    std::vector<cx::model::IBoard::Position> takenPositions;
     ASSERT_TRUE(takenPositions.empty());
 
     // The command is created and executed:
-    const auto cmd = std::make_unique<cxmodel::CommandDropChip>(board,
+    const auto cmd = std::make_unique<cx::model::CommandDropChip>(board,
                                                                 playerInfo,
-                                                                std::make_unique<cxmodel::Disc>(droppedDisc),
+                                                                std::make_unique<cx::model::Disc>(droppedDisc),
                                                                 0u,
                                                                 takenPositions,
                                                                 GetLogger());
@@ -149,44 +149,44 @@ TEST_F(CommandDropChipTestFixture, /*DISABLED_*/Execute_EmptyRowAndThreePlayers_
     cmd->Execute();
 
     // Data is now checked for valid updates:
-    ASSERT_TRUE(board.GetChip({0u, 0u}) == cxmodel::Disc(cxmodel::MakeRed()));
+    ASSERT_TRUE(board.GetChip({0u, 0u}) == cx::model::Disc(cx::model::MakeRed()));
     ASSERT_TRUE(playerInfo.m_activePlayerIndex == 1u);
     ASSERT_TRUE(playerInfo.m_nextPlayerIndex == 2u);
     ASSERT_TRUE(takenPositions.size() == 1);
-    ASSERT_TRUE(takenPositions[0] == cxmodel::IBoard::Position(0u, 0u));
+    ASSERT_TRUE(takenPositions[0] == cx::model::IBoard::Position(0u, 0u));
 }
 
 TEST_F(CommandDropChipTestFixture, /*DISABLED_*/Execute_RowNotFull_AllDataUpdated)
 {
     // Data setup:
-    cxmodel::Board board{6u, 7u, GetModelAsLimits()};
-    cxmodel::Disc firstDisc{cxmodel::MakeRed()};
-    cxmodel::IBoard::Position dummy;
+    cx::model::Board board{6u, 7u, GetModelAsLimits()};
+    cx::model::Disc firstDisc{cx::model::MakeRed()};
+    cx::model::IBoard::Position dummy;
     ASSERT_TRUE(board.DropChip(5u, firstDisc, dummy));
 
     ASSERT_TRUE(board.GetChip({0u, 5u}) == firstDisc);
     ASSERT_TRUE(board.GetChip({1u, 5u}) == NO_CHIP);
 
-    cxmodel::PlayerInformation playerInfo{
+    cx::model::PlayerInformation playerInfo{
         {
-            cxmodel::CreatePlayer("John Doe", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN),
-            cxmodel::CreatePlayer("Jane Doe", cxmodel::MakeBlue(), cxmodel::PlayerType::HUMAN),
+            cx::model::CreatePlayer("John Doe", cx::model::MakeRed(), cx::model::PlayerType::HUMAN),
+            cx::model::CreatePlayer("Jane Doe", cx::model::MakeBlue(), cx::model::PlayerType::HUMAN),
         },
         1u,
         0u
     };
 
-    cxmodel::Disc droppedDisc{cxmodel::MakeBlue()};
+    cx::model::Disc droppedDisc{cx::model::MakeBlue()};
 
     ASSERT_TRUE(droppedDisc == playerInfo.m_players[playerInfo.m_activePlayerIndex]->GetChip());
 
-    std::vector<cxmodel::IBoard::Position> takenPositions;
+    std::vector<cx::model::IBoard::Position> takenPositions;
     ASSERT_TRUE(takenPositions.empty());
 
     // The command is created and executed:
-    const auto cmd = std::make_unique<cxmodel::CommandDropChip>(board,
+    const auto cmd = std::make_unique<cx::model::CommandDropChip>(board,
                                                                 playerInfo,
-                                                                std::make_unique<cxmodel::Disc>(droppedDisc),
+                                                                std::make_unique<cx::model::Disc>(droppedDisc),
                                                                 5u,
                                                                 takenPositions,
                                                                 GetLogger());
@@ -194,21 +194,21 @@ TEST_F(CommandDropChipTestFixture, /*DISABLED_*/Execute_RowNotFull_AllDataUpdate
     cmd->Execute();
 
     // Data is now checked for valid updates:
-    ASSERT_TRUE(board.GetChip({1u, 5u}) == cxmodel::Disc(cxmodel::MakeBlue()));
+    ASSERT_TRUE(board.GetChip({1u, 5u}) == cx::model::Disc(cx::model::MakeBlue()));
     ASSERT_TRUE(playerInfo.m_activePlayerIndex == 0u);
     ASSERT_TRUE(playerInfo.m_nextPlayerIndex == 1u);
     ASSERT_TRUE(takenPositions.size() == 1);
-    ASSERT_TRUE(takenPositions[0] == cxmodel::IBoard::Position(1u, 5u));
+    ASSERT_TRUE(takenPositions[0] == cx::model::IBoard::Position(1u, 5u));
 }
 
 TEST_F(CommandDropChipTestFixture, /*DISABLED_*/Execute_RowFull_NoDataUpdated)
 {
     // Data setup:
-    cxmodel::Board board{6u, 7u, GetModelAsLimits()};
-    cxmodel::Disc firstDisc{cxmodel::MakeRed()};
-    cxmodel::Disc secondDisc{cxmodel::MakeBlue()};
+    cx::model::Board board{6u, 7u, GetModelAsLimits()};
+    cx::model::Disc firstDisc{cx::model::MakeRed()};
+    cx::model::Disc secondDisc{cx::model::MakeBlue()};
 
-    cxmodel::IBoard::Position dummy;
+    cx::model::IBoard::Position dummy;
     ASSERT_TRUE(board.DropChip(6u, firstDisc, dummy));
     ASSERT_TRUE(board.DropChip(6u, secondDisc, dummy));
     ASSERT_TRUE(board.DropChip(6u, firstDisc, dummy));
@@ -217,26 +217,26 @@ TEST_F(CommandDropChipTestFixture, /*DISABLED_*/Execute_RowFull_NoDataUpdated)
     ASSERT_TRUE(board.DropChip(6u, secondDisc, dummy));
     ASSERT_TRUE(board.GetChip({5u, 6u}) == secondDisc);
 
-    cxmodel::PlayerInformation playerInfo{
+    cx::model::PlayerInformation playerInfo{
         {
-            cxmodel::CreatePlayer("John Doe", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN),
-            cxmodel::CreatePlayer("Jane Doe", cxmodel::MakeBlue(), cxmodel::PlayerType::HUMAN),
+            cx::model::CreatePlayer("John Doe", cx::model::MakeRed(), cx::model::PlayerType::HUMAN),
+            cx::model::CreatePlayer("Jane Doe", cx::model::MakeBlue(), cx::model::PlayerType::HUMAN),
         },
         0u,
         1u
     };
 
-    cxmodel::Disc droppedDisc{cxmodel::MakeRed()};
+    cx::model::Disc droppedDisc{cx::model::MakeRed()};
 
     ASSERT_TRUE(droppedDisc == playerInfo.m_players[playerInfo.m_activePlayerIndex]->GetChip());
 
-    std::vector<cxmodel::IBoard::Position> takenPositions;
+    std::vector<cx::model::IBoard::Position> takenPositions;
     ASSERT_TRUE(takenPositions.empty());
 
     // The command is created and executed:
-    const auto cmd = std::make_unique<cxmodel::CommandDropChip>(board,
+    const auto cmd = std::make_unique<cx::model::CommandDropChip>(board,
                                                                 playerInfo,
-                                                                std::make_unique<cxmodel::Disc>(droppedDisc),
+                                                                std::make_unique<cx::model::Disc>(droppedDisc),
                                                                 6u,
                                                                 takenPositions,
                                                                 GetLogger());
@@ -251,7 +251,7 @@ TEST_F(CommandDropChipTestFixture, /*DISABLED_*/Execute_RowFull_NoDataUpdated)
     }
 
     // Data is now checked, no update should have occured:
-    ASSERT_TRUE(board.GetChip({5u, 6u}) == cxmodel::Disc(cxmodel::MakeBlue()));
+    ASSERT_TRUE(board.GetChip({5u, 6u}) == cx::model::Disc(cx::model::MakeBlue()));
     ASSERT_TRUE(playerInfo.m_activePlayerIndex == 0u);
     ASSERT_TRUE(playerInfo.m_nextPlayerIndex == 1u);
     ASSERT_TRUE(takenPositions.empty());

@@ -26,7 +26,7 @@
 #include <cxmodel/IPlayer.h>
 #include <cxgui/WinGameResolutionDialogPresenter.h>
 
-cx::gui::WinGameResolutionDialogPresenter::WinGameResolutionDialogPresenter(const cxmodel::IConnectXGameInformation& p_modelAsInformation)
+cx::gui::WinGameResolutionDialogPresenter::WinGameResolutionDialogPresenter(const cx::model::IConnectXGameInformation& p_modelAsInformation)
 : m_modelAsInformation{p_modelAsInformation}
 {
 

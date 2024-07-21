@@ -57,8 +57,8 @@ public:
      *     The chip height (in pixels).
      *
      ********************************************************************************************/
-    Gtkmm3Chip(const cxmodel::ChipColor& p_fillColor,
-               const cxmodel::ChipColor& p_backgroundColor,
+    Gtkmm3Chip(const cx::model::ChipColor& p_fillColor,
+               const cx::model::ChipColor& p_backgroundColor,
                int p_width,
                int p_height);
 
@@ -80,8 +80,8 @@ public:
     void SetDelegate(std::unique_ptr<IWidget> p_delegate);
 
     // cx::gui::IChip:
-    void ChangeColor(const cxmodel::ChipColor& p_newFillColor) override final;
-    [[nodiscard]] cxmodel::ChipColor GetColor() const override final;
+    void ChangeColor(const cx::model::ChipColor& p_newFillColor) override final;
+    [[nodiscard]] cx::model::ChipColor GetColor() const override final;
     void Highlight() override final;
     void UnHighlight() override final;
 
@@ -119,9 +119,9 @@ private:
 
     std::unique_ptr<IWidget> m_delegate;
 
-    cxmodel::ChipColor m_fillColor;
-    cxmodel::ChipColor m_backgroundColor;
-    cxmodel::ChipColor m_initialBackgroundColor;
+    cx::model::ChipColor m_fillColor;
+    cx::model::ChipColor m_backgroundColor;
+    cx::model::ChipColor m_initialBackgroundColor;
 };
 
 } // namespace cx::gui

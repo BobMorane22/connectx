@@ -24,12 +24,12 @@
 #ifndef ICOMMAND_H_65CCB8C8_B685_4720_8172_C50ED8C4909D
 #define ICOMMAND_H_65CCB8C8_B685_4720_8172_C50ED8C4909D
 
-namespace cxmodel
+namespace cx::model
 {
     enum class CommandCompletionStatus;
 }
 
-namespace cxmodel
+namespace cx::model
 {
 
 /*********************************************************************************************//**
@@ -72,6 +72,6 @@ public:
 
 };
 
-} // namespace cxmodel
+} // namespace cx::model
 
 #endif // ICOMMAND_H_65CCB8C8_B685_4720_8172_C50ED8C4909D

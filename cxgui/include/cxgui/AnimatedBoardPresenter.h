@@ -56,24 +56,24 @@ public:
 
     // cx::gui::IAnimatedBoardPresenter:
     void Sync() override;
-    [[nodiscard]] cxmodel::Height GetBoardHeight() const override;
-    [[nodiscard]] cxmodel::Width GetBoardWidth() const override;
+    [[nodiscard]] cx::model::Height GetBoardHeight() const override;
+    [[nodiscard]] cx::model::Width GetBoardWidth() const override;
     [[nodiscard]] cx::gui::Color GetGameViewBoardColor() const override;
     [[nodiscard]] cx::gui::Color GetGameViewColumnHighlightColor() const override;
-    [[nodiscard]] cxmodel::ChipColor GetActivePlayerChipColor() const override;
+    [[nodiscard]] cx::model::ChipColor GetActivePlayerChipColor() const override;
     [[nodiscard]] const IGameViewPresenter::ChipColors& GetBoardChipColors() const override;
-    [[nodiscard]] cxmodel::Column GetBotTarget() const override;
+    [[nodiscard]] cx::model::Column GetBotTarget() const override;
 
 private:
 
     // Cache the old information, needed by the animation logic.
     struct Cache
     {
-        cxmodel::Height m_boardHeight{0u};
-        cxmodel::Width m_boardWidth{0u};
-        cxmodel::ChipColor m_activePlayerChipColor = cxmodel::MakeTransparent();
+        cx::model::Height m_boardHeight{0u};
+        cx::model::Width m_boardWidth{0u};
+        cx::model::ChipColor m_activePlayerChipColor = cx::model::MakeTransparent();
         IGameViewPresenter::ChipColors m_boardColors;
-        cxmodel::Column m_botTarget{0u};
+        cx::model::Column m_botTarget{0u};
     };
 
     const IGameViewPresenter& m_gameVewPresenter;

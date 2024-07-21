@@ -41,7 +41,7 @@
 #include "ModelNotificationContext.h"
 #include "PlayerInformation.h"
 
-namespace cxmodel
+namespace cx::model
 {
 
 /*********************************************************************************************//**
@@ -139,7 +139,7 @@ public:
 ///@{ @name IConnectXGameActions
 
     void CreateNewGame(NewGameInformation p_gameInformation) override;
-    void DropChip(const cxmodel::IChip& p_chip, size_t p_column) override;
+    void DropChip(const cx::model::IChip& p_chip, size_t p_column) override;
     void MoveLeftOneColumn() override;
     void MoveRightOneColumn() override;
     void EndCurrentGame() override;
@@ -163,7 +163,7 @@ private:
     std::unique_ptr<ICommandStack> m_cmdStack;
     CompositeCommand* m_currentDropCommands;
 
-    std::unique_ptr<cxmodel::IBoard> m_board;
+    std::unique_ptr<cx::model::IBoard> m_board;
     PlayerInformation m_playersInfo;
     size_t m_inARowValue;
     std::vector<IBoard::Position> m_takenPositions;
@@ -174,6 +174,6 @@ private:
     size_t m_botTarget{0u};
 };
 
-} // namespace cxmodel
+} // namespace cx::model
 
 #endif // MODEL_H_8CC20E7E_7466_4977_9435_7E09ADBD10FC

@@ -74,8 +74,8 @@ public:
                   const Alignement& p_alignement = {}) override;
     void Unregister(IWidget& p_widget) override;
     void Unregister(Gtk::Widget& p_gtkWidget) override;
-    [[nodiscard]] const IWidget* GetWidgetAtPosition(const cxmodel::Row& p_row, const cxmodel::Column& p_column) const override;
-    [[nodiscard]] IWidget* GetWidgetAtPosition(const cxmodel::Row& p_row, const cxmodel::Column& p_column) override;
+    [[nodiscard]] const IWidget* GetWidgetAtPosition(const cx::model::Row& p_row, const cx::model::Column& p_column) const override;
+    [[nodiscard]] IWidget* GetWidgetAtPosition(const cx::model::Row& p_row, const cx::model::Column& p_column) override;
     void SetRowSpacingMode(RowSpacingMode p_newMode) override;
     void SetColumnSpacingMode(ColumnSpacingMode p_newMode) override;
 

@@ -33,7 +33,7 @@
 #include <cxgui/ISignal.h>
 #include <cxgui/IWidget.h>
 
-namespace cxmodel
+namespace cx::model
 {
     enum class PlayerType;
 }
@@ -83,7 +83,7 @@ public:
      *      The row's player chip color.
      *
      **********************************************************************************************/
-    [[nodiscard]] virtual cxmodel::ChipColor GetRowPlayerChipColor(
+    [[nodiscard]] virtual cx::model::ChipColor GetRowPlayerChipColor(
         const size_t p_index) const = 0;
 
     /*******************************************************************************************//**
@@ -111,7 +111,7 @@ public:
      *      An `std::vector` containing all the player types in the list.
      *
      **********************************************************************************************/
-    [[nodiscard]] virtual std::vector<cxmodel::PlayerType> GetAllPlayerTypes() const = 0;
+    [[nodiscard]] virtual std::vector<cx::model::PlayerType> GetAllPlayerTypes() const = 0;
 
     /*******************************************************************************************//**
      * @brief Accesses all player names in the list.
@@ -129,7 +129,7 @@ public:
      *      An `std::vector` containing all the player chip colors in the list.
      *
      **********************************************************************************************/
-    [[nodiscard]] virtual std::vector<cxmodel::ChipColor> GetAllColors() const = 0;
+    [[nodiscard]] virtual std::vector<cx::model::ChipColor> GetAllColors() const = 0;
 
     /*******************************************************************************************//**
      * @brief Adds a player to the list.
@@ -195,9 +195,9 @@ public:
      **********************************************************************************************/
     [[nodiscard]] virtual bool UpdatePlayer(
         const size_t p_index,
-        cxmodel::PlayerType p_newPlayerType,
+        cx::model::PlayerType p_newPlayerType,
         const std::string& p_newPlayerNewName,
-        const cxmodel::ChipColor& p_newPlayerNewChipColor) = 0;
+        const cx::model::ChipColor& p_newPlayerNewChipColor) = 0;
 
     /***********************************************************************************************
      * @brief Get the signal for when a player is updated in the list.

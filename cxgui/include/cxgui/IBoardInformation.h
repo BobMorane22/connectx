@@ -53,7 +53,7 @@ public:
      * @return The column in which the chip currently is located.
      *
      *********************************************************************************************/
-    [[nodiscard]] virtual const cxmodel::Column& GetCurrentColumn() const = 0;
+    [[nodiscard]] virtual const cx::model::Column& GetCurrentColumn() const = 0;
 
     /******************************************************************************************//**
      * @brief Gets the color of the chip currently in the next disc area.
@@ -62,7 +62,7 @@ public:
      *         is returned.
      *
      *********************************************************************************************/
-    [[nodiscard]] virtual cxmodel::ChipColor GetCurrentChipColor() const = 0;
+    [[nodiscard]] virtual cx::model::ChipColor GetCurrentChipColor() const = 0;
 
 };
 

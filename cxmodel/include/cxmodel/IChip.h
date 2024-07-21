@@ -26,7 +26,7 @@
 
 #include "ChipColor.h"
 
-namespace cxmodel
+namespace cx::model
 {
 
 /*********************************************************************************************//**
@@ -94,6 +94,6 @@ public:
  ********************************************************************************************/
 [[nodiscard]] bool operator!=(const IChip& p_lhs, const IChip& p_rhs);
 
-} // namespace cxmodel
+} // namespace cx::model
 
 #endif // ICHIP_H_FFD62B76_D91D_40E6_8195_BA1FE9F76597

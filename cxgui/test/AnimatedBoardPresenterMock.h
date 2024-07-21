@@ -35,18 +35,18 @@ public:
 
     // cx::gui::IAnimatedBoardPresenter:
     void Sync() override;
-    [[nodiscard]] cxmodel::Height GetBoardHeight() const override;
-    [[nodiscard]] cxmodel::Width GetBoardWidth() const override;
+    [[nodiscard]] cx::model::Height GetBoardHeight() const override;
+    [[nodiscard]] cx::model::Width GetBoardWidth() const override;
     [[nodiscard]] cx::gui::Color GetGameViewBoardColor() const override;
     [[nodiscard]] cx::gui::Color GetGameViewColumnHighlightColor() const override;
-    [[nodiscard]] cxmodel::ChipColor GetActivePlayerChipColor() const override;
+    [[nodiscard]] cx::model::ChipColor GetActivePlayerChipColor() const override;
     [[nodiscard]] const cx::gui::IGameViewPresenter::ChipColors& GetBoardChipColors() const override;
-    [[nodiscard]] cxmodel::Column GetBotTarget() const override;
+    [[nodiscard]] cx::model::Column GetBotTarget() const override;
 
     // Testing:
-    void SetBoardDimensions(const cxmodel::Height& p_nbRows, const cxmodel::Width& p_nbColumns);
-    void SetLastBotTarget(const cxmodel::Column& p_lastBotTarget);
-    void AddChipsToColumn(const cxmodel::Column& p_column, size_t p_nbOfChipsToAdd);
+    void SetBoardDimensions(const cx::model::Height& p_nbRows, const cx::model::Width& p_nbColumns);
+    void SetLastBotTarget(const cx::model::Column& p_lastBotTarget);
+    void AddChipsToColumn(const cx::model::Column& p_column, size_t p_nbOfChipsToAdd);
 
     [[nodiscard]] bool WasSyncCalled() const {return m_syncCalled;}
 
@@ -56,12 +56,12 @@ private:
 
     bool m_syncCalled = false;
 
-    cxmodel::Height m_boardHeight{6u};
-    cxmodel::Width m_boardWidth{7u};
+    cx::model::Height m_boardHeight{6u};
+    cx::model::Width m_boardWidth{7u};
 
     cx::gui::IGameViewPresenter::ChipColors m_chipColors;
 
-    cxmodel::Column m_lastBotTarget{5u};
+    cx::model::Column m_lastBotTarget{5u};
 };
 
 #endif // ANIMATEDBOARDPRESENTERMOCK_H_0BBB4EA4_6CE8_46F8_8FBF_62E30E5DEDE0

@@ -97,7 +97,7 @@ void cx::gui::Gtkmm3Layout::Unregister(Gtk::Widget& p_gtkWidget)
     remove(p_gtkWidget);
 }
 
-const cx::gui::IWidget* cx::gui::Gtkmm3Layout::GetWidgetAtPosition(const cxmodel::Row& p_row, const cxmodel::Column& p_column) const
+const cx::gui::IWidget* cx::gui::Gtkmm3Layout::GetWidgetAtPosition(const cx::model::Row& p_row, const cx::model::Column& p_column) const
 {
     const int left = static_cast<int>(p_column.Get());
     const int top = static_cast<int>(p_row.Get());
@@ -111,7 +111,7 @@ const cx::gui::IWidget* cx::gui::Gtkmm3Layout::GetWidgetAtPosition(const cxmodel
     return widget;
 }
 
-cx::gui::IWidget* cx::gui::Gtkmm3Layout::GetWidgetAtPosition(const cxmodel::Row& p_row, const cxmodel::Column& p_column)
+cx::gui::IWidget* cx::gui::Gtkmm3Layout::GetWidgetAtPosition(const cx::model::Row& p_row, const cx::model::Column& p_column)
 {
     return const_cast<cx::gui::IWidget*>(const_cast<const cx::gui::Gtkmm3Layout*>(this)->GetWidgetAtPosition(p_row, p_column));
 }

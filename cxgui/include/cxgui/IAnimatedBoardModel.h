@@ -129,7 +129,7 @@ public:
      *      The new value for the current column.
      *
      *********************************************************************************************/
-    virtual void UpdateCurrentColumn(const cxmodel::Column& p_newCurrentColumn) = 0;
+    virtual void UpdateCurrentColumn(const cx::model::Column& p_newCurrentColumn) = 0;
 
 ///@}
 
@@ -234,7 +234,7 @@ public:
      * @return The current column.
      *
      *********************************************************************************************/
-    [[nodiscard]] virtual const cxmodel::Column& GetCurrentColumn() const = 0;
+    [[nodiscard]] virtual const cx::model::Column& GetCurrentColumn() const = 0;
 
 ///@}
 
@@ -251,7 +251,7 @@ public:
  * @return The corresponding column.
  *
  *************************************************************************************************/
-[[nodiscard]] cxmodel::Column ComputeColumnFromPosition(const IAnimatedBoardModel& p_model, const cx::math::Position& p_position);
+[[nodiscard]] cx::model::Column ComputeColumnFromPosition(const IAnimatedBoardModel& p_model, const cx::math::Position& p_position);
 
 /**********************************************************************************************//**
  * @brief For some column, compute the corresponding chip position according to a model.
@@ -268,7 +268,7 @@ public:
  * @return The corresponding chip position (at the center of the column).
  *
  *************************************************************************************************/
-[[nodiscard]] cx::math::Position ComputeChipPositionFromColumn(const IAnimatedBoardModel& p_model, const cxmodel::Column& p_column);
+[[nodiscard]] cx::math::Position ComputeChipPositionFromColumn(const IAnimatedBoardModel& p_model, const cx::model::Column& p_column);
 
 } // namespace cx::gui
 

@@ -98,14 +98,14 @@ std::optional<cx::gui::BoardAnimationNotificationContext> MoveChipLeftOneColumnF
 
     if(p_horizontalAnimationInfo.m_currentDisplacement.Get() >= oneAnimationWidth || std::abs(p_horizontalAnimationInfo.m_currentDisplacement.Get() - oneAnimationWidth) <= 1e-6)
     {
-        if(m_animationModel.GetCurrentColumn() <= cxmodel::Column{0u})
+        if(m_animationModel.GetCurrentColumn() <= cx::model::Column{0u})
         {
-            const cxmodel::Column currentColumn{m_presenter.GetBoardWidth().Get() - 1u};
+            const cx::model::Column currentColumn{m_presenter.GetBoardWidth().Get() - 1u};
             m_animationModel.UpdateCurrentColumn(currentColumn);
         }
         else
         {
-            m_animationModel.UpdateCurrentColumn(m_animationModel.GetCurrentColumn() - cxmodel::Column{1u});
+            m_animationModel.UpdateCurrentColumn(m_animationModel.GetCurrentColumn() - cx::model::Column{1u});
         }
 
         // End animation:
@@ -158,13 +158,13 @@ std::optional<cx::gui::BoardAnimationNotificationContext> MoveChipRightOneColumn
 
     if(p_horizontalAnimationInfo.m_currentDisplacement.Get() >= oneAnimationWidth || std::abs(p_horizontalAnimationInfo.m_currentDisplacement.Get() - oneAnimationWidth) <= 1e-6)
     {
-        if(m_animationModel.GetCurrentColumn() >= cxmodel::Column{m_presenter.GetBoardWidth().Get() - 1u})
+        if(m_animationModel.GetCurrentColumn() >= cx::model::Column{m_presenter.GetBoardWidth().Get() - 1u})
         {
-            m_animationModel.UpdateCurrentColumn(cxmodel::Column{0u});
+            m_animationModel.UpdateCurrentColumn(cx::model::Column{0u});
         }
         else
         {
-            m_animationModel.UpdateCurrentColumn(m_animationModel.GetCurrentColumn() + cxmodel::Column{1u});
+            m_animationModel.UpdateCurrentColumn(m_animationModel.GetCurrentColumn() + cx::model::Column{1u});
         }
 
         // End animation:
@@ -210,7 +210,7 @@ std::optional<cx::gui::BoardAnimationNotificationContext> MoveChipRightToTargetF
                                                                                                                                                                    cx::gui::AnimationInformations<cx::math::Width>& p_horizontalAnimationInfo)
 {
     // Simulates the drop column computed by the model for the bot...
-    const cxmodel::Column target{m_presenter.GetBotTarget()};
+    const cx::model::Column target{m_presenter.GetBotTarget()};
 
     // The animation time is modulated by the number of columns the chip has to travel. The
     // animation time can be as small as 0.5s (1 column to traval) and up to 2s (64 columns
@@ -272,22 +272,22 @@ public:
 
 private:
 
-    cxmodel::Row GetDropPosition(const cxmodel::Column& p_column) const;
+    cx::model::Row GetDropPosition(const cx::model::Column& p_column) const;
 
     IAnimatedBoardModel& m_animationModel;
     IAnimatedBoardPresenter& m_presenter;
 };
 
-cxmodel::Row DropChipFrameAnimationStrategy::GetDropPosition(const cxmodel::Column& p_column) const
+cx::model::Row DropChipFrameAnimationStrategy::GetDropPosition(const cx::model::Column& p_column) const
 {
-    cxmodel::Row dropRow{0u};
+    cx::model::Row dropRow{0u};
     const IGameViewPresenter::ChipColors& chipColors = m_presenter.GetBoardChipColors();
 
     for(int row = m_presenter.GetBoardHeight().Get() - 1; row >= 0; --row)
     {
-        if(chipColors[row][p_column.Get()] == cxmodel::MakeTransparent())
+        if(chipColors[row][p_column.Get()] == cx::model::MakeTransparent())
         {
-            dropRow = cxmodel::Row{static_cast<size_t>(row)};
+            dropRow = cx::model::Row{static_cast<size_t>(row)};
             break;
         }
     }
@@ -299,7 +299,7 @@ std::optional<cx::gui::BoardAnimationNotificationContext> DropChipFrameAnimation
                                                                                                                                          cx::gui::AnimationInformations<cx::math::Width>& /*p_horizontalAnimationInfo*/)
 {
     const double cellHeight = m_animationModel.GetCellDimensions().m_height.Get();
-    const double oneAnimationHeight = (GetDropPosition(m_animationModel.GetCurrentColumn()) + cxmodel::Row{1}).Get() * cellHeight;
+    const double oneAnimationHeight = (GetDropPosition(m_animationModel.GetCurrentColumn()) + cx::model::Row{1}).Get() * cellHeight;
 
     const double fps = static_cast<double>(m_animationModel.GetFPS().Get());
     const double nbFrames = p_verticalAnimationInfo.m_nbOfRenderedFrames;
@@ -327,7 +327,7 @@ std::optional<cx::gui::BoardAnimationNotificationContext> DropChipFrameAnimation
 
         // Reinitialize chip:
         m_animationModel.ResetChipPositions();
-        m_animationModel.UpdateCurrentColumn(cxmodel::Column{0u});
+        m_animationModel.UpdateCurrentColumn(cx::model::Column{0u});
 
         m_presenter.Sync();
 
@@ -364,7 +364,7 @@ public:
 
 private:
 
-    cxmodel::Row GetDropPosition(const cxmodel::Column& p_column) const;
+    cx::model::Row GetDropPosition(const cx::model::Column& p_column) const;
 
     IAnimatedBoardModel& m_animationModel;
     IAnimatedBoardPresenter& m_presenter;
@@ -375,7 +375,7 @@ std::optional<cx::gui::BoardAnimationNotificationContext> UndoDropChipFrameAnima
 {
     // Reinitialize chip:
     m_animationModel.ResetChipPositions();
-    m_animationModel.UpdateCurrentColumn(cxmodel::Column{0u});
+    m_animationModel.UpdateCurrentColumn(cx::model::Column{0u});
     
     m_presenter.Sync();
     
@@ -403,7 +403,7 @@ public:
 
 private:
 
-    cxmodel::Row GetDropPosition(const cxmodel::Column& p_column) const;
+    cx::model::Row GetDropPosition(const cx::model::Column& p_column) const;
 
     IAnimatedBoardModel& m_animationModel;
     IAnimatedBoardPresenter& m_presenter;
@@ -414,7 +414,7 @@ std::optional<cx::gui::BoardAnimationNotificationContext> RedoDropChipFrameAnima
 {
     // Reinitialize chip:
     m_animationModel.ResetChipPositions();
-    m_animationModel.UpdateCurrentColumn(cxmodel::Column{0u});
+    m_animationModel.UpdateCurrentColumn(cx::model::Column{0u});
     
     m_presenter.Sync();
     
@@ -442,7 +442,7 @@ public:
 
 private:
 
-    cxmodel::Row GetDropPosition(const cxmodel::Column& p_column) const;
+    cx::model::Row GetDropPosition(const cx::model::Column& p_column) const;
 
     IAnimatedBoardModel& m_animationModel;
     IAnimatedBoardPresenter& m_presenter;
@@ -453,7 +453,7 @@ std::optional<cx::gui::BoardAnimationNotificationContext> ReinitializeFrameAnima
 {
     // Reinitialize chip:
     m_animationModel.ResetChipPositions();
-    m_animationModel.UpdateCurrentColumn(cxmodel::Column{0u});
+    m_animationModel.UpdateCurrentColumn(cx::model::Column{0u});
     
     m_presenter.Sync();
     

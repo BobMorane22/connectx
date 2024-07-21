@@ -42,8 +42,8 @@ public:
 
 cx::gui::EventPropagation GameViewDownKeyHandlerStrategy::Handle(IGameViewController& p_controller, IBoardInformation& p_gameBoard)
 {
-    const cxmodel::ChipColor chipColor = p_gameBoard.GetCurrentChipColor();
-    IF_CONDITION_NOT_MET_DO(chipColor != cxmodel::MakeTransparent(), return cx::gui::EventPropagation::PROPAGATE;);
+    const cx::model::ChipColor chipColor = p_gameBoard.GetCurrentChipColor();
+    IF_CONDITION_NOT_MET_DO(chipColor != cx::model::MakeTransparent(), return cx::gui::EventPropagation::PROPAGATE;);
 
     p_controller.OnDown(chipColor, p_gameBoard.GetCurrentColumn().Get());
 

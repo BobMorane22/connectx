@@ -50,12 +50,12 @@ GameResolutionDialogControllerTestFixture::GameResolutionDialogControllerMockMod
 {
 }
 
-void GameResolutionDialogControllerTestFixture::GameResolutionDialogControllerMockModel::CreateNewGame(cxmodel::NewGameInformation /*p_gameInformation*/)
+void GameResolutionDialogControllerTestFixture::GameResolutionDialogControllerMockModel::CreateNewGame(cx::model::NewGameInformation /*p_gameInformation*/)
 {
     // Nothing to do...
 }
 
-void GameResolutionDialogControllerTestFixture::GameResolutionDialogControllerMockModel::DropChip(const cxmodel::IChip& /*p_chip*/, size_t /*p_column*/)
+void GameResolutionDialogControllerTestFixture::GameResolutionDialogControllerMockModel::DropChip(const cx::model::IChip& /*p_chip*/, size_t /*p_column*/)
 {
     // Nothing to do...
 }

@@ -24,7 +24,7 @@
 #ifndef COMMANDCOMPLETIONSTATUS_H_D8E68D1D_1790_4070_AE58_CF186972A190
 #define COMMANDCOMPLETIONSTATUS_H_D8E68D1D_1790_4070_AE58_CF186972A190
 
-namespace cxmodel
+namespace cx::model
 {
 
 /*********************************************************************************************//**
@@ -54,6 +54,6 @@ enum class CommandCompletionStatus
 static_assert(CommandCompletionStatus::SUCCESS < CommandCompletionStatus::FAILED_EXPECTED);
 static_assert(CommandCompletionStatus::FAILED_EXPECTED < CommandCompletionStatus::FAILED_UNEXPECTED);
 
-} // namespace cxmodel
+} // namespace cx::model
 
 #endif // COMMANDCOMPLETIONSTATUS_H_D8E68D1D_1790_4070_AE58_CF186972A190

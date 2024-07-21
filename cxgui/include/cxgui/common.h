@@ -33,9 +33,9 @@ namespace cx::gui
  * @brief Color depth used in the cxgui library.
  *
  ********************************************************************************************/
-using Color = cxmodel::Color<unsigned short int>;
+using Color = cx::model::Color<unsigned short int>;
 
-static_assert(sizeof(cx::gui::Color) == sizeof(cxmodel::ChipColor));
+static_assert(sizeof(cx::gui::Color) == sizeof(cx::model::ChipColor));
 
 /** Dialog global margin (on each sides). */
 inline constexpr int DIALOG_SIDE_MARGIN = 10;

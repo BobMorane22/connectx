@@ -28,14 +28,14 @@
 
 TEST(Status, MakeSuccess_ValidContext_SuccessReturned)
 {
-    const auto status = cxmodel::MakeSuccess();
+    const auto status = cx::model::MakeSuccess();
 
     ASSERT_TRUE(status.IsSuccess());
 }
 
 TEST(Status, MakeError_WithErrorMessage_ErrorReturned)
 {
-    const auto status = cxmodel::MakeError("An error message");
+    const auto status = cx::model::MakeError("An error message");
 
     ASSERT_FALSE(status.IsSuccess());
 }
@@ -44,7 +44,7 @@ TEST(Status, GetMessage_ErrorWithMessage_MessageReturned)
 {
     const std::string expected = "An error message";
 
-    const auto status = cxmodel::MakeError("An error message");
+    const auto status = cx::model::MakeError("An error message");
 
     ASSERT_EQ(expected, status.GetMessage());
 }
@@ -53,7 +53,7 @@ TEST(Status, GetMessage_Success_EmptyMessageReturned)
 {
     cx::unit::DisableStdStreamsRAII streamDisabler;
 
-    const auto status = cxmodel::MakeSuccess();
+    const auto status = cx::model::MakeSuccess();
 
     ASSERT_EQ("", status.GetMessage());
 }
@@ -62,7 +62,7 @@ TEST(Status, MakeError_WithoutErrorMessage_EmptyMessageReturned)
 {
     cx::unit::DisableStdStreamsRAII streamDisabler;
 
-    const auto status = cxmodel::MakeError("");
+    const auto status = cx::model::MakeError("");
 
     ASSERT_EQ("", status.GetMessage());
 }
@@ -71,7 +71,7 @@ TEST(Status, GetMessage_Success_Asserts)
 {
     cx::unit::DisableStdStreamsRAII streamDisabler;
 
-    const auto status = cxmodel::MakeSuccess();
+    const auto status = cx::model::MakeSuccess();
     const std::string message = status.GetMessage();
 
     ASSERT_PRECONDITION_FAILED(streamDisabler);
@@ -81,14 +81,14 @@ TEST(Status, MakeError_WithoutErrorMessage_Asserts)
 {
     cx::unit::DisableStdStreamsRAII streamDisabler;
 
-    const auto status = cxmodel::MakeError("");
+    const auto status = cx::model::MakeError("");
 
     ASSERT_PRECONDITION_FAILED(streamDisabler);
 }
 
 TEST(Status, OnError_WithSuccess_DoesNotReturn)
 {
-    const auto runner = [](const cxmodel::Status& p_status, bool& p_didItReturn)
+    const auto runner = [](const cx::model::Status& p_status, bool& p_didItReturn)
                         {
                             ON_ERROR(p_status, return;);
 
@@ -96,14 +96,14 @@ TEST(Status, OnError_WithSuccess_DoesNotReturn)
                         };
 
     bool didNotReturn = false;
-    runner(cxmodel::MakeSuccess(), didNotReturn);
+    runner(cx::model::MakeSuccess(), didNotReturn);
 
     ASSERT_TRUE(didNotReturn);
 }
 
 TEST(Status, OnError_WithError_Returns)
 {
-    const auto runner = [](const cxmodel::Status& p_status, bool& p_didItReturn)
+    const auto runner = [](const cx::model::Status& p_status, bool& p_didItReturn)
                         {
                             ON_ERROR(p_status, return;);
 
@@ -111,7 +111,7 @@ TEST(Status, OnError_WithError_Returns)
                         };
 
     bool didReturn = false;
-    runner(cxmodel::MakeError("An error message"), didReturn);
+    runner(cx::model::MakeError("An error message"), didReturn);
 
     ASSERT_FALSE(didReturn);
 }

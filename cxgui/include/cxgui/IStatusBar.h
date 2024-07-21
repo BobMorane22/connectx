@@ -40,7 +40,7 @@ namespace cx::gui
  *
  ************************************************************************************************/
 class IStatusBar : public IWidget,
-                   public cxmodel::IModelObserver
+                   public cx::model::IModelObserver
 {
 
 public:

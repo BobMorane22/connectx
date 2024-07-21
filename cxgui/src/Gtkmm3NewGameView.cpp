@@ -77,8 +77,8 @@ cx::gui::Gtkmm3NewGameView::Gtkmm3NewGameView(
     INewGameViewController& p_controller,
     IWindow& p_parentWindow,
     cx::gui::ILayout& p_mainLayout,
-    const cxmodel::Column& p_viewLeft,
-    const cxmodel::Row& p_viewTop)
+    const cx::model::Column& p_viewLeft,
+    const cx::model::Row& p_viewTop)
  : m_widgetsFactories{p_widgetsFactories}
  , m_presenter{p_presenter}
  , m_controller{p_controller}
@@ -170,7 +170,7 @@ void cx::gui::Gtkmm3NewGameView::DeActivate()
     // Nothing to do...
 }
 
-void cx::gui::Gtkmm3NewGameView::Update(cxmodel::ModelNotificationContext /*p_context*/)
+void cx::gui::Gtkmm3NewGameView::Update(cx::model::ModelNotificationContext /*p_context*/)
 {
     // Noting to do...
 }
@@ -207,21 +207,21 @@ std::unique_ptr<cx::gui::ISignal<cx::gui::EventPropagation, cx::gui::KeyboardKey
 
 void cx::gui::Gtkmm3NewGameView::SetLayout()
 {
-    constexpr cxmodel::Column column0{0u};
-    constexpr cxmodel::Column column1{1u};
+    constexpr cx::model::Column column0{0u};
+    constexpr cx::model::Column column1{1u};
     constexpr cx::gui::ILayout::ColumnSpan singleColumnSpan{1u};
     constexpr cx::gui::ILayout::ColumnSpan fullColumnSpan{2u};
 
-    constexpr cxmodel::Row row0{0u};
-    constexpr cxmodel::Row row1{1u};
-    constexpr cxmodel::Row row2{2u};
-    constexpr cxmodel::Row row3{3u};
-    constexpr cxmodel::Row row4{4u};
-    constexpr cxmodel::Row row5{5u};
-    constexpr cxmodel::Row row6{6u};
-    constexpr cxmodel::Row row7{7u};
-    constexpr cxmodel::Row row8{8u};
-    constexpr cxmodel::Row row9{9u};
+    constexpr cx::model::Row row0{0u};
+    constexpr cx::model::Row row1{1u};
+    constexpr cx::model::Row row2{2u};
+    constexpr cx::model::Row row3{3u};
+    constexpr cx::model::Row row4{4u};
+    constexpr cx::model::Row row5{5u};
+    constexpr cx::model::Row row6{6u};
+    constexpr cx::model::Row row7{7u};
+    constexpr cx::model::Row row8{8u};
+    constexpr cx::model::Row row9{9u};
     constexpr cx::gui::ILayout::RowSpan singleRowSpan{1u};
 
     constexpr ILayout::Alignement hAlignLeft{
@@ -314,7 +314,7 @@ void cx::gui::Gtkmm3NewGameView::ConfigureWidgets()
 
 void cx::gui::Gtkmm3NewGameView::OnStart()
 {
-    cxmodel::NewGameInformation gameInformation;
+    cx::model::NewGameInformation gameInformation;
     const auto extractionStatus = ExtractGameInformation(gameInformation);
     if(!extractionStatus.IsSuccess())
     {
@@ -369,7 +369,7 @@ void cx::gui::Gtkmm3NewGameView::OnNewGameParameterUpdated()
 {
     m_startButton->SetEnabled(cx::gui::EnabledState::Disabled);
 
-    cxmodel::NewGameInformation gameInformation;
+    cx::model::NewGameInformation gameInformation;
     const auto extractionStatus = ExtractGameInformation(gameInformation);
     if(!extractionStatus.IsSuccess())
     {
@@ -390,24 +390,24 @@ void cx::gui::Gtkmm3NewGameView::OnNewGameParameterUpdated()
     m_startButton->SetTooltip("");
 }
 
-cxmodel::Status cx::gui::Gtkmm3NewGameView::ExtractGameInformation(cxmodel::NewGameInformation& p_gameInformation) const
+cx::model::Status cx::gui::Gtkmm3NewGameView::ExtractGameInformation(cx::model::NewGameInformation& p_gameInformation) const
 {
     // Extracting game parameters from the GUI:
     const int valueInARow = m_inARowSpinBox->GetValue();
-    IF_CONDITION_NOT_MET_DO(valueInARow > 0, return cxmodel::MakeError("Unexpected error occured."););
+    IF_CONDITION_NOT_MET_DO(valueInARow > 0, return cx::model::MakeError("Unexpected error occured."););
     const size_t inARowValue = static_cast<size_t>(valueInARow);
 
     const int valueBoardWidth = m_boardWidthSpinBox->GetValue();
-    IF_CONDITION_NOT_MET_DO(valueBoardWidth > 0, return cxmodel::MakeError("Unexpected error occured."););
+    IF_CONDITION_NOT_MET_DO(valueBoardWidth > 0, return cx::model::MakeError("Unexpected error occured."););
     const size_t boardWidth = static_cast<size_t>(valueBoardWidth);
 
     const int valueBoardHeight = m_boardHeightSpinBox->GetValue();
-    IF_CONDITION_NOT_MET_DO(valueBoardHeight > 0, return cxmodel::MakeError("Unexpected error occured."););
+    IF_CONDITION_NOT_MET_DO(valueBoardHeight > 0, return cx::model::MakeError("Unexpected error occured."););
     const size_t boardHeight = static_cast<size_t>(valueBoardHeight);
 
     const std::vector<std::string> playerNames = m_playersList->GetAllPlayerNames();
-    const std::vector<cxmodel::ChipColor> playerChipColors = m_playersList->GetAllColors();
-    const std::vector<cxmodel::PlayerType> playerTypes = m_playersList->GetAllPlayerTypes();
+    const std::vector<cx::model::ChipColor> playerChipColors = m_playersList->GetAllColors();
+    const std::vector<cx::model::PlayerType> playerTypes = m_playersList->GetAllPlayerTypes();
     ASSERT(playerNames.size() == playerChipColors.size());
     ASSERT(playerTypes.size() == playerTypes.size());
 
@@ -417,8 +417,8 @@ cxmodel::Status cx::gui::Gtkmm3NewGameView::ExtractGameInformation(cxmodel::NewG
     p_gameInformation.m_gridWidth = boardWidth;
     for(size_t index = 0u; index < m_playersList->GetNbPlayers(); ++index)
     {
-        p_gameInformation.m_players.push_back(cxmodel::CreatePlayer(playerNames[index], playerChipColors[index], playerTypes[index]));
+        p_gameInformation.m_players.push_back(cx::model::CreatePlayer(playerNames[index], playerChipColors[index], playerTypes[index]));
     }
 
-    return cxmodel::MakeSuccess();
+    return cx::model::MakeSuccess();
 }

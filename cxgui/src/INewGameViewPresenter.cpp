@@ -33,7 +33,7 @@
 #include <cxgui/INewGameViewPresenter.h>
 
 
-cxmodel::Status cx::gui::Validate(const cxmodel::NewGameInformation& p_gameInformation, const cx::gui::INewGameViewPresenter& p_presenter)
+cx::model::Status cx::gui::Validate(const cx::model::NewGameInformation& p_gameInformation, const cx::gui::INewGameViewPresenter& p_presenter)
 {
     const auto inARowInputStatus = p_presenter.IsInARowValueValid(p_gameInformation.m_inARowValue);
     RETURN_IF(!inARowInputStatus.IsSuccess(), inARowInputStatus);
@@ -49,7 +49,7 @@ cxmodel::Status cx::gui::Validate(const cxmodel::NewGameInformation& p_gameInfor
     const auto playerNamesInputStatus = p_presenter.ArePlayerNamesValid(playerNames);
     RETURN_IF(!playerNamesInputStatus.IsSuccess(), playerNamesInputStatus);
 
-    std::vector<cxmodel::ChipColor> playerChipColors;
+    std::vector<cx::model::ChipColor> playerChipColors;
     for(const auto& player : p_gameInformation.m_players)
     {
         playerChipColors.push_back(player->GetChip().GetColor());
@@ -57,10 +57,10 @@ cxmodel::Status cx::gui::Validate(const cxmodel::NewGameInformation& p_gameInfor
     const auto playerChipColorsInputStatus = p_presenter.ArePlayerChipColorsValid(playerChipColors);
     RETURN_IF(!playerChipColorsInputStatus.IsSuccess(), playerChipColorsInputStatus);
 
-    std::vector<cxmodel::PlayerType> playerTypes;
+    std::vector<cx::model::PlayerType> playerTypes;
     for(const auto& player : p_gameInformation.m_players)
     {
-        playerTypes.push_back(player->IsManaged() ? cxmodel::PlayerType::BOT : cxmodel::PlayerType::HUMAN );
+        playerTypes.push_back(player->IsManaged() ? cx::model::PlayerType::BOT : cx::model::PlayerType::HUMAN );
     }
     const auto playerTypesInputStatus = p_presenter.ArePlayerTypesValid(playerTypes);
     RETURN_IF(!playerTypesInputStatus.IsSuccess(), playerTypesInputStatus);
@@ -72,10 +72,10 @@ cxmodel::Status cx::gui::Validate(const cxmodel::NewGameInformation& p_gameInfor
 
     RETURN_IF(!newGameIsWinnableStatus.IsSuccess(), newGameIsWinnableStatus);
 
-    return cxmodel::MakeSuccess();
+    return cx::model::MakeSuccess();
 }
 
-std::vector<cxmodel::ChipColor> cx::gui::GetRemainingDefaultColors(const std::vector<cxmodel::ChipColor>& p_alreadyChosenColors,
+std::vector<cx::model::ChipColor> cx::gui::GetRemainingDefaultColors(const std::vector<cx::model::ChipColor>& p_alreadyChosenColors,
                                                                  const cx::gui::INewGameViewPresenter& p_presenter)
 {
     auto defaultRemainingColors = cx::cmn::ComputeStrictDifference(p_presenter.GetDefaultChipColors(), p_alreadyChosenColors);

@@ -49,8 +49,8 @@ public:
      *      The disc dimension (both width and height, in pixels).
      *
      ********************************************************************************************/
-    Gtkmm3DiscChip(const cxmodel::ChipColor& p_fillColor,
-                   const cxmodel::ChipColor& p_backgroundColor,
+    Gtkmm3DiscChip(const cx::model::ChipColor& p_fillColor,
+                   const cx::model::ChipColor& p_backgroundColor,
                    int p_dimension);
 
 private:

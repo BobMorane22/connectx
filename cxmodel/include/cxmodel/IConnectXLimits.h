@@ -24,7 +24,7 @@
 #ifndef ICONNECTXLIMITS_H_9A371FB1_B191_4967_A1E0_171616A30DDA
 #define ICONNECTXLIMITS_H_9A371FB1_B191_4967_A1E0_171616A30DDA
 
-namespace cxmodel
+namespace cx::model
 {
 
 /*********************************************************************************************//**
@@ -108,6 +108,6 @@ public:
 
 };
 
-} // namespace cxmodel
+} // namespace cx::model
 
 #endif // ICONNECTXLIMITS_H_9A371FB1_B191_4967_A1E0_171616A30DDA

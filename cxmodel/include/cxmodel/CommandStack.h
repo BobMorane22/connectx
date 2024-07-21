@@ -30,7 +30,7 @@
 
 #include "ICommandStack.h"
 
-namespace cxmodel
+namespace cx::model
 {
 
 /*********************************************************************************************//**
@@ -53,7 +53,7 @@ public:
      ************************************************************************************************/
     CommandStack(const size_t p_capacity);
 
-    // cxmodel::ICommandStack:
+    // cx::model::ICommandStack:
     [[nodiscard]] CommandCompletionStatus Execute(std::unique_ptr<ICommand>&& p_newCommand) override;
     void Clear() override;
 
@@ -82,6 +82,6 @@ private:
     std::vector<std::unique_ptr<ICommand>> m_commands;
 };
 
-} // namespace cxmodel
+} // namespace cx::model
 
 #endif // COMMANDSTACK_H_EC172719_473B_49A4_9D9B_D99C30B208A7

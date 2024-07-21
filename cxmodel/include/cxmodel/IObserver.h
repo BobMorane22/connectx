@@ -28,13 +28,13 @@
 
 #include "ModelNotificationContext.h"
 
-namespace cxmodel
+namespace cx::model
 {
     template<typename>
     class Subject;
 }
 
-namespace cxmodel
+namespace cx::model
 {
 
 /*********************************************************************************************//**
@@ -45,7 +45,7 @@ namespace cxmodel
  *
  * @tparam T A notification context. Must be an enum.
  *
- * @see cxmodel::Subject
+ * @see cx::model::Subject
  *
  ************************************************************************************************/
 template<typename T>
@@ -85,6 +85,6 @@ public:
 
 };
 
-} // namespace cxmodel
+} // namespace cx::model
 
 #endif // IOBSERVER_H_CB32427D_3430_41D8_BE7A_992F2D139BB2

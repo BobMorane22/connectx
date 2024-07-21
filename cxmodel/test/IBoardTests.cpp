@@ -27,32 +27,32 @@
 
 TEST(Position, OperatorEqual_TwoSamePositions_ReturnsTrue)
 {
-    const cxmodel::IBoard::Position lhs{1u, 2u};
-    const cxmodel::IBoard::Position rhs = lhs;
+    const cx::model::IBoard::Position lhs{1u, 2u};
+    const cx::model::IBoard::Position rhs = lhs;
 
     ASSERT_TRUE(lhs == rhs);
 }
 
 TEST(Position, OperatorEqual_TwoDifferentPositions_ReturnsTrue)
 {
-    const cxmodel::IBoard::Position lhs{1u, 2u};
-    const cxmodel::IBoard::Position rhs{2u, 1u};
+    const cx::model::IBoard::Position lhs{1u, 2u};
+    const cx::model::IBoard::Position rhs{2u, 1u};
 
     ASSERT_FALSE(lhs == rhs);
 }
 
 TEST(Position, OperatorNotEqual_TwoSamePositions_ReturnsFalse)
 {
-    const cxmodel::IBoard::Position lhs{1u, 2u};
-    const cxmodel::IBoard::Position rhs = lhs;
+    const cx::model::IBoard::Position lhs{1u, 2u};
+    const cx::model::IBoard::Position rhs = lhs;
 
     ASSERT_FALSE(lhs != rhs);
 }
 
 TEST(Position, OperatorNotEqual_TwoDifferentPositions_ReturnsTrue)
 {
-    const cxmodel::IBoard::Position lhs{1u, 2u};
-    const cxmodel::IBoard::Position rhs{2u, 1u};
+    const cx::model::IBoard::Position lhs{1u, 2u};
+    const cx::model::IBoard::Position rhs{2u, 1u};
 
     ASSERT_TRUE(lhs != rhs);
 }

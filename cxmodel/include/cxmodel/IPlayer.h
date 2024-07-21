@@ -29,7 +29,7 @@
 
 #include <cxmodel/ChipColor.h>
 
-namespace cxmodel
+namespace cx::model
 {
 
 class IChip;
@@ -37,7 +37,7 @@ class IPlayer;
 
 }
 
-namespace cxmodel
+namespace cx::model
 {
 
 /**********************************************************************************************//**
@@ -106,7 +106,7 @@ public:
  *         null player object is returned.
  *
  *************************************************************************************************/
-[[nodiscard]] std::unique_ptr<cxmodel::IPlayer> CreatePlayer(const std::string& p_name,
+[[nodiscard]] std::unique_ptr<cx::model::IPlayer> CreatePlayer(const std::string& p_name,
                                                              const ChipColor& p_chipColor,
                                                              PlayerType p_type);
 
@@ -133,6 +133,6 @@ bool operator==(const IPlayer& p_lhs, const IPlayer& p_rhs);
  ************************************************************************************************/
 bool operator!=(const IPlayer& p_lhs, const IPlayer& p_rhs);
 
-} // namespace cxmodel
+} // namespace cx::model
 
 #endif // IPLAYER_H_551C158B_76C1_424D_B20B_11D25D37A7EB

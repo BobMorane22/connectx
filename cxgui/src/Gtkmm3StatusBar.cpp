@@ -46,7 +46,7 @@ void cx::gui::Gtkmm3StatusBar::SetLastUserActionStatus(const std::string& p_last
     push(p_lastUserActionDescription);
 }
 
-void cx::gui::Gtkmm3StatusBar::Update(cxmodel::ModelNotificationContext, cxmodel::ModelSubject* p_subject)
+void cx::gui::Gtkmm3StatusBar::Update(cx::model::ModelNotificationContext, cx::model::ModelSubject* p_subject)
 {
     if(p_subject)
     {

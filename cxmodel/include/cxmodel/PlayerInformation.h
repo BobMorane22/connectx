@@ -30,7 +30,7 @@
 
 #include "IPlayer.h"
 
-namespace cxmodel
+namespace cx::model
 {
 
 /** A list of players. */

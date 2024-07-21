@@ -44,7 +44,7 @@ TEST_F(CommandStackTestFixture, /*DISABLED_*/Execute_InvalidCommand_CommandNotAd
     double result{0.0};
     (void)result; // unused
 
-    std::unique_ptr<cxmodel::ICommand> cmd;
+    std::unique_ptr<cx::model::ICommand> cmd;
     ASSERT_FALSE(cmd);
 
     {
@@ -60,40 +60,40 @@ TEST_F(CommandStackTestFixture, /*DISABLED_*/Execute_InvalidCommand_CommandNotAd
 
 TEST_F(CommandStackTestFixture, /*DISABLED_*/Execute_CommandReturningSuccess_CommandAddedToStack)
 {
-    class SuccessCommand : public cxmodel::ICommand
+    class SuccessCommand : public cx::model::ICommand
     {
-        [[nodiscard]] cxmodel::CommandCompletionStatus Execute() override {return cxmodel::CommandCompletionStatus::SUCCESS;}
+        [[nodiscard]] cx::model::CommandCompletionStatus Execute() override {return cx::model::CommandCompletionStatus::SUCCESS;}
         void Undo() override {}
     };
 
     ASSERT_TRUE(GetCommandStack()->IsEmpty());
-    ASSERT_TRUE(GetCommandStack()->Execute(std::make_unique<SuccessCommand>()) == cxmodel::CommandCompletionStatus::SUCCESS);
+    ASSERT_TRUE(GetCommandStack()->Execute(std::make_unique<SuccessCommand>()) == cx::model::CommandCompletionStatus::SUCCESS);
     ASSERT_TRUE(GetCommandStack()->GetNbCommands() == 1u);
 }
 
 TEST_F(CommandStackTestFixture, /*DISABLED_*/Execute_CommandReturningExpectedError_CommandNotAddedToStack)
 {
-    class ExpectedErrorCommand : public cxmodel::ICommand
+    class ExpectedErrorCommand : public cx::model::ICommand
     {
-        [[nodiscard]] cxmodel::CommandCompletionStatus Execute() override {return cxmodel::CommandCompletionStatus::FAILED_EXPECTED;}
+        [[nodiscard]] cx::model::CommandCompletionStatus Execute() override {return cx::model::CommandCompletionStatus::FAILED_EXPECTED;}
         void Undo() override {}
     };
 
     ASSERT_TRUE(GetCommandStack()->IsEmpty());
-    ASSERT_TRUE(GetCommandStack()->Execute(std::make_unique<ExpectedErrorCommand>()) == cxmodel::CommandCompletionStatus::FAILED_EXPECTED);
+    ASSERT_TRUE(GetCommandStack()->Execute(std::make_unique<ExpectedErrorCommand>()) == cx::model::CommandCompletionStatus::FAILED_EXPECTED);
     ASSERT_TRUE(GetCommandStack()->IsEmpty());
 }
 
 TEST_F(CommandStackTestFixtureStdErrStreamRedirector, /*DISABLED_*/Execute_CommandReturningUnexpectedError_CommandNotAddedToStackAndAsserts)
 {
-    class UnexpectedErrorCommand : public cxmodel::ICommand
+    class UnexpectedErrorCommand : public cx::model::ICommand
     {
-        [[nodiscard]] cxmodel::CommandCompletionStatus Execute() override {return cxmodel::CommandCompletionStatus::FAILED_UNEXPECTED;}
+        [[nodiscard]] cx::model::CommandCompletionStatus Execute() override {return cx::model::CommandCompletionStatus::FAILED_UNEXPECTED;}
         void Undo() override {}
     };
 
     ASSERT_TRUE(GetCommandStack()->IsEmpty());
-    ASSERT_TRUE(GetCommandStack()->Execute(std::make_unique<UnexpectedErrorCommand>()) == cxmodel::CommandCompletionStatus::FAILED_UNEXPECTED);
+    ASSERT_TRUE(GetCommandStack()->Execute(std::make_unique<UnexpectedErrorCommand>()) == cx::model::CommandCompletionStatus::FAILED_UNEXPECTED);
     ASSERT_TRUE(GetCommandStack()->IsEmpty());
 
     ASSERT_ASSERTION_FAILED(*this);

@@ -23,24 +23,24 @@
 
 #include <cxmodel/Disc.h>
 
-cxmodel::Disc::Disc(const ChipColor p_color)
+cx::model::Disc::Disc(const ChipColor p_color)
  : m_color{p_color}
 {
     // Nothing to do...
 }
 
-cxmodel::Disc cxmodel::Disc::MakeTransparentDisc()
+cx::model::Disc cx::model::Disc::MakeTransparentDisc()
 {
-    return cxmodel::Disc(cxmodel::MakeTransparent());
+    return cx::model::Disc(cx::model::MakeTransparent());
 }
 
-cxmodel::ChipColor cxmodel::Disc::GetColor() const
+cx::model::ChipColor cx::model::Disc::GetColor() const
 {
     return m_color;
 }
 
-void cxmodel::Disc::Reset()
+void cx::model::Disc::Reset()
 {
-    m_color = cxmodel::MakeTransparent();
+    m_color = cx::model::MakeTransparent();
 }
 

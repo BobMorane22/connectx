@@ -27,7 +27,7 @@
 #ifndef VERSION_H_A110E2C5_E337_4BE2_B076_A860B92A5D19                                                                                                                                                             
 #define VERSION_H_A110E2C5_E337_4BE2_B076_A860B92A5D19                                                                                                                                                             
 
-namespace cxmodel
+namespace cx::model
 {
 
 /**********************************************************************************************//**
@@ -46,6 +46,6 @@ unsigned int GetVersionMajor();
  *************************************************************************************************/
 unsigned int GetVersionMinor();
 
-} // namespace cxmodel
+} // namespace cx::model
 
 #endif // VERSION_H_A110E2C5_E337_4BE2_B076_A860B92A5D19 

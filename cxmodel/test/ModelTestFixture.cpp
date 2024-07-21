@@ -31,19 +31,19 @@ namespace
 {
 
 constexpr char FIRST_PLAYER_NAME[] = "John Doe";
-constexpr cxmodel::ChipColor FIRST_PLAYER_CHIP_COLOR = cxmodel::MakeRed();
+constexpr cx::model::ChipColor FIRST_PLAYER_CHIP_COLOR = cx::model::MakeRed();
 
 constexpr char SECOND_PLAYER_NAME[] = "Mary Foo";
-constexpr cxmodel::ChipColor SECOND_PLAYER_CHIP_COLOR = cxmodel::MakeBlue();
+constexpr cx::model::ChipColor SECOND_PLAYER_CHIP_COLOR = cx::model::MakeBlue();
 
 constexpr char THIRD_PLAYER_NAME[] = "Donald Foo-Bar";
-constexpr cxmodel::ChipColor THIRD_PLAYER_CHIP_COLOR = cxmodel::MakeYellow();
+constexpr cx::model::ChipColor THIRD_PLAYER_CHIP_COLOR = cx::model::MakeYellow();
 
-std::array<std::shared_ptr<cxmodel::IPlayer>, 3u> PLAYERS
+std::array<std::shared_ptr<cx::model::IPlayer>, 3u> PLAYERS
 {
-    cxmodel::CreatePlayer(FIRST_PLAYER_NAME, FIRST_PLAYER_CHIP_COLOR, cxmodel::PlayerType::HUMAN),
-    cxmodel::CreatePlayer(SECOND_PLAYER_NAME, SECOND_PLAYER_CHIP_COLOR, cxmodel::PlayerType::HUMAN),
-    cxmodel::CreatePlayer(THIRD_PLAYER_NAME, THIRD_PLAYER_CHIP_COLOR, cxmodel::PlayerType::HUMAN),
+    cx::model::CreatePlayer(FIRST_PLAYER_NAME, FIRST_PLAYER_CHIP_COLOR, cx::model::PlayerType::HUMAN),
+    cx::model::CreatePlayer(SECOND_PLAYER_NAME, SECOND_PLAYER_CHIP_COLOR, cx::model::PlayerType::HUMAN),
+    cx::model::CreatePlayer(THIRD_PLAYER_NAME, THIRD_PLAYER_CHIP_COLOR, cx::model::PlayerType::HUMAN),
 };
 
 // Gets the underlying enum value:
@@ -66,24 +66,24 @@ ModelTestFixture::ModelTestFixture()
     // We create a command stack unique pointer to be moved later,
     // but we keep a reference on its managed command stack, in case
     // we need to access it for a test later:
-    auto commandStack = std::make_unique<cxmodel::CommandStack>(200);
+    auto commandStack = std::make_unique<cx::model::CommandStack>(200);
     EXPECT_TRUE(commandStack);
     m_commandStack = commandStack.get();
     EXPECT_TRUE(m_commandStack);
     
-    m_model = std::make_unique<cxmodel::Model>(std::move(commandStack), *m_logger);
+    m_model = std::make_unique<cx::model::Model>(std::move(commandStack), *m_logger);
     EXPECT_TRUE(m_model);
 }
 
 ModelTestFixture::~ModelTestFixture() = default;
 
-cxmodel::Model& ModelTestFixture::GetModel()
+cx::model::Model& ModelTestFixture::GetModel()
 {
     EXPECT_TRUE(m_model);
     return *m_model;
 }
 
-cxmodel::ICommandStack& ModelTestFixture::GetInternalCommandStack()
+cx::model::ICommandStack& ModelTestFixture::GetInternalCommandStack()
 {
     EXPECT_TRUE(m_commandStack);
     return *m_commandStack;
@@ -111,7 +111,7 @@ void ModelTestFixture::CreateNewGame(size_t p_boardHeight,
     EXPECT_TRUE(inARow >= m_model->GetMinimumInARowValue());
     EXPECT_TRUE(inARow <= m_model->GetMaximumInARowValue());
 
-    cxmodel::NewGameInformation newGameInfo;
+    cx::model::NewGameInformation newGameInfo;
     newGameInfo.m_gridWidth = p_boardWidth;
     newGameInfo.m_gridHeight = p_boardHeight;
     newGameInfo.m_inARowValue = inARow;
@@ -126,7 +126,7 @@ void ModelTestFixture::CreateNewGame(size_t p_boardHeight,
     m_model->CreateNewGame(std::move(newGameInfo));
 }
 
-const cxmodel::IPlayer& ModelTestFixture::GetPlayer(size_t p_playerIndex) const
+const cx::model::IPlayer& ModelTestFixture::GetPlayer(size_t p_playerIndex) const
 {
     try
     {

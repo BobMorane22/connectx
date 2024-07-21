@@ -26,7 +26,7 @@
 
 #include "IGameResolutionDialogController.h"
 
-namespace cxmodel
+namespace cx::model
 {
     class IConnectXGameActions;
 }
@@ -49,13 +49,13 @@ public:
      * @param p_modelAsActions The model (user actions on the game).
      *
      ********************************************************************************************/
-    explicit GameResolutionDialogController(cxmodel::IConnectXGameActions& p_modelAsActions);
+    explicit GameResolutionDialogController(cx::model::IConnectXGameActions& p_modelAsActions);
 
     void OnNewGameRequested() override;
 
 private:
 
-    cxmodel::IConnectXGameActions& m_modelAsActions;
+    cx::model::IConnectXGameActions& m_modelAsActions;
 
 };
 

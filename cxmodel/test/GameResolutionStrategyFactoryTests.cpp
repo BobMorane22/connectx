@@ -34,7 +34,7 @@
 namespace
 {
 
-class BoardMock final : public cxmodel::IBoard
+class BoardMock final : public cx::model::IBoard
 {
 
 public:
@@ -42,14 +42,14 @@ public:
     size_t GetNbRows() const override {return 6u;}
     size_t GetNbColumns() const override {return 7u;}
     size_t GetNbPositions() const override {return 42u;}
-    const cxmodel::IChip& GetChip(const Position& /*p_position*/) const override {return m_disc;}
-    bool DropChip(size_t /*p_column*/, const cxmodel::IChip& /*p_chip*/, cxmodel::IBoard::Position& /*p_droppedPosition*/) override {return true;}
+    const cx::model::IChip& GetChip(const Position& /*p_position*/) const override {return m_disc;}
+    bool DropChip(size_t /*p_column*/, const cx::model::IChip& /*p_chip*/, cx::model::IBoard::Position& /*p_droppedPosition*/) override {return true;}
     void ResetChip(Position& /*p_position*/) override {}
     bool IsColumnFull(size_t /*p_column*/) const override {return false;}
 
 private:
 
-    const cxmodel::Disc m_disc{cxmodel::MakeRed()};
+    const cx::model::Disc m_disc{cx::model::MakeRed()};
 
 };
 
@@ -59,34 +59,34 @@ TEST(GameResolutionStrategyFactory, Make_WinGameResolution_WinStrategyReturned)
 {
     // Setup:
     BoardMock board;
-    std::vector<std::shared_ptr<cxmodel::IPlayer>> players{
-        cxmodel::CreatePlayer("First", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN),
-        cxmodel::CreatePlayer("Second", cxmodel::MakeBlue(), cxmodel::PlayerType::HUMAN)
+    std::vector<std::shared_ptr<cx::model::IPlayer>> players{
+        cx::model::CreatePlayer("First", cx::model::MakeRed(), cx::model::PlayerType::HUMAN),
+        cx::model::CreatePlayer("Second", cx::model::MakeBlue(), cx::model::PlayerType::HUMAN)
     };
-    std::vector<cxmodel::IBoard::Position> positions;
+    std::vector<cx::model::IBoard::Position> positions;
 
     // We create the strategy:
-    auto strategy = cxmodel::GameResolutionStrategyFactory::Make(board, 4u, players, positions, cxmodel::GameResolution::WIN);
+    auto strategy = cx::model::GameResolutionStrategyFactory::Make(board, 4u, players, positions, cx::model::GameResolution::WIN);
     ASSERT_TRUE(strategy);
 
-    ASSERT_TRUE(dynamic_cast<cxmodel::WinGameResolutionStrategy*>(strategy.get()));
+    ASSERT_TRUE(dynamic_cast<cx::model::WinGameResolutionStrategy*>(strategy.get()));
 }
 
 TEST(GameResolutionStrategyFactory, Make_TieGameResolution_TieStrategyReturned)
 {
     // Setup:
     BoardMock board;
-    std::vector<std::shared_ptr<cxmodel::IPlayer>> players{
-        cxmodel::CreatePlayer("First", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN),
-        cxmodel::CreatePlayer("Second", cxmodel::MakeBlue(), cxmodel::PlayerType::HUMAN)
+    std::vector<std::shared_ptr<cx::model::IPlayer>> players{
+        cx::model::CreatePlayer("First", cx::model::MakeRed(), cx::model::PlayerType::HUMAN),
+        cx::model::CreatePlayer("Second", cx::model::MakeBlue(), cx::model::PlayerType::HUMAN)
     };
-    std::vector<cxmodel::IBoard::Position> positions;
+    std::vector<cx::model::IBoard::Position> positions;
 
     // We create the strategy:
-    auto strategy = cxmodel::GameResolutionStrategyFactory::Make(board, 4u, players, positions, cxmodel::GameResolution::TIE);
+    auto strategy = cx::model::GameResolutionStrategyFactory::Make(board, 4u, players, positions, cx::model::GameResolution::TIE);
     ASSERT_TRUE(strategy);
 
-    ASSERT_TRUE(dynamic_cast<cxmodel::TieGameResolutionStrategy*>(strategy.get()));
+    ASSERT_TRUE(dynamic_cast<cx::model::TieGameResolutionStrategy*>(strategy.get()));
 }
 
 TEST(GameResolutionStrategyFactory, Make_InARowTooSmall_AssertsAndNoStrategyReturned)
@@ -95,17 +95,17 @@ TEST(GameResolutionStrategyFactory, Make_InARowTooSmall_AssertsAndNoStrategyRetu
 
     // Setup:
     BoardMock board;
-    std::vector<std::shared_ptr<cxmodel::IPlayer>> players{
-        cxmodel::CreatePlayer("First", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN),
-        cxmodel::CreatePlayer("Second", cxmodel::MakeBlue(), cxmodel::PlayerType::HUMAN)
+    std::vector<std::shared_ptr<cx::model::IPlayer>> players{
+        cx::model::CreatePlayer("First", cx::model::MakeRed(), cx::model::PlayerType::HUMAN),
+        cx::model::CreatePlayer("Second", cx::model::MakeBlue(), cx::model::PlayerType::HUMAN)
     };
-    std::vector<cxmodel::IBoard::Position> positions;
+    std::vector<cx::model::IBoard::Position> positions;
 
     // We create the strategy:
-    auto strategy = cxmodel::GameResolutionStrategyFactory::Make(board, 0u, players, positions, cxmodel::GameResolution::WIN);
+    auto strategy = cx::model::GameResolutionStrategyFactory::Make(board, 0u, players, positions, cx::model::GameResolution::WIN);
     ASSERT_TRUE(strategy);
-    ASSERT_FALSE(dynamic_cast<cxmodel::WinGameResolutionStrategy*>(strategy.get()));
-    ASSERT_FALSE(dynamic_cast<cxmodel::TieGameResolutionStrategy*>(strategy.get()));
+    ASSERT_FALSE(dynamic_cast<cx::model::WinGameResolutionStrategy*>(strategy.get()));
+    ASSERT_FALSE(dynamic_cast<cx::model::TieGameResolutionStrategy*>(strategy.get()));
     ASSERT_PRECONDITION_FAILED(streamDisabler);
 }
 
@@ -115,17 +115,17 @@ TEST(GameResolutionStrategyFactory, Make_InARowTooBig_AssertsAndNoStrategyReturn
 
     // Setup:
     BoardMock board;
-    std::vector<std::shared_ptr<cxmodel::IPlayer>> players{
-        cxmodel::CreatePlayer("First", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN),
-        cxmodel::CreatePlayer("Second", cxmodel::MakeBlue(), cxmodel::PlayerType::HUMAN)
+    std::vector<std::shared_ptr<cx::model::IPlayer>> players{
+        cx::model::CreatePlayer("First", cx::model::MakeRed(), cx::model::PlayerType::HUMAN),
+        cx::model::CreatePlayer("Second", cx::model::MakeBlue(), cx::model::PlayerType::HUMAN)
     };
-    std::vector<cxmodel::IBoard::Position> positions;
+    std::vector<cx::model::IBoard::Position> positions;
 
     // We create the strategy:
-    auto strategy = cxmodel::GameResolutionStrategyFactory::Make(board, std::numeric_limits<size_t>::max() + 1u, players, positions, cxmodel::GameResolution::WIN);
+    auto strategy = cx::model::GameResolutionStrategyFactory::Make(board, std::numeric_limits<size_t>::max() + 1u, players, positions, cx::model::GameResolution::WIN);
     ASSERT_TRUE(strategy);
-    ASSERT_FALSE(dynamic_cast<cxmodel::WinGameResolutionStrategy*>(strategy.get()));
-    ASSERT_FALSE(dynamic_cast<cxmodel::TieGameResolutionStrategy*>(strategy.get()));
+    ASSERT_FALSE(dynamic_cast<cx::model::WinGameResolutionStrategy*>(strategy.get()));
+    ASSERT_FALSE(dynamic_cast<cx::model::TieGameResolutionStrategy*>(strategy.get()));
     ASSERT_PRECONDITION_FAILED(streamDisabler);
 }
 
@@ -135,15 +135,15 @@ TEST(GameResolutionStrategyFactory, Make_NotEnoughPlayers_AssertsAndNoStrategyRe
 
     // Setup:
     BoardMock board;
-    std::vector<std::shared_ptr<cxmodel::IPlayer>> players{
-        cxmodel::CreatePlayer("First", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN),
+    std::vector<std::shared_ptr<cx::model::IPlayer>> players{
+        cx::model::CreatePlayer("First", cx::model::MakeRed(), cx::model::PlayerType::HUMAN),
     };
-    std::vector<cxmodel::IBoard::Position> positions;
+    std::vector<cx::model::IBoard::Position> positions;
 
     // We create the strategy:
-    auto strategy = cxmodel::GameResolutionStrategyFactory::Make(board, 4u, players, positions, cxmodel::GameResolution::WIN);
+    auto strategy = cx::model::GameResolutionStrategyFactory::Make(board, 4u, players, positions, cx::model::GameResolution::WIN);
     ASSERT_TRUE(strategy);
-    ASSERT_FALSE(dynamic_cast<cxmodel::WinGameResolutionStrategy*>(strategy.get()));
-    ASSERT_FALSE(dynamic_cast<cxmodel::TieGameResolutionStrategy*>(strategy.get()));
+    ASSERT_FALSE(dynamic_cast<cx::model::WinGameResolutionStrategy*>(strategy.get()));
+    ASSERT_FALSE(dynamic_cast<cx::model::TieGameResolutionStrategy*>(strategy.get()));
     ASSERT_PRECONDITION_FAILED(streamDisabler);
 }

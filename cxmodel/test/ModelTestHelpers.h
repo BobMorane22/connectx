@@ -31,7 +31,7 @@
  * notification is sent.
  *
  ************************************************************************************************/
-class ModelNotificationCatcher : public cxmodel::IModelObserver
+class ModelNotificationCatcher : public cx::model::IModelObserver
 {
 
 public:
@@ -42,7 +42,7 @@ public:
      * @param p_contextUnderTest The notification context to catch.
      *
      ********************************************************************************************/
-    ModelNotificationCatcher(cxmodel::ModelNotificationContext p_contextUnderTest);
+    ModelNotificationCatcher(cx::model::ModelNotificationContext p_contextUnderTest);
 
     /*****************************************************************************************//**
      * @brief Destructor.
@@ -58,11 +58,11 @@ public:
      ********************************************************************************************/
     bool WasNotified() const;
 
-    // cxmodel::IObserver:
-    void Update(cxmodel::ModelNotificationContext p_context, cxmodel::ModelSubject* p_subject) override;
+    // cx::model::IObserver:
+    void Update(cx::model::ModelNotificationContext p_context, cx::model::ModelSubject* p_subject) override;
 
 private:
 
-    const cxmodel::ModelNotificationContext m_contextUnderTest;
+    const cx::model::ModelNotificationContext m_contextUnderTest;
     bool m_wasNotified = false;
 };

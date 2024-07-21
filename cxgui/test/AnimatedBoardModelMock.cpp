@@ -46,7 +46,7 @@ void AnimatedBoardModelMock::ResetChipPositions()
     m_resetChipPositionsCalled = true;
 }
 
-void AnimatedBoardModelMock::UpdateCurrentColumn(const cxmodel::Column& p_newCurrentColumn)
+void AnimatedBoardModelMock::UpdateCurrentColumn(const cx::model::Column& p_newCurrentColumn)
 {
     m_updateCurrentColumnCalled = true;
 
@@ -103,7 +103,7 @@ cx::math::Width AnimatedBoardModelMock::GetLineWidth(cx::gui::Feature /*p_featur
     return cx::math::Width{0.0};
 }
 
-const cxmodel::Column& AnimatedBoardModelMock::GetCurrentColumn() const
+const cx::model::Column& AnimatedBoardModelMock::GetCurrentColumn() const
 {
     return m_currentColumn;
 }
@@ -123,7 +123,7 @@ void AnimatedBoardModelMock::SetAnimationSpeed(const cx::gui::AnimationSpeed& p_
     m_animationSpeed = p_animationSpeed;
 }
 
-void AnimatedBoardModelMock::SetCurrentColumn(const cxmodel::Column& p_currentColumn)
+void AnimatedBoardModelMock::SetCurrentColumn(const cx::model::Column& p_currentColumn)
 {
     m_currentColumn = p_currentColumn;
 }

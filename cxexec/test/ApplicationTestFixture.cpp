@@ -33,42 +33,42 @@ cx::log::ILogger& ApplicationTestFixture::GetLogger()
     return m_logger;
 }
 
-cxmodel::ModelSubject& ApplicationTestFixture::GetSubjectModel()
+cx::model::ModelSubject& ApplicationTestFixture::GetSubjectModel()
 {
     EXPECT_TRUE(m_model);
 
     return *m_model;
 }
 
-cxmodel::IConnectXGameActions& ApplicationTestFixture::GetGameActionsModel()
+cx::model::IConnectXGameActions& ApplicationTestFixture::GetGameActionsModel()
 {
     EXPECT_TRUE(m_model);
 
     return *m_model;
 }
 
-cxmodel::IConnectXGameInformation& ApplicationTestFixture::GetGameInformationModel()
+cx::model::IConnectXGameInformation& ApplicationTestFixture::GetGameInformationModel()
 {
     EXPECT_TRUE(m_model);
 
     return *m_model;
 }
 
-cxmodel::IConnectXLimits& ApplicationTestFixture::GetLimitsModel()
+cx::model::IConnectXLimits& ApplicationTestFixture::GetLimitsModel()
 {
     EXPECT_TRUE(m_model);
 
     return *m_model;
 }
 
-cxmodel::IUndoRedo& ApplicationTestFixture::GetUndoRedoModel()
+cx::model::IUndoRedo& ApplicationTestFixture::GetUndoRedoModel()
 {
     EXPECT_TRUE(m_model);
 
     return *m_model;
 }
 
-cxmodel::IVersioning& ApplicationTestFixture::GetVersionningModel()
+cx::model::IVersioning& ApplicationTestFixture::GetVersionningModel()
 {
     EXPECT_TRUE(m_model);
 
@@ -92,12 +92,12 @@ cx::ModelReferences ApplicationTestFixture::GetModelReferences()
     return references;
 }
 
-void ApplicationTestFixture::ModelApplicationMock::CreateNewGame(cxmodel::NewGameInformation /*p_gameInformation*/)
+void ApplicationTestFixture::ModelApplicationMock::CreateNewGame(cx::model::NewGameInformation /*p_gameInformation*/)
 {
     // Not used...
 }
 
-void ApplicationTestFixture::ModelApplicationMock::DropChip(const cxmodel::IChip& /*p_chip*/, size_t p_column)
+void ApplicationTestFixture::ModelApplicationMock::DropChip(const cx::model::IChip& /*p_chip*/, size_t p_column)
 {
     ASSERT_TRUE(p_column < GetCurrentGridWidth());
 
@@ -114,7 +114,7 @@ void ApplicationTestFixture::ModelApplicationMock::MoveRightOneColumn()
     // Not used...
 }
 
-const cxmodel::IChip& ApplicationTestFixture::ModelApplicationMock::GetChip(size_t p_row, size_t p_column) const
+const cx::model::IChip& ApplicationTestFixture::ModelApplicationMock::GetChip(size_t p_row, size_t p_column) const
 {
     EXPECT_TRUE(p_row < GetCurrentGridHeight());
     EXPECT_TRUE(p_column < GetCurrentGridWidth());

@@ -74,7 +74,7 @@ void cx::gui::Gtkmm3AbstractConnectXWidgetsFactory::RegisterStandardWidgetsFacto
 }
 
 std::unique_ptr<cx::gui::IWindow> cx::gui::Gtkmm3AbstractConnectXWidgetsFactory::CreateMainWindow(
-    cxmodel::ModelSubject& p_model,
+    cx::model::ModelSubject& p_model,
     IMainWindowController& p_controller,
     IMainWindowPresenter& p_presenter) const
 {
@@ -138,8 +138,8 @@ std::unique_ptr<cx::gui::IView> cx::gui::Gtkmm3AbstractConnectXWidgetsFactory::C
     INewGameViewController& p_controller,
     IWindow& p_parentWindow,
     cx::gui::ILayout& p_mainLayout,
-    const cxmodel::Column& p_viewLeft,
-    const cxmodel::Row& p_viewTop) const
+    const cx::model::Column& p_viewLeft,
+    const cx::model::Row& p_viewTop) const
 {
     auto newGameView = std::make_unique<Gtkmm3NewGameView>(
         *m_widgetsFactories,
@@ -161,8 +161,8 @@ std::unique_ptr<cx::gui::IView> cx::gui::Gtkmm3AbstractConnectXWidgetsFactory::C
     IGameViewController& p_controller,
     IWindow& p_parentWindow,
     cx::gui::ILayout& p_mainLayout,
-    const cxmodel::Column& p_viewLeft,
-    const cxmodel::Row& p_viewTop) const
+    const cx::model::Column& p_viewLeft,
+    const cx::model::Row& p_viewTop) const
 {
     auto gameView = std::make_unique<Gtkmm3GameView>(
         *m_widgetsFactories,
@@ -193,7 +193,7 @@ std::unique_ptr<cx::gui::INewPlayersList> cx::gui::Gtkmm3AbstractConnectXWidgets
 }
 
 std::unique_ptr<cx::gui::IColorPicker> cx::gui::Gtkmm3AbstractConnectXWidgetsFactory::CreateColorPicker(
-    const std::vector<cxmodel::ChipColor>& p_colors) const
+    const std::vector<cx::model::ChipColor>& p_colors) const
 {
     IF_PRECONDITION_NOT_MET_DO(!p_colors.empty(), return nullptr;);
 
@@ -216,8 +216,8 @@ std::unique_ptr<cx::gui::IAnimatedBoard> cx::gui::Gtkmm3AbstractConnectXWidgetsF
 }
 
 std::unique_ptr<cx::gui::IChip> cx::gui::Gtkmm3AbstractConnectXWidgetsFactory::CreateChip(
-   const cxmodel::ChipColor& p_fillColor,
-   const cxmodel::ChipColor& p_backgroundColor,
+   const cx::model::ChipColor& p_fillColor,
+   const cx::model::ChipColor& p_backgroundColor,
    int p_diameter) const
 {
     auto chip = CreateWidget<Gtkmm3DiscChip>(

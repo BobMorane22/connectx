@@ -24,7 +24,7 @@
 #ifndef ABOUTWINDOWPRESENTER_H_FF0579FF_28AC_4A2E_8900_B3D1A73C3E38
 #define ABOUTWINDOWPRESENTER_H_FF0579FF_28AC_4A2E_8900_B3D1A73C3E38
 
-namespace cxmodel
+namespace cx::model
 {
     class IVersioning;
 }
@@ -49,7 +49,7 @@ public:
      * @param p_model The model (versioning part).
      *
      ********************************************************************************************/
-    explicit AboutWindowPresenter(const cxmodel::IVersioning& p_model);
+    explicit AboutWindowPresenter(const cx::model::IVersioning& p_model);
 
     ~AboutWindowPresenter() override = default;
 

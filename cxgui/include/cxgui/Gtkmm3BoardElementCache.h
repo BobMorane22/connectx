@@ -90,7 +90,7 @@ public:
      *      The board element to cache.
      *
      *********************************************************************************************/
-    void Add(const cxmodel::ChipColor& p_color, const Cairo::RefPtr<Cairo::Surface>& p_surface);
+    void Add(const cx::model::ChipColor& p_color, const Cairo::RefPtr<Cairo::Surface>& p_surface);
 
     /******************************************************************************************//**
      * @brief Gets the correspondig cached board element from a key.
@@ -105,7 +105,7 @@ public:
      * @return The cached board element.
      *
      *********************************************************************************************/
-    const Cairo::RefPtr<Cairo::Surface>& Get(const cxmodel::ChipColor& p_color) const;
+    const Cairo::RefPtr<Cairo::Surface>& Get(const cx::model::ChipColor& p_color) const;
 
     /******************************************************************************************//**
      * @brief Clears all key/elements pairs from the cache.
@@ -122,11 +122,11 @@ public:
      * @return `true` if the element was found, `false` otherwise.
      *
      *********************************************************************************************/
-    bool HasElement(const cxmodel::ChipColor& p_color);
+    bool HasElement(const cx::model::ChipColor& p_color);
 
 private:
 
-    std::vector<cxmodel::ChipColor> m_keys;
+    std::vector<cx::model::ChipColor> m_keys;
     std::vector<Cairo::RefPtr<Cairo::Surface>> m_surfaces;
 
 };

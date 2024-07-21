@@ -30,24 +30,24 @@
 #include <cxmodel/IUndoRedo.h>
 #include <cxgui/MainWindowController.h>
 
-cx::gui::MainWindowController::MainWindowController(cxmodel::IConnectXGameActions& p_modelAsGameActions,
-                                                  cxmodel::IUndoRedo& p_modelAsUndoRedo)
+cx::gui::MainWindowController::MainWindowController(cx::model::IConnectXGameActions& p_modelAsGameActions,
+                                                  cx::model::IUndoRedo& p_modelAsUndoRedo)
 : m_modelAsGameActions{p_modelAsGameActions}
 , m_modelAsUndoRedo{p_modelAsUndoRedo}
-, m_currentChip{std::make_unique<cxmodel::Disc>(cxmodel::Disc::MakeTransparentDisc())}
+, m_currentChip{std::make_unique<cx::model::Disc>(cx::model::Disc::MakeTransparentDisc())}
 {
 }
 
-void cx::gui::MainWindowController::OnStart(cxmodel::NewGameInformation p_gameInformation)
+void cx::gui::MainWindowController::OnStart(cx::model::NewGameInformation p_gameInformation)
 {
     m_modelAsGameActions.CreateNewGame(std::move(p_gameInformation));
 }
 
-void cx::gui::MainWindowController::OnDown(const cxmodel::ChipColor& p_chipColor, size_t p_column)
+void cx::gui::MainWindowController::OnDown(const cx::model::ChipColor& p_chipColor, size_t p_column)
 {
-    IF_PRECONDITION_NOT_MET_DO(p_chipColor != cxmodel::MakeTransparent(), return;);
+    IF_PRECONDITION_NOT_MET_DO(p_chipColor != cx::model::MakeTransparent(), return;);
 
-    m_currentChip = std::make_unique<cxmodel::Disc>(p_chipColor);
+    m_currentChip = std::make_unique<cx::model::Disc>(p_chipColor);
     m_modelAsGameActions.DropChip(*m_currentChip, p_column);
 }
 

@@ -29,44 +29,44 @@
 
 TEST(Disc, /*DISABLED_*/Constructor_RedColor_RedColorReturned)
 {
-    cxmodel::Disc disc{cxmodel::MakeRed()};
-    ASSERT_EQ(disc.GetColor(), cxmodel::MakeRed());
+    cx::model::Disc disc{cx::model::MakeRed()};
+    ASSERT_EQ(disc.GetColor(), cx::model::MakeRed());
 }
 
 TEST(Disc, /*DISABLED_*/GetColorAcessor_RedColorInConstructor_RedColorReturned)
 {
-    cxmodel::Disc disc{cxmodel::MakeRed()};
-    ASSERT_EQ(disc.GetColor(), cxmodel::MakeRed());
+    cx::model::Disc disc{cx::model::MakeRed()};
+    ASSERT_EQ(disc.GetColor(), cx::model::MakeRed());
 }
 
 TEST(Disc, /*DISABLED_*/EqualToOperator_TwoSameColor_TrueReturned)
 {
-    cxmodel::Disc lhs{cxmodel::MakeRed()};
-    cxmodel::Disc rhs{cxmodel::MakeRed()};
+    cx::model::Disc lhs{cx::model::MakeRed()};
+    cx::model::Disc rhs{cx::model::MakeRed()};
 
     ASSERT_TRUE(lhs == rhs);
 }
 
 TEST(Disc, /*DISABLED_*/EqualToOperator_TwoDifferentColors_FalseReturned)
 {
-    cxmodel::Disc lhs{cxmodel::MakeRed()};
-    cxmodel::Disc rhs{cxmodel::MakeBlue()};
+    cx::model::Disc lhs{cx::model::MakeRed()};
+    cx::model::Disc rhs{cx::model::MakeBlue()};
 
     ASSERT_FALSE(lhs == rhs);
 }
 
 TEST(Disc, /*DISABLED_*/NotEqualToOperator_TwoSameColor_FalseReturned)
 {
-    cxmodel::Disc lhs{cxmodel::MakeRed()};
-    cxmodel::Disc rhs{cxmodel::MakeRed()};
+    cx::model::Disc lhs{cx::model::MakeRed()};
+    cx::model::Disc rhs{cx::model::MakeRed()};
 
     ASSERT_FALSE(lhs != rhs);
 }
 
 TEST(Disc, /*DISABLED_*/NotEqualToOperator_TwoDifferentColors_TrueReturned)
 {
-    cxmodel::Disc lhs{cxmodel::MakeRed()};
-    cxmodel::Disc rhs{cxmodel::MakeBlue()};
+    cx::model::Disc lhs{cx::model::MakeRed()};
+    cx::model::Disc rhs{cx::model::MakeBlue()};
 
     ASSERT_TRUE(lhs != rhs);
 }

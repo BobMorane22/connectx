@@ -57,7 +57,7 @@
 
 cx::gui::Gtkmm3MainWindow::Gtkmm3MainWindow(
     Gtk::Application& p_gtkApplication,
-    cxmodel::ModelSubject& p_model,
+    cx::model::ModelSubject& p_model,
     cx::gui::IMainWindowController& p_controller,
     cx::gui::IMainWindowPresenter& p_presenter,
     cx::gui::WidgetsFactories& p_widgetsFactories)
@@ -116,7 +116,7 @@ void cx::gui::Gtkmm3MainWindow::RegisterWidgets()
 {
     IF_CONDITION_NOT_MET_DO(m_mainLayout, return;);
 
-    m_mainLayout->Register(*m_menuBar, {cxmodel::Row{0u}, cx::gui::ILayout::RowSpan{1u}}, {cxmodel::Column{0u}, cx::gui::ILayout::ColumnSpan{2u}});
+    m_mainLayout->Register(*m_menuBar, {cx::model::Row{0u}, cx::gui::ILayout::RowSpan{1u}}, {cx::model::Column{0u}, cx::gui::ILayout::ColumnSpan{2u}});
 
     RegisterMenuBar();
 
@@ -163,55 +163,55 @@ int cx::gui::Gtkmm3MainWindow::Show()
     return m_gtkApplication.run(*this);
 }
 
-void cx::gui::Gtkmm3MainWindow::Update(cxmodel::ModelNotificationContext p_context, cxmodel::ModelSubject* p_subject)
+void cx::gui::Gtkmm3MainWindow::Update(cx::model::ModelNotificationContext p_context, cx::model::ModelSubject* p_subject)
 {
     if(INL_PRECONDITION(p_subject))
     {
         switch(p_context)
         {
-            case cxmodel::ModelNotificationContext::CHIP_DROPPED:
-            case cxmodel::ModelNotificationContext::CHIP_DROPPED_FAILED:
+            case cx::model::ModelNotificationContext::CHIP_DROPPED:
+            case cx::model::ModelNotificationContext::CHIP_DROPPED_FAILED:
             {
                 UpdateChipDropped(p_context);
                 break;
             }
-            case cxmodel::ModelNotificationContext::CHIP_MOVED_LEFT_ONE_COLUMN:
-            case cxmodel::ModelNotificationContext::CHIP_MOVED_RIGHT_ONE_COLUMN:
+            case cx::model::ModelNotificationContext::CHIP_MOVED_LEFT_ONE_COLUMN:
+            case cx::model::ModelNotificationContext::CHIP_MOVED_RIGHT_ONE_COLUMN:
             {
                 UpdateChipMoved(p_context);
                 break;
             }
-            case cxmodel::ModelNotificationContext::CREATE_NEW_GAME:
+            case cx::model::ModelNotificationContext::CREATE_NEW_GAME:
             {
                 UpdateCreateNewGame();
                 break;
             }
-            case cxmodel::ModelNotificationContext::UNDO_CHIP_DROPPED:
+            case cx::model::ModelNotificationContext::UNDO_CHIP_DROPPED:
             {
                 UpdateChipDropped(p_context);
                 break;
             }
-            case cxmodel::ModelNotificationContext::REDO_CHIP_DROPPED:
+            case cx::model::ModelNotificationContext::REDO_CHIP_DROPPED:
             {
                 UpdateChipDropped(p_context);
                 break;
             }
-            case cxmodel::ModelNotificationContext::GAME_WON:
+            case cx::model::ModelNotificationContext::GAME_WON:
             {
                 UpdateGameWon(p_context);
                 break;
             }
-            case cxmodel::ModelNotificationContext::GAME_TIED:
+            case cx::model::ModelNotificationContext::GAME_TIED:
             {
                 UpdateGameTied(p_context);
                 break;
             }
-            case cxmodel::ModelNotificationContext::GAME_ENDED:
+            case cx::model::ModelNotificationContext::GAME_ENDED:
             {
                 UpdateGameEnded();
                 break;
             }
-            case cxmodel::ModelNotificationContext::GAME_REINITIALIZED:
+            case cx::model::ModelNotificationContext::GAME_REINITIALIZED:
             {
                 UpdateGameReinitialized(p_context);
                 break;
@@ -230,7 +230,7 @@ void cx::gui::Gtkmm3MainWindow::UpdateCreateNewGame()
     ActivateGameView();
 }
 
-void cx::gui::Gtkmm3MainWindow::UpdateChipDropped(cxmodel::ModelNotificationContext p_context)
+void cx::gui::Gtkmm3MainWindow::UpdateChipDropped(cx::model::ModelNotificationContext p_context)
 {
     if(INL_ASSERT(m_gameView))
     {
@@ -238,7 +238,7 @@ void cx::gui::Gtkmm3MainWindow::UpdateChipDropped(cxmodel::ModelNotificationCont
     }
 }
 
-void cx::gui::Gtkmm3MainWindow::UpdateChipMoved(cxmodel::ModelNotificationContext p_context)
+void cx::gui::Gtkmm3MainWindow::UpdateChipMoved(cx::model::ModelNotificationContext p_context)
 {
     if(INL_ASSERT(m_gameView))
     {
@@ -246,13 +246,13 @@ void cx::gui::Gtkmm3MainWindow::UpdateChipMoved(cxmodel::ModelNotificationContex
     }
 }
 
-void cx::gui::Gtkmm3MainWindow::UpdateGameWon(cxmodel::ModelNotificationContext p_context)
+void cx::gui::Gtkmm3MainWindow::UpdateGameWon(cx::model::ModelNotificationContext p_context)
 {
     m_gameView->Update(p_context);
     CreateGameResolutionWindow(p_context);
 }
 
-void cx::gui::Gtkmm3MainWindow::UpdateGameTied(cxmodel::ModelNotificationContext p_context)
+void cx::gui::Gtkmm3MainWindow::UpdateGameTied(cx::model::ModelNotificationContext p_context)
 {
     m_gameView->Update(p_context);
     CreateGameResolutionWindow(p_context);
@@ -264,16 +264,16 @@ void cx::gui::Gtkmm3MainWindow::UpdateGameEnded()
     ActivateNewGameView();
 }
 
-void cx::gui::Gtkmm3MainWindow::UpdateGameReinitialized(cxmodel::ModelNotificationContext p_context)
+void cx::gui::Gtkmm3MainWindow::UpdateGameReinitialized(cx::model::ModelNotificationContext p_context)
 {
     m_gameView->Update(p_context); 
 }
 
-void cx::gui::Gtkmm3MainWindow::UpdateMenuItems(cxmodel::ModelNotificationContext p_context)
+void cx::gui::Gtkmm3MainWindow::UpdateMenuItems(cx::model::ModelNotificationContext p_context)
 {
     EnabledStateUpdate(*m_newGameMenuItem,      m_presenter.IsNewGamePossible());
     EnabledStateUpdate(*m_reinitializeMenuItem, m_presenter.IsCurrentGameReinitializationPossible());
-    EnabledStateUpdate(*m_undoMenuItem,         p_context == cxmodel::ModelNotificationContext::CHIP_DROPPED || m_presenter.IsUndoPossible());
+    EnabledStateUpdate(*m_undoMenuItem,         p_context == cx::model::ModelNotificationContext::CHIP_DROPPED || m_presenter.IsUndoPossible());
     EnabledStateUpdate(*m_redoMenuItem,         m_presenter.IsRedoPossible());
 }
 
@@ -318,8 +318,8 @@ void cx::gui::Gtkmm3MainWindow::RegisterStatusBar()
 
     m_mainLayout->Register(
         *m_statusBar,
-        {m_viewTop + cxmodel::Row{1u},cx::gui::ILayout::RowSpan{1u}},
-        {cxmodel::Column{0u}, cx::gui::ILayout::ColumnSpan{2u}}
+        {m_viewTop + cx::model::Row{1u},cx::gui::ILayout::RowSpan{1u}},
+        {cx::model::Column{0u}, cx::gui::ILayout::ColumnSpan{2u}}
     );
 
     POSTCONDITION(m_statusBarPresenter);
@@ -351,7 +351,7 @@ void cx::gui::Gtkmm3MainWindow::OnCreateAboutWindow()
 {
     if(!m_aboutWindow)
     {
-        cxmodel::IVersioning* versionModel = dynamic_cast<cxmodel::IVersioning*>(&m_model);
+        cx::model::IVersioning* versionModel = dynamic_cast<cx::model::IVersioning*>(&m_model);
         IF_CONDITION_NOT_MET_DO(versionModel, return;);
 
         std::unique_ptr<IAboutWindowPresenter> aboutPresenter = std::make_unique<AboutWindowPresenter>(*versionModel);
@@ -388,17 +388,17 @@ void cx::gui::Gtkmm3MainWindow::OnRedo()
     m_controller.OnRedo();
 }
 
-void cx::gui::Gtkmm3MainWindow::CreateGameResolutionWindow(cxmodel::ModelNotificationContext p_context)
+void cx::gui::Gtkmm3MainWindow::CreateGameResolutionWindow(cx::model::ModelNotificationContext p_context)
 {
 
-    cxmodel::GameResolution resolutionType;
-    if(p_context == cxmodel::ModelNotificationContext::GAME_WON)
+    cx::model::GameResolution resolutionType;
+    if(p_context == cx::model::ModelNotificationContext::GAME_WON)
     {
-        resolutionType = cxmodel::GameResolution::WIN;
+        resolutionType = cx::model::GameResolution::WIN;
     }
-    else if(p_context == cxmodel::ModelNotificationContext::GAME_TIED)
+    else if(p_context == cx::model::ModelNotificationContext::GAME_TIED)
     {
-        resolutionType = cxmodel::GameResolution::TIE;
+        resolutionType = cx::model::GameResolution::TIE;
     }
     else
     {
@@ -408,13 +408,13 @@ void cx::gui::Gtkmm3MainWindow::CreateGameResolutionWindow(cxmodel::ModelNotific
 
     if(!m_gameResolution)
     {
-        cxmodel::IConnectXGameInformation* gameInformationModel = dynamic_cast<cxmodel::IConnectXGameInformation*>(&m_model);
+        cx::model::IConnectXGameInformation* gameInformationModel = dynamic_cast<cx::model::IConnectXGameInformation*>(&m_model);
         IF_CONDITION_NOT_MET_DO(gameInformationModel, return;);
 
         auto gameResolutionPresenter = GameResolutionDialogPresenterFactory::Make(*gameInformationModel, resolutionType);
         IF_CONDITION_NOT_MET_DO(gameResolutionPresenter, return;);
 
-        cxmodel::IConnectXGameActions* gameActionsModel = dynamic_cast<cxmodel::IConnectXGameActions*>(&m_model);
+        cx::model::IConnectXGameActions* gameActionsModel = dynamic_cast<cx::model::IConnectXGameActions*>(&m_model);
         IF_CONDITION_NOT_MET_DO(gameActionsModel, return;);
 
         std::unique_ptr<IGameResolutionDialogController> gameResolutionController = std::make_unique<GameResolutionDialogController>(*gameActionsModel);

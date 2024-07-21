@@ -26,13 +26,13 @@
 
 #include <memory>
 
-namespace cxmodel
+namespace cx::model
 {
     enum class CommandCompletionStatus;
     class ICommand;
 }
 
-namespace cxmodel
+namespace cx::model
 {
 
 /*********************************************************************************************//**
@@ -151,6 +151,6 @@ public:
 
 };
 
-} // namespace cxmodel
+} // namespace cx::model
 
 #endif // ICOMMANDSTACK_H_5558B486_D3CD_4D16_832D_FFBF37402F13

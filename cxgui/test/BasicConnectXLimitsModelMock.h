@@ -32,7 +32,7 @@
  * Use this as a base to create complete `IConnectXLimits.h` compatible model mocks.
  *
  ************************************************************************************************/
-class BasicConnectXLimitsModelMock : public cxmodel::IConnectXLimits
+class BasicConnectXLimitsModelMock : public cx::model::IConnectXLimits
 {
 
 public:

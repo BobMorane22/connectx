@@ -28,7 +28,7 @@
 
 #include "IMainWindowController.h"
 
-namespace cxmodel
+namespace cx::model
 {
     class IConnectXGameActions;
     class IUndoRedo;
@@ -55,20 +55,20 @@ public:
      *      The model (undo and redo game actions).
      *
      *********************************************************************************************/
-    MainWindowController(cxmodel::IConnectXGameActions& p_modelAsGameActions,
-                         cxmodel::IUndoRedo& p_modelAsUndoRedo);
+    MainWindowController(cx::model::IConnectXGameActions& p_modelAsGameActions,
+                         cx::model::IUndoRedo& p_modelAsUndoRedo);
 
 ///@{ @name New Game View
 // ------------------------------------------------------------------------------------------------
 
-    void OnStart(const cxmodel::NewGameInformation p_gameInformation) override;
+    void OnStart(const cx::model::NewGameInformation p_gameInformation) override;
 
 ///@}
 
 ///@{ @name Game View
 // ------------------------------------------------------------------------------------------------
 
-    void OnDown(const cxmodel::ChipColor& p_chipColor, size_t p_column) override;
+    void OnDown(const cx::model::ChipColor& p_chipColor, size_t p_column) override;
     void OnMoveLeftOneColumn() override;
     void OnMoveRightOneColumn() override;
     void OnNewGame() override;
@@ -80,10 +80,10 @@ public:
 
 private:
 
-    cxmodel::IConnectXGameActions& m_modelAsGameActions;
-    cxmodel::IUndoRedo& m_modelAsUndoRedo;
+    cx::model::IConnectXGameActions& m_modelAsGameActions;
+    cx::model::IUndoRedo& m_modelAsUndoRedo;
 
-    std::unique_ptr<cxmodel::IChip> m_currentChip;
+    std::unique_ptr<cx::model::IChip> m_currentChip;
 };
 
 } // namespace cx::gui

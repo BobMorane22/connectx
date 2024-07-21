@@ -27,48 +27,48 @@
 
 TEST(IPlayer, CreatePlayer_HumanPlayer_ValidUnmanagedPlayerCreated)
 {
-    const auto humanPlayer = CreatePlayer("John", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN);
+    const auto humanPlayer = CreatePlayer("John", cx::model::MakeRed(), cx::model::PlayerType::HUMAN);
     ASSERT_TRUE(humanPlayer);
 
     ASSERT_TRUE(humanPlayer->GetName() == "John");
-    ASSERT_TRUE(humanPlayer->GetChip().GetColor() == cxmodel::MakeRed());
+    ASSERT_TRUE(humanPlayer->GetChip().GetColor() == cx::model::MakeRed());
     ASSERT_FALSE(humanPlayer->IsManaged());
 }
 
 TEST(IPlayer, CreatePlayer_BotPlayer_ValidManagedPlayerCreated)
 {
-    const auto botPlayer = CreatePlayer("JohnBot", cxmodel::MakeRed(), cxmodel::PlayerType::BOT);
+    const auto botPlayer = CreatePlayer("JohnBot", cx::model::MakeRed(), cx::model::PlayerType::BOT);
     ASSERT_TRUE(botPlayer);
 
     ASSERT_TRUE(botPlayer->GetName() == "JohnBot");
-    ASSERT_TRUE(botPlayer->GetChip().GetColor() == cxmodel::MakeRed());
+    ASSERT_TRUE(botPlayer->GetChip().GetColor() == cx::model::MakeRed());
     ASSERT_TRUE(botPlayer->IsManaged());
 }
 
 TEST(IPlayer, CreatePlayer_InvalidPlayerType_InvalidPlayerCreated)
 {
-    const auto invalidPlayerType = static_cast<cxmodel::PlayerType>(-1);
+    const auto invalidPlayerType = static_cast<cx::model::PlayerType>(-1);
 
-    std::unique_ptr<cxmodel::IPlayer> invalidPlayer;
+    std::unique_ptr<cx::model::IPlayer> invalidPlayer;
     {
         cx::unit::DisableStdStreamsRAII streamDisabler;
-        invalidPlayer = CreatePlayer("Invalid", cxmodel::MakeRed(), invalidPlayerType);
+        invalidPlayer = CreatePlayer("Invalid", cx::model::MakeRed(), invalidPlayerType);
         ASSERT_ASSERTION_FAILED(streamDisabler);
     }
 
     ASSERT_TRUE(invalidPlayer);
 
     ASSERT_TRUE(invalidPlayer->GetName() == "");
-    ASSERT_TRUE(invalidPlayer->GetChip().GetColor() == cxmodel::MakeTransparent());
+    ASSERT_TRUE(invalidPlayer->GetChip().GetColor() == cx::model::MakeTransparent());
     ASSERT_FALSE(invalidPlayer->IsManaged());
 }
 
 TEST(IPlayer, EqualToOperator_SameHumanPlayer_ReturnsTrue)
 {
-    const auto lhs = CreatePlayer("John", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN);
+    const auto lhs = CreatePlayer("John", cx::model::MakeRed(), cx::model::PlayerType::HUMAN);
     ASSERT_TRUE(lhs);
 
-    const auto rhs = CreatePlayer("John", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN);
+    const auto rhs = CreatePlayer("John", cx::model::MakeRed(), cx::model::PlayerType::HUMAN);
     ASSERT_TRUE(lhs);
 
     ASSERT_TRUE(*lhs == *rhs);
@@ -76,10 +76,10 @@ TEST(IPlayer, EqualToOperator_SameHumanPlayer_ReturnsTrue)
 
 TEST(IPlayer, EqualToOperator_SameHumanPlayerButDifferentName_ReturnsTrue)
 {
-    const auto lhs = CreatePlayer("John", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN);
+    const auto lhs = CreatePlayer("John", cx::model::MakeRed(), cx::model::PlayerType::HUMAN);
     ASSERT_TRUE(lhs);
 
-    const auto rhs = CreatePlayer("Doe", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN);
+    const auto rhs = CreatePlayer("Doe", cx::model::MakeRed(), cx::model::PlayerType::HUMAN);
     ASSERT_TRUE(lhs);
 
     ASSERT_TRUE(*lhs == *rhs);
@@ -87,10 +87,10 @@ TEST(IPlayer, EqualToOperator_SameHumanPlayerButDifferentName_ReturnsTrue)
 
 TEST(IPlayer, EqualToOperator_SameHumanPlayerButDifferentChipColor_ReturnsFalse)
 {
-    const auto lhs = CreatePlayer("John", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN);
+    const auto lhs = CreatePlayer("John", cx::model::MakeRed(), cx::model::PlayerType::HUMAN);
     ASSERT_TRUE(lhs);
 
-    const auto rhs = CreatePlayer("John", cxmodel::MakeBlue(), cxmodel::PlayerType::HUMAN);
+    const auto rhs = CreatePlayer("John", cx::model::MakeBlue(), cx::model::PlayerType::HUMAN);
     ASSERT_TRUE(lhs);
 
     ASSERT_FALSE(*lhs == *rhs);
@@ -98,10 +98,10 @@ TEST(IPlayer, EqualToOperator_SameHumanPlayerButDifferentChipColor_ReturnsFalse)
 
 TEST(IPlayer, EqualToOperator_SameBotPlayer_ReturnsTrue)
 {
-    const auto lhs = CreatePlayer("John", cxmodel::MakeRed(), cxmodel::PlayerType::BOT);
+    const auto lhs = CreatePlayer("John", cx::model::MakeRed(), cx::model::PlayerType::BOT);
     ASSERT_TRUE(lhs);
 
-    const auto rhs = CreatePlayer("John", cxmodel::MakeRed(), cxmodel::PlayerType::BOT);
+    const auto rhs = CreatePlayer("John", cx::model::MakeRed(), cx::model::PlayerType::BOT);
     ASSERT_TRUE(lhs);
 
     ASSERT_TRUE(*lhs == *rhs);
@@ -109,10 +109,10 @@ TEST(IPlayer, EqualToOperator_SameBotPlayer_ReturnsTrue)
 
 TEST(IPlayer, EqualToOperator_SameBotPlayerButDifferentName_ReturnsTrue)
 {
-    const auto lhs = CreatePlayer("John", cxmodel::MakeRed(), cxmodel::PlayerType::BOT);
+    const auto lhs = CreatePlayer("John", cx::model::MakeRed(), cx::model::PlayerType::BOT);
     ASSERT_TRUE(lhs);
 
-    const auto rhs = CreatePlayer("Doe", cxmodel::MakeRed(), cxmodel::PlayerType::BOT);
+    const auto rhs = CreatePlayer("Doe", cx::model::MakeRed(), cx::model::PlayerType::BOT);
     ASSERT_TRUE(lhs);
 
     ASSERT_TRUE(*lhs == *rhs);
@@ -120,10 +120,10 @@ TEST(IPlayer, EqualToOperator_SameBotPlayerButDifferentName_ReturnsTrue)
 
 TEST(IPlayer, EqualToOperator_SameBotPlayerButDifferentChipColor_ReturnsFalse)
 {
-    const auto lhs = CreatePlayer("John", cxmodel::MakeRed(), cxmodel::PlayerType::BOT);
+    const auto lhs = CreatePlayer("John", cx::model::MakeRed(), cx::model::PlayerType::BOT);
     ASSERT_TRUE(lhs);
 
-    const auto rhs = CreatePlayer("John", cxmodel::MakeBlue(), cxmodel::PlayerType::BOT);
+    const auto rhs = CreatePlayer("John", cx::model::MakeBlue(), cx::model::PlayerType::BOT);
     ASSERT_TRUE(lhs);
 
     ASSERT_FALSE(*lhs == *rhs);
@@ -131,10 +131,10 @@ TEST(IPlayer, EqualToOperator_SameBotPlayerButDifferentChipColor_ReturnsFalse)
 
 TEST(IPlayer, EqualToOperator_BotAndHumanPlayers_ReturnsFalse)
 {
-    const auto lhs = CreatePlayer("John", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN);
+    const auto lhs = CreatePlayer("John", cx::model::MakeRed(), cx::model::PlayerType::HUMAN);
     ASSERT_TRUE(lhs);
 
-    const auto rhs = CreatePlayer("John", cxmodel::MakeRed(), cxmodel::PlayerType::BOT);
+    const auto rhs = CreatePlayer("John", cx::model::MakeRed(), cx::model::PlayerType::BOT);
     ASSERT_TRUE(lhs);
 
     ASSERT_FALSE(*lhs == *rhs);
@@ -142,10 +142,10 @@ TEST(IPlayer, EqualToOperator_BotAndHumanPlayers_ReturnsFalse)
 
 TEST(IPlayer, NotEqualToOperator_SameHumanPlayer_ReturnsFalse)
 {
-    const auto lhs = CreatePlayer("John", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN);
+    const auto lhs = CreatePlayer("John", cx::model::MakeRed(), cx::model::PlayerType::HUMAN);
     ASSERT_TRUE(lhs);
 
-    const auto rhs = CreatePlayer("John", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN);
+    const auto rhs = CreatePlayer("John", cx::model::MakeRed(), cx::model::PlayerType::HUMAN);
     ASSERT_TRUE(lhs);
 
     ASSERT_FALSE(*lhs != *rhs);
@@ -153,10 +153,10 @@ TEST(IPlayer, NotEqualToOperator_SameHumanPlayer_ReturnsFalse)
 
 TEST(IPlayer, NotEqualToOperator_SameHumanPlayerButDifferentName_ReturnsFalse)
 {
-    const auto lhs = CreatePlayer("John", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN);
+    const auto lhs = CreatePlayer("John", cx::model::MakeRed(), cx::model::PlayerType::HUMAN);
     ASSERT_TRUE(lhs);
 
-    const auto rhs = CreatePlayer("Doe", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN);
+    const auto rhs = CreatePlayer("Doe", cx::model::MakeRed(), cx::model::PlayerType::HUMAN);
     ASSERT_TRUE(lhs);
 
     ASSERT_FALSE(*lhs != *rhs);
@@ -164,10 +164,10 @@ TEST(IPlayer, NotEqualToOperator_SameHumanPlayerButDifferentName_ReturnsFalse)
 
 TEST(IPlayer, NotEqualToOperator_SameHumanPlayerButDifferentChipColor_ReturnsTrue)
 {
-    const auto lhs = CreatePlayer("John", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN);
+    const auto lhs = CreatePlayer("John", cx::model::MakeRed(), cx::model::PlayerType::HUMAN);
     ASSERT_TRUE(lhs);
 
-    const auto rhs = CreatePlayer("John", cxmodel::MakeBlue(), cxmodel::PlayerType::HUMAN);
+    const auto rhs = CreatePlayer("John", cx::model::MakeBlue(), cx::model::PlayerType::HUMAN);
     ASSERT_TRUE(lhs);
 
     ASSERT_TRUE(*lhs != *rhs);
@@ -175,10 +175,10 @@ TEST(IPlayer, NotEqualToOperator_SameHumanPlayerButDifferentChipColor_ReturnsTru
 
 TEST(IPlayer, NotEqualToOperator_SameBotPlayer_ReturnsFalse)
 {
-    const auto lhs = CreatePlayer("John", cxmodel::MakeRed(), cxmodel::PlayerType::BOT);
+    const auto lhs = CreatePlayer("John", cx::model::MakeRed(), cx::model::PlayerType::BOT);
     ASSERT_TRUE(lhs);
 
-    const auto rhs = CreatePlayer("John", cxmodel::MakeRed(), cxmodel::PlayerType::BOT);
+    const auto rhs = CreatePlayer("John", cx::model::MakeRed(), cx::model::PlayerType::BOT);
     ASSERT_TRUE(lhs);
 
     ASSERT_FALSE(*lhs != *rhs);
@@ -186,10 +186,10 @@ TEST(IPlayer, NotEqualToOperator_SameBotPlayer_ReturnsFalse)
 
 TEST(IPlayer, NotEqualToOperator_SameBotPlayerButDifferentName_ReturnsFalse)
 {
-    const auto lhs = CreatePlayer("John", cxmodel::MakeRed(), cxmodel::PlayerType::BOT);
+    const auto lhs = CreatePlayer("John", cx::model::MakeRed(), cx::model::PlayerType::BOT);
     ASSERT_TRUE(lhs);
 
-    const auto rhs = CreatePlayer("Doe", cxmodel::MakeRed(), cxmodel::PlayerType::BOT);
+    const auto rhs = CreatePlayer("Doe", cx::model::MakeRed(), cx::model::PlayerType::BOT);
     ASSERT_TRUE(lhs);
 
     ASSERT_FALSE(*lhs != *rhs);
@@ -197,10 +197,10 @@ TEST(IPlayer, NotEqualToOperator_SameBotPlayerButDifferentName_ReturnsFalse)
 
 TEST(IPlayer, NotEqualToOperator_SameBotPlayerButDifferentChipColor_ReturnsTrue)
 {
-    const auto lhs = CreatePlayer("John", cxmodel::MakeRed(), cxmodel::PlayerType::BOT);
+    const auto lhs = CreatePlayer("John", cx::model::MakeRed(), cx::model::PlayerType::BOT);
     ASSERT_TRUE(lhs);
 
-    const auto rhs = CreatePlayer("John", cxmodel::MakeBlue(), cxmodel::PlayerType::BOT);
+    const auto rhs = CreatePlayer("John", cx::model::MakeBlue(), cx::model::PlayerType::BOT);
     ASSERT_TRUE(lhs);
 
     ASSERT_TRUE(*lhs != *rhs);
@@ -208,10 +208,10 @@ TEST(IPlayer, NotEqualToOperator_SameBotPlayerButDifferentChipColor_ReturnsTrue)
 
 TEST(IPlayer, NotEqualToOperator_BotAndHumanPlayers_ReturnsTrue)
 {
-    const auto lhs = CreatePlayer("John", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN);
+    const auto lhs = CreatePlayer("John", cx::model::MakeRed(), cx::model::PlayerType::HUMAN);
     ASSERT_TRUE(lhs);
 
-    const auto rhs = CreatePlayer("John", cxmodel::MakeRed(), cxmodel::PlayerType::BOT);
+    const auto rhs = CreatePlayer("John", cx::model::MakeRed(), cx::model::PlayerType::BOT);
     ASSERT_TRUE(lhs);
 
     ASSERT_TRUE(*lhs != *rhs);

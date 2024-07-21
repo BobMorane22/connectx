@@ -24,7 +24,7 @@
 #include <cxinv/assertion.h>
 #include <cxmodel/NewGameInformation.h>
 
-cxmodel::NewGameInformation::NewGameInformation(NewGameInformation&& p_other)
+cx::model::NewGameInformation::NewGameInformation(NewGameInformation&& p_other)
 {
     m_gridHeight = p_other.m_gridHeight;
     m_gridWidth = p_other.m_gridWidth;
@@ -33,7 +33,7 @@ cxmodel::NewGameInformation::NewGameInformation(NewGameInformation&& p_other)
     m_players = std::move(p_other.m_players);
 }
 
-cxmodel::NewGameInformation& cxmodel::NewGameInformation::operator=(NewGameInformation&& p_other)
+cx::model::NewGameInformation& cx::model::NewGameInformation::operator=(NewGameInformation&& p_other)
 {
     m_gridHeight = p_other.m_gridHeight;
     m_gridWidth = p_other.m_gridWidth;
@@ -44,7 +44,7 @@ cxmodel::NewGameInformation& cxmodel::NewGameInformation::operator=(NewGameInfor
     return *this;
 }
 
-bool cxmodel::operator==(const cxmodel::NewGameInformation& p_lhs, const cxmodel::NewGameInformation& p_rhs)
+bool cx::model::operator==(const cx::model::NewGameInformation& p_lhs, const cx::model::NewGameInformation& p_rhs)
 {
     bool areEqual = true;
 
@@ -70,7 +70,7 @@ bool cxmodel::operator==(const cxmodel::NewGameInformation& p_lhs, const cxmodel
     return areEqual;
 }
 
-bool cxmodel::operator!=(const cxmodel::NewGameInformation& p_lhs, const cxmodel::NewGameInformation& p_rhs)
+bool cx::model::operator!=(const cx::model::NewGameInformation& p_lhs, const cx::model::NewGameInformation& p_rhs)
 {
     return !(p_lhs == p_rhs);
 }

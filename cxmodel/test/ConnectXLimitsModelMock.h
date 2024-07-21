@@ -32,7 +32,7 @@
  * This mock uses the same parameters as the Connect X application.
  *
  *************************************************************************************************/
-class ConnectXLimitsModelMock : public cxmodel::IConnectXLimits
+class ConnectXLimitsModelMock : public cx::model::IConnectXLimits
 {
 
 public:

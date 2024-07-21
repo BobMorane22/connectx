@@ -49,9 +49,9 @@ void UpdatePlayerIndex(size_t& p_playerIndex, size_t p_nbOfPlayers)
 
 } // namespace
 
-cxmodel::CommandDropChip::CommandDropChip(cxmodel::IBoard& p_board,
-                                          cxmodel::PlayerInformation& p_playersInfo,
-                                          std::unique_ptr<cxmodel::IChip>&& p_droppedChip,
+cx::model::CommandDropChip::CommandDropChip(cx::model::IBoard& p_board,
+                                          cx::model::PlayerInformation& p_playersInfo,
+                                          std::unique_ptr<cx::model::IChip>&& p_droppedChip,
                                           const size_t p_column,
                                           std::vector<IBoard::Position>& p_takenPositions,
                                           cx::log::ILogger& p_logger)
@@ -69,7 +69,7 @@ cxmodel::CommandDropChip::CommandDropChip(cxmodel::IBoard& p_board,
     POSTCONDITION(m_droppedChip);
 }
 
-cxmodel::CommandCompletionStatus cxmodel::CommandDropChip::Execute()
+cx::model::CommandCompletionStatus cx::model::CommandDropChip::Execute()
 {
     const auto activePlayer = m_playersInfo.m_players[m_playersInfo.m_activePlayerIndex];
     if(!INL_PRECONDITION(activePlayer->GetChip() == *m_droppedChip))
@@ -137,7 +137,7 @@ cxmodel::CommandCompletionStatus cxmodel::CommandDropChip::Execute()
     return CommandCompletionStatus::SUCCESS;;
 }
 
-void cxmodel::CommandDropChip::Undo()
+void cx::model::CommandDropChip::Undo()
 {
     // Put playersInfo back:
     m_playersInfo = m_previousPlayerInformation;

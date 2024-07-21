@@ -39,7 +39,7 @@
                                      }                         \
                                      void(0)                   \
 
-namespace cxmodel
+namespace cx::model
 {
 
 /*********************************************************************************************//**
@@ -113,6 +113,6 @@ private:
  ********************************************************************************************/
 [[nodiscard]] Status MakeError(const std::string& p_errorMessage);
 
-} // namespace cxmodel
+} // namespace cx::model
 
 #endif // STATUS_H_E80A96D0_7F2D_4F3D_8AAB_2B059BA8D895

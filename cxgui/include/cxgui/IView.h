@@ -26,7 +26,7 @@
 
 #include <cxgui/IWidget.h>
 
-namespace cxmodel
+namespace cx::model
 {
     enum class ModelNotificationContext;
 }
@@ -82,7 +82,7 @@ public:
      * @param p_context The context.
      *
      ********************************************************************************************/
-    virtual void Update(cxmodel::ModelNotificationContext p_context) = 0;
+    virtual void Update(cx::model::ModelNotificationContext p_context) = 0;
 
 };
 

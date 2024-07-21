@@ -84,7 +84,7 @@ public:
     void RegisterStandardWidgetsFactory(IAbstractWidgetsFactory& p_stdAbstractWidgetsFactory);
 
     // cx::gui::IAbstractConnectXWidgetsFactory:
-    [[nodiscard]] std::unique_ptr<IWindow> CreateMainWindow(cxmodel::ModelSubject& p_model,
+    [[nodiscard]] std::unique_ptr<IWindow> CreateMainWindow(cx::model::ModelSubject& p_model,
         IMainWindowController& p_controller,
         IMainWindowPresenter& p_presenter) const override;
     [[nodiscard]] virtual std::unique_ptr<IWindow> CreateAboutWindow(
@@ -97,25 +97,25 @@ public:
         INewGameViewController& p_controller,
         IWindow& p_parentWindow,
         cx::gui::ILayout& p_mainLayout,
-        const cxmodel::Column& p_viewLeft,
-        const cxmodel::Row& p_viewTop) const override;
+        const cx::model::Column& p_viewLeft,
+        const cx::model::Row& p_viewTop) const override;
     [[nodiscard]] virtual std::unique_ptr<IView> CreateGameView(
         IGameViewPresenter& p_presenter,
         IGameViewController& p_controller,
         IWindow& p_parentWindow,
         cx::gui::ILayout& p_mainLayout,
-        const cxmodel::Column& p_viewLeft,
-        const cxmodel::Row& p_viewTop) const override;
+        const cx::model::Column& p_viewLeft,
+        const cx::model::Row& p_viewTop) const override;
     [[nodiscard]] std::unique_ptr<INewPlayersList> CreateNewPlayersList(
         const INewGameViewPresenter& p_presenter) const override;
     [[nodiscard]] std::unique_ptr<IColorPicker> CreateColorPicker(
-        const std::vector<cxmodel::ChipColor>& p_colors) const override;
+        const std::vector<cx::model::ChipColor>& p_colors) const override;
     [[nodiscard]] std::unique_ptr<IAnimatedBoard> CreateGameBoard(
         const IGameViewPresenter& p_presenter,
         const AnimationSpeed& p_speed) const override;
     [[nodiscard]] std::unique_ptr<IChip> CreateChip(
-        const cxmodel::ChipColor& p_fillColor,
-        const cxmodel::ChipColor& p_backgroundColor,
+        const cx::model::ChipColor& p_fillColor,
+        const cx::model::ChipColor& p_backgroundColor,
         int p_diameter) const override;
 
 private:

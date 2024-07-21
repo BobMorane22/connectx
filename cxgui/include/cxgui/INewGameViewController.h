@@ -52,7 +52,7 @@ public:
      * Called when the game is started.
      *
      ********************************************************************************************/
-    virtual void OnStart(const cxmodel::NewGameInformation p_gameInformation) = 0;
+    virtual void OnStart(const cx::model::NewGameInformation p_gameInformation) = 0;
 
 };
 

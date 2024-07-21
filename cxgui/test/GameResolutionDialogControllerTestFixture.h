@@ -42,7 +42,7 @@ public:
 
 private:
 
-    class GameResolutionDialogControllerMockModel : public cxmodel::IConnectXGameActions
+    class GameResolutionDialogControllerMockModel : public cx::model::IConnectXGameActions
     {
 
     public:
@@ -50,8 +50,8 @@ private:
         GameResolutionDialogControllerMockModel(GameResolutionDialogControllerTestFixture& p_outer);
 
         // IConnectXGameActions:
-        void CreateNewGame(cxmodel::NewGameInformation p_gameInformation) override;
-        void DropChip(const cxmodel::IChip& p_chip, size_t p_column) override;
+        void CreateNewGame(cx::model::NewGameInformation p_gameInformation) override;
+        void DropChip(const cx::model::IChip& p_chip, size_t p_column) override;
         void MoveLeftOneColumn() override;
         void MoveRightOneColumn() override;
         void EndCurrentGame() override;

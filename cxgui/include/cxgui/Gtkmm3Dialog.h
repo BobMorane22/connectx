@@ -99,8 +99,8 @@ public:
 
 private:
 
-    // cxmodel::IModelObserver:
-    void Update(cxmodel::ModelNotificationContext p_context, cxmodel::ModelSubject* p_subject) override;
+    // cx::model::IModelObserver:
+    void Update(cx::model::ModelNotificationContext p_context, cx::model::ModelSubject* p_subject) override;
 
     std::unique_ptr<IWidget> m_delegate;
 

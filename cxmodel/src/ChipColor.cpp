@@ -66,7 +66,7 @@ double HueToRGB(double p, double q, double t)
     return p;
 }
 
-double ComputeHSLFromRGB(const cxmodel::ChipColor& p_color, HSL p_channel)
+double ComputeHSLFromRGB(const cx::model::ChipColor& p_color, HSL p_channel)
 {
     constexpr unsigned short MAX = std::numeric_limits<unsigned short>::max();
 
@@ -125,27 +125,27 @@ double ComputeHSLFromRGB(const cxmodel::ChipColor& p_color, HSL p_channel)
 
 } // namespace
 
-cxmodel::ChipColor cxmodel::MakeFromHSL(double p_hue,
+cx::model::ChipColor cx::model::MakeFromHSL(double p_hue,
                                         double p_saturation,
                                         double p_lightness)
 {
-    return cxmodel::MakeFromHSLA(p_hue, p_saturation, p_lightness, 1.0);
+    return cx::model::MakeFromHSLA(p_hue, p_saturation, p_lightness, 1.0);
 }
 
-cxmodel::ChipColor cxmodel::MakeFromHSLA(double p_hue,
+cx::model::ChipColor cx::model::MakeFromHSLA(double p_hue,
                                          double p_saturation,
                                          double p_lightness,
                                          double p_alpha)
 {
-    IF_PRECONDITION_NOT_MET_DO(p_hue >= 0.0, return cxmodel::MakeTransparent(););
-    IF_PRECONDITION_NOT_MET_DO(p_saturation >= 0.0, return cxmodel::MakeTransparent(););
-    IF_PRECONDITION_NOT_MET_DO(p_lightness >= 0.0, return cxmodel::MakeTransparent(););
-    IF_PRECONDITION_NOT_MET_DO(p_alpha >= 0.0, return cxmodel::MakeTransparent(););
+    IF_PRECONDITION_NOT_MET_DO(p_hue >= 0.0, return cx::model::MakeTransparent(););
+    IF_PRECONDITION_NOT_MET_DO(p_saturation >= 0.0, return cx::model::MakeTransparent(););
+    IF_PRECONDITION_NOT_MET_DO(p_lightness >= 0.0, return cx::model::MakeTransparent(););
+    IF_PRECONDITION_NOT_MET_DO(p_alpha >= 0.0, return cx::model::MakeTransparent(););
 
-    IF_PRECONDITION_NOT_MET_DO(p_hue <= 1.0, return cxmodel::MakeTransparent(););
-    IF_PRECONDITION_NOT_MET_DO(p_saturation <= 1.0, return cxmodel::MakeTransparent(););
-    IF_PRECONDITION_NOT_MET_DO(p_lightness <= 1.0, return cxmodel::MakeTransparent(););
-    IF_PRECONDITION_NOT_MET_DO(p_alpha <= 1.0, return cxmodel::MakeTransparent(););
+    IF_PRECONDITION_NOT_MET_DO(p_hue <= 1.0, return cx::model::MakeTransparent(););
+    IF_PRECONDITION_NOT_MET_DO(p_saturation <= 1.0, return cx::model::MakeTransparent(););
+    IF_PRECONDITION_NOT_MET_DO(p_lightness <= 1.0, return cx::model::MakeTransparent(););
+    IF_PRECONDITION_NOT_MET_DO(p_alpha <= 1.0, return cx::model::MakeTransparent(););
 
     double red, green, blue;
 
@@ -186,17 +186,17 @@ cxmodel::ChipColor cxmodel::MakeFromHSLA(double p_hue,
     return ChipColor(r, g, b, a);
 }
 
-double cxmodel::ComputeHue(const ChipColor& p_color)
+double cx::model::ComputeHue(const ChipColor& p_color)
 {
     return ComputeHSLFromRGB(p_color, HSL::HUE);
 }
 
-double cxmodel::ComputeSaturation(const ChipColor& p_color)
+double cx::model::ComputeSaturation(const ChipColor& p_color)
 {
     return ComputeHSLFromRGB(p_color, HSL::SATURATION);
 }
 
-double cxmodel::ComputeLuminosity(const ChipColor& p_color)
+double cx::model::ComputeLuminosity(const ChipColor& p_color)
 {
     return ComputeHSLFromRGB(p_color, HSL::LUMINOSITY);
 }

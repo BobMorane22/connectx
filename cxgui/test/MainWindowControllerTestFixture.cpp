@@ -76,7 +76,7 @@ bool MainWindowControllerTestFixture::GetRedoCalled() const
     return m_redoCalled;
 }
 
-cxmodel::IConnectXGameActions& MainWindowControllerTestFixture::GetModel()
+cx::model::IConnectXGameActions& MainWindowControllerTestFixture::GetModel()
 {
     EXPECT_TRUE(m_model != nullptr);
 
@@ -97,12 +97,12 @@ cx::gui::INewGameViewController& MainWindowControllerTestFixture::GetNewGameView
     return *m_controller;
 }
 
-void MainWindowControllerTestFixture::MainWindowControllerMockModel::CreateNewGame(cxmodel::NewGameInformation /*p_gameInformation*/)
+void MainWindowControllerTestFixture::MainWindowControllerMockModel::CreateNewGame(cx::model::NewGameInformation /*p_gameInformation*/)
 {
     m_outer.m_newGameCreated = true;
 }
 
-void MainWindowControllerTestFixture::MainWindowControllerMockModel::DropChip(const cxmodel::IChip& /*p_chip*/, size_t /*p_column*/)
+void MainWindowControllerTestFixture::MainWindowControllerMockModel::DropChip(const cx::model::IChip& /*p_chip*/, size_t /*p_column*/)
 {
     m_outer.m_chipDropped = true;
 }

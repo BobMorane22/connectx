@@ -73,13 +73,13 @@ public:
      * @return `true` if the game is valid, `false` otherwise.
      *
      ************************************************************************************************/
-    [[nodiscard]] bool ValidateGame(const std::vector<std::shared_ptr<cxmodel::IPlayer>>& p_playerList,
+    [[nodiscard]] bool ValidateGame(const std::vector<std::shared_ptr<cx::model::IPlayer>>& p_playerList,
                                     const size_t p_inARowValue,
                                     const std::string& p_asciiGame);
 
 private:
 
-    class LimitsModelMock : public cxmodel::IConnectXLimits
+    class LimitsModelMock : public cx::model::IConnectXLimits
     {
 
     public:

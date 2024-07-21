@@ -53,7 +53,7 @@ public:
      * @return The cached board height.
      *
      *********************************************************************************************/
-    [[nodiscard]] virtual cxmodel::Height GetBoardHeight() const = 0;
+    [[nodiscard]] virtual cx::model::Height GetBoardHeight() const = 0;
 
     /******************************************************************************************//**
      * @brief Retreive the cached board width.
@@ -61,7 +61,7 @@ public:
      * @return The cached board width.
      *
      *********************************************************************************************/
-    [[nodiscard]] virtual cxmodel::Width GetBoardWidth() const = 0;
+    [[nodiscard]] virtual cx::model::Width GetBoardWidth() const = 0;
 
     /******************************************************************************************//**
      * @brief Retreive the board color (not cached).
@@ -88,7 +88,7 @@ public:
      * @return The cached active player chip color.
      *
      *********************************************************************************************/
-    [[nodiscard]] virtual cxmodel::ChipColor GetActivePlayerChipColor() const = 0;
+    [[nodiscard]] virtual cx::model::ChipColor GetActivePlayerChipColor() const = 0;
 
     /******************************************************************************************//**
      * @brief Retreive the cached board chip colors.
@@ -104,7 +104,7 @@ public:
      * @return The last computed bot target column.
      *
      *********************************************************************************************/
-    [[nodiscard]] virtual cxmodel::Column GetBotTarget() const = 0;
+    [[nodiscard]] virtual cx::model::Column GetBotTarget() const = 0;
 
 };
 

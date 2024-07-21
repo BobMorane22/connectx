@@ -26,12 +26,12 @@
 
 #include <cxmodel/version.h>
 
-unsigned int cxmodel::GetVersionMajor()
+unsigned int cx::model::GetVersionMajor()
 {
     return @connectx_VERSION_MAJOR@;
 }
 
-unsigned int cxmodel::GetVersionMinor()
+unsigned int cx::model::GetVersionMinor()
 {
     return @connectx_VERSION_MINOR@;
 }

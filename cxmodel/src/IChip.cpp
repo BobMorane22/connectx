@@ -23,12 +23,12 @@
 
 #include <cxmodel/IChip.h>
 
-bool cxmodel::operator==(const cxmodel::IChip& p_lhs, const cxmodel::IChip& p_rhs)
+bool cx::model::operator==(const cx::model::IChip& p_lhs, const cx::model::IChip& p_rhs)
 {
     return p_lhs.GetColor() == p_rhs.GetColor();
 }
 
-bool cxmodel::operator!=(const cxmodel::IChip& p_lhs, const cxmodel::IChip& p_rhs)
+bool cx::model::operator!=(const cx::model::IChip& p_lhs, const cx::model::IChip& p_rhs)
 {
     return !(p_lhs == p_rhs);
 }

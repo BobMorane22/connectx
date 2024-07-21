@@ -33,7 +33,7 @@
  * Use this as a base to create complete `IConnectXGameInformation` compatible model mocks.
  *
  ************************************************************************************************/
-class BasicConnectXGameInformationModelMock : public cxmodel::IConnectXGameInformation
+class BasicConnectXGameInformationModelMock : public cx::model::IConnectXGameInformation
 {
 
 public:
@@ -41,9 +41,9 @@ public:
     size_t GetCurrentGridHeight() const override {return 6u;}
     size_t GetCurrentGridWidth() const override {return 7u;}
     size_t GetCurrentInARowValue() const override {return 4u;}
-    const cxmodel::IPlayer& GetActivePlayer() const override {throw cx::unit::NotImplementedException();}
-    const cxmodel::IPlayer& GetNextPlayer() const override {throw cx::unit::NotImplementedException();}
-    const cxmodel::IChip& GetChip(size_t /*p_row*/, size_t /*p_column*/) const override {throw cx::unit::NotImplementedException();}
+    const cx::model::IPlayer& GetActivePlayer() const override {throw cx::unit::NotImplementedException();}
+    const cx::model::IPlayer& GetNextPlayer() const override {throw cx::unit::NotImplementedException();}
+    const cx::model::IChip& GetChip(size_t /*p_row*/, size_t /*p_column*/) const override {throw cx::unit::NotImplementedException();}
     bool IsWon() const override {return false;}
     bool IsTie() const override {return false;}
 };

@@ -36,7 +36,7 @@ public:
     void Resize(const cx::gui::ScalingRatios& p_scalingRatios) override;
     void AddChipDisplacement(const cx::math::Height& p_vertical, const cx::math::Width& p_horizontal) override;
     void ResetChipPositions() override;
-    void UpdateCurrentColumn(const cxmodel::Column& p_newCurrentColumn) override;
+    void UpdateCurrentColumn(const cx::model::Column& p_newCurrentColumn) override;
     [[nodiscard]] cx::gui::FPS GetFPS() const override;
     [[nodiscard]] cx::gui::AnimationSpeed GetAnimationSpeed() const override;
     [[nodiscard]] const cx::math::Dimensions& GetAnimatedAreaDimensions() const override;
@@ -47,13 +47,13 @@ public:
     [[nodiscard]] const cx::math::Position& GetMirrorChipPosition() const override;
     [[nodiscard]] bool IsMirrorChipNeeded() const override;
     [[nodiscard]] cx::math::Width GetLineWidth(cx::gui::Feature p_feature) const override;
-    [[nodiscard]] const cxmodel::Column& GetCurrentColumn() const override;
+    [[nodiscard]] const cx::model::Column& GetCurrentColumn() const override;
 
     // Testing:
     void SetAnimatedAreaDimensions(const cx::math::Dimensions& p_widgetDimensions);
     void SetFPS(const cx::gui::FPS& p_fps);
     void SetAnimationSpeed(const cx::gui::AnimationSpeed& p_animationSpeed);
-    void SetCurrentColumn(const cxmodel::Column& p_currentColumn);
+    void SetCurrentColumn(const cx::model::Column& p_currentColumn);
     void SetCellDimensions(const cx::math::Dimensions& p_cellDimensions);
 
     [[nodiscard]] bool WasUpdateCalled() const {return m_updateCalled;}
@@ -76,7 +76,7 @@ private:
     cx::math::Position m_currentChipPosition;
 
     cx::math::Dimensions m_cellDimensions{cx::math::Height{0.0}, cx::math::Width{0.0}};
-    cxmodel::Column m_currentColumn{0u};
+    cx::model::Column m_currentColumn{0u};
 };
 
 #endif // ANIMATEDBOARDMODELMOCK_H_FF30200C_A3BA_4A3F_A0C2_292330EF48B3

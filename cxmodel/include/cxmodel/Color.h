@@ -29,7 +29,7 @@
 #include <limits>
 #include <type_traits>
 
-namespace cxmodel
+namespace cx::model
 {
 
 /**********************************************************************************************//**
@@ -80,7 +80,7 @@ public:
      * @param p_blue  Blue channel value.
      * @param p_alpha Alpha channel value.
      *
-     * Constructs a cxmodel::Color object based on values for RGBA channels.
+     * Constructs a cx::model::Color object based on values for RGBA channels.
      *
      *********************************************************************************************/
     constexpr Color(Channel p_red,
@@ -93,7 +93,7 @@ public:
 
         // Color class should stay small and fast. Beside the four channel, not other data
         // members should be added to this class.
-        static_assert(sizeof(cxmodel::Color<Channel>) == 4 * sizeof(Channel), "Extra (unwanted) data member added.");
+        static_assert(sizeof(cx::model::Color<Channel>) == 4 * sizeof(Channel), "Extra (unwanted) data member added.");
 
         // The color channel underlying type should be an unsigned arithmetic type (but not a bool).
         static_assert(std::is_unsigned<Channel>::value, "Underlying channel type should be unsigned");
@@ -107,7 +107,7 @@ public:
      * @param p_green Green channel value.
      * @param p_blue  Blue channel value.
      *
-     * Constructs a cxmodel::Color object based on values for RGB channels. The color will be
+     * Constructs a cx::model::Color object based on values for RGB channels. The color will be
      * completely opaque.
      *
      *********************************************************************************************/
@@ -293,6 +293,6 @@ constexpr double NormalizedA(const Color<Channel>& p_color)
     return static_cast<double>(p_color.A()) / static_cast<double>(std::numeric_limits<Channel>::max());
 }
 
-} // namespace cxmodel
+} // namespace cx::model
 
 #endif // COLOR_H_2CBE2E5B_FB8A_412E_A9F8_981A1851DD34

@@ -37,5 +37,5 @@ void ConcreteSubjectMock::IncrementData()
 {
     ++m_data;
 
-    Notify(cxmodel::ModelNotificationContext::CREATE_NEW_GAME);
+    Notify(cx::model::ModelNotificationContext::CREATE_NEW_GAME);
 }

@@ -29,7 +29,7 @@
 
 #include "ICommand.h"
 
-namespace cxmodel
+namespace cx::model
 {
 
 /**********************************************************************************************//**
@@ -55,7 +55,7 @@ public:
      *************************************************************************************************/
     void Add(std::unique_ptr<ICommand> p_child);
 
-    // cxmodel::ICommand
+    // cx::model::ICommand
     [[nodiscard]] CommandCompletionStatus Execute() override;
     void Undo() override;
 
@@ -65,6 +65,6 @@ private:
 
 };
 
-} // namespace cxmodel
+} // namespace cx::model
 
 #endif // COMPOSITECOMMAND_H_2BA36E20_1068_4C28_8551_8BD94851A994

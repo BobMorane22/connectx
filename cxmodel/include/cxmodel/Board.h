@@ -30,7 +30,7 @@
 #include "IBoard.h"
 #include "IConnectXLimits.h"
 
-namespace cxmodel
+namespace cx::model
 {
 
 /**********************************************************************************************//**
@@ -58,7 +58,7 @@ public:
      *********************************************************************************************/
     Board(size_t p_nbRows, size_t p_nbColumns, const IConnectXLimits& p_modelAsLimits);
 
-    // cxmodel::IBoard:
+    // cx::model::IBoard:
     size_t GetNbRows() const override;
     size_t GetNbColumns() const override;
     size_t GetNbPositions() const override;
@@ -81,6 +81,6 @@ private:
 
 };
 
-} // namespace cxmodel
+} // namespace cx::model
 
 #endif // BOARD_H_22FBC1EE_999E_416C_B947_05B6CDF6DBB8

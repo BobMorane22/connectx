@@ -70,7 +70,7 @@ NotSynced Validate(cx::gui::IAnimatedBoardModel& p_model, const ModelOperations&
     const bool mirrorNeededBefore                         = p_model.IsMirrorChipNeeded();
     const cx::math::Width cellLineWidthBefore               = p_model.GetLineWidth(cx::gui::Feature::CELL);
     const cx::math::Width chipLineWidthBefore               = p_model.GetLineWidth(cx::gui::Feature::CHIP);
-    const cxmodel::Column currentColumnBefore             = p_model.GetCurrentColumn();
+    const cx::model::Column currentColumnBefore             = p_model.GetCurrentColumn();
 
     // Operation(s) performed on the model:
     EXPECT_TRUE(p_operations);
@@ -88,7 +88,7 @@ NotSynced Validate(cx::gui::IAnimatedBoardModel& p_model, const ModelOperations&
     const bool mirrorNeededAfter                         = p_model.IsMirrorChipNeeded();
     const cx::math::Width cellLineWidthAfter               = p_model.GetLineWidth(cx::gui::Feature::CELL);
     const cx::math::Width chipLineWidthAfter               = p_model.GetLineWidth(cx::gui::Feature::CHIP);
-    const cxmodel::Column currentColumnAfter             = p_model.GetCurrentColumn();
+    const cx::model::Column currentColumnAfter             = p_model.GetCurrentColumn();
 
     // Comparing the two:
     NotSynced syncResult = NONE;
@@ -147,13 +147,13 @@ public:
 
     // cx::gui::IAnimatedBoardPresenter:
     void Sync() override {FAIL();}
-    [[nodiscard]] cxmodel::Height GetBoardHeight() const override {return cxmodel::Height{6u};}
-    [[nodiscard]] cxmodel::Width GetBoardWidth() const override {return cxmodel::Width{7u};}
+    [[nodiscard]] cx::model::Height GetBoardHeight() const override {return cx::model::Height{6u};}
+    [[nodiscard]] cx::model::Width GetBoardWidth() const override {return cx::model::Width{7u};}
     [[nodiscard]] cx::gui::Color GetGameViewBoardColor() const override {return cx::gui::Color{8481u, 8481u, 51143u};}
     [[nodiscard]] cx::gui::Color GetGameViewColumnHighlightColor() const override {return cx::gui::Color{19660u, 19660u, 19660u, 32767u};}
-    [[nodiscard]] cxmodel::ChipColor GetActivePlayerChipColor() const override {return cxmodel::MakeRed();}
+    [[nodiscard]] cx::model::ChipColor GetActivePlayerChipColor() const override {return cx::model::MakeRed();}
     [[nodiscard]] const cx::gui::IGameViewPresenter::ChipColors& GetBoardChipColors() const override {return m_chipColors;}
-    [[nodiscard]] cxmodel::Column GetBotTarget() const {return cxmodel::Column{5u};}
+    [[nodiscard]] cx::model::Column GetBotTarget() const {return cx::model::Column{5u};}
 
     // Configuration:
 
@@ -414,19 +414,19 @@ TEST_F(AnimationModelTestFixture, /*DISABLED_*/UpdateCurrentColumn_NewColumIndex
     cx::gui::IAnimatedBoardModel& model = GetModel();
     model.Update({cx::math::Height{100}, cx::math::Width{150}}, true);
 
-    const cxmodel::Column currentColumnBefore = model.GetCurrentColumn();
-    ASSERT_TRUE(currentColumnBefore == cxmodel::Column{0u});
+    const cx::model::Column currentColumnBefore = model.GetCurrentColumn();
+    ASSERT_TRUE(currentColumnBefore == cx::model::Column{0u});
 
     const NotSynced whatChanged = Validate(model,
                                   [](cx::gui::IAnimatedBoardModel& p_model)
                                   {
-                                      p_model.UpdateCurrentColumn(cxmodel::Column{3u});
+                                      p_model.UpdateCurrentColumn(cx::model::Column{3u});
                                   });
 
     ASSERT_TRUE(whatChanged == CURRENT_COLUMN);
 
-    const cxmodel::Column currentColumnAfter = model.GetCurrentColumn();
-    ASSERT_TRUE(currentColumnAfter == cxmodel::Column{3u});
+    const cx::model::Column currentColumnAfter = model.GetCurrentColumn();
+    ASSERT_TRUE(currentColumnAfter == cx::model::Column{3u});
 }
 
 TEST_F(AnimationModelTestFixture, /*DISABLED_*/GetFPS_ValidModel_FPSReturned)

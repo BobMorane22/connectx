@@ -23,7 +23,7 @@
 #ifndef IUNDOREDO_H_C750BB28_D806_4806_8DEB_B796D85DA799
 #define IUNDOREDO_H_C750BB28_D806_4806_8DEB_B796D85DA799
 
-namespace cxmodel
+namespace cx::model
 {
 
 /**********************************************************************************************//**
@@ -86,6 +86,6 @@ public:
 
 };
 
-} // namespace cxmodel
+} // namespace cx::model
 
 #endif // IUNDOREDO_H_C750BB28_D806_4806_8DEB_B796D85DA799

@@ -28,16 +28,16 @@
 namespace
 {
 
-std::unique_ptr<cxmodel::IChip> NoChip()
+std::unique_ptr<cx::model::IChip> NoChip()
 {
-    return std::make_unique<cxmodel::Disc>(cxmodel::Disc::MakeTransparentDisc());
+    return std::make_unique<cx::model::Disc>(cx::model::Disc::MakeTransparentDisc());
 }
 
 } // namespace
 
-cxmodel::Board::Board(size_t p_nbRows,
+cx::model::Board::Board(size_t p_nbRows,
                       size_t p_nbColumns,
-                      const cxmodel::IConnectXLimits& p_modelAsLimits)
+                      const cx::model::IConnectXLimits& p_modelAsLimits)
 : m_nbRows{p_nbRows}
 , m_nbColumns{p_nbColumns}
 , m_modelAsLimits{p_modelAsLimits}
@@ -62,22 +62,22 @@ cxmodel::Board::Board(size_t p_nbRows,
     CheckInvariants();
 }
 
-size_t cxmodel::Board::GetNbColumns() const
+size_t cx::model::Board::GetNbColumns() const
 {
     return m_nbColumns;
 }
 
-size_t cxmodel::Board::GetNbRows() const
+size_t cx::model::Board::GetNbRows() const
 {
     return m_nbRows;
 }
 
-size_t cxmodel::Board::GetNbPositions() const
+size_t cx::model::Board::GetNbPositions() const
 {
     return m_nbColumns * m_nbRows;
 }
 
-const cxmodel::IChip& cxmodel::Board::GetChip(const Position& p_position) const
+const cx::model::IChip& cx::model::Board::GetChip(const Position& p_position) const
 {
     IF_PRECONDITION_NOT_MET_DO(p_position.m_row < m_nbRows, return *m_grid[0][0];);
     IF_PRECONDITION_NOT_MET_DO(p_position.m_column < m_nbColumns, return *m_grid[0][0];);
@@ -85,7 +85,7 @@ const cxmodel::IChip& cxmodel::Board::GetChip(const Position& p_position) const
     return *m_grid[p_position.m_row][p_position.m_column];
 }
 
-bool cxmodel::Board::DropChip(size_t p_column, const cxmodel::IChip& p_disc, Position& p_droppedPosition)
+bool cx::model::Board::DropChip(size_t p_column, const cx::model::IChip& p_disc, Position& p_droppedPosition)
 {
     IF_PRECONDITION_NOT_MET_DO(p_column < m_nbColumns, return false;);
 
@@ -98,10 +98,10 @@ bool cxmodel::Board::DropChip(size_t p_column, const cxmodel::IChip& p_disc, Pos
 
     for(auto row = m_grid.begin(); row != m_grid.end(); ++row)
     {
-        const cxmodel::IChip& chip = GetChip({rowSubscript, p_column});
+        const cx::model::IChip& chip = GetChip({rowSubscript, p_column});
         if(chip == *NoChip())
         {
-            m_grid[rowSubscript][p_column] = std::move(std::make_unique<cxmodel::Disc>(p_disc.GetColor()));
+            m_grid[rowSubscript][p_column] = std::move(std::make_unique<cx::model::Disc>(p_disc.GetColor()));
             break;
         }
 
@@ -115,7 +115,7 @@ bool cxmodel::Board::DropChip(size_t p_column, const cxmodel::IChip& p_disc, Pos
     return true;
 }
 
-void cxmodel::Board::ResetChip(Position& p_position)
+void cx::model::Board::ResetChip(Position& p_position)
 {
     PRECONDITION(p_position.m_row < GetNbRows());
     PRECONDITION(p_position.m_column < GetNbColumns());
@@ -127,7 +127,7 @@ void cxmodel::Board::ResetChip(Position& p_position)
     chipToReset->Reset();
 }
 
-bool cxmodel::Board::IsColumnFull(size_t p_column) const
+bool cx::model::Board::IsColumnFull(size_t p_column) const
 {
     PRECONDITION(p_column < m_nbColumns);
 
@@ -136,7 +136,7 @@ bool cxmodel::Board::IsColumnFull(size_t p_column) const
 
     for(auto row = m_grid.rbegin(); row != m_grid.rend(); ++row)
     {
-        const cxmodel::IChip& chip = GetChip({rowSubscript, p_column});
+        const cx::model::IChip& chip = GetChip({rowSubscript, p_column});
         if(chip == *NoChip())
         {
             isPlayable = true;
@@ -149,7 +149,7 @@ bool cxmodel::Board::IsColumnFull(size_t p_column) const
     return !isPlayable;
 }
 
-void cxmodel::Board::CheckInvariants() const
+void cx::model::Board::CheckInvariants() const
 {
     INVARIANT(m_nbRows >= m_modelAsLimits.GetMinimumGridHeight());
     INVARIANT(m_nbRows <= m_modelAsLimits.GetMaximumGridHeight());

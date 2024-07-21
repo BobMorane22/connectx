@@ -164,47 +164,47 @@ public:
         throw cx::unit::NotImplementedException();
     }
 
-    [[nodiscard]] cxmodel::ChipColor GetDefaultChipColor(size_t /*p_playerIndex*/) const override
+    [[nodiscard]] cx::model::ChipColor GetDefaultChipColor(size_t /*p_playerIndex*/) const override
     {
         throw cx::unit::NotImplementedException();
     }
 
-    [[nodiscard]] std::vector<cxmodel::ChipColor> GetDefaultChipColors() const override
+    [[nodiscard]] std::vector<cx::model::ChipColor> GetDefaultChipColors() const override
     {
         throw cx::unit::NotImplementedException();
     }
 
-    [[nodiscard]] cxmodel::PlayerType GetDefaultPlayerType(size_t /*p_playerIndex*/) const override
+    [[nodiscard]] cx::model::PlayerType GetDefaultPlayerType(size_t /*p_playerIndex*/) const override
     {
         throw cx::unit::NotImplementedException();
     }
 
-    [[nodiscard]] cxmodel::Status IsInARowValueValid(size_t /*p_inARowValue*/) const override
+    [[nodiscard]] cx::model::Status IsInARowValueValid(size_t /*p_inARowValue*/) const override
     {
         throw cx::unit::NotImplementedException();
     }
 
-    [[nodiscard]] cxmodel::Status AreBoardDimensionsValid(size_t /*p_boardHeight*/, size_t /*p_boardWidth*/) const override
+    [[nodiscard]] cx::model::Status AreBoardDimensionsValid(size_t /*p_boardHeight*/, size_t /*p_boardWidth*/) const override
     {
         throw cx::unit::NotImplementedException();
     }
 
-    [[nodiscard]] cxmodel::Status ArePlayerNamesValid(const std::vector<std::string>& /*p_playerNames*/) const override
+    [[nodiscard]] cx::model::Status ArePlayerNamesValid(const std::vector<std::string>& /*p_playerNames*/) const override
     {
         throw cx::unit::NotImplementedException();
     }
 
-    [[nodiscard]] cxmodel::Status ArePlayerChipColorsValid(const std::vector<cxmodel::ChipColor>& /*p_playerChipColors*/) const override
+    [[nodiscard]] cx::model::Status ArePlayerChipColorsValid(const std::vector<cx::model::ChipColor>& /*p_playerChipColors*/) const override
     {
         throw cx::unit::NotImplementedException();
     }
 
-    [[nodiscard]] cxmodel::Status ArePlayerTypesValid(const std::vector<cxmodel::PlayerType>& /*p_playerTypes*/) const override
+    [[nodiscard]] cx::model::Status ArePlayerTypesValid(const std::vector<cx::model::PlayerType>& /*p_playerTypes*/) const override
     {
         throw cx::unit::NotImplementedException();
     }
 
-    [[nodiscard]] cxmodel::Status IsNewGameWinnable(size_t /*p_inARowValue*/, size_t /*p_nbOfPlayers*/, size_t /*p_boardHeight*/, size_t /*p_boardWidth*/) const override
+    [[nodiscard]] cx::model::Status IsNewGameWinnable(size_t /*p_inARowValue*/, size_t /*p_nbOfPlayers*/, size_t /*p_boardHeight*/, size_t /*p_boardWidth*/) const override
     {
         throw cx::unit::NotImplementedException();
     }

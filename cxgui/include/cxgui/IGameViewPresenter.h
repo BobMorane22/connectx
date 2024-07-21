@@ -43,7 +43,7 @@ class IGameViewPresenter
 public:
 
     /** A list of chip colors */
-    using ChipColors = std::vector<std::vector<cxmodel::ChipColor>>;
+    using ChipColors = std::vector<std::vector<cx::model::ChipColor>>;
 
 public:
 
@@ -67,7 +67,7 @@ public:
      * @return The active player's chip color.
      *
      ********************************************************************************************/
-    virtual cxmodel::ChipColor GetGameViewActivePlayerChipColor() const = 0;
+    virtual cx::model::ChipColor GetGameViewActivePlayerChipColor() const = 0;
 
     /******************************************************************************************//**
      * @brief Next player's chip color accessor.
@@ -75,7 +75,7 @@ public:
      * @return The next player's chip color.
      *
      ********************************************************************************************/
-    virtual cxmodel::ChipColor GetGameViewNextPlayerChipColor() const = 0;
+    virtual cx::model::ChipColor GetGameViewNextPlayerChipColor() const = 0;
 
     /******************************************************************************************//**
      * @brief Active player label text accessor.

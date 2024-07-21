@@ -28,7 +28,7 @@
 
 #include "IGameResolutionDialogPresenter.h"
 
-namespace cxmodel
+namespace cx::model
 {
     enum class GameResolution;
     class IConnectXGameInformation;
@@ -55,8 +55,8 @@ public:
      * @return The game resolution dialog presenter.
      *
      ********************************************************************************************/
-    static std::unique_ptr<IGameResolutionDialogPresenter> Make(const cxmodel::IConnectXGameInformation& p_modelAsInformation,
-                                                                cxmodel::GameResolution p_resolution);
+    static std::unique_ptr<IGameResolutionDialogPresenter> Make(const cx::model::IConnectXGameInformation& p_modelAsInformation,
+                                                                cx::model::GameResolution p_resolution);
 
 };
 

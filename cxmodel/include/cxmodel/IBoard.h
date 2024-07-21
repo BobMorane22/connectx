@@ -28,7 +28,7 @@
 
 #include "IChip.h"
 
-namespace cxmodel
+namespace cx::model
 {
 
 /*********************************************************************************************//**
@@ -239,6 +239,6 @@ bool operator==(const IBoard::Position& p_lhs, const IBoard::Position& p_rhs);
  **************************************************************************************************/
 bool operator!=(const IBoard::Position& p_lhs, const IBoard::Position& p_rhs);
 
-} // namespace cxmodel
+} // namespace cx::model
 
 #endif // IBOARD_H_0D53584F_433F_4007_86CD_A0CF3135BAF3

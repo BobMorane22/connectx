@@ -27,12 +27,12 @@
 #include <cstddef>
 #include <memory>
 
-namespace cxmodel
+namespace cx::model
 {
     class IBoard;
 }
 
-namespace cxmodel
+namespace cx::model
 {
 
 /**********************************************************************************************//**
@@ -67,7 +67,7 @@ public:
      * @return The computed column.
      *
      *********************************************************************************************/
-    [[nodiscard]] virtual size_t Compute(const cxmodel::IBoard& p_board) const = 0;
+    [[nodiscard]] virtual size_t Compute(const cx::model::IBoard& p_board) const = 0;
 };
 
 /**********************************************************************************************//**
@@ -80,6 +80,6 @@ public:
  *************************************************************************************************/
 [[nodiscard]] std::unique_ptr<INextDropColumnComputationStrategy> NextDropColumnComputationStrategyCreate(DropColumnComputation p_algorithm);
 
-} // namespace cxmodel
+} // namespace cx::model
 
 #endif // INEXTDROPCOLUMNCOMPUTATIONSTRATEGY_H_7F40031F_E940_4D58_B90F_3D8888274306

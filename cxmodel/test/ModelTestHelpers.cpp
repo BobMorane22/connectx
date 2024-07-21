@@ -28,7 +28,7 @@
 
 #include "ModelTestHelpers.h"
 
-ModelNotificationCatcher::ModelNotificationCatcher(cxmodel::ModelNotificationContext p_contextUnderTest)
+ModelNotificationCatcher::ModelNotificationCatcher(cx::model::ModelNotificationContext p_contextUnderTest)
 :m_contextUnderTest{p_contextUnderTest}
 {
     EXPECT_FALSE(m_wasNotified);
@@ -48,7 +48,7 @@ bool ModelNotificationCatcher::WasNotified() const
     return m_wasNotified;
 }
 
-void ModelNotificationCatcher::Update(cxmodel::ModelNotificationContext p_context, cxmodel::ModelSubject* p_subject)
+void ModelNotificationCatcher::Update(cx::model::ModelNotificationContext p_context, cx::model::ModelSubject* p_subject)
 {
     ASSERT_TRUE(p_subject);
 

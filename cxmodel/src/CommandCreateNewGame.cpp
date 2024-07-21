@@ -29,7 +29,7 @@
 #include <cxmodel/CommandCompletionStatus.h>
 #include <cxmodel/CommandCreateNewGame.h>
 
-cxmodel::CommandCreateNewGame::CommandCreateNewGame(const IConnectXLimits& p_modelAsLimits,
+cx::model::CommandCreateNewGame::CommandCreateNewGame(const IConnectXLimits& p_modelAsLimits,
                                                     std::unique_ptr<IBoard>& p_board,
                                                     std::vector<std::shared_ptr<IPlayer>>& p_players,
                                                     size_t& p_inARowValue,
@@ -43,7 +43,7 @@ cxmodel::CommandCreateNewGame::CommandCreateNewGame(const IConnectXLimits& p_mod
     INVARIANT(m_newGameInformation.m_players.size() >= 2);
 }
 
-cxmodel::CommandCompletionStatus cxmodel::CommandCreateNewGame::Execute()
+cx::model::CommandCompletionStatus cx::model::CommandCreateNewGame::Execute()
 {
     IF_PRECONDITION_NOT_MET_DO(m_newGameInformation.m_players.size() >= 2, return CommandCompletionStatus::FAILED_UNEXPECTED;);
 
@@ -51,7 +51,7 @@ cxmodel::CommandCompletionStatus cxmodel::CommandCreateNewGame::Execute()
     m_modelPlayers = std::move(m_newGameInformation.m_players);
 
     // Board:
-    m_board = std::make_unique<cxmodel::Board>(m_newGameInformation.m_gridHeight, m_newGameInformation.m_gridWidth, m_modelAsLimits);
+    m_board = std::make_unique<cx::model::Board>(m_newGameInformation.m_gridHeight, m_newGameInformation.m_gridWidth, m_modelAsLimits);
 
     // In-a-row value:
     m_inARowValue = m_newGameInformation.m_inARowValue;
@@ -59,7 +59,7 @@ cxmodel::CommandCompletionStatus cxmodel::CommandCreateNewGame::Execute()
     return CommandCompletionStatus::SUCCESS;
 }
 
-void cxmodel::CommandCreateNewGame::Undo()
+void cx::model::CommandCreateNewGame::Undo()
 {
     ASSERT_ERROR_MSG("Not implemented. Should not be called.");
 }

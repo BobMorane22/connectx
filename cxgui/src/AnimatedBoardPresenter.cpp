@@ -31,19 +31,19 @@ cx::gui::AnimatedBoardPresenter::AnimatedBoardPresenter(const IGameViewPresenter
 
 void cx::gui::AnimatedBoardPresenter::Sync()
 {
-    m_cache.m_boardHeight = cxmodel::Height{m_gameVewPresenter.GetGameViewBoardHeight()};
-    m_cache.m_boardWidth = cxmodel::Width{m_gameVewPresenter.GetGameViewBoardWidth()};
+    m_cache.m_boardHeight = cx::model::Height{m_gameVewPresenter.GetGameViewBoardHeight()};
+    m_cache.m_boardWidth = cx::model::Width{m_gameVewPresenter.GetGameViewBoardWidth()};
     m_cache.m_activePlayerChipColor = m_gameVewPresenter.GetGameViewActivePlayerChipColor();
     m_cache.m_boardColors = m_gameVewPresenter.GetGameViewChipColors();
-    m_cache.m_botTarget = cxmodel::Column{m_gameVewPresenter.GetBotTarget()};
+    m_cache.m_botTarget = cx::model::Column{m_gameVewPresenter.GetBotTarget()};
 }
 
-cxmodel::Height cx::gui::AnimatedBoardPresenter::GetBoardHeight() const
+cx::model::Height cx::gui::AnimatedBoardPresenter::GetBoardHeight() const
 {
     return m_cache.m_boardHeight;
 }
 
-cxmodel::Width cx::gui::AnimatedBoardPresenter::GetBoardWidth() const
+cx::model::Width cx::gui::AnimatedBoardPresenter::GetBoardWidth() const
 {
     return m_cache.m_boardWidth;
 }
@@ -58,7 +58,7 @@ cx::gui::Color cx::gui::AnimatedBoardPresenter::GetGameViewColumnHighlightColor(
     return m_gameVewPresenter.GetGameViewColumnHighlightColor();
 }
 
-cxmodel::ChipColor cx::gui::AnimatedBoardPresenter::GetActivePlayerChipColor() const
+cx::model::ChipColor cx::gui::AnimatedBoardPresenter::GetActivePlayerChipColor() const
 {
     return m_cache.m_activePlayerChipColor;
 }
@@ -68,7 +68,7 @@ const cx::gui::IGameViewPresenter::ChipColors& cx::gui::AnimatedBoardPresenter::
     return m_cache.m_boardColors;
 }
 
-cxmodel::Column cx::gui::AnimatedBoardPresenter::GetBotTarget() const
+cx::model::Column cx::gui::AnimatedBoardPresenter::GetBotTarget() const
 {
     return m_cache.m_botTarget;
 }

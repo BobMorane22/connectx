@@ -29,7 +29,7 @@
 #include <cxmodel/Status.h>
 #include <cxgui/IView.h>
 
-namespace cxmodel
+namespace cx::model
 {
     class NewGameInformation;
 }
@@ -84,13 +84,13 @@ public:
        INewGameViewController& p_controller,
        IWindow& p_parentWindow,
        cx::gui::ILayout& p_mainLayout,
-       const cxmodel::Column& p_viewLeft,
-       const cxmodel::Row& p_viewTop);
+       const cx::model::Column& p_viewLeft,
+       const cx::model::Row& p_viewTop);
 
     // cx::gui::IView:
     void Activate() override;
     void DeActivate() override;
-    void Update(cxmodel::ModelNotificationContext p_context) override;
+    void Update(cx::model::ModelNotificationContext p_context) override;
 
     // IWidget:
     [[nodiscard]] size_t GetWidth() const override;
@@ -111,7 +111,7 @@ private:
     void OnRemovePlayer();
     void OnNewGameParameterUpdated();
 
-    [[nodiscard]] cxmodel::Status ExtractGameInformation(cxmodel::NewGameInformation& p_gameInformation) const;
+    [[nodiscard]] cx::model::Status ExtractGameInformation(cx::model::NewGameInformation& p_gameInformation) const;
 
 private:
 
@@ -124,8 +124,8 @@ private:
 
     cx::gui::ILayout& m_mainLayout;
 
-    const cxmodel::Column m_viewLeft;
-    const cxmodel::Row m_viewTop;
+    const cx::model::Column m_viewLeft;
+    const cx::model::Row m_viewTop;
 
     std::unique_ptr<ILayout> m_viewLayout;
 

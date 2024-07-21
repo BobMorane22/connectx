@@ -30,11 +30,11 @@ CommandAddTwoMock::CommandAddTwoMock(double& p_data)
 {
 }
 
-cxmodel::CommandCompletionStatus CommandAddTwoMock::Execute()
+cx::model::CommandCompletionStatus CommandAddTwoMock::Execute()
 {
     m_data += 2.0;
 
-    return cxmodel::CommandCompletionStatus::SUCCESS;
+    return cx::model::CommandCompletionStatus::SUCCESS;
 }
 
 void CommandAddTwoMock::Undo()

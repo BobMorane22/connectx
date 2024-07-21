@@ -28,7 +28,7 @@
 
 #include <cxcmn/StrongType.h>
 
-namespace cxmodel
+namespace cx::model
 {
 
 /** Represents a row in the game board. */
@@ -59,6 +59,6 @@ using Width = cx::cmn::StrongType<size_t, struct BoardWidthTag,
                                 cx::cmn::Addable
 >;
 
-} // namespace cxmodel
+} // namespace cx::model
 
 #endif // COMMON_H_EEBB0E3B_68E6_4C58_9FA4_E3D2897F7734

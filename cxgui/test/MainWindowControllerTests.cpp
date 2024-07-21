@@ -27,12 +27,12 @@ TEST_F(MainWindowControllerTestFixture, /*DISABLED_*/OnStart_ValidGame_CreateNew
 {
     ASSERT_FALSE(GetNewGameCreated());
 
-    cxmodel::NewGameInformation newGameInformation;
+    cx::model::NewGameInformation newGameInformation;
     newGameInformation.m_inARowValue = 4;
     newGameInformation.m_gridWidth = 7;
     newGameInformation.m_gridHeight = 6;
-    newGameInformation.m_players.push_back(cxmodel::CreatePlayer("John Doe", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN));
-    newGameInformation.m_players.push_back(cxmodel::CreatePlayer("Jane Doe", cxmodel::MakeBlue(), cxmodel::PlayerType::HUMAN));
+    newGameInformation.m_players.push_back(cx::model::CreatePlayer("John Doe", cx::model::MakeRed(), cx::model::PlayerType::HUMAN));
+    newGameInformation.m_players.push_back(cx::model::CreatePlayer("Jane Doe", cx::model::MakeBlue(), cx::model::PlayerType::HUMAN));
 
     GetController().OnStart(std::move(newGameInformation));
 
@@ -43,7 +43,7 @@ TEST_F(MainWindowControllerTestFixture, /*DISABLED_*/OnDown_ValidChip_ChipDroppe
 {
     ASSERT_FALSE(GetChipDropped());
 
-    GetController().OnDown(cxmodel::MakeBlue(), 0u);
+    GetController().OnDown(cx::model::MakeBlue(), 0u);
 
     ASSERT_TRUE(GetChipDropped());
 }

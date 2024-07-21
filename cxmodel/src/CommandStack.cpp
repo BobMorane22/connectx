@@ -27,7 +27,7 @@
 #include <cxmodel/CommandCompletionStatus.h>
 #include <cxmodel/CommandStack.h>
 
-cxmodel::CommandStack::CommandStack(const size_t p_capacity)
+cx::model::CommandStack::CommandStack(const size_t p_capacity)
  : m_endPosition{p_capacity - 1}
  , m_currentPosition{0}
  , m_allCmdUndoed{false}
@@ -41,7 +41,7 @@ cxmodel::CommandStack::CommandStack(const size_t p_capacity)
     CheckInvariants();
 }
 
-cxmodel::CommandCompletionStatus cxmodel::CommandStack::Execute(std::unique_ptr<cxmodel::ICommand>&& p_newCommand)
+cx::model::CommandCompletionStatus cx::model::CommandStack::Execute(std::unique_ptr<cx::model::ICommand>&& p_newCommand)
 {
     IF_PRECONDITION_NOT_MET_DO(p_newCommand, return CommandCompletionStatus::FAILED_UNEXPECTED;);
 
@@ -95,7 +95,7 @@ cxmodel::CommandCompletionStatus cxmodel::CommandStack::Execute(std::unique_ptr<
     return CommandCompletionStatus::SUCCESS;
 }
 
-void cxmodel::CommandStack::Clear()
+void cx::model::CommandStack::Clear()
 {
     m_commands.clear();
     m_currentPosition = 0;
@@ -106,7 +106,7 @@ void cxmodel::CommandStack::Clear()
     CheckInvariants();
 }
 
-void cxmodel::CommandStack::Undo()
+void cx::model::CommandStack::Undo()
 {
     if(m_commands.empty())
     {
@@ -127,7 +127,7 @@ void cxmodel::CommandStack::Undo()
     CheckInvariants();
 }
 
-void cxmodel::CommandStack::Redo()
+void cx::model::CommandStack::Redo()
 {
     if(m_commands.empty())
     {
@@ -148,47 +148,47 @@ void cxmodel::CommandStack::Redo()
     CheckInvariants();
 }
 
-bool cxmodel::CommandStack::CanUndo() const
+bool cx::model::CommandStack::CanUndo() const
 {
     return !IsEmpty() && m_currentPosition > 0;
 }
 
-bool cxmodel::CommandStack::CanRedo() const
+bool cx::model::CommandStack::CanRedo() const
 {
     return !IsEmpty() && m_currentPosition < GetLastCommandPosition() + 1;
 }
 
-bool cxmodel::CommandStack::IsEmpty() const
+bool cx::model::CommandStack::IsEmpty() const
 {
     return m_commands.empty();
 }
 
-bool cxmodel::CommandStack::IsFull() const
+bool cx::model::CommandStack::IsFull() const
 {
     return m_endPosition == GetLastCommandPosition();
 }
 
-size_t cxmodel::CommandStack::GetNbCommands() const
+size_t cx::model::CommandStack::GetNbCommands() const
 {
     return m_commands.size();
 }
 
-size_t cxmodel::CommandStack::GetLastCommandPosition() const
+size_t cx::model::CommandStack::GetLastCommandPosition() const
 {
     return m_commands.size() - 1;
 }
 
-bool cxmodel::CommandStack::NoCommandUndoed() const
+bool cx::model::CommandStack::NoCommandUndoed() const
 {
     return m_currentPosition == m_commands.size();
 }
 
-bool cxmodel::CommandStack::SomeCommandUndoed() const
+bool cx::model::CommandStack::SomeCommandUndoed() const
 {
     return m_currentPosition < m_commands.size();
 }
 
-void cxmodel::CommandStack::CheckInvariants()
+void cx::model::CommandStack::CheckInvariants()
 {
     INVARIANT(m_endPosition > 1);
 }

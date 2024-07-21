@@ -26,15 +26,15 @@
 
 #include <cxmodel/ICommand.h>
 
-class CommandTimesThreeMock : public cxmodel::ICommand
+class CommandTimesThreeMock : public cx::model::ICommand
 {
 
 public:
 
     CommandTimesThreeMock(double& p_data);
 
-    // cxmodel::ICommand:
-    [[nodiscard]] cxmodel::CommandCompletionStatus Execute() override;
+    // cx::model::ICommand:
+    [[nodiscard]] cx::model::CommandCompletionStatus Execute() override;
     void Undo() override;
 
 

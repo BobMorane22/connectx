@@ -26,7 +26,7 @@
 
 #include <cxmodel/ModelNotificationContext.h>
 
-class ConcreteObserverMock : public cxmodel::IModelObserver
+class ConcreteObserverMock : public cx::model::IModelObserver
 {
 
 public:
@@ -35,7 +35,7 @@ public:
 
     int GetData() const;
 
-    void Update(cxmodel::ModelNotificationContext p_context, cxmodel::ModelSubject* p_subject) override;
+    void Update(cx::model::ModelNotificationContext p_context, cx::model::ModelSubject* p_subject) override;
 
 private:
 

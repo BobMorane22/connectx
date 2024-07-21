@@ -26,7 +26,7 @@
 
 #include "NewGameInformation.h"
 
-namespace cxmodel
+namespace cx::model
 {
 
 /*********************************************************************************************//**
@@ -64,7 +64,7 @@ public:
      *      The column in which to drop the chip.
      *
      ********************************************************************************************/
-    virtual void DropChip(const cxmodel::IChip& p_chip, size_t p_column) = 0;
+    virtual void DropChip(const cx::model::IChip& p_chip, size_t p_column) = 0;
 
     /******************************************************************************************//**
      * @brief Moves the chip left one position.
@@ -99,6 +99,6 @@ public:
 
 };
 
-} // namespace cxmodel
+} // namespace cx::model
 
 #endif // ICONNECTXGAMEACTIONS_H_49B2D12C_4951_4989_AFE9_870A3940ED8F

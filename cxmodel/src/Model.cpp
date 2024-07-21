@@ -55,23 +55,23 @@ constexpr size_t IN_A_ROW_MAX = 8u;
 constexpr size_t NUMBER_OF_PLAYERS_MIN = 2u;
 constexpr size_t NUMBER_OF_PLAYERS_MAX = 10u;
 
-const cxmodel::Disc NO_DISC{cxmodel::MakeTransparent()};
+const cx::model::Disc NO_DISC{cx::model::MakeTransparent()};
 
-const cxmodel::IPlayer& GetDefaultActivePlayer()
+const cx::model::IPlayer& GetDefaultActivePlayer()
 {
-    static auto player = CreatePlayer("Woops (active)!", {0, 0, 0, 0}, cxmodel::PlayerType::HUMAN);
+    static auto player = CreatePlayer("Woops (active)!", {0, 0, 0, 0}, cx::model::PlayerType::HUMAN);
     return *player;
 }
 
-const cxmodel::IPlayer& GetDefaultNextPlayer()
+const cx::model::IPlayer& GetDefaultNextPlayer()
 {
-    static auto player = CreatePlayer("Woops (next)!", {0, 0, 0, 0}, cxmodel::PlayerType::HUMAN);
+    static auto player = CreatePlayer("Woops (next)!", {0, 0, 0, 0}, cx::model::PlayerType::HUMAN);
     return *player;
 }
 
 } // namespace
 
-cxmodel::Model::Model(std::unique_ptr<ICommandStack>&& p_cmdStack, cx::log::ILogger& p_logger)
+cx::model::Model::Model(std::unique_ptr<ICommandStack>&& p_cmdStack, cx::log::ILogger& p_logger)
  : m_logger{p_logger}
  , m_cmdStack{std::move(p_cmdStack)}
  , m_currentDropCommands{nullptr}
@@ -88,12 +88,12 @@ cxmodel::Model::Model(std::unique_ptr<ICommandStack>&& p_cmdStack, cx::log::ILog
     CheckInvariants();
 }
 
-cxmodel::Model::~Model()
+cx::model::Model::~Model()
 {
     DetatchAll();
 }
 
-void cxmodel::Model::Update(cxmodel::ModelNotificationContext p_context, cxmodel::ModelSubject* p_subject)
+void cx::model::Model::Update(cx::model::ModelNotificationContext p_context, cx::model::ModelSubject* p_subject)
 {
     if(INL_ASSERT(p_subject))
     {
@@ -101,61 +101,61 @@ void cxmodel::Model::Update(cxmodel::ModelNotificationContext p_context, cxmodel
     }
 }
 
-std::string cxmodel::Model::GetName() const
+std::string cx::model::Model::GetName() const
 {
     return std::string{NAME};
 }
 
-std::string cxmodel::Model::GetVersionNumber() const
+std::string cx::model::Model::GetVersionNumber() const
 {
     std::stringstream stream;
 
-    stream << "v" << cxmodel::GetVersionMajor() << "." << cxmodel::GetVersionMinor();
+    stream << "v" << cx::model::GetVersionMajor() << "." << cx::model::GetVersionMinor();
 
     return stream.str();
 }
 
-size_t cxmodel::Model::GetMinimumGridHeight() const
+size_t cx::model::Model::GetMinimumGridHeight() const
 {
     return GRID_MIN_HEIGHT;
 }
 
-size_t cxmodel::Model::GetMinimumGridWidth() const
+size_t cx::model::Model::GetMinimumGridWidth() const
 {
     return GRID_MIN_WIDTH;
 }
 
-size_t cxmodel::Model::GetMinimumInARowValue() const
+size_t cx::model::Model::GetMinimumInARowValue() const
 {
     return IN_A_ROW_MIN;
 }
 
-size_t cxmodel::Model::GetMaximumGridHeight() const
+size_t cx::model::Model::GetMaximumGridHeight() const
 {
     return GRID_MAX_HEIGHT;
 }
 
-size_t cxmodel::Model::GetMaximumGridWidth() const
+size_t cx::model::Model::GetMaximumGridWidth() const
 {
     return GRID_MAX_WIDTH;
 }
 
-size_t cxmodel::Model::GetMaximumInARowValue() const
+size_t cx::model::Model::GetMaximumInARowValue() const
 {
     return IN_A_ROW_MAX;
 }
 
-size_t cxmodel::Model::GetMinimumNumberOfPlayers() const
+size_t cx::model::Model::GetMinimumNumberOfPlayers() const
 {
     return NUMBER_OF_PLAYERS_MIN;
 }
 
-size_t cxmodel::Model::GetMaximumNumberOfPlayers() const
+size_t cx::model::Model::GetMaximumNumberOfPlayers() const
 {
     return NUMBER_OF_PLAYERS_MAX;
 }
 
-void cxmodel::Model::CreateNewGame(NewGameInformation p_gameInformation)
+void cx::model::Model::CreateNewGame(NewGameInformation p_gameInformation)
 {
     PRECONDITION(p_gameInformation.m_gridWidth > 0);
     PRECONDITION(p_gameInformation.m_gridHeight > 0);
@@ -164,7 +164,7 @@ void cxmodel::Model::CreateNewGame(NewGameInformation p_gameInformation)
 
     //PRECONDITION(std::all_of(p_gameInformation.GetNewPlayers().cbegin(),
     //                         p_gameInformation.GetNewPlayers().cend(),
-    //                         [](const cxmodel::Player& p_player)
+    //                         [](const cx::model::Player& p_player)
     //                         {
     //                            return !p_player.GetName().empty();
     //                         }));
@@ -199,7 +199,7 @@ void cxmodel::Model::CreateNewGame(NewGameInformation p_gameInformation)
     CheckInvariants();
 }
 
-void cxmodel::Model::DropChip(const cxmodel::IChip& p_chip, size_t p_column)
+void cx::model::Model::DropChip(const cx::model::IChip& p_chip, size_t p_column)
 {
     IF_PRECONDITION_NOT_MET_DO(m_board, return;);
     IF_PRECONDITION_NOT_MET_DO(p_column < m_board->GetNbColumns(), return;);
@@ -211,7 +211,7 @@ void cxmodel::Model::DropChip(const cxmodel::IChip& p_chip, size_t p_column)
     // We create the command and execute the drop:
     auto command = std::make_unique<CommandDropChip>(*m_board,
                                                      m_playersInfo,
-                                                     std::make_unique<cxmodel::Disc>(p_chip.GetColor()),
+                                                     std::make_unique<cx::model::Disc>(p_chip.GetColor()),
                                                      p_column,
                                                      m_takenPositions,
                                                      m_logger);
@@ -292,7 +292,7 @@ void cxmodel::Model::DropChip(const cxmodel::IChip& p_chip, size_t p_column)
     CheckInvariants();
 }
 
-void cxmodel::Model::MoveLeftOneColumn()
+void cx::model::Model::MoveLeftOneColumn()
 {
     Notify(ModelNotificationContext::CHIP_MOVED_LEFT_ONE_COLUMN);
 
@@ -301,7 +301,7 @@ void cxmodel::Model::MoveLeftOneColumn()
     CheckInvariants();
 }
 
-void cxmodel::Model::MoveRightOneColumn()
+void cx::model::Model::MoveRightOneColumn()
 {
     Notify(ModelNotificationContext::CHIP_MOVED_RIGHT_ONE_COLUMN);
 
@@ -310,7 +310,7 @@ void cxmodel::Model::MoveRightOneColumn()
     CheckInvariants();
 }
 
-void cxmodel::Model::EndCurrentGame()
+void cx::model::Model::EndCurrentGame()
 {
     // Clear the command stack:
     IF_CONDITION_NOT_MET_DO(m_cmdStack, return;);
@@ -334,7 +334,7 @@ void cxmodel::Model::EndCurrentGame()
     Log(cx::log::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__, "Game ended.");
 }
 
-void cxmodel::Model::ReinitializeCurrentGame()
+void cx::model::Model::ReinitializeCurrentGame()
 {
     // Clear the command stack:
     IF_CONDITION_NOT_MET_DO(m_cmdStack, return;);
@@ -370,40 +370,40 @@ void cxmodel::Model::ReinitializeCurrentGame()
     Log(cx::log::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__, "Game reinitialized.");
 }
 
-size_t cxmodel::Model::GetCurrentGridHeight() const
+size_t cx::model::Model::GetCurrentGridHeight() const
 {
     IF_CONDITION_NOT_MET_DO(m_board, return 0u;);
 
     return m_board->GetNbRows();
 }
 
-size_t cxmodel::Model::GetCurrentGridWidth() const
+size_t cx::model::Model::GetCurrentGridWidth() const
 {
     IF_CONDITION_NOT_MET_DO(m_board, return 0u;);
 
     return m_board->GetNbColumns();
 }
 
-size_t cxmodel::Model::GetCurrentInARowValue() const
+size_t cx::model::Model::GetCurrentInARowValue() const
 {
     return m_inARowValue;
 }
 
-const cxmodel::IPlayer& cxmodel::Model::GetActivePlayer() const
+const cx::model::IPlayer& cx::model::Model::GetActivePlayer() const
 {
     IF_CONDITION_NOT_MET_DO(m_playersInfo.m_players.size() >= 2, return GetDefaultActivePlayer(););
 
     return *m_playersInfo.m_players[m_playersInfo.m_activePlayerIndex];
 }
 
-const cxmodel::IPlayer& cxmodel::Model::GetNextPlayer() const
+const cx::model::IPlayer& cx::model::Model::GetNextPlayer() const
 {
     IF_CONDITION_NOT_MET_DO(m_playersInfo.m_players.size() >= 2, return GetDefaultNextPlayer(););
 
     return *m_playersInfo.m_players[m_playersInfo.m_nextPlayerIndex];
 }
 
-const cxmodel::IChip& cxmodel::Model::GetChip(size_t p_row, size_t p_column) const
+const cx::model::IChip& cx::model::Model::GetChip(size_t p_row, size_t p_column) const
 {
     if(p_row >= GetCurrentGridHeight() || p_column >= GetCurrentGridWidth())
     {
@@ -415,14 +415,14 @@ const cxmodel::IChip& cxmodel::Model::GetChip(size_t p_row, size_t p_column) con
     return m_board->GetChip({p_row, p_column});
 }
 
-bool cxmodel::Model::IsWon() const
+bool cx::model::Model::IsWon() const
 {
     IF_CONDITION_NOT_MET_DO(m_winResolutionStrategy, return false;);
 
     return m_winResolutionStrategy->Handle(GetActivePlayer());
 }
 
-bool cxmodel::Model::IsTie() const
+bool cx::model::Model::IsTie() const
 {
     IF_CONDITION_NOT_MET_DO(m_board, return false;);
     IF_CONDITION_NOT_MET_DO(m_tieResolutionStrategy, return false;);
@@ -430,7 +430,7 @@ bool cxmodel::Model::IsTie() const
     return m_tieResolutionStrategy->Handle(GetActivePlayer());
 }
 
-void cxmodel::Model::Undo()
+void cx::model::Model::Undo()
 {
     IF_CONDITION_NOT_MET_DO(m_cmdStack, return;);
 
@@ -441,7 +441,7 @@ void cxmodel::Model::Undo()
     CheckInvariants();
 }
 
-void cxmodel::Model::Redo()
+void cx::model::Model::Redo()
 {
     IF_CONDITION_NOT_MET_DO(m_cmdStack, return;);
 
@@ -452,40 +452,40 @@ void cxmodel::Model::Redo()
     CheckInvariants();
 }
 
-bool cxmodel::Model::CanUndo() const
+bool cx::model::Model::CanUndo() const
 {
     IF_CONDITION_NOT_MET_DO(m_cmdStack, return false;);
 
     return m_cmdStack->CanUndo();
 }
 
-bool cxmodel::Model::CanRedo() const
+bool cx::model::Model::CanRedo() const
 {
     IF_CONDITION_NOT_MET_DO(m_cmdStack, return false;);
 
     return m_cmdStack->CanRedo();
 }
 
-void cxmodel::Model::Log(const cx::log::VerbosityLevel p_verbosityLevel, const std::string& p_fileName, const std::string& p_functionName, const size_t p_lineNumber, const std::string& p_message)
+void cx::model::Model::Log(const cx::log::VerbosityLevel p_verbosityLevel, const std::string& p_fileName, const std::string& p_functionName, const size_t p_lineNumber, const std::string& p_message)
 {
     m_logger.Log(p_verbosityLevel, p_fileName, p_functionName, p_lineNumber, p_message);
 
     CheckInvariants();
 }
 
-void cxmodel::Model::SetVerbosityLevel(const cx::log::VerbosityLevel p_verbosityLevel)
+void cx::model::Model::SetVerbosityLevel(const cx::log::VerbosityLevel p_verbosityLevel)
 {
     m_logger.SetVerbosityLevel(p_verbosityLevel);
 
     CheckInvariants();
 }
 
-cx::log::VerbosityLevel cxmodel::Model::GetVerbosityLevel() const
+cx::log::VerbosityLevel cx::model::Model::GetVerbosityLevel() const
 {
     return m_logger.GetVerbosityLevel();
 }
 
-void cxmodel::Model::ComputeNextDropColumn(DropColumnComputation p_algorithm)
+void cx::model::Model::ComputeNextDropColumn(DropColumnComputation p_algorithm)
 {
     auto strategy = NextDropColumnComputationStrategyCreate(p_algorithm);
     IF_CONDITION_NOT_MET_DO(strategy, return;);
@@ -495,12 +495,12 @@ void cxmodel::Model::ComputeNextDropColumn(DropColumnComputation p_algorithm)
     CheckInvariants();
 }
 
-size_t cxmodel::Model::GetCurrentBotTarget() const
+size_t cx::model::Model::GetCurrentBotTarget() const
 {
     return m_botTarget;
 }
 
-void cxmodel::Model::CheckInvariants()
+void cx::model::Model::CheckInvariants()
 {
     INVARIANT(m_cmdStack);
 

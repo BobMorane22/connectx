@@ -25,31 +25,31 @@
 #include <cxmodel/CommandCompletionStatus.h>
 #include <cxmodel/CompositeCommand.h>
 
-void cxmodel::CompositeCommand::Add(std::unique_ptr<cxmodel::ICommand> p_child)
+void cx::model::CompositeCommand::Add(std::unique_ptr<cx::model::ICommand> p_child)
 {
     IF_PRECONDITION_NOT_MET_DO(p_child, return;);
 
     m_children.push_back(std::move(p_child));
 }
 
-cxmodel::CommandCompletionStatus cxmodel::CompositeCommand::Execute()
+cx::model::CommandCompletionStatus cx::model::CompositeCommand::Execute()
 {
     for(auto& child : m_children)
     {
         IF_CONDITION_NOT_MET_DO(child, continue;);
         const auto executionResult = child->Execute();
 
-        if(executionResult != cxmodel::CommandCompletionStatus::SUCCESS)
+        if(executionResult != cx::model::CommandCompletionStatus::SUCCESS)
         {
-            ASSERT(executionResult != cxmodel::CommandCompletionStatus::FAILED_UNEXPECTED);
+            ASSERT(executionResult != cx::model::CommandCompletionStatus::FAILED_UNEXPECTED);
             return executionResult;
         }
     }
 
-    return cxmodel::CommandCompletionStatus::SUCCESS;
+    return cx::model::CommandCompletionStatus::SUCCESS;
 }
 
-void cxmodel::CompositeCommand::Undo()
+void cx::model::CompositeCommand::Undo()
 {
     for(auto childIterator = m_children.rbegin(); childIterator != m_children.rend(); ++childIterator)
     {

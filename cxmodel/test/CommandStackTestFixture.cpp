@@ -27,13 +27,13 @@
 
 CommandStackTestFixture::CommandStackTestFixture()
  : m_STACK_SIZE{200}
- , m_stack{std::make_unique<cxmodel::CommandStack>(m_STACK_SIZE)}
+ , m_stack{std::make_unique<cx::model::CommandStack>(m_STACK_SIZE)}
 {
     EXPECT_TRUE(m_stack);
     EXPECT_TRUE(m_stack->IsEmpty());
 }
 
-cxmodel::ICommandStack* CommandStackTestFixture::GetCommandStack()
+cx::model::ICommandStack* CommandStackTestFixture::GetCommandStack()
 {
     EXPECT_TRUE(m_stack);
 

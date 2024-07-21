@@ -41,7 +41,7 @@ namespace cx::gui
  * Extracts a user input string (e.g. from an edit box) into an unsigned long, if possible.
  *
  ********************************************************************************************/
-cxmodel::Status extractRawUserInput(const std::string& p_raw, unsigned long& p_extracted);
+cx::model::Status extractRawUserInput(const std::string& p_raw, unsigned long& p_extracted);
 
 } // namespace cx::gui
 

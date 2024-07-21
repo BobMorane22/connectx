@@ -27,7 +27,7 @@
 #include "IObserver.h"
 #include "Subject.h"
 
-namespace cxmodel
+namespace cx::model
 {
 
 /**********************************************************************************************//**
@@ -89,6 +89,6 @@ using IModelObserver = IObserver<ModelNotificationContext>;
  *************************************************************************************************/
 using ModelSubject = Subject<ModelNotificationContext>;
 
-} // namespace cxmodel
+} // namespace cx::model
 
 #endif // NOTIFICATIONCONTEXT_H_3B763656_2127_4F2A_B522_85ECBA656CB8

@@ -41,12 +41,12 @@ public:
     AboutWindowPresenterTestFixture();
 
     cx::gui::IAboutWindowPresenter& GetPresenter();
-    cxmodel::IVersioning& GetModel();
+    cx::model::IVersioning& GetModel();
 
 private:
 
-    class AboutWindowPresenterModelMock : public cxmodel::ModelSubject,
-                                          public cxmodel::IVersioning
+    class AboutWindowPresenterModelMock : public cx::model::ModelSubject,
+                                          public cx::model::IVersioning
     {
 
     public:

@@ -23,12 +23,12 @@
 
 #include <cxmodel/IBoard.h>
 
-bool cxmodel::operator==(const cxmodel::IBoard::Position& p_lhs, const cxmodel::IBoard::Position& p_rhs)
+bool cx::model::operator==(const cx::model::IBoard::Position& p_lhs, const cx::model::IBoard::Position& p_rhs)
 {
     return (p_lhs.m_row == p_rhs.m_row) && (p_lhs.m_column == p_rhs.m_column);
 }
 
-bool cxmodel::operator!=(const cxmodel::IBoard::Position& p_lhs, const cxmodel::IBoard::Position& p_rhs)
+bool cx::model::operator!=(const cx::model::IBoard::Position& p_lhs, const cx::model::IBoard::Position& p_rhs)
 {
     return !(p_lhs == p_rhs);
 }

@@ -32,7 +32,7 @@
 namespace
 {
 
-class ModelMock final : public cxmodel::IConnectXGameInformation
+class ModelMock final : public cx::model::IConnectXGameInformation
 {
 
 public:
@@ -40,9 +40,9 @@ public:
     size_t GetCurrentGridHeight() const override {return 6u;}
     size_t GetCurrentGridWidth() const override {return 7u;}
     size_t GetCurrentInARowValue() const override {return 4u;}
-    const cxmodel::IPlayer& GetActivePlayer() const override {return *m_player;}
-    const cxmodel::IPlayer& GetNextPlayer() const override {return *m_player;}
-    const cxmodel::IChip& GetChip(size_t p_row, size_t p_column) const override
+    const cx::model::IPlayer& GetActivePlayer() const override {return *m_player;}
+    const cx::model::IPlayer& GetNextPlayer() const override {return *m_player;}
+    const cx::model::IChip& GetChip(size_t p_row, size_t p_column) const override
     {
         (void)p_row;
         (void)p_column;
@@ -55,7 +55,7 @@ public:
 
 private:
 
-    const std::unique_ptr<cxmodel::IPlayer> m_player = cxmodel::CreatePlayer( "Dummy", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN);
+    const std::unique_ptr<cx::model::IPlayer> m_player = cx::model::CreatePlayer( "Dummy", cx::model::MakeRed(), cx::model::PlayerType::HUMAN);
 
 };
 
@@ -65,7 +65,7 @@ TEST(GameResolutionDialogPresenterFactory, Make_WinGameResolution_WinGameResolut
 {
     ModelMock model;
 
-    auto presenter = cx::gui::GameResolutionDialogPresenterFactory::Make(model, cxmodel::GameResolution::WIN);
+    auto presenter = cx::gui::GameResolutionDialogPresenterFactory::Make(model, cx::model::GameResolution::WIN);
     ASSERT_TRUE(presenter);
 
     ASSERT_TRUE(dynamic_cast<cx::gui::WinGameResolutionDialogPresenter*>(presenter.get()));
@@ -75,7 +75,7 @@ TEST(GameResolutionDialogPresenterFactory, Make_TieGameResolution_TieGameResolut
 {
     ModelMock model;
 
-    auto presenter = cx::gui::GameResolutionDialogPresenterFactory::Make(model, cxmodel::GameResolution::TIE);
+    auto presenter = cx::gui::GameResolutionDialogPresenterFactory::Make(model, cx::model::GameResolution::TIE);
     ASSERT_TRUE(presenter);
 
     ASSERT_TRUE(dynamic_cast<cx::gui::TieGameResolutionDialogPresenter*>(presenter.get()));

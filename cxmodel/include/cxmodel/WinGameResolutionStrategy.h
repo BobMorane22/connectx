@@ -28,7 +28,7 @@
 
 #include "IGameResolutionStrategy.h"
 
-namespace cxmodel
+namespace cx::model
 {
 
 class IBoard;
@@ -36,7 +36,7 @@ class IPlayer;
 
 }
 
-namespace cxmodel
+namespace cx::model
 {
 
 /*********************************************************************************************//**
@@ -63,17 +63,17 @@ public:
      * @param p_takenPositions A list of all taken (i.e. non free) positions on the board.
      *
      ********************************************************************************************/
-    WinGameResolutionStrategy(const cxmodel::IBoard& p_board,
+    WinGameResolutionStrategy(const cx::model::IBoard& p_board,
                               const size_t p_inARowValue,
                               const std::vector<std::shared_ptr<IPlayer>>& p_players,
                               const std::vector<IBoard::Position>& p_takenPositions);
 
-    // cxmodel::IGameResolutionStrategy:
+    // cx::model::IGameResolutionStrategy:
     bool Handle(const IPlayer& p_activePlayer) const override;
 
 private:
 
-    const cxmodel::IBoard& m_board;
+    const cx::model::IBoard& m_board;
     int m_inARowValue;
     const std::vector<std::shared_ptr<IPlayer>>& m_players;
     const std::vector<IBoard::Position>& m_takenPositions;
@@ -109,6 +109,6 @@ private:
 
 };
 
-} // namespace cxmodel
+} // namespace cx::model
 
 #endif // WINGAMERESOLUTIONSTRATEGY_H_FADB6ACE_7D59_43BD_BC28_E9D29C1FD5B4

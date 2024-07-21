@@ -57,8 +57,8 @@ cx::gui::Gtkmm3GameView::Gtkmm3GameView(
     IGameViewController& p_controller,
     IWindow& p_parentWindow,
     cx::gui::ILayout& p_mainLayout,
-    const cxmodel::Column& p_viewLeft,
-    const cxmodel::Row& p_viewTop)
+    const cx::model::Column& p_viewLeft,
+    const cx::model::Row& p_viewTop)
 : m_widgetsFactories{p_widgetsFactories}
 , m_presenter{p_presenter}
 , m_controller{p_controller}
@@ -72,8 +72,8 @@ cx::gui::Gtkmm3GameView::Gtkmm3GameView(
 
     m_board = connectXWidgetsFactory.CreateGameBoard(m_presenter, NUMBER_CHIPS_MOVED_PER_SECOND);
 
-    m_activePlayerChip = connectXWidgetsFactory.CreateChip(cxmodel::MakeTransparent(), cxmodel::MakeTransparent(), cx::gui::DEFAULT_CHIP_SIZE / 4);
-    m_nextPlayerChip = connectXWidgetsFactory.CreateChip(cxmodel::MakeTransparent(), cxmodel::MakeTransparent(), cx::gui::DEFAULT_CHIP_SIZE / 4);
+    m_activePlayerChip = connectXWidgetsFactory.CreateChip(cx::model::MakeTransparent(), cx::model::MakeTransparent(), cx::gui::DEFAULT_CHIP_SIZE / 4);
+    m_nextPlayerChip = connectXWidgetsFactory.CreateChip(cx::model::MakeTransparent(), cx::model::MakeTransparent(), cx::gui::DEFAULT_CHIP_SIZE / 4);
 
     m_viewLayout = standardWidgetsFactory.CreateLayout();
     m_playersInfoLayout = standardWidgetsFactory.CreateLayout();
@@ -151,47 +151,47 @@ void cx::gui::Gtkmm3GameView::DeActivate()
     DisableKeyHandlers();
 }
 
-void cx::gui::Gtkmm3GameView::Update(cxmodel::ModelNotificationContext p_context)
+void cx::gui::Gtkmm3GameView::Update(cx::model::ModelNotificationContext p_context)
 {
     switch(p_context)
     {
-        case cxmodel::ModelNotificationContext::CHIP_DROPPED:
+        case cx::model::ModelNotificationContext::CHIP_DROPPED:
         {
             UpdateChipDropped();
             break;
         }
-        case cxmodel::ModelNotificationContext::CHIP_DROPPED_FAILED:
+        case cx::model::ModelNotificationContext::CHIP_DROPPED_FAILED:
         {
             UpdateChipDroppedFailed();
             break;
         }
-        case cxmodel::ModelNotificationContext::CHIP_MOVED_LEFT_ONE_COLUMN:
+        case cx::model::ModelNotificationContext::CHIP_MOVED_LEFT_ONE_COLUMN:
         {
             UpdateChipMovedLeftOneColumn();
             break;
         }
-        case cxmodel::ModelNotificationContext::CHIP_MOVED_RIGHT_ONE_COLUMN:
+        case cx::model::ModelNotificationContext::CHIP_MOVED_RIGHT_ONE_COLUMN:
         {
             UpdateChipMovedRightOneColumn();
             break;
         }
-        case cxmodel::ModelNotificationContext::GAME_WON:
-        case cxmodel::ModelNotificationContext::GAME_TIED:
+        case cx::model::ModelNotificationContext::GAME_WON:
+        case cx::model::ModelNotificationContext::GAME_TIED:
         {
             UpdateGameResolved();
             break;
         }
-        case cxmodel::ModelNotificationContext::GAME_REINITIALIZED:
+        case cx::model::ModelNotificationContext::GAME_REINITIALIZED:
         {
             UpdateGameReinitialized();
             break;
         }
-        case cxmodel::ModelNotificationContext::UNDO_CHIP_DROPPED:
+        case cx::model::ModelNotificationContext::UNDO_CHIP_DROPPED:
         {
             UpdateUndoChipDropped();
             break;
         }
-        case cxmodel::ModelNotificationContext::REDO_CHIP_DROPPED:
+        case cx::model::ModelNotificationContext::REDO_CHIP_DROPPED:
         {
             UpdateRedoChipDropped();
             break;
@@ -308,14 +308,14 @@ void cx::gui::Gtkmm3GameView::SetLayout()
     IF_CONDITION_NOT_MET_DO(m_viewLayout, return;);
     IF_CONDITION_NOT_MET_DO(m_playersInfoLayout, return;);
 
-    constexpr cxmodel::Row row0{0u};
-    constexpr cxmodel::Row row1{1u};
-    constexpr cxmodel::Row row4{4u};
+    constexpr cx::model::Row row0{0u};
+    constexpr cx::model::Row row1{1u};
+    constexpr cx::model::Row row4{4u};
     constexpr ILayout::RowSpan singleRowSpan{1u};
 
-    constexpr cxmodel::Column column0{0u};
-    constexpr cxmodel::Column column1{1u};
-    constexpr cxmodel::Column column2{2u};
+    constexpr cx::model::Column column0{0u};
+    constexpr cx::model::Column column1{1u};
+    constexpr cx::model::Column column2{2u};
     constexpr ILayout::ColumnSpan singleColumnSpan{1u};
     constexpr ILayout::ColumnSpan fullSpan{2u};
 

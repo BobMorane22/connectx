@@ -22,10 +22,10 @@
  *************************************************************************************************/
 
 /**********************************************************************************************//**
- * @namespace cxmodel
+ * @namespace cx::model
  *
  * @brief The Connect X model namespace
  *
- * The `cxmodel` namespace contains the Connect X model as well as facilities related to it.
+ * The `cx::model` namespace contains the Connect X model as well as facilities related to it.
  *
  *************************************************************************************************/

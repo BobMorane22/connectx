@@ -24,12 +24,12 @@
 #ifndef IGAMERESOLUTIONSTRATEGY_H_E0ECD7E2_8D97_422F_9387_79D4DB55D3DC
 #define IGAMERESOLUTIONSTRATEGY_H_E0ECD7E2_8D97_422F_9387_79D4DB55D3DC
 
-namespace cxmodel
+namespace cx::model
 {
     class IPlayer;
 }
 
-namespace cxmodel
+namespace cx::model
 {
 
 /*********************************************************************************************//**
@@ -60,10 +60,10 @@ public:
      * @return `true` if the game is resolved, `false` if it goes on.
      *
      ********************************************************************************************/
-    virtual bool Handle(const cxmodel::IPlayer& p_activePlayer) const = 0;
+    virtual bool Handle(const cx::model::IPlayer& p_activePlayer) const = 0;
 
 };
 
-} // namespace cxmodel
+} // namespace cx::model
 
 #endif // IGAMERESOLUTIONSTRATEGY_H_E0ECD7E2_8D97_422F_9387_79D4DB55D3DC

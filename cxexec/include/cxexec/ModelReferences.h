@@ -69,13 +69,13 @@ public:
     *      AI model : access any AI based actions.
     *
     ********************************************************************************************/
-    ModelReferences(cxmodel::ModelSubject& p_asSubject,
-                    cxmodel::IConnectXGameActions& p_asGameActions,
-                    cxmodel::IConnectXGameInformation& p_asGameInformation,
-                    cxmodel::IConnectXLimits& p_asLimits,
-                    cxmodel::IVersioning& p_asVersionning,
-                    cxmodel::IUndoRedo& p_asUndoRedo,
-                    cxmodel::IConnectXAI& p_asAi)
+    ModelReferences(cx::model::ModelSubject& p_asSubject,
+                    cx::model::IConnectXGameActions& p_asGameActions,
+                    cx::model::IConnectXGameInformation& p_asGameInformation,
+                    cx::model::IConnectXLimits& p_asLimits,
+                    cx::model::IVersioning& p_asVersionning,
+                    cx::model::IUndoRedo& p_asUndoRedo,
+                    cx::model::IConnectXAI& p_asAi)
     : m_asSubject{p_asSubject}
     , m_asGameActions{p_asGameActions}
     , m_asGameInformation{p_asGameInformation}
@@ -88,25 +88,25 @@ public:
     }
 
     /** The observed part of the model. */
-    cxmodel::ModelSubject& m_asSubject;
+    cx::model::ModelSubject& m_asSubject;
 
     /** Part of the model managing user actions. */
-    cxmodel::IConnectXGameActions& m_asGameActions;
+    cx::model::IConnectXGameActions& m_asGameActions;
 
     /** Part of the model managing informations about the current game. */
-    cxmodel::IConnectXGameInformation& m_asGameInformation;
+    cx::model::IConnectXGameInformation& m_asGameInformation;
 
     /** Part of the model holding the system (global) limits. */
-    cxmodel::IConnectXLimits& m_asLimits;
+    cx::model::IConnectXLimits& m_asLimits;
 
     /** Part of the model managing versionning. */
-    cxmodel::IVersioning& m_asVersionning;
+    cx::model::IVersioning& m_asVersionning;
 
     /** Part of the model managing undos and redos. */
-    cxmodel::IUndoRedo& m_asUndoRedo;
+    cx::model::IUndoRedo& m_asUndoRedo;
 
     /** Part of the model managing the AI behind bot players. */
-    cxmodel::IConnectXAI& m_asAi;
+    cx::model::IConnectXAI& m_asAi;
 
 };
 

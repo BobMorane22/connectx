@@ -31,12 +31,12 @@ namespace
 {
 
 // Default strategy. Should never be created.
-class NoGameResolutionStrategy final : public cxmodel::IGameResolutionStrategy
+class NoGameResolutionStrategy final : public cx::model::IGameResolutionStrategy
 {
 
 public:
 
-    bool Handle(const cxmodel::IPlayer& /*p_activePlayer*/) const override   // LCOV_EXCL_LINE
+    bool Handle(const cx::model::IPlayer& /*p_activePlayer*/) const override   // LCOV_EXCL_LINE
     {
         return false;                                                        // LCOV_EXCL_LINE
     }
@@ -45,7 +45,7 @@ public:
 
 } // namespace
 
-std::unique_ptr<cxmodel::IGameResolutionStrategy> cxmodel::GameResolutionStrategyFactory::Make(const IBoard& p_board,
+std::unique_ptr<cx::model::IGameResolutionStrategy> cx::model::GameResolutionStrategyFactory::Make(const IBoard& p_board,
                                                                                                size_t p_inARowValue,
                                                                                                const std::vector<std::shared_ptr<IPlayer>>& p_players,
                                                                                                const std::vector<IBoard::Position>& p_takenPositions,

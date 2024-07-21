@@ -26,7 +26,7 @@
 #include <cxmodel/Disc.h>
 #include <cxmodel/IPlayer.h>
 
-namespace cxmodel
+namespace cx::model
 {
 
 /*************************************************************************************************
@@ -43,7 +43,7 @@ public:
 
     NoPlayer()
     {
-        m_chip = std::make_unique<Disc>(cxmodel::MakeTransparent());
+        m_chip = std::make_unique<Disc>(cx::model::MakeTransparent());
     }
 
     [[nodiscard]] std::string GetName() const override {return {};}
@@ -79,7 +79,7 @@ public:
      ********************************************************************************************/
     Player(const std::string& p_name, const ChipColor& p_chipColor)
     : m_name{p_name}
-    , m_chip{std::make_unique<cxmodel::Disc>(p_chipColor)}
+    , m_chip{std::make_unique<cx::model::Disc>(p_chipColor)}
     {
         PRECONDITION(!p_name.empty());
     }
@@ -92,7 +92,7 @@ public:
      ********************************************************************************************/
     Player& operator=(const Player& p_player);
 
-    // cxmodel::IPlayer:
+    // cx::model::IPlayer:
     [[nodiscard]] std::string GetName() const override {return m_name;};
     [[nodiscard]] const IChip& GetChip() const override {return *m_chip;};
     [[nodiscard]] bool IsManaged() const override = 0;
@@ -130,7 +130,7 @@ public:
     {
     }
 
-    // cxmodel::IPlayer:
+    // cx::model::IPlayer:
     [[nodiscard]] bool IsManaged() const override {return false;}
 
 };
@@ -161,27 +161,27 @@ public:
     {
     }
 
-    // cxmodel::IPlayer:
+    // cx::model::IPlayer:
     [[nodiscard]] bool IsManaged() const override {return true;}
 
 };
 
-} // namespace cxmodel
+} // namespace cx::model
 
-[[nodiscard]] std::unique_ptr<cxmodel::IPlayer> cxmodel::CreatePlayer(const std::string& p_name,
+[[nodiscard]] std::unique_ptr<cx::model::IPlayer> cx::model::CreatePlayer(const std::string& p_name,
                                                                       const ChipColor& p_chipColor,
                                                                       PlayerType p_type)
 {
-    std::unique_ptr<cxmodel::IPlayer> player = std::make_unique<NoPlayer>();
+    std::unique_ptr<cx::model::IPlayer> player = std::make_unique<NoPlayer>();
 
     IF_PRECONDITION_NOT_MET_DO(!p_name.empty(), return player;);
 
     switch(p_type)
     {
-        case cxmodel::PlayerType::HUMAN:
+        case cx::model::PlayerType::HUMAN:
             return std::make_unique<HumanPlayer>(p_name, p_chipColor);
 
-        case cxmodel::PlayerType::BOT:
+        case cx::model::PlayerType::BOT:
             return std::make_unique<BotPlayer>(p_name, p_chipColor);
 
         default:
@@ -192,12 +192,12 @@ public:
     return player;
 }
 
-bool cxmodel::operator==(const cxmodel::IPlayer& p_lhs, const cxmodel::IPlayer& p_rhs)
+bool cx::model::operator==(const cx::model::IPlayer& p_lhs, const cx::model::IPlayer& p_rhs)
 {
     return (p_lhs.GetChip() == p_rhs.GetChip()) && (p_lhs.IsManaged() == p_rhs.IsManaged());
 }
 
-bool cxmodel::operator!=(const cxmodel::IPlayer& p_lhs, const cxmodel::IPlayer& p_rhs)
+bool cx::model::operator!=(const cx::model::IPlayer& p_lhs, const cx::model::IPlayer& p_rhs)
 {
     return !(p_lhs == p_rhs);
 }

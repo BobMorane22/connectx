@@ -24,7 +24,7 @@
 #include <cxmodel/IConnectXGameActions.h>
 #include <cxgui/GameResolutionDialogController.h>
 
-cx::gui::GameResolutionDialogController::GameResolutionDialogController(cxmodel::IConnectXGameActions& p_modelAsActions)
+cx::gui::GameResolutionDialogController::GameResolutionDialogController(cx::model::IConnectXGameActions& p_modelAsActions)
 : m_modelAsActions{p_modelAsActions}
 {
 }

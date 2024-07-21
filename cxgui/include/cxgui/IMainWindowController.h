@@ -53,14 +53,14 @@ public:
 ///@{ @name New Game View
 // ------------------------------------------------------------------------------------------------
 
-    void OnStart(const cxmodel::NewGameInformation p_gameInformation) override = 0;
+    void OnStart(const cx::model::NewGameInformation p_gameInformation) override = 0;
 
 ///@}
 
 ///@{ @name Game View
 // ------------------------------------------------------------------------------------------------
 
-    void OnDown(const cxmodel::ChipColor& p_chipColor, size_t p_column) override = 0;
+    void OnDown(const cx::model::ChipColor& p_chipColor, size_t p_column) override = 0;
     void OnMoveLeftOneColumn() override = 0;
     void OnMoveRightOneColumn() override = 0;
     void OnNewGame() override = 0;

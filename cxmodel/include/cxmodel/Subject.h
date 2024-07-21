@@ -31,13 +31,13 @@
 #include <cxinv/assertion.h>
 #include <cxmodel/IObserver.h>
 
-namespace cxmodel
+namespace cx::model
 {
     template<typename>
     class IObserver;
 }
 
-namespace cxmodel
+namespace cx::model
 {
 
 /*********************************************************************************************//**
@@ -52,7 +52,7 @@ namespace cxmodel
  *
  * @tparam T A notification context. Must be an enum.
  *
- * @see cxmodel::IObserver
+ * @see cx::model::IObserver
  *
  ************************************************************************************************/
 template<typename T>
@@ -143,33 +143,33 @@ private:
 
     void CheckInvariants();
 
-    std::vector<cxmodel::IObserver<T>*> m_observers;
+    std::vector<cx::model::IObserver<T>*> m_observers;
 
 };
 
-} // namespace cxmodel
+} // namespace cx::model
 
 template<typename T>
-cxmodel::Subject<T>::Subject()
+cx::model::Subject<T>::Subject()
 {
     CheckInvariants();
 }
 
 template<typename T>
-cxmodel::Subject<T>::~Subject()
+cx::model::Subject<T>::~Subject()
 {
     DetatchAll();
 }
 
 template<typename T>
-void cxmodel::Subject<T>::Attach(cxmodel::IObserver<T>* const p_newObserver)
+void cx::model::Subject<T>::Attach(cx::model::IObserver<T>* const p_newObserver)
 {
     PRECONDITION(p_newObserver);
 
     if(p_newObserver)
     {
         const bool alreadyRegistered = std::any_of(m_observers.cbegin(),
-                                                   m_observers.cend(), [p_newObserver](cxmodel::IObserver<T>* const p_observer)
+                                                   m_observers.cend(), [p_newObserver](cx::model::IObserver<T>* const p_observer)
                                                                       {
                                                                           return p_observer == p_newObserver;
                                                                       }
@@ -187,7 +187,7 @@ void cxmodel::Subject<T>::Attach(cxmodel::IObserver<T>* const p_newObserver)
 }
 
 template<typename T>
-void cxmodel::Subject<T>::Detatch(cxmodel::IObserver<T>* const p_oldObserver)
+void cx::model::Subject<T>::Detatch(cx::model::IObserver<T>* const p_oldObserver)
 {
     PRECONDITION(p_oldObserver);
 
@@ -209,7 +209,7 @@ void cxmodel::Subject<T>::Detatch(cxmodel::IObserver<T>* const p_oldObserver)
 }
 
 template<typename T>
-void cxmodel::Subject<T>::DetatchAll()
+void cx::model::Subject<T>::DetatchAll()
 {
     // Here the fact that there might be no observer listed is not a problem.
     // This is the case because we are not looking to detach a specific observer,
@@ -224,7 +224,7 @@ void cxmodel::Subject<T>::DetatchAll()
 }
 
 template<typename T>
-void cxmodel::Subject<T>::Notify(T p_context)
+void cx::model::Subject<T>::Notify(T p_context)
 {
     for(const auto observer : m_observers)
     {
@@ -238,11 +238,11 @@ void cxmodel::Subject<T>::Notify(T p_context)
 }
 
 template<typename T>
-void cxmodel::Subject<T>::CheckInvariants()
+void cx::model::Subject<T>::CheckInvariants()
 {
     INVARIANT(std::none_of(m_observers.cbegin(),
                            m_observers.cend(),
-                           [](cxmodel::IObserver<T>* const p_observer)
+                           [](cx::model::IObserver<T>* const p_observer)
                            {
                                 return p_observer == nullptr;
                            }));

@@ -41,20 +41,20 @@ class NoGameResolutionDialogPresenter : public cx::gui::IGameResolutionDialogPre
 
 } // namespace
 
-std::unique_ptr<cx::gui::IGameResolutionDialogPresenter> cx::gui::GameResolutionDialogPresenterFactory::Make(const cxmodel::IConnectXGameInformation& p_modelAsInformation,
-                                                                                                         cxmodel::GameResolution p_resolution)
+std::unique_ptr<cx::gui::IGameResolutionDialogPresenter> cx::gui::GameResolutionDialogPresenterFactory::Make(const cx::model::IConnectXGameInformation& p_modelAsInformation,
+                                                                                                         cx::model::GameResolution p_resolution)
 {
     std::unique_ptr<cx::gui::IGameResolutionDialogPresenter> presenter = std::make_unique<NoGameResolutionDialogPresenter>();
     ASSERT(presenter);
 
     switch(p_resolution)
     {
-        case cxmodel::GameResolution::WIN:
+        case cx::model::GameResolution::WIN:
         {
             presenter = std::make_unique<cx::gui::WinGameResolutionDialogPresenter>(p_modelAsInformation);
             break;
         }
-        case cxmodel::GameResolution::TIE:
+        case cx::model::GameResolution::TIE:
         {
             presenter = std::make_unique<cx::gui::TieGameResolutionDialogPresenter>();
             break;

@@ -97,7 +97,7 @@ public:
      *
      *********************************************************************************************/
     [[nodiscard]] virtual std::unique_ptr<IWindow> CreateMainWindow(
-        cxmodel::ModelSubject& p_model,
+        cx::model::ModelSubject& p_model,
         IMainWindowController& p_controller,
         IMainWindowPresenter& p_presenter) const = 0;
 
@@ -181,8 +181,8 @@ public:
         INewGameViewController& p_controller,
         IWindow& p_parentWindow,
         cx::gui::ILayout& p_mainLayout,
-        const cxmodel::Column& p_viewLeft,
-        const cxmodel::Row& p_viewTop) const = 0;
+        const cx::model::Column& p_viewLeft,
+        const cx::model::Row& p_viewTop) const = 0;
 
     /*****************************************************************************************//**
      * @brief Creates a view for playing a Connect X game.
@@ -212,8 +212,8 @@ public:
         IGameViewController& p_controller,
         IWindow& p_parentWindow,
         cx::gui::ILayout& p_mainLayout,
-        const cxmodel::Column& p_viewLeft,
-        const cxmodel::Row& p_viewTop) const = 0;
+        const cx::model::Column& p_viewLeft,
+        const cx::model::Row& p_viewTop) const = 0;
 
 ///@}
 
@@ -257,7 +257,7 @@ public:
      *
      ********************************************************************************************/
     [[nodiscard]] virtual std::unique_ptr<IColorPicker> CreateColorPicker(
-        const std::vector<cxmodel::ChipColor>& p_colors) const = 0;
+        const std::vector<cx::model::ChipColor>& p_colors) const = 0;
 
 ///@}
 
@@ -302,8 +302,8 @@ public:
      *
      ********************************************************************************************/
     [[nodiscard]] virtual std::unique_ptr<IChip> CreateChip(
-        const cxmodel::ChipColor& p_fillColor,
-        const cxmodel::ChipColor& p_backgroundColor,
+        const cx::model::ChipColor& p_fillColor,
+        const cx::model::ChipColor& p_backgroundColor,
         int p_diameter) const = 0;
 
 ///@}

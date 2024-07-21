@@ -40,13 +40,13 @@ namespace cx::gui
  * a UI framework independent fashion. This makes it possible to create a main window with
  * minimal logic.
  *
- * @note Because the class inherits the cxmodel::Subject class, which is an abstract class,
+ * @note Because the class inherits the cx::model::Subject class, which is an abstract class,
  *       this class is not a pure interface. It is named as if it were a pure interface
  *       because conceptually, it acts like one as far as the presenter is concerned.
  *
  ************************************************************************************************/
-class IMainWindowPresenter : public cxmodel::IModelObserver,
-                             public cxmodel::ModelSubject,
+class IMainWindowPresenter : public cx::model::IModelObserver,
+                             public cx::model::ModelSubject,
                              public IGameViewPresenter,
                              public INewGameViewPresenter
 {
@@ -132,13 +132,13 @@ public:
     size_t GetNewGameViewMinBoardHeightValue() const override = 0;
     size_t GetNewGameViewMaxBoardHeightValue() const override = 0;
 
-    cxmodel::Status IsInARowValueValid(size_t p_inARowValue) const override = 0;
-    cxmodel::Status AreBoardDimensionsValid(size_t p_boardHeight, size_t p_boardWidth) const override = 0;
-    cxmodel::Status ArePlayerNamesValid(const std::vector<std::string>& p_playerNames) const override = 0;
-    cxmodel::Status ArePlayerChipColorsValid(const std::vector<cxmodel::ChipColor>& p_playerChipColors) const override = 0;
-    cxmodel::Status ArePlayerTypesValid(const std::vector<cxmodel::PlayerType>& p_playerTypes) const override = 0;
+    cx::model::Status IsInARowValueValid(size_t p_inARowValue) const override = 0;
+    cx::model::Status AreBoardDimensionsValid(size_t p_boardHeight, size_t p_boardWidth) const override = 0;
+    cx::model::Status ArePlayerNamesValid(const std::vector<std::string>& p_playerNames) const override = 0;
+    cx::model::Status ArePlayerChipColorsValid(const std::vector<cx::model::ChipColor>& p_playerChipColors) const override = 0;
+    cx::model::Status ArePlayerTypesValid(const std::vector<cx::model::PlayerType>& p_playerTypes) const override = 0;
 
-    cxmodel::Status IsNewGameWinnable(size_t p_inARowValue,
+    cx::model::Status IsNewGameWinnable(size_t p_inARowValue,
                                       size_t p_nbOfPlayers,
                                       size_t p_boardHeight,
                                       size_t p_boardWidth) const override = 0;
@@ -149,8 +149,8 @@ public:
 // -----------------------------------------------------------------------------------------------
     std::string GetGameViewTitle() const override = 0;
 
-    cxmodel::ChipColor GetGameViewActivePlayerChipColor() const override = 0;
-    cxmodel::ChipColor GetGameViewNextPlayerChipColor() const override = 0;
+    cx::model::ChipColor GetGameViewActivePlayerChipColor() const override = 0;
+    cx::model::ChipColor GetGameViewNextPlayerChipColor() const override = 0;
 
     std::string GetGameViewActivePlayerLabelText() const override = 0;
     std::string GetGameViewNextPlayerLabelText() const override = 0;

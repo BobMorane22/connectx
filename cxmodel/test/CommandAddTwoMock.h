@@ -26,15 +26,15 @@
 
 #include <cxmodel/ICommand.h>
 
-class CommandAddTwoMock : public cxmodel::ICommand
+class CommandAddTwoMock : public cx::model::ICommand
 {
 
 public:
 
     CommandAddTwoMock(double& p_data);
 
-    // cxmodel::ICommand:
-    [[nodiscard]] cxmodel::CommandCompletionStatus Execute() override;
+    // cx::model::ICommand:
+    [[nodiscard]] cx::model::CommandCompletionStatus Execute() override;
     void Undo() override;
 
 

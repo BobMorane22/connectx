@@ -27,7 +27,7 @@
 
 #include <cxgui/INewPlayersList.h>
 
-namespace cxmodel
+namespace cx::model
 {
     enum class PlayerType;
 }
@@ -106,22 +106,22 @@ public:
 
     // cx::gui::INewPlayersList:
     [[nodiscard]] size_t GetNbPlayers() const override;
-    [[nodiscard]] cxmodel::ChipColor GetRowPlayerChipColor(
+    [[nodiscard]] cx::model::ChipColor GetRowPlayerChipColor(
         const size_t p_index) const override;
     [[nodiscard]] std::string GetPlayerNameAtRow(
         const size_t p_index) const override;
-    [[nodiscard]] std::vector<cxmodel::ChipColor> GetAllColors() const override;
+    [[nodiscard]] std::vector<cx::model::ChipColor> GetAllColors() const override;
     [[nodiscard]] std::vector<std::string> GetAllPlayerNames() const override;
-    [[nodiscard]] std::vector<cxmodel::PlayerType> GetAllPlayerTypes() const override;
+    [[nodiscard]] std::vector<cx::model::PlayerType> GetAllPlayerTypes() const override;
     [[nodiscard]] bool AddPlayer(
         size_t p_rowIndex) override;
     [[nodiscard]] bool RemovePlayer(
         const size_t p_index) override;
     [[nodiscard]] bool UpdatePlayer(
         const size_t p_index,
-        cxmodel::PlayerType p_newPlayerType,
+        cx::model::PlayerType p_newPlayerType,
         const std::string& p_newPlayerNewName,
-        const cxmodel::ChipColor& p_newPlayerNewChipColor) override;
+        const cx::model::ChipColor& p_newPlayerNewChipColor) override;
     [[nodiscard]] std::unique_ptr<ISignal<void>> OnPlayerUpdated() override;
 
     // cx::gui::IWidget:
@@ -141,7 +141,7 @@ private:
 
     void RegisterNewPlayerRow(
         size_t p_rowIndex,
-        const std::vector<cxmodel::ChipColor>& p_alreadyChosenColors,
+        const std::vector<cx::model::ChipColor>& p_alreadyChosenColors,
         EnabledState p_enabled);
 
     bool RemovePlayerRow(
@@ -149,9 +149,9 @@ private:
 
     bool UpdatePlayerRow(
         const size_t p_index,
-        cxmodel::PlayerType p_playerNewType,
+        cx::model::PlayerType p_playerNewType,
         const std::string& p_playerNewName,
-        const cxmodel::ChipColor& p_playerNewChipColor);
+        const cx::model::ChipColor& p_playerNewChipColor);
 
     void InvariantsCheck() const;
 

@@ -42,7 +42,7 @@ namespace
  * Override this to make undo or redo available (i.e. "unlocked").
  *
  ************************************************************************************************/
-class CanUndoRedoModel : public cxmodel::IUndoRedo
+class CanUndoRedoModel : public cx::model::IUndoRedo
 {
 
 public:
@@ -59,7 +59,7 @@ public:
  *
  ************************************************************************************************/
 class UndoConnectXGameInformationModelMock : public BasicConnectXGameInformationModelMock,
-                                             public cxmodel::ModelSubject
+                                             public cx::model::ModelSubject
 {
 
 public:
@@ -68,37 +68,37 @@ public:
     {
         for(size_t row = 0u; row < GetCurrentGridHeight(); ++row)
         {
-            m_board.push_back(std::vector<cxmodel::Disc>());
+            m_board.push_back(std::vector<cx::model::Disc>());
             for(size_t column = 0u; column < GetCurrentGridWidth(); ++column)
             {
-                m_board[row].push_back(cxmodel::Disc::MakeTransparentDisc());
+                m_board[row].push_back(cx::model::Disc::MakeTransparentDisc());
             }
         }
 
         if(!p_makeEmpty)
         {
-            m_board[0][0] = cxmodel::Disc{cxmodel::MakeRed()};
+            m_board[0][0] = cx::model::Disc{cx::model::MakeRed()};
         }
     }
 
     void NotifyCreateNewGame()
     {
-        Notify(cxmodel::ModelNotificationContext::CREATE_NEW_GAME);
+        Notify(cx::model::ModelNotificationContext::CREATE_NEW_GAME);
     }
 
     void NotifyDropChip()
     {
-        Notify(cxmodel::ModelNotificationContext::CHIP_DROPPED);
+        Notify(cx::model::ModelNotificationContext::CHIP_DROPPED);
     }
 
     void NotifyUndo()
     {
-        Notify(cxmodel::ModelNotificationContext::UNDO_CHIP_DROPPED);
+        Notify(cx::model::ModelNotificationContext::UNDO_CHIP_DROPPED);
     }
 
-    const cxmodel::IPlayer& GetActivePlayer() const override {return *m_activePlayer;}
-    const cxmodel::IPlayer& GetNextPlayer() const override {return *m_nextPlayer;}
-    const cxmodel::IChip& GetChip(size_t p_row, size_t p_column) const override
+    const cx::model::IPlayer& GetActivePlayer() const override {return *m_activePlayer;}
+    const cx::model::IPlayer& GetNextPlayer() const override {return *m_nextPlayer;}
+    const cx::model::IChip& GetChip(size_t p_row, size_t p_column) const override
     {
         EXPECT_TRUE(p_row < GetCurrentGridHeight());
         EXPECT_TRUE(p_column < GetCurrentGridWidth());
@@ -108,9 +108,9 @@ public:
 
 private:
 
-    std::unique_ptr<cxmodel::IPlayer> m_activePlayer = cxmodel::CreatePlayer("John Doe", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN);
-    std::unique_ptr<cxmodel::IPlayer> m_nextPlayer = cxmodel::CreatePlayer("Jane Doe", cxmodel::MakeGreen(), cxmodel::PlayerType::HUMAN);
-    std::vector<std::vector<cxmodel::Disc>> m_board;
+    std::unique_ptr<cx::model::IPlayer> m_activePlayer = cx::model::CreatePlayer("John Doe", cx::model::MakeRed(), cx::model::PlayerType::HUMAN);
+    std::unique_ptr<cx::model::IPlayer> m_nextPlayer = cx::model::CreatePlayer("Jane Doe", cx::model::MakeGreen(), cx::model::PlayerType::HUMAN);
+    std::vector<std::vector<cx::model::Disc>> m_board;
 };
 
 } // namespace
@@ -170,21 +170,21 @@ TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/Update_CreateNewGame_NewGame
     const auto& presenter = GetPresenter();
 
     // Unitial presenter state:
-    ASSERT_EQ(presenter.GetGameViewActivePlayerChipColor(), cxmodel::MakeTransparent());
+    ASSERT_EQ(presenter.GetGameViewActivePlayerChipColor(), cx::model::MakeTransparent());
     ASSERT_EQ(presenter.GetGameViewActivePlayerName(), "--");
 
-    ASSERT_EQ(presenter.GetGameViewNextPlayerChipColor(), cxmodel::MakeTransparent());
+    ASSERT_EQ(presenter.GetGameViewNextPlayerChipColor(), cx::model::MakeTransparent());
     ASSERT_EQ(presenter.GetGameViewNextPlayerName() , "--");
 
     // We create a new game:
     auto& actionModel = GetActionsModel();
-    actionModel.CreateNewGame(cxmodel::NewGameInformation{});
+    actionModel.CreateNewGame(cx::model::NewGameInformation{});
 
     // Updated presenter state:
-    ASSERT_EQ(presenter.GetGameViewActivePlayerChipColor(), cxmodel::MakeRed());
+    ASSERT_EQ(presenter.GetGameViewActivePlayerChipColor(), cx::model::MakeRed());
     ASSERT_EQ(presenter.GetGameViewActivePlayerName(), "John Doe");
 
-    ASSERT_EQ(presenter.GetGameViewNextPlayerChipColor(), cxmodel::MakeBlue());
+    ASSERT_EQ(presenter.GetGameViewNextPlayerChipColor(), cx::model::MakeBlue());
     ASSERT_EQ(presenter.GetGameViewNextPlayerName() , "Jane Doe");
 }
 
@@ -192,7 +192,7 @@ TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/Update_ChipDropped_BoardInfo
 {
     // We create a new game to update the active player chip:
     auto& actionModel = GetActionsModel();
-    actionModel.CreateNewGame(cxmodel::NewGameInformation{});
+    actionModel.CreateNewGame(cx::model::NewGameInformation{});
 
     const auto& presenter = GetPresenter();
     auto boardColors = presenter.GetGameViewChipColors();
@@ -202,9 +202,9 @@ TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/Update_ChipDropped_BoardInfo
     {
         ASSERT_TRUE(std::all_of(row.cbegin(),
                                 row.cend(),
-                                [](const cxmodel::ChipColor& p_color)
+                                [](const cx::model::ChipColor& p_color)
                                 {
-                                    return p_color == cxmodel::MakeTransparent();
+                                    return p_color == cx::model::MakeTransparent();
                                 }));
     }
 
@@ -219,9 +219,9 @@ TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/Update_ChipDropped_BoardInfo
     {
         ASSERT_TRUE(std::all_of(row.cbegin(),
                                 row.cend(),
-                                [&infoModel](const cxmodel::ChipColor& p_color)
+                                [&infoModel](const cx::model::ChipColor& p_color)
                                 {
-                                    const cxmodel::IChip& activePlayerChip = infoModel.GetActivePlayer().GetChip();
+                                    const cx::model::IChip& activePlayerChip = infoModel.GetActivePlayer().GetChip();
                                     return p_color == activePlayerChip.GetColor();
                                 }));
     }
@@ -231,7 +231,7 @@ TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/Update_GameReinitialized_Boa
 {
     // We create a new game to update the active player chip:
     auto& actionModel = GetActionsModel();
-    actionModel.CreateNewGame(cxmodel::NewGameInformation{});
+    actionModel.CreateNewGame(cx::model::NewGameInformation{});
 
     // Initial state:
     const auto& presenter = GetPresenter();
@@ -241,9 +241,9 @@ TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/Update_GameReinitialized_Boa
     {
         ASSERT_TRUE(std::all_of(row.cbegin(),
                                 row.cend(),
-                                [](const cxmodel::ChipColor& p_color)
+                                [](const cx::model::ChipColor& p_color)
                                 {
-                                    return p_color == cxmodel::MakeTransparent();
+                                    return p_color == cx::model::MakeTransparent();
                                 }));
     }
 
@@ -258,9 +258,9 @@ TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/Update_GameReinitialized_Boa
     {
         ASSERT_TRUE(std::all_of(row.cbegin(),
                                 row.cend(),
-                                [&infoModel](const cxmodel::ChipColor& p_color)
+                                [&infoModel](const cx::model::ChipColor& p_color)
                                 {
-                                    const cxmodel::IChip& activePlayerChip = infoModel.GetActivePlayer().GetChip();
+                                    const cx::model::IChip& activePlayerChip = infoModel.GetActivePlayer().GetChip();
                                     return p_color == activePlayerChip.GetColor();
                                 }));
     }
@@ -270,7 +270,7 @@ TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/Update_DiscDropUndone_BoardI
 {
     // We create a new game to update the active player chip:
     auto& actionModel = GetActionsModel();
-    actionModel.CreateNewGame(cxmodel::NewGameInformation{});
+    actionModel.CreateNewGame(cx::model::NewGameInformation{});
 
     // Initial state:
     const auto& presenter = GetPresenter();
@@ -280,9 +280,9 @@ TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/Update_DiscDropUndone_BoardI
     {
         ASSERT_TRUE(std::all_of(row.cbegin(),
                                 row.cend(),
-                                [](const cxmodel::ChipColor& p_color)
+                                [](const cx::model::ChipColor& p_color)
                                 {
-                                    return p_color == cxmodel::MakeTransparent();
+                                    return p_color == cx::model::MakeTransparent();
                                 }));
     }
 
@@ -298,9 +298,9 @@ TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/Update_DiscDropUndone_BoardI
     {
         ASSERT_TRUE(std::all_of(row.cbegin(),
                                 row.cend(),
-                                [&infoModel](const cxmodel::ChipColor& p_color)
+                                [&infoModel](const cx::model::ChipColor& p_color)
                                 {
-                                    const cxmodel::IChip& activePlayerChip = infoModel.GetActivePlayer().GetChip();
+                                    const cx::model::IChip& activePlayerChip = infoModel.GetActivePlayer().GetChip();
                                     return p_color == activePlayerChip.GetColor();
                                 }));
     }
@@ -310,7 +310,7 @@ TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/Update_DiscDropRedone_BoardI
 {
     // We create a new game to update the active player chip:
     auto& actionModel = GetActionsModel();
-    actionModel.CreateNewGame(cxmodel::NewGameInformation{});
+    actionModel.CreateNewGame(cx::model::NewGameInformation{});
 
     // Initial state:
     const auto& presenter = GetPresenter();
@@ -320,9 +320,9 @@ TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/Update_DiscDropRedone_BoardI
     {
         ASSERT_TRUE(std::all_of(row.cbegin(),
                                 row.cend(),
-                                [](const cxmodel::ChipColor& p_color)
+                                [](const cx::model::ChipColor& p_color)
                                 {
-                                    return p_color == cxmodel::MakeTransparent();
+                                    return p_color == cx::model::MakeTransparent();
                                 }));
     }
 
@@ -338,9 +338,9 @@ TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/Update_DiscDropRedone_BoardI
     {
         ASSERT_TRUE(std::all_of(row.cbegin(),
                                 row.cend(),
-                                [&infoModel](const cxmodel::ChipColor& p_color)
+                                [&infoModel](const cx::model::ChipColor& p_color)
                                 {
-                                    const cxmodel::IChip& activePlayerChip = infoModel.GetActivePlayer().GetChip();
+                                    const cx::model::IChip& activePlayerChip = infoModel.GetActivePlayer().GetChip();
                                     return p_color == activePlayerChip.GetColor();
                                 }));
     }
@@ -431,7 +431,7 @@ TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/IsNewGamePossible_NoNotifica
 
 TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/IsNewGamePossible_CreateNewGameNotification_TrueReturned)
 {
-    SendNotification(cxmodel::ModelNotificationContext::CREATE_NEW_GAME);
+    SendNotification(cx::model::ModelNotificationContext::CREATE_NEW_GAME);
 
     const auto& presenter = GetPresenter();
     ASSERT_TRUE(presenter.IsNewGamePossible());
@@ -440,9 +440,9 @@ TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/IsNewGamePossible_CreateNewG
 TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/IsNewGamePossible_ChipDroppedNotification_TrueReturned)
 {
     auto& actionModel = GetActionsModel();
-    actionModel.CreateNewGame(cxmodel::NewGameInformation{});
+    actionModel.CreateNewGame(cx::model::NewGameInformation{});
 
-    SendNotification(cxmodel::ModelNotificationContext::CHIP_DROPPED);
+    SendNotification(cx::model::ModelNotificationContext::CHIP_DROPPED);
 
     const auto& presenter = GetPresenter();
     ASSERT_TRUE(presenter.IsNewGamePossible());
@@ -451,9 +451,9 @@ TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/IsNewGamePossible_ChipDroppe
 TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/IsNewGamePossible_GameReinitializedNotification_TrueReturned)
 {
     auto& actionModel = GetActionsModel();
-    actionModel.CreateNewGame(cxmodel::NewGameInformation{});
+    actionModel.CreateNewGame(cx::model::NewGameInformation{});
 
-    SendNotification(cxmodel::ModelNotificationContext::GAME_REINITIALIZED);
+    SendNotification(cx::model::ModelNotificationContext::GAME_REINITIALIZED);
 
     const auto& presenter = GetPresenter();
     ASSERT_TRUE(presenter.IsNewGamePossible());
@@ -462,9 +462,9 @@ TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/IsNewGamePossible_GameReinit
 TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/IsNewGamePossible_ChipDropRedoneNotification_TrueReturned)
 {
     auto& actionModel = GetActionsModel();
-    actionModel.CreateNewGame(cxmodel::NewGameInformation{});
+    actionModel.CreateNewGame(cx::model::NewGameInformation{});
 
-    SendNotification(cxmodel::ModelNotificationContext::REDO_CHIP_DROPPED);
+    SendNotification(cx::model::ModelNotificationContext::REDO_CHIP_DROPPED);
 
     const auto& presenter = GetPresenter();
     ASSERT_TRUE(presenter.IsNewGamePossible());
@@ -473,33 +473,33 @@ TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/IsNewGamePossible_ChipDropRe
 TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/IsNewGamePossible_ChipMovedLeftOneColumnNotification_TrueReturned)
 {
     auto& actionModel = GetActionsModel();
-    actionModel.CreateNewGame(cxmodel::NewGameInformation{});
+    actionModel.CreateNewGame(cx::model::NewGameInformation{});
 
     const auto& presenter = GetPresenter();
 
-    SendNotification(cxmodel::ModelNotificationContext::CHIP_MOVED_LEFT_ONE_COLUMN);
+    SendNotification(cx::model::ModelNotificationContext::CHIP_MOVED_LEFT_ONE_COLUMN);
     ASSERT_TRUE(presenter.IsNewGamePossible());
 }
 
 TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/IsNewGamePossible_ChipMovedRightOneColumnNotification_TrueReturned)
 {
     auto& actionModel = GetActionsModel();
-    actionModel.CreateNewGame(cxmodel::NewGameInformation{});
+    actionModel.CreateNewGame(cx::model::NewGameInformation{});
 
     const auto& presenter = GetPresenter();
 
-    SendNotification(cxmodel::ModelNotificationContext::CHIP_MOVED_RIGHT_ONE_COLUMN);
+    SendNotification(cx::model::ModelNotificationContext::CHIP_MOVED_RIGHT_ONE_COLUMN);
     ASSERT_TRUE(presenter.IsNewGamePossible());
 }
 
 TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/IsNewGamePossible_AllOtherNotifications_FalseReturned)
 {
     auto& actionModel = GetActionsModel();
-    actionModel.CreateNewGame(cxmodel::NewGameInformation{});
+    actionModel.CreateNewGame(cx::model::NewGameInformation{});
 
     const auto& presenter = GetPresenter();
 
-    SendNotification(cxmodel::ModelNotificationContext::GAME_ENDED);
+    SendNotification(cx::model::ModelNotificationContext::GAME_ENDED);
     ASSERT_FALSE(presenter.IsNewGamePossible());
 }
 
@@ -513,9 +513,9 @@ TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/IsCurrentGameReinitializatio
 TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/IsCurrentGameReinitializationPossible_ChipDroppedNotification_TrueReturned)
 {
     auto& actionModel = GetActionsModel();
-    actionModel.CreateNewGame(cxmodel::NewGameInformation{});
+    actionModel.CreateNewGame(cx::model::NewGameInformation{});
 
-    SendNotification(cxmodel::ModelNotificationContext::CHIP_DROPPED);
+    SendNotification(cx::model::ModelNotificationContext::CHIP_DROPPED);
 
     const auto& presenter = GetPresenter();
     ASSERT_TRUE(presenter.IsCurrentGameReinitializationPossible());
@@ -524,9 +524,9 @@ TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/IsCurrentGameReinitializatio
 TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/IsCurrentGameReinitializationPossible_ChipDroppedRedoneNotification_TrueReturned)
 {
     auto& actionModel = GetActionsModel();
-    actionModel.CreateNewGame(cxmodel::NewGameInformation{});
+    actionModel.CreateNewGame(cx::model::NewGameInformation{});
 
-    SendNotification(cxmodel::ModelNotificationContext::REDO_CHIP_DROPPED);
+    SendNotification(cx::model::ModelNotificationContext::REDO_CHIP_DROPPED);
 
     const auto& presenter = GetPresenter();
     ASSERT_TRUE(presenter.IsCurrentGameReinitializationPossible());
@@ -535,27 +535,27 @@ TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/IsCurrentGameReinitializatio
 TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/IsCurrentGameReinitializationPossible_AllOtherNotifications_FalseReturned)
 {
     auto& actionModel = GetActionsModel();
-    actionModel.CreateNewGame(cxmodel::NewGameInformation{});
+    actionModel.CreateNewGame(cx::model::NewGameInformation{});
 
     const auto& presenter = GetPresenter();
     ASSERT_FALSE(presenter.IsCurrentGameReinitializationPossible());
 
-    SendNotification(cxmodel::ModelNotificationContext::GAME_ENDED);
+    SendNotification(cx::model::ModelNotificationContext::GAME_ENDED);
     ASSERT_FALSE(presenter.IsCurrentGameReinitializationPossible());
 
-    SendNotification(cxmodel::ModelNotificationContext::GAME_REINITIALIZED);
+    SendNotification(cx::model::ModelNotificationContext::GAME_REINITIALIZED);
     ASSERT_FALSE(presenter.IsCurrentGameReinitializationPossible());
 }
 
 TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/IsCurrentPlayerABot_CurrentPlayerIsABot_ReturnsTrue)
 {
-    UpdatePlayerState(GetGameInformationModel().GetActivePlayer(), cxmodel::PlayerType::BOT);
+    UpdatePlayerState(GetGameInformationModel().GetActivePlayer(), cx::model::PlayerType::BOT);
     ASSERT_TRUE(GetPresenter().IsCurrentPlayerABot());
 }
 
 TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/IsCurrentPlayerABot_CurrentPlayerIsNotABot_ReturnsFalse)
 {
-    UpdatePlayerState(GetGameInformationModel().GetActivePlayer(), cxmodel::PlayerType::HUMAN);
+    UpdatePlayerState(GetGameInformationModel().GetActivePlayer(), cx::model::PlayerType::HUMAN);
     ASSERT_FALSE(GetPresenter().IsCurrentPlayerABot());
 }
 

@@ -90,13 +90,13 @@ enum class BoardAnimationNotificationContext
  * @brief Board animation notifications observer.
  *
  *************************************************************************************************/
-using IBoardAnimationObserver = cxmodel::IObserver<cx::gui::BoardAnimationNotificationContext>;
+using IBoardAnimationObserver = cx::model::IObserver<cx::gui::BoardAnimationNotificationContext>;
 
 /**********************************************************************************************//**
  * @brief Board animation notifications subject.
  *
  *************************************************************************************************/
-using BoardAnimationSubject = cxmodel::Subject<cx::gui::BoardAnimationNotificationContext>;
+using BoardAnimationSubject = cx::model::Subject<cx::gui::BoardAnimationNotificationContext>;
 
 } // namespace cx::gui
 

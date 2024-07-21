@@ -26,7 +26,7 @@
 
 #include <string>
 
-namespace cxmodel
+namespace cx::model
 {
 
 /*********************************************************************************************//**
@@ -62,6 +62,6 @@ public:
 
 };
 
-} // namespace cxmodel
+} // namespace cx::model
 
 #endif // IVERSIONING_H_776139B1_BE1B_4469_95F0_2DE9A0E4C816

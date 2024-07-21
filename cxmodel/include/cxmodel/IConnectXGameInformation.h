@@ -24,13 +24,13 @@
 #ifndef IGAMEINFORMATION_H_9970E71B_B32B_4B39_8363_50B66B9CE1C3
 #define IGAMEINFORMATION_H_9970E71B_B32B_4B39_8363_50B66B9CE1C3
 
-namespace cxmodel
+namespace cx::model
 {
     class IChip;
     class IPlayer;
 }
 
-namespace cxmodel
+namespace cx::model
 {
 
 /*********************************************************************************************//**
@@ -121,6 +121,6 @@ public:
 
 };
 
-} // namespace cxmodel
+} // namespace cx::model
 
 #endif // IGAMEINFORMATION_H_9970E71B_B32B_4B39_8363_50B66B9CE1C3

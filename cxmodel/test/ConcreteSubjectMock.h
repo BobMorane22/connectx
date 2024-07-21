@@ -26,7 +26,7 @@
 
 #include <cxmodel/ModelNotificationContext.h>
 
-class ConcreteSubjectMock : public cxmodel::ModelSubject
+class ConcreteSubjectMock : public cx::model::ModelSubject
 {
 
 public:

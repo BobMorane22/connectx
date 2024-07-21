@@ -50,7 +50,7 @@ void cx::gui::Gtkmm3Dialog::ShrinkToContents(IWindow::Orientation /*p_orientatio
     // Nothing to do.
 }
 
-void cx::gui::Gtkmm3Dialog::Update(cxmodel::ModelNotificationContext /*p_context*/, cxmodel::ModelSubject* /*p_subject*/)
+void cx::gui::Gtkmm3Dialog::Update(cx::model::ModelNotificationContext /*p_context*/, cx::model::ModelSubject* /*p_subject*/)
 {
     // Nothing to do.
 }

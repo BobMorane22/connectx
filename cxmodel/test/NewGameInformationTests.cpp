@@ -30,29 +30,29 @@ namespace
 
 struct PlayerCreationInfo
 {
-    PlayerCreationInfo(const std::string& p_name, const cxmodel::ChipColor p_chipColor)
+    PlayerCreationInfo(const std::string& p_name, const cx::model::ChipColor p_chipColor)
     : m_name{p_name}
     , m_chipColor{p_chipColor}
     {
     }
 
     std::string m_name;
-    cxmodel::ChipColor m_chipColor;
+    cx::model::ChipColor m_chipColor;
 };
 
-cxmodel::NewGameInformation MakeNewGameInformation(size_t p_gridHeight,
+cx::model::NewGameInformation MakeNewGameInformation(size_t p_gridHeight,
                                                    size_t p_gridWidth,
                                                    size_t p_inARowValue,
                                                    const std::vector<PlayerCreationInfo>& p_playersCreationInfo)
 {
-    cxmodel::NewGameInformation info;
+    cx::model::NewGameInformation info;
     info.m_gridHeight = p_gridHeight;
     info.m_gridWidth = p_gridWidth;
     info.m_inARowValue = p_inARowValue;
 
     for(const auto& playerCreationInfo : p_playersCreationInfo)
     {
-        info.m_players.push_back(cxmodel::CreatePlayer(playerCreationInfo.m_name, playerCreationInfo.m_chipColor, cxmodel::PlayerType::HUMAN));
+        info.m_players.push_back(cx::model::CreatePlayer(playerCreationInfo.m_name, playerCreationInfo.m_chipColor, cx::model::PlayerType::HUMAN));
     }
 
     return info;
@@ -62,15 +62,15 @@ cxmodel::NewGameInformation MakeNewGameInformation(size_t p_gridHeight,
 
 TEST(NewGameInformation, /*DISABLED*/MoveConstructor_OtherWithStdMove_OtherMoved)
 {
-    cxmodel::NewGameInformation movedFrom;
+    cx::model::NewGameInformation movedFrom;
 
     movedFrom.m_gridHeight = 6u;
     movedFrom.m_gridWidth = 7u;
     movedFrom.m_inARowValue = 4u;
-    movedFrom.m_players.push_back(cxmodel::CreatePlayer("John", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN));
-    movedFrom.m_players.push_back(cxmodel::CreatePlayer("Doe", cxmodel::MakeBlue(), cxmodel::PlayerType::HUMAN));
+    movedFrom.m_players.push_back(cx::model::CreatePlayer("John", cx::model::MakeRed(), cx::model::PlayerType::HUMAN));
+    movedFrom.m_players.push_back(cx::model::CreatePlayer("Doe", cx::model::MakeBlue(), cx::model::PlayerType::HUMAN));
 
-    cxmodel::NewGameInformation movedTo{std::move(movedFrom)};
+    cx::model::NewGameInformation movedTo{std::move(movedFrom)};
 
     ASSERT_TRUE(movedTo.m_gridHeight == 6u);
     ASSERT_TRUE(movedTo.m_gridWidth == 7u);
@@ -81,15 +81,15 @@ TEST(NewGameInformation, /*DISABLED*/MoveConstructor_OtherWithStdMove_OtherMoved
 
 TEST(NewGameInformation, /*DISABLED*/MoveAssignmentOperator_OtherWithStdMove_OtherMoved)
 {
-    cxmodel::NewGameInformation movedFrom;
+    cx::model::NewGameInformation movedFrom;
 
     movedFrom.m_gridHeight = 6u;
     movedFrom.m_gridWidth = 7u;
     movedFrom.m_inARowValue = 4u;
-    movedFrom.m_players.push_back(cxmodel::CreatePlayer("John", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN));
-    movedFrom.m_players.push_back(cxmodel::CreatePlayer("Doe", cxmodel::MakeBlue(), cxmodel::PlayerType::HUMAN));
+    movedFrom.m_players.push_back(cx::model::CreatePlayer("John", cx::model::MakeRed(), cx::model::PlayerType::HUMAN));
+    movedFrom.m_players.push_back(cx::model::CreatePlayer("Doe", cx::model::MakeBlue(), cx::model::PlayerType::HUMAN));
 
-    cxmodel::NewGameInformation movedTo;
+    cx::model::NewGameInformation movedTo;
     movedTo = std::move(movedFrom);
 
     ASSERT_TRUE(movedTo.m_gridHeight == 6u);
@@ -101,136 +101,136 @@ TEST(NewGameInformation, /*DISABLED*/MoveAssignmentOperator_OtherWithStdMove_Oth
 
 TEST(NewGameInformation, /*DISABLED_*/OperatorEqual_TwoSameInformations_ReturnsTrue)
 {
-    const PlayerCreationInfo player1{"John Doe", cxmodel::MakeRed()};
-    const PlayerCreationInfo player2{"Jane Doe", cxmodel::MakeBlue()};
+    const PlayerCreationInfo player1{"John Doe", cx::model::MakeRed()};
+    const PlayerCreationInfo player2{"Jane Doe", cx::model::MakeBlue()};
 
-    const cxmodel::NewGameInformation gameInfo1 = MakeNewGameInformation(6, 7, 4, {player1, player2});
-    const cxmodel::NewGameInformation gameInfo2 = MakeNewGameInformation(6, 7, 4, {player1, player2});
+    const cx::model::NewGameInformation gameInfo1 = MakeNewGameInformation(6, 7, 4, {player1, player2});
+    const cx::model::NewGameInformation gameInfo2 = MakeNewGameInformation(6, 7, 4, {player1, player2});
 
     ASSERT_TRUE(gameInfo1 == gameInfo2);
 }
 
 TEST(NewGameInformation, /*DISABLED_*/OperatorEqual_TwoSameInformationsButOrderDiffer_ReturnsFalse)
 {
-    const PlayerCreationInfo player1{"John Doe", cxmodel::MakeRed()};
-    const PlayerCreationInfo player2{"Jane Doe", cxmodel::MakeBlue()};
+    const PlayerCreationInfo player1{"John Doe", cx::model::MakeRed()};
+    const PlayerCreationInfo player2{"Jane Doe", cx::model::MakeBlue()};
 
-    const cxmodel::NewGameInformation gameInfo1 = MakeNewGameInformation(6, 7, 4, {player1, player2});
-    const cxmodel::NewGameInformation gameInfo2 = MakeNewGameInformation(6, 7, 4, {player2, player1});
+    const cx::model::NewGameInformation gameInfo1 = MakeNewGameInformation(6, 7, 4, {player1, player2});
+    const cx::model::NewGameInformation gameInfo2 = MakeNewGameInformation(6, 7, 4, {player2, player1});
 
     ASSERT_FALSE(gameInfo1 == gameInfo2);
 }
 
 TEST(NewGameInformation, /*DISABLED_*/OperatorEqual_DifferentGridHeight_ReturnsFalse)
 {
-    const PlayerCreationInfo player1{"John Doe", cxmodel::MakeRed()};
-    const PlayerCreationInfo player2{"Jane Doe", cxmodel::MakeBlue()};
+    const PlayerCreationInfo player1{"John Doe", cx::model::MakeRed()};
+    const PlayerCreationInfo player2{"Jane Doe", cx::model::MakeBlue()};
 
-    const cxmodel::NewGameInformation gameInfo1 = MakeNewGameInformation(6, 7, 4, {player1, player2});
-    const cxmodel::NewGameInformation gameInfo2 = MakeNewGameInformation(7, 7, 4, {player1, player2});
+    const cx::model::NewGameInformation gameInfo1 = MakeNewGameInformation(6, 7, 4, {player1, player2});
+    const cx::model::NewGameInformation gameInfo2 = MakeNewGameInformation(7, 7, 4, {player1, player2});
 
     ASSERT_FALSE(gameInfo1 == gameInfo2);
 }
 
 TEST(NewGameInformation, /*DISABLED_*/OperatorEqual_DifferentGridWidth_ReturnsFalse)
 {
-    const PlayerCreationInfo player1{"John Doe", cxmodel::MakeRed()};
-    const PlayerCreationInfo player2{"Jane Doe", cxmodel::MakeBlue()};
+    const PlayerCreationInfo player1{"John Doe", cx::model::MakeRed()};
+    const PlayerCreationInfo player2{"Jane Doe", cx::model::MakeBlue()};
 
-    const cxmodel::NewGameInformation gameInfo1 = MakeNewGameInformation(6, 7, 4, {player1, player2});
-    const cxmodel::NewGameInformation gameInfo2 = MakeNewGameInformation(6, 8, 4, {player1, player2});
+    const cx::model::NewGameInformation gameInfo1 = MakeNewGameInformation(6, 7, 4, {player1, player2});
+    const cx::model::NewGameInformation gameInfo2 = MakeNewGameInformation(6, 8, 4, {player1, player2});
 
     ASSERT_FALSE(gameInfo1 == gameInfo2);
 }
 
 TEST(NewGameInformation, /*DISABLED_*/OperatorEqual_DifferentInARowValue_ReturnsFalse)
 {
-    const PlayerCreationInfo player1{"John Doe", cxmodel::MakeRed()};
-    const PlayerCreationInfo player2{"Jane Doe", cxmodel::MakeBlue()};
+    const PlayerCreationInfo player1{"John Doe", cx::model::MakeRed()};
+    const PlayerCreationInfo player2{"Jane Doe", cx::model::MakeBlue()};
 
-    const cxmodel::NewGameInformation gameInfo1 = MakeNewGameInformation(6, 7, 4, {player1, player2});
-    const cxmodel::NewGameInformation gameInfo2 = MakeNewGameInformation(6, 7, 5, {player1, player2});
+    const cx::model::NewGameInformation gameInfo1 = MakeNewGameInformation(6, 7, 4, {player1, player2});
+    const cx::model::NewGameInformation gameInfo2 = MakeNewGameInformation(6, 7, 5, {player1, player2});
 
     ASSERT_FALSE(gameInfo1 == gameInfo2);
 }
 
 TEST(NewGameInformation, /*DISABLED_*/OperatorEqual_DifferentPlayers_ReturnsFalse)
 {
-    const PlayerCreationInfo player1{"Player1", cxmodel::MakeRed()};
-    const PlayerCreationInfo player2{"Player2", cxmodel::MakeBlue()};
-    const cxmodel::NewGameInformation gameInfo1 = MakeNewGameInformation(6, 7, 4, {player1, player2});
+    const PlayerCreationInfo player1{"Player1", cx::model::MakeRed()};
+    const PlayerCreationInfo player2{"Player2", cx::model::MakeBlue()};
+    const cx::model::NewGameInformation gameInfo1 = MakeNewGameInformation(6, 7, 4, {player1, player2});
 
-    const PlayerCreationInfo player3{"Player3", cxmodel::MakeYellow()};
-    const PlayerCreationInfo player4{"Player4", cxmodel::MakeGreen()};
-    const cxmodel::NewGameInformation gameInfo2 = MakeNewGameInformation(6, 7, 4, {player3, player4});
+    const PlayerCreationInfo player3{"Player3", cx::model::MakeYellow()};
+    const PlayerCreationInfo player4{"Player4", cx::model::MakeGreen()};
+    const cx::model::NewGameInformation gameInfo2 = MakeNewGameInformation(6, 7, 4, {player3, player4});
 
     ASSERT_FALSE(gameInfo1 == gameInfo2);
 }
 
 TEST(NewGameInformation, /*DISABLED_*/OperatorNotEqual_TwoSameInformations_ReturnsFalse)
 {
-    const PlayerCreationInfo player1{"John Doe", cxmodel::MakeRed()};
-    const PlayerCreationInfo player2{"Jane Doe", cxmodel::MakeBlue()};
+    const PlayerCreationInfo player1{"John Doe", cx::model::MakeRed()};
+    const PlayerCreationInfo player2{"Jane Doe", cx::model::MakeBlue()};
 
-    const cxmodel::NewGameInformation gameInfo1 = MakeNewGameInformation(6, 7, 4, {player1, player2});
-    const cxmodel::NewGameInformation gameInfo2 = MakeNewGameInformation(6, 7, 4, {player1, player2});
+    const cx::model::NewGameInformation gameInfo1 = MakeNewGameInformation(6, 7, 4, {player1, player2});
+    const cx::model::NewGameInformation gameInfo2 = MakeNewGameInformation(6, 7, 4, {player1, player2});
 
     ASSERT_FALSE(gameInfo1 != gameInfo2);
 }
 
 TEST(NewGameInformation, /*DISABLED_*/OperatorNotEqual_DifferentGridHeight_ReturnsTrue)
 {
-    const PlayerCreationInfo player1{"John Doe", cxmodel::MakeRed()};
-    const PlayerCreationInfo player2{"Jane Doe", cxmodel::MakeBlue()};
+    const PlayerCreationInfo player1{"John Doe", cx::model::MakeRed()};
+    const PlayerCreationInfo player2{"Jane Doe", cx::model::MakeBlue()};
 
-    const cxmodel::NewGameInformation gameInfo1 = MakeNewGameInformation(6, 7, 4, {player1, player2});
-    const cxmodel::NewGameInformation gameInfo2 = MakeNewGameInformation(7, 7, 4, {player1, player2});
+    const cx::model::NewGameInformation gameInfo1 = MakeNewGameInformation(6, 7, 4, {player1, player2});
+    const cx::model::NewGameInformation gameInfo2 = MakeNewGameInformation(7, 7, 4, {player1, player2});
 
     ASSERT_TRUE(gameInfo1 != gameInfo2);
 }
 
 TEST(NewGameInformation, /*DISABLED_*/OperatorNotEqual_DifferentGridWidth_ReturnsTrue)
 {
-    const PlayerCreationInfo player1{"John Doe", cxmodel::MakeRed()};
-    const PlayerCreationInfo player2{"Jane Doe", cxmodel::MakeBlue()};
+    const PlayerCreationInfo player1{"John Doe", cx::model::MakeRed()};
+    const PlayerCreationInfo player2{"Jane Doe", cx::model::MakeBlue()};
 
-    const cxmodel::NewGameInformation gameInfo1 = MakeNewGameInformation(6, 7, 4, {player1, player2});
-    const cxmodel::NewGameInformation gameInfo2 = MakeNewGameInformation(6, 8, 4, {player1, player2});
+    const cx::model::NewGameInformation gameInfo1 = MakeNewGameInformation(6, 7, 4, {player1, player2});
+    const cx::model::NewGameInformation gameInfo2 = MakeNewGameInformation(6, 8, 4, {player1, player2});
 
     ASSERT_TRUE(gameInfo1 != gameInfo2);
 }
 
 TEST(NewGameInformation, /*DISABLED_*/OperatorNotEqual_DifferentInARowValue_ReturnsTrue)
 {
-    const PlayerCreationInfo player1{"John Doe", cxmodel::MakeRed()};
-    const PlayerCreationInfo player2{"Jane Doe", cxmodel::MakeBlue()};
+    const PlayerCreationInfo player1{"John Doe", cx::model::MakeRed()};
+    const PlayerCreationInfo player2{"Jane Doe", cx::model::MakeBlue()};
 
-    const cxmodel::NewGameInformation gameInfo1 = MakeNewGameInformation(6, 7, 4, {player1, player2});
-    const cxmodel::NewGameInformation gameInfo2 = MakeNewGameInformation(6, 7, 5, {player1, player2});
+    const cx::model::NewGameInformation gameInfo1 = MakeNewGameInformation(6, 7, 4, {player1, player2});
+    const cx::model::NewGameInformation gameInfo2 = MakeNewGameInformation(6, 7, 5, {player1, player2});
 
     ASSERT_TRUE(gameInfo1 != gameInfo2);
 }
 
 TEST(NewGameInformation, /*DISABLED_*/OperatorNotEqual_DifferentPlayersInformations_ReturnsTrue)
 {
-    const PlayerCreationInfo player1{"Player1", cxmodel::MakeRed()};
-    const PlayerCreationInfo player2{"Player2", cxmodel::MakeBlue()};
-    const cxmodel::NewGameInformation gameInfo1 = MakeNewGameInformation(6, 7, 4, {player1, player2});
+    const PlayerCreationInfo player1{"Player1", cx::model::MakeRed()};
+    const PlayerCreationInfo player2{"Player2", cx::model::MakeBlue()};
+    const cx::model::NewGameInformation gameInfo1 = MakeNewGameInformation(6, 7, 4, {player1, player2});
 
-    const PlayerCreationInfo player3{"Player3", cxmodel::MakeYellow()};
-    const PlayerCreationInfo player4{"Player4", cxmodel::MakeGreen()};
-    const cxmodel::NewGameInformation gameInfo2 = MakeNewGameInformation(6, 7, 4, {player3, player4});
+    const PlayerCreationInfo player3{"Player3", cx::model::MakeYellow()};
+    const PlayerCreationInfo player4{"Player4", cx::model::MakeGreen()};
+    const cx::model::NewGameInformation gameInfo2 = MakeNewGameInformation(6, 7, 4, {player3, player4});
 
     ASSERT_TRUE(gameInfo1 != gameInfo2);
 }
 
 TEST(NewGameInformation, /*DISABLED_*/OperatorNotEqual_TwoSameInformationsButOrderDiffer_ReturnsTrue)
 {
-    const PlayerCreationInfo player1{"John Doe", cxmodel::MakeRed()};
-    const PlayerCreationInfo player2{"Jane Doe", cxmodel::MakeBlue()};
+    const PlayerCreationInfo player1{"John Doe", cx::model::MakeRed()};
+    const PlayerCreationInfo player2{"Jane Doe", cx::model::MakeBlue()};
 
-    const cxmodel::NewGameInformation gameInfo1 = MakeNewGameInformation(6, 7, 4, {player1, player2});
-    const cxmodel::NewGameInformation gameInfo2 = MakeNewGameInformation(6, 7, 4, {player2, player1});
+    const cx::model::NewGameInformation gameInfo1 = MakeNewGameInformation(6, 7, 4, {player1, player2});
+    const cx::model::NewGameInformation gameInfo2 = MakeNewGameInformation(6, 7, 4, {player2, player1});
 
     ASSERT_TRUE(gameInfo1 != gameInfo2);
 }

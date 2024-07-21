@@ -160,13 +160,13 @@ public:
      * @brief Necessary row information to position a widget in a layout.
      *
      *********************************************************************************************/
-    using RowDescriptor = CoordinateDescriptor<cxmodel::Row, RowSpan>;
+    using RowDescriptor = CoordinateDescriptor<cx::model::Row, RowSpan>;
     
     /******************************************************************************************//**
      * @brief Necessary column information to position a widget in a layout.
      *
      *********************************************************************************************/
-    using ColumnDescriptor = CoordinateDescriptor<cxmodel::Column, ColumnSpan>;
+    using ColumnDescriptor = CoordinateDescriptor<cx::model::Column, ColumnSpan>;
 
     /******************************************************************************************//**
      * @brief Row spacing modes.
@@ -346,13 +346,13 @@ public:
      *      The widget's address, or `nullptr` otherwise.
      *
      *********************************************************************************************/
-    [[nodiscard]] virtual const IWidget* GetWidgetAtPosition(const cxmodel::Row& p_row, const cxmodel::Column& p_column) const = 0;
+    [[nodiscard]] virtual const IWidget* GetWidgetAtPosition(const cx::model::Row& p_row, const cx::model::Column& p_column) const = 0;
 
     /******************************************************************************************//**
      * @copydoc cx::gui::ILayout::GetWidgetAtPosition
      *
      *********************************************************************************************/
-    [[nodiscard]] virtual IWidget* GetWidgetAtPosition(const cxmodel::Row& p_row, const cxmodel::Column& p_column) = 0;
+    [[nodiscard]] virtual IWidget* GetWidgetAtPosition(const cx::model::Row& p_row, const cx::model::Column& p_column) = 0;
 
     /******************************************************************************************//**
      * @brief Changes the row spacing mode. Affects all rows in the layout.

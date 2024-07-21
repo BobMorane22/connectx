@@ -32,7 +32,7 @@
  * @brief No next drop column computation strategy.
  *
  *************************************************************************************************/
-class NoNextDropColumnComputationStrategy : public cxmodel::INextDropColumnComputationStrategy
+class NoNextDropColumnComputationStrategy : public cx::model::INextDropColumnComputationStrategy
 {
 
 public:
@@ -43,7 +43,7 @@ public:
      * @return The computed column.
      *
      *********************************************************************************************/
-    [[nodiscard]] size_t Compute(const cxmodel::IBoard& /*p_board*/) const override
+    [[nodiscard]] size_t Compute(const cx::model::IBoard& /*p_board*/) const override
     {
         return 0u;
     }
@@ -55,7 +55,7 @@ public:
  * A random column is chosen amongst the available columns in the board.
  *
  *************************************************************************************************/
-class RandomNextDropColumnComputationStrategy : public cxmodel::INextDropColumnComputationStrategy
+class RandomNextDropColumnComputationStrategy : public cx::model::INextDropColumnComputationStrategy
 {
 
 public:
@@ -74,10 +74,10 @@ public:
      * @return The computed column.
      *
      *********************************************************************************************/
-    [[nodiscard]] size_t Compute(const cxmodel::IBoard& p_board) const override;
+    [[nodiscard]] size_t Compute(const cx::model::IBoard& p_board) const override;
 };
 
-size_t RandomNextDropColumnComputationStrategy::Compute(const cxmodel::IBoard& p_board) const
+size_t RandomNextDropColumnComputationStrategy::Compute(const cx::model::IBoard& p_board) const
 {
     // List all the available column indexes:
     std::vector<size_t> allColumnIndexes;
@@ -109,7 +109,7 @@ size_t RandomNextDropColumnComputationStrategy::Compute(const cxmodel::IBoard& p
     return availableColumnIndexes[columnIndex];
 }
 
-std::unique_ptr<cxmodel::INextDropColumnComputationStrategy> cxmodel::NextDropColumnComputationStrategyCreate(DropColumnComputation p_algorithm)
+std::unique_ptr<cx::model::INextDropColumnComputationStrategy> cx::model::NextDropColumnComputationStrategyCreate(DropColumnComputation p_algorithm)
 {
     switch(p_algorithm)
     {

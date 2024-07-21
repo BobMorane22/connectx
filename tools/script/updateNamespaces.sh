@@ -27,6 +27,11 @@
 ./tools/script/findReplace.sh "namespace cxunit" "namespace cx::unit"
 ./tools/script/findReplace.sh "@namespace cxunit" "@namespace cx::unit"
 
+# model -> cx::model
+./tools/script/findReplace.sh "cxmodel::" "cx::model::"
+./tools/script/findReplace.sh "namespace cxmodel" "namespace cx::model"
+./tools/script/findReplace.sh "@namespace cxmodel" "@namespace cx::model"
+
 # cxgui -> cx::gui
 ./tools/script/findReplace.sh "cxgui::" "cx::gui::"
 ./tools/script/findReplace.sh "namespace cxgui" "namespace cx::gui"

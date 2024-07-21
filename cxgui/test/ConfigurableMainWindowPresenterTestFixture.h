@@ -69,7 +69,7 @@ public:
      * @warning When this method is called, the presenter's state is reset to its initial state.
      *
      ********************************************************************************************/
-    void SetGameInformationModel(std::unique_ptr<cxmodel::IConnectXGameInformation>&& p_model);
+    void SetGameInformationModel(std::unique_ptr<cx::model::IConnectXGameInformation>&& p_model);
 
     /******************************************************************************************//**
      * @brief Sets a new `IConnectXLimits` compatible model.
@@ -79,7 +79,7 @@ public:
      * @warning When this method is called, the presenter's state is reset to its initial state.
      *
      ********************************************************************************************/
-    void SetLimitsModel(std::unique_ptr<cxmodel::IConnectXLimits>&& p_model);
+    void SetLimitsModel(std::unique_ptr<cx::model::IConnectXLimits>&& p_model);
 
     /******************************************************************************************//**
      * @brief Sets a new `IUndoRedo` compatible model.
@@ -89,7 +89,7 @@ public:
      * @warning When this method is called, the presenter's state is reset to its initial state.
      *
      ********************************************************************************************/
-    void SetUndoRedoModel(std::unique_ptr<cxmodel::IUndoRedo>&& p_model);
+    void SetUndoRedoModel(std::unique_ptr<cx::model::IUndoRedo>&& p_model);
 
     /******************************************************************************************//**
      * @brief Sets a new `IConnectXAI` compatible model.
@@ -99,7 +99,7 @@ public:
      * @warning When this method is called, the presenter's state is reset to its initial state.
      *
      ********************************************************************************************/
-    void SetAIModel(std::unique_ptr<cxmodel::IConnectXAI>&& p_model);
+    void SetAIModel(std::unique_ptr<cx::model::IConnectXAI>&& p_model);
 
     /******************************************************************************************//**
      * @brief Access to the underlying `IConnectXGameInformation` model.
@@ -107,7 +107,7 @@ public:
      * @return The `IConnectXGameInformation` model.
      *
      ********************************************************************************************/
-    [[nodiscard]] cxmodel::IConnectXGameInformation& GetGameInformationModel();
+    [[nodiscard]] cx::model::IConnectXGameInformation& GetGameInformationModel();
 
     /******************************************************************************************//**
      * @brief Access to the underlying `IConnectXLimits` model.
@@ -115,7 +115,7 @@ public:
      * @return The `IConnectXLimits` model.
      *
      ********************************************************************************************/
-    [[nodiscard]] cxmodel::IConnectXLimits& GetLimitsModel();
+    [[nodiscard]] cx::model::IConnectXLimits& GetLimitsModel();
 
     /******************************************************************************************//**
      * @brief Access to the underlying `IConnectXAI` model.
@@ -123,16 +123,16 @@ public:
      * @return The `IConnectXAI` model.
      *
      ********************************************************************************************/
-    [[nodiscard]] cxmodel::IConnectXAI& GetAIModel();
+    [[nodiscard]] cx::model::IConnectXAI& GetAIModel();
 
 private:
 
     std::unique_ptr<cx::gui::IMainWindowPresenter> m_presenter;
 
-    std::unique_ptr<cxmodel::IConnectXGameInformation> m_modelAsGameInformation;
-    std::unique_ptr<cxmodel::IConnectXLimits> m_modelAsLimits;
-    std::unique_ptr<cxmodel::IUndoRedo> m_modelAsUndoRedo;
-    std::unique_ptr<cxmodel::IConnectXAI> m_modelAsAI;
+    std::unique_ptr<cx::model::IConnectXGameInformation> m_modelAsGameInformation;
+    std::unique_ptr<cx::model::IConnectXLimits> m_modelAsLimits;
+    std::unique_ptr<cx::model::IUndoRedo> m_modelAsUndoRedo;
+    std::unique_ptr<cx::model::IConnectXAI> m_modelAsAI;
 
 };
 

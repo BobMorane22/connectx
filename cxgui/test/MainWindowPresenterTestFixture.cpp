@@ -39,7 +39,7 @@ MainWindowPresenterTestFixture::MainWindowPresenterTestFixture()
     m_model->Attach(m_presenter.get());
 }
 
-void MainWindowPresenterTestFixture::SendNotification(cxmodel::ModelNotificationContext p_context)
+void MainWindowPresenterTestFixture::SendNotification(cx::model::ModelNotificationContext p_context)
 {
     EXPECT_TRUE(m_model);
     m_model->SendNotification(p_context);
@@ -63,63 +63,63 @@ cx::gui::INewGameViewPresenter& MainWindowPresenterTestFixture::GetNewGameViewPr
     return *m_presenter;
 }
 
-cxmodel::IConnectXGameActions& MainWindowPresenterTestFixture::GetActionsModel()
+cx::model::IConnectXGameActions& MainWindowPresenterTestFixture::GetActionsModel()
 {
     EXPECT_TRUE(m_model);
     return *m_model;
 }
 
-cxmodel::IConnectXGameInformation& MainWindowPresenterTestFixture::GetGameInformationModel()
+cx::model::IConnectXGameInformation& MainWindowPresenterTestFixture::GetGameInformationModel()
 {
     EXPECT_TRUE(m_model);
     return *m_model;
 }
 
-cxmodel::IConnectXLimits& MainWindowPresenterTestFixture::GetLimitsModel()
+cx::model::IConnectXLimits& MainWindowPresenterTestFixture::GetLimitsModel()
 {
     EXPECT_TRUE(m_model);
     return *m_model;
 }
 
-cxmodel::IUndoRedo& MainWindowPresenterTestFixture::GetUndoRedoModel()
+cx::model::IUndoRedo& MainWindowPresenterTestFixture::GetUndoRedoModel()
 {
     EXPECT_TRUE(m_model);
     return *m_model;
 }
 
-void MainWindowPresenterTestFixture::UpdatePlayerState(const cxmodel::IPlayer& p_player, cxmodel::PlayerType p_newPlayerType)
+void MainWindowPresenterTestFixture::UpdatePlayerState(const cx::model::IPlayer& p_player, cx::model::PlayerType p_newPlayerType)
 {
     EXPECT_TRUE(m_model);
     m_model->UpdatePlayerState(p_player, p_newPlayerType);
 }
 
-void MainWindowPresenterTestFixture::MainWindowPresenterModelMock::SendNotification(cxmodel::ModelNotificationContext p_context)
+void MainWindowPresenterTestFixture::MainWindowPresenterModelMock::SendNotification(cx::model::ModelNotificationContext p_context)
 {
     Notify(p_context);
 }
 
-void MainWindowPresenterTestFixture::MainWindowPresenterModelMock::UpdatePlayerState(const cxmodel::IPlayer& p_player, cxmodel::PlayerType p_newPlayerType)
+void MainWindowPresenterTestFixture::MainWindowPresenterModelMock::UpdatePlayerState(const cx::model::IPlayer& p_player, cx::model::PlayerType p_newPlayerType)
 {
     EXPECT_TRUE(m_activePlayer);
     EXPECT_TRUE(m_nextPlayer);
 
     if(p_player == *m_activePlayer)    
     {
-        m_activePlayer = cxmodel::CreatePlayer(p_player.GetName(), p_player.GetChip().GetColor(), p_newPlayerType); 
+        m_activePlayer = cx::model::CreatePlayer(p_player.GetName(), p_player.GetChip().GetColor(), p_newPlayerType); 
 
         // Here we only notify and let the presenter feed from the hardcoded
         // model mock values. The values in themselves are not important.
-        Notify(cxmodel::ModelNotificationContext::CREATE_NEW_GAME);
+        Notify(cx::model::ModelNotificationContext::CREATE_NEW_GAME);
 
         return;
     }
     else if(p_player == *m_nextPlayer)
     {
-        m_nextPlayer = cxmodel::CreatePlayer(p_player.GetName(), p_player.GetChip().GetColor(), p_newPlayerType); 
+        m_nextPlayer = cx::model::CreatePlayer(p_player.GetName(), p_player.GetChip().GetColor(), p_newPlayerType); 
 
         // Here we only notify and let the presenter feed from the hardcoded
         // model mock values. The values in themselves are not important.
-        Notify(cxmodel::ModelNotificationContext::CREATE_NEW_GAME);
+        Notify(cx::model::ModelNotificationContext::CREATE_NEW_GAME);
 
         return;
     }
@@ -127,20 +127,20 @@ void MainWindowPresenterTestFixture::MainWindowPresenterModelMock::UpdatePlayerS
     FAIL() << "The player passed as an argument should be either the active or the next player";
 }
 
-void MainWindowPresenterTestFixture::MainWindowPresenterModelMock::CreateNewGame(cxmodel::NewGameInformation p_gameInformation)
+void MainWindowPresenterTestFixture::MainWindowPresenterModelMock::CreateNewGame(cx::model::NewGameInformation p_gameInformation)
 {
     (void)p_gameInformation;
 
     // Here we only notify and let the presenter feed from the hardcoded
     // model mock values. The values in themselves are not important.
-    Notify(cxmodel::ModelNotificationContext::CREATE_NEW_GAME);
+    Notify(cx::model::ModelNotificationContext::CREATE_NEW_GAME);
 }
 
-void MainWindowPresenterTestFixture::MainWindowPresenterModelMock::DropChip(const cxmodel::IChip& /*p_chip*/, size_t p_column)
+void MainWindowPresenterTestFixture::MainWindowPresenterModelMock::DropChip(const cx::model::IChip& /*p_chip*/, size_t p_column)
 {
     ASSERT_TRUE(p_column < GetCurrentGridWidth());
 
-    Notify(cxmodel::ModelNotificationContext::CHIP_DROPPED);
+    Notify(cx::model::ModelNotificationContext::CHIP_DROPPED);
 }
 
 void MainWindowPresenterTestFixture::MainWindowPresenterModelMock::MoveLeftOneColumn()
@@ -153,7 +153,7 @@ void MainWindowPresenterTestFixture::MainWindowPresenterModelMock::MoveRightOneC
     // Nothing to do...
 }
 
-const cxmodel::IChip& MainWindowPresenterTestFixture::MainWindowPresenterModelMock::GetChip(size_t p_row, size_t p_column) const
+const cx::model::IChip& MainWindowPresenterTestFixture::MainWindowPresenterModelMock::GetChip(size_t p_row, size_t p_column) const
 {
     EXPECT_TRUE(p_row < GetCurrentGridHeight());
     EXPECT_TRUE(p_column < GetCurrentGridWidth());
@@ -163,27 +163,27 @@ const cxmodel::IChip& MainWindowPresenterTestFixture::MainWindowPresenterModelMo
 
 void MainWindowPresenterTestFixture::MainWindowPresenterModelMock::EndCurrentGame()
 {
-    Notify(cxmodel::ModelNotificationContext::GAME_ENDED);
+    Notify(cx::model::ModelNotificationContext::GAME_ENDED);
 }
 
 void MainWindowPresenterTestFixture::MainWindowPresenterModelMock::ReinitializeCurrentGame()
 {
     // Here we only notify and let the presenter feed from the hardcoded
     // model mock values. The values in themselves are not important.
-    Notify(cxmodel::ModelNotificationContext::GAME_REINITIALIZED);
+    Notify(cx::model::ModelNotificationContext::GAME_REINITIALIZED);
 }
 
 void MainWindowPresenterTestFixture::MainWindowPresenterModelMock::Undo()
 {
     // Here we only notify and let the presenter feed from the hardcoded
     // model mock values. The values in themselves are not important.
-    Notify(cxmodel::ModelNotificationContext::UNDO_CHIP_DROPPED);
+    Notify(cx::model::ModelNotificationContext::UNDO_CHIP_DROPPED);
 }
 
 void MainWindowPresenterTestFixture::MainWindowPresenterModelMock::Redo()
 {
     // Here we only notify and let the presenter feed from the hardcoded
     // model mock values. The values in themselves are not important.
-    Notify(cxmodel::ModelNotificationContext::REDO_CHIP_DROPPED);
+    Notify(cx::model::ModelNotificationContext::REDO_CHIP_DROPPED);
 }
 

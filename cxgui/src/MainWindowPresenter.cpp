@@ -62,10 +62,10 @@ std::string MakeBoardHeightValueOutOfLimitsWarningDialog(size_t p_lower, size_t 
 
 } // namespace
 
-cx::gui::MainWindowPresenter::MainWindowPresenter(const cxmodel::IConnectXLimits& p_modealAsLimits,
-                                                const cxmodel::IConnectXGameInformation& p_modelAsGameInformation,
-                                                const cxmodel::IUndoRedo& p_modelAsUndoRedo,
-                                                const cxmodel::IConnectXAI& p_modelAsAI)
+cx::gui::MainWindowPresenter::MainWindowPresenter(const cx::model::IConnectXLimits& p_modealAsLimits,
+                                                const cx::model::IConnectXGameInformation& p_modelAsGameInformation,
+                                                const cx::model::IUndoRedo& p_modelAsUndoRedo,
+                                                const cx::model::IConnectXAI& p_modelAsAI)
  : m_modelAsLimits{p_modealAsLimits}
  , m_modelAsGameInformation{p_modelAsGameInformation}
  , m_modelAsUndoRedo{p_modelAsUndoRedo}
@@ -75,11 +75,11 @@ cx::gui::MainWindowPresenter::MainWindowPresenter(const cxmodel::IConnectXLimits
  , m_currentBoardWidth{p_modealAsLimits.GetMinimumGridWidth()}
  , m_currentBoardHeight{p_modealAsLimits.GetMinimumGridHeight()}
 {
-    m_activePlayer = cxmodel::CreatePlayer("--", cxmodel::MakeTransparent(), cxmodel::PlayerType::HUMAN);
-    m_nextPlayer = cxmodel::CreatePlayer("--", cxmodel::MakeTransparent(), cxmodel::PlayerType::HUMAN);
+    m_activePlayer = cx::model::CreatePlayer("--", cx::model::MakeTransparent(), cx::model::PlayerType::HUMAN);
+    m_nextPlayer = cx::model::CreatePlayer("--", cx::model::MakeTransparent(), cx::model::PlayerType::HUMAN);
 }
 
-void cx::gui::MainWindowPresenter::Update(cxmodel::ModelNotificationContext p_context, cxmodel::ModelSubject* p_subject)
+void cx::gui::MainWindowPresenter::Update(cx::model::ModelNotificationContext p_context, cx::model::ModelSubject* p_subject)
 {
     if(INL_PRECONDITION(p_subject))
     {
@@ -88,32 +88,32 @@ void cx::gui::MainWindowPresenter::Update(cxmodel::ModelNotificationContext p_co
 
         switch(p_context)
         {
-            case cxmodel::ModelNotificationContext::CREATE_NEW_GAME:
+            case cx::model::ModelNotificationContext::CREATE_NEW_GAME:
             {
                 m_canRequestNewGame = true;
                 UpdateCreateNewGame();
                 break;
             }
-            case cxmodel::ModelNotificationContext::CHIP_MOVED_LEFT_ONE_COLUMN:
-            case cxmodel::ModelNotificationContext::CHIP_MOVED_RIGHT_ONE_COLUMN:
+            case cx::model::ModelNotificationContext::CHIP_MOVED_LEFT_ONE_COLUMN:
+            case cx::model::ModelNotificationContext::CHIP_MOVED_RIGHT_ONE_COLUMN:
             {
                 m_canRequestNewGame = true;
                 break;
             }
-            case cxmodel::ModelNotificationContext::CHIP_DROPPED:
+            case cx::model::ModelNotificationContext::CHIP_DROPPED:
             {
                 m_canRequestNewGame = true;
                 m_canCurrentGameBeReinitialized = true;
                 UpdateChipDropped();
                 break;
             }
-            case cxmodel::ModelNotificationContext::GAME_REINITIALIZED:
+            case cx::model::ModelNotificationContext::GAME_REINITIALIZED:
             {
                 m_canRequestNewGame = true;
                 UpdateGameReinitialized();
                 break;
             }
-            case cxmodel::ModelNotificationContext::UNDO_CHIP_DROPPED:
+            case cx::model::ModelNotificationContext::UNDO_CHIP_DROPPED:
             {
                 m_canRequestNewGame = true;
                 m_canCurrentGameBeReinitialized = !IsBoardEmpty();
@@ -121,7 +121,7 @@ void cx::gui::MainWindowPresenter::Update(cxmodel::ModelNotificationContext p_co
                 UpdateChipDropped();
                 break;
             }
-            case cxmodel::ModelNotificationContext::REDO_CHIP_DROPPED:
+            case cx::model::ModelNotificationContext::REDO_CHIP_DROPPED:
             {
                 m_canRequestNewGame = true;
                 m_canCurrentGameBeReinitialized = true;
@@ -306,64 +306,64 @@ std::string cx::gui::MainWindowPresenter::GetDefaultPlayerName(size_t p_playerIn
     return oss.str();
 }
 
-cxmodel::ChipColor cx::gui::MainWindowPresenter::GetDefaultChipColor(size_t p_playerIndex) const
+cx::model::ChipColor cx::gui::MainWindowPresenter::GetDefaultChipColor(size_t p_playerIndex) const
 {
     if(p_playerIndex == 2u)
     {
-        return cxmodel::MakeGreen();
+        return cx::model::MakeGreen();
     }
 
-    return cxmodel::MakeRed();
+    return cx::model::MakeRed();
 }
 
-std::vector<cxmodel::ChipColor> cx::gui::MainWindowPresenter::GetDefaultChipColors() const
+std::vector<cx::model::ChipColor> cx::gui::MainWindowPresenter::GetDefaultChipColors() const
 {
-    std::vector<cxmodel::ChipColor> colors;
+    std::vector<cx::model::ChipColor> colors;
 
-    colors.push_back(cxmodel::MakeRed());
-    colors.push_back(cxmodel::MakeGreen());
-    colors.push_back(cxmodel::MakeYellow());
-    colors.push_back(cxmodel::MakeBlue());
-    colors.push_back(cxmodel::MakePink());
-    colors.push_back(cxmodel::MakeOrange());
-    colors.push_back(cxmodel::MakeAqua());
-    colors.push_back(cxmodel::MakeBlack());
-    colors.push_back(cxmodel::MakeLilac());
-    colors.push_back(cxmodel::MakeSalmon());
+    colors.push_back(cx::model::MakeRed());
+    colors.push_back(cx::model::MakeGreen());
+    colors.push_back(cx::model::MakeYellow());
+    colors.push_back(cx::model::MakeBlue());
+    colors.push_back(cx::model::MakePink());
+    colors.push_back(cx::model::MakeOrange());
+    colors.push_back(cx::model::MakeAqua());
+    colors.push_back(cx::model::MakeBlack());
+    colors.push_back(cx::model::MakeLilac());
+    colors.push_back(cx::model::MakeSalmon());
 
     return colors;
 }
 
-cxmodel::PlayerType cx::gui::MainWindowPresenter::GetDefaultPlayerType(size_t p_playerIndex) const
+cx::model::PlayerType cx::gui::MainWindowPresenter::GetDefaultPlayerType(size_t p_playerIndex) const
 {
     if(p_playerIndex == 1u)
     {
-        return cxmodel::PlayerType::HUMAN;
+        return cx::model::PlayerType::HUMAN;
     }
 
-    return cxmodel::PlayerType::BOT;
+    return cx::model::PlayerType::BOT;
 }
 
-cxmodel::Status cx::gui::MainWindowPresenter::IsInARowValueValid(size_t p_inARowValue) const
+cx::model::Status cx::gui::MainWindowPresenter::IsInARowValueValid(size_t p_inARowValue) const
 {
     if(p_inARowValue < GetNewGameViewMinInARowValue() || p_inARowValue > GetNewGameViewMaxInARowValue())
     {
         const std::string errorMessage = MakeInARowValueOutOfLimitsWarningDialog(GetNewGameViewMinInARowValue(),
                                                                                  GetNewGameViewMaxInARowValue());
-        return cxmodel::MakeError(errorMessage);
+        return cx::model::MakeError(errorMessage);
     }
 
-    return cxmodel::MakeSuccess();
+    return cx::model::MakeSuccess();
 }
 
-cxmodel::Status cx::gui::MainWindowPresenter::AreBoardDimensionsValid(size_t p_boardHeight, size_t p_boardWidth) const
+cx::model::Status cx::gui::MainWindowPresenter::AreBoardDimensionsValid(size_t p_boardHeight, size_t p_boardWidth) const
 {
     if(p_boardHeight < GetNewGameViewMinBoardHeightValue() ||
        p_boardHeight > GetNewGameViewMaxBoardHeightValue())
     {
         const std::string errorMessage = MakeBoardHeightValueOutOfLimitsWarningDialog(GetNewGameViewMinBoardHeightValue(),
                                                                                       GetNewGameViewMaxBoardHeightValue());
-        return cxmodel::MakeError(errorMessage);
+        return cx::model::MakeError(errorMessage);
     }
 
     if(p_boardWidth < GetNewGameViewMinBoardWidthValue() ||
@@ -371,13 +371,13 @@ cxmodel::Status cx::gui::MainWindowPresenter::AreBoardDimensionsValid(size_t p_b
     {
         const std::string errorMessage = MakeBoardWidthValueOutOfLimitsWarningDialog(GetNewGameViewMinBoardWidthValue(),
                                                                                      GetNewGameViewMaxBoardWidthValue());
-        return cxmodel::MakeError(errorMessage);
+        return cx::model::MakeError(errorMessage);
     }
 
-    return cxmodel::MakeSuccess();
+    return cx::model::MakeSuccess();
 }
 
-cxmodel::Status cx::gui::MainWindowPresenter::ArePlayerNamesValid(const std::vector<std::string>& p_playerNames) const
+cx::model::Status cx::gui::MainWindowPresenter::ArePlayerNamesValid(const std::vector<std::string>& p_playerNames) const
 {
     if(std::any_of(p_playerNames.cbegin(),
                    p_playerNames.cend(),
@@ -386,13 +386,13 @@ cxmodel::Status cx::gui::MainWindowPresenter::ArePlayerNamesValid(const std::vec
                        return p_name.empty();
                    }))
               {
-                  return cxmodel::MakeError("Player names cannot be empty.");
+                  return cx::model::MakeError("Player names cannot be empty.");
               }
 
-    return cxmodel::MakeSuccess();
+    return cx::model::MakeSuccess();
 }
 
-cxmodel::Status cx::gui::MainWindowPresenter::ArePlayerChipColorsValid(const std::vector<cxmodel::ChipColor>& p_playerChipColors) const
+cx::model::Status cx::gui::MainWindowPresenter::ArePlayerChipColorsValid(const std::vector<cx::model::ChipColor>& p_playerChipColors) const
 {
    // Chip colors (should not have duplicates):
    bool duplicateColorsExist = false;
@@ -409,28 +409,28 @@ cxmodel::Status cx::gui::MainWindowPresenter::ArePlayerChipColorsValid(const std
 
    if(duplicateColorsExist)
    {
-       return cxmodel::MakeError("Discs must have different colors.");
+       return cx::model::MakeError("Discs must have different colors.");
    }
 
-   return cxmodel::MakeSuccess();
+   return cx::model::MakeSuccess();
 }
 
-cxmodel::Status cx::gui::MainWindowPresenter::ArePlayerTypesValid(const std::vector<cxmodel::PlayerType>& p_playerTypes) const
+cx::model::Status cx::gui::MainWindowPresenter::ArePlayerTypesValid(const std::vector<cx::model::PlayerType>& p_playerTypes) const
 {
     if(std::any_of(p_playerTypes.cbegin(),
                    p_playerTypes.cend(),
-                   [](cxmodel::PlayerType p_type)
+                   [](cx::model::PlayerType p_type)
                    {
-                       return p_type == cxmodel::PlayerType::HUMAN;
+                       return p_type == cx::model::PlayerType::HUMAN;
                    }))
               {
-                  return cxmodel::MakeSuccess();
+                  return cx::model::MakeSuccess();
               }
 
-    return cxmodel::MakeError("At least one player must not be a bot.");
+    return cx::model::MakeError("At least one player must not be a bot.");
 }
 
-cxmodel::Status cx::gui::MainWindowPresenter::IsNewGameWinnable(size_t p_inARowValue,
+cx::model::Status cx::gui::MainWindowPresenter::IsNewGameWinnable(size_t p_inARowValue,
                                                               size_t p_nbOfPlayers,
                                                               size_t p_boardHeight,
                                                               size_t p_boardWidth) const
@@ -440,16 +440,16 @@ cxmodel::Status cx::gui::MainWindowPresenter::IsNewGameWinnable(size_t p_inARowV
     const size_t nbLocations = p_boardHeight * p_boardWidth;
     if(nbLocations < (p_nbOfPlayers - 1u)*(p_inARowValue - 1u) + p_inARowValue)
     {
-        return cxmodel::MakeError("There is not enough room on the board. Adjust the number of players or the in-a-row value.");
+        return cx::model::MakeError("There is not enough room on the board. Adjust the number of players or the in-a-row value.");
     }
 
     // Can the in-a-row value fit on the board?
     if(p_inARowValue > std::max<size_t>(p_boardHeight, p_boardWidth))
     {
-        return cxmodel::MakeError("The in-a-row value does not fit on the board.");
+        return cx::model::MakeError("The in-a-row value does not fit on the board.");
     }
 
-    return cxmodel::MakeSuccess();
+    return cx::model::MakeSuccess();
 }
 
 /**************************************************************************************************
@@ -463,16 +463,16 @@ std::string cx::gui::MainWindowPresenter::GetGameViewTitle() const
     return "Game";
 }
 
-cxmodel::ChipColor cx::gui::MainWindowPresenter::GetGameViewActivePlayerChipColor() const
+cx::model::ChipColor cx::gui::MainWindowPresenter::GetGameViewActivePlayerChipColor() const
 {
-    const cxmodel::IChip& activePlayerChip = m_activePlayer->GetChip();
+    const cx::model::IChip& activePlayerChip = m_activePlayer->GetChip();
 
     return activePlayerChip.GetColor();
 }
 
-cxmodel::ChipColor cx::gui::MainWindowPresenter::GetGameViewNextPlayerChipColor() const
+cx::model::ChipColor cx::gui::MainWindowPresenter::GetGameViewNextPlayerChipColor() const
 {
-    const cxmodel::IChip& nextPlayerChip = m_nextPlayer->GetChip();
+    const cx::model::IChip& nextPlayerChip = m_nextPlayer->GetChip();
 
     return nextPlayerChip.GetColor();
 }
@@ -529,37 +529,37 @@ void cx::gui::MainWindowPresenter::UpdateCreateNewGame()
     m_currentBoardWidth = m_modelAsGameInformation.GetCurrentGridWidth();
     m_currentBoardHeight = m_modelAsGameInformation.GetCurrentGridHeight();
 
-    m_activePlayer = cxmodel::CreatePlayer(m_modelAsGameInformation.GetActivePlayer().GetName(),
+    m_activePlayer = cx::model::CreatePlayer(m_modelAsGameInformation.GetActivePlayer().GetName(),
                                            m_modelAsGameInformation.GetActivePlayer().GetChip().GetColor(),
-                                           m_modelAsGameInformation.GetActivePlayer().IsManaged() ? cxmodel::PlayerType::BOT : cxmodel::PlayerType::HUMAN);
+                                           m_modelAsGameInformation.GetActivePlayer().IsManaged() ? cx::model::PlayerType::BOT : cx::model::PlayerType::HUMAN);
 
-    m_nextPlayer = cxmodel::CreatePlayer(m_modelAsGameInformation.GetNextPlayer().GetName(),
+    m_nextPlayer = cx::model::CreatePlayer(m_modelAsGameInformation.GetNextPlayer().GetName(),
                                          m_modelAsGameInformation.GetNextPlayer().GetChip().GetColor(),
-                                         m_modelAsGameInformation.GetNextPlayer().IsManaged() ? cxmodel::PlayerType::BOT : cxmodel::PlayerType::HUMAN);
+                                         m_modelAsGameInformation.GetNextPlayer().IsManaged() ? cx::model::PlayerType::BOT : cx::model::PlayerType::HUMAN);
 
     // Reserve the board color memory:
     for(size_t row = 0u; row < m_currentBoardHeight; ++row)
     {
-        m_chipColors.push_back(std::vector<cxmodel::ChipColor>(m_currentBoardWidth, cxmodel::MakeTransparent()));
+        m_chipColors.push_back(std::vector<cx::model::ChipColor>(m_currentBoardWidth, cx::model::MakeTransparent()));
     }
 }
 
 void cx::gui::MainWindowPresenter::UpdateChipDropped()
 {
     // Update players information:
-    m_activePlayer = cxmodel::CreatePlayer(m_modelAsGameInformation.GetActivePlayer().GetName(),
+    m_activePlayer = cx::model::CreatePlayer(m_modelAsGameInformation.GetActivePlayer().GetName(),
                                            m_modelAsGameInformation.GetActivePlayer().GetChip().GetColor(),
-                                           m_modelAsGameInformation.GetActivePlayer().IsManaged() ? cxmodel::PlayerType::BOT : cxmodel::PlayerType::HUMAN);
+                                           m_modelAsGameInformation.GetActivePlayer().IsManaged() ? cx::model::PlayerType::BOT : cx::model::PlayerType::HUMAN);
 
-    m_nextPlayer = cxmodel::CreatePlayer(m_modelAsGameInformation.GetNextPlayer().GetName(),
+    m_nextPlayer = cx::model::CreatePlayer(m_modelAsGameInformation.GetNextPlayer().GetName(),
                                          m_modelAsGameInformation.GetNextPlayer().GetChip().GetColor(),
-                                         m_modelAsGameInformation.GetNextPlayer().IsManaged() ? cxmodel::PlayerType::BOT : cxmodel::PlayerType::HUMAN);
+                                         m_modelAsGameInformation.GetNextPlayer().IsManaged() ? cx::model::PlayerType::BOT : cx::model::PlayerType::HUMAN);
     // Update board information:
     for(size_t row = 0u; row < m_currentBoardHeight; ++row)
     {
         for(size_t column = 0u; column < m_currentBoardWidth; ++column)
         {
-            const cxmodel::IChip& chip = m_modelAsGameInformation.GetChip(row, column);
+            const cx::model::IChip& chip = m_modelAsGameInformation.GetChip(row, column);
             m_chipColors[m_currentBoardHeight - row - 1][column] = chip.GetColor();
         }
     }
@@ -577,8 +577,8 @@ bool cx::gui::MainWindowPresenter::IsBoardEmpty() const
     {
         for(size_t column = 0u; column < m_modelAsGameInformation.GetCurrentGridWidth(); ++column)
         {
-            const cxmodel::IChip& chip = m_modelAsGameInformation.GetChip(row, column);
-            if(chip.GetColor() != cxmodel::MakeTransparent())
+            const cx::model::IChip& chip = m_modelAsGameInformation.GetChip(row, column);
+            if(chip.GetColor() != cx::model::MakeTransparent())
             {
                 isBoardEmpty = false;
                 break;

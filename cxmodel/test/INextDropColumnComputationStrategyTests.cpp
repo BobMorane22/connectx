@@ -33,11 +33,11 @@
 namespace
 {
 
-void FillColumn(size_t p_column, cxmodel::IBoard& p_board, const cxmodel::IChip& p_chip)
+void FillColumn(size_t p_column, cx::model::IBoard& p_board, const cx::model::IChip& p_chip)
 {
     for(size_t row = 0u; row < p_board.GetNbRows(); ++row)
     {
-        cxmodel::IBoard::Position unused;
+        cx::model::IBoard::Position unused;
         p_board.DropChip(p_column, p_chip, unused);
 
     }
@@ -45,7 +45,7 @@ void FillColumn(size_t p_column, cxmodel::IBoard& p_board, const cxmodel::IChip&
     ASSERT_TRUE(p_board.IsColumnFull(p_column));
 }
 
-void FillBoard(cxmodel::IBoard& p_board, const cxmodel::IChip& p_chip)
+void FillBoard(cx::model::IBoard& p_board, const cx::model::IChip& p_chip)
 {
     for(size_t column = 0u; column < p_board.GetNbColumns(); ++column)
     {
@@ -55,10 +55,10 @@ void FillBoard(cxmodel::IBoard& p_board, const cxmodel::IChip& p_chip)
 
 size_t ComputeColumn()
 {
-    const auto strategy = cxmodel::NextDropColumnComputationStrategyCreate(cxmodel::DropColumnComputation::RANDOM);
+    const auto strategy = cx::model::NextDropColumnComputationStrategyCreate(cx::model::DropColumnComputation::RANDOM);
 
     const ConnectXLimitsModelMock modelMock;
-    const cxmodel::Board board{6u, 7u, modelMock};
+    const cx::model::Board board{6u, 7u, modelMock};
 
     return strategy->Compute(board);
 }
@@ -83,19 +83,19 @@ bool DoesIndexAppearEnough(size_t p_indexUnderTest,
 
 TEST(INextDropColumnComputationStrategy, /*DISABLED_*/NextDropColumnComputationStrategyCreate_Random_ReturnsValidStrategy)
 {
-    const auto strategy = cxmodel::NextDropColumnComputationStrategyCreate(cxmodel::DropColumnComputation::RANDOM);
+    const auto strategy = cx::model::NextDropColumnComputationStrategyCreate(cx::model::DropColumnComputation::RANDOM);
     ASSERT_TRUE(strategy);
 }
 
 TEST(INextDropColumnComputationStrategy, /*DISABLED_*/NextDropColumnComputationStrategyCreate_Invalid_AssertsAndReturnsValidStrategy)
 {
     // Create an invalid algorithm:
-    cxmodel::DropColumnComputation invalid = static_cast<cxmodel::DropColumnComputation>(-1);
+    cx::model::DropColumnComputation invalid = static_cast<cx::model::DropColumnComputation>(-1);
 
-    std::unique_ptr<cxmodel::INextDropColumnComputationStrategy> strategy;
+    std::unique_ptr<cx::model::INextDropColumnComputationStrategy> strategy;
     {
         cx::unit::DisableStdStreamsRAII streamDisabler;
-        strategy = cxmodel::NextDropColumnComputationStrategyCreate(invalid);
+        strategy = cx::model::NextDropColumnComputationStrategyCreate(invalid);
         ASSERT_ASSERTION_FAILED(streamDisabler);
     }
 
@@ -103,7 +103,7 @@ TEST(INextDropColumnComputationStrategy, /*DISABLED_*/NextDropColumnComputationS
 
     // Call "Compute" on it:
     ConnectXLimitsModelMock modelMock;
-    cxmodel::Board unused{6u, 7u, modelMock};
+    cx::model::Board unused{6u, 7u, modelMock};
     ASSERT_TRUE(strategy->Compute(unused) == 0u);
 }
 
@@ -112,10 +112,10 @@ TEST(INextDropColumnComputationStrategy, /*DISABLED_*/NextDropColumnComputationS
 // ************************************************************************************************
 TEST(INextDropColumnComputationStrategy, /*DISABLED_*/Compute_RandomAndAvailableColumn_ReturnsResultInBoardRange)
 {
-    const auto strategy = cxmodel::NextDropColumnComputationStrategyCreate(cxmodel::DropColumnComputation::RANDOM);
+    const auto strategy = cx::model::NextDropColumnComputationStrategyCreate(cx::model::DropColumnComputation::RANDOM);
 
     ConnectXLimitsModelMock modelMock;
-    cxmodel::Board board{6u, 7u, modelMock};
+    cx::model::Board board{6u, 7u, modelMock};
 
     const size_t result = strategy->Compute(board);
 
@@ -124,13 +124,13 @@ TEST(INextDropColumnComputationStrategy, /*DISABLED_*/Compute_RandomAndAvailable
 
 TEST(INextDropColumnComputationStrategy, /*DISABLED_*/Compute_RandomAndOneAvailableColumn_ReturnsAvailableColumn)
 {
-    const auto strategy = cxmodel::NextDropColumnComputationStrategyCreate(cxmodel::DropColumnComputation::RANDOM);
+    const auto strategy = cx::model::NextDropColumnComputationStrategyCreate(cx::model::DropColumnComputation::RANDOM);
 
     ConnectXLimitsModelMock modelMock;
-    cxmodel::Board board{6u, 7u, modelMock};
+    cx::model::Board board{6u, 7u, modelMock};
 
-    cxmodel::Disc chip{cxmodel::MakeRed()};
-    cxmodel::IBoard::Position unused;
+    cx::model::Disc chip{cx::model::MakeRed()};
+    cx::model::IBoard::Position unused;
     FillColumn(0u, board, chip);
     FillColumn(2u, board, chip);
     FillColumn(3u, board, chip);
@@ -145,13 +145,13 @@ TEST(INextDropColumnComputationStrategy, /*DISABLED_*/Compute_RandomAndOneAvaila
 
 TEST(INextDropColumnComputationStrategy, /*DISABLED_*/Compute_RandomAndNoAvailableColumn_AssertsAndReturnsZero)
 {
-    const auto strategy = cxmodel::NextDropColumnComputationStrategyCreate(cxmodel::DropColumnComputation::RANDOM);
+    const auto strategy = cx::model::NextDropColumnComputationStrategyCreate(cx::model::DropColumnComputation::RANDOM);
 
     ConnectXLimitsModelMock modelMock;
-    cxmodel::Board board{6u, 7u, modelMock};
+    cx::model::Board board{6u, 7u, modelMock};
 
-    cxmodel::Disc chip{cxmodel::MakeRed()};
-    cxmodel::IBoard::Position unused;
+    cx::model::Disc chip{cx::model::MakeRed()};
+    cx::model::IBoard::Position unused;
     FillBoard(board, chip);
 
     cx::unit::DisableStdStreamsRAII streamDisabler;

@@ -32,9 +32,9 @@
 #include <cxmodel/Model.h>
 
 /*********************************************************************************************//**
- * @brief Fixture for the cxmodel::Model class.
+ * @brief Fixture for the cx::model::Model class.
  *
- * The cxmodel::Model class is a critical piece of Connect X. It has a lot of dependencies and
+ * The cx::model::Model class is a critical piece of Connect X. It has a lot of dependencies and
  * a lot of repetitive code has to be written for a lot of tests. This fixture aims at removing
  * from the tester the burden of writing all this code. Mostly, the fixture provides services
  * to:
@@ -101,7 +101,7 @@ public:
      * @return The configured model.
      *
      ********************************************************************************************/
-    cxmodel::Model& GetModel();
+    cx::model::Model& GetModel();
 
     /******************************************************************************************//**
      * @brief Access the configured model's internal command stack.
@@ -109,7 +109,7 @@ public:
      * @return The configured model's internal command stack.
      *
      ********************************************************************************************/
-    cxmodel::ICommandStack& GetInternalCommandStack();
+    cx::model::ICommandStack& GetInternalCommandStack();
 
     /******************************************************************************************//**
      * @brief Creates a valid new game.
@@ -151,7 +151,7 @@ public:
      * @return The player at the specified index.
      *
      ********************************************************************************************/
-    const cxmodel::IPlayer& GetPlayer(size_t p_playerIndex) const;
+    const cx::model::IPlayer& GetPlayer(size_t p_playerIndex) const;
 
     /******************************************************************************************//**
      * @brief Drops the specified number of chips in alternate rows.
@@ -183,9 +183,9 @@ public:
 private:
 
     std::unique_ptr<cx::log::ILogger> m_logger;
-    cxmodel::CommandStack* m_commandStack;
+    cx::model::CommandStack* m_commandStack;
 
-    std::unique_ptr<cxmodel::Model> m_model;
+    std::unique_ptr<cx::model::Model> m_model;
     size_t m_nbOfPlayersInCurrentGame;
 
 };

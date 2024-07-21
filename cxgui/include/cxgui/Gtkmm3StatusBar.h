@@ -81,7 +81,7 @@ public:
 
 private:
 
-    virtual void Update(cxmodel::ModelNotificationContext p_context, cxmodel::ModelSubject* p_subject) override;
+    virtual void Update(cx::model::ModelNotificationContext p_context, cx::model::ModelSubject* p_subject) override;
 
 private:
 

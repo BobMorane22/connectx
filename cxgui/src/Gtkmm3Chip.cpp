@@ -26,8 +26,8 @@
 #include <cxgui/Gtkmm3Chip.h>
 #include <cxgui/KeyboardKeyPressedEvent.h>
 
-cx::gui::Gtkmm3Chip::Gtkmm3Chip(const cxmodel::ChipColor& p_fillColor,
-                              const cxmodel::ChipColor& p_backgroundColor,
+cx::gui::Gtkmm3Chip::Gtkmm3Chip(const cx::model::ChipColor& p_fillColor,
+                              const cx::model::ChipColor& p_backgroundColor,
                               int p_width,
                               int p_height)
 : m_fillColor{p_fillColor}
@@ -46,7 +46,7 @@ void cx::gui::Gtkmm3Chip::SetDelegate(std::unique_ptr<IWidget> p_delegate)
     POSTCONDITION(m_delegate);
 }
 
-void cx::gui::Gtkmm3Chip::ChangeColor(const cxmodel::ChipColor& p_newFillColor)
+void cx::gui::Gtkmm3Chip::ChangeColor(const cx::model::ChipColor& p_newFillColor)
 {
     if(m_fillColor != p_newFillColor)
     {
@@ -55,20 +55,20 @@ void cx::gui::Gtkmm3Chip::ChangeColor(const cxmodel::ChipColor& p_newFillColor)
     }
 }
 
-cxmodel::ChipColor cx::gui::Gtkmm3Chip::GetColor() const
+cx::model::ChipColor cx::gui::Gtkmm3Chip::GetColor() const
 {
     return m_fillColor;
 }
 
 void cx::gui::Gtkmm3Chip::Highlight()
 {
-    const double hue = cxmodel::ComputeHue(m_backgroundColor);
-    const double saturation = cxmodel::ComputeSaturation(m_backgroundColor);
-    double luminosity = cxmodel::ComputeLuminosity(m_backgroundColor);
+    const double hue = cx::model::ComputeHue(m_backgroundColor);
+    const double saturation = cx::model::ComputeSaturation(m_backgroundColor);
+    double luminosity = cx::model::ComputeLuminosity(m_backgroundColor);
 
     luminosity *= 1.4;
 
-    m_backgroundColor = cxmodel::MakeFromHSL(hue, saturation, luminosity);
+    m_backgroundColor = cx::model::MakeFromHSL(hue, saturation, luminosity);
     Redraw();
 }
 
@@ -142,11 +142,11 @@ void cx::gui::Gtkmm3Chip::Draw(const Cairo::RefPtr<Cairo::Context>& p_context) c
 
     DrawBorder(p_context);
 
-    constexpr cxmodel::ChipColor borderColor = cxmodel::ChipColor::MakePredefined(cxmodel::ChipColor::Predefined::BLACK);
-    p_context->set_source_rgba(cxmodel::NormalizedR(borderColor),
-                               cxmodel::NormalizedG(borderColor),
-                               cxmodel::NormalizedB(borderColor),
-                               cxmodel::NormalizedA(borderColor));
+    constexpr cx::model::ChipColor borderColor = cx::model::ChipColor::MakePredefined(cx::model::ChipColor::Predefined::BLACK);
+    p_context->set_source_rgba(cx::model::NormalizedR(borderColor),
+                               cx::model::NormalizedG(borderColor),
+                               cx::model::NormalizedB(borderColor),
+                               cx::model::NormalizedA(borderColor));
 
     p_context->stroke_preserve();
     p_context->restore();
@@ -157,10 +157,10 @@ void cx::gui::Gtkmm3Chip::DrawBackgroundColor(const Cairo::RefPtr<Cairo::Context
     p_context->save();
     DrawBorder(p_context);
 
-    p_context->set_source_rgba(cxmodel::NormalizedR(m_backgroundColor),
-                               cxmodel::NormalizedG(m_backgroundColor),
-                               cxmodel::NormalizedB(m_backgroundColor),
-                               cxmodel::NormalizedA(m_backgroundColor));
+    p_context->set_source_rgba(cx::model::NormalizedR(m_backgroundColor),
+                               cx::model::NormalizedG(m_backgroundColor),
+                               cx::model::NormalizedB(m_backgroundColor),
+                               cx::model::NormalizedA(m_backgroundColor));
 
     const Gtk::Allocation allocation{get_allocation()};
     const int width{allocation.get_width()};
@@ -180,10 +180,10 @@ void cx::gui::Gtkmm3Chip::DrawBackgroundColor(const Cairo::RefPtr<Cairo::Context
 
 void cx::gui::Gtkmm3Chip::DrawFillColor(const Cairo::RefPtr<Cairo::Context>& p_context) const
 {
-    p_context->set_source_rgba(cxmodel::NormalizedR(m_fillColor),
-                               cxmodel::NormalizedG(m_fillColor),
-                               cxmodel::NormalizedB(m_fillColor),
-                               cxmodel::NormalizedA(m_fillColor));
+    p_context->set_source_rgba(cx::model::NormalizedR(m_fillColor),
+                               cx::model::NormalizedG(m_fillColor),
+                               cx::model::NormalizedB(m_fillColor),
+                               cx::model::NormalizedA(m_fillColor));
 
     DrawBorder(p_context);
     p_context->fill();

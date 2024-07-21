@@ -29,7 +29,7 @@
 
 #include "IPlayer.h"
 
-namespace cxmodel
+namespace cx::model
 {
 
 /*********************************************************************************************//**
@@ -119,6 +119,6 @@ bool operator==(const NewGameInformation& p_lhs, const NewGameInformation& p_rhs
  ************************************************************************************************/
 bool operator!=(const NewGameInformation& p_lhs, const NewGameInformation& p_rhs);
 
-} // namespace cxmodel
+} // namespace cx::model
 
 #endif // NEWGAMEINFORMATION_H_BE24FB43_1A63_4A5D_BA34_DA52C92DFB4A

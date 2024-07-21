@@ -28,7 +28,7 @@
 
 #include <cxmodel/Status.h>
 
-namespace cxmodel
+namespace cx::model
 {
 
 class NewGameInformation;
@@ -287,7 +287,7 @@ public:
      *      The default chip color for new players.
      *
      ********************************************************************************************/
-    [[nodiscard]] virtual cxmodel::ChipColor GetDefaultChipColor(size_t p_playerIndex) const = 0;
+    [[nodiscard]] virtual cx::model::ChipColor GetDefaultChipColor(size_t p_playerIndex) const = 0;
 
     /******************************************************************************************//**
      * @brief
@@ -300,7 +300,7 @@ public:
      *      The default chip color list for new players.
      *
      ********************************************************************************************/
-    [[nodiscard]] virtual std::vector<cxmodel::ChipColor> GetDefaultChipColors() const = 0;
+    [[nodiscard]] virtual std::vector<cx::model::ChipColor> GetDefaultChipColors() const = 0;
 
     /******************************************************************************************//**
      * @brief Default new player type.
@@ -312,7 +312,7 @@ public:
      * @return The default new player type.
      *
      ********************************************************************************************/
-    [[nodiscard]] virtual cxmodel::PlayerType GetDefaultPlayerType(size_t p_playerIndex) const = 0;
+    [[nodiscard]] virtual cx::model::PlayerType GetDefaultPlayerType(size_t p_playerIndex) const = 0;
 
     /******************************************************************************************//**
      * @brief Checks if the in-a-row value is valid.
@@ -322,7 +322,7 @@ public:
      * @return `Success` if the value is valid, `Error` otherwise.
      *
      ********************************************************************************************/
-    virtual cxmodel::Status IsInARowValueValid(size_t p_inARowValue) const = 0;
+    virtual cx::model::Status IsInARowValueValid(size_t p_inARowValue) const = 0;
 
     /******************************************************************************************//**
      * @brief Checks if the board dimensions passed as arguments are valid.
@@ -333,7 +333,7 @@ public:
      * @return `Success` if both height and width are valid, `Error` otherwise.
      *
      ********************************************************************************************/
-    virtual cxmodel::Status AreBoardDimensionsValid(size_t p_boardHeight, size_t p_boardWidth) const = 0;
+    virtual cx::model::Status AreBoardDimensionsValid(size_t p_boardHeight, size_t p_boardWidth) const = 0;
 
     /******************************************************************************************//**
      * @brief Checks if the player names passed as arguments are valid.
@@ -343,7 +343,7 @@ public:
      * @return `Success` if the list of player names is valid, `Error` otherwise.
      *
      ********************************************************************************************/
-    virtual cxmodel::Status ArePlayerNamesValid(const std::vector<std::string>& p_playerNames) const = 0;
+    virtual cx::model::Status ArePlayerNamesValid(const std::vector<std::string>& p_playerNames) const = 0;
 
     /******************************************************************************************//**
      * @brief Checks if the player chip colors passed as arguments are valid.
@@ -353,7 +353,7 @@ public:
      * @return `Success` if the list of player chip colors is valid, `Error` otherwise.
      *
      ********************************************************************************************/
-    virtual cxmodel::Status ArePlayerChipColorsValid(const std::vector<cxmodel::ChipColor>& p_playerChipColors) const = 0;
+    virtual cx::model::Status ArePlayerChipColorsValid(const std::vector<cx::model::ChipColor>& p_playerChipColors) const = 0;
 
     /******************************************************************************************//**
      * @brief Checks if the player types passed as arguments are valid.
@@ -363,7 +363,7 @@ public:
      * @return `Success` if the list of player types is valid, `Error` otherwise.
      *
      ********************************************************************************************/
-    virtual cxmodel::Status ArePlayerTypesValid(const std::vector<cxmodel::PlayerType>& p_playerTypes) const = 0;
+    virtual cx::model::Status ArePlayerTypesValid(const std::vector<cx::model::PlayerType>& p_playerTypes) const = 0;
 
     /******************************************************************************************//**
      * @brief Checks if the new game created by the user is winnable (i.e. do the parameters
@@ -377,7 +377,7 @@ public:
      * @return `Success` if the game is winnable, `Error` otherwise.
      *
      ********************************************************************************************/
-    virtual cxmodel::Status IsNewGameWinnable(size_t p_inARowValue,
+    virtual cx::model::Status IsNewGameWinnable(size_t p_inARowValue,
                                               size_t p_nbOfPlayers,
                                               size_t p_boardHeight,
                                               size_t p_boardWidth) const = 0;
@@ -395,7 +395,7 @@ public:
  * @return A status instance, indicating if the new game information is valid.
  *
  ************************************************************************************************/
-[[nodiscard]] cxmodel::Status Validate(const cxmodel::NewGameInformation& p_gameInformation,
+[[nodiscard]] cx::model::Status Validate(const cx::model::NewGameInformation& p_gameInformation,
                                        const cx::gui::INewGameViewPresenter& p_presenter);
 
 /*********************************************************************************************//**
@@ -414,7 +414,7 @@ public:
  *       have been filtered out.
  *
  ************************************************************************************************/
-[[nodiscard]] std::vector<cxmodel::ChipColor> GetRemainingDefaultColors(const std::vector<cxmodel::ChipColor>& p_alreadyChosenColors,
+[[nodiscard]] std::vector<cx::model::ChipColor> GetRemainingDefaultColors(const std::vector<cx::model::ChipColor>& p_alreadyChosenColors,
                                                                         const cx::gui::INewGameViewPresenter& p_presenter);
 
 }

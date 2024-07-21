@@ -53,7 +53,7 @@ public:
      * @param p_column    The column in which to drop the chip.
      *
      ********************************************************************************************/
-    virtual void OnDown(const cxmodel::ChipColor& p_chipColor, size_t p_column) = 0;
+    virtual void OnDown(const cx::model::ChipColor& p_chipColor, size_t p_column) = 0;
 
     /******************************************************************************************//**
      * @brief Handler for left move by one column.

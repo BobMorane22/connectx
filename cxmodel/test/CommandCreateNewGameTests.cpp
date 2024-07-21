@@ -33,14 +33,14 @@ class CommandCreateNewGameTestFixture : public ::testing::Test
 
 public:
 
-    cxmodel::IConnectXLimits& ModelAsLimitsGet()
+    cx::model::IConnectXLimits& ModelAsLimitsGet()
     {
         return m_model;
     }
 
 private:
 
-    class ModelMock final : public cxmodel::IConnectXLimits
+    class ModelMock final : public cx::model::IConnectXLimits
     {
         size_t GetMinimumGridHeight() const override {return 6u;};
         size_t GetMinimumGridWidth() const override {return 7u;};
@@ -58,24 +58,24 @@ private:
 
 TEST_F(CommandCreateNewGameTestFixture, /*DISABLED_*/Execute_ValidNewGame_NewGameCreated)
 {
-    std::vector<std::shared_ptr<cxmodel::IPlayer>> modelPlayers;
-    std::unique_ptr<cxmodel::IBoard> board;
+    std::vector<std::shared_ptr<cx::model::IPlayer>> modelPlayers;
+    std::unique_ptr<cx::model::IBoard> board;
     size_t modelInARowValue = 0u;
 
-    cxmodel::NewGameInformation newGameInformation;
+    cx::model::NewGameInformation newGameInformation;
 
     newGameInformation.m_gridHeight = 6u;
     newGameInformation.m_gridWidth = 7u;
     newGameInformation.m_inARowValue = 4u;
-    newGameInformation.m_players.emplace_back(cxmodel::CreatePlayer("John Doe", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN));
-    newGameInformation.m_players.emplace_back(cxmodel::CreatePlayer("Jane Doe", cxmodel::MakeBlue(), cxmodel::PlayerType::HUMAN));
+    newGameInformation.m_players.emplace_back(cx::model::CreatePlayer("John Doe", cx::model::MakeRed(), cx::model::PlayerType::HUMAN));
+    newGameInformation.m_players.emplace_back(cx::model::CreatePlayer("Jane Doe", cx::model::MakeBlue(), cx::model::PlayerType::HUMAN));
 
-    cxmodel::CommandCreateNewGame cmd{ModelAsLimitsGet(), board, modelPlayers, modelInARowValue, std::move(newGameInformation)};
-    ASSERT_TRUE(cmd.Execute() == cxmodel::CommandCompletionStatus::SUCCESS);
+    cx::model::CommandCreateNewGame cmd{ModelAsLimitsGet(), board, modelPlayers, modelInARowValue, std::move(newGameInformation)};
+    ASSERT_TRUE(cmd.Execute() == cx::model::CommandCompletionStatus::SUCCESS);
 
     ASSERT_EQ(modelPlayers.size(), 2u);
-    ASSERT_EQ(*modelPlayers[0], *cxmodel::CreatePlayer("John Doe", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN));
-    ASSERT_EQ(*modelPlayers[1], *cxmodel::CreatePlayer("Jane Doe", cxmodel::MakeBlue(), cxmodel::PlayerType::HUMAN));
+    ASSERT_EQ(*modelPlayers[0], *cx::model::CreatePlayer("John Doe", cx::model::MakeRed(), cx::model::PlayerType::HUMAN));
+    ASSERT_EQ(*modelPlayers[1], *cx::model::CreatePlayer("Jane Doe", cx::model::MakeBlue(), cx::model::PlayerType::HUMAN));
 
     ASSERT_TRUE(board);
     ASSERT_EQ(board->GetNbRows(), 6u);
@@ -85,20 +85,20 @@ TEST_F(CommandCreateNewGameTestFixture, /*DISABLED_*/Execute_ValidNewGame_NewGam
 
 TEST_F(CommandCreateNewGameTestFixture, /*DISABLED_*/Undo_ValidNewGame_HasNoEffect)
 {
-    std::vector<std::shared_ptr<cxmodel::IPlayer>> modelPlayers;
-    std::unique_ptr<cxmodel::IBoard> board;
+    std::vector<std::shared_ptr<cx::model::IPlayer>> modelPlayers;
+    std::unique_ptr<cx::model::IBoard> board;
     size_t modelInARowValue = 0u;
 
-    cxmodel::NewGameInformation newGameInformation;
+    cx::model::NewGameInformation newGameInformation;
 
     newGameInformation.m_gridHeight = 6u;
     newGameInformation.m_gridWidth = 7u;
     newGameInformation.m_inARowValue = 4u;
-    newGameInformation.m_players.emplace_back(cxmodel::CreatePlayer("John Doe", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN));
-    newGameInformation.m_players.emplace_back(cxmodel::CreatePlayer("Jane Doe", cxmodel::MakeBlue(), cxmodel::PlayerType::HUMAN));
+    newGameInformation.m_players.emplace_back(cx::model::CreatePlayer("John Doe", cx::model::MakeRed(), cx::model::PlayerType::HUMAN));
+    newGameInformation.m_players.emplace_back(cx::model::CreatePlayer("Jane Doe", cx::model::MakeBlue(), cx::model::PlayerType::HUMAN));
 
-    cxmodel::CommandCreateNewGame cmd{ModelAsLimitsGet(), board, modelPlayers, modelInARowValue, std::move(newGameInformation)};
-    ASSERT_TRUE(cmd.Execute() == cxmodel::CommandCompletionStatus::SUCCESS);
+    cx::model::CommandCreateNewGame cmd{ModelAsLimitsGet(), board, modelPlayers, modelInARowValue, std::move(newGameInformation)};
+    ASSERT_TRUE(cmd.Execute() == cx::model::CommandCompletionStatus::SUCCESS);
 
     // For now, undoing should have no effect:
     {
@@ -108,8 +108,8 @@ TEST_F(CommandCreateNewGameTestFixture, /*DISABLED_*/Undo_ValidNewGame_HasNoEffe
     }
 
     ASSERT_EQ(modelPlayers.size(), 2u);
-    ASSERT_EQ(*modelPlayers[0], *cxmodel::CreatePlayer("John Doe", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN));
-    ASSERT_EQ(*modelPlayers[1], *cxmodel::CreatePlayer("Jane Doe", cxmodel::MakeBlue(), cxmodel::PlayerType::HUMAN));
+    ASSERT_EQ(*modelPlayers[0], *cx::model::CreatePlayer("John Doe", cx::model::MakeRed(), cx::model::PlayerType::HUMAN));
+    ASSERT_EQ(*modelPlayers[1], *cx::model::CreatePlayer("Jane Doe", cx::model::MakeBlue(), cx::model::PlayerType::HUMAN));
 
     ASSERT_TRUE(board);
     ASSERT_EQ(board->GetNbRows(), 6u);

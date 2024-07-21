@@ -37,7 +37,7 @@ namespace cx::gui
  *
  ************************************************************************************************/
 class IWindow : public IWidget,
-                public cxmodel::IModelObserver
+                public cx::model::IModelObserver
 {
 
 public:

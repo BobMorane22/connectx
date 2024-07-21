@@ -45,13 +45,13 @@ public:
      * @param p_modelAsVersionning The Connect X compatible model (Versionning).
      *
      ********************************************************************************************/
-    CmdArgVersionStrategy(cxmodel::IVersioning& p_modelAsVersionning);
+    CmdArgVersionStrategy(cx::model::IVersioning& p_modelAsVersionning);
 
     int Handle() override;
 
 private:
 
-    cxmodel::IVersioning& m_modelAsVersionning;
+    cx::model::IVersioning& m_modelAsVersionning;
 
 };
 

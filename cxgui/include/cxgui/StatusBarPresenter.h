@@ -40,7 +40,7 @@ public:
 
     std::string GetStatusBarMessage() const override;
 
-    virtual void Update(cxmodel::ModelNotificationContext p_context, cxmodel::ModelSubject* p_subject) override;
+    virtual void Update(cx::model::ModelNotificationContext p_context, cx::model::ModelSubject* p_subject) override;
 
 
 private:
@@ -63,7 +63,7 @@ private:
  * @return The formatted string related to the model notification context (can be empty).
  *
  *************************************************************************************************/
-[[nodiscard]] std::string MakeStatusBarContextString(cxmodel::ModelNotificationContext p_context);
+[[nodiscard]] std::string MakeStatusBarContextString(cx::model::ModelNotificationContext p_context);
 
 } // namespace cx::gui
 

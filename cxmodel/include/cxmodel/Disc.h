@@ -28,7 +28,7 @@
 
 #include "IChip.h"
 
-namespace cxmodel
+namespace cx::model
 {
 
 /*********************************************************************************************//**
@@ -37,7 +37,7 @@ namespace cxmodel
  * They are the classic Connect 4 disc shaped, mono colored chips.
  *
  ************************************************************************************************/
-class Disc : public cxmodel::IChip
+class Disc : public cx::model::IChip
 {
 
 public:
@@ -68,6 +68,6 @@ private:
     ChipColor m_color;
 };
 
-} // namespace cxmodel
+} // namespace cx::model
 
 #endif // DISC_H_E4E3699A_35A5_4050_AAE7_C91C2C38DCEF

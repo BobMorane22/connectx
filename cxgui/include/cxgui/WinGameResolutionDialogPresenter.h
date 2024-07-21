@@ -44,7 +44,7 @@ public:
      * @param p_modelAsInformation The model (Game information).
      *
      ********************************************************************************************/
-    WinGameResolutionDialogPresenter(const cxmodel::IConnectXGameInformation& p_modelAsInformation);
+    WinGameResolutionDialogPresenter(const cx::model::IConnectXGameInformation& p_modelAsInformation);
 
     // IGameResolutionDialogPresenter:
     std::string GetTitle() const override;
@@ -53,7 +53,7 @@ public:
 
 private:
 
-    const cxmodel::IConnectXGameInformation& m_modelAsInformation;
+    const cx::model::IConnectXGameInformation& m_modelAsInformation;
 
     std::string m_resolutionMessage;
 };

@@ -33,14 +33,14 @@ public:
 
     CommandStackTestFixture();
 
-    cxmodel::ICommandStack* GetCommandStack();
+    cx::model::ICommandStack* GetCommandStack();
     size_t GetCommandStackSize() const;
 
 
 private:
 
     const size_t m_STACK_SIZE;
-    std::unique_ptr< cxmodel::ICommandStack > m_stack;
+    std::unique_ptr< cx::model::ICommandStack > m_stack;
 };
 
 ADD_STREAM_REDIRECTORS(CommandStackTestFixture);

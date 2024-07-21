@@ -57,12 +57,12 @@ namespace
  *************************************************************************************************/
 template<typename Channel>
 void SetSourceColor(const Cairo::RefPtr<Cairo::Context>& p_context,
-                    const cxmodel::Color<Channel>& p_newSourceColor)
+                    const cx::model::Color<Channel>& p_newSourceColor)
 {
-    p_context->set_source_rgba(cxmodel::NormalizedR(p_newSourceColor),
-                               cxmodel::NormalizedG(p_newSourceColor),
-                               cxmodel::NormalizedB(p_newSourceColor),
-                               cxmodel::NormalizedA(p_newSourceColor));
+    p_context->set_source_rgba(cx::model::NormalizedR(p_newSourceColor),
+                               cx::model::NormalizedG(p_newSourceColor),
+                               cx::model::NormalizedB(p_newSourceColor),
+                               cx::model::NormalizedA(p_newSourceColor));
 }
 
 /**************************************************************************************************
@@ -83,7 +83,7 @@ void SetSourceColor(const Cairo::RefPtr<Cairo::Context>& p_context,
 void DrawChip(const Cairo::RefPtr<Cairo::Context>& p_context,
               const cx::math::Position& p_centerPosition,
               double p_radius,
-              const cxmodel::ChipColor& p_backgroundColor)
+              const cx::model::ChipColor& p_backgroundColor)
 {
     const cx::gui::Gtkmm3ContextRestoreRAII contextRestoreRAII{p_context};
 
@@ -185,12 +185,12 @@ void cx::gui::Gtkmm3AnimatedBoard::SetDelegate(std::unique_ptr<IWidget> p_delega
     POSTCONDITION(m_delegate);
 }
 
-const cxmodel::Column& cx::gui::Gtkmm3AnimatedBoard::GetCurrentColumn() const
+const cx::model::Column& cx::gui::Gtkmm3AnimatedBoard::GetCurrentColumn() const
 {
     return m_animationModel->GetCurrentColumn();
 }
 
-cxmodel::ChipColor cx::gui::Gtkmm3AnimatedBoard::GetCurrentChipColor() const
+cx::model::ChipColor cx::gui::Gtkmm3AnimatedBoard::GetCurrentChipColor() const
 {
     return m_presenter->GetActivePlayerChipColor();
 }
@@ -267,7 +267,7 @@ bool cx::gui::Gtkmm3AnimatedBoard::on_draw(const Cairo::RefPtr<Cairo::Context>& 
                                   m_animationModel->GetAnimatedAreaDimensions().m_height.Get(),
                                   m_animationModel->GetAnimatedAreaDimensions().m_width.Get());
 
-        SetSourceColor(bufferContext, cxmodel::MakeTransparent());
+        SetSourceColor(bufferContext, cx::model::MakeTransparent());
         bufferContext->set_operator(Cairo::Operator::OPERATOR_SOURCE);
         bufferContext->fill_preserve();
         bufferContext->stroke();
@@ -277,7 +277,7 @@ bool cx::gui::Gtkmm3AnimatedBoard::on_draw(const Cairo::RefPtr<Cairo::Context>& 
     DrawActiveColumnHighlight(bufferContext);
 
     // Draw Chip(s):
-    const cxmodel::ChipColor chipColor = m_presenter->GetActivePlayerChipColor();
+    const cx::model::ChipColor chipColor = m_presenter->GetActivePlayerChipColor();
     DrawChip(bufferContext,
              m_animationModel->GetChipPosition(),
              m_animationModel->GetChipRadius().Get() + m_animationModel->GetLineWidth(cx::gui::Feature::CHIP).Get(),
@@ -296,7 +296,7 @@ bool cx::gui::Gtkmm3AnimatedBoard::on_draw(const Cairo::RefPtr<Cairo::Context>& 
     {
         for(size_t column = 0u; column < m_presenter->GetBoardWidth().Get(); ++column)
         {
-            DrawBoardElement(bufferContext, cxmodel::Row{row}, cxmodel::Column{column});
+            DrawBoardElement(bufferContext, cx::model::Row{row}, cx::model::Column{column});
         }
     }
 
@@ -345,7 +345,7 @@ void cx::gui::Gtkmm3AnimatedBoard::DrawActiveColumnHighlight(const Cairo::RefPtr
 
 // See `on_draw()`. Basically draws a chip and the rectangular space around it (which has the board color). All
 // these elements together make the board.
-void cx::gui::Gtkmm3AnimatedBoard::DrawBoardElement(const Cairo::RefPtr<Cairo::Context>& p_context, const cxmodel::Row& p_row, const cxmodel::Column& p_column)
+void cx::gui::Gtkmm3AnimatedBoard::DrawBoardElement(const Cairo::RefPtr<Cairo::Context>& p_context, const cx::model::Row& p_row, const cx::model::Column& p_column)
 {
     const cx::math::Dimensions cellDimensions = m_animationModel->GetCellDimensions();
     const double cellWidth = cellDimensions.m_width.Get();
@@ -353,7 +353,7 @@ void cx::gui::Gtkmm3AnimatedBoard::DrawBoardElement(const Cairo::RefPtr<Cairo::C
     const double radius = m_animationModel->GetChipRadius().Get() + m_animationModel->GetLineWidth(cx::gui::Feature::CHIP).Get();
 
     const IGameViewPresenter::ChipColors& chipColors = m_presenter->GetBoardChipColors();
-    const cxmodel::ChipColor chipColor = chipColors[p_row.Get()][p_column.Get()];
+    const cx::model::ChipColor chipColor = chipColors[p_row.Get()][p_column.Get()];
 
     const Gtkmm3ContextRestoreRAII contextRestoreRAII{p_context};
 
@@ -656,7 +656,7 @@ bool cx::gui::Gtkmm3AnimatedBoard::OnMouseButtonPressed(GdkEventButton* p_event)
     if(p_event->type == GDK_BUTTON_PRESS && p_event->button == 1)
     {
         // We update the model with the necessary information:
-        const cxmodel::Column columnUnderMousePointer = cx::gui::ComputeColumnFromPosition(*m_animationModel, {p_event->x, p_event->y});
+        const cx::model::Column columnUnderMousePointer = cx::gui::ComputeColumnFromPosition(*m_animationModel, {p_event->x, p_event->y});
         const cx::math::Position targetChipPosition = cx::gui::ComputeChipPositionFromColumn(*m_animationModel, columnUnderMousePointer);
 
         m_animationModel->UpdateCurrentColumn(columnUnderMousePointer);
@@ -692,7 +692,7 @@ bool cx::gui::Gtkmm3AnimatedBoard::OnMouseMotion(GdkEventMotion* p_event)
     // The board is not animated at the moment. We catch the event:
     if(p_event->type == GDK_MOTION_NOTIFY)
     {
-        const cxmodel::Column columnUnderMousePointer = cx::gui::ComputeColumnFromPosition(*m_animationModel, {p_event->x, p_event->y});
+        const cx::model::Column columnUnderMousePointer = cx::gui::ComputeColumnFromPosition(*m_animationModel, {p_event->x, p_event->y});
 
         if(columnUnderMousePointer == m_animationModel->GetCurrentColumn())
         {

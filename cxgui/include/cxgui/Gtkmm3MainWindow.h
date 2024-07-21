@@ -102,7 +102,7 @@ public:
      ********************************************************************************************/
     Gtkmm3MainWindow(
         Gtk::Application& p_gtkApplication,
-        cxmodel::ModelSubject& p_model,
+        cx::model::ModelSubject& p_model,
         IMainWindowController& p_controller,
         IMainWindowPresenter& p_presenter,
         WidgetsFactories& p_widgetsFactories);
@@ -113,16 +113,16 @@ public:
 
 private:
 
-    void Update(cxmodel::ModelNotificationContext p_context, cxmodel::ModelSubject* p_subject) override;
+    void Update(cx::model::ModelNotificationContext p_context, cx::model::ModelSubject* p_subject) override;
 
     void UpdateCreateNewGame();
-    void UpdateChipDropped(cxmodel::ModelNotificationContext p_context);
-    void UpdateChipMoved(cxmodel::ModelNotificationContext p_context);
-    void UpdateGameWon(cxmodel::ModelNotificationContext p_context);
-    void UpdateGameTied(cxmodel::ModelNotificationContext p_context);
+    void UpdateChipDropped(cx::model::ModelNotificationContext p_context);
+    void UpdateChipMoved(cx::model::ModelNotificationContext p_context);
+    void UpdateGameWon(cx::model::ModelNotificationContext p_context);
+    void UpdateGameTied(cx::model::ModelNotificationContext p_context);
     void UpdateGameEnded();
-    void UpdateGameReinitialized(cxmodel::ModelNotificationContext p_context);
-    void UpdateMenuItems(cxmodel::ModelNotificationContext p_context);
+    void UpdateGameReinitialized(cx::model::ModelNotificationContext p_context);
+    void UpdateMenuItems(cx::model::ModelNotificationContext p_context);
 
     void InitializeWidgets() override;
     void ConfigureWindow() override;
@@ -142,7 +142,7 @@ private:
     void OnHelpContentsRequested();
     void OnCreateAboutWindow();
 
-    void CreateGameResolutionWindow(cxmodel::ModelNotificationContext p_context);
+    void CreateGameResolutionWindow(cx::model::ModelNotificationContext p_context);
 
     void ActivateNewGameView();
     void DeactivateNewGameView();
@@ -154,7 +154,7 @@ private:
 
     Gtk::Application& m_gtkApplication;
 
-    cxmodel::ModelSubject& m_model;
+    cx::model::ModelSubject& m_model;
 
     IMainWindowController& m_controller;
     IMainWindowPresenter& m_presenter;
@@ -179,8 +179,8 @@ private:
     std::unique_ptr<IMenuItem> m_aboutMenuItem;
 
     // Views:
-    const cxmodel::Column m_viewLeft;
-    const cxmodel::Row m_viewTop;
+    const cx::model::Column m_viewLeft;
+    const cx::model::Row m_viewTop;
     std::unique_ptr<IView> m_newGameView;
     std::unique_ptr<IView> m_gameView;
 

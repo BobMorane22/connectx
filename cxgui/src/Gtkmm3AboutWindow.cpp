@@ -42,7 +42,7 @@ cx::gui::Gtkmm3AboutWindow::Gtkmm3AboutWindow(
     POSTCONDITION(m_presenter);
 }
 
-void cx::gui::Gtkmm3AboutWindow::Update(cxmodel::ModelNotificationContext /*p_context*/, cxmodel::ModelSubject* /*p_subject*/)
+void cx::gui::Gtkmm3AboutWindow::Update(cx::model::ModelNotificationContext /*p_context*/, cx::model::ModelSubject* /*p_subject*/)
 {
     // Nothing to do...
 }
@@ -84,16 +84,16 @@ void cx::gui::Gtkmm3AboutWindow::RegisterWidgets()
 {
     IF_CONDITION_NOT_MET_DO(m_mainLayout, return;);
 
-    constexpr cxmodel::Row row0{0u};
-    constexpr cxmodel::Row row1{1u};
-    constexpr cxmodel::Row row2{2u};
-    constexpr cxmodel::Row row3{3u};
-    constexpr cxmodel::Row row4{4u};
-    constexpr cxmodel::Row row5{5u};
-    constexpr cxmodel::Row row6{6u};
+    constexpr cx::model::Row row0{0u};
+    constexpr cx::model::Row row1{1u};
+    constexpr cx::model::Row row2{2u};
+    constexpr cx::model::Row row3{3u};
+    constexpr cx::model::Row row4{4u};
+    constexpr cx::model::Row row5{5u};
+    constexpr cx::model::Row row6{6u};
     constexpr cx::gui::ILayout::RowSpan rowSpan1{1u};
 
-    constexpr cxmodel::Column column0{0u};
+    constexpr cx::model::Column column0{0u};
     constexpr cx::gui::ILayout::ColumnSpan columnSpan1{1u};
     
     m_mainLayout->Register(*m_name,        {row0, rowSpan1}, {column0, columnSpan1});

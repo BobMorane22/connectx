@@ -30,7 +30,7 @@
 #include "BasicConnectXLimitsModelMock.h"
 #include "ConfigurableMainWindowPresenterTestFixture.h"
 
-class BasicUndoRedoModelMock : public cxmodel::IUndoRedo
+class BasicUndoRedoModelMock : public cx::model::IUndoRedo
 {
 
 public:
@@ -63,7 +63,7 @@ cx::gui::IMainWindowPresenter& ConfigurableMainWindowPresenterTestFixture::GetPr
     return *m_presenter;
 }
 
-void ConfigurableMainWindowPresenterTestFixture::SetGameInformationModel(std::unique_ptr<cxmodel::IConnectXGameInformation>&& p_model)
+void ConfigurableMainWindowPresenterTestFixture::SetGameInformationModel(std::unique_ptr<cx::model::IConnectXGameInformation>&& p_model)
 {
     EXPECT_TRUE(p_model);
     m_modelAsGameInformation = std::move(p_model);
@@ -72,7 +72,7 @@ void ConfigurableMainWindowPresenterTestFixture::SetGameInformationModel(std::un
     EXPECT_TRUE(m_presenter);
 }
 
-void ConfigurableMainWindowPresenterTestFixture::SetLimitsModel(std::unique_ptr<cxmodel::IConnectXLimits>&& p_model)
+void ConfigurableMainWindowPresenterTestFixture::SetLimitsModel(std::unique_ptr<cx::model::IConnectXLimits>&& p_model)
 {
     EXPECT_TRUE(p_model);
     m_modelAsLimits = std::move(p_model);
@@ -81,7 +81,7 @@ void ConfigurableMainWindowPresenterTestFixture::SetLimitsModel(std::unique_ptr<
     EXPECT_TRUE(m_presenter);
 }
 
-void ConfigurableMainWindowPresenterTestFixture::SetUndoRedoModel(std::unique_ptr<cxmodel::IUndoRedo>&& p_model)
+void ConfigurableMainWindowPresenterTestFixture::SetUndoRedoModel(std::unique_ptr<cx::model::IUndoRedo>&& p_model)
 {
     EXPECT_TRUE(p_model);
     m_modelAsUndoRedo = std::move(p_model);
@@ -90,7 +90,7 @@ void ConfigurableMainWindowPresenterTestFixture::SetUndoRedoModel(std::unique_pt
     EXPECT_TRUE(m_presenter);
 }
 
-void ConfigurableMainWindowPresenterTestFixture::SetAIModel(std::unique_ptr<cxmodel::IConnectXAI>&& p_model)
+void ConfigurableMainWindowPresenterTestFixture::SetAIModel(std::unique_ptr<cx::model::IConnectXAI>&& p_model)
 {
     EXPECT_TRUE(p_model);
     m_modelAsAI = std::move(p_model);
@@ -99,19 +99,19 @@ void ConfigurableMainWindowPresenterTestFixture::SetAIModel(std::unique_ptr<cxmo
     EXPECT_TRUE(m_presenter);
 }
 
-cxmodel::IConnectXGameInformation& ConfigurableMainWindowPresenterTestFixture::GetGameInformationModel()
+cx::model::IConnectXGameInformation& ConfigurableMainWindowPresenterTestFixture::GetGameInformationModel()
 {
     EXPECT_TRUE(m_modelAsGameInformation);
     return *m_modelAsGameInformation;
 }
 
-cxmodel::IConnectXLimits& ConfigurableMainWindowPresenterTestFixture::GetLimitsModel()
+cx::model::IConnectXLimits& ConfigurableMainWindowPresenterTestFixture::GetLimitsModel()
 {
     EXPECT_TRUE(m_modelAsLimits);
     return *m_modelAsLimits;
 }
 
-cxmodel::IConnectXAI& ConfigurableMainWindowPresenterTestFixture::GetAIModel()
+cx::model::IConnectXAI& ConfigurableMainWindowPresenterTestFixture::GetAIModel()
 {
     EXPECT_TRUE(m_modelAsAI);
     return *m_modelAsAI;

@@ -54,7 +54,7 @@ public:
      *      The new fill color.
      *
      ********************************************************************************************/
-    virtual void ChangeColor(const cxmodel::ChipColor& p_newFillColor) = 0;
+    virtual void ChangeColor(const cx::model::ChipColor& p_newFillColor) = 0;
 
     /******************************************************************************************//**
      * @brief Chip color accessor.
@@ -63,7 +63,7 @@ public:
      *      The chip's color.
      *
      ********************************************************************************************/
-    [[nodiscard]] virtual cxmodel::ChipColor GetColor() const = 0;
+    [[nodiscard]] virtual cx::model::ChipColor GetColor() const = 0;
 
     /******************************************************************************************//**
      * @brief Highlights the current chip.

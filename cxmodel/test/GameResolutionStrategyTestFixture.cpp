@@ -275,11 +275,11 @@ BoardConfigurationData ExtractBoardConfigurationData(const std::string& p_asciiG
  *
  ********************************************************************************************/
 void DropChipInternal(size_t p_column,
-                      const cxmodel::IChip& p_chip,
-                      cxmodel::IBoard& p_board,
-                      std::vector<cxmodel::IBoard::Position>& p_takenPositions)
+                      const cx::model::IChip& p_chip,
+                      cx::model::IBoard& p_board,
+                      std::vector<cx::model::IBoard::Position>& p_takenPositions)
 {
-    cxmodel::IBoard::Position position;
+    cx::model::IBoard::Position position;
     ASSERT_TRUE(p_board.DropChip(p_column, p_chip, position));
 
     p_takenPositions.push_back(position);
@@ -308,10 +308,10 @@ void DropChipInternal(size_t p_column,
  *     does not.
  *
  ********************************************************************************************/
-bool ValidateGameInternal(const std::vector<std::shared_ptr<cxmodel::IPlayer>>& p_players,
+bool ValidateGameInternal(const std::vector<std::shared_ptr<cx::model::IPlayer>>& p_players,
                           const size_t p_inARowValue,
                           const BoardConfigurationData& p_boardData,
-                          const cxmodel::IConnectXLimits& p_model)
+                          const cx::model::IConnectXLimits& p_model)
 {
     // Preconditions:
     const size_t nbPlayers = p_players.size();
@@ -324,12 +324,12 @@ bool ValidateGameInternal(const std::vector<std::shared_ptr<cxmodel::IPlayer>>& 
     EXPECT_TRUE(inARow <= p_model.GetMaximumInARowValue());
 
     // Game creation:
-    cxmodel::Board board{p_boardData.m_nbRows, p_boardData.m_nbColumns, p_model};
-    std::vector<cxmodel::IBoard::Position> takenPositions;
+    cx::model::Board board{p_boardData.m_nbRows, p_boardData.m_nbColumns, p_model};
+    std::vector<cx::model::IBoard::Position> takenPositions;
     EXPECT_TRUE(takenPositions.empty());
 
-    cxmodel::WinGameResolutionStrategy winStrategy{board, inARow, p_players, takenPositions};
-    cxmodel::TieGameResolutionStrategy tieStrategy{board, inARow, p_players, takenPositions};
+    cx::model::WinGameResolutionStrategy winStrategy{board, inARow, p_players, takenPositions};
+    cx::model::TieGameResolutionStrategy tieStrategy{board, inARow, p_players, takenPositions};
 
     // Game validation:
     size_t index = 0u;
@@ -401,7 +401,7 @@ bool ValidateGameInternal(const std::vector<std::shared_ptr<cxmodel::IPlayer>>& 
 
 } // namespace
 
-bool GameResolutionStrategyTestFixture::ValidateGame(const std::vector<std::shared_ptr<cxmodel::IPlayer>>& p_playerList,
+bool GameResolutionStrategyTestFixture::ValidateGame(const std::vector<std::shared_ptr<cx::model::IPlayer>>& p_playerList,
                                                      const size_t p_inARowValue,
                                                      const std::string& p_asciiGame)
 {

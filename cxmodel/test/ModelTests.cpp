@@ -39,7 +39,7 @@ TEST_F(ModelTestFixture, /*DISABLED*/_Update_ValidModel_CalledOnUndoChipDrop)
 {
     CreateNewGame(6u, 7u, ModelTestFixture::NbPlayers::TWO, ModelTestFixture::InARowValue::FOUR);
 
-    ModelNotificationCatcher undoDropChipObserver{cxmodel::ModelNotificationContext::UNDO_CHIP_DROPPED};
+    ModelNotificationCatcher undoDropChipObserver{cx::model::ModelNotificationContext::UNDO_CHIP_DROPPED};
     GetModel().Attach(&undoDropChipObserver);
 
     DropChips(1u);
@@ -55,7 +55,7 @@ TEST_F(ModelTestFixture, /*DISABLED_*/Update_ValidModel_CalledOnRedoChipDrop)
 {
     CreateNewGame(6u, 7u, ModelTestFixture::NbPlayers::TWO, ModelTestFixture::InARowValue::FOUR);
 
-    ModelNotificationCatcher redoDropChipObserver{cxmodel::ModelNotificationContext::REDO_CHIP_DROPPED};
+    ModelNotificationCatcher redoDropChipObserver{cx::model::ModelNotificationContext::REDO_CHIP_DROPPED};
     GetModel().Attach(&redoDropChipObserver);
 
     // Drop a chip. This is an initial drop, so no "redo" notification occurs:
@@ -92,7 +92,7 @@ TEST_F(ModelTestFixture, /*DISABLED_*/GetMinimumGridHeight_ValidModel_ValueRetur
 TEST_F(ModelTestFixture, /*DISABLED_*/GetMinimumGridWidth_ValidModel_ValueReturned)
 {
     LoggerMock logger;
-    cxmodel::Model model{std::make_unique<cxmodel::CommandStack>(200), logger};
+    cx::model::Model model{std::make_unique<cx::model::CommandStack>(200), logger};
 
     ASSERT_EQ(GetModel().GetMinimumGridWidth(), 7u);
 }
@@ -131,8 +131,8 @@ TEST_F(ModelTestFixture, /*DISABLED_*/CreateNewGame_ValidNewGameInformation_NewG
 {
     CreateNewGame(6u, 7u, ModelTestFixture::NbPlayers::TWO, ModelTestFixture::InARowValue::FOUR);
 
-    const auto JOHN_DOE = cxmodel::CreatePlayer("John Doe", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN);
-    const auto JANE_DOE = cxmodel::CreatePlayer("Jane Doe", cxmodel::MakeBlue(), cxmodel::PlayerType::HUMAN);
+    const auto JOHN_DOE = cx::model::CreatePlayer("John Doe", cx::model::MakeRed(), cx::model::PlayerType::HUMAN);
+    const auto JANE_DOE = cx::model::CreatePlayer("Jane Doe", cx::model::MakeBlue(), cx::model::PlayerType::HUMAN);
 
     ASSERT_EQ(GetModel().GetActivePlayer(), *JOHN_DOE);
     ASSERT_EQ(GetModel().GetNextPlayer(), *JANE_DOE);
@@ -143,7 +143,7 @@ TEST_F(ModelTestFixture, /*DISABLED_*/CreateNewGame_ValidNewGameInformation_NewG
 
 TEST_F(ModelTestFixture, /*DISABLED_*/CreateNewGame_ValidNewGameInformation_CreateNewGameNotificationSent)
 {
-    ModelNotificationCatcher createNewGameObserver{cxmodel::ModelNotificationContext::CREATE_NEW_GAME};
+    ModelNotificationCatcher createNewGameObserver{cx::model::ModelNotificationContext::CREATE_NEW_GAME};
     GetModel().Attach(&createNewGameObserver);
 
     ASSERT_FALSE(createNewGameObserver.WasNotified());
@@ -156,7 +156,7 @@ TEST_F(ModelTestFixture, /*DISABLED_*/DropChip_ValidModelChipAndColumn_ChipDropp
     CreateNewGame(6u, 7u, ModelTestFixture::NbPlayers::TWO, ModelTestFixture::InARowValue::FOUR);
 
     // We then attach the model to our observer:
-    ModelNotificationCatcher chipDropObserver{cxmodel::ModelNotificationContext::CHIP_DROPPED};
+    ModelNotificationCatcher chipDropObserver{cx::model::ModelNotificationContext::CHIP_DROPPED};
     GetModel().Attach(&chipDropObserver);
 
     // We drop a chip. It should trigger a notification since the board is empty:
@@ -170,8 +170,8 @@ TEST_F(ModelTestFixture, /*DISABLED_*/DropChip_ValidModelChipAndColumn_ChipDropp
     CreateNewGame(6u, 7u, ModelTestFixture::NbPlayers::TWO, ModelTestFixture::InARowValue::FOUR);
 
     // We then attach the model to our observer:
-    ModelNotificationCatcher chipDropObserverNotFull{cxmodel::ModelNotificationContext::CHIP_DROPPED};
-    ModelNotificationCatcher chipDropObserverFull{cxmodel::ModelNotificationContext::CHIP_DROPPED};
+    ModelNotificationCatcher chipDropObserverNotFull{cx::model::ModelNotificationContext::CHIP_DROPPED};
+    ModelNotificationCatcher chipDropObserverFull{cx::model::ModelNotificationContext::CHIP_DROPPED};
 
     const int column = 0u;
     GetModel().DropChip(GetPlayer(0u).GetChip(), column);
@@ -201,7 +201,7 @@ TEST_F(ModelTestFixture, /*DISABLED_*/DropChip_ValidModelChipAndColumn_ChipDropp
     CreateNewGame(6u, 7u, ModelTestFixture::NbPlayers::TWO, ModelTestFixture::InARowValue::FOUR);
 
     // We then attach the model to our observer:
-    ModelNotificationCatcher chipDropObserverNotFull{cxmodel::ModelNotificationContext::CHIP_DROPPED_FAILED};
+    ModelNotificationCatcher chipDropObserverNotFull{cx::model::ModelNotificationContext::CHIP_DROPPED_FAILED};
 
     const int column = 0u;
     GetModel().DropChip(GetPlayer(0u).GetChip(), column);
@@ -224,14 +224,14 @@ TEST_F(ModelTestFixture, /*DISABLED_*/DropChip_ValidModelChipAndColumn_GameDataU
 {
     CreateNewGame(6u, 7u, NbPlayers::TWO, InARowValue::FOUR);
 
-    ASSERT_EQ(GetModel().GetActivePlayer(), *cxmodel::CreatePlayer("John Doe", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN));
-    ASSERT_EQ(GetModel().GetNextPlayer(), *cxmodel::CreatePlayer("Mary Foo", cxmodel::MakeBlue(), cxmodel::PlayerType::HUMAN));
+    ASSERT_EQ(GetModel().GetActivePlayer(), *cx::model::CreatePlayer("John Doe", cx::model::MakeRed(), cx::model::PlayerType::HUMAN));
+    ASSERT_EQ(GetModel().GetNextPlayer(), *cx::model::CreatePlayer("Mary Foo", cx::model::MakeBlue(), cx::model::PlayerType::HUMAN));
 
     // We drop a chip:
     DropChips(1u);
 
-    ASSERT_EQ(GetModel().GetActivePlayer(), *cxmodel::CreatePlayer("Mary Foo", cxmodel::MakeBlue(), cxmodel::PlayerType::HUMAN));
-    ASSERT_EQ(GetModel().GetNextPlayer(), *cxmodel::CreatePlayer("John Doe", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN));
+    ASSERT_EQ(GetModel().GetActivePlayer(), *cx::model::CreatePlayer("Mary Foo", cx::model::MakeBlue(), cx::model::PlayerType::HUMAN));
+    ASSERT_EQ(GetModel().GetNextPlayer(), *cx::model::CreatePlayer("John Doe", cx::model::MakeRed(), cx::model::PlayerType::HUMAN));
 }
 
 TEST_F(ModelTestFixtureStdErrStreamRedirector, /*DISABLED_*/DropChip_ValidModelTwoSameChipsDropped_GameDataNotUpdated)
@@ -239,32 +239,32 @@ TEST_F(ModelTestFixtureStdErrStreamRedirector, /*DISABLED_*/DropChip_ValidModelT
     CreateNewGame(6u, 7u, NbPlayers::TWO, InARowValue::FOUR);
 
     // We drop a chip:
-    ASSERT_EQ(GetModel().GetActivePlayer(), *cxmodel::CreatePlayer("John Doe", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN));
-    ASSERT_EQ(GetModel().GetNextPlayer(), *cxmodel::CreatePlayer("Mary Foo", cxmodel::MakeBlue(), cxmodel::PlayerType::HUMAN));
+    ASSERT_EQ(GetModel().GetActivePlayer(), *cx::model::CreatePlayer("John Doe", cx::model::MakeRed(), cx::model::PlayerType::HUMAN));
+    ASSERT_EQ(GetModel().GetNextPlayer(), *cx::model::CreatePlayer("Mary Foo", cx::model::MakeBlue(), cx::model::PlayerType::HUMAN));
 
-    const cxmodel::Disc RED_CHIP{cxmodel::MakeRed()};
+    const cx::model::Disc RED_CHIP{cx::model::MakeRed()};
     GetModel().DropChip(RED_CHIP, 0u);
 
     // This will assert:
     GetModel().DropChip(RED_CHIP, 0u);
 
-    ASSERT_EQ(GetModel().GetActivePlayer(), *cxmodel::CreatePlayer("Jane Doe", cxmodel::MakeBlue(), cxmodel::PlayerType::HUMAN));
-    ASSERT_EQ(GetModel().GetNextPlayer(), *cxmodel::CreatePlayer("John Doe", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN));
+    ASSERT_EQ(GetModel().GetActivePlayer(), *cx::model::CreatePlayer("Jane Doe", cx::model::MakeBlue(), cx::model::PlayerType::HUMAN));
+    ASSERT_EQ(GetModel().GetNextPlayer(), *cx::model::CreatePlayer("John Doe", cx::model::MakeRed(), cx::model::PlayerType::HUMAN));
 }
 
 TEST_F(ModelTestFixture, /*DISABLED_*/DropChip_ValidModelGameIsWon_NotificationsHappen)
 {
-    ModelNotificationCatcher gameWonObserver{cxmodel::ModelNotificationContext::GAME_WON};
+    ModelNotificationCatcher gameWonObserver{cx::model::ModelNotificationContext::GAME_WON};
 
     GetModel().Attach(&gameWonObserver);
     CreateNewGame(6u, 7u, NbPlayers::TWO, InARowValue::FOUR);
 
     // We drop chips:
-    const cxmodel::Disc RED_CHIP{cxmodel::MakeRed()};
-    const cxmodel::Disc BLUE_CHIP{cxmodel::MakeBlue()};
+    const cx::model::Disc RED_CHIP{cx::model::MakeRed()};
+    const cx::model::Disc BLUE_CHIP{cx::model::MakeBlue()};
 
-    ASSERT_EQ(GetModel().GetActivePlayer(), *cxmodel::CreatePlayer("John Doe", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN));
-    ASSERT_EQ(GetModel().GetNextPlayer(), *cxmodel::CreatePlayer("Mary Foo", cxmodel::MakeBlue(), cxmodel::PlayerType::HUMAN));
+    ASSERT_EQ(GetModel().GetActivePlayer(), *cx::model::CreatePlayer("John Doe", cx::model::MakeRed(), cx::model::PlayerType::HUMAN));
+    ASSERT_EQ(GetModel().GetNextPlayer(), *cx::model::CreatePlayer("Mary Foo", cx::model::MakeBlue(), cx::model::PlayerType::HUMAN));
 
     DropChips(6u);
 
@@ -278,8 +278,8 @@ TEST_F(ModelTestFixture, /*DISABLED_*/DropChip_ValidModelGameIsWon_WinnerIsFirst
 {
     CreateNewGame(6u, 7u, NbPlayers::THREE, InARowValue::FOUR);
 
-    const cxmodel::IPlayer& FIRST_PLAYER = GetPlayer(0u);
-    const cxmodel::IPlayer& SECOND_PLAYER = GetPlayer(1u);
+    const cx::model::IPlayer& FIRST_PLAYER = GetPlayer(0u);
+    const cx::model::IPlayer& SECOND_PLAYER = GetPlayer(1u);
 
     ASSERT_EQ(GetModel().GetActivePlayer(), FIRST_PLAYER);
     ASSERT_EQ(GetModel().GetNextPlayer(), SECOND_PLAYER);
@@ -295,14 +295,14 @@ TEST_F(ModelTestFixture, /*DISABLED_*/DropChip_ValidModelGameIsWon_WinnerIsMiddl
     CreateNewGame(6u, 7u, NbPlayers::THREE, InARowValue::FOUR);
 
     // We drop chips:
-    const cxmodel::IPlayer& FIRST_PLAYER = GetPlayer(0u);
-    const cxmodel::IPlayer& SECOND_PLAYER = GetPlayer(1u);
+    const cx::model::IPlayer& FIRST_PLAYER = GetPlayer(0u);
+    const cx::model::IPlayer& SECOND_PLAYER = GetPlayer(1u);
     ASSERT_EQ(GetModel().GetActivePlayer(), FIRST_PLAYER);
     ASSERT_EQ(GetModel().GetNextPlayer(), SECOND_PLAYER);
 
     // DropChips...
-    const cxmodel::IChip& FIRST_PLAYER_CHIP = FIRST_PLAYER.GetChip();
-    const cxmodel::IChip& SECOND_PLAYER_CHIP = SECOND_PLAYER.GetChip();
+    const cx::model::IChip& FIRST_PLAYER_CHIP = FIRST_PLAYER.GetChip();
+    const cx::model::IChip& SECOND_PLAYER_CHIP = SECOND_PLAYER.GetChip();
 
     DropChips(9u);
     GetModel().DropChip(FIRST_PLAYER_CHIP, 4u);
@@ -318,13 +318,13 @@ TEST_F(ModelTestFixture, /*DISABLED_*/DropChip_ValidModelGameIsWon_WinnerIsLastP
     CreateNewGame(6u, 7u, NbPlayers::THREE, InARowValue::FOUR);
 
     // We drop chips:
-    const cxmodel::IPlayer& FIRST_PLAYER = GetPlayer(0u);
-    const cxmodel::IPlayer& SECOND_PLAYER = GetPlayer(1u);
-    const cxmodel::IPlayer& THIRD_PLAYER = GetPlayer(2u);
+    const cx::model::IPlayer& FIRST_PLAYER = GetPlayer(0u);
+    const cx::model::IPlayer& SECOND_PLAYER = GetPlayer(1u);
+    const cx::model::IPlayer& THIRD_PLAYER = GetPlayer(2u);
 
-    const cxmodel::IChip& FIRST_PLAYER_CHIP = FIRST_PLAYER.GetChip();
-    const cxmodel::IChip& SECOND_PLAYER_CHIP = SECOND_PLAYER.GetChip();
-    const cxmodel::IChip& THIRD_PLAYER_CHIP = THIRD_PLAYER.GetChip();
+    const cx::model::IChip& FIRST_PLAYER_CHIP = FIRST_PLAYER.GetChip();
+    const cx::model::IChip& SECOND_PLAYER_CHIP = SECOND_PLAYER.GetChip();
+    const cx::model::IChip& THIRD_PLAYER_CHIP = THIRD_PLAYER.GetChip();
 
     ASSERT_EQ(GetModel().GetActivePlayer(), FIRST_PLAYER);
     ASSERT_EQ(GetModel().GetNextPlayer(), SECOND_PLAYER);
@@ -341,17 +341,17 @@ TEST_F(ModelTestFixture, /*DISABLED_*/DropChip_ValidModelGameIsWon_WinnerIsLastP
 
 TEST_F(ModelTestFixture, /*DISABLED_*/DropChip_ValidModelGameIsTied_NotificationsHappen)
 {
-    ModelNotificationCatcher gameTiedObserver{cxmodel::ModelNotificationContext::GAME_TIED};
+    ModelNotificationCatcher gameTiedObserver{cx::model::ModelNotificationContext::GAME_TIED};
 
     GetModel().Attach(&gameTiedObserver);
     CreateNewGame(6u, 7u, NbPlayers::TWO, InARowValue::FOUR);
 
     // We drop chips:
-    const cxmodel::Disc RED_CHIP{cxmodel::MakeRed()};
-    const cxmodel::Disc BLUE_CHIP{cxmodel::MakeBlue()};
+    const cx::model::Disc RED_CHIP{cx::model::MakeRed()};
+    const cx::model::Disc BLUE_CHIP{cx::model::MakeBlue()};
 
-    ASSERT_EQ(GetModel().GetActivePlayer(), *cxmodel::CreatePlayer("John Doe", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN));
-    ASSERT_EQ(GetModel().GetNextPlayer(), *cxmodel::CreatePlayer("Mary Foo", cxmodel::MakeBlue(), cxmodel::PlayerType::HUMAN));
+    ASSERT_EQ(GetModel().GetActivePlayer(), *cx::model::CreatePlayer("John Doe", cx::model::MakeRed(), cx::model::PlayerType::HUMAN));
+    ASSERT_EQ(GetModel().GetNextPlayer(), *cx::model::CreatePlayer("Mary Foo", cx::model::MakeBlue(), cx::model::PlayerType::HUMAN));
 
     GetModel().DropChip(RED_CHIP, 0u);
     GetModel().DropChip(BLUE_CHIP, 1u);
@@ -411,7 +411,7 @@ TEST_F(ModelTestFixture, /*DISABLED_*/DropChip_ValidModelGameIsTied_Notification
 
 TEST_F(ModelTestFixture, /*DISABLED_*/MoveLeft_ValidModel_NotificationsSent)
 {
-    ModelNotificationCatcher gameEndedObserver{cxmodel::ModelNotificationContext::CHIP_MOVED_LEFT_ONE_COLUMN};
+    ModelNotificationCatcher gameEndedObserver{cx::model::ModelNotificationContext::CHIP_MOVED_LEFT_ONE_COLUMN};
     
     CreateNewGame(6u, 7u, NbPlayers::TWO, InARowValue::FOUR);
 
@@ -425,7 +425,7 @@ TEST_F(ModelTestFixture, /*DISABLED_*/MoveLeft_ValidModel_NotificationsSent)
 
 TEST_F(ModelTestFixture, /*DISABLED_*/MoveRight_ValidModel_NotificationsSent)
 {
-    ModelNotificationCatcher gameEndedObserver{cxmodel::ModelNotificationContext::CHIP_MOVED_RIGHT_ONE_COLUMN};
+    ModelNotificationCatcher gameEndedObserver{cx::model::ModelNotificationContext::CHIP_MOVED_RIGHT_ONE_COLUMN};
     
     CreateNewGame(6u, 7u, NbPlayers::TWO, InARowValue::FOUR);
 
@@ -439,7 +439,7 @@ TEST_F(ModelTestFixture, /*DISABLED_*/MoveRight_ValidModel_NotificationsSent)
 
 TEST_F(ModelTestFixture, /*DISABLED_*/EndCurrentGame_ValidModel_NotificationsSent)
 {
-    ModelNotificationCatcher gameEndedObserver{cxmodel::ModelNotificationContext::GAME_ENDED};
+    ModelNotificationCatcher gameEndedObserver{cx::model::ModelNotificationContext::GAME_ENDED};
     
     CreateNewGame(6u, 7u, NbPlayers::TWO, InARowValue::FOUR);
 
@@ -456,7 +456,7 @@ TEST_F(ModelTestFixture, /*DISABLED_*/EndCurrentGame_ValidModel_CommandStackEmpt
     CreateNewGame(6u, 7u, NbPlayers::TWO, InARowValue::FOUR);
 
     // We add a command to the stack:
-    const cxmodel::IPlayer& firstPlayer = GetPlayer(0u);
+    const cx::model::IPlayer& firstPlayer = GetPlayer(0u);
     GetModel().DropChip(firstPlayer.GetChip(), 0u);
     ASSERT_FALSE(GetInternalCommandStack().IsEmpty());
 
@@ -471,16 +471,16 @@ TEST_F(ModelTestFixtureStdErrStreamRedirector, /*DISABLED_*/EndCurrentGame_Valid
     // We create a new game:
     CreateNewGame(6u, 7u, NbPlayers::TWO, InARowValue::FOUR);
 
-    const cxmodel::IPlayer& ACTIVE = GetPlayer(0u);
-    const cxmodel::IPlayer& NEXT = GetPlayer(1u);
+    const cx::model::IPlayer& ACTIVE = GetPlayer(0u);
+    const cx::model::IPlayer& NEXT = GetPlayer(1u);
     ASSERT_EQ(ACTIVE, GetModel().GetActivePlayer());
     ASSERT_EQ(NEXT, GetModel().GetNextPlayer());
 
     // And end it:
     GetModel().EndCurrentGame();
 
-    const auto NO_ACTIVE_PLAYER = cxmodel::CreatePlayer("Woops (active)!", {0, 0, 0, 0}, cxmodel::PlayerType::HUMAN);
-    const auto NO_NEXT_PLAYER = cxmodel::CreatePlayer("Woops! (next)", {0, 0, 0, 0}, cxmodel::PlayerType::HUMAN);
+    const auto NO_ACTIVE_PLAYER = cx::model::CreatePlayer("Woops (active)!", {0, 0, 0, 0}, cx::model::PlayerType::HUMAN);
+    const auto NO_NEXT_PLAYER = cx::model::CreatePlayer("Woops! (next)", {0, 0, 0, 0}, cx::model::PlayerType::HUMAN);
 
     // Will assert here...
     ASSERT_EQ(*NO_ACTIVE_PLAYER, GetModel().GetActivePlayer());
@@ -498,7 +498,7 @@ TEST_F(ModelTestFixture, /*DISABLED_*/EndCurrentGame_ValidModel_InARowValueReset
 
 TEST_F(ModelTestFixture, /*DISABLED_*/ReinitializeCurrentGame_ValidModel_NotificationHappens)
 {
-    ModelNotificationCatcher gameReinitializedObserver{cxmodel::ModelNotificationContext::GAME_REINITIALIZED};
+    ModelNotificationCatcher gameReinitializedObserver{cx::model::ModelNotificationContext::GAME_REINITIALIZED};
     
     CreateNewGame(6u, 7u, NbPlayers::TWO, InARowValue::FOUR);
 
@@ -515,7 +515,7 @@ TEST_F(ModelTestFixture, /*DISABLED_*/ReinitializeCurrentGame_ValidModel_Command
     CreateNewGame(6u, 7u, NbPlayers::TWO, InARowValue::FOUR);
 
     // We add a command to the stack:
-    const cxmodel::IPlayer& firstPlayer = GetPlayer(0u);
+    const cx::model::IPlayer& firstPlayer = GetPlayer(0u);
     GetModel().DropChip(firstPlayer.GetChip(), 0u);
     ASSERT_FALSE(GetInternalCommandStack().IsEmpty());
 
@@ -530,16 +530,16 @@ TEST_F(ModelTestFixture, /*DISABLED_*/ReinitializeCurrentGame_ValidModel_BoardRe
     CreateNewGame(6u, 7u, NbPlayers::TWO, InARowValue::FOUR);
 
     // We create valid new game information:
-    const cxmodel::IPlayer& FIRST_PLAYER = GetPlayer(0u);
-    const cxmodel::IPlayer& SECOND_PLAYER = GetPlayer(1u);
+    const cx::model::IPlayer& FIRST_PLAYER = GetPlayer(0u);
+    const cx::model::IPlayer& SECOND_PLAYER = GetPlayer(1u);
     ASSERT_EQ(GetModel().GetActivePlayer(), FIRST_PLAYER);
     ASSERT_EQ(GetModel().GetNextPlayer(), SECOND_PLAYER);
 
     // We drop chips:
     DropChips(2u);
 
-    const cxmodel::IChip& FIRST_PLAYER_CHIP = FIRST_PLAYER.GetChip();
-    const cxmodel::IChip& SECOND_PLAYER_CHIP = SECOND_PLAYER.GetChip();
+    const cx::model::IChip& FIRST_PLAYER_CHIP = FIRST_PLAYER.GetChip();
+    const cx::model::IChip& SECOND_PLAYER_CHIP = SECOND_PLAYER.GetChip();
 
     ASSERT_EQ(FIRST_PLAYER_CHIP.GetColor(), GetModel().GetChip(0u, 0u).GetColor());
     ASSERT_EQ(SECOND_PLAYER_CHIP.GetColor(), GetModel().GetChip(0u, 1u).GetColor());
@@ -550,7 +550,7 @@ TEST_F(ModelTestFixture, /*DISABLED_*/ReinitializeCurrentGame_ValidModel_BoardRe
     {
         for(size_t column = 0u; column < GetModel().GetCurrentGridWidth(); ++column)
         {
-            ASSERT_EQ(cxmodel::MakeTransparent(), GetModel().GetChip(row, column).GetColor());
+            ASSERT_EQ(cx::model::MakeTransparent(), GetModel().GetChip(row, column).GetColor());
         }
     }
 }
@@ -559,11 +559,11 @@ TEST_F(ModelTestFixture, /*DISABLED_*/ReinitializeCurrentGame_ValidModel_Players
 {
     CreateNewGame(6u, 7u, NbPlayers::TWO, InARowValue::FOUR);
 
-    const cxmodel::IPlayer& FIRST_PLAYER = GetPlayer(0u);
-    const cxmodel::IPlayer& SECOND_PLAYER = GetPlayer(1u);
+    const cx::model::IPlayer& FIRST_PLAYER = GetPlayer(0u);
+    const cx::model::IPlayer& SECOND_PLAYER = GetPlayer(1u);
 
     // DropChips...
-    const cxmodel::IChip& FIRST_PLAYER_CHIP = FIRST_PLAYER.GetChip();
+    const cx::model::IChip& FIRST_PLAYER_CHIP = FIRST_PLAYER.GetChip();
     GetModel().DropChip(FIRST_PLAYER_CHIP, 0u);
 
     ASSERT_EQ(GetModel().GetActivePlayer(), SECOND_PLAYER);
@@ -579,8 +579,8 @@ TEST_F(ModelTestFixture, /*DISABLED_*/ReinitializeCurrentGame_ValidModel_WinReso
 {
     CreateNewGame(6u, 7u, NbPlayers::THREE, InARowValue::FOUR);
 
-    const cxmodel::IPlayer& FIRST_PLAYER = GetPlayer(0u);
-    const cxmodel::IPlayer& SECOND_PLAYER = GetPlayer(1u);
+    const cx::model::IPlayer& FIRST_PLAYER = GetPlayer(0u);
+    const cx::model::IPlayer& SECOND_PLAYER = GetPlayer(1u);
     ASSERT_EQ(GetModel().GetActivePlayer(), FIRST_PLAYER);
     ASSERT_EQ(GetModel().GetNextPlayer(), SECOND_PLAYER);
 
@@ -602,16 +602,16 @@ TEST_F(ModelTestFixture, /*DISABLED_*/GetChip_ValidModel_ChipReturned)
     CreateNewGame(6u, 7u, NbPlayers::TWO, InARowValue::FOUR);
 
     // For now, no chip has been dropped, all returned chips should be transparent:
-    const cxmodel::IChip& chipBefore = GetModel().GetChip(0u, 0u);
-    ASSERT_EQ(chipBefore, cxmodel::Disc(cxmodel::MakeTransparent()));
+    const cx::model::IChip& chipBefore = GetModel().GetChip(0u, 0u);
+    ASSERT_EQ(chipBefore, cx::model::Disc(cx::model::MakeTransparent()));
 
     // We drop a chip:
-    const cxmodel::Disc RED_CHIP{cxmodel::MakeRed()};
+    const cx::model::Disc RED_CHIP{cx::model::MakeRed()};
     GetModel().DropChip(RED_CHIP, 0u);
 
     // We now have a red chip at (0,0):
-    const cxmodel::IChip& chipAfter = GetModel().GetChip(0u, 0u);
-    ASSERT_EQ(chipAfter, cxmodel::Disc(cxmodel::MakeRed()));
+    const cx::model::IChip& chipAfter = GetModel().GetChip(0u, 0u);
+    ASSERT_EQ(chipAfter, cx::model::Disc(cx::model::MakeRed()));
 }
 
 TEST_F(ModelTestFixture, /*DISABLED_*/GetChip_InvalidRow_ReturnsNoDisc)
@@ -619,8 +619,8 @@ TEST_F(ModelTestFixture, /*DISABLED_*/GetChip_InvalidRow_ReturnsNoDisc)
     CreateNewGame(6u, 7u, NbPlayers::TWO, InARowValue::FOUR);
 
     // For now, no chip has been dropped, all returned chips should be transparent:
-    const cxmodel::IChip& chipBefore = GetModel().GetChip(GetModel().GetCurrentGridHeight(), 0u);
-    ASSERT_EQ(chipBefore, cxmodel::Disc(cxmodel::MakeTransparent()));
+    const cx::model::IChip& chipBefore = GetModel().GetChip(GetModel().GetCurrentGridHeight(), 0u);
+    ASSERT_EQ(chipBefore, cx::model::Disc(cx::model::MakeTransparent()));
 }
 
 TEST_F(ModelTestFixture, /*DISABLED_*/GetChip_InvalidColumn_ReturnsNoDisc)
@@ -628,8 +628,8 @@ TEST_F(ModelTestFixture, /*DISABLED_*/GetChip_InvalidColumn_ReturnsNoDisc)
     CreateNewGame(6u, 7u, NbPlayers::TWO, InARowValue::FOUR);
 
     // For now, no chip has been dropped, all returned chips should be transparent:
-    const cxmodel::IChip& chipBefore = GetModel().GetChip(0u, GetModel().GetCurrentGridWidth());
-    ASSERT_EQ(chipBefore, cxmodel::Disc(cxmodel::MakeTransparent()));
+    const cx::model::IChip& chipBefore = GetModel().GetChip(0u, GetModel().GetCurrentGridWidth());
+    ASSERT_EQ(chipBefore, cx::model::Disc(cx::model::MakeTransparent()));
 }
 
 TEST_F(ModelTestFixtureStdErrStreamRedirector, /*DISABLED_*/IsWon_ValidModel_DoesNotThrow)
@@ -655,7 +655,7 @@ TEST(Model, /*DISABLED_*/Undo_RandomCommand_UndoCalledOnCommandStack)
 
     // We create a model:
     LoggerMock logger;
-    cxmodel::Model model{std::move(cmdStack), logger};
+    cx::model::Model model{std::move(cmdStack), logger};
 
     ASSERT_FALSE(cmdStackMock.IsUndoed());
 
@@ -672,7 +672,7 @@ TEST_F(ModelTestFixture, /*DISABLED_*/Undo_CommandDropChip_PreviousStateRecovere
     // We record the initial state here:
     const std::string activePlayerName = GetModel().GetActivePlayer().GetName();
     const std::string nextPlayerName = GetModel().GetNextPlayer().GetName();
-    const cxmodel::ChipColor colorAt00 = GetModel().GetChip(0u, 0u).GetColor();
+    const cx::model::ChipColor colorAt00 = GetModel().GetChip(0u, 0u).GetColor();
 
     // We drop a chip at (0, 0) and check that the state has changed:
     DropChips(1u);
@@ -682,7 +682,7 @@ TEST_F(ModelTestFixture, /*DISABLED_*/Undo_CommandDropChip_PreviousStateRecovere
     const std::string nextPlayerNameAfterDrop = GetModel().GetNextPlayer().GetName();
     ASSERT_FALSE(nextPlayerName == nextPlayerNameAfterDrop);
 
-    const cxmodel::ChipColor colorAt00AfterDrop = GetModel().GetChip(0u, 0u).GetColor();
+    const cx::model::ChipColor colorAt00AfterDrop = GetModel().GetChip(0u, 0u).GetColor();
     ASSERT_FALSE(colorAt00 == colorAt00AfterDrop);
     
     // We undo the drop and check that the previous state has been recovered:
@@ -693,22 +693,22 @@ TEST_F(ModelTestFixture, /*DISABLED_*/Undo_CommandDropChip_PreviousStateRecovere
     const std::string nextPlayerNameAfterUndo = GetModel().GetNextPlayer().GetName();
     ASSERT_TRUE(nextPlayerName == nextPlayerNameAfterUndo);
 
-    const cxmodel::ChipColor colorAt00AfterUndo = GetModel().GetChip(0u, 0u).GetColor();
+    const cx::model::ChipColor colorAt00AfterUndo = GetModel().GetChip(0u, 0u).GetColor();
     ASSERT_TRUE(colorAt00 == colorAt00AfterUndo);
 }
 
 TEST_F(ModelTestFixture, /*DISABLED_*/Undo_CommandDropChipWithOneBot_PreviousStateRecovered)
 {
-    cxmodel::Model& model = GetModel();
+    cx::model::Model& model = GetModel();
 
     // We first create a game with one human player and one bot:
-    cxmodel::NewGameInformation newGameInfo;
+    cx::model::NewGameInformation newGameInfo;
     newGameInfo.m_gridWidth = 7u;
     newGameInfo.m_gridHeight = 6u;
     newGameInfo.m_inARowValue = 4u;
 
-    newGameInfo.m_players.push_back(cxmodel::CreatePlayer("P1", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN));
-    newGameInfo.m_players.push_back(cxmodel::CreatePlayer("P2", cxmodel::MakeBlue(), cxmodel::PlayerType::BOT));
+    newGameInfo.m_players.push_back(cx::model::CreatePlayer("P1", cx::model::MakeRed(), cx::model::PlayerType::HUMAN));
+    newGameInfo.m_players.push_back(cx::model::CreatePlayer("P2", cx::model::MakeBlue(), cx::model::PlayerType::BOT));
 
     model.CreateNewGame(std::move(newGameInfo));
 
@@ -718,11 +718,11 @@ TEST_F(ModelTestFixture, /*DISABLED_*/Undo_CommandDropChipWithOneBot_PreviousSta
     // Human players drops a chip, followed by the bot player:
     ASSERT_FALSE(model.GetActivePlayer().IsManaged());
     model.DropChip(model.GetActivePlayer().GetChip(), 1u);
-    ASSERT_TRUE(model.GetChip(0u, 1u).GetColor() == cxmodel::MakeRed());
+    ASSERT_TRUE(model.GetChip(0u, 1u).GetColor() == cx::model::MakeRed());
 
     ASSERT_TRUE(model.GetActivePlayer().IsManaged());
     model.DropChip(model.GetActivePlayer().GetChip(), 1u);
-    ASSERT_TRUE(model.GetChip(1u, 1u).GetColor() == cxmodel::MakeBlue());
+    ASSERT_TRUE(model.GetChip(1u, 1u).GetColor() == cx::model::MakeBlue());
 
     ASSERT_FALSE(model.GetActivePlayer().IsManaged());
 
@@ -732,23 +732,23 @@ TEST_F(ModelTestFixture, /*DISABLED_*/Undo_CommandDropChipWithOneBot_PreviousSta
     // We undo, both the human player and the bot player drops
     // should be undone:
     model.Undo();
-    ASSERT_TRUE(model.GetChip(0u, 1u).GetColor() == cxmodel::MakeTransparent());
-    ASSERT_TRUE(model.GetChip(1u, 1u).GetColor() == cxmodel::MakeTransparent());
+    ASSERT_TRUE(model.GetChip(0u, 1u).GetColor() == cx::model::MakeTransparent());
+    ASSERT_TRUE(model.GetChip(1u, 1u).GetColor() == cx::model::MakeTransparent());
 }
 
 TEST_F(ModelTestFixture, /*DISABLED_*/Undo_CommandDropChipWithTwoBots_PreviousStateRecovered)
 {
-    cxmodel::Model& model = GetModel();
+    cx::model::Model& model = GetModel();
 
     // We first create a game with one human player and one bot:
-    cxmodel::NewGameInformation newGameInfo;
+    cx::model::NewGameInformation newGameInfo;
     newGameInfo.m_gridWidth = 7u;
     newGameInfo.m_gridHeight = 6u;
     newGameInfo.m_inARowValue = 4u;
 
-    newGameInfo.m_players.push_back(cxmodel::CreatePlayer("P1", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN));
-    newGameInfo.m_players.push_back(cxmodel::CreatePlayer("P2", cxmodel::MakeBlue(), cxmodel::PlayerType::BOT));
-    newGameInfo.m_players.push_back(cxmodel::CreatePlayer("P3", cxmodel::MakeGreen(), cxmodel::PlayerType::BOT));
+    newGameInfo.m_players.push_back(cx::model::CreatePlayer("P1", cx::model::MakeRed(), cx::model::PlayerType::HUMAN));
+    newGameInfo.m_players.push_back(cx::model::CreatePlayer("P2", cx::model::MakeBlue(), cx::model::PlayerType::BOT));
+    newGameInfo.m_players.push_back(cx::model::CreatePlayer("P3", cx::model::MakeGreen(), cx::model::PlayerType::BOT));
 
     model.CreateNewGame(std::move(newGameInfo));
 
@@ -758,15 +758,15 @@ TEST_F(ModelTestFixture, /*DISABLED_*/Undo_CommandDropChipWithTwoBots_PreviousSt
     // Human players drops a chip, followed by the two bot players:
     ASSERT_FALSE(model.GetActivePlayer().IsManaged());
     model.DropChip(model.GetActivePlayer().GetChip(), 1u);
-    ASSERT_TRUE(model.GetChip(0u, 1u).GetColor() == cxmodel::MakeRed());
+    ASSERT_TRUE(model.GetChip(0u, 1u).GetColor() == cx::model::MakeRed());
 
     ASSERT_TRUE(model.GetActivePlayer().IsManaged());
     model.DropChip(model.GetActivePlayer().GetChip(), 1u);
-    ASSERT_TRUE(model.GetChip(1u, 1u).GetColor() == cxmodel::MakeBlue());
+    ASSERT_TRUE(model.GetChip(1u, 1u).GetColor() == cx::model::MakeBlue());
 
     ASSERT_TRUE(model.GetActivePlayer().IsManaged());
     model.DropChip(model.GetActivePlayer().GetChip(), 1u);
-    ASSERT_TRUE(model.GetChip(2u, 1u).GetColor() == cxmodel::MakeGreen());
+    ASSERT_TRUE(model.GetChip(2u, 1u).GetColor() == cx::model::MakeGreen());
 
     ASSERT_FALSE(model.GetActivePlayer().IsManaged());
 
@@ -776,23 +776,23 @@ TEST_F(ModelTestFixture, /*DISABLED_*/Undo_CommandDropChipWithTwoBots_PreviousSt
     // We undo, both the human player and the bot players drops
     // should be undone:
     model.Undo();
-    ASSERT_TRUE(model.GetChip(0u, 1u).GetColor() == cxmodel::MakeTransparent());
-    ASSERT_TRUE(model.GetChip(1u, 1u).GetColor() == cxmodel::MakeTransparent());
-    ASSERT_TRUE(model.GetChip(2u, 1u).GetColor() == cxmodel::MakeTransparent());
+    ASSERT_TRUE(model.GetChip(0u, 1u).GetColor() == cx::model::MakeTransparent());
+    ASSERT_TRUE(model.GetChip(1u, 1u).GetColor() == cx::model::MakeTransparent());
+    ASSERT_TRUE(model.GetChip(2u, 1u).GetColor() == cx::model::MakeTransparent());
 }
 
 TEST_F(ModelTestFixture, /*DISABLED_*/Redo_CommandDropChipWithOneBot_PreviousStateRecovered)
 {
-    cxmodel::Model& model = GetModel();
+    cx::model::Model& model = GetModel();
 
     // We first create a game with one human player and one bot:
-    cxmodel::NewGameInformation newGameInfo;
+    cx::model::NewGameInformation newGameInfo;
     newGameInfo.m_gridWidth = 7u;
     newGameInfo.m_gridHeight = 6u;
     newGameInfo.m_inARowValue = 4u;
 
-    newGameInfo.m_players.push_back(cxmodel::CreatePlayer("P1", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN));
-    newGameInfo.m_players.push_back(cxmodel::CreatePlayer("P2", cxmodel::MakeBlue(), cxmodel::PlayerType::BOT));
+    newGameInfo.m_players.push_back(cx::model::CreatePlayer("P1", cx::model::MakeRed(), cx::model::PlayerType::HUMAN));
+    newGameInfo.m_players.push_back(cx::model::CreatePlayer("P2", cx::model::MakeBlue(), cx::model::PlayerType::BOT));
 
     model.CreateNewGame(std::move(newGameInfo));
 
@@ -807,23 +807,23 @@ TEST_F(ModelTestFixture, /*DISABLED_*/Redo_CommandDropChipWithOneBot_PreviousSta
     model.Undo();
     model.Redo();
 
-    ASSERT_TRUE(model.GetChip(0u, 1u).GetColor() == cxmodel::MakeRed());
-    ASSERT_TRUE(model.GetChip(1u, 1u).GetColor() == cxmodel::MakeBlue());
+    ASSERT_TRUE(model.GetChip(0u, 1u).GetColor() == cx::model::MakeRed());
+    ASSERT_TRUE(model.GetChip(1u, 1u).GetColor() == cx::model::MakeBlue());
 }
 
 TEST_F(ModelTestFixture, /*DISABLED_*/Redo_CommandDropChipWithTwoBots_PreviousStateRecovered)
 {
-    cxmodel::Model& model = GetModel();
+    cx::model::Model& model = GetModel();
 
     // We first create a game with one human player and one bot:
-    cxmodel::NewGameInformation newGameInfo;
+    cx::model::NewGameInformation newGameInfo;
     newGameInfo.m_gridWidth = 7u;
     newGameInfo.m_gridHeight = 6u;
     newGameInfo.m_inARowValue = 4u;
 
-    newGameInfo.m_players.push_back(cxmodel::CreatePlayer("P1", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN));
-    newGameInfo.m_players.push_back(cxmodel::CreatePlayer("P2", cxmodel::MakeBlue(), cxmodel::PlayerType::BOT));
-    newGameInfo.m_players.push_back(cxmodel::CreatePlayer("P3", cxmodel::MakeGreen(), cxmodel::PlayerType::BOT));
+    newGameInfo.m_players.push_back(cx::model::CreatePlayer("P1", cx::model::MakeRed(), cx::model::PlayerType::HUMAN));
+    newGameInfo.m_players.push_back(cx::model::CreatePlayer("P2", cx::model::MakeBlue(), cx::model::PlayerType::BOT));
+    newGameInfo.m_players.push_back(cx::model::CreatePlayer("P3", cx::model::MakeGreen(), cx::model::PlayerType::BOT));
 
     model.CreateNewGame(std::move(newGameInfo));
 
@@ -839,9 +839,9 @@ TEST_F(ModelTestFixture, /*DISABLED_*/Redo_CommandDropChipWithTwoBots_PreviousSt
     model.Undo();
     model.Redo();
 
-    ASSERT_TRUE(model.GetChip(0u, 1u).GetColor() == cxmodel::MakeRed());
-    ASSERT_TRUE(model.GetChip(1u, 1u).GetColor() == cxmodel::MakeBlue());
-    ASSERT_TRUE(model.GetChip(2u, 1u).GetColor() == cxmodel::MakeGreen());
+    ASSERT_TRUE(model.GetChip(0u, 1u).GetColor() == cx::model::MakeRed());
+    ASSERT_TRUE(model.GetChip(1u, 1u).GetColor() == cx::model::MakeBlue());
+    ASSERT_TRUE(model.GetChip(2u, 1u).GetColor() == cx::model::MakeGreen());
 }
 
 TEST(Model, /*DISABLED_*/Redo_RandomCommand_RedoCalledOnCommandStack)
@@ -853,7 +853,7 @@ TEST(Model, /*DISABLED_*/Redo_RandomCommand_RedoCalledOnCommandStack)
 
     // We create a model:
     LoggerMock logger;
-    cxmodel::Model model{std::move(cmdStack), logger};
+    cx::model::Model model{std::move(cmdStack), logger};
 
     ASSERT_FALSE(cmdStackMock.IsRedoed());
 
@@ -873,7 +873,7 @@ TEST(Model, /*DISABLED_*/CanUndo_CmdStackCannotUndo_ReturnsFalse)
 
     // We create a model:
     LoggerMock logger;
-    cxmodel::Model model{std::move(cmdStack), logger};
+    cx::model::Model model{std::move(cmdStack), logger};
 
     ASSERT_FALSE(model.CanUndo());
 }
@@ -888,7 +888,7 @@ TEST(Model, /*DISABLED_*/CanUndo_CmdStackCanUndo_ReturnsTrue)
 
     // We create a model:
     LoggerMock logger;
-    cxmodel::Model model{std::move(cmdStack), logger};
+    cx::model::Model model{std::move(cmdStack), logger};
 
     ASSERT_TRUE(model.CanUndo());
 }
@@ -903,7 +903,7 @@ TEST(Model, /*DISABLED_*/CanRedo_CmdStackCannotRedo_ReturnsFalse)
 
     // We create a model:
     LoggerMock logger;
-    cxmodel::Model model{std::move(cmdStack), logger};
+    cx::model::Model model{std::move(cmdStack), logger};
 
     ASSERT_FALSE(model.CanUndo());
 }
@@ -918,7 +918,7 @@ TEST(Model, /*DISABLED_*/CanRedo_CmdStackCanRedo_ReturnsTrue)
 
     // We create a model:
     LoggerMock logger;
-    cxmodel::Model model{std::move(cmdStack), logger};
+    cx::model::Model model{std::move(cmdStack), logger};
 
     ASSERT_TRUE(model.CanRedo());
 }

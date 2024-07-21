@@ -30,11 +30,11 @@ CommandTimesThreeMock::CommandTimesThreeMock(double& p_data)
 {
 }
 
-cxmodel::CommandCompletionStatus CommandTimesThreeMock::Execute()
+cx::model::CommandCompletionStatus CommandTimesThreeMock::Execute()
 {
     m_data *= 3.0;
 
-    return cxmodel::CommandCompletionStatus::SUCCESS;
+    return cx::model::CommandCompletionStatus::SUCCESS;
 }
 
 void CommandTimesThreeMock::Undo()

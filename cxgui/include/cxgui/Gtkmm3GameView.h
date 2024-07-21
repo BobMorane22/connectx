@@ -80,8 +80,8 @@ public:
         IGameViewPresenter& p_presenter, IGameViewController& p_controller,
         IWindow& p_parentWindow,
         cx::gui::ILayout& p_mainLayout,
-        const cxmodel::Column& p_viewLeft,
-        const cxmodel::Row& p_viewTop);
+        const cx::model::Column& p_viewLeft,
+        const cx::model::Row& p_viewTop);
 
     /*****************************************************************************************//**
      * @brief Destructor.
@@ -92,7 +92,7 @@ public:
     // cx::gui::IView:
     void Activate() override;
     void DeActivate() override;
-    void Update(cxmodel::ModelNotificationContext p_context) override;
+    void Update(cx::model::ModelNotificationContext p_context) override;
 
     // IWidget:
     [[nodiscard]] size_t GetWidth() const override;
@@ -141,8 +141,8 @@ private:
 
     cx::gui::ILayout& m_mainLayout;
 
-    const cxmodel::Column m_viewLeft;
-    const cxmodel::Row m_viewTop;
+    const cx::model::Column m_viewLeft;
+    const cx::model::Row m_viewTop;
 
     std::unique_ptr<ILayout> m_viewLayout;
 

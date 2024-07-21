@@ -32,12 +32,12 @@ TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetTitle_GamePresenter_Title
 
 TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetActivePlayerChipColor_GamePresenterNoUpdate_NoColorReturned)
 {
-    ASSERT_EQ(GetGameViewPresenter().GetGameViewActivePlayerChipColor(), cxmodel::MakeTransparent());
+    ASSERT_EQ(GetGameViewPresenter().GetGameViewActivePlayerChipColor(), cx::model::MakeTransparent());
 }
 
 TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetNextPlayerChipColor_GamePresenterNoUpdate_NoColorReturned)
 {
-    ASSERT_EQ(GetGameViewPresenter().GetGameViewNextPlayerChipColor(), cxmodel::MakeTransparent());
+    ASSERT_EQ(GetGameViewPresenter().GetGameViewNextPlayerChipColor(), cx::model::MakeTransparent());
 }
 
 TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetActivePlayerLabelText_GamePresenter_LabelTextReturned)

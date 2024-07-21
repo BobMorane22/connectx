@@ -32,12 +32,12 @@
 #include <cxmodel/NewGameInformation.h>
 #include <cxmodel/IPlayer.h>
 
-namespace cxmodel
+namespace cx::model
 {
     class IConnectXLimits;
 }
 
-namespace cxmodel
+namespace cx::model
 {
 
 /**********************************************************************************************//**
@@ -82,6 +82,6 @@ private:
 
 };
 
-} // namespace cxmodel
+} // namespace cx::model
 
 #endif // COMMANDCREATENEWGAME_H_42E0AF3C_C0D0_44F7_B472_9F2E0E11216D

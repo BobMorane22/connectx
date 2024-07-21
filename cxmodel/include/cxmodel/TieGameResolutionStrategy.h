@@ -28,7 +28,7 @@
 
 #include "IGameResolutionStrategy.h"
 
-namespace cxmodel
+namespace cx::model
 {
 
 class IBoard;
@@ -36,7 +36,7 @@ class IPlayer;
 
 }
 
-namespace cxmodel
+namespace cx::model
 {
 
 /*********************************************************************************************//**
@@ -69,7 +69,7 @@ public:
                               const std::vector<std::shared_ptr<IPlayer>>& p_players,
                               const std::vector<IBoard::Position>& p_takenPositions);
 
-    // cxmodel::IGameResolutionStrategy:
+    // cx::model::IGameResolutionStrategy:
     bool Handle(const IPlayer& p_activePlayer) const override;
 
 private:
@@ -108,6 +108,6 @@ private:
 
 };
 
-} // namespace cxmodel
+} // namespace cx::model
 
 #endif // TIEGAMERESOLUTIONSTRATEGY_H_3571E08C_7D58_4402_AAFA_B0A3BD3FE53D

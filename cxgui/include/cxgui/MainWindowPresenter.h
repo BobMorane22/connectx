@@ -30,7 +30,7 @@
 
 #include "IMainWindowPresenter.h"
 
-namespace cxmodel
+namespace cx::model
 {
     class IConnectXGameInformation;
     class IConnectXLimits;
@@ -63,10 +63,10 @@ public:
      *      A Connect X model (managed players).
      *
      *********************************************************************************************/
-    MainWindowPresenter(const cxmodel::IConnectXLimits& p_modelAsLimits,
-                        const cxmodel::IConnectXGameInformation& p_modelAsGameInformation,
-                        const cxmodel::IUndoRedo& p_modelAsUndoRedo,
-                        const cxmodel::IConnectXAI& p_modelAsAI);
+    MainWindowPresenter(const cx::model::IConnectXLimits& p_modelAsLimits,
+                        const cx::model::IConnectXGameInformation& p_modelAsGameInformation,
+                        const cx::model::IUndoRedo& p_modelAsUndoRedo,
+                        const cx::model::IConnectXAI& p_modelAsAI);
 
 ///@{ @name Main Window
 // -----------------------------------------------------------------------------------------------
@@ -113,17 +113,17 @@ public:
     [[nodiscard]] size_t GetDefaultBoardHeightValue() const override;
     [[nodiscard]] size_t GetDefaultBoardWidthValue() const override;
     [[nodiscard]] std::string GetDefaultPlayerName(size_t p_playerIndex) const override;
-    [[nodiscard]] cxmodel::ChipColor GetDefaultChipColor(size_t p_playerIndex) const override;
-    [[nodiscard]] std::vector<cxmodel::ChipColor> GetDefaultChipColors() const override;
-    [[nodiscard]] cxmodel::PlayerType GetDefaultPlayerType(size_t p_playerIndex) const override;
+    [[nodiscard]] cx::model::ChipColor GetDefaultChipColor(size_t p_playerIndex) const override;
+    [[nodiscard]] std::vector<cx::model::ChipColor> GetDefaultChipColors() const override;
+    [[nodiscard]] cx::model::PlayerType GetDefaultPlayerType(size_t p_playerIndex) const override;
 
-    cxmodel::Status IsInARowValueValid(size_t p_inARowValue) const override;
-    cxmodel::Status AreBoardDimensionsValid(size_t p_boardHeight, size_t p_boardWidth) const override;
-    cxmodel::Status ArePlayerNamesValid(const std::vector<std::string>& p_playerNames) const override;
-    cxmodel::Status ArePlayerChipColorsValid(const std::vector<cxmodel::ChipColor>& p_playerChipColors) const override;
-    cxmodel::Status ArePlayerTypesValid(const std::vector<cxmodel::PlayerType>& p_playerTypes) const override;
+    cx::model::Status IsInARowValueValid(size_t p_inARowValue) const override;
+    cx::model::Status AreBoardDimensionsValid(size_t p_boardHeight, size_t p_boardWidth) const override;
+    cx::model::Status ArePlayerNamesValid(const std::vector<std::string>& p_playerNames) const override;
+    cx::model::Status ArePlayerChipColorsValid(const std::vector<cx::model::ChipColor>& p_playerChipColors) const override;
+    cx::model::Status ArePlayerTypesValid(const std::vector<cx::model::PlayerType>& p_playerTypes) const override;
 
-    cxmodel::Status IsNewGameWinnable(size_t p_inARowValue,
+    cx::model::Status IsNewGameWinnable(size_t p_inARowValue,
                                       size_t p_nbOfPlayers,
                                       size_t p_boardHeight,
                                       size_t p_boardWidth) const override;
@@ -134,8 +134,8 @@ public:
 // -----------------------------------------------------------------------------------------------
     std::string GetGameViewTitle() const override;
 
-    cxmodel::ChipColor GetGameViewActivePlayerChipColor() const override;
-    cxmodel::ChipColor GetGameViewNextPlayerChipColor() const override;
+    cx::model::ChipColor GetGameViewActivePlayerChipColor() const override;
+    cx::model::ChipColor GetGameViewNextPlayerChipColor() const override;
 
     std::string GetGameViewActivePlayerLabelText() const override;
     std::string GetGameViewNextPlayerLabelText() const override;
@@ -157,7 +157,7 @@ public:
 
 private:
 
-    void Update(cxmodel::ModelNotificationContext p_context, cxmodel::ModelSubject* p_subject) override;
+    void Update(cx::model::ModelNotificationContext p_context, cx::model::ModelSubject* p_subject) override;
 
     void UpdateCreateNewGame();
     void UpdateChipDropped();
@@ -165,10 +165,10 @@ private:
 
     bool IsBoardEmpty() const;
 
-    const cxmodel::IConnectXLimits& m_modelAsLimits;
-    const cxmodel::IConnectXGameInformation& m_modelAsGameInformation;
-    const cxmodel::IUndoRedo& m_modelAsUndoRedo;
-    const cxmodel::IConnectXAI& m_modelAsAI;
+    const cx::model::IConnectXLimits& m_modelAsLimits;
+    const cx::model::IConnectXGameInformation& m_modelAsGameInformation;
+    const cx::model::IUndoRedo& m_modelAsUndoRedo;
+    const cx::model::IConnectXAI& m_modelAsAI;
     
     bool m_canRequestNewGame;
     bool m_canCurrentGameBeReinitialized;
@@ -176,10 +176,10 @@ private:
     size_t m_currentBoardWidth;
     size_t m_currentBoardHeight;
 
-    std::unique_ptr<cxmodel::IPlayer> m_activePlayer;
-    std::unique_ptr<cxmodel::IPlayer> m_nextPlayer;
+    std::unique_ptr<cx::model::IPlayer> m_activePlayer;
+    std::unique_ptr<cx::model::IPlayer> m_nextPlayer;
 
-    std::vector<std::vector<cxmodel::ChipColor>> m_chipColors;
+    std::vector<std::vector<cx::model::ChipColor>> m_chipColors;
 };
 
 } // namespace cx::gui

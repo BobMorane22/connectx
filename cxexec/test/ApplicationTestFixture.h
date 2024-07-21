@@ -39,7 +39,7 @@
 
 #include "LoggerMock.h"
 
-namespace cxmodel
+namespace cx::model
 {
     enum class DropColumnComputation;
 }
@@ -58,31 +58,31 @@ public:
 
     cx::log::ILogger& GetLogger();
 
-    cxmodel::ModelSubject& GetSubjectModel();
-    cxmodel::IConnectXGameActions& GetGameActionsModel();
-    cxmodel::IConnectXGameInformation& GetGameInformationModel();
-    cxmodel::IConnectXLimits& GetLimitsModel();
-    cxmodel::IUndoRedo& GetUndoRedoModel();
-    cxmodel::IVersioning& GetVersionningModel();
+    cx::model::ModelSubject& GetSubjectModel();
+    cx::model::IConnectXGameActions& GetGameActionsModel();
+    cx::model::IConnectXGameInformation& GetGameInformationModel();
+    cx::model::IConnectXLimits& GetLimitsModel();
+    cx::model::IUndoRedo& GetUndoRedoModel();
+    cx::model::IVersioning& GetVersionningModel();
 
     cx::ModelReferences GetModelReferences();
 
 private:
 
-    class ModelApplicationMock : public cxmodel::ModelSubject,
-                                 public cxmodel::IConnectXGameActions,
-                                 public cxmodel::IConnectXGameInformation,
-                                 public cxmodel::IConnectXLimits,
-                                 public cxmodel::IUndoRedo,
-                                 public cxmodel::IVersioning,
-                                 public cxmodel::IConnectXAI
+    class ModelApplicationMock : public cx::model::ModelSubject,
+                                 public cx::model::IConnectXGameActions,
+                                 public cx::model::IConnectXGameInformation,
+                                 public cx::model::IConnectXLimits,
+                                 public cx::model::IUndoRedo,
+                                 public cx::model::IVersioning,
+                                 public cx::model::IConnectXAI
     {
 
     public:
 
         // IConnectXGameActions:
-        void CreateNewGame(cxmodel::NewGameInformation p_gameInformation) override;
-        void DropChip(const cxmodel::IChip& p_chip, size_t p_column) override;
+        void CreateNewGame(cx::model::NewGameInformation p_gameInformation) override;
+        void DropChip(const cx::model::IChip& p_chip, size_t p_column) override;
         void MoveLeftOneColumn() override;
         void MoveRightOneColumn() override;
         void EndCurrentGame() override;
@@ -92,9 +92,9 @@ private:
         size_t GetCurrentGridHeight() const override {return 6u;}
         size_t GetCurrentGridWidth() const override {return 7u;}
         size_t GetCurrentInARowValue() const override {return 4u;}
-        const cxmodel::IPlayer& GetActivePlayer() const override {return *m_ACTIVE_PLAYER;}
-        const cxmodel::IPlayer& GetNextPlayer() const override {return *m_NEXT_PLAYER;}
-        const cxmodel::IChip& GetChip(size_t p_row, size_t p_column) const override;
+        const cx::model::IPlayer& GetActivePlayer() const override {return *m_ACTIVE_PLAYER;}
+        const cx::model::IPlayer& GetNextPlayer() const override {return *m_NEXT_PLAYER;}
+        const cx::model::IChip& GetChip(size_t p_row, size_t p_column) const override;
         bool IsWon() const override {throw std::logic_error("Not implemented!");}
         bool IsTie() const override {throw std::logic_error("Not implemented!");}
 
@@ -119,14 +119,14 @@ private:
         std::string GetVersionNumber() const override {return "v0.0";}
 
         // IConnectXAI:
-        void ComputeNextDropColumn(cxmodel::DropColumnComputation /*p_algorithm*/) override {}
+        void ComputeNextDropColumn(cx::model::DropColumnComputation /*p_algorithm*/) override {}
         [[nodiscard]] size_t GetCurrentBotTarget() const override {return 5u;};
 
 
     private:
 
-        const std::unique_ptr<cxmodel::IPlayer> m_ACTIVE_PLAYER = cxmodel::CreatePlayer("John Doe", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN);
-        const std::unique_ptr<cxmodel::IPlayer> m_NEXT_PLAYER = cxmodel::CreatePlayer("Jane Doe", cxmodel::MakeBlue(), cxmodel::PlayerType::HUMAN);
+        const std::unique_ptr<cx::model::IPlayer> m_ACTIVE_PLAYER = cx::model::CreatePlayer("John Doe", cx::model::MakeRed(), cx::model::PlayerType::HUMAN);
+        const std::unique_ptr<cx::model::IPlayer> m_NEXT_PLAYER = cx::model::CreatePlayer("Jane Doe", cx::model::MakeBlue(), cx::model::PlayerType::HUMAN);
     };
 
     LoggerMock m_logger;

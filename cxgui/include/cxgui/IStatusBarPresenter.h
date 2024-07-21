@@ -35,8 +35,8 @@ namespace cx::gui
  * @brief Interface for status bar presenters.
  *
  ************************************************************************************************/
-class IStatusBarPresenter : public cxmodel::IModelObserver,
-                            public cxmodel::ModelSubject
+class IStatusBarPresenter : public cx::model::IModelObserver,
+                            public cx::model::ModelSubject
 {
 
 public:

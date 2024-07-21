@@ -186,16 +186,16 @@ TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetDefaultPlayerName_NewGame
 
 TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetDefaultChipColor_NewGamePresenter_DefaultValueReturned)
 {
-    ASSERT_EQ(GetNewGameViewPresenter().GetDefaultChipColor(1u), cxmodel::MakeRed());
-    ASSERT_EQ(GetNewGameViewPresenter().GetDefaultChipColor(2u), cxmodel::MakeGreen());
-    ASSERT_EQ(GetNewGameViewPresenter().GetDefaultChipColor(3u), cxmodel::MakeRed());
-    ASSERT_EQ(GetNewGameViewPresenter().GetDefaultChipColor(4u), cxmodel::MakeRed());
-    ASSERT_EQ(GetNewGameViewPresenter().GetDefaultChipColor(5u), cxmodel::MakeRed());
-    ASSERT_EQ(GetNewGameViewPresenter().GetDefaultChipColor(6u), cxmodel::MakeRed());
-    ASSERT_EQ(GetNewGameViewPresenter().GetDefaultChipColor(7u), cxmodel::MakeRed());
-    ASSERT_EQ(GetNewGameViewPresenter().GetDefaultChipColor(8u), cxmodel::MakeRed());
-    ASSERT_EQ(GetNewGameViewPresenter().GetDefaultChipColor(9u), cxmodel::MakeRed());
-    ASSERT_EQ(GetNewGameViewPresenter().GetDefaultChipColor(10u), cxmodel::MakeRed());
+    ASSERT_EQ(GetNewGameViewPresenter().GetDefaultChipColor(1u), cx::model::MakeRed());
+    ASSERT_EQ(GetNewGameViewPresenter().GetDefaultChipColor(2u), cx::model::MakeGreen());
+    ASSERT_EQ(GetNewGameViewPresenter().GetDefaultChipColor(3u), cx::model::MakeRed());
+    ASSERT_EQ(GetNewGameViewPresenter().GetDefaultChipColor(4u), cx::model::MakeRed());
+    ASSERT_EQ(GetNewGameViewPresenter().GetDefaultChipColor(5u), cx::model::MakeRed());
+    ASSERT_EQ(GetNewGameViewPresenter().GetDefaultChipColor(6u), cx::model::MakeRed());
+    ASSERT_EQ(GetNewGameViewPresenter().GetDefaultChipColor(7u), cx::model::MakeRed());
+    ASSERT_EQ(GetNewGameViewPresenter().GetDefaultChipColor(8u), cx::model::MakeRed());
+    ASSERT_EQ(GetNewGameViewPresenter().GetDefaultChipColor(9u), cx::model::MakeRed());
+    ASSERT_EQ(GetNewGameViewPresenter().GetDefaultChipColor(10u), cx::model::MakeRed());
 }
 
 TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetDefaultChipColors_NewGamePresenter_DefaultValueReturned)
@@ -203,30 +203,30 @@ TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetDefaultChipColors_NewGame
     const auto defaults = GetNewGameViewPresenter().GetDefaultChipColors();
 
     ASSERT_TRUE(defaults.size() == 10u);
-    ASSERT_TRUE(defaults[0u] == cxmodel::MakeRed());
-    ASSERT_TRUE(defaults[1u] == cxmodel::MakeGreen());
-    ASSERT_TRUE(defaults[2u] == cxmodel::MakeYellow());
-    ASSERT_TRUE(defaults[3u] == cxmodel::MakeBlue());
-    ASSERT_TRUE(defaults[4u] == cxmodel::MakePink());
-    ASSERT_TRUE(defaults[5u] == cxmodel::MakeOrange());
-    ASSERT_TRUE(defaults[6u] == cxmodel::MakeAqua());
-    ASSERT_TRUE(defaults[7u] == cxmodel::MakeBlack());
-    ASSERT_TRUE(defaults[8u] == cxmodel::MakeLilac());
-    ASSERT_TRUE(defaults[9u] == cxmodel::MakeSalmon());
+    ASSERT_TRUE(defaults[0u] == cx::model::MakeRed());
+    ASSERT_TRUE(defaults[1u] == cx::model::MakeGreen());
+    ASSERT_TRUE(defaults[2u] == cx::model::MakeYellow());
+    ASSERT_TRUE(defaults[3u] == cx::model::MakeBlue());
+    ASSERT_TRUE(defaults[4u] == cx::model::MakePink());
+    ASSERT_TRUE(defaults[5u] == cx::model::MakeOrange());
+    ASSERT_TRUE(defaults[6u] == cx::model::MakeAqua());
+    ASSERT_TRUE(defaults[7u] == cx::model::MakeBlack());
+    ASSERT_TRUE(defaults[8u] == cx::model::MakeLilac());
+    ASSERT_TRUE(defaults[9u] == cx::model::MakeSalmon());
 }
 
 TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetDefaultPlayerType_NewGamePresenter_DefaultValueReturned)
 {
-    ASSERT_EQ(GetNewGameViewPresenter().GetDefaultPlayerType(1u), cxmodel::PlayerType::HUMAN);
-    ASSERT_EQ(GetNewGameViewPresenter().GetDefaultPlayerType(2u), cxmodel::PlayerType::BOT);
-    ASSERT_EQ(GetNewGameViewPresenter().GetDefaultPlayerType(3u), cxmodel::PlayerType::BOT);
-    ASSERT_EQ(GetNewGameViewPresenter().GetDefaultPlayerType(4u), cxmodel::PlayerType::BOT);
-    ASSERT_EQ(GetNewGameViewPresenter().GetDefaultPlayerType(5u), cxmodel::PlayerType::BOT);
-    ASSERT_EQ(GetNewGameViewPresenter().GetDefaultPlayerType(6u), cxmodel::PlayerType::BOT);
-    ASSERT_EQ(GetNewGameViewPresenter().GetDefaultPlayerType(7u), cxmodel::PlayerType::BOT);
-    ASSERT_EQ(GetNewGameViewPresenter().GetDefaultPlayerType(8u), cxmodel::PlayerType::BOT);
-    ASSERT_EQ(GetNewGameViewPresenter().GetDefaultPlayerType(9u), cxmodel::PlayerType::BOT);
-    ASSERT_EQ(GetNewGameViewPresenter().GetDefaultPlayerType(10u), cxmodel::PlayerType::BOT);
+    ASSERT_EQ(GetNewGameViewPresenter().GetDefaultPlayerType(1u), cx::model::PlayerType::HUMAN);
+    ASSERT_EQ(GetNewGameViewPresenter().GetDefaultPlayerType(2u), cx::model::PlayerType::BOT);
+    ASSERT_EQ(GetNewGameViewPresenter().GetDefaultPlayerType(3u), cx::model::PlayerType::BOT);
+    ASSERT_EQ(GetNewGameViewPresenter().GetDefaultPlayerType(4u), cx::model::PlayerType::BOT);
+    ASSERT_EQ(GetNewGameViewPresenter().GetDefaultPlayerType(5u), cx::model::PlayerType::BOT);
+    ASSERT_EQ(GetNewGameViewPresenter().GetDefaultPlayerType(6u), cx::model::PlayerType::BOT);
+    ASSERT_EQ(GetNewGameViewPresenter().GetDefaultPlayerType(7u), cx::model::PlayerType::BOT);
+    ASSERT_EQ(GetNewGameViewPresenter().GetDefaultPlayerType(8u), cx::model::PlayerType::BOT);
+    ASSERT_EQ(GetNewGameViewPresenter().GetDefaultPlayerType(9u), cx::model::PlayerType::BOT);
+    ASSERT_EQ(GetNewGameViewPresenter().GetDefaultPlayerType(10u), cx::model::PlayerType::BOT);
 }
 
 TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetInARowInvalidInputMessage_NewGamePresenter_MessageReturned)
@@ -391,11 +391,11 @@ TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/ArePlayerNamesValid_AnEmptyP
 
 TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/ArePlayerChipColorsValid_AllDifferentColors_ReturnsSuccess)
 {
-    const std::vector<cxmodel::ChipColor> chipColors
+    const std::vector<cx::model::ChipColor> chipColors
     {
-        cxmodel::MakeRed(),
-        cxmodel::MakeBlue(),
-        cxmodel::MakeYellow()
+        cx::model::MakeRed(),
+        cx::model::MakeBlue(),
+        cx::model::MakeYellow()
     };
 
     const auto status = GetNewGameViewPresenter().ArePlayerChipColorsValid(chipColors);
@@ -404,11 +404,11 @@ TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/ArePlayerChipColorsValid_All
 
 TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/ArePlayerChipColorsValid_TwoSameColors_ReturnsError)
 {
-    const std::vector<cxmodel::ChipColor> chipColors
+    const std::vector<cx::model::ChipColor> chipColors
     {
-        cxmodel::MakeRed(),
-        cxmodel::MakeYellow(),
-        cxmodel::MakeYellow()
+        cx::model::MakeRed(),
+        cx::model::MakeYellow(),
+        cx::model::MakeYellow()
     };
 
     const auto status = GetNewGameViewPresenter().ArePlayerChipColorsValid(chipColors);
@@ -418,11 +418,11 @@ TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/ArePlayerChipColorsValid_Two
 
 TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/ArePlayerTypesValid_AllHumans_ReturnsSuccess)
 {
-    const std::vector<cxmodel::PlayerType> playerTypes
+    const std::vector<cx::model::PlayerType> playerTypes
     {
-        cxmodel::PlayerType::HUMAN,
-        cxmodel::PlayerType::HUMAN,
-        cxmodel::PlayerType::HUMAN
+        cx::model::PlayerType::HUMAN,
+        cx::model::PlayerType::HUMAN,
+        cx::model::PlayerType::HUMAN
     };
 
     const auto status = GetNewGameViewPresenter().ArePlayerTypesValid(playerTypes);
@@ -431,11 +431,11 @@ TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/ArePlayerTypesValid_AllHuman
 
 TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/ArePlayerTypesValid_OneHuman_ReturnsSuccess)
 {
-    const std::vector<cxmodel::PlayerType> playerTypes
+    const std::vector<cx::model::PlayerType> playerTypes
     {
-        cxmodel::PlayerType::BOT,
-        cxmodel::PlayerType::HUMAN,
-        cxmodel::PlayerType::BOT
+        cx::model::PlayerType::BOT,
+        cx::model::PlayerType::HUMAN,
+        cx::model::PlayerType::BOT
     };
 
     const auto status = GetNewGameViewPresenter().ArePlayerTypesValid(playerTypes);
@@ -444,11 +444,11 @@ TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/ArePlayerTypesValid_OneHuman
 
 TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/ArePlayerTypesValid_NoHuman_ReturnsError)
 {
-    const std::vector<cxmodel::PlayerType> playerTypes
+    const std::vector<cx::model::PlayerType> playerTypes
     {
-        cxmodel::PlayerType::BOT,
-        cxmodel::PlayerType::BOT,
-        cxmodel::PlayerType::BOT
+        cx::model::PlayerType::BOT,
+        cx::model::PlayerType::BOT,
+        cx::model::PlayerType::BOT
     };
 
     const auto status = GetNewGameViewPresenter().ArePlayerTypesValid(playerTypes);
@@ -520,12 +520,12 @@ class NewGameViewPresenterValidateMock : public NewGameViewPresenterMock
 public:
 
     NewGameViewPresenterValidateMock(
-        const cxmodel::Status& p_inARowStatus,
-        const cxmodel::Status& p_boardDimensionsStatus,
-        const cxmodel::Status& p_playerNamesStatus,
-        const cxmodel::Status& p_playerChipColorsStatus,
-        const cxmodel::Status& p_playerTypesStatus,
-        const cxmodel::Status& p_newGameWinnableStatus)
+        const cx::model::Status& p_inARowStatus,
+        const cx::model::Status& p_boardDimensionsStatus,
+        const cx::model::Status& p_playerNamesStatus,
+        const cx::model::Status& p_playerChipColorsStatus,
+        const cx::model::Status& p_playerTypesStatus,
+        const cx::model::Status& p_newGameWinnableStatus)
     : m_inARowStatus{p_inARowStatus}
     , m_boardDimensionsStatus{p_boardDimensionsStatus}
     , m_playerNamesStatus{p_playerNamesStatus}
@@ -534,33 +534,33 @@ public:
     , m_newGameWinnableStatus{p_newGameWinnableStatus}
     {}
 
-    [[nodiscard]] cxmodel::Status IsInARowValueValid(size_t /*p_inARowValue*/) const override {return m_inARowStatus;}
-    [[nodiscard]] cxmodel::Status AreBoardDimensionsValid(size_t /*p_boardHeight*/, size_t /*p_boardWidth*/) const override {return m_boardDimensionsStatus;}
-    [[nodiscard]] cxmodel::Status ArePlayerNamesValid(const std::vector<std::string>& /*p_playerNames*/) const override {return m_playerNamesStatus;}
-    [[nodiscard]] cxmodel::Status ArePlayerChipColorsValid(const std::vector<cxmodel::ChipColor>& /*p_playerChipColors*/) const override {return m_playerChipColorsStatus;}
-    [[nodiscard]] cxmodel::Status ArePlayerTypesValid(const std::vector<cxmodel::PlayerType>& /*p_playerTypes*/) const override {return m_playerTypesStatus;}
-    [[nodiscard]] cxmodel::Status IsNewGameWinnable(size_t /*p_inARowValue*/, size_t /*p_nbOfPlayers*/, size_t /*p_boardHeight*/, size_t /*p_boardWidth*/) const override {return m_newGameWinnableStatus;}
+    [[nodiscard]] cx::model::Status IsInARowValueValid(size_t /*p_inARowValue*/) const override {return m_inARowStatus;}
+    [[nodiscard]] cx::model::Status AreBoardDimensionsValid(size_t /*p_boardHeight*/, size_t /*p_boardWidth*/) const override {return m_boardDimensionsStatus;}
+    [[nodiscard]] cx::model::Status ArePlayerNamesValid(const std::vector<std::string>& /*p_playerNames*/) const override {return m_playerNamesStatus;}
+    [[nodiscard]] cx::model::Status ArePlayerChipColorsValid(const std::vector<cx::model::ChipColor>& /*p_playerChipColors*/) const override {return m_playerChipColorsStatus;}
+    [[nodiscard]] cx::model::Status ArePlayerTypesValid(const std::vector<cx::model::PlayerType>& /*p_playerTypes*/) const override {return m_playerTypesStatus;}
+    [[nodiscard]] cx::model::Status IsNewGameWinnable(size_t /*p_inARowValue*/, size_t /*p_nbOfPlayers*/, size_t /*p_boardHeight*/, size_t /*p_boardWidth*/) const override {return m_newGameWinnableStatus;}
 
 private:
 
-    cxmodel::Status m_inARowStatus;
-    cxmodel::Status m_boardDimensionsStatus;
-    cxmodel::Status m_playerNamesStatus;
-    cxmodel::Status m_playerChipColorsStatus;
-    cxmodel::Status m_playerTypesStatus;
-    cxmodel::Status m_newGameWinnableStatus;
+    cx::model::Status m_inARowStatus;
+    cx::model::Status m_boardDimensionsStatus;
+    cx::model::Status m_playerNamesStatus;
+    cx::model::Status m_playerChipColorsStatus;
+    cx::model::Status m_playerTypesStatus;
+    cx::model::Status m_newGameWinnableStatus;
 };
 
 // We don't really care about the game information contents, except that we
 // need at least one player to get coverage in the `for` loops inside the
 // `cx::gui::Validate` logic. The tests do not depend on the contents of
 // the new game information, but rather on the presenter validations.
-[[nodiscard]] cxmodel::NewGameInformation NewGameInformationCreate()
+[[nodiscard]] cx::model::NewGameInformation NewGameInformationCreate()
 {
-    cxmodel::NewGameInformation info;
+    cx::model::NewGameInformation info;
 
-    info.m_players.push_back(cxmodel::CreatePlayer("Will Ferrell", cxmodel::MakeRed(), cxmodel::PlayerType::HUMAN));
-    info.m_players.push_back(cxmodel::CreatePlayer("RoboCop", cxmodel::MakeBlue(), cxmodel::PlayerType::BOT));
+    info.m_players.push_back(cx::model::CreatePlayer("Will Ferrell", cx::model::MakeRed(), cx::model::PlayerType::HUMAN));
+    info.m_players.push_back(cx::model::CreatePlayer("RoboCop", cx::model::MakeBlue(), cx::model::PlayerType::BOT));
 
     return info;
 }
@@ -569,28 +569,28 @@ private:
 
 TEST(INewGameViewPresenter, /*DISABLED_*/Validate_ValidNewGame_ReturnsSuccess)
 {
-    const NewGameViewPresenterValidateMock presenter(cxmodel::MakeSuccess(),
-                                                     cxmodel::MakeSuccess(),
-                                                     cxmodel::MakeSuccess(),
-                                                     cxmodel::MakeSuccess(),
-                                                     cxmodel::MakeSuccess(),
-                                                     cxmodel::MakeSuccess());
+    const NewGameViewPresenterValidateMock presenter(cx::model::MakeSuccess(),
+                                                     cx::model::MakeSuccess(),
+                                                     cx::model::MakeSuccess(),
+                                                     cx::model::MakeSuccess(),
+                                                     cx::model::MakeSuccess(),
+                                                     cx::model::MakeSuccess());
 
-    const cxmodel::Status status = cx::gui::Validate(NewGameInformationCreate(), presenter);
+    const cx::model::Status status = cx::gui::Validate(NewGameInformationCreate(), presenter);
 
     ASSERT_TRUE(status.IsSuccess());
 }
 
 TEST(INewGameViewPresenter, /*DISABLED_*/Validate_InvalidInARowValue_ReturnsError)
 {
-    const NewGameViewPresenterValidateMock presenter(cxmodel::MakeError("In-a-row invalid"),
-                                                     cxmodel::MakeSuccess(),
-                                                     cxmodel::MakeSuccess(),
-                                                     cxmodel::MakeSuccess(),
-                                                     cxmodel::MakeSuccess(),
-                                                     cxmodel::MakeSuccess());
+    const NewGameViewPresenterValidateMock presenter(cx::model::MakeError("In-a-row invalid"),
+                                                     cx::model::MakeSuccess(),
+                                                     cx::model::MakeSuccess(),
+                                                     cx::model::MakeSuccess(),
+                                                     cx::model::MakeSuccess(),
+                                                     cx::model::MakeSuccess());
 
-    const cxmodel::Status status = cx::gui::Validate(NewGameInformationCreate(), presenter);
+    const cx::model::Status status = cx::gui::Validate(NewGameInformationCreate(), presenter);
 
     ASSERT_TRUE(!status.IsSuccess());
     ASSERT_TRUE(status.GetMessage() == "In-a-row invalid");
@@ -598,14 +598,14 @@ TEST(INewGameViewPresenter, /*DISABLED_*/Validate_InvalidInARowValue_ReturnsErro
 
 TEST(INewGameViewPresenter, /*DISABLED_*/Validate_InvalidBoardDimensions_ReturnsError)
 {
-    const NewGameViewPresenterValidateMock presenter(cxmodel::MakeSuccess(),
-                                                     cxmodel::MakeError("Board dimensions invalid"),
-                                                     cxmodel::MakeSuccess(),
-                                                     cxmodel::MakeSuccess(),
-                                                     cxmodel::MakeSuccess(),
-                                                     cxmodel::MakeSuccess());
+    const NewGameViewPresenterValidateMock presenter(cx::model::MakeSuccess(),
+                                                     cx::model::MakeError("Board dimensions invalid"),
+                                                     cx::model::MakeSuccess(),
+                                                     cx::model::MakeSuccess(),
+                                                     cx::model::MakeSuccess(),
+                                                     cx::model::MakeSuccess());
 
-    const cxmodel::Status status = cx::gui::Validate(NewGameInformationCreate(), presenter);
+    const cx::model::Status status = cx::gui::Validate(NewGameInformationCreate(), presenter);
 
     ASSERT_TRUE(!status.IsSuccess());
     ASSERT_TRUE(status.GetMessage() == "Board dimensions invalid");
@@ -613,14 +613,14 @@ TEST(INewGameViewPresenter, /*DISABLED_*/Validate_InvalidBoardDimensions_Returns
 
 TEST(INewGameViewPresenter, /*DISABLED_*/Validate_InvalidPlayerNames_ReturnsError)
 {
-    const NewGameViewPresenterValidateMock presenter(cxmodel::MakeSuccess(),
-                                                     cxmodel::MakeSuccess(),
-                                                     cxmodel::MakeError("Player names invalid"),
-                                                     cxmodel::MakeSuccess(),
-                                                     cxmodel::MakeSuccess(),
-                                                     cxmodel::MakeSuccess());
+    const NewGameViewPresenterValidateMock presenter(cx::model::MakeSuccess(),
+                                                     cx::model::MakeSuccess(),
+                                                     cx::model::MakeError("Player names invalid"),
+                                                     cx::model::MakeSuccess(),
+                                                     cx::model::MakeSuccess(),
+                                                     cx::model::MakeSuccess());
 
-    const cxmodel::Status status = cx::gui::Validate(NewGameInformationCreate(), presenter);
+    const cx::model::Status status = cx::gui::Validate(NewGameInformationCreate(), presenter);
 
     ASSERT_TRUE(!status.IsSuccess());
     ASSERT_TRUE(status.GetMessage() == "Player names invalid");
@@ -628,14 +628,14 @@ TEST(INewGameViewPresenter, /*DISABLED_*/Validate_InvalidPlayerNames_ReturnsErro
 
 TEST(INewGameViewPresenter, /*DISABLED_*/Validate_InvalidPlayerChipColors_ReturnsError)
 {
-    const NewGameViewPresenterValidateMock presenter(cxmodel::MakeSuccess(),
-                                                     cxmodel::MakeSuccess(),
-                                                     cxmodel::MakeSuccess(),
-                                                     cxmodel::MakeError("Player chip colors invalid"),
-                                                     cxmodel::MakeSuccess(),
-                                                     cxmodel::MakeSuccess());
+    const NewGameViewPresenterValidateMock presenter(cx::model::MakeSuccess(),
+                                                     cx::model::MakeSuccess(),
+                                                     cx::model::MakeSuccess(),
+                                                     cx::model::MakeError("Player chip colors invalid"),
+                                                     cx::model::MakeSuccess(),
+                                                     cx::model::MakeSuccess());
 
-    const cxmodel::Status status = cx::gui::Validate(NewGameInformationCreate(), presenter);
+    const cx::model::Status status = cx::gui::Validate(NewGameInformationCreate(), presenter);
 
     ASSERT_TRUE(!status.IsSuccess());
     ASSERT_TRUE(status.GetMessage() == "Player chip colors invalid");
@@ -643,14 +643,14 @@ TEST(INewGameViewPresenter, /*DISABLED_*/Validate_InvalidPlayerChipColors_Return
 
 TEST(INewGameViewPresenter, /*DISABLED_*/Validate_InvalidPlayerTypes_ReturnsError)
 {
-    const NewGameViewPresenterValidateMock presenter(cxmodel::MakeSuccess(),
-                                                     cxmodel::MakeSuccess(),
-                                                     cxmodel::MakeSuccess(),
-                                                     cxmodel::MakeSuccess(),
-                                                     cxmodel::MakeError("Player types invalid"),
-                                                     cxmodel::MakeSuccess());
+    const NewGameViewPresenterValidateMock presenter(cx::model::MakeSuccess(),
+                                                     cx::model::MakeSuccess(),
+                                                     cx::model::MakeSuccess(),
+                                                     cx::model::MakeSuccess(),
+                                                     cx::model::MakeError("Player types invalid"),
+                                                     cx::model::MakeSuccess());
 
-    const cxmodel::Status status = cx::gui::Validate(NewGameInformationCreate(), presenter);
+    const cx::model::Status status = cx::gui::Validate(NewGameInformationCreate(), presenter);
 
     ASSERT_TRUE(!status.IsSuccess());
     ASSERT_TRUE(status.GetMessage() == "Player types invalid");
@@ -658,14 +658,14 @@ TEST(INewGameViewPresenter, /*DISABLED_*/Validate_InvalidPlayerTypes_ReturnsErro
 
 TEST(INewGameViewPresenter, /*DISABLED_*/Validate_UnwinableGame_ReturnsError)
 {
-    const NewGameViewPresenterValidateMock presenter(cxmodel::MakeSuccess(),
-                                                     cxmodel::MakeSuccess(),
-                                                     cxmodel::MakeSuccess(),
-                                                     cxmodel::MakeSuccess(),
-                                                     cxmodel::MakeSuccess(),
-                                                     cxmodel::MakeError("New game not winnable"));
+    const NewGameViewPresenterValidateMock presenter(cx::model::MakeSuccess(),
+                                                     cx::model::MakeSuccess(),
+                                                     cx::model::MakeSuccess(),
+                                                     cx::model::MakeSuccess(),
+                                                     cx::model::MakeSuccess(),
+                                                     cx::model::MakeError("New game not winnable"));
 
-    const cxmodel::Status status = cx::gui::Validate(NewGameInformationCreate(), presenter);
+    const cx::model::Status status = cx::gui::Validate(NewGameInformationCreate(), presenter);
 
     ASSERT_TRUE(!status.IsSuccess());
     ASSERT_TRUE(status.GetMessage() == "New game not winnable");

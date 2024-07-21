@@ -24,7 +24,7 @@
 #ifndef ICONNECTXAI_H_362BB63A_6179_4ADE_BE2B_42ACD69F9888
 #define ICONNECTXAI_H_362BB63A_6179_4ADE_BE2B_42ACD69F9888
 
-namespace cxmodel
+namespace cx::model
 {
 
 enum class DropColumnComputation;
@@ -32,7 +32,7 @@ enum class DropColumnComputation;
 }
 
 
-namespace cxmodel
+namespace cx::model
 {
 
 /**********************************************************************************************//**
@@ -71,6 +71,6 @@ public:
     [[nodiscard]] virtual size_t GetCurrentBotTarget() const = 0;
 };
 
-} // namespace cxmodel
+} // namespace cx::model
 
 #endif // ICONNECTXAI_H_362BB63A_6179_4ADE_BE2B_42ACD69F9888

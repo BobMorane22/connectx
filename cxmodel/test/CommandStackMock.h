@@ -26,7 +26,7 @@
 #ifndef COMMANDSTACKMOCK_H_1C1D7FE3_9103_4716_9765_AF876798E1CB
 #define COMMANDSTACKMOCK_H_1C1D7FE3_9103_4716_9765_AF876798E1CB
 
-class CommandStackMock : public cxmodel::ICommandStack
+class CommandStackMock : public cx::model::ICommandStack
 {
 
 public:
@@ -37,8 +37,8 @@ public:
     void SetCanUndo(bool p_canUndo);
     void SetCanRedo(bool p_canRedo);
 
-    // cxmodel::ICommandStack:
-    [[nodiscard]] cxmodel::CommandCompletionStatus Execute(std::unique_ptr<cxmodel::ICommand>&& p_newCommand) override;
+    // cx::model::ICommandStack:
+    [[nodiscard]] cx::model::CommandCompletionStatus Execute(std::unique_ptr<cx::model::ICommand>&& p_newCommand) override;
     void Clear() override;
     void Undo() override;
     void Redo() override;

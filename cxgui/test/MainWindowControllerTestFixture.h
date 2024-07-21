@@ -48,14 +48,14 @@ public:
     bool GetUndoCalled() const;
     bool GetRedoCalled() const;
 
-    cxmodel::IConnectXGameActions& GetModel();
+    cx::model::IConnectXGameActions& GetModel();
     cx::gui::IMainWindowController& GetController();
     cx::gui::INewGameViewController& GetNewGameViewController();
 
 private:
 
-    class MainWindowControllerMockModel : public cxmodel::IConnectXGameActions,
-                                          public cxmodel::IUndoRedo
+    class MainWindowControllerMockModel : public cx::model::IConnectXGameActions,
+                                          public cx::model::IUndoRedo
     {
 
     public:
@@ -66,8 +66,8 @@ private:
         }
 
         // IConnectXGameActions:
-        void CreateNewGame(cxmodel::NewGameInformation p_gameInformation) override;
-        void DropChip(const cxmodel::IChip& p_chip, size_t p_column) override;
+        void CreateNewGame(cx::model::NewGameInformation p_gameInformation) override;
+        void DropChip(const cx::model::IChip& p_chip, size_t p_column) override;
         void MoveLeftOneColumn() override;
         void MoveRightOneColumn() override;
         void EndCurrentGame() override;

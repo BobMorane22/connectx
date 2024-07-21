@@ -91,8 +91,8 @@ public:
     void SetDelegate(std::unique_ptr<IWidget> p_delegate);
 
     // cx::gui::IAnimatedBoard:
-    [[nodiscard]] const cxmodel::Column& GetCurrentColumn() const override;
-    [[nodiscard]] cxmodel::ChipColor GetCurrentChipColor() const override;
+    [[nodiscard]] const cx::model::Column& GetCurrentColumn() const override;
+    [[nodiscard]] cx::model::ChipColor GetCurrentChipColor() const override;
 
     // cx::gui::IWidget:
     [[nodiscard]] size_t GetWidth() const override;
@@ -108,7 +108,7 @@ private:
 
     bool on_draw(const Cairo::RefPtr<Cairo::Context>& p_context) override;
     void DrawActiveColumnHighlight(const Cairo::RefPtr<Cairo::Context>& p_context);
-    void DrawBoardElement(const Cairo::RefPtr<Cairo::Context>& p_context, const cxmodel::Row& p_row, const cxmodel::Column& p_column);
+    void DrawBoardElement(const Cairo::RefPtr<Cairo::Context>& p_context, const cx::model::Row& p_row, const cx::model::Column& p_column);
 
     bool Redraw();
 

@@ -32,7 +32,7 @@ std::string cx::gui::StatusBarPresenter::GetStatusBarMessage() const
     return m_statusBarMessage;
 }
 
-void cx::gui::StatusBarPresenter::Update(cxmodel::ModelNotificationContext p_context, cxmodel::ModelSubject* p_subject)
+void cx::gui::StatusBarPresenter::Update(cx::model::ModelNotificationContext p_context, cx::model::ModelSubject* p_subject)
 {
     if(p_subject)
     {
@@ -42,41 +42,41 @@ void cx::gui::StatusBarPresenter::Update(cxmodel::ModelNotificationContext p_con
     }
 }
 
-std::string cx::gui::MakeStatusBarContextString(cxmodel::ModelNotificationContext p_context)
+std::string cx::gui::MakeStatusBarContextString(cx::model::ModelNotificationContext p_context)
 {
     switch(p_context)
     {
-        case cxmodel::ModelNotificationContext::CREATE_NEW_GAME:
+        case cx::model::ModelNotificationContext::CREATE_NEW_GAME:
             return "New game created.";
 
-        case cxmodel::ModelNotificationContext::CHIP_DROPPED:
+        case cx::model::ModelNotificationContext::CHIP_DROPPED:
             return "Chip dropped.";
 
-        case cxmodel::ModelNotificationContext::CHIP_DROPPED_FAILED:
+        case cx::model::ModelNotificationContext::CHIP_DROPPED_FAILED:
             return NO_MESSAGE;
 
-        case cxmodel::ModelNotificationContext::CHIP_MOVED_LEFT_ONE_COLUMN:
+        case cx::model::ModelNotificationContext::CHIP_MOVED_LEFT_ONE_COLUMN:
             return NO_MESSAGE;
 
-        case cxmodel::ModelNotificationContext::CHIP_MOVED_RIGHT_ONE_COLUMN:
+        case cx::model::ModelNotificationContext::CHIP_MOVED_RIGHT_ONE_COLUMN:
             return NO_MESSAGE;
 
-        case cxmodel::ModelNotificationContext::UNDO_CHIP_DROPPED:
+        case cx::model::ModelNotificationContext::UNDO_CHIP_DROPPED:
             return "Undo.";
 
-        case cxmodel::ModelNotificationContext::REDO_CHIP_DROPPED:
+        case cx::model::ModelNotificationContext::REDO_CHIP_DROPPED:
             return "Redo.";
 
-        case cxmodel::ModelNotificationContext::GAME_WON:
+        case cx::model::ModelNotificationContext::GAME_WON:
             return "Game won!";
 
-        case cxmodel::ModelNotificationContext::GAME_TIED:
+        case cx::model::ModelNotificationContext::GAME_TIED:
             return "Game tied!";
 
-        case cxmodel::ModelNotificationContext::GAME_ENDED:
+        case cx::model::ModelNotificationContext::GAME_ENDED:
             return NO_MESSAGE;
 
-        case cxmodel::ModelNotificationContext::GAME_REINITIALIZED:
+        case cx::model::ModelNotificationContext::GAME_REINITIALIZED:
             return "Game reinitialized.";
 
         default:                                                     // LCOV_EXCL_LINE

@@ -71,7 +71,7 @@ std::unique_ptr<cx::log::ILogger> CreateFileLogger(cx::log::VerbosityLevel p_ver
  * @return All abstract references to the model, packaged.
  *
  ********************************************************************************************/
-cx::ModelReferences ModelReferencesCreate(cxmodel::Model& p_model)
+cx::ModelReferences ModelReferencesCreate(cx::model::Model& p_model)
 {
     return cx::ModelReferences{p_model, p_model, p_model, p_model, p_model, p_model, p_model};
 }
@@ -103,7 +103,7 @@ int main(int argc, char *argv[])
         std::unique_ptr<cx::log::ILogger> logger = CreateFileLogger(cx::log::VerbosityLevel::DEBUG);
         IF_CONDITION_NOT_MET_DO(logger, return EXIT_FAILURE;);
 
-        cxmodel::Model concreteModel{std::make_unique<cxmodel::CommandStack>(CMD_STACK_SIZE), *logger};
+        cx::model::Model concreteModel{std::make_unique<cx::model::CommandStack>(CMD_STACK_SIZE), *logger};
         cx::ModelReferences modelReferences = ModelReferencesCreate(concreteModel);
 
         std::unique_ptr<cx::IApplication> app = std::make_unique<cx::Application>(argc, argv, modelReferences, *logger);

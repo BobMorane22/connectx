@@ -31,7 +31,7 @@
 #include "IGameResolutionStrategy.h"
 #include "IPlayer.h"
 
-namespace cxmodel
+namespace cx::model
 {
 
 /*********************************************************************************************//**
@@ -76,7 +76,7 @@ public:
      *      The newly created game resolution strategy.
      *
      ********************************************************************************************/
-    [[nodiscard]] static std::unique_ptr<cxmodel::IGameResolutionStrategy> Make(const IBoard& p_board,
+    [[nodiscard]] static std::unique_ptr<cx::model::IGameResolutionStrategy> Make(const IBoard& p_board,
                                                                                 size_t p_inARowValue,
                                                                                 const std::vector<std::shared_ptr<IPlayer>>& p_players,
                                                                                 const std::vector<IBoard::Position>& p_takenPositions,
@@ -84,6 +84,6 @@ public:
 
 };
 
-} // namespace cxmodel
+} // namespace cx::model
 
 #endif // GAMERESOLUTIONSTRATEGYFACTORY_H_CA3F96EF_84E2_4D20_BFF9_6D0FBB35DB44

@@ -52,13 +52,13 @@ enum class UserAction
  * Observers react when this subject is acted upon.
  *
  *************************************************************************************************/
-using UserActionSubject = cxmodel::Subject<UserAction>;
+using UserActionSubject = cx::model::Subject<UserAction>;
 
 /**********************************************************************************************//**
  * @brief Observers for user actions.
  *
  *************************************************************************************************/
-using IUserActionObserver = cxmodel::IObserver<UserAction>;
+using IUserActionObserver = cx::model::IObserver<UserAction>;
 
 /**********************************************************************************************//**
  * @brief Game board widget supporting animations.
@@ -99,7 +99,7 @@ public:
      *      The column in which the chip currently is located.
      *
      *********************************************************************************************/
-    [[nodiscard]] virtual const cxmodel::Column& GetCurrentColumn() const = 0;
+    [[nodiscard]] virtual const cx::model::Column& GetCurrentColumn() const = 0;
 
     /******************************************************************************************//**
      * @brief Gets the color of the chip currently in the next disc area.
@@ -108,7 +108,7 @@ public:
      *      The color of the disc in the next disc area. If there is none, transparent is returned.
      *
      *********************************************************************************************/
-    [[nodiscard]] virtual cxmodel::ChipColor GetCurrentChipColor() const = 0;
+    [[nodiscard]] virtual cx::model::ChipColor GetCurrentChipColor() const = 0;
 
 };
 

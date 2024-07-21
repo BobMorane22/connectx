@@ -33,13 +33,13 @@
 namespace
 {
 
-const cxmodel::Disc NO_CHIP = cxmodel::Disc::MakeTransparentDisc();
+const cx::model::Disc NO_CHIP = cx::model::Disc::MakeTransparentDisc();
 
 } // namespace
 
 // Note: the class interface uses 'size_t', but internally, signed integers are used
 //       because in some calculations, negative values are used which cause overflow.
-cxmodel::WinGameResolutionStrategy::WinGameResolutionStrategy(const cxmodel::IBoard& p_board,
+cx::model::WinGameResolutionStrategy::WinGameResolutionStrategy(const cx::model::IBoard& p_board,
                                                               const size_t p_inARowValue,
                                                               const std::vector<std::shared_ptr<IPlayer>>& p_players,
                                                               const std::vector<IBoard::Position>& p_takenPositions)
@@ -58,7 +58,7 @@ cxmodel::WinGameResolutionStrategy::WinGameResolutionStrategy(const cxmodel::IBo
     PRECONDITION(p_takenPositions.size() < m_board.GetNbPositions());
 }
 
-bool cxmodel::WinGameResolutionStrategy::Handle(const IPlayer& /*p_activePlayer*/) const
+bool cx::model::WinGameResolutionStrategy::Handle(const IPlayer& /*p_activePlayer*/) const
 {
     if(m_inARowValue == -1)
     {
@@ -81,12 +81,12 @@ bool cxmodel::WinGameResolutionStrategy::Handle(const IPlayer& /*p_activePlayer*
     return isWinner;
 }
 
-cxmodel::IBoard::Position cxmodel::WinGameResolutionStrategy::PositionOfLastSuccessFullMove() const
+cx::model::IBoard::Position cx::model::WinGameResolutionStrategy::PositionOfLastSuccessFullMove() const
 {
     return m_takenPositions.back();
 }
 
-int cxmodel::WinGameResolutionStrategy::LeftValidationLimit(GridValidationType p_validationType) const
+int cx::model::WinGameResolutionStrategy::LeftValidationLimit(GridValidationType p_validationType) const
 {
     const IBoard::Position lastMovePosition = PositionOfLastSuccessFullMove();
     ASSERT(lastMovePosition.m_row <= std::numeric_limits<size_t>::max());
@@ -124,7 +124,7 @@ int cxmodel::WinGameResolutionStrategy::LeftValidationLimit(GridValidationType p
     return leftSubscript;
 }
 
-int cxmodel::WinGameResolutionStrategy::RightValidationLimit(GridValidationType p_validationType) const
+int cx::model::WinGameResolutionStrategy::RightValidationLimit(GridValidationType p_validationType) const
 
 {
     const IBoard::Position lastMovePosition = PositionOfLastSuccessFullMove();
@@ -165,7 +165,7 @@ int cxmodel::WinGameResolutionStrategy::RightValidationLimit(GridValidationType 
     return rightSubscript;
 }
 
-int cxmodel::WinGameResolutionStrategy::UpperValidationLimit(GridValidationType p_validationType) const
+int cx::model::WinGameResolutionStrategy::UpperValidationLimit(GridValidationType p_validationType) const
 {
     const IBoard::Position lastMovePosition = PositionOfLastSuccessFullMove();
     ASSERT(lastMovePosition.m_row <= std::numeric_limits<size_t>::max());
@@ -193,7 +193,7 @@ int cxmodel::WinGameResolutionStrategy::UpperValidationLimit(GridValidationType 
     return upperSubscript;
 }
 
-int cxmodel::WinGameResolutionStrategy::LowerValidationLimit(GridValidationType p_validationType) const
+int cx::model::WinGameResolutionStrategy::LowerValidationLimit(GridValidationType p_validationType) const
 {
     const IBoard::Position lastMovePosition = PositionOfLastSuccessFullMove();
     ASSERT(lastMovePosition.m_row <= std::numeric_limits<size_t>::max());
@@ -219,14 +219,14 @@ int cxmodel::WinGameResolutionStrategy::LowerValidationLimit(GridValidationType 
     return lowerSubscript;
 }
 
-int cxmodel::WinGameResolutionStrategy::NbOfValidations(int p_minValidationLimit, int p_maxValidationLimit) const
+int cx::model::WinGameResolutionStrategy::NbOfValidations(int p_minValidationLimit, int p_maxValidationLimit) const
 {
     int nbCombinationsToCheck = std::abs(p_maxValidationLimit - p_minValidationLimit) + 1;
 
     return nbCombinationsToCheck - (m_inARowValue - 1);
 }
 
-int cxmodel::WinGameResolutionStrategy::HorizontalNbOfAdjacentDiscs() const
+int cx::model::WinGameResolutionStrategy::HorizontalNbOfAdjacentDiscs() const
 {
     const int leftLimit = LeftValidationLimit();
     const int rightLimit = RightValidationLimit();
@@ -269,7 +269,7 @@ int cxmodel::WinGameResolutionStrategy::HorizontalNbOfAdjacentDiscs() const
     return nbIdenticalDiscs;
 }
 
-int cxmodel::WinGameResolutionStrategy::VerticalNbOfAdjacentDiscs() const
+int cx::model::WinGameResolutionStrategy::VerticalNbOfAdjacentDiscs() const
 {
     const int lowerLimit = LowerValidationLimit();
     const int upperLimit = UpperValidationLimit();
@@ -312,7 +312,7 @@ int cxmodel::WinGameResolutionStrategy::VerticalNbOfAdjacentDiscs() const
     return nbIdenticalDiscs;
 }
 
-int cxmodel::WinGameResolutionStrategy::UpwardNbOfAdjacentDiscs() const
+int cx::model::WinGameResolutionStrategy::UpwardNbOfAdjacentDiscs() const
 {
     const int lowerLimit = LowerValidationLimit(GridValidationType::DiagonalUpward);
     const int leftLimit = LeftValidationLimit(GridValidationType::DiagonalUpward);
@@ -360,7 +360,7 @@ int cxmodel::WinGameResolutionStrategy::UpwardNbOfAdjacentDiscs() const
     return nbIdenticalDiscs;
 }
 
-int cxmodel::WinGameResolutionStrategy::DownwardNbOfAdjacentDiscs() const
+int cx::model::WinGameResolutionStrategy::DownwardNbOfAdjacentDiscs() const
 {
     const int upperLimit = UpperValidationLimit(GridValidationType::DiagonalDownward);
     const int leftLimit = LeftValidationLimit(GridValidationType::DiagonalDownward);
@@ -408,22 +408,22 @@ int cxmodel::WinGameResolutionStrategy::DownwardNbOfAdjacentDiscs() const
     return nbIdenticalDiscs;
 }
 
-bool cxmodel::WinGameResolutionStrategy::CheckHorizontalWinner() const
+bool cx::model::WinGameResolutionStrategy::CheckHorizontalWinner() const
 {
     return HorizontalNbOfAdjacentDiscs() == m_inARowValue;
 }
 
-bool cxmodel::WinGameResolutionStrategy::CheckVerticalWinner() const
+bool cx::model::WinGameResolutionStrategy::CheckVerticalWinner() const
 {
     return VerticalNbOfAdjacentDiscs() == m_inARowValue;
 }
 
-bool cxmodel::WinGameResolutionStrategy::CheckUpwardWinner() const
+bool cx::model::WinGameResolutionStrategy::CheckUpwardWinner() const
 {
     return UpwardNbOfAdjacentDiscs() == m_inARowValue;
 }
 
-bool cxmodel::WinGameResolutionStrategy::CheckDownwardWinner() const
+bool cx::model::WinGameResolutionStrategy::CheckDownwardWinner() const
 {
     return DownwardNbOfAdjacentDiscs() == m_inARowValue;
 }

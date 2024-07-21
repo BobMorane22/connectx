@@ -23,8 +23,8 @@
 
 #include <cxgui/Gtkmm3DiscChip.h>
 
-cx::gui::Gtkmm3DiscChip::Gtkmm3DiscChip(const cxmodel::ChipColor& p_fillColor,
-                                      const cxmodel::ChipColor& p_backgroundColor,
+cx::gui::Gtkmm3DiscChip::Gtkmm3DiscChip(const cx::model::ChipColor& p_fillColor,
+                                      const cx::model::ChipColor& p_backgroundColor,
                                       int p_dimension)
 : Gtkmm3Chip{p_fillColor,
              p_backgroundColor,

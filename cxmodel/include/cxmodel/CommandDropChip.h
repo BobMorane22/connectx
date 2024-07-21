@@ -37,12 +37,12 @@ namespace cx::log
     class ILogger;
 }
 
-namespace cxmodel
+namespace cx::model
 {
     class IChip;
 }
 
-namespace cxmodel
+namespace cx::model
 {
 
 /*********************************************************************************************//**
@@ -80,7 +80,7 @@ public:
      ********************************************************************************************/
     CommandDropChip(IBoard& p_board,
                     PlayerInformation& p_playersInfo,
-                    std::unique_ptr<cxmodel::IChip>&& p_droppedChip,
+                    std::unique_ptr<cx::model::IChip>&& p_droppedChip,
                     const size_t p_column,
                     std::vector<IBoard::Position>& p_takenPositions,
                     cx::log::ILogger& p_logger);
@@ -93,7 +93,7 @@ private:
 
     IBoard& m_board;
     PlayerInformation& m_playersInfo;
-    const std::unique_ptr<cxmodel::IChip> m_droppedChip;
+    const std::unique_ptr<cx::model::IChip> m_droppedChip;
     const size_t m_column;
     std::vector<IBoard::Position>& m_takenPositions;
     cx::log::ILogger& m_logger;
@@ -106,6 +106,6 @@ private:
     bool m_isRedo = false;
 };
 
-} // namespace cxmodel
+} // namespace cx::model
 
 #endif // COMMANDDROPCHIP_H_412DF355_E70F_413B_B531_63838B549644

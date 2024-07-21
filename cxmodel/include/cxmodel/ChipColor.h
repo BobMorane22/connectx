@@ -28,7 +28,7 @@
 
 #include "Color.h"
 
-namespace cxmodel
+namespace cx::model
 {
 
 /******************************************************************************************//**
@@ -244,6 +244,6 @@ using ChipColor = Color<unsigned short>;
  *********************************************************************************************/
 [[nodiscard]] double ComputeLuminosity(const ChipColor& p_color);
 
-} // namespace cxmodel
+} // namespace cx::model
 
 #endif // CHIPCOLOR_H_B5759AA2_F394_4B95_900C_C9DEA836633B

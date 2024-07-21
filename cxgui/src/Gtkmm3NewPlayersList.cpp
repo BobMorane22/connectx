@@ -209,13 +209,13 @@ size_t cx::gui::Gtkmm3NewPlayersList::GetNbPlayers() const
     return m_playerNames.size();
 }
 
-cxmodel::ChipColor cx::gui::Gtkmm3NewPlayersList::GetRowPlayerChipColor(
+cx::model::ChipColor cx::gui::Gtkmm3NewPlayersList::GetRowPlayerChipColor(
     const size_t p_index) const
 {
     PRECONDITION(p_index < GetNbPlayers());
 
     const std::unique_ptr<IColorPicker>& control = m_playerChipColors[p_index];
-    IF_CONDITION_NOT_MET_DO(control, return cxmodel::MakeTransparent(););
+    IF_CONDITION_NOT_MET_DO(control, return cx::model::MakeTransparent(););
 
     return control->GetCurrentSelection();
 }
@@ -231,9 +231,9 @@ std::string cx::gui::Gtkmm3NewPlayersList::GetPlayerNameAtRow(
     return control->GetContents();
 }
 
-std::vector<cxmodel::ChipColor> cx::gui::Gtkmm3NewPlayersList::GetAllColors() const
+std::vector<cx::model::ChipColor> cx::gui::Gtkmm3NewPlayersList::GetAllColors() const
 {
-    std::vector<cxmodel::ChipColor> colors;
+    std::vector<cx::model::ChipColor> colors;
 
     for(const std::unique_ptr<IColorPicker>& control : m_playerChipColors)
     {
@@ -257,18 +257,18 @@ std::vector<std::string> cx::gui::Gtkmm3NewPlayersList::GetAllPlayerNames() cons
     return names;
 }
 
-std::vector<cxmodel::PlayerType> cx::gui::Gtkmm3NewPlayersList::GetAllPlayerTypes() const
+std::vector<cx::model::PlayerType> cx::gui::Gtkmm3NewPlayersList::GetAllPlayerTypes() const
 {
-    std::vector<cxmodel::PlayerType> types;
+    std::vector<cx::model::PlayerType> types;
 
     for(const std::unique_ptr<IOnOffSwitch>& control : m_playerTypes)
     {
         IF_CONDITION_NOT_MET_DO(control, return {};);
 
-        auto playerType = cxmodel::PlayerType::HUMAN;
+        auto playerType = cx::model::PlayerType::HUMAN;
         if(control->GetState() == cx::gui::OnOffState::ON)
         {
-            playerType = cxmodel::PlayerType::BOT;
+            playerType = cx::model::PlayerType::BOT;
         }
 
         types.push_back(playerType);
@@ -315,9 +315,9 @@ bool cx::gui::Gtkmm3NewPlayersList::RemovePlayer(
 
 bool cx::gui::Gtkmm3NewPlayersList::UpdatePlayer(
     const size_t p_index,
-    cxmodel::PlayerType p_playerNewType,
+    cx::model::PlayerType p_playerNewType,
     const std::string& p_playerNewName,
-    const cxmodel::ChipColor& p_playerNewChipColor)
+    const cx::model::ChipColor& p_playerNewChipColor)
 {
     IF_PRECONDITION_NOT_MET_DO(p_index < GetNbPlayers(), return false;);
     IF_PRECONDITION_NOT_MET_DO(!p_playerNewName.empty(), return false;);
@@ -351,19 +351,19 @@ void cx::gui::Gtkmm3NewPlayersList::RegisterTitleRow()
 
     m_layout->Register(
         *m_isBotTitle,
-        {cxmodel::Row{0u}, ILayout::RowSpan{1u}},
-        {cxmodel::Column{0u}, ILayout::ColumnSpan{1u}},
+        {cx::model::Row{0u}, ILayout::RowSpan{1u}},
+        {cx::model::Column{0u}, ILayout::ColumnSpan{1u}},
         {ILayout::VerticalAlignement::CENTER, ILayout::HorizontalAlignement::CENTER});
 
     m_layout->Register(
         *m_playerNameTitle,
-        {cxmodel::Row{0u}, ILayout::RowSpan{1u}},
-        {cxmodel::Column{1u}, ILayout::ColumnSpan{1u}});
+        {cx::model::Row{0u}, ILayout::RowSpan{1u}},
+        {cx::model::Column{1u}, ILayout::ColumnSpan{1u}});
 
     m_layout->Register(
         *m_chipColorTitle,
-        {cxmodel::Row{0u}, ILayout::RowSpan{1u}},
-        {cxmodel::Column{2u}, ILayout::ColumnSpan{1u}});
+        {cx::model::Row{0u}, ILayout::RowSpan{1u}},
+        {cx::model::Column{2u}, ILayout::ColumnSpan{1u}});
 
     POSTCONDITION(m_isBotTitle);
     POSTCONDITION(m_playerNameTitle);
@@ -374,7 +374,7 @@ void cx::gui::Gtkmm3NewPlayersList::RegisterTitleRow()
 
 void cx::gui::Gtkmm3NewPlayersList::RegisterNewPlayerRow(
     size_t p_rowIndex,
-    const std::vector<cxmodel::ChipColor>& p_alreadyChosenColors,
+    const std::vector<cx::model::ChipColor>& p_alreadyChosenColors,
     EnabledState p_enabled)
 {
     if(p_rowIndex > 0u)
@@ -400,7 +400,7 @@ void cx::gui::Gtkmm3NewPlayersList::RegisterNewPlayerRow(
 
     playerChipColor->SetCurrentSelection(defaultColors.front());
 
-    if(m_presenter.GetDefaultPlayerType(p_rowIndex) == cxmodel::PlayerType::BOT) 
+    if(m_presenter.GetDefaultPlayerType(p_rowIndex) == cx::model::PlayerType::BOT) 
     {
         playerType->SetState(cx::gui::OnOffState::ON);
     }
@@ -415,11 +415,11 @@ void cx::gui::Gtkmm3NewPlayersList::RegisterNewPlayerRow(
     // Registering the widgets:
     constexpr cx::gui::ILayout::RowSpan rowSpan{1u};
     constexpr cx::gui::ILayout::ColumnSpan columnSpan{1u};
-    const cxmodel::Row row{p_rowIndex};
+    const cx::model::Row row{p_rowIndex};
     constexpr cx::gui::ILayout::Alignement alignCenter{cx::gui::ILayout::VerticalAlignement::CENTER, cx::gui::ILayout::HorizontalAlignement::CENTER};
-    m_layout->Register(*playerType,      {row, rowSpan}, {cxmodel::Column{0u}, columnSpan}, alignCenter);
-    m_layout->Register(*playerName,      {row, rowSpan}, {cxmodel::Column{1u}, columnSpan});
-    m_layout->Register(*playerChipColor, {row, rowSpan}, {cxmodel::Column{2u}, columnSpan});
+    m_layout->Register(*playerType,      {row, rowSpan}, {cx::model::Column{0u}, columnSpan}, alignCenter);
+    m_layout->Register(*playerName,      {row, rowSpan}, {cx::model::Column{1u}, columnSpan});
+    m_layout->Register(*playerChipColor, {row, rowSpan}, {cx::model::Column{2u}, columnSpan});
 
     m_playerTypes.push_back(std::move(playerType));
     m_playerNames.push_back(std::move(playerName));
@@ -462,22 +462,22 @@ bool cx::gui::Gtkmm3NewPlayersList::RemovePlayerRow(
 
 bool cx::gui::Gtkmm3NewPlayersList::UpdatePlayerRow(
     const size_t p_index,
-    cxmodel::PlayerType p_playerNewType,
+    cx::model::PlayerType p_playerNewType,
     const std::string& p_playerNewName,
-    const cxmodel::ChipColor& p_playerNewChipColor)
+    const cx::model::ChipColor& p_playerNewChipColor)
 {
     IF_PRECONDITION_NOT_MET_DO(p_index < GetNbPlayers(), return false;);
     IF_PRECONDITION_NOT_MET_DO(!p_playerNewName.empty(), return false;);
 
-    const cxmodel::Row row{p_index};
-    constexpr cxmodel::Column column0{0u};
+    const cx::model::Row row{p_index};
+    constexpr cx::model::Column column0{0u};
     {
         IWidget* widget = m_layout->GetWidgetAtPosition(row, column0);
         auto* control = dynamic_cast<IOnOffSwitch*>(widget);
         IF_CONDITION_NOT_MET_DO(control, return false;);
 
         auto newState = OnOffState::ON;
-        if(p_playerNewType == cxmodel::PlayerType::HUMAN)
+        if(p_playerNewType == cx::model::PlayerType::HUMAN)
         {
             newState = OnOffState::OFF;
         }
@@ -485,7 +485,7 @@ bool cx::gui::Gtkmm3NewPlayersList::UpdatePlayerRow(
         control->SetState(newState);
     }
 
-    constexpr cxmodel::Column column1{1u};
+    constexpr cx::model::Column column1{1u};
     {
         IWidget* widget = m_layout->GetWidgetAtPosition(row, column1);
         auto* control = dynamic_cast<IEditBox*>(widget);
@@ -494,7 +494,7 @@ bool cx::gui::Gtkmm3NewPlayersList::UpdatePlayerRow(
         control->UpdateContents(p_playerNewName);
     }
 
-    constexpr cxmodel::Column column2{2u};
+    constexpr cx::model::Column column2{2u};
     {
         IWidget* widget = m_layout->GetWidgetAtPosition(row, column2);
         auto* control = dynamic_cast<IColorPicker*>(widget);

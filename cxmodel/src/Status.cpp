@@ -24,13 +24,13 @@
 #include <cxinv/assertion.h>
 #include <cxmodel/Status.h>
 
-cxmodel::Status::Status()
+cx::model::Status::Status()
 : m_status{true}
 {
     CheckInvariants();
 }
 
-cxmodel::Status::Status(const std::string& p_errorMessage)
+cx::model::Status::Status(const std::string& p_errorMessage)
 : m_status{false}
 , m_errorMessage{p_errorMessage}
 {
@@ -40,31 +40,31 @@ cxmodel::Status::Status(const std::string& p_errorMessage)
     CheckInvariants();
 }
 
-bool cxmodel::Status::IsSuccess() const
+bool cx::model::Status::IsSuccess() const
 {
     return m_status;
 }
 
-const std::string& cxmodel::Status::GetMessage() const
+const std::string& cx::model::Status::GetMessage() const
 {
     PRECONDITION(!m_errorMessage.empty());
 
     return m_errorMessage;
 }
 
-void cxmodel::Status::CheckInvariants()
+void cx::model::Status::CheckInvariants()
 {
     INVARIANT((IsSuccess() && m_errorMessage.empty()) || (!IsSuccess() && !m_errorMessage.empty()));
 }
 
-cxmodel::Status cxmodel::MakeSuccess()
+cx::model::Status cx::model::MakeSuccess()
 {
-    return cxmodel::Status();
+    return cx::model::Status();
 }
 
-cxmodel::Status cxmodel::MakeError(const std::string& p_errorMessage)
+cx::model::Status cx::model::MakeError(const std::string& p_errorMessage)
 {
     PRECONDITION(!p_errorMessage.empty());
 
-    return cxmodel::Status(p_errorMessage);
+    return cx::model::Status(p_errorMessage);
 }

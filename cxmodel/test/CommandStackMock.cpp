@@ -48,9 +48,9 @@ void CommandStackMock::SetCanRedo(bool p_canRedo)
     m_canRedo = p_canRedo;
 }
 
-cxmodel::CommandCompletionStatus CommandStackMock::Execute(std::unique_ptr<cxmodel::ICommand>&& /*p_newCommand*/)
+cx::model::CommandCompletionStatus CommandStackMock::Execute(std::unique_ptr<cx::model::ICommand>&& /*p_newCommand*/)
 {
-    return cxmodel::CommandCompletionStatus::SUCCESS;
+    return cx::model::CommandCompletionStatus::SUCCESS;
 }
 
 void CommandStackMock::Clear()

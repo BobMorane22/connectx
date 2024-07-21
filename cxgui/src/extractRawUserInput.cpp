@@ -33,7 +33,7 @@ constexpr char NUMERICAL_VALUE_OUT_OF_BOUND[] = "Numerical values out of range."
 
 } // namespace
 
-cxmodel::Status cx::gui::extractRawUserInput(const std::string& p_raw, unsigned long& p_extracted)
+cx::model::Status cx::gui::extractRawUserInput(const std::string& p_raw, unsigned long& p_extracted)
 {
     try
     {
@@ -41,12 +41,12 @@ cxmodel::Status cx::gui::extractRawUserInput(const std::string& p_raw, unsigned 
     }
     catch(const std::invalid_argument& p_exception)
     {
-        return cxmodel::MakeError(NUMERICAL_VALUE_EXPECTED);
+        return cx::model::MakeError(NUMERICAL_VALUE_EXPECTED);
     }
     catch(const std::out_of_range& p_exception)
     {
-        return cxmodel::MakeError(NUMERICAL_VALUE_OUT_OF_BOUND);;
+        return cx::model::MakeError(NUMERICAL_VALUE_OUT_OF_BOUND);;
     }
 
-    return cxmodel::MakeSuccess();
+    return cx::model::MakeSuccess();
 }
