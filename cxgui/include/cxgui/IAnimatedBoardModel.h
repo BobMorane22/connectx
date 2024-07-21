@@ -92,7 +92,7 @@ public:
      *      Indicates if the chip is currently moving left of right.
      *
      *********************************************************************************************/
-    virtual void Update(const cxmath::Dimensions& p_widgetDimensions, bool p_isChipMovingHorizontally) = 0;
+    virtual void Update(const cx::math::Dimensions& p_widgetDimensions, bool p_isChipMovingHorizontally) = 0;
 
     /******************************************************************************************//**
      * @brief Resizes the current animation according to horizontal and vertical ratios.
@@ -114,7 +114,7 @@ public:
      *      An horizontal displacement (in pixels).
      *
      *********************************************************************************************/
-     virtual void AddChipDisplacement(const cxmath::Height& p_vertical, const cxmath::Width& p_horizontal) = 0;
+     virtual void AddChipDisplacement(const cx::math::Height& p_vertical, const cx::math::Width& p_horizontal) = 0;
      
     /******************************************************************************************//**
      * @brief Resets all chip positions.
@@ -157,7 +157,7 @@ public:
      * @return The dimensions of the animated widget.
      *
      *********************************************************************************************/
-    [[nodiscard]] virtual const cxmath::Dimensions& GetAnimatedAreaDimensions() const = 0;
+    [[nodiscard]] virtual const cx::math::Dimensions& GetAnimatedAreaDimensions() const = 0;
 
     /******************************************************************************************//**
      * @brief Gets the dimensions for a single cell.
@@ -170,7 +170,7 @@ public:
      * @return Dimensions for a single cell.
      *
      *********************************************************************************************/
-    [[nodiscard]] virtual const cxmath::Dimensions& GetCellDimensions() const = 0;
+    [[nodiscard]] virtual const cx::math::Dimensions& GetCellDimensions() const = 0;
 
     /******************************************************************************************//**
      * @brief Gets the radius of a chip.
@@ -178,7 +178,7 @@ public:
      * @return The radius of the chip.
      *
      *********************************************************************************************/
-    [[nodiscard]] virtual cxmath::Radius GetChipRadius() const = 0;
+    [[nodiscard]] virtual cx::math::Radius GetChipRadius() const = 0;
 
     /******************************************************************************************//**
      * @brief Gets the main chip current position.
@@ -186,7 +186,7 @@ public:
      * @return The main chip's current position.
      *
      *********************************************************************************************/
-    [[nodiscard]] virtual const cxmath::Position& GetChipPosition() const = 0;
+    [[nodiscard]] virtual const cx::math::Position& GetChipPosition() const = 0;
 
     /******************************************************************************************//**
      * @brief Gets the current horizontal margin.
@@ -197,7 +197,7 @@ public:
      * @return The horizontal margin.
      *
      *********************************************************************************************/
-    [[nodiscard]] virtual cxmath::Width GetHorizontalMargin() const = 0;
+    [[nodiscard]] virtual cx::math::Width GetHorizontalMargin() const = 0;
 
     /******************************************************************************************//**
      * @brief Gets the mirror chip's current position.
@@ -205,7 +205,7 @@ public:
      * @return The mirror chip's current position.
      *
      *********************************************************************************************/
-    [[nodiscard]] virtual const cxmath::Position& GetMirrorChipPosition() const = 0;
+    [[nodiscard]] virtual const cx::math::Position& GetMirrorChipPosition() const = 0;
 
     /******************************************************************************************//**
      * @brief Indicates if the drawing of a mirror chip is required.
@@ -223,7 +223,7 @@ public:
      * @return The current line width value.
      *
      *********************************************************************************************/
-    [[nodiscard]] virtual cxmath::Width GetLineWidth(Feature p_feature) const = 0;
+    [[nodiscard]] virtual cx::math::Width GetLineWidth(Feature p_feature) const = 0;
 
     /******************************************************************************************//**
      * @brief Gets the current column.
@@ -251,7 +251,7 @@ public:
  * @return The corresponding column.
  *
  *************************************************************************************************/
-[[nodiscard]] cxmodel::Column ComputeColumnFromPosition(const IAnimatedBoardModel& p_model, const cxmath::Position& p_position);
+[[nodiscard]] cxmodel::Column ComputeColumnFromPosition(const IAnimatedBoardModel& p_model, const cx::math::Position& p_position);
 
 /**********************************************************************************************//**
  * @brief For some column, compute the corresponding chip position according to a model.
@@ -268,7 +268,7 @@ public:
  * @return The corresponding chip position (at the center of the column).
  *
  *************************************************************************************************/
-[[nodiscard]] cxmath::Position ComputeChipPositionFromColumn(const IAnimatedBoardModel& p_model, const cxmodel::Column& p_column);
+[[nodiscard]] cx::math::Position ComputeChipPositionFromColumn(const IAnimatedBoardModel& p_model, const cxmodel::Column& p_column);
 
 } // namespace cxgui
 

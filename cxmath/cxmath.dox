@@ -22,11 +22,11 @@
  *************************************************************************************************/
 
 /**********************************************************************************************//**
- * @namespace cxmath
+ * @namespace cx::math
  *
  * @brief Generic mathematical facilities.
  *
- * The `cxmath` namespace contains mathematical facilities generic enough to be reusable from
+ * The `cx::math` namespace contains mathematical facilities generic enough to be reusable from
  * anywhere.
  *
  *************************************************************************************************/

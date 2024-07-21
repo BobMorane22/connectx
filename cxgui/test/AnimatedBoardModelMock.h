@@ -32,29 +32,29 @@ class AnimatedBoardModelMock : public cxgui::IAnimatedBoardModel
 public:
 
     // cxgui::IAnimatedBoardModel:
-    void Update(const cxmath::Dimensions& p_widgetDimensions, bool p_isChipMovingHorizontally) override;
+    void Update(const cx::math::Dimensions& p_widgetDimensions, bool p_isChipMovingHorizontally) override;
     void Resize(const cxgui::ScalingRatios& p_scalingRatios) override;
-    void AddChipDisplacement(const cxmath::Height& p_vertical, const cxmath::Width& p_horizontal) override;
+    void AddChipDisplacement(const cx::math::Height& p_vertical, const cx::math::Width& p_horizontal) override;
     void ResetChipPositions() override;
     void UpdateCurrentColumn(const cxmodel::Column& p_newCurrentColumn) override;
     [[nodiscard]] cxgui::FPS GetFPS() const override;
     [[nodiscard]] cxgui::AnimationSpeed GetAnimationSpeed() const override;
-    [[nodiscard]] const cxmath::Dimensions& GetAnimatedAreaDimensions() const override;
-    [[nodiscard]] const cxmath::Dimensions& GetCellDimensions() const override;
-    [[nodiscard]] cxmath::Radius GetChipRadius() const override;
-    [[nodiscard]] const cxmath::Position& GetChipPosition() const override;
-    [[nodiscard]] cxmath::Width GetHorizontalMargin() const override;
-    [[nodiscard]] const cxmath::Position& GetMirrorChipPosition() const override;
+    [[nodiscard]] const cx::math::Dimensions& GetAnimatedAreaDimensions() const override;
+    [[nodiscard]] const cx::math::Dimensions& GetCellDimensions() const override;
+    [[nodiscard]] cx::math::Radius GetChipRadius() const override;
+    [[nodiscard]] const cx::math::Position& GetChipPosition() const override;
+    [[nodiscard]] cx::math::Width GetHorizontalMargin() const override;
+    [[nodiscard]] const cx::math::Position& GetMirrorChipPosition() const override;
     [[nodiscard]] bool IsMirrorChipNeeded() const override;
-    [[nodiscard]] cxmath::Width GetLineWidth(cxgui::Feature p_feature) const override;
+    [[nodiscard]] cx::math::Width GetLineWidth(cxgui::Feature p_feature) const override;
     [[nodiscard]] const cxmodel::Column& GetCurrentColumn() const override;
 
     // Testing:
-    void SetAnimatedAreaDimensions(const cxmath::Dimensions& p_widgetDimensions);
+    void SetAnimatedAreaDimensions(const cx::math::Dimensions& p_widgetDimensions);
     void SetFPS(const cxgui::FPS& p_fps);
     void SetAnimationSpeed(const cxgui::AnimationSpeed& p_animationSpeed);
     void SetCurrentColumn(const cxmodel::Column& p_currentColumn);
-    void SetCellDimensions(const cxmath::Dimensions& p_cellDimensions);
+    void SetCellDimensions(const cx::math::Dimensions& p_cellDimensions);
 
     [[nodiscard]] bool WasUpdateCalled() const {return m_updateCalled;}
     [[nodiscard]] bool WasResizeCalled() const {return m_resizeCalled;}
@@ -70,12 +70,12 @@ private:
     bool m_resetChipPositionsCalled = false;
     bool m_updateCurrentColumnCalled = false;
 
-    cxmath::Dimensions m_widgetDimensions{cxmath::Height{0.0}, cxmath::Width{0.0}};
+    cx::math::Dimensions m_widgetDimensions{cx::math::Height{0.0}, cx::math::Width{0.0}};
     cxgui::FPS m_fps{24u};
     cxgui::AnimationSpeed m_animationSpeed{3u};
-    cxmath::Position m_currentChipPosition;
+    cx::math::Position m_currentChipPosition;
 
-    cxmath::Dimensions m_cellDimensions{cxmath::Height{0.0}, cxmath::Width{0.0}};
+    cx::math::Dimensions m_cellDimensions{cx::math::Height{0.0}, cx::math::Width{0.0}};
     cxmodel::Column m_currentColumn{0u};
 };
 

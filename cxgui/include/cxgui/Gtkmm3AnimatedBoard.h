@@ -112,7 +112,7 @@ private:
 
     bool Redraw();
 
-    bool OnResize(const cxmath::Dimensions& p_newDimensions);
+    bool OnResize(const cx::math::Dimensions& p_newDimensions);
 
     void Update(BoardAnimationNotificationContext p_context, BoardAnimationSubject* p_subject) override;
 
@@ -133,11 +133,11 @@ private:
     // Clock (ticks m_FPS times per second):
     std::unique_ptr<Gtkmm3AnimatedBoardTimerRAII> m_timer;
 
-    AnimationInformations<cxmath::Width> m_moveLeftAnimationInfo;
-    AnimationInformations<cxmath::Width> m_moveRightAnimationInfo;
-    AnimationInformations<cxmath::Height> m_dropAnimationInfo;
+    AnimationInformations<cx::math::Width> m_moveLeftAnimationInfo;
+    AnimationInformations<cx::math::Width> m_moveRightAnimationInfo;
+    AnimationInformations<cx::math::Height> m_dropAnimationInfo;
 
-    cxmath::Dimensions m_lastFrameDimensions{cxmath::Height{0.0}, cxmath::Width{0.0}};
+    cx::math::Dimensions m_lastFrameDimensions{cx::math::Height{0.0}, cx::math::Width{0.0}};
 
     // Surfaces in RAM on which to perform the drawing, in memory, before effectively
     // drawing on the screen. Caching these surfaces here avoids recreating them on every

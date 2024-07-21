@@ -26,7 +26,7 @@
 
 #include <cxcmn/StrongType.h>
 
-namespace cxmath
+namespace cx::math
 {
 
 /**********************************************************************************************//**
@@ -38,6 +38,6 @@ using Radius = cx::cmn::StrongType<double, struct RadiusTag,
                                  cx::cmn::Comparable,
                                  cx::cmn::Addable>;
 
-} // namespace cxmath
+} // namespace cx::math
 
 #endif // RADIUS_H_0CA889EE_C37D_424C_B589_723A9EAAFBF7

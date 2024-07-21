@@ -72,8 +72,8 @@ public:
      * @return An optional notification to be handled by the caller.
      *
      *********************************************************************************************/
-    virtual std::optional<cxgui::BoardAnimationNotificationContext> PerformAnimation(cxgui::AnimationInformations<cxmath::Height>& p_verticalAnimationInfo,
-                                                                                     cxgui::AnimationInformations<cxmath::Width>& p_horizontalAnimationInfo) = 0;
+    virtual std::optional<cxgui::BoardAnimationNotificationContext> PerformAnimation(cxgui::AnimationInformations<cx::math::Height>& p_verticalAnimationInfo,
+                                                                                     cxgui::AnimationInformations<cx::math::Width>& p_horizontalAnimationInfo) = 0;
 
 
 };

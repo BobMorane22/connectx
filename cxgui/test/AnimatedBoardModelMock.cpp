@@ -23,7 +23,7 @@
 
 #include "AnimatedBoardModelMock.h"
 
-void AnimatedBoardModelMock::Update(const cxmath::Dimensions& /*p_widgetDimensions*/, bool /*p_isChipMovingHorizontally*/)
+void AnimatedBoardModelMock::Update(const cx::math::Dimensions& /*p_widgetDimensions*/, bool /*p_isChipMovingHorizontally*/)
 {
     m_updateCalled = true;
 }
@@ -33,7 +33,7 @@ void AnimatedBoardModelMock::Resize(const cxgui::ScalingRatios& /*p_scalingRatio
     m_resizeCalled = true;
 }
 
-void AnimatedBoardModelMock::AddChipDisplacement(const cxmath::Height& p_vertical, const cxmath::Width& p_horizontal)
+void AnimatedBoardModelMock::AddChipDisplacement(const cx::math::Height& p_vertical, const cx::math::Width& p_horizontal)
 {
     m_addChipDisplacementCalled = true;
 
@@ -63,32 +63,32 @@ cxgui::AnimationSpeed AnimatedBoardModelMock::GetAnimationSpeed() const
     return m_animationSpeed;
 }
 
-const cxmath::Dimensions& AnimatedBoardModelMock::GetAnimatedAreaDimensions() const
+const cx::math::Dimensions& AnimatedBoardModelMock::GetAnimatedAreaDimensions() const
 {
     return m_widgetDimensions;
 }
 
-const cxmath::Dimensions& AnimatedBoardModelMock::GetCellDimensions() const
+const cx::math::Dimensions& AnimatedBoardModelMock::GetCellDimensions() const
 {
     return m_cellDimensions;
 }
 
-cxmath::Radius AnimatedBoardModelMock::GetChipRadius() const
+cx::math::Radius AnimatedBoardModelMock::GetChipRadius() const
 {
-    return cxmath::Radius{0.0};
+    return cx::math::Radius{0.0};
 }
 
-const cxmath::Position& AnimatedBoardModelMock::GetChipPosition() const
+const cx::math::Position& AnimatedBoardModelMock::GetChipPosition() const
 {
     return m_currentChipPosition;
 }
 
-cxmath::Width AnimatedBoardModelMock::GetHorizontalMargin() const
+cx::math::Width AnimatedBoardModelMock::GetHorizontalMargin() const
 {
-    return cxmath::Width{0.0};
+    return cx::math::Width{0.0};
 }
 
-const cxmath::Position& AnimatedBoardModelMock::GetMirrorChipPosition() const
+const cx::math::Position& AnimatedBoardModelMock::GetMirrorChipPosition() const
 {
     return m_currentChipPosition;
 }
@@ -98,9 +98,9 @@ bool AnimatedBoardModelMock::IsMirrorChipNeeded() const
     return false;
 }
 
-cxmath::Width AnimatedBoardModelMock::GetLineWidth(cxgui::Feature /*p_feature*/) const
+cx::math::Width AnimatedBoardModelMock::GetLineWidth(cxgui::Feature /*p_feature*/) const
 {
-    return cxmath::Width{0.0};
+    return cx::math::Width{0.0};
 }
 
 const cxmodel::Column& AnimatedBoardModelMock::GetCurrentColumn() const
@@ -108,7 +108,7 @@ const cxmodel::Column& AnimatedBoardModelMock::GetCurrentColumn() const
     return m_currentColumn;
 }
 
-void AnimatedBoardModelMock::SetAnimatedAreaDimensions(const cxmath::Dimensions& p_widgetDimensions)
+void AnimatedBoardModelMock::SetAnimatedAreaDimensions(const cx::math::Dimensions& p_widgetDimensions)
 {
     m_widgetDimensions = p_widgetDimensions;
 }
@@ -128,7 +128,7 @@ void AnimatedBoardModelMock::SetCurrentColumn(const cxmodel::Column& p_currentCo
     m_currentColumn = p_currentColumn;
 }
 
-void AnimatedBoardModelMock::SetCellDimensions(const cxmath::Dimensions& p_cellDimensions)
+void AnimatedBoardModelMock::SetCellDimensions(const cx::math::Dimensions& p_cellDimensions)
 {
     m_cellDimensions = p_cellDimensions;
 }

@@ -59,50 +59,50 @@ public:
      *************************************************************************************************/
     AnimatedBoardModel(const cxgui::IAnimatedBoardPresenter& p_presenter, const cxgui::AnimationSpeed& p_animationSpeed);
 
-    void Update(const cxmath::Dimensions& p_widgetDimensions, bool p_isChipMovingHorizontally) override;
+    void Update(const cx::math::Dimensions& p_widgetDimensions, bool p_isChipMovingHorizontally) override;
     void Resize(const cxgui::ScalingRatios& p_scalingRatios) override;
-    void AddChipDisplacement(const cxmath::Height& p_vertical, const cxmath::Width& p_horizontal) override;
+    void AddChipDisplacement(const cx::math::Height& p_vertical, const cx::math::Width& p_horizontal) override;
     void ResetChipPositions() override;
     void UpdateCurrentColumn(const cxmodel::Column& p_newCurrentColumn) override;
 
     [[nodiscard]] FPS GetFPS() const override;
     [[nodiscard]] AnimationSpeed GetAnimationSpeed() const override;
-    [[nodiscard]] const cxmath::Dimensions& GetAnimatedAreaDimensions() const override;
-    [[nodiscard]] const cxmath::Dimensions& GetCellDimensions() const override;
-    [[nodiscard]] cxmath::Radius GetChipRadius() const override;
-    [[nodiscard]] const cxmath::Position& GetChipPosition() const override;
-    [[nodiscard]] cxmath::Width GetHorizontalMargin() const override;
-    [[nodiscard]] const cxmath::Position& GetMirrorChipPosition() const override;
+    [[nodiscard]] const cx::math::Dimensions& GetAnimatedAreaDimensions() const override;
+    [[nodiscard]] const cx::math::Dimensions& GetCellDimensions() const override;
+    [[nodiscard]] cx::math::Radius GetChipRadius() const override;
+    [[nodiscard]] const cx::math::Position& GetChipPosition() const override;
+    [[nodiscard]] cx::math::Width GetHorizontalMargin() const override;
+    [[nodiscard]] const cx::math::Position& GetMirrorChipPosition() const override;
     [[nodiscard]] bool IsMirrorChipNeeded() const override;
-    [[nodiscard]] cxmath::Width GetLineWidth(Feature p_feature) const override;
+    [[nodiscard]] cx::math::Width GetLineWidth(Feature p_feature) const override;
     [[nodiscard]] const cxmodel::Column& GetCurrentColumn() const override;
 
 private:
 
     template<BoardAnimation A>
-    [[nodiscard]] bool ComputeChipPosition(double p_windowWidth, const cxmath::Radius& p_discRadius, double p_horizontalMargin);
-    [[nodiscard]] bool ComputeChipLeftPosition(double p_windowWidth, const cxmath::Radius& p_discRadius, double p_horizontalMargin);
-    [[nodiscard]] bool ComputeChipRightPosition(double p_windowWidth, const cxmath::Radius& p_discRadius, double p_horizontalMargin);
-    void ComputeChipVerticalPosition(const cxmath::Radius& p_discRadius, double p_height);
+    [[nodiscard]] bool ComputeChipPosition(double p_windowWidth, const cx::math::Radius& p_discRadius, double p_horizontalMargin);
+    [[nodiscard]] bool ComputeChipLeftPosition(double p_windowWidth, const cx::math::Radius& p_discRadius, double p_horizontalMargin);
+    [[nodiscard]] bool ComputeChipRightPosition(double p_windowWidth, const cx::math::Radius& p_discRadius, double p_horizontalMargin);
+    void ComputeChipVerticalPosition(const cx::math::Radius& p_discRadius, double p_height);
 
     const cxgui::IAnimatedBoardPresenter& m_presenter;
 
     cxgui::AnimationSpeed m_animationSpeed;
 
-    cxmath::Dimensions m_widgetDimensions{cxmath::Height{0.0}, cxmath::Width{0.0}};
-    cxmath::Dimensions m_cellDimensions{cxmath::Height{0.0}, cxmath::Width{0.0}};
+    cx::math::Dimensions m_widgetDimensions{cx::math::Height{0.0}, cx::math::Width{0.0}};
+    cx::math::Dimensions m_cellDimensions{cx::math::Height{0.0}, cx::math::Width{0.0}};
 
-    cxmath::Radius m_chipRadius{0.0};
+    cx::math::Radius m_chipRadius{0.0};
 
     bool m_isChipMovingHorizontally = false;
-    cxmath::Position m_chipPosition{0.0, 0.0};
-    cxmath::Position m_mirrorChipPosition{0.0, 0.0};
+    cx::math::Position m_chipPosition{0.0, 0.0};
+    cx::math::Position m_mirrorChipPosition{0.0, 0.0};
     bool m_isMirrorChipNeeded = false;
 
-    cxmath::Width m_horizontalMargin{0.0};
+    cx::math::Width m_horizontalMargin{0.0};
 
-    cxmath::Width m_chipLineWidth{0.0};
-    cxmath::Width m_cellLineWidth{0.0};
+    cx::math::Width m_chipLineWidth{0.0};
+    cx::math::Width m_cellLineWidth{0.0};
 
     cxmodel::Column m_currentColumn{0u};
 };

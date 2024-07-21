@@ -71,12 +71,12 @@ constexpr double LINE_WIDTH_SCALING_FACTOR = 0.005;
 template<cxgui::BoardAnimation A>
 bool HasChipCrossedOver(double p_currentHorizontalPosition,
                         double p_windowWidth,
-                        const cxmath::Radius& p_discRadius);
+                        const cx::math::Radius& p_discRadius);
 
 template<>
 bool HasChipCrossedOver<cxgui::BoardAnimation::MOVE_CHIP_LEFT_ONE_COLUMN>(double p_currentHorizontalPosition,
                                                                           [[maybe_unused]]double p_windowWidth,
-                                                                          const cxmath::Radius& p_discRadius)
+                                                                          const cx::math::Radius& p_discRadius)
 {
     return p_currentHorizontalPosition < p_discRadius.Get();
 }
@@ -84,7 +84,7 @@ bool HasChipCrossedOver<cxgui::BoardAnimation::MOVE_CHIP_LEFT_ONE_COLUMN>(double
 template<>
 bool HasChipCrossedOver<cxgui::BoardAnimation::MOVE_CHIP_RIGHT_ONE_COLUMN>(double p_currentHorizontalPosition,
                                                                            double p_windowWidth,
-                                                                           const cxmath::Radius& p_discRadius)
+                                                                           const cx::math::Radius& p_discRadius)
 {
     return p_currentHorizontalPosition > p_windowWidth - p_discRadius.Get();
 }
@@ -135,25 +135,25 @@ bool HasChipCrossedOver<cxgui::BoardAnimation::MOVE_CHIP_RIGHT_ONE_COLUMN>(doubl
 template<cxgui::BoardAnimation A>
 bool HasChipCompletelyCrossedOver(double p_currentHorizontalPosition,
                                   double p_windowWidth,
-                                  const cxmath::Radius& p_discRadius,
+                                  const cx::math::Radius& p_discRadius,
                                   double p_horizontalMargin);
 
 template<>
 bool HasChipCompletelyCrossedOver<cxgui::BoardAnimation::MOVE_CHIP_LEFT_ONE_COLUMN>(double p_currentHorizontalPosition,
                                                                                     [[maybe_unused]] double p_windowWidth,
-                                                                                    const cxmath::Radius& p_discRadius,
+                                                                                    const cx::math::Radius& p_discRadius,
                                                                                     double p_horizontalMargin)
 {
-    return cxmath::AreLogicallyEqual(-p_currentHorizontalPosition, p_discRadius.Get() + p_horizontalMargin); 
+    return cx::math::AreLogicallyEqual(-p_currentHorizontalPosition, p_discRadius.Get() + p_horizontalMargin); 
 }
 
 template<>
 bool HasChipCompletelyCrossedOver<cxgui::BoardAnimation::MOVE_CHIP_RIGHT_ONE_COLUMN>(double p_currentHorizontalPosition,
                                                                                      double p_windowWidth,
-                                                                                     const cxmath::Radius& p_discRadius,
+                                                                                     const cx::math::Radius& p_discRadius,
                                                                                      double p_horizontalMargin)
 {
-    return cxmath::AreLogicallyEqual(p_currentHorizontalPosition, p_windowWidth + p_discRadius.Get() + p_horizontalMargin);
+    return cx::math::AreLogicallyEqual(p_currentHorizontalPosition, p_windowWidth + p_discRadius.Get() + p_horizontalMargin);
 }
 
 /**************************************************************************************************
@@ -179,13 +179,13 @@ bool HasChipCompletelyCrossedOver<cxgui::BoardAnimation::MOVE_CHIP_RIGHT_ONE_COL
 template<cxgui::BoardAnimation A>
 void ComputeChipPositionForOtherSide(double& p_currentHorizontalPosition,
                                      double p_windowWidth,
-                                     const cxmath::Radius& p_discRadius,
+                                     const cx::math::Radius& p_discRadius,
                                      double p_horizontalMargin);
 
 template<>
 void ComputeChipPositionForOtherSide<cxgui::BoardAnimation::MOVE_CHIP_LEFT_ONE_COLUMN>(double& p_currentHorizontalPosition,
                                                                                        double p_windowWidth,
-                                                                                       const cxmath::Radius& p_discRadius,
+                                                                                       const cx::math::Radius& p_discRadius,
                                                                                        double p_horizontalMargin)
 {
     p_currentHorizontalPosition = p_windowWidth - p_discRadius.Get() - p_horizontalMargin;
@@ -194,7 +194,7 @@ void ComputeChipPositionForOtherSide<cxgui::BoardAnimation::MOVE_CHIP_LEFT_ONE_C
 template<>
 void ComputeChipPositionForOtherSide<cxgui::BoardAnimation::MOVE_CHIP_RIGHT_ONE_COLUMN>(double& p_currentHorizontalPosition,
                                                                                         [[maybe_unused]] double p_windowWidth,
-                                                                                        const cxmath::Radius& p_discRadius,
+                                                                                        const cx::math::Radius& p_discRadius,
                                                                                         double p_horizontalMargin)
 {
     p_currentHorizontalPosition = p_discRadius.Get() + p_horizontalMargin;
@@ -223,13 +223,13 @@ void ComputeChipPositionForOtherSide<cxgui::BoardAnimation::MOVE_CHIP_RIGHT_ONE_
 template<cxgui::BoardAnimation A>
 void ClampChipPositionToCurrentSide(double& p_currentHorizontalPosition,
                                     double p_windowWidth,
-                                    const cxmath::Radius& p_discRadius,
+                                    const cx::math::Radius& p_discRadius,
                                     double p_horizontalMargin);
 
 template<>
 void ClampChipPositionToCurrentSide<cxgui::BoardAnimation::MOVE_CHIP_LEFT_ONE_COLUMN>(double& p_currentHorizontalPosition,
                                                                                       [[maybe_unused]] double p_windowWidth,
-                                                                                      const cxmath::Radius& p_discRadius,
+                                                                                      const cx::math::Radius& p_discRadius,
                                                                                       double p_horizontalMargin)
 {
     p_currentHorizontalPosition = p_discRadius.Get() + p_horizontalMargin;
@@ -238,7 +238,7 @@ void ClampChipPositionToCurrentSide<cxgui::BoardAnimation::MOVE_CHIP_LEFT_ONE_CO
 template<>
 void ClampChipPositionToCurrentSide<cxgui::BoardAnimation::MOVE_CHIP_RIGHT_ONE_COLUMN>(double& p_currentHorizontalPosition,
                                                                                        double p_windowWidth,
-                                                                                       const cxmath::Radius& p_discRadius,
+                                                                                       const cx::math::Radius& p_discRadius,
                                                                                        double p_horizontalMargin)
 {
     p_currentHorizontalPosition = p_windowWidth - p_discRadius.Get() - p_horizontalMargin;
@@ -316,7 +316,7 @@ cxgui::AnimatedBoardModel::AnimatedBoardModel(const cxgui::IAnimatedBoardPresent
 // Compute the current chip's position. If needed, the current mirror chip position is also
 // computed. Refer to the subfunction documentation for more details.
 template<cxgui::BoardAnimation A>
-bool cxgui::AnimatedBoardModel::ComputeChipPosition(double p_windowWidth, const cxmath::Radius& p_discRadius, double p_horizontalMargin)
+bool cxgui::AnimatedBoardModel::ComputeChipPosition(double p_windowWidth, const cx::math::Radius& p_discRadius, double p_horizontalMargin)
 {
     bool isMirrorChipNeeded = false;
 
@@ -348,17 +348,17 @@ bool cxgui::AnimatedBoardModel::ComputeChipPosition(double p_windowWidth, const 
     return isMirrorChipNeeded;
 }
 
-bool cxgui::AnimatedBoardModel::ComputeChipLeftPosition(double p_windowWidth, const cxmath::Radius& p_discRadius, double p_horizontalMargin)
+bool cxgui::AnimatedBoardModel::ComputeChipLeftPosition(double p_windowWidth, const cx::math::Radius& p_discRadius, double p_horizontalMargin)
 {
     return ComputeChipPosition<cxgui::BoardAnimation::MOVE_CHIP_LEFT_ONE_COLUMN>(p_windowWidth, p_discRadius, p_horizontalMargin);
 }
 
-bool cxgui::AnimatedBoardModel::ComputeChipRightPosition(double p_windowWidth, const cxmath::Radius& p_discRadius, double p_horizontalMargin)
+bool cxgui::AnimatedBoardModel::ComputeChipRightPosition(double p_windowWidth, const cx::math::Radius& p_discRadius, double p_horizontalMargin)
 {
     return ComputeChipPosition<cxgui::BoardAnimation::MOVE_CHIP_RIGHT_ONE_COLUMN>(p_windowWidth, p_discRadius, p_horizontalMargin);
 }
 
-void cxgui::AnimatedBoardModel::ComputeChipVerticalPosition(const cxmath::Radius& p_discRadius, double p_height)
+void cxgui::AnimatedBoardModel::ComputeChipVerticalPosition(const cx::math::Radius& p_discRadius, double p_height)
 {
     if(m_chipPosition.m_y < p_discRadius.Get())
     {
@@ -371,7 +371,7 @@ void cxgui::AnimatedBoardModel::ComputeChipVerticalPosition(const cxmath::Radius
     }
 }
 
-void cxgui::AnimatedBoardModel::Update(const cxmath::Dimensions& p_widgetDimensions, bool p_isChipMovingHorizontally)
+void cxgui::AnimatedBoardModel::Update(const cx::math::Dimensions& p_widgetDimensions, bool p_isChipMovingHorizontally)
 {
     IF_PRECONDITION_NOT_MET_DO((p_widgetDimensions.m_height.Get() > 0.0 && p_widgetDimensions.m_width.Get() > 0.0), return;);
 
@@ -380,19 +380,19 @@ void cxgui::AnimatedBoardModel::Update(const cxmath::Dimensions& p_widgetDimensi
     m_widgetDimensions = p_widgetDimensions;
 
     // Cell dimensions:
-    const cxmath::Height cellHeight = cxmath::Height(m_widgetDimensions.m_height.Get() / (m_presenter.GetBoardHeight().Get() + 1.0));
-    const cxmath::Width cellWidth = cxmath::Width(m_widgetDimensions.m_width.Get() / m_presenter.GetBoardWidth().Get());
-    m_cellDimensions = cxmath::Dimensions{cellHeight, cellWidth};
+    const cx::math::Height cellHeight = cx::math::Height(m_widgetDimensions.m_height.Get() / (m_presenter.GetBoardHeight().Get() + 1.0));
+    const cx::math::Width cellWidth = cx::math::Width(m_widgetDimensions.m_width.Get() / m_presenter.GetBoardWidth().Get());
+    m_cellDimensions = cx::math::Dimensions{cellHeight, cellWidth};
     const double smallestDimensionSize = std::min(m_widgetDimensions.m_height.Get(), m_widgetDimensions.m_width.Get());
-    m_cellLineWidth = cxmath::Width{smallestDimensionSize * LINE_WIDTH_SCALING_FACTOR};
+    m_cellLineWidth = cx::math::Width{smallestDimensionSize * LINE_WIDTH_SCALING_FACTOR};
 
     // Chip radius:
     const double maximumNbChips = std::max(m_presenter.GetBoardHeight().Get() + 1, m_presenter.GetBoardWidth().Get());
-    m_chipRadius = cxmath::Radius{static_cast<double>((smallestDimensionSize / (maximumNbChips * 2.0)))};
-    m_chipLineWidth = cxmath::Width{m_chipRadius.Get() * LINE_WIDTH_SCALING_FACTOR};
+    m_chipRadius = cx::math::Radius{static_cast<double>((smallestDimensionSize / (maximumNbChips * 2.0)))};
+    m_chipLineWidth = cx::math::Width{m_chipRadius.Get() * LINE_WIDTH_SCALING_FACTOR};
 
     // Chips positions (central and mirror):
-    m_horizontalMargin = cxmath::Width{(cellWidth.Get() - (2.0 * m_chipRadius.Get())) / 2.0};
+    m_horizontalMargin = cx::math::Width{(cellWidth.Get() - (2.0 * m_chipRadius.Get())) / 2.0};
 
     m_isChipMovingHorizontally = p_isChipMovingHorizontally;
     const bool mirrorToTheLeft = ComputeChipLeftPosition(m_widgetDimensions.m_width.Get(), m_chipRadius, m_horizontalMargin.Get());
@@ -413,7 +413,7 @@ void cxgui::AnimatedBoardModel::Resize(const cxgui::ScalingRatios& p_scalingRati
     m_chipPosition.m_y *= p_scalingRatios.m_verticalRatio.Get();
 }
 
-void cxgui::AnimatedBoardModel::AddChipDisplacement(const cxmath::Height& p_vertical, const cxmath::Width& p_horizontal)
+void cxgui::AnimatedBoardModel::AddChipDisplacement(const cx::math::Height& p_vertical, const cx::math::Width& p_horizontal)
 {
     m_chipPosition.m_x += p_horizontal.Get();
     m_chipPosition.m_y += p_vertical.Get();
@@ -442,32 +442,32 @@ cxgui::AnimationSpeed cxgui::AnimatedBoardModel::GetAnimationSpeed() const
     return m_animationSpeed;
 }
 
-const cxmath::Dimensions& cxgui::AnimatedBoardModel::GetAnimatedAreaDimensions() const
+const cx::math::Dimensions& cxgui::AnimatedBoardModel::GetAnimatedAreaDimensions() const
 {
     return m_widgetDimensions;
 }
 
-const cxmath::Dimensions& cxgui::AnimatedBoardModel::GetCellDimensions() const
+const cx::math::Dimensions& cxgui::AnimatedBoardModel::GetCellDimensions() const
 {
     return m_cellDimensions;
 }
 
-cxmath::Radius cxgui::AnimatedBoardModel::GetChipRadius() const
+cx::math::Radius cxgui::AnimatedBoardModel::GetChipRadius() const
 {
     return m_chipRadius;
 }
 
-const cxmath::Position& cxgui::AnimatedBoardModel::GetChipPosition() const
+const cx::math::Position& cxgui::AnimatedBoardModel::GetChipPosition() const
 {
     return m_chipPosition;
 }
 
-cxmath::Width cxgui::AnimatedBoardModel::GetHorizontalMargin() const
+cx::math::Width cxgui::AnimatedBoardModel::GetHorizontalMargin() const
 {
     return m_horizontalMargin;
 }
 
-const cxmath::Position& cxgui::AnimatedBoardModel::GetMirrorChipPosition() const
+const cx::math::Position& cxgui::AnimatedBoardModel::GetMirrorChipPosition() const
 {
     return m_mirrorChipPosition;
 }
@@ -477,7 +477,7 @@ bool cxgui::AnimatedBoardModel::IsMirrorChipNeeded() const
     return m_isMirrorChipNeeded;
 }
 
-cxmath::Width cxgui::AnimatedBoardModel::GetLineWidth(Feature p_feature) const
+cx::math::Width cxgui::AnimatedBoardModel::GetLineWidth(Feature p_feature) const
 {
     switch(p_feature)
     {
@@ -489,7 +489,7 @@ cxmath::Width cxgui::AnimatedBoardModel::GetLineWidth(Feature p_feature) const
 
         default:
             ASSERT_ERROR_MSG("Unknown feature type.");
-            return cxmath::Width{0.0};
+            return cx::math::Width{0.0};
     }
 }
 

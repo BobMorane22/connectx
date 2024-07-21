@@ -11,3 +11,8 @@
 ./tools/script/findReplace.sh "cxinv::" "cx::inv::"
 ./tools/script/findReplace.sh "namespace cxinv" "namespace cx::inv"
 ./tools/script/findReplace.sh "@namespace cxinv" "@namespace cx::inv"
+
+# cxmath -> cx::math
+./tools/script/findReplace.sh "cxmath::" "cx::math::"
+./tools/script/findReplace.sh "namespace cxmath" "namespace cx::math"
+./tools/script/findReplace.sh "@namespace cxmath" "@namespace cx::math"

@@ -34,8 +34,8 @@ namespace
 AnimatedBoardModelMock CreateMock()
 {
     AnimatedBoardModelMock model;
-    model.SetAnimatedAreaDimensions({cxmath::Height{70.0}, cxmath::Width{70.0}});
-    model.SetCellDimensions({cxmath::Height{10.0}, cxmath::Width{10.0}});
+    model.SetAnimatedAreaDimensions({cx::math::Height{70.0}, cx::math::Width{70.0}});
+    model.SetCellDimensions({cx::math::Height{10.0}, cx::math::Width{10.0}});
 
     return model;
 }
@@ -97,13 +97,13 @@ TEST(IAnimatedBoardModel, /*DISABLED_*/ComputeChipPositionFromColumn_ValidColumn
 {
     const AnimatedBoardModelMock model = CreateMock();
 
-    ASSERT_TRUE(cxgui::ComputeChipPositionFromColumn(model, cxmodel::Column{0u}) == cxmath::Position(5.0, 0.0));
-    ASSERT_TRUE(cxgui::ComputeChipPositionFromColumn(model, cxmodel::Column{1u}) == cxmath::Position(15.0, 0.0));
-    ASSERT_TRUE(cxgui::ComputeChipPositionFromColumn(model, cxmodel::Column{2u}) == cxmath::Position(25.0, 0.0));
-    ASSERT_TRUE(cxgui::ComputeChipPositionFromColumn(model, cxmodel::Column{3u}) == cxmath::Position(35.0, 0.0));
-    ASSERT_TRUE(cxgui::ComputeChipPositionFromColumn(model, cxmodel::Column{4u}) == cxmath::Position(45.0, 0.0));
-    ASSERT_TRUE(cxgui::ComputeChipPositionFromColumn(model, cxmodel::Column{5u}) == cxmath::Position(55.0, 0.0));
-    ASSERT_TRUE(cxgui::ComputeChipPositionFromColumn(model, cxmodel::Column{6u}) == cxmath::Position(65.0, 0.0));
+    ASSERT_TRUE(cxgui::ComputeChipPositionFromColumn(model, cxmodel::Column{0u}) == cx::math::Position(5.0, 0.0));
+    ASSERT_TRUE(cxgui::ComputeChipPositionFromColumn(model, cxmodel::Column{1u}) == cx::math::Position(15.0, 0.0));
+    ASSERT_TRUE(cxgui::ComputeChipPositionFromColumn(model, cxmodel::Column{2u}) == cx::math::Position(25.0, 0.0));
+    ASSERT_TRUE(cxgui::ComputeChipPositionFromColumn(model, cxmodel::Column{3u}) == cx::math::Position(35.0, 0.0));
+    ASSERT_TRUE(cxgui::ComputeChipPositionFromColumn(model, cxmodel::Column{4u}) == cx::math::Position(45.0, 0.0));
+    ASSERT_TRUE(cxgui::ComputeChipPositionFromColumn(model, cxmodel::Column{5u}) == cx::math::Position(55.0, 0.0));
+    ASSERT_TRUE(cxgui::ComputeChipPositionFromColumn(model, cxmodel::Column{6u}) == cx::math::Position(65.0, 0.0));
 }
 
 TEST(IAnimatedBoardModel, /*DISABLED_*/ComputeChipPositionFromColumn_ColumnOutsideBoard_PositionReturnedAndPreconditionFails)
@@ -111,7 +111,7 @@ TEST(IAnimatedBoardModel, /*DISABLED_*/ComputeChipPositionFromColumn_ColumnOutsi
     const AnimatedBoardModelMock model = CreateMock();
 
     cxunit::DisableStdStreamsRAII redirector;
-    ASSERT_TRUE(cxgui::ComputeChipPositionFromColumn(model, cxmodel::Column{7u}) == cxmath::Position(75.0, 0.0));
+    ASSERT_TRUE(cxgui::ComputeChipPositionFromColumn(model, cxmodel::Column{7u}) == cx::math::Position(75.0, 0.0));
     ASSERT_PRECONDITION_FAILED(redirector);
     ASSERT_POSTCONDITION_FAILED(redirector);
 }

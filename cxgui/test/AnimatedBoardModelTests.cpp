@@ -61,15 +61,15 @@ NotSynced Validate(cxgui::IAnimatedBoardModel& p_model, const ModelOperations& p
     // Pre-operation(s) values:
     const cxgui::FPS fpsBefore                            = p_model.GetFPS();
     const cxgui::AnimationSpeed speedBefore               = p_model.GetAnimationSpeed();
-    const cxmath::Dimensions animatedAreaDimensionsBefore = p_model.GetAnimatedAreaDimensions();
-    const cxmath::Dimensions cellDimensionsBefore         = p_model.GetCellDimensions();
-    const cxmath::Radius chipRadiusBefore                 = p_model.GetChipRadius();
-    const cxmath::Position chipPositionBefore             = p_model.GetChipPosition();
-    const cxmath::Width horizontalMarginBefore            = p_model.GetHorizontalMargin();
-    const cxmath::Position mirrorChipPositionBefore       = p_model.GetMirrorChipPosition();
+    const cx::math::Dimensions animatedAreaDimensionsBefore = p_model.GetAnimatedAreaDimensions();
+    const cx::math::Dimensions cellDimensionsBefore         = p_model.GetCellDimensions();
+    const cx::math::Radius chipRadiusBefore                 = p_model.GetChipRadius();
+    const cx::math::Position chipPositionBefore             = p_model.GetChipPosition();
+    const cx::math::Width horizontalMarginBefore            = p_model.GetHorizontalMargin();
+    const cx::math::Position mirrorChipPositionBefore       = p_model.GetMirrorChipPosition();
     const bool mirrorNeededBefore                         = p_model.IsMirrorChipNeeded();
-    const cxmath::Width cellLineWidthBefore               = p_model.GetLineWidth(cxgui::Feature::CELL);
-    const cxmath::Width chipLineWidthBefore               = p_model.GetLineWidth(cxgui::Feature::CHIP);
+    const cx::math::Width cellLineWidthBefore               = p_model.GetLineWidth(cxgui::Feature::CELL);
+    const cx::math::Width chipLineWidthBefore               = p_model.GetLineWidth(cxgui::Feature::CHIP);
     const cxmodel::Column currentColumnBefore             = p_model.GetCurrentColumn();
 
     // Operation(s) performed on the model:
@@ -79,15 +79,15 @@ NotSynced Validate(cxgui::IAnimatedBoardModel& p_model, const ModelOperations& p
     // Post-operation(s) values:
     const cxgui::FPS fpsAfter                            = p_model.GetFPS();
     const cxgui::AnimationSpeed speedAfter               = p_model.GetAnimationSpeed();
-    const cxmath::Dimensions animatedAreaDimensionsAfter = p_model.GetAnimatedAreaDimensions();
-    const cxmath::Dimensions cellDimensionsAfter         = p_model.GetCellDimensions();
-    const cxmath::Radius chipRadiusAfter                 = p_model.GetChipRadius();
-    const cxmath::Position chipPositionAfter             = p_model.GetChipPosition();
-    const cxmath::Width horizontalMarginAfter            = p_model.GetHorizontalMargin();
-    const cxmath::Position mirrorChipPositionAfter       = p_model.GetMirrorChipPosition();
+    const cx::math::Dimensions animatedAreaDimensionsAfter = p_model.GetAnimatedAreaDimensions();
+    const cx::math::Dimensions cellDimensionsAfter         = p_model.GetCellDimensions();
+    const cx::math::Radius chipRadiusAfter                 = p_model.GetChipRadius();
+    const cx::math::Position chipPositionAfter             = p_model.GetChipPosition();
+    const cx::math::Width horizontalMarginAfter            = p_model.GetHorizontalMargin();
+    const cx::math::Position mirrorChipPositionAfter       = p_model.GetMirrorChipPosition();
     const bool mirrorNeededAfter                         = p_model.IsMirrorChipNeeded();
-    const cxmath::Width cellLineWidthAfter               = p_model.GetLineWidth(cxgui::Feature::CELL);
-    const cxmath::Width chipLineWidthAfter               = p_model.GetLineWidth(cxgui::Feature::CHIP);
+    const cx::math::Width cellLineWidthAfter               = p_model.GetLineWidth(cxgui::Feature::CELL);
+    const cx::math::Width chipLineWidthAfter               = p_model.GetLineWidth(cxgui::Feature::CHIP);
     const cxmodel::Column currentColumnAfter             = p_model.GetCurrentColumn();
 
     // Comparing the two:
@@ -128,13 +128,13 @@ std::string Debug(const T& p_value)
 }
 
 template<>
-void PrintType<cxmath::Position>(std::ostream& p_stream, const cxmath::Position& p_value)
+void PrintType<cx::math::Position>(std::ostream& p_stream, const cx::math::Position& p_value)
 {
     p_stream << "("  << p_value.m_x << ", " << p_value.m_y << ")";
 }
 
 template<>
-void PrintType<cxmath::Radius>(std::ostream& p_stream, const cxmath::Radius& p_value)
+void PrintType<cx::math::Radius>(std::ostream& p_stream, const cx::math::Radius& p_value)
 {
     p_stream << std::to_string(p_value.Get());
 }
@@ -213,7 +213,7 @@ TEST_F(AnimationModelTestFixture, /*DISABLED_*/Update_ValidInput_UpdatesAnimatio
     const NotSynced whatChanged = Validate(model,
                                   [](cxgui::IAnimatedBoardModel& p_model)
                                   {
-                                      p_model.Update({cxmath::Height{100}, cxmath::Width{150}}, true);
+                                      p_model.Update({cx::math::Height{100}, cx::math::Width{150}}, true);
                                   });
 
     // Comparing the two:
@@ -236,7 +236,7 @@ TEST_F(AnimationModelTestFixtureStdErrStreamRedirector, /*DISABLED_*/Update_Inva
     const NotSynced whatChanged = Validate(model,
                                   [](cxgui::IAnimatedBoardModel& p_model)
                                   {
-                                      p_model.Update({cxmath::Height{-100}, cxmath::Width{150}}, true);
+                                      p_model.Update({cx::math::Height{-100}, cx::math::Width{150}}, true);
                                   });
 
     ASSERT_TRUE(whatChanged == NONE);
@@ -250,7 +250,7 @@ TEST_F(AnimationModelTestFixtureStdErrStreamRedirector, /*DISABLED_*/Update_Inva
     const NotSynced whatChanged = Validate(model,
                                   [](cxgui::IAnimatedBoardModel& p_model)
                                   {
-                                      p_model.Update({cxmath::Height{100}, cxmath::Width{-150}}, true);
+                                      p_model.Update({cx::math::Height{100}, cx::math::Width{-150}}, true);
                                   });
 
     ASSERT_TRUE(whatChanged == NONE);
@@ -261,9 +261,9 @@ TEST_F(AnimationModelTestFixture, /*DISABLED_*/Resize_ValidAndHorizontal_Resizin
 {
     cxgui::IAnimatedBoardModel& model = GetModel();
 
-    model.Update({cxmath::Height{100}, cxmath::Width{150}}, true);
-    model.AddChipDisplacement(cxmath::Height{1.0}, cxmath::Width{1.0});
-    const cxmath::Position chipPositionBefore = model.GetChipPosition();
+    model.Update({cx::math::Height{100}, cx::math::Width{150}}, true);
+    model.AddChipDisplacement(cx::math::Height{1.0}, cx::math::Width{1.0});
+    const cx::math::Position chipPositionBefore = model.GetChipPosition();
 
     const NotSynced whatChanged = Validate(model,
                                   [](cxgui::IAnimatedBoardModel& p_model)
@@ -274,19 +274,19 @@ TEST_F(AnimationModelTestFixture, /*DISABLED_*/Resize_ValidAndHorizontal_Resizin
 
     ASSERT_TRUE(whatChanged == CHIP_POSITION);
 
-    const cxmath::Position chipPositionAfter = model.GetChipPosition();
+    const cx::math::Position chipPositionAfter = model.GetChipPosition();
 
-    ASSERT_TRUE(cxmath::AreLogicallyEqual(2.0 * chipPositionBefore.m_x, chipPositionAfter.m_x));
-    ASSERT_TRUE(cxmath::AreLogicallyEqual(chipPositionBefore.m_y, chipPositionAfter.m_y));
+    ASSERT_TRUE(cx::math::AreLogicallyEqual(2.0 * chipPositionBefore.m_x, chipPositionAfter.m_x));
+    ASSERT_TRUE(cx::math::AreLogicallyEqual(chipPositionBefore.m_y, chipPositionAfter.m_y));
 }
 
 TEST_F(AnimationModelTestFixture, /*DISABLED_*/Resize_ValidAndVertical_ResizingOccured)
 {
     cxgui::IAnimatedBoardModel& model = GetModel();
 
-    model.Update({cxmath::Height{100}, cxmath::Width{150}}, true);
-    model.AddChipDisplacement(cxmath::Height{1.0}, cxmath::Width{1.0});
-    const cxmath::Position chipPositionBefore = model.GetChipPosition();
+    model.Update({cx::math::Height{100}, cx::math::Width{150}}, true);
+    model.AddChipDisplacement(cx::math::Height{1.0}, cx::math::Width{1.0});
+    const cx::math::Position chipPositionBefore = model.GetChipPosition();
 
     const NotSynced whatChanged = Validate(model,
                                   [](cxgui::IAnimatedBoardModel& p_model)
@@ -297,16 +297,16 @@ TEST_F(AnimationModelTestFixture, /*DISABLED_*/Resize_ValidAndVertical_ResizingO
 
     ASSERT_TRUE(whatChanged == CHIP_POSITION);
 
-    const cxmath::Position chipPositionAfter = model.GetChipPosition();
+    const cx::math::Position chipPositionAfter = model.GetChipPosition();
 
-    ASSERT_TRUE(cxmath::AreLogicallyEqual(chipPositionBefore.m_x, chipPositionAfter.m_x));
-    ASSERT_TRUE(cxmath::AreLogicallyEqual(3.0 * chipPositionBefore.m_y, chipPositionAfter.m_y));
+    ASSERT_TRUE(cx::math::AreLogicallyEqual(chipPositionBefore.m_x, chipPositionAfter.m_x));
+    ASSERT_TRUE(cx::math::AreLogicallyEqual(3.0 * chipPositionBefore.m_y, chipPositionAfter.m_y));
 }
 
 TEST_F(AnimationModelTestFixtureStdErrStreamRedirector, /*DISABLED_*/Resize_InvalidHorizontalRatio_DoesNotResizeAndAsserts)
 {
     cxgui::IAnimatedBoardModel& model = GetModel();
-    model.Update({cxmath::Height{100}, cxmath::Width{150}}, true);
+    model.Update({cx::math::Height{100}, cx::math::Width{150}}, true);
 
     const NotSynced whatChanged = Validate(model,
                                   [](cxgui::IAnimatedBoardModel& p_model)
@@ -322,7 +322,7 @@ TEST_F(AnimationModelTestFixtureStdErrStreamRedirector, /*DISABLED_*/Resize_Inva
 TEST_F(AnimationModelTestFixtureStdErrStreamRedirector, /*DISABLED_*/Resize_InvalidVerticalRatio_DoesNotResizeAndAsserts)
 {
     cxgui::IAnimatedBoardModel& model = GetModel();
-    model.Update({cxmath::Height{100}, cxmath::Width{150}}, true);
+    model.Update({cx::math::Height{100}, cx::math::Width{150}}, true);
 
     const NotSynced whatChanged = Validate(model,
                                   [](cxgui::IAnimatedBoardModel& p_model)
@@ -338,51 +338,51 @@ TEST_F(AnimationModelTestFixtureStdErrStreamRedirector, /*DISABLED_*/Resize_Inva
 TEST_F(AnimationModelTestFixture, /*DISABLED_*/AddChipDisplacement_HorizontalDisplacement_ChipMovedHorizontally)
 {
     cxgui::IAnimatedBoardModel& model = GetModel();
-    model.Update({cxmath::Height{100}, cxmath::Width{150}}, true);
+    model.Update({cx::math::Height{100}, cx::math::Width{150}}, true);
 
-    const cxmath::Position chipPositionBefore = model.GetChipPosition();
+    const cx::math::Position chipPositionBefore = model.GetChipPosition();
 
     const NotSynced whatChanged = Validate(model,
                                   [](cxgui::IAnimatedBoardModel& p_model)
                                   {
-                                      p_model.AddChipDisplacement(cxmath::Height{0.0}, cxmath::Width{1.0});
+                                      p_model.AddChipDisplacement(cx::math::Height{0.0}, cx::math::Width{1.0});
                                   });
 
     ASSERT_TRUE(whatChanged == CHIP_POSITION);
 
-    const cxmath::Position chipPositionAfter = model.GetChipPosition();
-    ASSERT_TRUE(cxmath::AreLogicallyEqual(chipPositionBefore.m_x + 1.0, chipPositionAfter.m_x));
-    ASSERT_TRUE(cxmath::AreLogicallyEqual(chipPositionBefore.m_y, chipPositionAfter.m_y));
+    const cx::math::Position chipPositionAfter = model.GetChipPosition();
+    ASSERT_TRUE(cx::math::AreLogicallyEqual(chipPositionBefore.m_x + 1.0, chipPositionAfter.m_x));
+    ASSERT_TRUE(cx::math::AreLogicallyEqual(chipPositionBefore.m_y, chipPositionAfter.m_y));
 }
 
 TEST_F(AnimationModelTestFixture, /*DISABLED_*/AddChipDisplacement_VerticalDisplacement_ChipMovedVertically)
 {
     cxgui::IAnimatedBoardModel& model = GetModel();
-    model.Update({cxmath::Height{100}, cxmath::Width{150}}, true);
+    model.Update({cx::math::Height{100}, cx::math::Width{150}}, true);
 
-    const cxmath::Position chipPositionBefore = model.GetChipPosition();
+    const cx::math::Position chipPositionBefore = model.GetChipPosition();
 
     const NotSynced whatChanged = Validate(model,
                                   [](cxgui::IAnimatedBoardModel& p_model)
                                   {
-                                      p_model.AddChipDisplacement(cxmath::Height{1.0}, cxmath::Width{0.0});
+                                      p_model.AddChipDisplacement(cx::math::Height{1.0}, cx::math::Width{0.0});
                                   });
 
     ASSERT_TRUE(whatChanged == CHIP_POSITION);
 
-    const cxmath::Position chipPositionAfter = model.GetChipPosition();
-    ASSERT_TRUE(cxmath::AreLogicallyEqual(chipPositionBefore.m_x, chipPositionAfter.m_x));
-    ASSERT_TRUE(cxmath::AreLogicallyEqual(chipPositionBefore.m_y + 1.0, chipPositionAfter.m_y));
+    const cx::math::Position chipPositionAfter = model.GetChipPosition();
+    ASSERT_TRUE(cx::math::AreLogicallyEqual(chipPositionBefore.m_x, chipPositionAfter.m_x));
+    ASSERT_TRUE(cx::math::AreLogicallyEqual(chipPositionBefore.m_y + 1.0, chipPositionAfter.m_y));
 }
 
 TEST_F(AnimationModelTestFixture, /*DISABLED_*/ResetChipPositions_ValidModel_ChipPositionsReinitialized)
 {
     cxgui::IAnimatedBoardModel& model = GetModel();
-    model.Update({cxmath::Height{100}, cxmath::Width{150}}, true);
-    model.AddChipDisplacement(cxmath::Height{1.0}, cxmath::Width{1.0});
+    model.Update({cx::math::Height{100}, cx::math::Width{150}}, true);
+    model.AddChipDisplacement(cx::math::Height{1.0}, cx::math::Width{1.0});
 
-    const cxmath::Position chipPositionBefore = model.GetChipPosition();
-    const cxmath::Position mirrorChipPositionBefore = model.GetMirrorChipPosition();
+    const cx::math::Position chipPositionBefore = model.GetChipPosition();
+    const cx::math::Position mirrorChipPositionBefore = model.GetMirrorChipPosition();
 
     const NotSynced whatChanged = Validate(model,
                                   [](cxgui::IAnimatedBoardModel& p_model)
@@ -392,18 +392,18 @@ TEST_F(AnimationModelTestFixture, /*DISABLED_*/ResetChipPositions_ValidModel_Chi
 
     ASSERT_TRUE(whatChanged == (CHIP_POSITION | MIRROR_CHIP_POSITION));
 
-    const cxmath::Position chipPositionAfter = model.GetChipPosition();
-    ASSERT_TRUE(!cxmath::AreLogicallyEqual(chipPositionBefore.m_x, chipPositionAfter.m_x));
-    ASSERT_TRUE(!cxmath::AreLogicallyEqual(chipPositionBefore.m_y, chipPositionAfter.m_y));
+    const cx::math::Position chipPositionAfter = model.GetChipPosition();
+    ASSERT_TRUE(!cx::math::AreLogicallyEqual(chipPositionBefore.m_x, chipPositionAfter.m_x));
+    ASSERT_TRUE(!cx::math::AreLogicallyEqual(chipPositionBefore.m_y, chipPositionAfter.m_y));
 
-    const cxmath::Radius chipRadius = model.GetChipRadius();
-    const cxmath::Width cellMargin = model.GetHorizontalMargin();
+    const cx::math::Radius chipRadius = model.GetChipRadius();
+    const cx::math::Width cellMargin = model.GetHorizontalMargin();
     ASSERT_TRUE(chipPositionAfter.m_x == cellMargin.Get() + chipRadius.Get());
     ASSERT_TRUE(chipPositionAfter.m_y == 0.0);
 
-    const cxmath::Position mirrorChipPositionAfter = model.GetMirrorChipPosition();
-    ASSERT_TRUE(!cxmath::AreLogicallyEqual(mirrorChipPositionBefore.m_x, mirrorChipPositionAfter.m_x));
-    ASSERT_TRUE(!cxmath::AreLogicallyEqual(mirrorChipPositionBefore.m_y, mirrorChipPositionAfter.m_y));
+    const cx::math::Position mirrorChipPositionAfter = model.GetMirrorChipPosition();
+    ASSERT_TRUE(!cx::math::AreLogicallyEqual(mirrorChipPositionBefore.m_x, mirrorChipPositionAfter.m_x));
+    ASSERT_TRUE(!cx::math::AreLogicallyEqual(mirrorChipPositionBefore.m_y, mirrorChipPositionAfter.m_y));
 
     ASSERT_TRUE(mirrorChipPositionAfter.m_x == cellMargin.Get() + chipRadius.Get());
     ASSERT_TRUE(mirrorChipPositionAfter.m_y == 0.0);
@@ -412,7 +412,7 @@ TEST_F(AnimationModelTestFixture, /*DISABLED_*/ResetChipPositions_ValidModel_Chi
 TEST_F(AnimationModelTestFixture, /*DISABLED_*/UpdateCurrentColumn_NewColumIndex_ColumnUpdated)
 {
     cxgui::IAnimatedBoardModel& model = GetModel();
-    model.Update({cxmath::Height{100}, cxmath::Width{150}}, true);
+    model.Update({cx::math::Height{100}, cx::math::Width{150}}, true);
 
     const cxmodel::Column currentColumnBefore = model.GetCurrentColumn();
     ASSERT_TRUE(currentColumnBefore == cxmodel::Column{0u});
@@ -438,7 +438,7 @@ TEST_F(AnimationModelTestFixture, /*DISABLED_*/GetFPS_ValidModel_FPSReturned)
 TEST_F(AnimationModelTestFixture, /*DISABLED_*/GetAnimationSpeed_ValidModel_AnimationSpeedReturned)
 {
     cxgui::IAnimatedBoardModel& model = GetModel();
-    model.Update({cxmath::Height{100}, cxmath::Width{150}}, true);
+    model.Update({cx::math::Height{100}, cx::math::Width{150}}, true);
 
     ASSERT_TRUE(model.GetAnimationSpeed() == cxgui::AnimationSpeed{3u});
 }
@@ -447,180 +447,180 @@ TEST_F(AnimationModelTestFixture, /*DISABLED_*/GetAnimatedAreaDimensions)
 {
     cxgui::IAnimatedBoardModel& model = GetModel();
 
-    const cxmath::Dimensions areaDimensionsBeforeUpdate = model.GetAnimatedAreaDimensions();
-    ASSERT_TRUE((areaDimensionsBeforeUpdate == cxmath::Dimensions{cxmath::Height{0}, cxmath::Width{0}}));
+    const cx::math::Dimensions areaDimensionsBeforeUpdate = model.GetAnimatedAreaDimensions();
+    ASSERT_TRUE((areaDimensionsBeforeUpdate == cx::math::Dimensions{cx::math::Height{0}, cx::math::Width{0}}));
 
-    model.Update({cxmath::Height{100}, cxmath::Width{150}}, true);
+    model.Update({cx::math::Height{100}, cx::math::Width{150}}, true);
 
-    const cxmath::Dimensions areaDimensions = model.GetAnimatedAreaDimensions();
-    ASSERT_TRUE((areaDimensions == cxmath::Dimensions{cxmath::Height{100}, cxmath::Width{150}}));
+    const cx::math::Dimensions areaDimensions = model.GetAnimatedAreaDimensions();
+    ASSERT_TRUE((areaDimensions == cx::math::Dimensions{cx::math::Height{100}, cx::math::Width{150}}));
 }
 
 TEST_F(AnimationModelTestFixture, /*DISABLED_*/GetCellDimensions_ValidModel_CellDimensionsReturned)
 {
     cxgui::IAnimatedBoardModel& model = GetModel();
 
-    const cxmath::Dimensions cellDimensionsBeforeUpdate = model.GetCellDimensions();
-    ASSERT_TRUE((cellDimensionsBeforeUpdate == cxmath::Dimensions{cxmath::Height{0}, cxmath::Width{0}}));
+    const cx::math::Dimensions cellDimensionsBeforeUpdate = model.GetCellDimensions();
+    ASSERT_TRUE((cellDimensionsBeforeUpdate == cx::math::Dimensions{cx::math::Height{0}, cx::math::Width{0}}));
 
-    model.Update({cxmath::Height{100}, cxmath::Width{150}}, true);
+    model.Update({cx::math::Height{100}, cx::math::Width{150}}, true);
 
-    const cxmath::Dimensions cellDimensionsAfterUpdate = model.GetCellDimensions();
-    ASSERT_TRUE((cellDimensionsAfterUpdate == cxmath::Dimensions{cxmath::Height{100.0 / 7.0}, cxmath::Width{150.0 / 7.0}}));
+    const cx::math::Dimensions cellDimensionsAfterUpdate = model.GetCellDimensions();
+    ASSERT_TRUE((cellDimensionsAfterUpdate == cx::math::Dimensions{cx::math::Height{100.0 / 7.0}, cx::math::Width{150.0 / 7.0}}));
 }
 
 TEST_F(AnimationModelTestFixture, /*DISABLED_*/GetChipRadius_ValidModel_ChipRadiusReturned)
 {
     cxgui::IAnimatedBoardModel& model = GetModel();
 
-    const cxmath::Radius chipRadiusBeforeUpdate = model.GetChipRadius();
-    ASSERT_TRUE(chipRadiusBeforeUpdate == cxmath::Radius{0.0});
+    const cx::math::Radius chipRadiusBeforeUpdate = model.GetChipRadius();
+    ASSERT_TRUE(chipRadiusBeforeUpdate == cx::math::Radius{0.0});
 
-    model.Update({cxmath::Height{100}, cxmath::Width{150}}, true);
+    model.Update({cx::math::Height{100}, cx::math::Width{150}}, true);
 
-    const cxmath::Radius chipRadiusAfterUpdate = model.GetChipRadius();
-    ASSERT_TRUE(cxmath::AreLogicallyEqual(chipRadiusAfterUpdate.Get(), 7.1428571428571432)) << Debug(chipRadiusAfterUpdate);
+    const cx::math::Radius chipRadiusAfterUpdate = model.GetChipRadius();
+    ASSERT_TRUE(cx::math::AreLogicallyEqual(chipRadiusAfterUpdate.Get(), 7.1428571428571432)) << Debug(chipRadiusAfterUpdate);
 }
 
 TEST_F(AnimationModelTestFixture, /*DISABLED_*/GetChipPosition_CrossedToTheLeftChipIsMoving_ReturnsPosition)
 {
     cxgui::IAnimatedBoardModel& model = GetModel();
-    model.Update({cxmath::Height{150}, cxmath::Width{100}}, CHIP_IS_MOVING_HORIZONTALLY);
+    model.Update({cx::math::Height{150}, cx::math::Width{100}}, CHIP_IS_MOVING_HORIZONTALLY);
 
-    const cxmath::Position chipPosition = model.GetChipPosition();
-    const cxmath::Position mirrorChipPosition = model.GetMirrorChipPosition();
+    const cx::math::Position chipPosition = model.GetChipPosition();
+    const cx::math::Position mirrorChipPosition = model.GetMirrorChipPosition();
 
     // Since the chip is starting at (0,0) and moving, it's horizontal position is not updated:
-    ASSERT_TRUE((chipPosition == cxmath::Position{0.0, 7.1428571428571432})) << Debug(chipPosition);
+    ASSERT_TRUE((chipPosition == cx::math::Position{0.0, 7.1428571428571432})) << Debug(chipPosition);
 
     // Instead, a mirror chip will be added to represent its complement on the other side of the board:
     ASSERT_TRUE(model.IsMirrorChipNeeded());
-    ASSERT_TRUE((mirrorChipPosition == cxmath::Position{100.0, 7.1428571428571432})) << Debug(mirrorChipPosition);
+    ASSERT_TRUE((mirrorChipPosition == cx::math::Position{100.0, 7.1428571428571432})) << Debug(mirrorChipPosition);
 }
 
 TEST_F(AnimationModelTestFixture, /*DISABLED_*/GetChipPosition_CrossedToTheLeftChipIsNotMoving_ReturnsPosition)
 {
     cxgui::IAnimatedBoardModel& model = GetModel();
-    model.Update({cxmath::Height{150}, cxmath::Width{100}}, CHIP_IS_NOT_MOVING_HORIZONTALLY);
+    model.Update({cx::math::Height{150}, cx::math::Width{100}}, CHIP_IS_NOT_MOVING_HORIZONTALLY);
 
-    const cxmath::Position chipPosition = model.GetChipPosition();
-    const cxmath::Position mirrorChipPosition = model.GetMirrorChipPosition();
+    const cx::math::Position chipPosition = model.GetChipPosition();
+    const cx::math::Position mirrorChipPosition = model.GetMirrorChipPosition();
 
     // Since the chip is starting at (0,0) and it is not moving, an update will
     // make sure it is completely visible to the user:
-    ASSERT_TRUE((chipPosition == cxmath::Position{7.1428571428571432, 7.1428571428571432})) << Debug(chipPosition);
+    ASSERT_TRUE((chipPosition == cx::math::Position{7.1428571428571432, 7.1428571428571432})) << Debug(chipPosition);
 
     // Also, in this case, no mirror chip will be added (it is only added to simulate
     // continuity across the board limits as animations are performed):
     ASSERT_FALSE(model.IsMirrorChipNeeded());
-    ASSERT_TRUE((mirrorChipPosition == cxmath::Position{0.0, 7.1428571428571432})) << Debug(mirrorChipPosition);
+    ASSERT_TRUE((mirrorChipPosition == cx::math::Position{0.0, 7.1428571428571432})) << Debug(mirrorChipPosition);
 }
 
 TEST_F(AnimationModelTestFixture, /*DISABLED_*/GetChipPosition_CompletelyCrossedToTheLeftChipIsMoving_ReturnsPosition)
 {
     cxgui::IAnimatedBoardModel& model = GetModel();
-    model.AddChipDisplacement(cxmath::Height{0.0}, cxmath::Width{-7.1428571428571432});
-    model.Update({cxmath::Height{150}, cxmath::Width{100}}, CHIP_IS_MOVING_HORIZONTALLY);
+    model.AddChipDisplacement(cx::math::Height{0.0}, cx::math::Width{-7.1428571428571432});
+    model.Update({cx::math::Height{150}, cx::math::Width{100}}, CHIP_IS_MOVING_HORIZONTALLY);
 
-    const cxmath::Position chipPosition = model.GetChipPosition();
-    const cxmath::Position mirrorChipPosition = model.GetMirrorChipPosition();
+    const cx::math::Position chipPosition = model.GetChipPosition();
+    const cx::math::Position mirrorChipPosition = model.GetMirrorChipPosition();
 
     // Since the chip has completely crossed to the left but that it is still moving, 
     // its position is not updated:
-    ASSERT_TRUE((chipPosition == cxmath::Position{-7.1428571428571432, 7.1428571428571432})) << Debug(chipPosition);
+    ASSERT_TRUE((chipPosition == cx::math::Position{-7.1428571428571432, 7.1428571428571432})) << Debug(chipPosition);
 
     // Instead, a mirror chip is added on the other side, fully visible:
     ASSERT_TRUE(model.IsMirrorChipNeeded());
-    ASSERT_TRUE((mirrorChipPosition == cxmath::Position{92.857142857142861, 7.1428571428571432})) << Debug(mirrorChipPosition);
+    ASSERT_TRUE((mirrorChipPosition == cx::math::Position{92.857142857142861, 7.1428571428571432})) << Debug(mirrorChipPosition);
 }
 
 TEST_F(AnimationModelTestFixture, /*DISABLED_*/GetChipPosition_CompletelyCrossedToTheLeftChipIsNotMoving_ReturnsPosition)
 {
     cxgui::IAnimatedBoardModel& model = GetModel();
-    model.AddChipDisplacement(cxmath::Height{0.0}, cxmath::Width{-7.1428571428571432});
-    model.Update({cxmath::Height{150}, cxmath::Width{100}}, CHIP_IS_NOT_MOVING_HORIZONTALLY);
+    model.AddChipDisplacement(cx::math::Height{0.0}, cx::math::Width{-7.1428571428571432});
+    model.Update({cx::math::Height{150}, cx::math::Width{100}}, CHIP_IS_NOT_MOVING_HORIZONTALLY);
 
-    const cxmath::Position chipPosition = model.GetChipPosition();
-    const cxmath::Position mirrorChipPosition = model.GetMirrorChipPosition();
+    const cx::math::Position chipPosition = model.GetChipPosition();
+    const cx::math::Position mirrorChipPosition = model.GetMirrorChipPosition();
 
     // Since the chip has completely crossed to the left, its position is updated to be
     // at the extreme right side:
-    ASSERT_TRUE((chipPosition == cxmath::Position{92.857142857142861, 7.1428571428571432})) << Debug(chipPosition);
+    ASSERT_TRUE((chipPosition == cx::math::Position{92.857142857142861, 7.1428571428571432})) << Debug(chipPosition);
 
     // Since all of it is visible, no mirror chip is needed:
     ASSERT_FALSE(model.IsMirrorChipNeeded());
-    ASSERT_TRUE((mirrorChipPosition == cxmath::Position{0.0, 7.1428571428571432})) << Debug(mirrorChipPosition);
+    ASSERT_TRUE((mirrorChipPosition == cx::math::Position{0.0, 7.1428571428571432})) << Debug(mirrorChipPosition);
 }
 
 TEST_F(AnimationModelTestFixture, /*DISABLED_*/GetChipPosition_CrossedToTheRightChipIsNotMoving_ReturnsPosition)
 {
     cxgui::IAnimatedBoardModel& model = GetModel();
-    model.AddChipDisplacement(cxmath::Height{0.0}, cxmath::Width{100.0});
-    model.Update({cxmath::Height{150}, cxmath::Width{100}}, CHIP_IS_NOT_MOVING_HORIZONTALLY);
+    model.AddChipDisplacement(cx::math::Height{0.0}, cx::math::Width{100.0});
+    model.Update({cx::math::Height{150}, cx::math::Width{100}}, CHIP_IS_NOT_MOVING_HORIZONTALLY);
 
-    const cxmath::Position chipPosition = model.GetChipPosition();
-    const cxmath::Position mirrorChipPosition = model.GetMirrorChipPosition();
+    const cx::math::Position chipPosition = model.GetChipPosition();
+    const cx::math::Position mirrorChipPosition = model.GetMirrorChipPosition();
 
     // The chip is "clamped" to the right, to make sure all of it is visible:
-    ASSERT_TRUE((chipPosition == cxmath::Position{92.857142857142861, 7.1428571428571432})) << Debug(chipPosition);
+    ASSERT_TRUE((chipPosition == cx::math::Position{92.857142857142861, 7.1428571428571432})) << Debug(chipPosition);
 
     // No mirror chip is needed in the case:
     ASSERT_FALSE(model.IsMirrorChipNeeded());
-    ASSERT_TRUE((mirrorChipPosition == cxmath::Position{0.0, 7.1428571428571432})) << Debug(mirrorChipPosition);
+    ASSERT_TRUE((mirrorChipPosition == cx::math::Position{0.0, 7.1428571428571432})) << Debug(mirrorChipPosition);
 }
 
 TEST_F(AnimationModelTestFixture, /*DISABLED_*/GetChipPosition_CrossedToTheRightChipIsMoving_ReturnsPosition)
 {
     cxgui::IAnimatedBoardModel& model = GetModel();
-    model.AddChipDisplacement(cxmath::Height{0.0}, cxmath::Width{100.0});
-    model.Update({cxmath::Height{150}, cxmath::Width{100}}, CHIP_IS_MOVING_HORIZONTALLY);
+    model.AddChipDisplacement(cx::math::Height{0.0}, cx::math::Width{100.0});
+    model.Update({cx::math::Height{150}, cx::math::Width{100}}, CHIP_IS_MOVING_HORIZONTALLY);
 
-    const cxmath::Position chipPosition = model.GetChipPosition();
-    const cxmath::Position mirrorChipPosition = model.GetMirrorChipPosition();
+    const cx::math::Position chipPosition = model.GetChipPosition();
+    const cx::math::Position mirrorChipPosition = model.GetMirrorChipPosition();
 
     // Since the chip position makes it cross over to the right (half the chip is crossing over),
     // and the chip is moving, a mirror chip is added, on the left side of the board to give
     // the user the illusion of a smooth crossing over animation:
-    ASSERT_TRUE((chipPosition == cxmath::Position{100.0, 7.1428571428571432})) << Debug(chipPosition);
+    ASSERT_TRUE((chipPosition == cx::math::Position{100.0, 7.1428571428571432})) << Debug(chipPosition);
 
     ASSERT_TRUE(model.IsMirrorChipNeeded());
-    ASSERT_TRUE((mirrorChipPosition == cxmath::Position{0.0, 7.1428571428571432})) << Debug(mirrorChipPosition);
+    ASSERT_TRUE((mirrorChipPosition == cx::math::Position{0.0, 7.1428571428571432})) << Debug(mirrorChipPosition);
 }
 
 TEST_F(AnimationModelTestFixture, /*DISABLED_*/GetChipPosition_CompletelyCrossedToTheRightChipIsMoving_ReturnsPosition)
 {
     cxgui::IAnimatedBoardModel& model = GetModel();
-    model.AddChipDisplacement( cxmath::Height{0.0}, cxmath::Width{107.1428571428571432});
-    model.Update({cxmath::Height{150}, cxmath::Width{100}}, CHIP_IS_MOVING_HORIZONTALLY);
+    model.AddChipDisplacement( cx::math::Height{0.0}, cx::math::Width{107.1428571428571432});
+    model.Update({cx::math::Height{150}, cx::math::Width{100}}, CHIP_IS_MOVING_HORIZONTALLY);
 
-    const cxmath::Position chipPosition = model.GetChipPosition();
-    const cxmath::Position mirrorChipPosition = model.GetMirrorChipPosition();
+    const cx::math::Position chipPosition = model.GetChipPosition();
+    const cx::math::Position mirrorChipPosition = model.GetMirrorChipPosition();
 
     // Since the chip has completely crossed to the right but that it is still moving, 
     // its position is not updated:
-    ASSERT_TRUE((chipPosition == cxmath::Position{107.14285714285714, 7.1428571428571432})) << Debug(chipPosition);
+    ASSERT_TRUE((chipPosition == cx::math::Position{107.14285714285714, 7.1428571428571432})) << Debug(chipPosition);
 
     // Instead, a mirror chip is added on the other side, fully visible:
     ASSERT_TRUE(model.IsMirrorChipNeeded());
-    ASSERT_TRUE((mirrorChipPosition == cxmath::Position{7.1428571428571388, 7.1428571428571432})) << Debug(mirrorChipPosition);
+    ASSERT_TRUE((mirrorChipPosition == cx::math::Position{7.1428571428571388, 7.1428571428571432})) << Debug(mirrorChipPosition);
 }
 
 TEST_F(AnimationModelTestFixture, /*DISABLED_*/GetChipPosition_CompletelyCrossedToTheRightChipIsNotMoving_ReturnsPosition)
 {
     cxgui::IAnimatedBoardModel& model = GetModel();
-    model.AddChipDisplacement(cxmath::Height{0.0}, cxmath::Width{107.1428571428571432});
-    model.Update({cxmath::Height{150}, cxmath::Width{100}}, CHIP_IS_NOT_MOVING_HORIZONTALLY);
+    model.AddChipDisplacement(cx::math::Height{0.0}, cx::math::Width{107.1428571428571432});
+    model.Update({cx::math::Height{150}, cx::math::Width{100}}, CHIP_IS_NOT_MOVING_HORIZONTALLY);
 
-    const cxmath::Position chipPosition = model.GetChipPosition();
-    const cxmath::Position mirrorChipPosition = model.GetMirrorChipPosition();
+    const cx::math::Position chipPosition = model.GetChipPosition();
+    const cx::math::Position mirrorChipPosition = model.GetMirrorChipPosition();
 
     // Since the chip has completely crossed to the right, its position is updated to be
     // at the extreme left side:
-    ASSERT_TRUE((chipPosition == cxmath::Position{7.1428571428571432, 7.1428571428571432})) << Debug(chipPosition);
+    ASSERT_TRUE((chipPosition == cx::math::Position{7.1428571428571432, 7.1428571428571432})) << Debug(chipPosition);
 
     // Since all of it is visible, no mirror chip is needed:
     ASSERT_FALSE(model.IsMirrorChipNeeded());
-    ASSERT_TRUE((mirrorChipPosition == cxmath::Position{0.0, 7.1428571428571432})) << Debug(mirrorChipPosition);
+    ASSERT_TRUE((mirrorChipPosition == cx::math::Position{0.0, 7.1428571428571432})) << Debug(mirrorChipPosition);
 }
 
 TEST_F(AnimationModelTestFixture, /*DISABLED_*/GetChipPosition_HorizontalOffsetTowardsTop_PositionIsFixed)
@@ -628,14 +628,14 @@ TEST_F(AnimationModelTestFixture, /*DISABLED_*/GetChipPosition_HorizontalOffsetT
     cxgui::IAnimatedBoardModel& model = GetModel();
 
     // Going out of the board (at top):
-    model.AddChipDisplacement(cxmath::Height{1.0}, cxmath::Width{50.0});
-    model.Update({cxmath::Height{150}, cxmath::Width{100}}, CHIP_IS_NOT_MOVING_HORIZONTALLY);
+    model.AddChipDisplacement(cx::math::Height{1.0}, cx::math::Width{50.0});
+    model.Update({cx::math::Height{150}, cx::math::Width{100}}, CHIP_IS_NOT_MOVING_HORIZONTALLY);
 
-    const cxmath::Position chipPosition = model.GetChipPosition();
+    const cx::math::Position chipPosition = model.GetChipPosition();
 
     // Vertical position is "clamped" to the top of the board to make sure the chip is
     // visible to the user:
-    ASSERT_TRUE((chipPosition == cxmath::Position{50.0, 7.1428571428571432})) << Debug(chipPosition);
+    ASSERT_TRUE((chipPosition == cx::math::Position{50.0, 7.1428571428571432})) << Debug(chipPosition);
 }
 
 TEST_F(AnimationModelTestFixture, /*DISABLED_*/GetChipPosition_HorizontalOffsetTowardsBottom_PositionIsFixed)
@@ -643,39 +643,39 @@ TEST_F(AnimationModelTestFixture, /*DISABLED_*/GetChipPosition_HorizontalOffsetT
     cxgui::IAnimatedBoardModel& model = GetModel();
 
     // Going out of the board (at bottom, remember to bottom is in the positive y):
-    model.AddChipDisplacement(cxmath::Height{151.0}, cxmath::Width{50.0});
-    model.Update({cxmath::Height{150}, cxmath::Width{100}}, CHIP_IS_NOT_MOVING_HORIZONTALLY);
+    model.AddChipDisplacement(cx::math::Height{151.0}, cx::math::Width{50.0});
+    model.Update({cx::math::Height{150}, cx::math::Width{100}}, CHIP_IS_NOT_MOVING_HORIZONTALLY);
 
-    const cxmath::Position chipPosition = model.GetChipPosition();
+    const cx::math::Position chipPosition = model.GetChipPosition();
 
     // Vertical position is "clamped" to the bottom of the board to make sure the chip is
     // visible to the user:
-    ASSERT_TRUE((chipPosition == cxmath::Position{50.0, 142.85714285714286})) << Debug(chipPosition);
+    ASSERT_TRUE((chipPosition == cx::math::Position{50.0, 142.85714285714286})) << Debug(chipPosition);
 }
 
 TEST_F(AnimationModelTestFixture, /*DISABLED_*/GetHorizontalMargin_ValidModel_MarginReturned)
 {
     cxgui::IAnimatedBoardModel& model = GetModel();
 
-    const cxmath::Width horizontalMarginBeforeUpdate = model.GetHorizontalMargin();
-    ASSERT_TRUE(horizontalMarginBeforeUpdate == cxmath::Width{0.0});
+    const cx::math::Width horizontalMarginBeforeUpdate = model.GetHorizontalMargin();
+    ASSERT_TRUE(horizontalMarginBeforeUpdate == cx::math::Width{0.0});
 
-    model.Update({cxmath::Height{100}, cxmath::Width{150}}, true);
+    model.Update({cx::math::Height{100}, cx::math::Width{150}}, true);
 
-    const cxmath::Width horizontalMarginAfterUpdate = model.GetHorizontalMargin();
-    ASSERT_TRUE(cxmath::AreLogicallyEqual(horizontalMarginAfterUpdate.Get(), 3.571429)) << Debug(horizontalMarginAfterUpdate);
+    const cx::math::Width horizontalMarginAfterUpdate = model.GetHorizontalMargin();
+    ASSERT_TRUE(cx::math::AreLogicallyEqual(horizontalMarginAfterUpdate.Get(), 3.571429)) << Debug(horizontalMarginAfterUpdate);
 }
 
 TEST_F(AnimationModelTestFixture, /*DISABLED_*/GetHorizontalMargin_ValidModelWidthEqualsHeight_ZeroMarginReturned)
 {
     cxgui::IAnimatedBoardModel& model = GetModel();
 
-    const cxmath::Width horizontalMarginBeforeUpdate = model.GetHorizontalMargin();
-    ASSERT_TRUE(horizontalMarginBeforeUpdate == cxmath::Width{0.0});
+    const cx::math::Width horizontalMarginBeforeUpdate = model.GetHorizontalMargin();
+    ASSERT_TRUE(horizontalMarginBeforeUpdate == cx::math::Width{0.0});
 
-    model.Update({cxmath::Height{150}, cxmath::Width{150}}, true);
+    model.Update({cx::math::Height{150}, cx::math::Width{150}}, true);
 
-    const cxmath::Width horizontalMarginAfterUpdate = model.GetHorizontalMargin();
+    const cx::math::Width horizontalMarginAfterUpdate = model.GetHorizontalMargin();
 
     // There is no margin since both dimensions are the same!
     ASSERT_TRUE(horizontalMarginAfterUpdate.Get() == 0.0) << Debug(horizontalMarginAfterUpdate);
@@ -685,26 +685,26 @@ TEST_F(AnimationModelTestFixture, /*DISABLED_*/GetCellLineWidth_ValidModel_CellL
 {
     cxgui::IAnimatedBoardModel& model = GetModel();
 
-    const cxmath::Width lineWidthBeforeUpdate = model.GetLineWidth(cxgui::Feature::CELL);
-    ASSERT_TRUE(lineWidthBeforeUpdate == cxmath::Width{0.0});
+    const cx::math::Width lineWidthBeforeUpdate = model.GetLineWidth(cxgui::Feature::CELL);
+    ASSERT_TRUE(lineWidthBeforeUpdate == cx::math::Width{0.0});
 
-    model.Update({cxmath::Height{100}, cxmath::Width{150}}, true);
+    model.Update({cx::math::Height{100}, cx::math::Width{150}}, true);
 
-    const cxmath::Width lineWidthAfterUpdate = model.GetLineWidth(cxgui::Feature::CELL);
-    ASSERT_TRUE(cxmath::AreLogicallyEqual(lineWidthAfterUpdate.Get(), 0.5));
+    const cx::math::Width lineWidthAfterUpdate = model.GetLineWidth(cxgui::Feature::CELL);
+    ASSERT_TRUE(cx::math::AreLogicallyEqual(lineWidthAfterUpdate.Get(), 0.5));
 }
 
 TEST_F(AnimationModelTestFixture, /*DISABLED_*/GetChipLineWidth_ValidModel_ChipLineWidthReturned)
 {
     cxgui::IAnimatedBoardModel& model = GetModel();
 
-    const cxmath::Width lineWidthBeforeUpdate = model.GetLineWidth(cxgui::Feature::CHIP);
-    ASSERT_TRUE(lineWidthBeforeUpdate == cxmath::Width{0.0});
+    const cx::math::Width lineWidthBeforeUpdate = model.GetLineWidth(cxgui::Feature::CHIP);
+    ASSERT_TRUE(lineWidthBeforeUpdate == cx::math::Width{0.0});
 
-    model.Update({cxmath::Height{100}, cxmath::Width{150}}, true);
+    model.Update({cx::math::Height{100}, cx::math::Width{150}}, true);
 
-    const cxmath::Width lineWidthAfterUpdate = model.GetLineWidth(cxgui::Feature::CHIP);
-    ASSERT_TRUE(cxmath::AreLogicallyEqual(lineWidthAfterUpdate.Get(), 0.035714285714285719));
+    const cx::math::Width lineWidthAfterUpdate = model.GetLineWidth(cxgui::Feature::CHIP);
+    ASSERT_TRUE(cx::math::AreLogicallyEqual(lineWidthAfterUpdate.Get(), 0.035714285714285719));
 }
 
 TEST_F(AnimationModelTestFixtureStdErrStreamRedirector, /*DISABLED_*/GetUnknownLineWidth_ValidModel_ZeroReturnedAndAssert)
@@ -713,8 +713,8 @@ TEST_F(AnimationModelTestFixtureStdErrStreamRedirector, /*DISABLED_*/GetUnknownL
 
     const cxgui::Feature invalid = static_cast<cxgui::Feature>(-1);
 
-    const cxmath::Width invalidLineWidth = model.GetLineWidth(invalid);
-    ASSERT_TRUE(invalidLineWidth == cxmath::Width{0.0});
+    const cx::math::Width invalidLineWidth = model.GetLineWidth(invalid);
+    ASSERT_TRUE(invalidLineWidth == cx::math::Width{0.0});
 
     ASSERT_ASSERTION_FAILED(*this);
 }

@@ -54,8 +54,8 @@ public:
         ASSERT_ERROR_MSG("Unknown frame animation strategy");
     }
 
-    std::optional<cxgui::BoardAnimationNotificationContext> PerformAnimation(cxgui::AnimationInformations<cxmath::Height>& /*p_verticalAnimationInfo*/,
-                                                                             cxgui::AnimationInformations<cxmath::Width>& /*p_horizontalAnimationInfo*/) override
+    std::optional<cxgui::BoardAnimationNotificationContext> PerformAnimation(cxgui::AnimationInformations<cx::math::Height>& /*p_verticalAnimationInfo*/,
+                                                                             cxgui::AnimationInformations<cx::math::Width>& /*p_horizontalAnimationInfo*/) override
     {
         return std::nullopt;
     }
@@ -77,8 +77,8 @@ public:
     {
     }
 
-    std::optional<cxgui::BoardAnimationNotificationContext> PerformAnimation(cxgui::AnimationInformations<cxmath::Height>& p_verticalAnimationInfo,
-                                                                             cxgui::AnimationInformations<cxmath::Width>& p_horizontalAnimationInfo) override;
+    std::optional<cxgui::BoardAnimationNotificationContext> PerformAnimation(cxgui::AnimationInformations<cx::math::Height>& p_verticalAnimationInfo,
+                                                                             cxgui::AnimationInformations<cx::math::Width>& p_horizontalAnimationInfo) override;
 
 private:
 
@@ -86,15 +86,15 @@ private:
     const IAnimatedBoardPresenter& m_presenter;
 };
 
-std::optional<cxgui::BoardAnimationNotificationContext> MoveChipLeftOneColumnFrameAnimationStrategy::MoveChipLeftOneColumnFrameAnimationStrategy::PerformAnimation(cxgui::AnimationInformations<cxmath::Height>& /*p_verticalAnimationInfo*/,
-                                                                                                                                                                   cxgui::AnimationInformations<cxmath::Width>& p_horizontalAnimationInfo)
+std::optional<cxgui::BoardAnimationNotificationContext> MoveChipLeftOneColumnFrameAnimationStrategy::MoveChipLeftOneColumnFrameAnimationStrategy::PerformAnimation(cxgui::AnimationInformations<cx::math::Height>& /*p_verticalAnimationInfo*/,
+                                                                                                                                                                   cxgui::AnimationInformations<cx::math::Width>& p_horizontalAnimationInfo)
 {
     const double fps = static_cast<double>(m_animationModel.GetFPS().Get());
     const double speed = static_cast<double>(m_animationModel.GetAnimationSpeed().Get());
     const double nbFramesPerChip = fps / speed;
 
     const double oneAnimationWidth = m_animationModel.GetAnimatedAreaDimensions().m_width.Get() / m_presenter.GetBoardWidth().Get();
-    const cxmath::Width delta{oneAnimationWidth / nbFramesPerChip};
+    const cx::math::Width delta{oneAnimationWidth / nbFramesPerChip};
 
     if(p_horizontalAnimationInfo.m_currentDisplacement.Get() >= oneAnimationWidth || std::abs(p_horizontalAnimationInfo.m_currentDisplacement.Get() - oneAnimationWidth) <= 1e-6)
     {
@@ -114,7 +114,7 @@ std::optional<cxgui::BoardAnimationNotificationContext> MoveChipLeftOneColumnFra
     }
     else
     {
-        m_animationModel.AddChipDisplacement(cxmath::Height{0.0}, -delta);
+        m_animationModel.AddChipDisplacement(cx::math::Height{0.0}, -delta);
         p_horizontalAnimationInfo.m_currentDisplacement += delta;
     }
 
@@ -137,8 +137,8 @@ public:
     {
     }
 
-    std::optional<cxgui::BoardAnimationNotificationContext> PerformAnimation(cxgui::AnimationInformations<cxmath::Height>& p_verticalAnimationInfo,
-                                                                             cxgui::AnimationInformations<cxmath::Width>& p_horizontalAnimationInfo) override;
+    std::optional<cxgui::BoardAnimationNotificationContext> PerformAnimation(cxgui::AnimationInformations<cx::math::Height>& p_verticalAnimationInfo,
+                                                                             cxgui::AnimationInformations<cx::math::Width>& p_horizontalAnimationInfo) override;
 
 private:
 
@@ -146,15 +146,15 @@ private:
     IAnimatedBoardPresenter& m_presenter;
 };
 
-std::optional<cxgui::BoardAnimationNotificationContext> MoveChipRightOneColumnFrameAnimationStrategy::MoveChipRightOneColumnFrameAnimationStrategy::PerformAnimation(cxgui::AnimationInformations<cxmath::Height>& /*p_verticalAnimationInfo*/,
-                                                                                                                                                                     cxgui::AnimationInformations<cxmath::Width>& p_horizontalAnimationInfo)
+std::optional<cxgui::BoardAnimationNotificationContext> MoveChipRightOneColumnFrameAnimationStrategy::MoveChipRightOneColumnFrameAnimationStrategy::PerformAnimation(cxgui::AnimationInformations<cx::math::Height>& /*p_verticalAnimationInfo*/,
+                                                                                                                                                                     cxgui::AnimationInformations<cx::math::Width>& p_horizontalAnimationInfo)
 {
     const double fps = static_cast<double>(m_animationModel.GetFPS().Get());
     const double speed = static_cast<double>(m_animationModel.GetAnimationSpeed().Get());
     const double nbFramesPerChip = fps / speed;
 
     const double oneAnimationWidth = m_animationModel.GetAnimatedAreaDimensions().m_width.Get() / m_presenter.GetBoardWidth().Get();
-    const cxmath::Width delta{oneAnimationWidth / nbFramesPerChip};
+    const cx::math::Width delta{oneAnimationWidth / nbFramesPerChip};
 
     if(p_horizontalAnimationInfo.m_currentDisplacement.Get() >= oneAnimationWidth || std::abs(p_horizontalAnimationInfo.m_currentDisplacement.Get() - oneAnimationWidth) <= 1e-6)
     {
@@ -174,7 +174,7 @@ std::optional<cxgui::BoardAnimationNotificationContext> MoveChipRightOneColumnFr
     }
     else
     {
-        m_animationModel.AddChipDisplacement(cxmath::Height{0.0}, delta);
+        m_animationModel.AddChipDisplacement(cx::math::Height{0.0}, delta);
         p_horizontalAnimationInfo.m_currentDisplacement += delta;
     }
 
@@ -197,8 +197,8 @@ public:
     {
     }
 
-    std::optional<cxgui::BoardAnimationNotificationContext> PerformAnimation(cxgui::AnimationInformations<cxmath::Height>& p_verticalAnimationInfo,
-                                                                             cxgui::AnimationInformations<cxmath::Width>& p_horizontalAnimationInfo) override;
+    std::optional<cxgui::BoardAnimationNotificationContext> PerformAnimation(cxgui::AnimationInformations<cx::math::Height>& p_verticalAnimationInfo,
+                                                                             cxgui::AnimationInformations<cx::math::Width>& p_horizontalAnimationInfo) override;
 
 private:
 
@@ -206,8 +206,8 @@ private:
     IAnimatedBoardPresenter& m_presenter;
 };
 
-std::optional<cxgui::BoardAnimationNotificationContext> MoveChipRightToTargetFrameAnimationStrategy::MoveChipRightToTargetFrameAnimationStrategy::PerformAnimation(cxgui::AnimationInformations<cxmath::Height>& /*p_verticalAnimationInfo*/,
-                                                                                                                                                                   cxgui::AnimationInformations<cxmath::Width>& p_horizontalAnimationInfo)
+std::optional<cxgui::BoardAnimationNotificationContext> MoveChipRightToTargetFrameAnimationStrategy::MoveChipRightToTargetFrameAnimationStrategy::PerformAnimation(cxgui::AnimationInformations<cx::math::Height>& /*p_verticalAnimationInfo*/,
+                                                                                                                                                                   cxgui::AnimationInformations<cx::math::Width>& p_horizontalAnimationInfo)
 {
     // Simulates the drop column computed by the model for the bot...
     const cxmodel::Column target{m_presenter.GetBotTarget()};
@@ -238,13 +238,13 @@ std::optional<cxgui::BoardAnimationNotificationContext> MoveChipRightToTargetFra
         // than the computed animation width. Visually, this translated into a misaligned chip
         // on the board. To address this, we make an adjustement on the last delta to make
         // sure it does not exceed the computed animation width.
-        cxmath::Width delta{oneAnimationWidth / totalNbOfFrames};
+        cx::math::Width delta{oneAnimationWidth / totalNbOfFrames};
         if(p_horizontalAnimationInfo.m_currentDisplacement.Get() + delta.Get() > oneAnimationWidth)
         {
-            delta -= p_horizontalAnimationInfo.m_currentDisplacement + delta - cxmath::Width{oneAnimationWidth};
+            delta -= p_horizontalAnimationInfo.m_currentDisplacement + delta - cx::math::Width{oneAnimationWidth};
         }
 
-        m_animationModel.AddChipDisplacement(cxmath::Height{0.0}, delta);
+        m_animationModel.AddChipDisplacement(cx::math::Height{0.0}, delta);
         p_horizontalAnimationInfo.m_currentDisplacement += delta;
     }
 
@@ -267,8 +267,8 @@ public:
     {
     }
 
-    std::optional<cxgui::BoardAnimationNotificationContext> PerformAnimation(cxgui::AnimationInformations<cxmath::Height>& p_verticalAnimationInfo,
-                                                                             cxgui::AnimationInformations<cxmath::Width>& p_horizontalAnimationInfo) override;
+    std::optional<cxgui::BoardAnimationNotificationContext> PerformAnimation(cxgui::AnimationInformations<cx::math::Height>& p_verticalAnimationInfo,
+                                                                             cxgui::AnimationInformations<cx::math::Width>& p_horizontalAnimationInfo) override;
 
 private:
 
@@ -295,8 +295,8 @@ cxmodel::Row DropChipFrameAnimationStrategy::GetDropPosition(const cxmodel::Colu
     return dropRow;
 }
 
-std::optional<cxgui::BoardAnimationNotificationContext> DropChipFrameAnimationStrategy::DropChipFrameAnimationStrategy::PerformAnimation(cxgui::AnimationInformations<cxmath::Height>& p_verticalAnimationInfo,
-                                                                                                                                         cxgui::AnimationInformations<cxmath::Width>& /*p_horizontalAnimationInfo*/)
+std::optional<cxgui::BoardAnimationNotificationContext> DropChipFrameAnimationStrategy::DropChipFrameAnimationStrategy::PerformAnimation(cxgui::AnimationInformations<cx::math::Height>& p_verticalAnimationInfo,
+                                                                                                                                         cxgui::AnimationInformations<cx::math::Width>& /*p_horizontalAnimationInfo*/)
 {
     const double cellHeight = m_animationModel.GetCellDimensions().m_height.Get();
     const double oneAnimationHeight = (GetDropPosition(m_animationModel.GetCurrentColumn()) + cxmodel::Row{1}).Get() * cellHeight;
@@ -318,7 +318,7 @@ std::optional<cxgui::BoardAnimationNotificationContext> DropChipFrameAnimationSt
     //                                    d(t) = |4gt²|
     //
     // to get a smooth gravity animation when dropping a chip:
-    const cxmath::Height delta{4 * cxmath::g<double> * t * t};
+    const cx::math::Height delta{4 * cx::math::g<double> * t * t};
 
     if(p_verticalAnimationInfo.m_currentDisplacement.Get() >= oneAnimationHeight || std::abs(p_verticalAnimationInfo.m_currentDisplacement.Get() - oneAnimationHeight) <= 1e-6)
     {
@@ -335,7 +335,7 @@ std::optional<cxgui::BoardAnimationNotificationContext> DropChipFrameAnimationSt
     }
     else
     {
-        m_animationModel.AddChipDisplacement(delta, cxmath::Width{0.0});
+        m_animationModel.AddChipDisplacement(delta, cx::math::Width{0.0});
         p_verticalAnimationInfo.m_currentDisplacement += delta;
         p_verticalAnimationInfo.m_nbOfRenderedFrames += 1u;;
     }
@@ -359,8 +359,8 @@ public:
     {
     }
 
-    std::optional<cxgui::BoardAnimationNotificationContext> PerformAnimation(cxgui::AnimationInformations<cxmath::Height>& p_verticalAnimationInfo,
-                                                                             cxgui::AnimationInformations<cxmath::Width>& p_horizontalAnimationInfo) override;
+    std::optional<cxgui::BoardAnimationNotificationContext> PerformAnimation(cxgui::AnimationInformations<cx::math::Height>& p_verticalAnimationInfo,
+                                                                             cxgui::AnimationInformations<cx::math::Width>& p_horizontalAnimationInfo) override;
 
 private:
 
@@ -370,8 +370,8 @@ private:
     IAnimatedBoardPresenter& m_presenter;
 };
 
-std::optional<cxgui::BoardAnimationNotificationContext> UndoDropChipFrameAnimationStrategy::UndoDropChipFrameAnimationStrategy::PerformAnimation(cxgui::AnimationInformations<cxmath::Height>& /*p_verticalAnimationInfo*/,
-                                                                                                                                                 cxgui::AnimationInformations<cxmath::Width>& /*p_horizontalAnimationInfo*/)
+std::optional<cxgui::BoardAnimationNotificationContext> UndoDropChipFrameAnimationStrategy::UndoDropChipFrameAnimationStrategy::PerformAnimation(cxgui::AnimationInformations<cx::math::Height>& /*p_verticalAnimationInfo*/,
+                                                                                                                                                 cxgui::AnimationInformations<cx::math::Width>& /*p_horizontalAnimationInfo*/)
 {
     // Reinitialize chip:
     m_animationModel.ResetChipPositions();
@@ -398,8 +398,8 @@ public:
     {
     }
 
-    std::optional<cxgui::BoardAnimationNotificationContext> PerformAnimation(cxgui::AnimationInformations<cxmath::Height>& p_verticalAnimationInfo,
-                                                                             cxgui::AnimationInformations<cxmath::Width>& p_horizontalAnimationInfo) override;
+    std::optional<cxgui::BoardAnimationNotificationContext> PerformAnimation(cxgui::AnimationInformations<cx::math::Height>& p_verticalAnimationInfo,
+                                                                             cxgui::AnimationInformations<cx::math::Width>& p_horizontalAnimationInfo) override;
 
 private:
 
@@ -409,8 +409,8 @@ private:
     IAnimatedBoardPresenter& m_presenter;
 };
 
-std::optional<cxgui::BoardAnimationNotificationContext> RedoDropChipFrameAnimationStrategy::RedoDropChipFrameAnimationStrategy::PerformAnimation(cxgui::AnimationInformations<cxmath::Height>& /*p_verticalAnimationInfo*/,
-                                                                                                                                                 cxgui::AnimationInformations<cxmath::Width>& /*p_horizontalAnimationInfo*/)
+std::optional<cxgui::BoardAnimationNotificationContext> RedoDropChipFrameAnimationStrategy::RedoDropChipFrameAnimationStrategy::PerformAnimation(cxgui::AnimationInformations<cx::math::Height>& /*p_verticalAnimationInfo*/,
+                                                                                                                                                 cxgui::AnimationInformations<cx::math::Width>& /*p_horizontalAnimationInfo*/)
 {
     // Reinitialize chip:
     m_animationModel.ResetChipPositions();
@@ -437,8 +437,8 @@ public:
     {
     }
 
-    std::optional<cxgui::BoardAnimationNotificationContext> PerformAnimation(cxgui::AnimationInformations<cxmath::Height>& p_verticalAnimationInfo,
-                                                                             cxgui::AnimationInformations<cxmath::Width>& p_horizontalAnimationInfo) override;
+    std::optional<cxgui::BoardAnimationNotificationContext> PerformAnimation(cxgui::AnimationInformations<cx::math::Height>& p_verticalAnimationInfo,
+                                                                             cxgui::AnimationInformations<cx::math::Width>& p_horizontalAnimationInfo) override;
 
 private:
 
@@ -448,8 +448,8 @@ private:
     IAnimatedBoardPresenter& m_presenter;
 };
 
-std::optional<cxgui::BoardAnimationNotificationContext> ReinitializeFrameAnimationStrategy::ReinitializeFrameAnimationStrategy::PerformAnimation(cxgui::AnimationInformations<cxmath::Height>& /*p_verticalAnimationInfo*/,
-                                                                                                                                                 cxgui::AnimationInformations<cxmath::Width>& /*p_horizontalAnimationInfo*/)
+std::optional<cxgui::BoardAnimationNotificationContext> ReinitializeFrameAnimationStrategy::ReinitializeFrameAnimationStrategy::PerformAnimation(cxgui::AnimationInformations<cx::math::Height>& /*p_verticalAnimationInfo*/,
+                                                                                                                                                 cxgui::AnimationInformations<cx::math::Width>& /*p_horizontalAnimationInfo*/)
 {
     // Reinitialize chip:
     m_animationModel.ResetChipPositions();

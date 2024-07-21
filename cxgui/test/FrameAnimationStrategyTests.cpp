@@ -49,11 +49,11 @@ public:
     // Animation model:
     cxgui::IAnimatedBoardModel& GetModel();
 
-    void SetAnimatedAreaDimensionsOnModel(const cxmath::Dimensions& p_widgetDimensions);
+    void SetAnimatedAreaDimensionsOnModel(const cx::math::Dimensions& p_widgetDimensions);
     void SetFPSOnModel(const cxgui::FPS& p_fps);
     void SetAnimationSpeedOnModel(const cxgui::AnimationSpeed& p_animationSpeed);
     void SetCurrentColumnOnModel(const cxmodel::Column& p_currentColumn);
-    void SetCellDimensionsOnModel(const cxmath::Dimensions& p_cellDimensions);
+    void SetCellDimensionsOnModel(const cx::math::Dimensions& p_cellDimensions);
 
     [[nodiscard]] bool WasUpdateCalledOnModel() const {return m_model->WasUpdateCalled();}
     [[nodiscard]] bool WasResizeCalledOnModel() const {return m_model->WasResizeCalled();}
@@ -71,21 +71,21 @@ public:
     [[nodiscard]] bool WasSyncCalledOnPresenter() const {return m_presenter->WasSyncCalled();}
 
     // Helpers:
-    using BothAnimationInformations = std::pair<cxgui::AnimationInformations<cxmath::Height>, cxgui::AnimationInformations<cxmath::Width>>;
+    using BothAnimationInformations = std::pair<cxgui::AnimationInformations<cx::math::Height>, cxgui::AnimationInformations<cx::math::Width>>;
 
-    BothAnimationInformations MakeAnimationInformations(const cxmath::Height& p_verticalCurrentDisplacement, const cxmath::Width& p_horizontalCurrentDisplacement);
+    BothAnimationInformations MakeAnimationInformations(const cx::math::Height& p_verticalCurrentDisplacement, const cx::math::Width& p_horizontalCurrentDisplacement);
     void ConfigureModelAndPresenter(const cxmodel::Height& p_boardHeight, const cxmodel::Width& p_boardWidth, const cxmodel::Column& p_currantColumn);
 
     void FrameAnimationComputationsValidate(cxgui::BoardAnimation p_boardAnimation,
-                                            const cxmath::Position& p_initialChipPosition,
-                                            const cxmath::Height& p_initialVerticalDisplacement,
-                                            const cxmath::Width& p_initialHorizontalDisplacement,
+                                            const cx::math::Position& p_initialChipPosition,
+                                            const cx::math::Height& p_initialVerticalDisplacement,
+                                            const cx::math::Width& p_initialHorizontalDisplacement,
                                             const cxmodel::Column& p_initialColumn,
                                             const std::optional<cxgui::BoardAnimationNotificationContext>& p_notification,
                                             const cxmodel::Column& p_finalColumn,
-                                            const cxmath::Position& p_finalChipPosition,
-                                            const cxmath::Height& p_finalVerticalDisplacement,
-                                            const cxmath::Width& p_finalHorizontalDisplacement);
+                                            const cx::math::Position& p_finalChipPosition,
+                                            const cx::math::Height& p_finalVerticalDisplacement,
+                                            const cx::math::Width& p_finalHorizontalDisplacement);
 
 private:
 
@@ -111,7 +111,7 @@ cxgui::IAnimatedBoardModel& FrameAnimationTestFixture::GetModel()
     return *m_model;
 }
 
-void FrameAnimationTestFixture::SetAnimatedAreaDimensionsOnModel(const cxmath::Dimensions& p_widgetDimensions)
+void FrameAnimationTestFixture::SetAnimatedAreaDimensionsOnModel(const cx::math::Dimensions& p_widgetDimensions)
 {
     m_model->SetAnimatedAreaDimensions(p_widgetDimensions);
 }
@@ -131,7 +131,7 @@ void FrameAnimationTestFixture::SetCurrentColumnOnModel(const cxmodel::Column& p
     m_model->SetCurrentColumn(p_currentColumn);
 }
 
-void FrameAnimationTestFixture::SetCellDimensionsOnModel(const cxmath::Dimensions& p_cellDimensions)
+void FrameAnimationTestFixture::SetCellDimensionsOnModel(const cx::math::Dimensions& p_cellDimensions)
 {
     m_model->SetCellDimensions(p_cellDimensions);
 }
@@ -160,12 +160,12 @@ void FrameAnimationTestFixture::AddChipsToColumnOnPresenter(const cxmodel::Colum
     m_presenter->AddChipsToColumn(p_column, p_nbOfChipsToAdd);
 }
 
-FrameAnimationTestFixture::BothAnimationInformations FrameAnimationTestFixture::MakeAnimationInformations(const cxmath::Height& p_verticalCurrentDisplacement, const cxmath::Width& p_horizontalCurrentDisplacement)
+FrameAnimationTestFixture::BothAnimationInformations FrameAnimationTestFixture::MakeAnimationInformations(const cx::math::Height& p_verticalCurrentDisplacement, const cx::math::Width& p_horizontalCurrentDisplacement)
 {
-    cxgui::AnimationInformations<cxmath::Height> heightInfo;
+    cxgui::AnimationInformations<cx::math::Height> heightInfo;
     heightInfo.m_currentDisplacement = p_verticalCurrentDisplacement;
 
-    cxgui::AnimationInformations<cxmath::Width> widthInfo;
+    cxgui::AnimationInformations<cx::math::Width> widthInfo;
     widthInfo.m_currentDisplacement = p_horizontalCurrentDisplacement;
 
     return {heightInfo, widthInfo};
@@ -180,24 +180,24 @@ void FrameAnimationTestFixture::ConfigureModelAndPresenter(const cxmodel::Height
 
     SetBoardDimensionsOnPresenter(p_boardHeight, p_boardWidth);
 
-    const cxmath::Dimensions cellDimensions{cxmath::Height{10.0}, cxmath::Width{10.0}};
+    const cx::math::Dimensions cellDimensions{cx::math::Height{10.0}, cx::math::Width{10.0}};
     SetCellDimensionsOnModel(cellDimensions);
 
     const double widgetHeight = (p_boardHeight.Get() + 1u) * cellDimensions.m_height.Get();
     const double widgetWidth = (p_boardWidth.Get()) * cellDimensions.m_width.Get();
-    SetAnimatedAreaDimensionsOnModel({cxmath::Height{widgetHeight}, cxmath::Width{widgetWidth}});
+    SetAnimatedAreaDimensionsOnModel({cx::math::Height{widgetHeight}, cx::math::Width{widgetWidth}});
 }
 
 void FrameAnimationTestFixture::FrameAnimationComputationsValidate(cxgui::BoardAnimation p_boardAnimation,
-                                                                   const cxmath::Position& p_initialChipPosition,
-                                                                   const cxmath::Height& p_initialVerticalDisplacement,
-                                                                   const cxmath::Width& p_initialHorizontalDisplacement,
+                                                                   const cx::math::Position& p_initialChipPosition,
+                                                                   const cx::math::Height& p_initialVerticalDisplacement,
+                                                                   const cx::math::Width& p_initialHorizontalDisplacement,
                                                                    const cxmodel::Column& p_initialColumn,
                                                                    const std::optional<cxgui::BoardAnimationNotificationContext>& p_notification,
                                                                    const cxmodel::Column& p_finalColumn,
-                                                                   const cxmath::Position& p_finalChipPosition,
-                                                                   const cxmath::Height& p_finalVerticalDisplacement,
-                                                                   const cxmath::Width& p_finalHorizontalDisplacement)
+                                                                   const cx::math::Position& p_finalChipPosition,
+                                                                   const cx::math::Height& p_finalVerticalDisplacement,
+                                                                   const cx::math::Width& p_finalHorizontalDisplacement)
 {
     // We create the strategy:
     auto strategy = cxgui::CreateFrameAnimationStrategy(GetModel(), GetPresenter(), p_boardAnimation);
@@ -277,15 +277,15 @@ TEST_F(FrameAnimationTestFixtureStdErrStreamRedirector, /*DISABLED_*/CreateFrame
     constexpr cxgui::BoardAnimation invalidBoardAnimation = static_cast<cxgui::BoardAnimation>(-1);
 
     FrameAnimationComputationsValidate(invalidBoardAnimation,        /* The performed animation. */
-                                       cxmath::Position{0.0, 0.0},   /* The initial chip position. */
-                                       cxmath::Height{0.0},          /* The initial vertical displacement. */
-                                       cxmath::Width{0.0},           /* The initial horizontal displacement. */
+                                       cx::math::Position{0.0, 0.0},   /* The initial chip position. */
+                                       cx::math::Height{0.0},          /* The initial vertical displacement. */
+                                       cx::math::Width{0.0},           /* The initial horizontal displacement. */
                                        cxmodel::Column{4u},          /* The initial column on which the chip is located. */
                                        NO_NOTIFICATION,              /* The notification expected. */
                                        cxmodel::Column{4u},          /* The final column on which the disc is located. */
-                                       cxmath::Position{0.0, 0.0},   /* The final chip position. */
-                                       cxmath::Height{0.0},          /* The final vertical displacement. */
-                                       cxmath::Width{0.0});          /* The final horizontal displacement. */
+                                       cx::math::Position{0.0, 0.0},   /* The final chip position. */
+                                       cx::math::Height{0.0},          /* The final vertical displacement. */
+                                       cx::math::Width{0.0});          /* The final horizontal displacement. */
 }
 
 /**************************************************************************************************
@@ -295,15 +295,15 @@ TEST_F(FrameAnimationTestFixtureStdErrStreamRedirector, /*DISABLED_*/CreateFrame
 TEST_F(FrameAnimationTestFixture, /*DISABLED_*/CreateFrameAnimationStrategy_MoveLeftOneColumnAnimationStart_AnimationInfoUpdated)
 {
     FrameAnimationComputationsValidate(cxgui::BoardAnimation::MOVE_CHIP_LEFT_ONE_COLUMN, /* The performed animation. */
-                                       cxmath::Position{0.0, 0.0},                       /* The initial chip position. */
-                                       cxmath::Height{0.0},                              /* The initial vertical displacement. */
-                                       cxmath::Width{0.0},                               /* The initial horizontal displacement. */
+                                       cx::math::Position{0.0, 0.0},                       /* The initial chip position. */
+                                       cx::math::Height{0.0},                              /* The initial vertical displacement. */
+                                       cx::math::Width{0.0},                               /* The initial horizontal displacement. */
                                        cxmodel::Column{4u},                              /* The initial column on which the chip is located. */
                                        NO_NOTIFICATION,                                  /* The notification expected. */
                                        cxmodel::Column{4u},                              /* The final column on which the disc is located. */
-                                       cxmath::Position{-1.25, 0.0},                     /* The final chip position. */
-                                       cxmath::Height{0.0},                              /* The final vertical displacement. */
-                                       cxmath::Width{1.25});                             /* The final horizontal displacement. */
+                                       cx::math::Position{-1.25, 0.0},                     /* The final chip position. */
+                                       cx::math::Height{0.0},                              /* The final vertical displacement. */
+                                       cx::math::Width{1.25});                             /* The final horizontal displacement. */
 
     // We check what model and presenter methods were called:
     ASSERT_FALSE(WasUpdateCalledOnModel());
@@ -318,15 +318,15 @@ TEST_F(FrameAnimationTestFixture, /*DISABLED_*/CreateFrameAnimationStrategy_Move
 TEST_F(FrameAnimationTestFixture, /*DISABLED_*/CreateFrameAnimationStrategy_MoveLeftOneColumnAnimationEnd_AnimationInfoUpdatedAndNotificationReturned)
 {
     FrameAnimationComputationsValidate(cxgui::BoardAnimation::MOVE_CHIP_LEFT_ONE_COLUMN,                            /* The performed animation. */
-                                       cxmath::Position{0.0, 0.0},                                                  /* The initial chip position. */
-                                       cxmath::Height{0.0},                                                         /* The initial vertical displacement. */
-                                       cxmath::Width{10.0},                                                         /* The initial horizontal displacement. */
+                                       cx::math::Position{0.0, 0.0},                                                  /* The initial chip position. */
+                                       cx::math::Height{0.0},                                                         /* The initial vertical displacement. */
+                                       cx::math::Width{10.0},                                                         /* The initial horizontal displacement. */
                                        cxmodel::Column{4u},                                                         /* The initial column on which the chip is located. */
                                        cxgui::BoardAnimationNotificationContext::POST_ANIMATE_MOVE_LEFT_ONE_COLUMN, /* The notification expected. */
                                        cxmodel::Column{3u},                                                         /* The final column on which the disc is located. */
-                                       cxmath::Position{0.0, 0.0},                                                  /* The final chip position. */
-                                       cxmath::Height{0.0},                                                         /* The final vertical displacement. */
-                                       cxmath::Width{0.0});                                                         /* The final horizontal displacement. */
+                                       cx::math::Position{0.0, 0.0},                                                  /* The final chip position. */
+                                       cx::math::Height{0.0},                                                         /* The final vertical displacement. */
+                                       cx::math::Width{0.0});                                                         /* The final horizontal displacement. */
 
     // We check what model and presenter methods were called:
     ASSERT_FALSE(WasUpdateCalledOnModel());
@@ -341,15 +341,15 @@ TEST_F(FrameAnimationTestFixture, /*DISABLED_*/CreateFrameAnimationStrategy_Move
 TEST_F(FrameAnimationTestFixture, /*DISABLED_*/CreateFrameAnimationStrategy_MoveLeftOneColumnAnimationEndFarLeft_AnimationInfoUpdatedAndNotificationReturned)
 {
     FrameAnimationComputationsValidate(cxgui::BoardAnimation::MOVE_CHIP_LEFT_ONE_COLUMN,                            /* The performed animation. */
-                                       cxmath::Position{0.0, 0.0},                                                  /* The initial chip position. */
-                                       cxmath::Height{0.0},                                                         /* The initial vertical displacement. */
-                                       cxmath::Width{10.0},                                                         /* The initial horizontal displacement. */
+                                       cx::math::Position{0.0, 0.0},                                                  /* The initial chip position. */
+                                       cx::math::Height{0.0},                                                         /* The initial vertical displacement. */
+                                       cx::math::Width{10.0},                                                         /* The initial horizontal displacement. */
                                        cxmodel::Column{0u},                                                         /* The initial column on which the chip is located. */
                                        cxgui::BoardAnimationNotificationContext::POST_ANIMATE_MOVE_LEFT_ONE_COLUMN, /* The notification expected. */
                                        cxmodel::Column{6u},                                                         /* The final column on which the disc is located. */
-                                       cxmath::Position{0.0, 0.0},                                                  /* The final chip position. */
-                                       cxmath::Height{0.0},                                                         /* The final vertical displacement. */
-                                       cxmath::Width{0.0});                                                         /* The final horizontal displacement. */
+                                       cx::math::Position{0.0, 0.0},                                                  /* The final chip position. */
+                                       cx::math::Height{0.0},                                                         /* The final vertical displacement. */
+                                       cx::math::Width{0.0});                                                         /* The final horizontal displacement. */
 
     // We check what model and presenter methods were called:
     ASSERT_FALSE(WasUpdateCalledOnModel());
@@ -368,15 +368,15 @@ TEST_F(FrameAnimationTestFixture, /*DISABLED_*/CreateFrameAnimationStrategy_Move
 TEST_F(FrameAnimationTestFixture, /*DISABLED_*/CreateFrameAnimationStrategy_MoveRightOneColumnAnimationStart_AnimationInfoUpdated)
 {
     FrameAnimationComputationsValidate(cxgui::BoardAnimation::MOVE_CHIP_RIGHT_ONE_COLUMN, /* The performed animation. */
-                                       cxmath::Position{0.0, 0.0},                        /* The initial chip position. */
-                                       cxmath::Height{0.0},                               /* The initial vertical displacement. */
-                                       cxmath::Width{0.0},                                /* The initial horizontal displacement. */
+                                       cx::math::Position{0.0, 0.0},                        /* The initial chip position. */
+                                       cx::math::Height{0.0},                               /* The initial vertical displacement. */
+                                       cx::math::Width{0.0},                                /* The initial horizontal displacement. */
                                        cxmodel::Column{4u},                               /* The initial column on which the chip is located. */
                                        NO_NOTIFICATION,                                   /* The notification expected. */
                                        cxmodel::Column{4u},                               /* The final column on which the disc is located. */
-                                       cxmath::Position{1.25, 0.0},                       /* The final chip position. */
-                                       cxmath::Height{0.0},                               /* The final vertical displacement. */
-                                       cxmath::Width{1.25});                              /* The final horizontal displacement. */
+                                       cx::math::Position{1.25, 0.0},                       /* The final chip position. */
+                                       cx::math::Height{0.0},                               /* The final vertical displacement. */
+                                       cx::math::Width{1.25});                              /* The final horizontal displacement. */
 
     // We check what model and presenter methods were called:
     ASSERT_FALSE(WasUpdateCalledOnModel());
@@ -391,15 +391,15 @@ TEST_F(FrameAnimationTestFixture, /*DISABLED_*/CreateFrameAnimationStrategy_Move
 TEST_F(FrameAnimationTestFixture, /*DISABLED_*/CreateFrameAnimationStrategy_MoveRightOneColumnAnimationEnd_AnimationInfoUpdatedAndNotificationReturned)
 {
     FrameAnimationComputationsValidate(cxgui::BoardAnimation::MOVE_CHIP_RIGHT_ONE_COLUMN,                            /* The performed animation. */
-                                       cxmath::Position{0.0, 0.0},                                                   /* The initial chip position. */
-                                       cxmath::Height{0.0},                                                          /* The initial vertical displacement. */
-                                       cxmath::Width{10.0},                                                           /* The initial horizontal displacement. */
+                                       cx::math::Position{0.0, 0.0},                                                   /* The initial chip position. */
+                                       cx::math::Height{0.0},                                                          /* The initial vertical displacement. */
+                                       cx::math::Width{10.0},                                                           /* The initial horizontal displacement. */
                                        cxmodel::Column{4u},                                                          /* The initial column on which the chip is located. */
                                        cxgui::BoardAnimationNotificationContext::POST_ANIMATE_MOVE_RIGHT_ONE_COLUMN, /* The notification expected. */
                                        cxmodel::Column{5u},                                                          /* The final column on which the disc is located. */
-                                       cxmath::Position{0.0, 0.0},                                                  /* The final chip position. */
-                                       cxmath::Height{0.0},                                                          /* The final vertical displacement. */
-                                       cxmath::Width{0.0});                                                         /* The final horizontal displacement. */
+                                       cx::math::Position{0.0, 0.0},                                                  /* The final chip position. */
+                                       cx::math::Height{0.0},                                                          /* The final vertical displacement. */
+                                       cx::math::Width{0.0});                                                         /* The final horizontal displacement. */
 
     // We check what model and presenter methods were called:
     ASSERT_FALSE(WasUpdateCalledOnModel());
@@ -414,15 +414,15 @@ TEST_F(FrameAnimationTestFixture, /*DISABLED_*/CreateFrameAnimationStrategy_Move
 TEST_F(FrameAnimationTestFixture, /*DISABLED_*/CreateFrameAnimationStrategy_MoveRightOneColumnAnimationEndFarLeft_AnimationInfoUpdatedAndNotificationReturned)
 {
     FrameAnimationComputationsValidate(cxgui::BoardAnimation::MOVE_CHIP_RIGHT_ONE_COLUMN,                            /* The performed animation. */
-                                       cxmath::Position{0.0, 0.0},                                                   /* The initial chip position. */
-                                       cxmath::Height{0.0},                                                          /* The initial vertical displacement. */
-                                       cxmath::Width{10.0},                                                          /* The initial horizontal displacement. */
+                                       cx::math::Position{0.0, 0.0},                                                   /* The initial chip position. */
+                                       cx::math::Height{0.0},                                                          /* The initial vertical displacement. */
+                                       cx::math::Width{10.0},                                                          /* The initial horizontal displacement. */
                                        cxmodel::Column{6u},                                                          /* The initial column on which the chip is located. */
                                        cxgui::BoardAnimationNotificationContext::POST_ANIMATE_MOVE_RIGHT_ONE_COLUMN, /* The notification expected. */
                                        cxmodel::Column{0u},                                                          /* The final column on which the disc is located. */
-                                       cxmath::Position{0.0, 0.0},                                                   /* The final chip position. */
-                                       cxmath::Height{0.0},                                                          /* The final vertical displacement. */
-                                       cxmath::Width{0.0});                                                          /* The final horizontal displacement. */
+                                       cx::math::Position{0.0, 0.0},                                                   /* The final chip position. */
+                                       cx::math::Height{0.0},                                                          /* The final vertical displacement. */
+                                       cx::math::Width{0.0});                                                          /* The final horizontal displacement. */
 
     // We check what model and presenter methods were called:
     ASSERT_FALSE(WasUpdateCalledOnModel());
@@ -441,15 +441,15 @@ TEST_F(FrameAnimationTestFixture, /*DISABLED_*/CreateFrameAnimationStrategy_Move
 TEST_F(FrameAnimationTestFixture, /*DISABLED_*/CreateFrameAnimationStrategy_MoveRightToTargetAnimationStart_AnimationInfoUpdated)
 {
     FrameAnimationComputationsValidate(cxgui::BoardAnimation::MOVE_CHIP_RIGHT_TO_TARGET,  /* The performed animation. */
-                                       cxmath::Position{0.0, 0.0},                        /* The initial chip position. */
-                                       cxmath::Height{0.0},                               /* The initial vertical displacement. */
-                                       cxmath::Width{0.0},                                /* The initial horizontal displacement. */
+                                       cx::math::Position{0.0, 0.0},                        /* The initial chip position. */
+                                       cx::math::Height{0.0},                               /* The initial vertical displacement. */
+                                       cx::math::Width{0.0},                                /* The initial horizontal displacement. */
                                        cxmodel::Column{0u},                               /* The initial column on which the chip is located. */
                                        NO_NOTIFICATION,                                   /* The notification expected. */
                                        cxmodel::Column{0u},                               /* The final column on which the disc is located. */
-                                       cxmath::Position{3.5, 0.0},                        /* The final chip position. */
-                                       cxmath::Height{0.0},                               /* The final vertical displacement. */
-                                       cxmath::Width{3.5});                               /* The final horizontal displacement. */
+                                       cx::math::Position{3.5, 0.0},                        /* The final chip position. */
+                                       cx::math::Height{0.0},                               /* The final vertical displacement. */
+                                       cx::math::Width{3.5});                               /* The final horizontal displacement. */
 
     // We check what model and presenter methods were called:
     ASSERT_FALSE(WasUpdateCalledOnModel());
@@ -467,15 +467,15 @@ TEST_F(FrameAnimationTestFixture, /*DISABLED_*/CreateFrameAnimationStrategy_Move
 
 
     FrameAnimationComputationsValidate(cxgui::BoardAnimation::MOVE_CHIP_RIGHT_TO_TARGET,  /* The performed animation. */
-                                       cxmath::Position{0.0, 0.0},                        /* The initial chip position. */
-                                       cxmath::Height{0.0},                               /* The initial vertical displacement. */
-                                       cxmath::Width{49.0},                               /* The initial horizontal displacement. */
+                                       cx::math::Position{0.0, 0.0},                        /* The initial chip position. */
+                                       cx::math::Height{0.0},                               /* The initial vertical displacement. */
+                                       cx::math::Width{49.0},                               /* The initial horizontal displacement. */
                                        cxmodel::Column{4u},                               /* The initial column on which the chip is located. */
                                        NO_NOTIFICATION,                                   /* The notification expected. */
                                        cxmodel::Column{4u},                               /* The final column on which the disc is located. */
-                                       cxmath::Position{1.0, 0.0},                        /* The final chip position. */
-                                       cxmath::Height{0.0},                               /* The final vertical displacement. */
-                                       cxmath::Width{50.0});                              /* The final horizontal displacement. */
+                                       cx::math::Position{1.0, 0.0},                        /* The final chip position. */
+                                       cx::math::Height{0.0},                               /* The final vertical displacement. */
+                                       cx::math::Width{50.0});                              /* The final horizontal displacement. */
 
     // We check what model and presenter methods were called:
     ASSERT_FALSE(WasUpdateCalledOnModel());
@@ -490,15 +490,15 @@ TEST_F(FrameAnimationTestFixture, /*DISABLED_*/CreateFrameAnimationStrategy_Move
 TEST_F(FrameAnimationTestFixture, /*DISABLED_*/CreateFrameAnimationStrategy_MoveRightToTargetAnimationEnd_AnimationInfoUpdatedAndNotificationReturned)
 {
     FrameAnimationComputationsValidate(cxgui::BoardAnimation::MOVE_CHIP_RIGHT_TO_TARGET,                            /* The performed animation. */
-                                       cxmath::Position{0.0, 0.0},                                                  /* The initial chip position. */
-                                       cxmath::Height{0.0},                                                         /* The initial vertical displacement. */
-                                       cxmath::Width{50.0},                                                         /* The initial horizontal displacement. */
+                                       cx::math::Position{0.0, 0.0},                                                  /* The initial chip position. */
+                                       cx::math::Height{0.0},                                                         /* The initial vertical displacement. */
+                                       cx::math::Width{50.0},                                                         /* The initial horizontal displacement. */
                                        cxmodel::Column{4u},                                                         /* The initial column on which the chip is located. */
                                        cxgui::BoardAnimationNotificationContext::POST_ANIMATE_MOVE_RIGHT_TO_TARGET, /* The notification expected. */
                                        cxmodel::Column{5u},                                                         /* The final column on which the disc is located. */
-                                       cxmath::Position{0.0, 0.0},                                                  /* The final chip position. */
-                                       cxmath::Height{0.0},                                                         /* The final vertical displacement. */
-                                       cxmath::Width{0.0});                                                         /* The final horizontal displacement. */
+                                       cx::math::Position{0.0, 0.0},                                                  /* The final chip position. */
+                                       cx::math::Height{0.0},                                                         /* The final vertical displacement. */
+                                       cx::math::Width{0.0});                                                         /* The final horizontal displacement. */
 
     // We check what model and presenter methods were called:
     ASSERT_FALSE(WasUpdateCalledOnModel());
@@ -515,15 +515,15 @@ TEST_F(FrameAnimationTestFixture, /*DISABLED_*/CreateFrameAnimationStrategy_Move
 {
     SetBotTargetOnPresenter(cxmodel::Column{0});
     FrameAnimationComputationsValidate(cxgui::BoardAnimation::MOVE_CHIP_RIGHT_TO_TARGET,                            /* The performed animation. */
-                                       cxmath::Position{0.0, 0.0},                                                  /* The initial chip position. */
-                                       cxmath::Height{0.0},                                                         /* The initial vertical displacement. */
-                                       cxmath::Width{0.0},                                                          /* The initial horizontal displacement. */
+                                       cx::math::Position{0.0, 0.0},                                                  /* The initial chip position. */
+                                       cx::math::Height{0.0},                                                         /* The initial vertical displacement. */
+                                       cx::math::Width{0.0},                                                          /* The initial horizontal displacement. */
                                        cxmodel::Column{0u},                                                         /* The initial column on which the chip is located. */
                                        cxgui::BoardAnimationNotificationContext::POST_ANIMATE_MOVE_RIGHT_TO_TARGET, /* The notification expected. */
                                        cxmodel::Column{0u},                                                         /* The final column on which the disc is located. */
-                                       cxmath::Position{0.0, 0.0},                                                  /* The final chip position. */
-                                       cxmath::Height{0.0},                                                         /* The final vertical displacement. */
-                                       cxmath::Width{0.0});                                                         /* The final horizontal displacement. */
+                                       cx::math::Position{0.0, 0.0},                                                  /* The final chip position. */
+                                       cx::math::Height{0.0},                                                         /* The final vertical displacement. */
+                                       cx::math::Width{0.0});                                                         /* The final horizontal displacement. */
 
     // We check what model and presenter methods were called:
     ASSERT_FALSE(WasUpdateCalledOnModel());
@@ -589,15 +589,15 @@ TEST_P(FrameAnimationTestFixtureForDropChipStartAnimation, /*DISABLED_*/CreateFr
     AddChipsToColumnOnPresenter(cxmodel::Column{4u}, GetParam().m_nbOfChipsInBoard);
 
     FrameAnimationComputationsValidate(cxgui::BoardAnimation::DROP_CHIP,                        /* The performed animation. */
-                                       cxmath::Position{0.0, 0.0},                              /* The initial chip position. */
-                                       cxmath::Height{0.0},                                     /* The initial vertical displacement. */
-                                       cxmath::Width{0.0},                                      /* The initial horizontal displacement. */
+                                       cx::math::Position{0.0, 0.0},                              /* The initial chip position. */
+                                       cx::math::Height{0.0},                                     /* The initial vertical displacement. */
+                                       cx::math::Width{0.0},                                      /* The initial horizontal displacement. */
                                        cxmodel::Column{4u},                                     /* The initial column on which the chip is located. */
                                        NO_NOTIFICATION,                                         /* The notification expected. */
                                        cxmodel::Column{4u},                                     /* The final column on which the disc is located. */
-                                       cxmath::Position{0.0, GetParam().m_currentDisplacement}, /* The final chip position. */
-                                       cxmath::Height{GetParam().m_currentDisplacement},        /* The final vertical displacement. */
-                                       cxmath::Width{0.0});                                     /* The final horizontal displacement. */
+                                       cx::math::Position{0.0, GetParam().m_currentDisplacement}, /* The final chip position. */
+                                       cx::math::Height{GetParam().m_currentDisplacement},        /* The final vertical displacement. */
+                                       cx::math::Width{0.0});                                     /* The final horizontal displacement. */
 
     // We check what model and presenter methods were called:
     ASSERT_FALSE(WasUpdateCalledOnModel());
@@ -648,15 +648,15 @@ TEST_P(FrameAnimationTestFixtureForDropChipEndAnimation, /*DISABLED_*/CreateFram
     AddChipsToColumnOnPresenter(cxmodel::Column{4u}, GetParam().m_nbOfChipsInBoard);
 
     FrameAnimationComputationsValidate(cxgui::BoardAnimation::DROP_CHIP,                                 /* The performed animation. */
-                                       cxmath::Position{0.0, 0.0},                                       /* The initial chip position. */
-                                       cxmath::Height{GetParam().m_animationFullHeight},                 /* The initial vertical displacement. */
-                                       cxmath::Width{0.0},                                               /* The initial horizontal displacement. */
+                                       cx::math::Position{0.0, 0.0},                                       /* The initial chip position. */
+                                       cx::math::Height{GetParam().m_animationFullHeight},                 /* The initial vertical displacement. */
+                                       cx::math::Width{0.0},                                               /* The initial horizontal displacement. */
                                        cxmodel::Column{4u},                                              /* The initial column on which the chip is located. */
                                        cxgui::BoardAnimationNotificationContext::POST_ANIMATE_DROP_CHIP, /* The notification expected. */
                                        cxmodel::Column{0u},                                              /* The final column on which the disc is located. */
-                                       cxmath::Position{0.0, 0.0},                                       /* The final chip position. */
-                                       cxmath::Height{0.0},                                              /* The final vertical displacement. */
-                                       cxmath::Width{0.0});                                              /* The final horizontal displacement. */
+                                       cx::math::Position{0.0, 0.0},                                       /* The final chip position. */
+                                       cx::math::Height{0.0},                                              /* The final vertical displacement. */
+                                       cx::math::Width{0.0});                                              /* The final horizontal displacement. */
 
     // We check what model and presenter methods were called:
     ASSERT_FALSE(WasUpdateCalledOnModel());
@@ -675,15 +675,15 @@ TEST_P(FrameAnimationTestFixtureForDropChipEndAnimation, /*DISABLED_*/CreateFram
 TEST_F(FrameAnimationTestFixture, /*DISABLED_*/CreateFrameAnimationStrategy_UndoDropChip_AnimationInfoUpdated)
 {
     FrameAnimationComputationsValidate(cxgui::BoardAnimation::UNDO_DROP_CHIP,                                 /* The performed animation. */
-                                       cxmath::Position{0.0, 0.0},                                            /* The initial chip position. */
-                                       cxmath::Height{0.0},                                                   /* The initial vertical displacement. */
-                                       cxmath::Width{0.0},                                                    /* The initial horizontal displacement. */
+                                       cx::math::Position{0.0, 0.0},                                            /* The initial chip position. */
+                                       cx::math::Height{0.0},                                                   /* The initial vertical displacement. */
+                                       cx::math::Width{0.0},                                                    /* The initial horizontal displacement. */
                                        cxmodel::Column{4u},                                                   /* The initial column on which the chip is located. */
                                        cxgui::BoardAnimationNotificationContext::POST_ANIMATE_UNDO_DROP_CHIP, /* The notification expected. */
                                        cxmodel::Column{0u},                                                   /* The final column on which the disc is located. */
-                                       cxmath::Position{0.0, 0.0},                                            /* The final chip position. */
-                                       cxmath::Height{0.0},                                                   /* The final vertical displacement. */
-                                       cxmath::Width{0.0});                                                   /* The final horizontal displacement. */
+                                       cx::math::Position{0.0, 0.0},                                            /* The final chip position. */
+                                       cx::math::Height{0.0},                                                   /* The final vertical displacement. */
+                                       cx::math::Width{0.0});                                                   /* The final horizontal displacement. */
 
     ASSERT_FALSE(WasUpdateCalledOnModel());
     ASSERT_FALSE(WasResizeCalledOnModel());
@@ -701,15 +701,15 @@ TEST_F(FrameAnimationTestFixture, /*DISABLED_*/CreateFrameAnimationStrategy_Undo
 TEST_F(FrameAnimationTestFixture, /*DISABLED_*/CreateFrameAnimationStrategy_RedoDropChip_AnimationInfoUpdated)
 {
     FrameAnimationComputationsValidate(cxgui::BoardAnimation::REDO_DROP_CHIP,                                 /* The performed animation. */
-                                       cxmath::Position{0.0, 0.0},                                            /* The initial chip position. */
-                                       cxmath::Height{0.0},                                                   /* The initial vertical displacement. */
-                                       cxmath::Width{0.0},                                                    /* The initial horizontal displacement. */
+                                       cx::math::Position{0.0, 0.0},                                            /* The initial chip position. */
+                                       cx::math::Height{0.0},                                                   /* The initial vertical displacement. */
+                                       cx::math::Width{0.0},                                                    /* The initial horizontal displacement. */
                                        cxmodel::Column{4u},                                                   /* The initial column on which the chip is located. */
                                        cxgui::BoardAnimationNotificationContext::POST_ANIMATE_REDO_DROP_CHIP, /* The notification expected. */
                                        cxmodel::Column{0u},                                                   /* The final column on which the disc is located. */
-                                       cxmath::Position{0.0, 0.0},                                            /* The final chip position. */
-                                       cxmath::Height{0.0},                                                   /* The final vertical displacement. */
-                                       cxmath::Width{0.0});                                                   /* The final horizontal displacement. */
+                                       cx::math::Position{0.0, 0.0},                                            /* The final chip position. */
+                                       cx::math::Height{0.0},                                                   /* The final vertical displacement. */
+                                       cx::math::Width{0.0});                                                   /* The final horizontal displacement. */
 
     ASSERT_FALSE(WasUpdateCalledOnModel());
     ASSERT_FALSE(WasResizeCalledOnModel());
@@ -727,15 +727,15 @@ TEST_F(FrameAnimationTestFixture, /*DISABLED_*/CreateFrameAnimationStrategy_Redo
 TEST_F(FrameAnimationTestFixture, /*DISABLED_*/CreateFrameAnimationStrategy_Resize_AnimationInfoUpdated)
 {
     FrameAnimationComputationsValidate(cxgui::BoardAnimation::REINITIALIZE,                                       /* The performed animation. */
-                                       cxmath::Position{0.0, 0.0},                                                /* The initial chip position. */
-                                       cxmath::Height{0.0},                                                       /* The initial vertical displacement. */
-                                       cxmath::Width{0.0},                                                        /* The initial horizontal displacement. */
+                                       cx::math::Position{0.0, 0.0},                                                /* The initial chip position. */
+                                       cx::math::Height{0.0},                                                       /* The initial vertical displacement. */
+                                       cx::math::Width{0.0},                                                        /* The initial horizontal displacement. */
                                        cxmodel::Column{4u},                                                       /* The initial column on which the chip is located. */
                                        cxgui::BoardAnimationNotificationContext::POST_ANIMATE_REINITIALIZE_BOARD, /* The notification expected. */
                                        cxmodel::Column{0u},                                                       /* The final column on which the disc is located. */
-                                       cxmath::Position{0.0, 0.0},                                                /* The final chip position. */
-                                       cxmath::Height{0.0},                                                       /* The final vertical displacement. */
-                                       cxmath::Width{0.0});                                                       /* The final horizontal displacement. */
+                                       cx::math::Position{0.0, 0.0},                                                /* The final chip position. */
+                                       cx::math::Height{0.0},                                                       /* The final vertical displacement. */
+                                       cx::math::Width{0.0});                                                       /* The final horizontal displacement. */
 
     ASSERT_FALSE(WasUpdateCalledOnModel());
     ASSERT_FALSE(WasResizeCalledOnModel());

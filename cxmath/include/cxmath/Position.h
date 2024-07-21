@@ -24,7 +24,7 @@
 #ifndef POSITION_H_0AF4F7DC_2C60_4E04_9AEF_7CDA286A9B0E
 #define POSITION_H_0AF4F7DC_2C60_4E04_9AEF_7CDA286A9B0E
 
-namespace cxmath
+namespace cx::math
 {
 
 /**********************************************************************************************//**
@@ -80,7 +80,7 @@ struct Position
  *     `true` if both position are the same, `false` otherwise.
  *
  *************************************************************************************************/
-[[nodiscard]] bool operator==(const cxmath::Position& p_lhs, const cxmath::Position& p_rhs);
+[[nodiscard]] bool operator==(const cx::math::Position& p_lhs, const cx::math::Position& p_rhs);
 
 /**********************************************************************************************//**
  * @brief Not equal-to operator.
@@ -94,9 +94,9 @@ struct Position
  *     `true` if both position are not the same, `false` otherwise.
  *
  *************************************************************************************************/
-[[nodiscard]] bool operator!=(const cxmath::Position& p_lhs, const cxmath::Position& p_rhs);
+[[nodiscard]] bool operator!=(const cx::math::Position& p_lhs, const cx::math::Position& p_rhs);
 
-} // namespace cxmath
+} // namespace cx::math
 
 #endif // POSITION_H_0AF4F7DC_2C60_4E04_9AEF_7CDA286A9B0E
 

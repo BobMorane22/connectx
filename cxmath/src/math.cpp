@@ -30,7 +30,7 @@ constexpr double DOUBLE_DEFAULT_TOLERANCE = 1e-6;
 
 } // namespace
 
-bool cxmath::AreLogicallyEqual(double p_lhs, double p_rhs)
+bool cx::math::AreLogicallyEqual(double p_lhs, double p_rhs)
 {
     const double delta = p_lhs - p_rhs;
 

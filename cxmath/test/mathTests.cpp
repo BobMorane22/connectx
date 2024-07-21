@@ -35,10 +35,10 @@ namespace
 
 TEST(math, /*DISABLED_*/Pi_Constant_ReturnsConstant)
 {
-    ASSERT_NEAR(cxmath::pi<long double>, std::acos(-1), 1e-12);
-    ASSERT_NEAR(cxmath::pi<double>, std::acos(-1), 1e-9);
-    ASSERT_NEAR(cxmath::pi<float>, std::acos(-1), 1e-6);
-    ASSERT_EQ(cxmath::pi<int>, 3);
+    ASSERT_NEAR(cx::math::pi<long double>, std::acos(-1), 1e-12);
+    ASSERT_NEAR(cx::math::pi<double>, std::acos(-1), 1e-9);
+    ASSERT_NEAR(cx::math::pi<float>, std::acos(-1), 1e-6);
+    ASSERT_EQ(cx::math::pi<int>, 3);
 }
 
 TEST(math, /*DISABLED_*/AreLogicallyEqual_LhsTooBig_ReturnsFalse)
@@ -46,7 +46,7 @@ TEST(math, /*DISABLED_*/AreLogicallyEqual_LhsTooBig_ReturnsFalse)
     constexpr double lhs = 1.123456789;
     constexpr double rhs = lhs - (DOUBLE_DEFAULT_COMPARISON_TOLERANCE + std::numeric_limits<double>::epsilon());
 
-    ASSERT_FALSE(cxmath::AreLogicallyEqual(lhs, rhs));
+    ASSERT_FALSE(cx::math::AreLogicallyEqual(lhs, rhs));
 }
 
 TEST(math, /*DISABLED_*/AreLogicallyEqual_RhsTooBig_ReturnsFalse)
@@ -54,7 +54,7 @@ TEST(math, /*DISABLED_*/AreLogicallyEqual_RhsTooBig_ReturnsFalse)
     constexpr double rhs = 1.123456789;
     constexpr double lhs = rhs - (DOUBLE_DEFAULT_COMPARISON_TOLERANCE + std::numeric_limits<double>::epsilon());
 
-    ASSERT_FALSE(cxmath::AreLogicallyEqual(lhs, rhs));
+    ASSERT_FALSE(cx::math::AreLogicallyEqual(lhs, rhs));
 }
 
 TEST(math, /*DISABLED_*/AreLogicallyEqual_BothWithinTolerance_ReturnsTrue)
@@ -62,12 +62,12 @@ TEST(math, /*DISABLED_*/AreLogicallyEqual_BothWithinTolerance_ReturnsTrue)
     constexpr double lhs1 = 1.123456789;
     constexpr double rhs1 = lhs1 - (DOUBLE_DEFAULT_COMPARISON_TOLERANCE - std::numeric_limits<double>::epsilon());
 
-    ASSERT_TRUE(cxmath::AreLogicallyEqual(lhs1, rhs1));
+    ASSERT_TRUE(cx::math::AreLogicallyEqual(lhs1, rhs1));
 
     constexpr double rhs2 = 1.123456789;
     constexpr double lhs2 = rhs2 - (DOUBLE_DEFAULT_COMPARISON_TOLERANCE - std::numeric_limits<double>::epsilon());
 
-    ASSERT_TRUE(cxmath::AreLogicallyEqual(lhs2, rhs2));
+    ASSERT_TRUE(cx::math::AreLogicallyEqual(lhs2, rhs2));
 }
 
 TEST(math, /*DISABLED_*/AreLogicallyEqual_BothBitwiseEqual_ReturnsTrue)
@@ -75,5 +75,5 @@ TEST(math, /*DISABLED_*/AreLogicallyEqual_BothBitwiseEqual_ReturnsTrue)
     constexpr double lhs = -1.123456789;
     constexpr double rhs = lhs;
 
-    ASSERT_TRUE(cxmath::AreLogicallyEqual(lhs, rhs));
+    ASSERT_TRUE(cx::math::AreLogicallyEqual(lhs, rhs));
 }

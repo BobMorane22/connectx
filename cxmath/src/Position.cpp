@@ -23,12 +23,12 @@
 
 #include <cxmath/Position.h>
  
-bool cxmath::operator==(const cxmath::Position& p_lhs, const cxmath::Position& p_rhs)
+bool cx::math::operator==(const cx::math::Position& p_lhs, const cx::math::Position& p_rhs)
 {
     return (p_lhs.m_x == p_rhs.m_x) && (p_lhs.m_y == p_rhs.m_y);
 }
 
-bool cxmath::operator!=(const cxmath::Position& p_lhs, const cxmath::Position& p_rhs)
+bool cx::math::operator!=(const cx::math::Position& p_lhs, const cx::math::Position& p_rhs)
 {
     return !(p_lhs == p_rhs);
 }

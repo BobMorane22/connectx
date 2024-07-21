@@ -26,7 +26,7 @@
 
 #include <cxcmn/StrongType.h>
 
-namespace cxmath
+namespace cx::math
 {
 
 /** Continuous height dimension. */
@@ -82,7 +82,7 @@ struct Dimensions
  *      `true` if the dimensions are the same, `false` otherwise.
  *
  *************************************************************************************************/
-[[nodiscard]] bool operator==(const cxmath::Dimensions& p_lhs, const cxmath::Dimensions& p_rhs);
+[[nodiscard]] bool operator==(const cx::math::Dimensions& p_lhs, const cx::math::Dimensions& p_rhs);
 
 /**********************************************************************************************//**
  * @brief Not equal-to operator.
@@ -96,8 +96,8 @@ struct Dimensions
  *      `true` if the dimensions are the different `false` otherwise.
  *
  *************************************************************************************************/
-[[nodiscard]] bool operator!=(const cxmath::Dimensions& p_lhs, const cxmath::Dimensions& p_rhs);
+[[nodiscard]] bool operator!=(const cx::math::Dimensions& p_lhs, const cx::math::Dimensions& p_rhs);
 
-} // namespace cxmath
+} // namespace cx::math
 
 #endif // DIMENSIONS_H_DED7FF0E_07A9_4626_B744_8A3EAAC92B7B

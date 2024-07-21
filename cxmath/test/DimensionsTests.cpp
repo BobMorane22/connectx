@@ -27,7 +27,7 @@
 
 TEST(Dimensions, /*DISABLED*/EqualToOperator_TwoSameDimensions_ReturnsTrue)
 {
-    using namespace cxmath;
+    using namespace cx::math;
 
     constexpr Dimensions lhs{Height{1.0}, Width{2.0}};
     constexpr Dimensions rhs{lhs.m_height, lhs.m_width};
@@ -37,7 +37,7 @@ TEST(Dimensions, /*DISABLED*/EqualToOperator_TwoSameDimensions_ReturnsTrue)
 
 TEST(Dimensions, /*DISABLED*/EqualToOperator_TwoDifferentDimensions_ReturnsFalse)
 {
-    using namespace cxmath;
+    using namespace cx::math;
 
     const double height = 1.0;
     const double width = 2.0;
@@ -54,7 +54,7 @@ TEST(Dimensions, /*DISABLED*/EqualToOperator_TwoDifferentDimensions_ReturnsFalse
 
 TEST(Dimensions, /*DISABLED*/NotEqualToOperator_TwoSameDimensions_ReturnsFalse)
 {
-    using namespace cxmath;
+    using namespace cx::math;
 
     constexpr Dimensions lhs{Height{1.0}, Width{2.0}};
     constexpr Dimensions rhs{lhs.m_height, lhs.m_width};
@@ -64,7 +64,7 @@ TEST(Dimensions, /*DISABLED*/NotEqualToOperator_TwoSameDimensions_ReturnsFalse)
 
 TEST(Dimensions, /*DISABLED*/NotEqualToOperator_TwoDifferentDimensions_ReturnsTrue)
 {
-    using namespace cxmath;
+    using namespace cx::math;
 
     const double height = 1.0;
     const double width = 2.0;

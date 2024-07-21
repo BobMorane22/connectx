@@ -24,7 +24,7 @@
 #ifndef MATH_H_510D2F57_FB0C_4280_9992_BDD00936E001
 #define MATH_H_510D2F57_FB0C_4280_9992_BDD00936E001
 
-namespace cxmath
+namespace cx::math
 {
 
 /**********************************************************************************************//**
@@ -85,7 +85,7 @@ inline constexpr T g = T{9.80665};
  *************************************************************************************************/
 [[nodiscard]] bool AreLogicallyEqual(double p_lhs, double p_rhs);
 
-} // cxmath
+} // namespace cx::math
 
 #endif // MATH_H_510D2F57_FB0C_4280_9992_BDD00936E001
 
