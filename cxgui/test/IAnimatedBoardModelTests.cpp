@@ -66,28 +66,28 @@ TEST(IAnimatedBoardModel, /*DISABLED_*/ComputeColumnFromPosition_InvalidPosition
 
     // x-coordinate below 0:
     {
-        cxunit::DisableStdStreamsRAII redirector;
+        cx::unit::DisableStdStreamsRAII redirector;
         ASSERT_TRUE(cxgui::ComputeColumnFromPosition(model, {-1.0, 1.0})  == cxmodel::Column{0u});
         ASSERT_PRECONDITION_FAILED(redirector);
     }
 
     // y-coordinate below 0:
     {
-        cxunit::DisableStdStreamsRAII redirector;
+        cx::unit::DisableStdStreamsRAII redirector;
         ASSERT_TRUE(cxgui::ComputeColumnFromPosition(model, {1.0, -1.0})  == cxmodel::Column{0u});
         ASSERT_PRECONDITION_FAILED(redirector);
     }
 
     // x-coordinate outside board:
     {
-        cxunit::DisableStdStreamsRAII redirector;
+        cx::unit::DisableStdStreamsRAII redirector;
         ASSERT_TRUE(cxgui::ComputeColumnFromPosition(model, {71.0, 1.0})  == cxmodel::Column{0u});
         ASSERT_PRECONDITION_FAILED(redirector);
     }
 
     // y-coordinate outside board:
     {
-        cxunit::DisableStdStreamsRAII redirector;
+        cx::unit::DisableStdStreamsRAII redirector;
         ASSERT_TRUE(cxgui::ComputeColumnFromPosition(model, {1.0, 71.0})  == cxmodel::Column{0u});
         ASSERT_PRECONDITION_FAILED(redirector);
     }
@@ -110,7 +110,7 @@ TEST(IAnimatedBoardModel, /*DISABLED_*/ComputeChipPositionFromColumn_ColumnOutsi
 {
     const AnimatedBoardModelMock model = CreateMock();
 
-    cxunit::DisableStdStreamsRAII redirector;
+    cx::unit::DisableStdStreamsRAII redirector;
     ASSERT_TRUE(cxgui::ComputeChipPositionFromColumn(model, cxmodel::Column{7u}) == cx::math::Position(75.0, 0.0));
     ASSERT_PRECONDITION_FAILED(redirector);
     ASSERT_POSTCONDITION_FAILED(redirector);

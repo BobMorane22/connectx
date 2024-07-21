@@ -102,7 +102,7 @@ TEST_F(CommandCreateNewGameTestFixture, /*DISABLED_*/Undo_ValidNewGame_HasNoEffe
 
     // For now, undoing should have no effect:
     {
-        cxunit::DisableStdStreamsRAII streamDisabler;
+        cx::unit::DisableStdStreamsRAII streamDisabler;
         cmd.Undo();
         ASSERT_ASSERTION_FAILED(streamDisabler);
     }

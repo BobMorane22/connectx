@@ -91,7 +91,7 @@ TEST(WinGameResolutionDialogPresenter, GetResolutionMessage_GameWon_GameWonResol
 
 TEST(WinGameResolutionDialogPresenter, GetResolutionMessage_GameNotWon_NoMessageReturnedAndAssertion)
 {
-    cxunit::DisableStdStreamsRAII streamDisabler;
+    cx::unit::DisableStdStreamsRAII streamDisabler;
 
     ModelMock model;
 

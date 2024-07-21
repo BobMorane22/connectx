@@ -22,11 +22,11 @@
  *************************************************************************************************/
 
 /**********************************************************************************************//**
- * @namespace cxunit
+ * @namespace cx::unit
  *
  * @brief Reusable unit testing facilities.
  *
- * The `cxunit` namespace contains facilities for unit testing that can be reused across all
+ * The `cx::unit` namespace contains facilities for unit testing that can be reused across all
  * unit test executables.
  *
  *************************************************************************************************/

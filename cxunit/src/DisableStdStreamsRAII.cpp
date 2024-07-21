@@ -25,7 +25,7 @@
 
 #include <iostream>
 
-cxunit::DisableStdStreamsRAII::DisableStdStreamsRAII()
+cx::unit::DisableStdStreamsRAII::DisableStdStreamsRAII()
  : m_stdOutBufferContents{std::cout.rdbuf()}
  , m_stdErrBufferContents{std::cerr.rdbuf()}
 {
@@ -33,38 +33,38 @@ cxunit::DisableStdStreamsRAII::DisableStdStreamsRAII()
     DisableStdErr();
 }
 
-cxunit::DisableStdStreamsRAII::~DisableStdStreamsRAII()
+cx::unit::DisableStdStreamsRAII::~DisableStdStreamsRAII()
 {
     EnableStdOut();
     EnableStdErr();
 }
 
-void cxunit::DisableStdStreamsRAII::DisableStdOut()
+void cx::unit::DisableStdStreamsRAII::DisableStdOut()
 {
     std::cout.rdbuf(m_stdOutBuffer.rdbuf());
 }
 
-void cxunit::DisableStdStreamsRAII::EnableStdOut()
+void cx::unit::DisableStdStreamsRAII::EnableStdOut()
 {
     std::cout.rdbuf(m_stdOutBufferContents);
 }
 
-void cxunit::DisableStdStreamsRAII::DisableStdErr()
+void cx::unit::DisableStdStreamsRAII::DisableStdErr()
 {
     std::cerr.rdbuf(m_stdErrBuffer.rdbuf());
 }
 
-void cxunit::DisableStdStreamsRAII::EnableStdErr()
+void cx::unit::DisableStdStreamsRAII::EnableStdErr()
 {
     std::cerr.rdbuf(m_stdErrBufferContents);
 }
 
-std::string cxunit::DisableStdStreamsRAII::GetStdOutContents() const
+std::string cx::unit::DisableStdStreamsRAII::GetStdOutContents() const
 {
     return m_stdOutBuffer.str();
 }
 
-std::string cxunit::DisableStdStreamsRAII::GetStdErrContents() const
+std::string cx::unit::DisableStdStreamsRAII::GetStdErrContents() const
 {
     return m_stdErrBuffer.str();
 }

@@ -28,7 +28,7 @@
 
 #include <sstream>
 
-namespace cxunit
+namespace cx::unit
 {
 
 /*********************************************************************************************//**
@@ -131,7 +131,7 @@ private:
  *
  * @param p_streamRedirector
  *      A stream redirector. This class must implement the `GetStdErrContents` method. As
- *      defined in `cxunit::DisableStdStreamsRAII`.
+ *      defined in `cx::unit::DisableStdStreamsRAII`.
  * @param p_assertionKeyword
  *      The string differentiating assertion types in the standard error stream.
  *
@@ -155,7 +155,7 @@ private:
  *
  * @param p_streamRedirector
  *      A stream redirector. This class must implement the `GetStdErrContents` method. As
- *      defined in `cxunit::DisableStdStreamsRAII`.
+ *      defined in `cx::unit::DisableStdStreamsRAII`.
  *
  ************************************************************************************************/
 #define ASSERT_ASSERTION_FAILED(p_streamRedirector) ASSERT_ASSERTION_FAILED_IMPL(p_streamRedirector, "Assertion")
@@ -167,7 +167,7 @@ private:
  *
  * @param p_streamRedirector
  *      A stream redirector. This class must implement the `GetStdErrContents` method. As
- *      defined in `cxunit::DisableStdStreamsRAII`.
+ *      defined in `cx::unit::DisableStdStreamsRAII`.
  *
  ************************************************************************************************/
 #define ASSERT_PRECONDITION_FAILED(p_streamRedirector) ASSERT_ASSERTION_FAILED_IMPL(p_streamRedirector, "Precondition")
@@ -179,7 +179,7 @@ private:
  *
  * @param p_streamRedirector
  *      A stream redirector. This class must implement the `GetStdErrContents` method. As
- *      defined in `cxunit::DisableStdStreamsRAII`.
+ *      defined in `cx::unit::DisableStdStreamsRAII`.
  *
  ************************************************************************************************/
 #define ASSERT_POSTCONDITION_FAILED(p_streamRedirector) ASSERT_ASSERTION_FAILED_IMPL(p_streamRedirector, "Postcondition")
@@ -191,11 +191,11 @@ private:
  *
  * @param p_streamRedirector
  *      A stream redirector. This class must implement the `GetStdErrContents` method. As
- *      defined in `cxunit::DisableStdStreamsRAII`.
+ *      defined in `cx::unit::DisableStdStreamsRAII`.
  *
  ************************************************************************************************/
 #define ASSERT_INVARIANT_FAILED(p_streamRedirector) ASSERT_ASSERTION_FAILED_IMPL(p_streamRedirector, "Invariant")
 
-} // cxunit
+} // namespace cx::unit
 
 #endif // DISABLESTDSTREAMSRAII_H_96B3CE7F_EAD5_42AF_9745_53ADE74A7697

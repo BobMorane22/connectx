@@ -21,3 +21,8 @@
 ./tools/script/findReplace.sh "cxlog::" "cx::log::"
 ./tools/script/findReplace.sh "namespace cxlog" "namespace cx::log"
 ./tools/script/findReplace.sh "@namespace cxlog" "@namespace cx::log"
+
+# cxunit -> cx::unit
+./tools/script/findReplace.sh "cxunit::" "cx::unit::"
+./tools/script/findReplace.sh "namespace cxunit" "namespace cx::unit"
+./tools/script/findReplace.sh "@namespace cxunit" "@namespace cx::unit"

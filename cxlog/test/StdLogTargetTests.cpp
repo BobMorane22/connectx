@@ -28,7 +28,7 @@
 
 TEST(StdLogTarget, /*DISABLED_*/Log_SomeString_StringLoggedToStdout)
 {
-    cxunit::DisableStdStreamsRAII raii;
+    cx::unit::DisableStdStreamsRAII raii;
 
     const std::string before = raii.GetStdOutContents();
     ASSERT_TRUE(before.empty());

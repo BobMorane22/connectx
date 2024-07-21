@@ -139,10 +139,10 @@ void MainWindowControllerTestFixture::MainWindowControllerMockModel::Redo()
 
 bool MainWindowControllerTestFixture::MainWindowControllerMockModel::CanUndo() const
 {
-    throw cxunit::NotImplementedException();
+    throw cx::unit::NotImplementedException();
 }
 
 bool MainWindowControllerTestFixture::MainWindowControllerMockModel::CanRedo() const
 {
-    throw cxunit::NotImplementedException();
+    throw cx::unit::NotImplementedException();
 }

@@ -91,7 +91,7 @@ TEST(GameResolutionStrategyFactory, Make_TieGameResolution_TieStrategyReturned)
 
 TEST(GameResolutionStrategyFactory, Make_InARowTooSmall_AssertsAndNoStrategyReturned)
 {
-    cxunit::DisableStdStreamsRAII streamDisabler;
+    cx::unit::DisableStdStreamsRAII streamDisabler;
 
     // Setup:
     BoardMock board;
@@ -111,7 +111,7 @@ TEST(GameResolutionStrategyFactory, Make_InARowTooSmall_AssertsAndNoStrategyRetu
 
 TEST(GameResolutionStrategyFactory, Make_InARowTooBig_AssertsAndNoStrategyReturned)
 {
-    cxunit::DisableStdStreamsRAII streamDisabler;
+    cx::unit::DisableStdStreamsRAII streamDisabler;
 
     // Setup:
     BoardMock board;
@@ -131,7 +131,7 @@ TEST(GameResolutionStrategyFactory, Make_InARowTooBig_AssertsAndNoStrategyReturn
 
 TEST(GameResolutionStrategyFactory, Make_NotEnoughPlayers_AssertsAndNoStrategyReturned)
 {
-    cxunit::DisableStdStreamsRAII streamDisabler;
+    cx::unit::DisableStdStreamsRAII streamDisabler;
 
     // Setup:
     BoardMock board;

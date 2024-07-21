@@ -246,7 +246,7 @@ TEST_F(CommandDropChipTestFixture, /*DISABLED_*/Execute_RowFull_NoDataUpdated)
         // always be checked before dropping a disc. Here, for testing
         // purposes, we call the command directly on a full column and
         // an assertion occurs. We silence it for testing purposes:
-        cxunit::DisableStdStreamsRAII streamDisabler;
+        cx::unit::DisableStdStreamsRAII streamDisabler;
         cmd->Execute();
     }
 

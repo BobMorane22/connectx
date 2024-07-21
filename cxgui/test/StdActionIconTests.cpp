@@ -133,7 +133,7 @@ TEST(StdNameGet, FunctionCall_InvalidActionGiven_AssertAndEmptyNameReturned)
 {
     using namespace cxgui::FreeDesktop;
 
-    cxunit::DisableStdStreamsRAII streamDisabler;
+    cx::unit::DisableStdStreamsRAII streamDisabler;
     const auto invalid = static_cast<StdActionIcon>(-1);
     const std::string iconName = StdNameGet(invalid);
 

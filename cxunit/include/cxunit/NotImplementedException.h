@@ -27,7 +27,7 @@
 #include <stdexcept>
 #include <string>
 
-namespace cxunit
+namespace cx::unit
 {
 
 /*********************************************************************************************//**
@@ -50,6 +50,6 @@ public:
 
 };
 
-} // namespace cxunit
+} // namespace cx::unit
 
 #endif // NOTIMPLEMENTEDEXCEPTION_H_E60FBB1F_01F8_425F_8129_762D383E89AC

@@ -43,7 +43,7 @@ public:
 
 TEST(StreamRedirector, /*DISABLED_*/RedirectNone_ContentsOutput_NothingIsRedirected)
 {
-    cxunit::StdStreamRedirector<StdStreamWriter, cxunit::Redirection::NONE> redirector;
+    cx::unit::StdStreamRedirector<StdStreamWriter, cx::unit::Redirection::NONE> redirector;
 
     redirector.WriteToStdOut(); // Should be printed to the console.
     // Will not compile:
@@ -56,7 +56,7 @@ TEST(StreamRedirector, /*DISABLED_*/RedirectNone_ContentsOutput_NothingIsRedirec
 
 TEST(StreamRedirector, /*DISABLED_*/RedirectStdOutOnly_ContentsOutput_OnlyStdOutRedirected)
 {
-    cxunit::StdStreamRedirector<StdStreamWriter, cxunit::Redirection::STDOUT> redirector;
+    cx::unit::StdStreamRedirector<StdStreamWriter, cx::unit::Redirection::STDOUT> redirector;
 
     redirector.WriteToStdOut();
     ASSERT_EQ(redirector.GetStdOutContents(), "STDOUT");
@@ -68,7 +68,7 @@ TEST(StreamRedirector, /*DISABLED_*/RedirectStdOutOnly_ContentsOutput_OnlyStdOut
 
 TEST(StreamRedirector, /*DISABLED_*/RedirectStdErrOnly_ContentsOutput_OnlyStdErrOutRedirected)
 {
-    cxunit::StdStreamRedirector<StdStreamWriter, cxunit::Redirection::STDERR> redirector;
+    cx::unit::StdStreamRedirector<StdStreamWriter, cx::unit::Redirection::STDERR> redirector;
 
     redirector.WriteToStdOut(); // Should be printed to the console.
     // Will not compile:
@@ -80,7 +80,7 @@ TEST(StreamRedirector, /*DISABLED_*/RedirectStdErrOnly_ContentsOutput_OnlyStdErr
 
 TEST(StreamRedirector, /*DISABLED_*/RedirectBoth_ContentsOutput_AllIsRedirected)
 {
-    cxunit::StdStreamRedirector<StdStreamWriter, cxunit::Redirection::BOTH> redirector;
+    cx::unit::StdStreamRedirector<StdStreamWriter, cx::unit::Redirection::BOTH> redirector;
 
     redirector.WriteToStdOut();
     ASSERT_EQ(redirector.GetStdOutContents(), "STDOUT");

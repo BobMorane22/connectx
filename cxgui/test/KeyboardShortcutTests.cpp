@@ -57,7 +57,7 @@ TEST(KeyboardShortcut, Constructor_TwoSameKeys_PreconditionFails)
 {
     using namespace cxgui;
 
-    cxunit::DisableStdStreamsRAII redirector;
+    cx::unit::DisableStdStreamsRAII redirector;
     const KeyboardShortcut shortcut{Key::CTRL + Key::CTRL};
     ASSERT_PRECONDITION_FAILED(redirector);
 

@@ -158,7 +158,7 @@ TEST(CompositeCommand, /*DISABLED_*/Add_InvalidChild_NothingAddedAndAssert)
     cxmodel::CompositeCommand topLevelComposite;
 
     {
-        cxunit::DisableStdStreamsRAII streamDisabler;
+        cx::unit::DisableStdStreamsRAII streamDisabler;
 
         topLevelComposite.Add(nullptr); 
         ASSERT_PRECONDITION_FAILED(streamDisabler);
@@ -179,7 +179,7 @@ TEST(CompositeCommand, /*DISABLED_*/Execute_LeafCommandFails_ReturnsError)
         cxmodel::CompositeCommand composite;
         composite.Add(std::make_unique<ErrorLeafCommandMock>(cxmodel::CommandCompletionStatus::FAILED_UNEXPECTED));
 
-        cxunit::DisableStdStreamsRAII streamDisabler;
+        cx::unit::DisableStdStreamsRAII streamDisabler;
         ASSERT_TRUE(composite.Execute() == cxmodel::CommandCompletionStatus::FAILED_UNEXPECTED);
         ASSERT_ASSERTION_FAILED(streamDisabler);
     }
@@ -211,7 +211,7 @@ TEST(CompositeCommand, /*DISABLED_*/Execute_CompositeCommandFails_ReturnsError)
 
         topLevelComposite.Add(std::move(subComposite));
 
-        cxunit::DisableStdStreamsRAII streamDisabler;
+        cx::unit::DisableStdStreamsRAII streamDisabler;
         ASSERT_TRUE(topLevelComposite.Execute() == cxmodel::CommandCompletionStatus::FAILED_UNEXPECTED);
         ASSERT_ASSERTION_FAILED(streamDisabler);
     }

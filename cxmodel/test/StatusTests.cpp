@@ -51,7 +51,7 @@ TEST(Status, GetMessage_ErrorWithMessage_MessageReturned)
 
 TEST(Status, GetMessage_Success_EmptyMessageReturned)
 {
-    cxunit::DisableStdStreamsRAII streamDisabler;
+    cx::unit::DisableStdStreamsRAII streamDisabler;
 
     const auto status = cxmodel::MakeSuccess();
 
@@ -60,7 +60,7 @@ TEST(Status, GetMessage_Success_EmptyMessageReturned)
 
 TEST(Status, MakeError_WithoutErrorMessage_EmptyMessageReturned)
 {
-    cxunit::DisableStdStreamsRAII streamDisabler;
+    cx::unit::DisableStdStreamsRAII streamDisabler;
 
     const auto status = cxmodel::MakeError("");
 
@@ -69,7 +69,7 @@ TEST(Status, MakeError_WithoutErrorMessage_EmptyMessageReturned)
 
 TEST(Status, GetMessage_Success_Asserts)
 {
-    cxunit::DisableStdStreamsRAII streamDisabler;
+    cx::unit::DisableStdStreamsRAII streamDisabler;
 
     const auto status = cxmodel::MakeSuccess();
     const std::string message = status.GetMessage();
@@ -79,7 +79,7 @@ TEST(Status, GetMessage_Success_Asserts)
 
 TEST(Status, MakeError_WithoutErrorMessage_Asserts)
 {
-    cxunit::DisableStdStreamsRAII streamDisabler;
+    cx::unit::DisableStdStreamsRAII streamDisabler;
 
     const auto status = cxmodel::MakeError("");
 

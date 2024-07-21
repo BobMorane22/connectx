@@ -47,8 +47,8 @@ class CanUndoRedoModel : public cxmodel::IUndoRedo
 
 public:
 
-    void Undo() override {throw cxunit::NotImplementedException();}
-    void Redo() override {throw cxunit::NotImplementedException();}
+    void Undo() override {throw cx::unit::NotImplementedException();}
+    void Redo() override {throw cx::unit::NotImplementedException();}
     bool CanUndo() const override {return false;}
     bool CanRedo() const override {return false;}
 

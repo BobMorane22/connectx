@@ -199,7 +199,7 @@ TEST_F(AnimationModelTestFixture, /*DISABLED_*/Constructor_ValidInput_DoesNotAss
     auto presenter = std::make_unique<AnimatedBoardPresenterMock>();
     ASSERT_TRUE(presenter);
 
-    cxunit::DisableStdStreamsRAII streamDisabler;
+    cx::unit::DisableStdStreamsRAII streamDisabler;
     const cxgui::AnimatedBoardModel model{*presenter, cxgui::AnimationSpeed{3u}};
     const std::string streamContents = streamDisabler.GetStdErrContents();
 

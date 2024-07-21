@@ -94,7 +94,7 @@ TEST(INextDropColumnComputationStrategy, /*DISABLED_*/NextDropColumnComputationS
 
     std::unique_ptr<cxmodel::INextDropColumnComputationStrategy> strategy;
     {
-        cxunit::DisableStdStreamsRAII streamDisabler;
+        cx::unit::DisableStdStreamsRAII streamDisabler;
         strategy = cxmodel::NextDropColumnComputationStrategyCreate(invalid);
         ASSERT_ASSERTION_FAILED(streamDisabler);
     }
@@ -154,7 +154,7 @@ TEST(INextDropColumnComputationStrategy, /*DISABLED_*/Compute_RandomAndNoAvailab
     cxmodel::IBoard::Position unused;
     FillBoard(board, chip);
 
-    cxunit::DisableStdStreamsRAII streamDisabler;
+    cx::unit::DisableStdStreamsRAII streamDisabler;
     const size_t result = strategy->Compute(board);
     ASSERT_ASSERTION_FAILED(streamDisabler);
 

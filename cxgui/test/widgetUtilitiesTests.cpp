@@ -62,12 +62,12 @@ private:
 
 size_t WidgetMock::GetWidth() const
 {
-    throw cxunit::NotImplementedException();
+    throw cx::unit::NotImplementedException();
 }
 
 size_t WidgetMock::GetHeight() const
 {
-    throw cxunit::NotImplementedException();
+    throw cx::unit::NotImplementedException();
 }
 
 void WidgetMock::SetEnabled(cxgui::EnabledState p_enabled)
@@ -78,17 +78,17 @@ void WidgetMock::SetEnabled(cxgui::EnabledState p_enabled)
 
 void WidgetMock::SetMargins(const cxgui::Margins& /*p_newMarginSizes*/)
 {
-    throw cxunit::NotImplementedException();
+    throw cx::unit::NotImplementedException();
 }
 
 void WidgetMock::SetTooltip(const std::string& /*p_tooltipContents*/)
 {
-    throw cxunit::NotImplementedException();
+    throw cx::unit::NotImplementedException();
 }
 
 std::unique_ptr<cxgui::ISignal<cxgui::EventPropagation, cxgui::KeyboardKeyPressedEvent>> WidgetMock::OnKeyPressed()
 {
-    throw cxunit::NotImplementedException();
+    throw cx::unit::NotImplementedException();
 }
 
 TEST(EnabledStateUpdate, EnabledStateUpdate_ConditionFalse_WidgetDisabled)

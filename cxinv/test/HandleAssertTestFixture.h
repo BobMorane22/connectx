@@ -59,7 +59,7 @@ protected:
 
 private:
 
-    cxunit::DisableStdStreamsRAII m_disableStreamsRAII;
+    cx::unit::DisableStdStreamsRAII m_disableStreamsRAII;
 
 };
 

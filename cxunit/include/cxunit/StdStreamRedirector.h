@@ -47,13 +47,13 @@
  *
  ************************************************************************************************/
 #define ADD_STREAM_REDIRECTORS(p_fixtureClassName)                                                                                \
-    using p_fixtureClassName##NoStreamRedirector     = cxunit::StdStreamRedirector<p_fixtureClassName, cxunit::Redirection::NONE>;   \
-    using p_fixtureClassName##StdOutStreamRedirector = cxunit::StdStreamRedirector<p_fixtureClassName, cxunit::Redirection::STDOUT>; \
-    using p_fixtureClassName##StdErrStreamRedirector = cxunit::StdStreamRedirector<p_fixtureClassName, cxunit::Redirection::STDERR>; \
-    using p_fixtureClassName##BothStreamsRedirector  = cxunit::StdStreamRedirector<p_fixtureClassName, cxunit::Redirection::BOTH>
+    using p_fixtureClassName##NoStreamRedirector     = cx::unit::StdStreamRedirector<p_fixtureClassName, cx::unit::Redirection::NONE>;   \
+    using p_fixtureClassName##StdOutStreamRedirector = cx::unit::StdStreamRedirector<p_fixtureClassName, cx::unit::Redirection::STDOUT>; \
+    using p_fixtureClassName##StdErrStreamRedirector = cx::unit::StdStreamRedirector<p_fixtureClassName, cx::unit::Redirection::STDERR>; \
+    using p_fixtureClassName##BothStreamsRedirector  = cx::unit::StdStreamRedirector<p_fixtureClassName, cx::unit::Redirection::BOTH>
 
 
-namespace cxunit
+namespace cx::unit
 {
 
 /*********************************************************************************************//**
@@ -164,6 +164,6 @@ private:
 
 };
 
-} // namespace cxunit
+} // namespace cx::unit
 
 #endif // STDSTREAMREDIRECTOR_H_427CDDDB_A0AD_4B25_A294_D6805EC6F06D

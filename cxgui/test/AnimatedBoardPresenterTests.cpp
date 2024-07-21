@@ -51,12 +51,12 @@ public:
     }
 
     // cxgui::IGameViewPresenter (not used):
-    std::string GetGameViewTitle() const override {throw cxunit::NotImplementedException();}
-    cxmodel::ChipColor GetGameViewNextPlayerChipColor() const override {throw cxunit::NotImplementedException();}
-    std::string GetGameViewActivePlayerLabelText() const override {throw cxunit::NotImplementedException();}
-    std::string GetGameViewNextPlayerLabelText() const override {throw cxunit::NotImplementedException();}
-    std::string GetGameViewActivePlayerName() const override {throw cxunit::NotImplementedException();}
-    std::string GetGameViewNextPlayerName() const override {throw cxunit::NotImplementedException();}
+    std::string GetGameViewTitle() const override {throw cx::unit::NotImplementedException();}
+    cxmodel::ChipColor GetGameViewNextPlayerChipColor() const override {throw cx::unit::NotImplementedException();}
+    std::string GetGameViewActivePlayerLabelText() const override {throw cx::unit::NotImplementedException();}
+    std::string GetGameViewNextPlayerLabelText() const override {throw cx::unit::NotImplementedException();}
+    std::string GetGameViewActivePlayerName() const override {throw cx::unit::NotImplementedException();}
+    std::string GetGameViewNextPlayerName() const override {throw cx::unit::NotImplementedException();}
 
     // cxgui::IGameViewPresenter (wrapped by the cxgui::AnimatedBoardPresenter):
     cxmodel::ChipColor GetGameViewActivePlayerChipColor() const override {return m_activePlayerChipColor;}

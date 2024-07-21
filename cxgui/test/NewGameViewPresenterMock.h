@@ -41,172 +41,172 @@ public:
 
     [[nodiscard]] std::string GetNewGameViewTitle() const override
     {
-        throw cxunit::NotImplementedException();
+        throw cx::unit::NotImplementedException();
     }
 
     [[nodiscard]] std::string GetNewGameViewGameSectionTitle() const override
     {
-        throw cxunit::NotImplementedException();
+        throw cx::unit::NotImplementedException();
     }
 
     [[nodiscard]] std::string GetNewGameViewInARowLabelText() const override
     {
-        throw cxunit::NotImplementedException();
+        throw cx::unit::NotImplementedException();
     }
 
     [[nodiscard]] std::string GetNewGameViewBoardSectionTitle() const override
     {
-        throw cxunit::NotImplementedException();
+        throw cx::unit::NotImplementedException();
     }
 
     [[nodiscard]] std::string GetNewGameViewWidthLabelText() const override
     {
-        throw cxunit::NotImplementedException();
+        throw cx::unit::NotImplementedException();
     }
 
     [[nodiscard]] std::string GetNewGameViewHeightLabelText() const override
     {
-        throw cxunit::NotImplementedException();
+        throw cx::unit::NotImplementedException();
     }
 
     [[nodiscard]] std::string GetNewGameViewPlayersSectionTitle() const override
     {
-        throw cxunit::NotImplementedException();
+        throw cx::unit::NotImplementedException();
     }
 
     [[nodiscard]] std::string GetNewGameViewNameColumnHeaderText() const override
     {
-        throw cxunit::NotImplementedException();
+        throw cx::unit::NotImplementedException();
     }
 
     [[nodiscard]] std::string GetNewGameViewDiscColumnHeaderText() const override
     {
-        throw cxunit::NotImplementedException();
+        throw cx::unit::NotImplementedException();
     }
 
     [[nodiscard]] std::string GetNewGameViewIsManagedColumnHeaderText() const override
     {
-        throw cxunit::NotImplementedException();
+        throw cx::unit::NotImplementedException();
     }
 
     [[nodiscard]] std::string GetNewGameViewRemovePlayerButtonText() const override
     {
-        throw cxunit::NotImplementedException();
+        throw cx::unit::NotImplementedException();
     }
 
     [[nodiscard]] bool CanRemoveAnotherPlayer(std::size_t /*p_currentNumberOfPlayers*/) const override
     {
-        throw cxunit::NotImplementedException();
+        throw cx::unit::NotImplementedException();
     }
 
     [[nodiscard]] std::string GetNewGameViewAddPlayerButtonText() const override
     {
-        throw cxunit::NotImplementedException();
+        throw cx::unit::NotImplementedException();
     }
 
     [[nodiscard]] bool CanAddAnotherPlayer(std::size_t /*p_currentNumberOfPlayers*/) const override
     {
-        throw cxunit::NotImplementedException();
+        throw cx::unit::NotImplementedException();
     }
 
     [[nodiscard]] std::string GetNewGameViewStartButtonText() const override
     {
-        throw cxunit::NotImplementedException();
+        throw cx::unit::NotImplementedException();
     }
 
     [[nodiscard]] size_t GetNewGameViewMinInARowValue() const override
     {
-        throw cxunit::NotImplementedException();
+        throw cx::unit::NotImplementedException();
     }
 
     [[nodiscard]] size_t GetNewGameViewMaxInARowValue() const override
     {
-        throw cxunit::NotImplementedException();
+        throw cx::unit::NotImplementedException();
     }
 
     [[nodiscard]] size_t GetNewGameViewMinBoardWidthValue() const override
     {
-        throw cxunit::NotImplementedException();
+        throw cx::unit::NotImplementedException();
     }
 
     [[nodiscard]] size_t GetNewGameViewMaxBoardWidthValue() const override
     {
-        throw cxunit::NotImplementedException();
+        throw cx::unit::NotImplementedException();
     }
 
     [[nodiscard]] size_t GetNewGameViewMinBoardHeightValue() const override
     {
-        throw cxunit::NotImplementedException();
+        throw cx::unit::NotImplementedException();
     }
 
     [[nodiscard]] size_t GetNewGameViewMaxBoardHeightValue() const override
     {
-        throw cxunit::NotImplementedException();
+        throw cx::unit::NotImplementedException();
     }
 
     [[nodiscard]] size_t GetDefaultInARowValue() const override
     {
-        throw cxunit::NotImplementedException();
+        throw cx::unit::NotImplementedException();
     }
 
     [[nodiscard]] size_t GetDefaultBoardHeightValue() const override
     {
-        throw cxunit::NotImplementedException();
+        throw cx::unit::NotImplementedException();
     }
 
     [[nodiscard]] size_t GetDefaultBoardWidthValue() const override
     {
-        throw cxunit::NotImplementedException();
+        throw cx::unit::NotImplementedException();
     }
 
     [[nodiscard]] std::string GetDefaultPlayerName(size_t /*p_playerIndex*/) const override
     {
-        throw cxunit::NotImplementedException();
+        throw cx::unit::NotImplementedException();
     }
 
     [[nodiscard]] cxmodel::ChipColor GetDefaultChipColor(size_t /*p_playerIndex*/) const override
     {
-        throw cxunit::NotImplementedException();
+        throw cx::unit::NotImplementedException();
     }
 
     [[nodiscard]] std::vector<cxmodel::ChipColor> GetDefaultChipColors() const override
     {
-        throw cxunit::NotImplementedException();
+        throw cx::unit::NotImplementedException();
     }
 
     [[nodiscard]] cxmodel::PlayerType GetDefaultPlayerType(size_t /*p_playerIndex*/) const override
     {
-        throw cxunit::NotImplementedException();
+        throw cx::unit::NotImplementedException();
     }
 
     [[nodiscard]] cxmodel::Status IsInARowValueValid(size_t /*p_inARowValue*/) const override
     {
-        throw cxunit::NotImplementedException();
+        throw cx::unit::NotImplementedException();
     }
 
     [[nodiscard]] cxmodel::Status AreBoardDimensionsValid(size_t /*p_boardHeight*/, size_t /*p_boardWidth*/) const override
     {
-        throw cxunit::NotImplementedException();
+        throw cx::unit::NotImplementedException();
     }
 
     [[nodiscard]] cxmodel::Status ArePlayerNamesValid(const std::vector<std::string>& /*p_playerNames*/) const override
     {
-        throw cxunit::NotImplementedException();
+        throw cx::unit::NotImplementedException();
     }
 
     [[nodiscard]] cxmodel::Status ArePlayerChipColorsValid(const std::vector<cxmodel::ChipColor>& /*p_playerChipColors*/) const override
     {
-        throw cxunit::NotImplementedException();
+        throw cx::unit::NotImplementedException();
     }
 
     [[nodiscard]] cxmodel::Status ArePlayerTypesValid(const std::vector<cxmodel::PlayerType>& /*p_playerTypes*/) const override
     {
-        throw cxunit::NotImplementedException();
+        throw cx::unit::NotImplementedException();
     }
 
     [[nodiscard]] cxmodel::Status IsNewGameWinnable(size_t /*p_inARowValue*/, size_t /*p_nbOfPlayers*/, size_t /*p_boardHeight*/, size_t /*p_boardWidth*/) const override
     {
-        throw cxunit::NotImplementedException();
+        throw cx::unit::NotImplementedException();
     }
 
 };

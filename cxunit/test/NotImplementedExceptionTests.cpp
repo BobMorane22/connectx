@@ -32,7 +32,7 @@ public:
 
     void NotImplementedMethod()
     {
-        throw cxunit::NotImplementedException();
+        throw cx::unit::NotImplementedException();
     }
 };
 
@@ -47,7 +47,7 @@ TEST(NotImplementedException, SomeOperation_ExceptionThrown_NotImplementedMessag
     {
         object.NotImplementedMethod();
     }
-    catch(const cxunit::NotImplementedException& p_exception)
+    catch(const cx::unit::NotImplementedException& p_exception)
     {
         exceptionThrown = true;
         exceptionMessage = p_exception.what();

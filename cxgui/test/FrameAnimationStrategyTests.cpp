@@ -251,7 +251,7 @@ TEST_F(FrameAnimationTestFixture, /*DISABLED_*/CreateFrameAnimationStrategy_Vali
     ASSERT_TRUE(strategy);
 
     // No strategy:
-    cxunit::DisableStdStreamsRAII streamDisabler;
+    cx::unit::DisableStdStreamsRAII streamDisabler;
     strategy = cxgui::CreateFrameAnimationStrategy(GetModel(), GetPresenter(), cxgui::BoardAnimation::GAME_REINITIALIZED);
     ASSERT_TRUE(strategy);
 

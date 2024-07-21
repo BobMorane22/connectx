@@ -51,7 +51,7 @@ TEST(IPlayer, CreatePlayer_InvalidPlayerType_InvalidPlayerCreated)
 
     std::unique_ptr<cxmodel::IPlayer> invalidPlayer;
     {
-        cxunit::DisableStdStreamsRAII streamDisabler;
+        cx::unit::DisableStdStreamsRAII streamDisabler;
         invalidPlayer = CreatePlayer("Invalid", cxmodel::MakeRed(), invalidPlayerType);
         ASSERT_ASSERTION_FAILED(streamDisabler);
     }

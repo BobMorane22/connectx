@@ -24,7 +24,7 @@
 #include <cxunit/NotImplementedException.h>
 
 
-cxunit::NotImplementedException::NotImplementedException()
+cx::unit::NotImplementedException::NotImplementedException()
 : std::logic_error{"Not implemented."}
 {
     // Nothing to do...

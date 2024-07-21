@@ -31,7 +31,7 @@ TEST(DisableStdStreamsRAII, Constructor_WithScope_StdOutRAII)
 {
     std::cout << "Hello ";
     {
-        cxunit::DisableStdStreamsRAII raii;
+        cx::unit::DisableStdStreamsRAII raii;
         ASSERT_EQ(raii.GetStdOutContents(), "");
         
         std::cout << "World";
@@ -46,7 +46,7 @@ TEST(DisableStdStreamsRAII, Constructor_WithScope_StdErrRAII)
 {
     std::cerr << "Hello ";
     {
-        cxunit::DisableStdStreamsRAII raii;
+        cx::unit::DisableStdStreamsRAII raii;
         ASSERT_EQ(raii.GetStdErrContents(), "");
         
         std::cerr << "World";

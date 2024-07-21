@@ -55,7 +55,7 @@ cxmodel::CommandCompletionStatus CommandStackMock::Execute(std::unique_ptr<cxmod
 
 void CommandStackMock::Clear()
 {
-    throw cxunit::NotImplementedException();
+    throw cx::unit::NotImplementedException();
 }
 
 void CommandStackMock::Undo()
@@ -85,10 +85,10 @@ bool CommandStackMock::IsEmpty() const
 
 bool CommandStackMock::IsFull() const
 {
-    throw cxunit::NotImplementedException();
+    throw cx::unit::NotImplementedException();
 }
 
 size_t CommandStackMock::GetNbCommands() const
 {
-    throw cxunit::NotImplementedException();
+    throw cx::unit::NotImplementedException();
 }
