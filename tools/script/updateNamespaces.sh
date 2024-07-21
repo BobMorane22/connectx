@@ -16,3 +16,8 @@
 ./tools/script/findReplace.sh "cxmath::" "cx::math::"
 ./tools/script/findReplace.sh "namespace cxmath" "namespace cx::math"
 ./tools/script/findReplace.sh "@namespace cxmath" "@namespace cx::math"
+
+# cxlog -> cx::log
+./tools/script/findReplace.sh "cxlog::" "cx::log::"
+./tools/script/findReplace.sh "namespace cxlog" "namespace cx::log"
+./tools/script/findReplace.sh "@namespace cxlog" "@namespace cx::log"

@@ -24,14 +24,14 @@
 #include <cxinv/assertion.h>
 #include <cxlog/FileLogTarget.h>
 
-cxlog::FileLogTarget::FileLogTarget(const std::string& p_logFileName)
+cx::log::FileLogTarget::FileLogTarget(const std::string& p_logFileName)
 {
     m_fileStream.open(p_logFileName, std::ios_base::out);
 
     ASSERT_MSG(FileStream().good(), "File stream is in a bad state.");
 }
 
-void cxlog::FileLogTarget::Log(const std::string& p_message)
+void cx::log::FileLogTarget::Log(const std::string& p_message)
 {
     if(INL_ASSERT(FileStream().good()))
     {

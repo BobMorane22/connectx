@@ -29,7 +29,7 @@
 
 TEST(ISO8601TimestampFormatter, /*DISABLED_*/FormatTimestamp_Seconds_ReturnsCorrectFormattedTimestamp)
 {
-    using namespace cxlog;
+    using namespace cx::log;
 
     std::unique_ptr<ITimestampFormatter> formatter = std::make_unique<ISO8601TimestampFormatter>(TimePrecision::SECONDS);
 
@@ -42,7 +42,7 @@ TEST(ISO8601TimestampFormatter, /*DISABLED_*/FormatTimestamp_Seconds_ReturnsCorr
 
 TEST(ISO8601TimestampFormatter, /*DISABLED_*/FormatTimestamp_MilliSeconds_ReturnsCorrectFormattedTimestamp)
 {
-    using namespace cxlog;
+    using namespace cx::log;
 
     std::unique_ptr<ITimestampFormatter> formatter = std::make_unique<ISO8601TimestampFormatter>(TimePrecision::MILLISECONDS);
 
@@ -55,7 +55,7 @@ TEST(ISO8601TimestampFormatter, /*DISABLED_*/FormatTimestamp_MilliSeconds_Return
 
 TEST(ISO8601TimestampFormatter, /*DISABLED_*/FormatTimestamp_MicroSeconds_ReturnsCorrectFormattedTimestamp)
 {
-    using namespace cxlog;
+    using namespace cx::log;
 
     std::unique_ptr<ITimestampFormatter> formatter = std::make_unique<ISO8601TimestampFormatter>(TimePrecision::MICROSECONDS);
 
@@ -68,7 +68,7 @@ TEST(ISO8601TimestampFormatter, /*DISABLED_*/FormatTimestamp_MicroSeconds_Return
 
 TEST(ISO8601TimestampFormatter, /*DISABLED_*/FormatTimestamp_NanoSeconds_ReturnsCorrectFormattedTimestamp)
 {
-    using namespace cxlog;
+    using namespace cx::log;
 
     std::unique_ptr<ITimestampFormatter> formatter = std::make_unique<ISO8601TimestampFormatter>(TimePrecision::NANOSECONDS);
 

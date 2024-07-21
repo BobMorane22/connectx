@@ -27,113 +27,113 @@
 
 TEST(VerbosityLevel, /*DISABLED_*/LessThanOperator_IsLessThan_ReturnsTrue)
 {
-    ASSERT_TRUE(cxlog::VerbosityLevel::NONE    < cxlog::VerbosityLevel::FATAL);
-    ASSERT_TRUE(cxlog::VerbosityLevel::FATAL   < cxlog::VerbosityLevel::ERROR);
-    ASSERT_TRUE(cxlog::VerbosityLevel::ERROR   < cxlog::VerbosityLevel::WARNING);
-    ASSERT_TRUE(cxlog::VerbosityLevel::WARNING < cxlog::VerbosityLevel::INFO);
-    ASSERT_TRUE(cxlog::VerbosityLevel::INFO    < cxlog::VerbosityLevel::DEBUG);
+    ASSERT_TRUE(cx::log::VerbosityLevel::NONE    < cx::log::VerbosityLevel::FATAL);
+    ASSERT_TRUE(cx::log::VerbosityLevel::FATAL   < cx::log::VerbosityLevel::ERROR);
+    ASSERT_TRUE(cx::log::VerbosityLevel::ERROR   < cx::log::VerbosityLevel::WARNING);
+    ASSERT_TRUE(cx::log::VerbosityLevel::WARNING < cx::log::VerbosityLevel::INFO);
+    ASSERT_TRUE(cx::log::VerbosityLevel::INFO    < cx::log::VerbosityLevel::DEBUG);
 }
 
 TEST(VerbosityLevel, /*DISABLED_*/LessThanOperator_IsEqualTo_ReturnsFalse)
 {
-    ASSERT_FALSE(cxlog::VerbosityLevel::NONE    < cxlog::VerbosityLevel::NONE);
-    ASSERT_FALSE(cxlog::VerbosityLevel::FATAL   < cxlog::VerbosityLevel::FATAL);
-    ASSERT_FALSE(cxlog::VerbosityLevel::ERROR   < cxlog::VerbosityLevel::ERROR);
-    ASSERT_FALSE(cxlog::VerbosityLevel::WARNING < cxlog::VerbosityLevel::WARNING);
-    ASSERT_FALSE(cxlog::VerbosityLevel::INFO    < cxlog::VerbosityLevel::INFO);
-    ASSERT_FALSE(cxlog::VerbosityLevel::DEBUG   < cxlog::VerbosityLevel::DEBUG);
+    ASSERT_FALSE(cx::log::VerbosityLevel::NONE    < cx::log::VerbosityLevel::NONE);
+    ASSERT_FALSE(cx::log::VerbosityLevel::FATAL   < cx::log::VerbosityLevel::FATAL);
+    ASSERT_FALSE(cx::log::VerbosityLevel::ERROR   < cx::log::VerbosityLevel::ERROR);
+    ASSERT_FALSE(cx::log::VerbosityLevel::WARNING < cx::log::VerbosityLevel::WARNING);
+    ASSERT_FALSE(cx::log::VerbosityLevel::INFO    < cx::log::VerbosityLevel::INFO);
+    ASSERT_FALSE(cx::log::VerbosityLevel::DEBUG   < cx::log::VerbosityLevel::DEBUG);
 }
 
 TEST(VerbosityLevel, /*DISABLED_*/LessThanOperator_IsGreaterThan_ReturnsFalse)
 {
-    ASSERT_FALSE(cxlog::VerbosityLevel::DEBUG   < cxlog::VerbosityLevel::INFO);
-    ASSERT_FALSE(cxlog::VerbosityLevel::INFO    < cxlog::VerbosityLevel::WARNING);
-    ASSERT_FALSE(cxlog::VerbosityLevel::WARNING < cxlog::VerbosityLevel::ERROR);
-    ASSERT_FALSE(cxlog::VerbosityLevel::ERROR   < cxlog::VerbosityLevel::FATAL);
-    ASSERT_FALSE(cxlog::VerbosityLevel::FATAL   < cxlog::VerbosityLevel::NONE);
+    ASSERT_FALSE(cx::log::VerbosityLevel::DEBUG   < cx::log::VerbosityLevel::INFO);
+    ASSERT_FALSE(cx::log::VerbosityLevel::INFO    < cx::log::VerbosityLevel::WARNING);
+    ASSERT_FALSE(cx::log::VerbosityLevel::WARNING < cx::log::VerbosityLevel::ERROR);
+    ASSERT_FALSE(cx::log::VerbosityLevel::ERROR   < cx::log::VerbosityLevel::FATAL);
+    ASSERT_FALSE(cx::log::VerbosityLevel::FATAL   < cx::log::VerbosityLevel::NONE);
 }
 
 TEST(VerbosityLevel, /*DISABLED_*/LessThanOrEqualToOperator_IsLessThan_ReturnsTrue)
 {
-    ASSERT_TRUE(cxlog::VerbosityLevel::NONE    <= cxlog::VerbosityLevel::FATAL);
-    ASSERT_TRUE(cxlog::VerbosityLevel::FATAL   <= cxlog::VerbosityLevel::ERROR);
-    ASSERT_TRUE(cxlog::VerbosityLevel::ERROR   <= cxlog::VerbosityLevel::WARNING);
-    ASSERT_TRUE(cxlog::VerbosityLevel::WARNING <= cxlog::VerbosityLevel::INFO);
-    ASSERT_TRUE(cxlog::VerbosityLevel::INFO    <= cxlog::VerbosityLevel::DEBUG);
+    ASSERT_TRUE(cx::log::VerbosityLevel::NONE    <= cx::log::VerbosityLevel::FATAL);
+    ASSERT_TRUE(cx::log::VerbosityLevel::FATAL   <= cx::log::VerbosityLevel::ERROR);
+    ASSERT_TRUE(cx::log::VerbosityLevel::ERROR   <= cx::log::VerbosityLevel::WARNING);
+    ASSERT_TRUE(cx::log::VerbosityLevel::WARNING <= cx::log::VerbosityLevel::INFO);
+    ASSERT_TRUE(cx::log::VerbosityLevel::INFO    <= cx::log::VerbosityLevel::DEBUG);
 }
 
 TEST(VerbosityLevel, /*DISABLED_*/LessThanOrEqualToOperator_IsEqualTo_ReturnsTrue)
 {
-    ASSERT_TRUE(cxlog::VerbosityLevel::NONE    <= cxlog::VerbosityLevel::NONE);
-    ASSERT_TRUE(cxlog::VerbosityLevel::FATAL   <= cxlog::VerbosityLevel::FATAL);
-    ASSERT_TRUE(cxlog::VerbosityLevel::ERROR   <= cxlog::VerbosityLevel::ERROR);
-    ASSERT_TRUE(cxlog::VerbosityLevel::WARNING <= cxlog::VerbosityLevel::WARNING);
-    ASSERT_TRUE(cxlog::VerbosityLevel::INFO    <= cxlog::VerbosityLevel::INFO);
-    ASSERT_TRUE(cxlog::VerbosityLevel::DEBUG   <= cxlog::VerbosityLevel::DEBUG);
+    ASSERT_TRUE(cx::log::VerbosityLevel::NONE    <= cx::log::VerbosityLevel::NONE);
+    ASSERT_TRUE(cx::log::VerbosityLevel::FATAL   <= cx::log::VerbosityLevel::FATAL);
+    ASSERT_TRUE(cx::log::VerbosityLevel::ERROR   <= cx::log::VerbosityLevel::ERROR);
+    ASSERT_TRUE(cx::log::VerbosityLevel::WARNING <= cx::log::VerbosityLevel::WARNING);
+    ASSERT_TRUE(cx::log::VerbosityLevel::INFO    <= cx::log::VerbosityLevel::INFO);
+    ASSERT_TRUE(cx::log::VerbosityLevel::DEBUG   <= cx::log::VerbosityLevel::DEBUG);
 }
 
 TEST(VerbosityLevel, /*DISABLED_*/LessThanOrEqualToOperator_IsGreater_ReturnsFalse)
 {
-    ASSERT_FALSE(cxlog::VerbosityLevel::DEBUG   <= cxlog::VerbosityLevel::INFO);
-    ASSERT_FALSE(cxlog::VerbosityLevel::INFO    <= cxlog::VerbosityLevel::WARNING);
-    ASSERT_FALSE(cxlog::VerbosityLevel::WARNING <= cxlog::VerbosityLevel::ERROR);
-    ASSERT_FALSE(cxlog::VerbosityLevel::ERROR   <= cxlog::VerbosityLevel::FATAL);
-    ASSERT_FALSE(cxlog::VerbosityLevel::FATAL   <= cxlog::VerbosityLevel::NONE);
+    ASSERT_FALSE(cx::log::VerbosityLevel::DEBUG   <= cx::log::VerbosityLevel::INFO);
+    ASSERT_FALSE(cx::log::VerbosityLevel::INFO    <= cx::log::VerbosityLevel::WARNING);
+    ASSERT_FALSE(cx::log::VerbosityLevel::WARNING <= cx::log::VerbosityLevel::ERROR);
+    ASSERT_FALSE(cx::log::VerbosityLevel::ERROR   <= cx::log::VerbosityLevel::FATAL);
+    ASSERT_FALSE(cx::log::VerbosityLevel::FATAL   <= cx::log::VerbosityLevel::NONE);
 }
 
 TEST(VerbosityLevel, /*DISABLED_*/GreaterThanOperator_IsGreaterThan_ReturnsTrue)
 {
-    ASSERT_TRUE(cxlog::VerbosityLevel::DEBUG   > cxlog::VerbosityLevel::INFO);
-    ASSERT_TRUE(cxlog::VerbosityLevel::INFO    > cxlog::VerbosityLevel::WARNING);
-    ASSERT_TRUE(cxlog::VerbosityLevel::WARNING > cxlog::VerbosityLevel::ERROR);
-    ASSERT_TRUE(cxlog::VerbosityLevel::ERROR   > cxlog::VerbosityLevel::FATAL);
-    ASSERT_TRUE(cxlog::VerbosityLevel::FATAL   > cxlog::VerbosityLevel::NONE);
+    ASSERT_TRUE(cx::log::VerbosityLevel::DEBUG   > cx::log::VerbosityLevel::INFO);
+    ASSERT_TRUE(cx::log::VerbosityLevel::INFO    > cx::log::VerbosityLevel::WARNING);
+    ASSERT_TRUE(cx::log::VerbosityLevel::WARNING > cx::log::VerbosityLevel::ERROR);
+    ASSERT_TRUE(cx::log::VerbosityLevel::ERROR   > cx::log::VerbosityLevel::FATAL);
+    ASSERT_TRUE(cx::log::VerbosityLevel::FATAL   > cx::log::VerbosityLevel::NONE);
 }
 
 TEST(VerbosityLevel, /*DISABLED_*/GreaterThanOperator_IsEqualTo_ReturnsFalse)
 {
-    ASSERT_FALSE(cxlog::VerbosityLevel::NONE    > cxlog::VerbosityLevel::NONE);
-    ASSERT_FALSE(cxlog::VerbosityLevel::FATAL   > cxlog::VerbosityLevel::FATAL);
-    ASSERT_FALSE(cxlog::VerbosityLevel::ERROR   > cxlog::VerbosityLevel::ERROR);
-    ASSERT_FALSE(cxlog::VerbosityLevel::WARNING > cxlog::VerbosityLevel::WARNING);
-    ASSERT_FALSE(cxlog::VerbosityLevel::INFO    > cxlog::VerbosityLevel::INFO);
-    ASSERT_FALSE(cxlog::VerbosityLevel::DEBUG   > cxlog::VerbosityLevel::DEBUG);
+    ASSERT_FALSE(cx::log::VerbosityLevel::NONE    > cx::log::VerbosityLevel::NONE);
+    ASSERT_FALSE(cx::log::VerbosityLevel::FATAL   > cx::log::VerbosityLevel::FATAL);
+    ASSERT_FALSE(cx::log::VerbosityLevel::ERROR   > cx::log::VerbosityLevel::ERROR);
+    ASSERT_FALSE(cx::log::VerbosityLevel::WARNING > cx::log::VerbosityLevel::WARNING);
+    ASSERT_FALSE(cx::log::VerbosityLevel::INFO    > cx::log::VerbosityLevel::INFO);
+    ASSERT_FALSE(cx::log::VerbosityLevel::DEBUG   > cx::log::VerbosityLevel::DEBUG);
 }
 
 TEST(VerbosityLevel, /*DISABLED_*/GreaterThanOperator_IsLessThan_ReturnsFalse)
 {
-    ASSERT_FALSE(cxlog::VerbosityLevel::NONE    > cxlog::VerbosityLevel::FATAL);
-    ASSERT_FALSE(cxlog::VerbosityLevel::FATAL   > cxlog::VerbosityLevel::ERROR);
-    ASSERT_FALSE(cxlog::VerbosityLevel::ERROR   > cxlog::VerbosityLevel::WARNING);
-    ASSERT_FALSE(cxlog::VerbosityLevel::WARNING > cxlog::VerbosityLevel::INFO);
-    ASSERT_FALSE(cxlog::VerbosityLevel::INFO    > cxlog::VerbosityLevel::DEBUG);
+    ASSERT_FALSE(cx::log::VerbosityLevel::NONE    > cx::log::VerbosityLevel::FATAL);
+    ASSERT_FALSE(cx::log::VerbosityLevel::FATAL   > cx::log::VerbosityLevel::ERROR);
+    ASSERT_FALSE(cx::log::VerbosityLevel::ERROR   > cx::log::VerbosityLevel::WARNING);
+    ASSERT_FALSE(cx::log::VerbosityLevel::WARNING > cx::log::VerbosityLevel::INFO);
+    ASSERT_FALSE(cx::log::VerbosityLevel::INFO    > cx::log::VerbosityLevel::DEBUG);
 }
 
 TEST(VerbosityLevel, /*DISABLED_*/GreaterThanOrEqualToOperator_IsGreaterThan_ReturnsTrue)
 {
-    ASSERT_TRUE(cxlog::VerbosityLevel::DEBUG   >= cxlog::VerbosityLevel::INFO);
-    ASSERT_TRUE(cxlog::VerbosityLevel::INFO    >= cxlog::VerbosityLevel::WARNING);
-    ASSERT_TRUE(cxlog::VerbosityLevel::WARNING >= cxlog::VerbosityLevel::ERROR);
-    ASSERT_TRUE(cxlog::VerbosityLevel::ERROR   >= cxlog::VerbosityLevel::FATAL);
-    ASSERT_TRUE(cxlog::VerbosityLevel::FATAL   >= cxlog::VerbosityLevel::NONE);
+    ASSERT_TRUE(cx::log::VerbosityLevel::DEBUG   >= cx::log::VerbosityLevel::INFO);
+    ASSERT_TRUE(cx::log::VerbosityLevel::INFO    >= cx::log::VerbosityLevel::WARNING);
+    ASSERT_TRUE(cx::log::VerbosityLevel::WARNING >= cx::log::VerbosityLevel::ERROR);
+    ASSERT_TRUE(cx::log::VerbosityLevel::ERROR   >= cx::log::VerbosityLevel::FATAL);
+    ASSERT_TRUE(cx::log::VerbosityLevel::FATAL   >= cx::log::VerbosityLevel::NONE);
 }
 
 TEST(VerbosityLevel, /*DISABLED_*/GreaterThanOrEqualToOperator_IsEqualTo_ReturnsTrue)
 {
-    ASSERT_TRUE(cxlog::VerbosityLevel::NONE    >= cxlog::VerbosityLevel::NONE);
-    ASSERT_TRUE(cxlog::VerbosityLevel::FATAL   >= cxlog::VerbosityLevel::FATAL);
-    ASSERT_TRUE(cxlog::VerbosityLevel::ERROR   >= cxlog::VerbosityLevel::ERROR);
-    ASSERT_TRUE(cxlog::VerbosityLevel::WARNING >= cxlog::VerbosityLevel::WARNING);
-    ASSERT_TRUE(cxlog::VerbosityLevel::INFO    >= cxlog::VerbosityLevel::INFO);
-    ASSERT_TRUE(cxlog::VerbosityLevel::DEBUG   >= cxlog::VerbosityLevel::DEBUG);
+    ASSERT_TRUE(cx::log::VerbosityLevel::NONE    >= cx::log::VerbosityLevel::NONE);
+    ASSERT_TRUE(cx::log::VerbosityLevel::FATAL   >= cx::log::VerbosityLevel::FATAL);
+    ASSERT_TRUE(cx::log::VerbosityLevel::ERROR   >= cx::log::VerbosityLevel::ERROR);
+    ASSERT_TRUE(cx::log::VerbosityLevel::WARNING >= cx::log::VerbosityLevel::WARNING);
+    ASSERT_TRUE(cx::log::VerbosityLevel::INFO    >= cx::log::VerbosityLevel::INFO);
+    ASSERT_TRUE(cx::log::VerbosityLevel::DEBUG   >= cx::log::VerbosityLevel::DEBUG);
 }
 
 TEST(VerbosityLevel, /*DISABLED_*/GreaterThanOrEqualToOperator_IsLessThan_ReturnsFalse)
 {
-    ASSERT_FALSE(cxlog::VerbosityLevel::NONE    >= cxlog::VerbosityLevel::FATAL);
-    ASSERT_FALSE(cxlog::VerbosityLevel::FATAL   >= cxlog::VerbosityLevel::ERROR);
-    ASSERT_FALSE(cxlog::VerbosityLevel::ERROR   >= cxlog::VerbosityLevel::WARNING);
-    ASSERT_FALSE(cxlog::VerbosityLevel::WARNING >= cxlog::VerbosityLevel::INFO);
-    ASSERT_FALSE(cxlog::VerbosityLevel::INFO    >= cxlog::VerbosityLevel::DEBUG);
+    ASSERT_FALSE(cx::log::VerbosityLevel::NONE    >= cx::log::VerbosityLevel::FATAL);
+    ASSERT_FALSE(cx::log::VerbosityLevel::FATAL   >= cx::log::VerbosityLevel::ERROR);
+    ASSERT_FALSE(cx::log::VerbosityLevel::ERROR   >= cx::log::VerbosityLevel::WARNING);
+    ASSERT_FALSE(cx::log::VerbosityLevel::WARNING >= cx::log::VerbosityLevel::INFO);
+    ASSERT_FALSE(cx::log::VerbosityLevel::INFO    >= cx::log::VerbosityLevel::DEBUG);
 }
 

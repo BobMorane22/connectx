@@ -80,40 +80,40 @@ std::string HeaderLine()
            "Message"         + END_OF_LINE;
 }
 
-std::unique_ptr<cxlog::ILogger> CreateCSVStringStreamLogger(std::ostringstream& p_stream,
+std::unique_ptr<cx::log::ILogger> CreateCSVStringStreamLogger(std::ostringstream& p_stream,
                                                             const bool          p_generateHeader)
 {
     // Creating logger dependencies:
-    std::unique_ptr<cxlog::ITimestampFormatter> t_timeFormatter = std::make_unique<TimestampFormatterMock>();
-    std::unique_ptr<cxlog::IMessageFormatter> t_msgFormatter = std::make_unique<cxlog::CSVMessageFormatter>(std::move(t_timeFormatter));
+    std::unique_ptr<cx::log::ITimestampFormatter> t_timeFormatter = std::make_unique<TimestampFormatterMock>();
+    std::unique_ptr<cx::log::IMessageFormatter> t_msgFormatter = std::make_unique<cx::log::CSVMessageFormatter>(std::move(t_timeFormatter));
 
-    std::unique_ptr<cxlog::ILogTarget> t_target = std::make_unique<cxlog::StringStreamLogTarget>(p_stream);
+    std::unique_ptr<cx::log::ILogTarget> t_target = std::make_unique<cx::log::StringStreamLogTarget>(p_stream);
 
     // Creating CSV string logger:
-    std::unique_ptr<cxlog::ILogger> t_logger = std::make_unique<cxlog::IncrementalLogger>(std::move(t_msgFormatter),
+    std::unique_ptr<cx::log::ILogger> t_logger = std::make_unique<cx::log::IncrementalLogger>(std::move(t_msgFormatter),
                                                std::move(t_target),
                                                p_generateHeader);
 
-    t_logger->SetVerbosityLevel(cxlog::VerbosityLevel::DEBUG);
+    t_logger->SetVerbosityLevel(cx::log::VerbosityLevel::DEBUG);
 
     return t_logger;
 }
 
-std::unique_ptr<cxlog::ChainLogger> CreateCSVStringStreamChainLogger(std::ostringstream& p_stream,
+std::unique_ptr<cx::log::ChainLogger> CreateCSVStringStreamChainLogger(std::ostringstream& p_stream,
                                                                      const bool          p_generateHeader)
 {
     // Creating logger dependencies:
-    std::unique_ptr<cxlog::ITimestampFormatter> t_timeFormatter = std::make_unique<TimestampFormatterMock>();
-    std::unique_ptr<cxlog::IMessageFormatter> t_msgFormatter = std::make_unique<cxlog::CSVMessageFormatter>(std::move(t_timeFormatter));
+    std::unique_ptr<cx::log::ITimestampFormatter> t_timeFormatter = std::make_unique<TimestampFormatterMock>();
+    std::unique_ptr<cx::log::IMessageFormatter> t_msgFormatter = std::make_unique<cx::log::CSVMessageFormatter>(std::move(t_timeFormatter));
 
-    std::unique_ptr<cxlog::ILogTarget> t_target = std::make_unique<cxlog::StringStreamLogTarget>(p_stream);
+    std::unique_ptr<cx::log::ILogTarget> t_target = std::make_unique<cx::log::StringStreamLogTarget>(p_stream);
 
     // Creating CSV string logger:
-    std::unique_ptr<cxlog::ChainLogger> t_logger = std::make_unique<cxlog::IncrementalChainedLogger>(std::move(t_msgFormatter),
+    std::unique_ptr<cx::log::ChainLogger> t_logger = std::make_unique<cx::log::IncrementalChainedLogger>(std::move(t_msgFormatter),
                                                                                                      std::move(t_target),
                                                                                                      p_generateHeader);
 
-    t_logger->SetVerbosityLevel(cxlog::VerbosityLevel::DEBUG);
+    t_logger->SetVerbosityLevel(cx::log::VerbosityLevel::DEBUG);
 
     return t_logger;
 }

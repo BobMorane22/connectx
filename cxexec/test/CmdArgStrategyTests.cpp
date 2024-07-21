@@ -144,10 +144,10 @@ TEST_F(ApplicationTestFixtureStdErrStreamRedirector, Handle_VerboseStrategy_Logg
     const int argc = 2;
     const char *argv[] = {"connectx", "--verbose"};
 
-    std::unique_ptr<cxlog::ITimestampFormatter> timestampFormatter = std::make_unique<cxlog::ISO8601TimestampFormatter>(cxlog::TimePrecision::MILLISECONDS);
-    std::unique_ptr<cxlog::IMessageFormatter> messageFormatter = std::make_unique<cxlog::CSVMessageFormatter>(std::move(timestampFormatter));
-    std::unique_ptr<cxlog::ILogTarget> logTarget = std::make_unique<cxlog::StdLogTarget>();
-    std::unique_ptr<cxlog::ILogger> logger = std::make_unique<cxlog::IncrementalLogger>(std::move(messageFormatter), std::move(logTarget));
+    std::unique_ptr<cx::log::ITimestampFormatter> timestampFormatter = std::make_unique<cx::log::ISO8601TimestampFormatter>(cx::log::TimePrecision::MILLISECONDS);
+    std::unique_ptr<cx::log::IMessageFormatter> messageFormatter = std::make_unique<cx::log::CSVMessageFormatter>(std::move(timestampFormatter));
+    std::unique_ptr<cx::log::ILogTarget> logTarget = std::make_unique<cx::log::StdLogTarget>();
+    std::unique_ptr<cx::log::ILogger> logger = std::make_unique<cx::log::IncrementalLogger>(std::move(messageFormatter), std::move(logTarget));
 
     ASSERT_TRUE(logger);
 

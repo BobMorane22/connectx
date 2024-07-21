@@ -926,12 +926,12 @@ TEST(Model, /*DISABLED_*/CanRedo_CmdStackCanRedo_ReturnsTrue)
 TEST_F(ModelTestFixture, /*DISABLED_*/SetVerbosityLevel_FromNoneToDebug_VerbosityLevelSet)
 {
     // Set verbosity level to none:
-    GetModel().SetVerbosityLevel(cxlog::VerbosityLevel::NONE);
-    ASSERT_EQ(GetModel().GetVerbosityLevel(), cxlog::VerbosityLevel::NONE);
+    GetModel().SetVerbosityLevel(cx::log::VerbosityLevel::NONE);
+    ASSERT_EQ(GetModel().GetVerbosityLevel(), cx::log::VerbosityLevel::NONE);
 
     // We change it to debug and check it has an impact:
-    GetModel().SetVerbosityLevel(cxlog::VerbosityLevel::DEBUG);
-    ASSERT_EQ(GetModel().GetVerbosityLevel(), cxlog::VerbosityLevel::DEBUG);
+    GetModel().SetVerbosityLevel(cx::log::VerbosityLevel::DEBUG);
+    ASSERT_EQ(GetModel().GetVerbosityLevel(), cx::log::VerbosityLevel::DEBUG);
 }
 
 TEST_F(ModelTestFixture, /*DISABLED_*/ComputeNextDropColumn_InitialAndValidModel_BotColumnIsZero)

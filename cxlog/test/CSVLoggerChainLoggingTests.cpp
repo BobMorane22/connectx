@@ -56,7 +56,7 @@ TEST(ChainLogging, /*DISABLED_*/ChainLogging_ValidStringAsInfo_AllLoggersLog)
     t_logger->SetSucessor(std::move(t_loggerSuccessor));
 
     // Log a string:
-    t_logger->Log(cxlog::VerbosityLevel::INFO, _FILE_, _FUNCTION_, _LINE_, GenerateLineToLog());
+    t_logger->Log(cx::log::VerbosityLevel::INFO, _FILE_, _FUNCTION_, _LINE_, GenerateLineToLog());
 
     // Get log results:
     const std::string loggedLine{t_stream.str()};
@@ -78,14 +78,14 @@ TEST(ChainLogging, /*DISABLED_*/ChainLogging_ValidStringAsInfo_AllLoggersLogExce
     auto t_loggerSecondSuccessor{CreateCSVStringStreamChainLogger(t_streamSecondSuccessor)};
 
     // Middle successor is silenced:
-    t_loggerFirstSuccessor->SetVerbosityLevel(cxlog::VerbosityLevel::NONE);
+    t_loggerFirstSuccessor->SetVerbosityLevel(cx::log::VerbosityLevel::NONE);
 
     // Set two successors:
     t_loggerFirstSuccessor->SetSucessor(std::move(t_loggerSecondSuccessor));
     t_logger->SetSucessor(std::move(t_loggerFirstSuccessor));
 
     // Log a string:
-    t_logger->Log(cxlog::VerbosityLevel::INFO, _FILE_, _FUNCTION_, _LINE_, GenerateLineToLog());
+    t_logger->Log(cx::log::VerbosityLevel::INFO, _FILE_, _FUNCTION_, _LINE_, GenerateLineToLog());
 
     // Get log results:
     const std::string loggedLine               {t_stream.str()};

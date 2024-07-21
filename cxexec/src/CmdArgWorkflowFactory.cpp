@@ -47,7 +47,7 @@ const std::string VERBOSE_ARG = "--verbose";
 } // namespace cx
 
 
-std::unique_ptr<cx::ICmdArgWorkflowStrategy> cx::CmdArgWorkflowFactory::Create(int argc, char *argv[], cx::ModelReferences& p_model, cxlog::ILogger& p_logger)
+std::unique_ptr<cx::ICmdArgWorkflowStrategy> cx::CmdArgWorkflowFactory::Create(int argc, char *argv[], cx::ModelReferences& p_model, cx::log::ILogger& p_logger)
 {
     std::unique_ptr<cx::ICmdArgWorkflowStrategy> strategy = std::make_unique<CmdArgNoStrategy>();
 

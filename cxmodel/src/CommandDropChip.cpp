@@ -54,7 +54,7 @@ cxmodel::CommandDropChip::CommandDropChip(cxmodel::IBoard& p_board,
                                           std::unique_ptr<cxmodel::IChip>&& p_droppedChip,
                                           const size_t p_column,
                                           std::vector<IBoard::Position>& p_takenPositions,
-                                          cxlog::ILogger& p_logger)
+                                          cx::log::ILogger& p_logger)
  : m_board{p_board}
  , m_playersInfo{p_playersInfo}
  , m_droppedChip{std::move(p_droppedChip)}
@@ -79,20 +79,20 @@ cxmodel::CommandCompletionStatus cxmodel::CommandDropChip::Execute()
         logStream << "Active player's color: (" << activePlayerChip.GetColor().R() << ", "
                                                 << activePlayerChip.GetColor().G() << ", "
                                                 << activePlayerChip.GetColor().B() << ")";
-        m_logger.Log(cxlog::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__, logStream.str());
+        m_logger.Log(cx::log::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__, logStream.str());
 
         logStream.str("");
         logStream << "Dropped disc color: (" << m_droppedChip->GetColor().R() << ", "
                                              << m_droppedChip->GetColor().G() << ", "
                                              << m_droppedChip->GetColor().B() << ")";
-        m_logger.Log(cxlog::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__, logStream.str());
+        m_logger.Log(cx::log::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__, logStream.str());
 
         return CommandCompletionStatus::FAILED_UNEXPECTED;;
     }
 
     if(m_board.IsColumnFull(m_column))
     {
-        m_logger.Log(cxlog::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__, "Chip drop failed for " + activePlayer->GetName());
+        m_logger.Log(cx::log::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__, "Chip drop failed for " + activePlayer->GetName());
         Notify(ModelNotificationContext::CHIP_DROPPED_FAILED);
 
         return CommandCompletionStatus::FAILED_EXPECTED;;
@@ -127,7 +127,7 @@ cxmodel::CommandCompletionStatus cxmodel::CommandDropChip::Execute()
 
     std::ostringstream stream;
     stream << activePlayer->GetName() << "'s chip dropped at (" << droppedPosition.m_row << ", " << droppedPosition.m_column << ")";
-    m_logger.Log(cxlog::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__, stream.str());
+    m_logger.Log(cx::log::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__, stream.str());
 
     // At this point, all successive calls to Execute are redos:
     m_isRedo = true;

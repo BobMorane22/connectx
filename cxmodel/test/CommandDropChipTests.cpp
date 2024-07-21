@@ -44,7 +44,7 @@ public:
         return m_model;
     }
 
-    [[nodiscard]] cxlog::ILogger& GetLogger()
+    [[nodiscard]] cx::log::ILogger& GetLogger()
     {
         return m_logger;
     }
@@ -63,11 +63,11 @@ private:
         size_t GetMaximumNumberOfPlayers() const override {return 10u;}
     };
 
-    class NoLogger final : public cxlog::ILogger
+    class NoLogger final : public cx::log::ILogger
     {
-        void Log(const cxlog::VerbosityLevel, const std::string&, const std::string&, size_t, const std::string&) override {}
-        void SetVerbosityLevel(const cxlog::VerbosityLevel) override {}
-        cxlog::VerbosityLevel GetVerbosityLevel() const override {return cxlog::VerbosityLevel::NONE;}
+        void Log(const cx::log::VerbosityLevel, const std::string&, const std::string&, size_t, const std::string&) override {}
+        void SetVerbosityLevel(const cx::log::VerbosityLevel) override {}
+        cx::log::VerbosityLevel GetVerbosityLevel() const override {return cx::log::VerbosityLevel::NONE;}
     };
 
     ModelMock m_model;

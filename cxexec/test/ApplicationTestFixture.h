@@ -56,7 +56,7 @@ public:
 
     ApplicationTestFixture();
 
-    cxlog::ILogger& GetLogger();
+    cx::log::ILogger& GetLogger();
 
     cxmodel::ModelSubject& GetSubjectModel();
     cxmodel::IConnectXGameActions& GetGameActionsModel();

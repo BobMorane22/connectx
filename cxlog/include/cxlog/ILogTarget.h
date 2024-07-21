@@ -26,7 +26,7 @@
 
 #include <string>
 
-namespace cxlog
+namespace cx::log
 {
 
 /***********************************************************************************************//**
@@ -61,6 +61,6 @@ public:
 
 };
 
-} // namespace cxlog
+} // namespace cx::log
 
 #endif // ILOGTARGET_H_0453E7CF_945A_428B_9979_55AE34F85946

@@ -71,7 +71,7 @@ const cxmodel::IPlayer& GetDefaultNextPlayer()
 
 } // namespace
 
-cxmodel::Model::Model(std::unique_ptr<ICommandStack>&& p_cmdStack, cxlog::ILogger& p_logger)
+cxmodel::Model::Model(std::unique_ptr<ICommandStack>&& p_cmdStack, cx::log::ILogger& p_logger)
  : m_logger{p_logger}
  , m_cmdStack{std::move(p_cmdStack)}
  , m_currentDropCommands{nullptr}
@@ -194,7 +194,7 @@ void cxmodel::Model::CreateNewGame(NewGameInformation p_gameInformation)
               ", Grid dimensions=(W" << m_board->GetNbColumns() << ", H" << m_board->GetNbRows() << ")"
               ", Number of players=" << m_playersInfo.m_players.size();
 
-    Log(cxlog::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__, stream.str());
+    Log(cx::log::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__, stream.str());
 
     CheckInvariants();
 }
@@ -264,7 +264,7 @@ void cxmodel::Model::DropChip(const cxmodel::IChip& p_chip, size_t p_column)
 
         Notify(ModelNotificationContext::GAME_WON);
 
-        Log(cxlog::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__, "Game won by : " + GetActivePlayer().GetName());
+        Log(cx::log::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__, "Game won by : " + GetActivePlayer().GetName());
 
         CheckInvariants();
 
@@ -280,7 +280,7 @@ void cxmodel::Model::DropChip(const cxmodel::IChip& p_chip, size_t p_column)
 
         Notify(ModelNotificationContext::GAME_TIED);
 
-        Log(cxlog::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__, "Game tied!");
+        Log(cx::log::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__, "Game tied!");
 
         CheckInvariants();
 
@@ -296,7 +296,7 @@ void cxmodel::Model::MoveLeftOneColumn()
 {
     Notify(ModelNotificationContext::CHIP_MOVED_LEFT_ONE_COLUMN);
 
-    Log(cxlog::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__, "Chip moved left one column.");
+    Log(cx::log::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__, "Chip moved left one column.");
 
     CheckInvariants();
 }
@@ -305,7 +305,7 @@ void cxmodel::Model::MoveRightOneColumn()
 {
     Notify(ModelNotificationContext::CHIP_MOVED_RIGHT_ONE_COLUMN);
 
-    Log(cxlog::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__, "Chip moved right one column.");
+    Log(cx::log::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__, "Chip moved right one column.");
 
     CheckInvariants();
 }
@@ -331,7 +331,7 @@ void cxmodel::Model::EndCurrentGame()
 
     Notify(ModelNotificationContext::GAME_ENDED);
 
-    Log(cxlog::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__, "Game ended.");
+    Log(cx::log::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__, "Game ended.");
 }
 
 void cxmodel::Model::ReinitializeCurrentGame()
@@ -367,7 +367,7 @@ void cxmodel::Model::ReinitializeCurrentGame()
 
     Notify(ModelNotificationContext::GAME_REINITIALIZED);
 
-    Log(cxlog::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__, "Game reinitialized.");
+    Log(cx::log::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__, "Game reinitialized.");
 }
 
 size_t cxmodel::Model::GetCurrentGridHeight() const
@@ -436,7 +436,7 @@ void cxmodel::Model::Undo()
 
     m_cmdStack->Undo();
 
-    Log(cxlog::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__, "Last action undoed.");
+    Log(cx::log::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__, "Last action undoed.");
 
     CheckInvariants();
 }
@@ -447,7 +447,7 @@ void cxmodel::Model::Redo()
 
     m_cmdStack->Redo();
 
-    Log(cxlog::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__, "Last action redoed.");
+    Log(cx::log::VerbosityLevel::DEBUG, __FILE__, __FUNCTION__, __LINE__, "Last action redoed.");
 
     CheckInvariants();
 }
@@ -466,21 +466,21 @@ bool cxmodel::Model::CanRedo() const
     return m_cmdStack->CanRedo();
 }
 
-void cxmodel::Model::Log(const cxlog::VerbosityLevel p_verbosityLevel, const std::string& p_fileName, const std::string& p_functionName, const size_t p_lineNumber, const std::string& p_message)
+void cxmodel::Model::Log(const cx::log::VerbosityLevel p_verbosityLevel, const std::string& p_fileName, const std::string& p_functionName, const size_t p_lineNumber, const std::string& p_message)
 {
     m_logger.Log(p_verbosityLevel, p_fileName, p_functionName, p_lineNumber, p_message);
 
     CheckInvariants();
 }
 
-void cxmodel::Model::SetVerbosityLevel(const cxlog::VerbosityLevel p_verbosityLevel)
+void cxmodel::Model::SetVerbosityLevel(const cx::log::VerbosityLevel p_verbosityLevel)
 {
     m_logger.SetVerbosityLevel(p_verbosityLevel);
 
     CheckInvariants();
 }
 
-cxlog::VerbosityLevel cxmodel::Model::GetVerbosityLevel() const
+cx::log::VerbosityLevel cxmodel::Model::GetVerbosityLevel() const
 {
     return m_logger.GetVerbosityLevel();
 }

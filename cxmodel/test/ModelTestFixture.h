@@ -182,7 +182,7 @@ public:
 
 private:
 
-    std::unique_ptr<cxlog::ILogger> m_logger;
+    std::unique_ptr<cx::log::ILogger> m_logger;
     cxmodel::CommandStack* m_commandStack;
 
     std::unique_ptr<cxmodel::Model> m_model;

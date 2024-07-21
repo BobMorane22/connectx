@@ -22,10 +22,10 @@
  *************************************************************************************************/
 
 /**********************************************************************************************//**
- * @namespace cxlog
+ * @namespace cx::log
  *
  * @brief Logging facilities.
  *
- * The `cxlog` namespace contains facilities for logging, mainly for debugging purposes.
+ * The `cx::log` namespace contains facilities for logging, mainly for debugging purposes.
  *
  *************************************************************************************************/

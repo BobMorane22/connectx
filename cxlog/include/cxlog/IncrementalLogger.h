@@ -28,7 +28,7 @@
 
 #include "Logger.h"
 
-namespace cxlog
+namespace cx::log
 {
 
 /***********************************************************************************************//**
@@ -80,6 +80,6 @@ private:
     std::unique_ptr<ILogTarget>        m_logTarget;
 };
 
-} // namespace cxlog
+} // namespace cx::log
 
 #endif // INCREMENTALLOGGER_H_8B296618_F3FB_4858_B8B3_845E261A3B9F

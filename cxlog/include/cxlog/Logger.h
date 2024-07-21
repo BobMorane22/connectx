@@ -29,7 +29,7 @@
 
 #include "ILogger.h"
 
-namespace cxlog
+namespace cx::log
 {
 
 /***********************************************************************************************//**
@@ -87,6 +87,6 @@ private:
     VerbosityLevel m_verbosityLevel{VerbosityLevel::NONE};
 };
 
-} // namespace cxlog
+} // namespace cx::log
 
 #endif // LOGGER_H_A906454D_E729_4DBF_85EB_2EB1BCD186AE

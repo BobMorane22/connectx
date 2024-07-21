@@ -33,7 +33,7 @@ TEST(StdLogTarget, /*DISABLED_*/Log_SomeString_StringLoggedToStdout)
     const std::string before = raii.GetStdOutContents();
     ASSERT_TRUE(before.empty());
 
-    std::unique_ptr<cxlog::ILogTarget> target = std::make_unique<cxlog::StdLogTarget>();
+    std::unique_ptr<cx::log::ILogTarget> target = std::make_unique<cx::log::StdLogTarget>();
 
     const std::string someString = "Some string...";
 

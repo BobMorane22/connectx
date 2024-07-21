@@ -52,7 +52,7 @@ namespace cxmodel
  * This class holds the Connect X related business rules.
  *
  ************************************************************************************************/
-class Model : public cxlog::ILogger,
+class Model : public cx::log::ILogger,
               public ModelSubject,
               public IModelObserver,
               public IVersioning,
@@ -77,14 +77,14 @@ public:
      *      The command stack is valid and empty.
      *
      ********************************************************************************************/
-    Model(std::unique_ptr<ICommandStack>&& p_cmdStack, cxlog::ILogger& p_logger);
+    Model(std::unique_ptr<ICommandStack>&& p_cmdStack, cx::log::ILogger& p_logger);
     ~Model() override;
 
-///@{ @name cxlog::ILogger
+///@{ @name cx::log::ILogger
 
-    void Log(const cxlog::VerbosityLevel p_verbosityLevel, const std::string& p_fileName, const std::string& p_functionName, const size_t p_lineNumber, const std::string& p_message) override;
-    void SetVerbosityLevel(const cxlog::VerbosityLevel p_verbosityLevel) override;
-    cxlog::VerbosityLevel GetVerbosityLevel() const override;
+    void Log(const cx::log::VerbosityLevel p_verbosityLevel, const std::string& p_fileName, const std::string& p_functionName, const size_t p_lineNumber, const std::string& p_message) override;
+    void SetVerbosityLevel(const cx::log::VerbosityLevel p_verbosityLevel) override;
+    cx::log::VerbosityLevel GetVerbosityLevel() const override;
 
 ///@}
 
@@ -158,7 +158,7 @@ private:
 
     void CheckInvariants();
 
-    cxlog::ILogger& m_logger;
+    cx::log::ILogger& m_logger;
 
     std::unique_ptr<ICommandStack> m_cmdStack;
     CompositeCommand* m_currentDropCommands;

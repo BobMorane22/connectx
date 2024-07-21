@@ -31,7 +31,7 @@
 TEST(CSVMessageFormatter, /*DISABLED_*/FormatHeaders_ValidMessageFormatter_FormatsHeadersAccordingly)
 {
     std::unique_ptr<TimestampFormatterMock> tsmpFormatter= std::make_unique<TimestampFormatterMock>();
-    std::unique_ptr<cxlog::IMessageFormatter> formatter = std::make_unique<cxlog::CSVMessageFormatter>(std::move(tsmpFormatter));
+    std::unique_ptr<cx::log::IMessageFormatter> formatter = std::make_unique<cx::log::CSVMessageFormatter>(std::move(tsmpFormatter));
 
     const std::string result  {formatter->FormatHeaders()};
     const std::string expected{HeaderLine()};
@@ -42,9 +42,9 @@ TEST(CSVMessageFormatter, /*DISABLED_*/FormatHeaders_ValidMessageFormatter_Forma
 TEST(CSVMessageFormatter, /*DISABLED_*/FormatMessage_ValidLineAsFatal_FormatsCSVMessageAccordingly)
 {
     std::unique_ptr<TimestampFormatterMock> tsmpFormatter= std::make_unique<TimestampFormatterMock>();
-    std::unique_ptr<cxlog::IMessageFormatter> formatter = std::make_unique<cxlog::CSVMessageFormatter>(std::move(tsmpFormatter));
+    std::unique_ptr<cx::log::IMessageFormatter> formatter = std::make_unique<cx::log::CSVMessageFormatter>(std::move(tsmpFormatter));
 
-    const std::string result{formatter->FormatMessage(cxlog::VerbosityLevel::FATAL,
+    const std::string result{formatter->FormatMessage(cx::log::VerbosityLevel::FATAL,
                                                       _FILE_,
                                                       _FUNCTION_,
                                                       _LINE_,
@@ -57,9 +57,9 @@ TEST(CSVMessageFormatter, /*DISABLED_*/FormatMessage_ValidLineAsFatal_FormatsCSV
 TEST(CSVMessageFormatter, /*DISABLED_*/FormatMessage_ValidLineAsError_FormatsCSVMessageAccordingly)
 {
     std::unique_ptr<TimestampFormatterMock> tsmpFormatter= std::make_unique<TimestampFormatterMock>();
-    std::unique_ptr<cxlog::IMessageFormatter> formatter = std::make_unique<cxlog::CSVMessageFormatter>(std::move(tsmpFormatter));
+    std::unique_ptr<cx::log::IMessageFormatter> formatter = std::make_unique<cx::log::CSVMessageFormatter>(std::move(tsmpFormatter));
 
-    const std::string result{formatter->FormatMessage(cxlog::VerbosityLevel::ERROR,
+    const std::string result{formatter->FormatMessage(cx::log::VerbosityLevel::ERROR,
                                                       _FILE_,
                                                       _FUNCTION_,
                                                       _LINE_,
@@ -72,9 +72,9 @@ TEST(CSVMessageFormatter, /*DISABLED_*/FormatMessage_ValidLineAsError_FormatsCSV
 TEST(CSVMessageFormatter, /*DISABLED_*/FormatMessage_ValidLineAsWarning_FormatsCSVMessageAccordingly)
 {
     std::unique_ptr<TimestampFormatterMock> tsmpFormatter= std::make_unique<TimestampFormatterMock>();
-    std::unique_ptr<cxlog::IMessageFormatter> formatter = std::make_unique<cxlog::CSVMessageFormatter>(std::move(tsmpFormatter));
+    std::unique_ptr<cx::log::IMessageFormatter> formatter = std::make_unique<cx::log::CSVMessageFormatter>(std::move(tsmpFormatter));
 
-    const std::string result{formatter->FormatMessage(cxlog::VerbosityLevel::WARNING,
+    const std::string result{formatter->FormatMessage(cx::log::VerbosityLevel::WARNING,
                                                       _FILE_,
                                                       _FUNCTION_,
                                                       _LINE_,
@@ -87,9 +87,9 @@ TEST(CSVMessageFormatter, /*DISABLED_*/FormatMessage_ValidLineAsWarning_FormatsC
 TEST(CSVMessageFormatter, /*DISABLED_*/FormatMessage_ValidLineAsInfo_FormatsCSVMessageAccordingly)
 {
     std::unique_ptr<TimestampFormatterMock> tsmpFormatter= std::make_unique<TimestampFormatterMock>();
-    std::unique_ptr<cxlog::IMessageFormatter> formatter = std::make_unique<cxlog::CSVMessageFormatter>(std::move(tsmpFormatter));
+    std::unique_ptr<cx::log::IMessageFormatter> formatter = std::make_unique<cx::log::CSVMessageFormatter>(std::move(tsmpFormatter));
 
-    const std::string result{formatter->FormatMessage(cxlog::VerbosityLevel::INFO,
+    const std::string result{formatter->FormatMessage(cx::log::VerbosityLevel::INFO,
                                                       _FILE_,
                                                       _FUNCTION_,
                                                       _LINE_,
@@ -102,9 +102,9 @@ TEST(CSVMessageFormatter, /*DISABLED_*/FormatMessage_ValidLineAsInfo_FormatsCSVM
 TEST(CSVMessageFormatter, /*DISABLED_*/FormatMessage_ValidLineAsDebug_FormatsCSVMessageAccordingly)
 {
     std::unique_ptr<TimestampFormatterMock> tsmpFormatter= std::make_unique<TimestampFormatterMock>();
-    std::unique_ptr<cxlog::IMessageFormatter> formatter = std::make_unique<cxlog::CSVMessageFormatter>(std::move(tsmpFormatter));
+    std::unique_ptr<cx::log::IMessageFormatter> formatter = std::make_unique<cx::log::CSVMessageFormatter>(std::move(tsmpFormatter));
 
-    const std::string result{formatter->FormatMessage(cxlog::VerbosityLevel::DEBUG,
+    const std::string result{formatter->FormatMessage(cx::log::VerbosityLevel::DEBUG,
                                                       _FILE_,
                                                       _FUNCTION_,
                                                       _LINE_,

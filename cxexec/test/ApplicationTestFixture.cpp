@@ -28,7 +28,7 @@ ApplicationTestFixture::ApplicationTestFixture()
 {
 }
 
-cxlog::ILogger& ApplicationTestFixture::GetLogger()
+cx::log::ILogger& ApplicationTestFixture::GetLogger()
 {
     return m_logger;
 }

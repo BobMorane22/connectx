@@ -23,7 +23,7 @@
 
 #include "LoggerMock.h"
 
-void LoggerMock::Log(const cxlog::VerbosityLevel p_verbosityLevel,
+void LoggerMock::Log(const cx::log::VerbosityLevel p_verbosityLevel,
                      const std::string& p_fileName,
                      const std::string& p_functionName,
                      const size_t p_lineNumber,
@@ -37,12 +37,12 @@ void LoggerMock::Log(const cxlog::VerbosityLevel p_verbosityLevel,
     (void)p_message;
 }
 
-void LoggerMock::SetVerbosityLevel(const cxlog::VerbosityLevel p_verbosityLevel)
+void LoggerMock::SetVerbosityLevel(const cx::log::VerbosityLevel p_verbosityLevel)
 {
     m_verbosityLevel = p_verbosityLevel;
 }
 
-cxlog::VerbosityLevel LoggerMock::GetVerbosityLevel() const
+cx::log::VerbosityLevel LoggerMock::GetVerbosityLevel() const
 {
     return m_verbosityLevel;
 }

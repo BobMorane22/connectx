@@ -28,7 +28,7 @@
 
 #include "VerbosityLevel.h"
 
-namespace cxlog
+namespace cx::log
 {
 
 /***********************************************************************************************//**
@@ -83,6 +83,6 @@ public:
 
 };
 
-} // namespace cxlog
+} // namespace cx::log
 
 #endif // IMESSAGEFORMATTER_H_911F98FA_9452_4B67_845D_34FD824FDD3A

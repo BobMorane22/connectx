@@ -23,22 +23,22 @@
 
 #include <cxlog/VerbosityLevel.h>
 
-bool cxlog::operator<(VerbosityLevel p_first, VerbosityLevel p_second)
+bool cx::log::operator<(VerbosityLevel p_first, VerbosityLevel p_second)
 {
     return static_cast<int>(p_first) < static_cast<int>(p_second);
 }
 
-bool cxlog::operator<=(VerbosityLevel p_first, VerbosityLevel p_second)
+bool cx::log::operator<=(VerbosityLevel p_first, VerbosityLevel p_second)
 {
     return p_first < p_second || p_first == p_second;
 }
 
-bool cxlog::operator>(VerbosityLevel p_first, VerbosityLevel p_second)
+bool cx::log::operator>(VerbosityLevel p_first, VerbosityLevel p_second)
 {
     return static_cast<int>(p_first) > static_cast<int>(p_second);
 }
 
-bool cxlog::operator>=(VerbosityLevel p_first, VerbosityLevel p_second)
+bool cx::log::operator>=(VerbosityLevel p_first, VerbosityLevel p_second)
 {
     return p_first > p_second || p_first == p_second;
 }

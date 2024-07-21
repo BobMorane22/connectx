@@ -43,12 +43,12 @@
  * @return The newly created logger.
  *
  ********************************************************************************************/
-std::unique_ptr<cxlog::ILogger> CreateVerboseLogger(cxlog::VerbosityLevel p_verbosity)
+std::unique_ptr<cx::log::ILogger> CreateVerboseLogger(cx::log::VerbosityLevel p_verbosity)
 {
-    std::unique_ptr<cxlog::ITimestampFormatter> timestampFormatter = std::make_unique<cxlog::ISO8601TimestampFormatter>(cxlog::TimePrecision::MILLISECONDS);
-    std::unique_ptr<cxlog::ILogTarget> logTarget = std::make_unique<cxlog::StdLogTarget>();
-    std::unique_ptr<cxlog::IMessageFormatter> formatter = std::make_unique<cxlog::CSVMessageFormatter>(std::move(timestampFormatter));
-    std::unique_ptr<cxlog::ILogger> logger = std::make_unique<cxlog::IncrementalChainedLogger>(std::move(formatter), std::move(logTarget));
+    std::unique_ptr<cx::log::ITimestampFormatter> timestampFormatter = std::make_unique<cx::log::ISO8601TimestampFormatter>(cx::log::TimePrecision::MILLISECONDS);
+    std::unique_ptr<cx::log::ILogTarget> logTarget = std::make_unique<cx::log::StdLogTarget>();
+    std::unique_ptr<cx::log::IMessageFormatter> formatter = std::make_unique<cx::log::CSVMessageFormatter>(std::move(timestampFormatter));
+    std::unique_ptr<cx::log::ILogger> logger = std::make_unique<cx::log::IncrementalChainedLogger>(std::move(formatter), std::move(logTarget));
 
     logger->SetVerbosityLevel(p_verbosity);
 
@@ -57,7 +57,7 @@ std::unique_ptr<cxlog::ILogger> CreateVerboseLogger(cxlog::VerbosityLevel p_verb
     return logger;
 }
 
-cx::CmdArgVerboseStrategy::CmdArgVerboseStrategy(int argc, char *argv[], cx::ModelReferences& p_model, cxlog::ILogger* p_logger)
+cx::CmdArgVerboseStrategy::CmdArgVerboseStrategy(int argc, char *argv[], cx::ModelReferences& p_model, cx::log::ILogger* p_logger)
 : m_argc{argc}
 , m_argv{argv}
 , m_model{p_model}
@@ -70,12 +70,12 @@ int cx::CmdArgVerboseStrategy::Handle()
 {
     IF_CONDITION_NOT_MET_DO(m_logger, return EXIT_FAILURE;);
 
-    cxlog::IChainLogging* chainLogger = dynamic_cast<cxlog::IChainLogging*>(m_logger);
+    cx::log::IChainLogging* chainLogger = dynamic_cast<cx::log::IChainLogging*>(m_logger);
 
     // Should never happen if the code compiles (see static_asset above):
     IF_CONDITION_NOT_MET_DO(chainLogger, return EXIT_FAILURE;);
 
-    const cxlog::VerbosityLevel verbosityLevel = m_logger->GetVerbosityLevel();
+    const cx::log::VerbosityLevel verbosityLevel = m_logger->GetVerbosityLevel();
     chainLogger->SetSucessor(CreateVerboseLogger(verbosityLevel));
 
     ASSERT_MSG(chainLogger->HasSucessor(), "Setting a logger successor failed.");

@@ -32,14 +32,14 @@
 namespace
 {
 
-void LogAtAllLevels(std::unique_ptr<cxlog::ILogger> p_logger)
+void LogAtAllLevels(std::unique_ptr<cx::log::ILogger> p_logger)
 {
-    p_logger->Log(cxlog::VerbosityLevel::NONE,    _FILE_, _FUNCTION_, _LINE_, GenerateLineToLog());
-    p_logger->Log(cxlog::VerbosityLevel::FATAL,   _FILE_, _FUNCTION_, _LINE_, GenerateLineToLog());
-    p_logger->Log(cxlog::VerbosityLevel::ERROR,   _FILE_, _FUNCTION_, _LINE_, GenerateLineToLog());
-    p_logger->Log(cxlog::VerbosityLevel::WARNING, _FILE_, _FUNCTION_, _LINE_, GenerateLineToLog());
-    p_logger->Log(cxlog::VerbosityLevel::INFO,    _FILE_, _FUNCTION_, _LINE_, GenerateLineToLog());
-    p_logger->Log(cxlog::VerbosityLevel::DEBUG,   _FILE_, _FUNCTION_, _LINE_, GenerateLineToLog());
+    p_logger->Log(cx::log::VerbosityLevel::NONE,    _FILE_, _FUNCTION_, _LINE_, GenerateLineToLog());
+    p_logger->Log(cx::log::VerbosityLevel::FATAL,   _FILE_, _FUNCTION_, _LINE_, GenerateLineToLog());
+    p_logger->Log(cx::log::VerbosityLevel::ERROR,   _FILE_, _FUNCTION_, _LINE_, GenerateLineToLog());
+    p_logger->Log(cx::log::VerbosityLevel::WARNING, _FILE_, _FUNCTION_, _LINE_, GenerateLineToLog());
+    p_logger->Log(cx::log::VerbosityLevel::INFO,    _FILE_, _FUNCTION_, _LINE_, GenerateLineToLog());
+    p_logger->Log(cx::log::VerbosityLevel::DEBUG,   _FILE_, _FUNCTION_, _LINE_, GenerateLineToLog());
 }
 
 } // unamed namespace
@@ -49,7 +49,7 @@ TEST(CSVIncrementalLogging, /*DISABLED_*/CSVStringLogger_TargetNONE_VerbosityLev
     std::ostringstream t_stream;
     auto t_logger{CreateCSVStringStreamLogger(t_stream)};
 
-    t_logger->SetVerbosityLevel(cxlog::VerbosityLevel::NONE);
+    t_logger->SetVerbosityLevel(cx::log::VerbosityLevel::NONE);
 
     LogAtAllLevels(std::move(t_logger));
 
@@ -61,7 +61,7 @@ TEST(CSVIncrementalLogging, /*DISABLED_*/CSVStringLogger_TargetFATAL_VerbosityLe
     std::ostringstream t_stream;
     auto t_logger{CreateCSVStringStreamLogger(t_stream)};
 
-    t_logger->SetVerbosityLevel(cxlog::VerbosityLevel::FATAL);
+    t_logger->SetVerbosityLevel(cx::log::VerbosityLevel::FATAL);
 
     LogAtAllLevels(std::move(t_logger));
 
@@ -75,7 +75,7 @@ TEST(CSVIncrementalLogging, /*DISABLED_*/CSVStringLogger_TargetERROR_VerbosityLe
     std::ostringstream t_stream;
     auto t_logger{CreateCSVStringStreamLogger(t_stream)};
 
-    t_logger->SetVerbosityLevel(cxlog::VerbosityLevel::ERROR);
+    t_logger->SetVerbosityLevel(cx::log::VerbosityLevel::ERROR);
 
     LogAtAllLevels(std::move(t_logger));
 
@@ -89,7 +89,7 @@ TEST(CSVIncrementalLogging, /*DISABLED_*/CSVStringLogger_TargetWARNING_Verbosity
     std::ostringstream t_stream;
     auto t_logger{CreateCSVStringStreamLogger(t_stream)};
 
-    t_logger->SetVerbosityLevel(cxlog::VerbosityLevel::WARNING);
+    t_logger->SetVerbosityLevel(cx::log::VerbosityLevel::WARNING);
 
     LogAtAllLevels(std::move(t_logger));
 
@@ -103,7 +103,7 @@ TEST(CSVIncrementalLogging, /*DISABLED_*/CSVStringLogger_TargetINFO_VerbosityLev
     std::ostringstream t_stream;
     auto t_logger{CreateCSVStringStreamLogger(t_stream)};
 
-    t_logger->SetVerbosityLevel(cxlog::VerbosityLevel::INFO);
+    t_logger->SetVerbosityLevel(cx::log::VerbosityLevel::INFO);
 
     LogAtAllLevels(std::move(t_logger));
 
@@ -117,7 +117,7 @@ TEST(CSVIncrementalLogging, /*DISABLED_*/CSVStringLogger_TargetDEBUG_VerbosityLe
     std::ostringstream t_stream;
     auto t_logger{CreateCSVStringStreamLogger(t_stream)};
 
-    t_logger->SetVerbosityLevel(cxlog::VerbosityLevel::DEBUG);
+    t_logger->SetVerbosityLevel(cx::log::VerbosityLevel::DEBUG);
 
     LogAtAllLevels(std::move(t_logger));
 
@@ -131,7 +131,7 @@ TEST(CSVIncrementalLogging, /*DISABLED_*/CSVStringChainedLogger_TargetNONE_Verbo
     std::ostringstream t_stream;
     auto t_logger{CreateCSVStringStreamChainLogger(t_stream)};
 
-    t_logger->SetVerbosityLevel(cxlog::VerbosityLevel::NONE);
+    t_logger->SetVerbosityLevel(cx::log::VerbosityLevel::NONE);
 
     LogAtAllLevels(std::move(t_logger));
 
@@ -143,7 +143,7 @@ TEST(CSVIncrementalLogging, /*DISABLED_*/CSVStringChainedLogger_TargetFATAL_Verb
     std::ostringstream t_stream;
     auto t_logger{CreateCSVStringStreamChainLogger(t_stream)};
 
-    t_logger->SetVerbosityLevel(cxlog::VerbosityLevel::FATAL);
+    t_logger->SetVerbosityLevel(cx::log::VerbosityLevel::FATAL);
 
     LogAtAllLevels(std::move(t_logger));
 
@@ -157,7 +157,7 @@ TEST(CSVIncrementalLogging, /*DISABLED_*/CSVStringChainedLogger_TargetERROR_Verb
     std::ostringstream t_stream;
     auto t_logger{CreateCSVStringStreamChainLogger(t_stream)};
 
-    t_logger->SetVerbosityLevel(cxlog::VerbosityLevel::ERROR);
+    t_logger->SetVerbosityLevel(cx::log::VerbosityLevel::ERROR);
 
     LogAtAllLevels(std::move(t_logger));
 
@@ -171,7 +171,7 @@ TEST(CSVIncrementalLogging, /*DISABLED_*/CSVStringChainedLogger_TargetWARNING_Ve
     std::ostringstream t_stream;
     auto t_logger{CreateCSVStringStreamChainLogger(t_stream)};
 
-    t_logger->SetVerbosityLevel(cxlog::VerbosityLevel::WARNING);
+    t_logger->SetVerbosityLevel(cx::log::VerbosityLevel::WARNING);
 
     LogAtAllLevels(std::move(t_logger));
 
@@ -185,7 +185,7 @@ TEST(CSVIncrementalLogging, /*DISABLED_*/CSVStringChainedLogger_TargetINFO_Verbo
     std::ostringstream t_stream;
     auto t_logger{CreateCSVStringStreamChainLogger(t_stream)};
 
-    t_logger->SetVerbosityLevel(cxlog::VerbosityLevel::INFO);
+    t_logger->SetVerbosityLevel(cx::log::VerbosityLevel::INFO);
 
     LogAtAllLevels(std::move(t_logger));
 
@@ -199,7 +199,7 @@ TEST(CSVIncrementalLogging, /*DISABLED_*/CSVStringChainedLogger_TargetDEBUG_Verb
     std::ostringstream t_stream;
     auto t_logger{CreateCSVStringStreamChainLogger(t_stream)};
 
-    t_logger->SetVerbosityLevel(cxlog::VerbosityLevel::DEBUG);
+    t_logger->SetVerbosityLevel(cx::log::VerbosityLevel::DEBUG);
 
     LogAtAllLevels(std::move(t_logger));
 
@@ -213,7 +213,7 @@ TEST(CSVIncrementalLogging, /*DISABLED_*/CSVStringChainedLogger_TargetDEBUG_Head
     std::ostringstream t_stream;
     auto t_logger{CreateCSVStringStreamChainLogger(t_stream, true)};
 
-    t_logger->SetVerbosityLevel(cxlog::VerbosityLevel::DEBUG);
+    t_logger->SetVerbosityLevel(cx::log::VerbosityLevel::DEBUG);
 
     LogAtAllLevels(std::move(t_logger));
 

@@ -27,7 +27,7 @@
 #include "ChainLogger.h"
 #include "IMessageFormatter.h"
 
-namespace cxlog
+namespace cx::log
 {
 
 /***********************************************************************************************//**
@@ -85,6 +85,6 @@ private:
     std::unique_ptr<ILogTarget>        m_logTarget;    ///< The log target.
 };
 
-} // namespace cxlog
+} // namespace cx::log
 
 #endif // INCREMENTALCHAINEDLOGGER_H_25A9595F_2567_4CD1_9A36_B046CFCC8552

@@ -30,7 +30,7 @@
 TEST(LogTarget, /*DISABLED_*/StringStreamTarget_ValidMessageAndValidStream_LineLogged)
 {
     std::ostringstream stream;
-    std::unique_ptr<cxlog::ILogTarget> target{new cxlog::StringStreamLogTarget{stream}};
+    std::unique_ptr<cx::log::ILogTarget> target{new cx::log::StringStreamLogTarget{stream}};
 
     target->Log(GenerateLineToLog());
 

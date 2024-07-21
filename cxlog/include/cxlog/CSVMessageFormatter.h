@@ -31,7 +31,7 @@
 #include "IMessageFormatter.h"
 #include "ITimestampFormatter.h"
 
-namespace cxlog
+namespace cx::log
 {
 
 /***********************************************************************************************//**
@@ -91,6 +91,6 @@ private:
     std::unique_ptr<ITimestampFormatter> m_timeFormatter;
 };
 
-} // namespace cxlog
+} // namespace cx::log
 
 #endif // CSVMESSAGEFORMATTER_H_29E79C64_F1E1_4609_8098_6C5277CE5DDA

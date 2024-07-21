@@ -28,7 +28,7 @@
 
 #include "ITimestampFormatter.h"
 
-namespace cxlog
+namespace cx::log
 {
 
 /***********************************************************************************************//**
@@ -85,6 +85,6 @@ private:
 
 };
 
-} // namespace cxlog
+} // namespace cx::log
 
 #endif // ISO8601TIMESTAMPFORMATTER_H_C98443B5_733A_46B9_8B0C_EF059B9701E3

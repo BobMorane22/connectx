@@ -24,7 +24,7 @@
 #include <cxinv/assertion.h>
 #include <cxlog/IncrementalLogger.h>
 
-cxlog::IncrementalLogger::IncrementalLogger(std::unique_ptr<IMessageFormatter>&& p_msgFormatter,
+cx::log::IncrementalLogger::IncrementalLogger(std::unique_ptr<IMessageFormatter>&& p_msgFormatter,
                                             std::unique_ptr<ILogTarget>&&        p_logTarget,
                                             bool                                 p_addHeader)
  : m_msgFormatter{std::move(p_msgFormatter)}
@@ -45,7 +45,7 @@ cxlog::IncrementalLogger::IncrementalLogger(std::unique_ptr<IMessageFormatter>&&
     INVARIANT(m_logTarget);
 }
 
-void cxlog::IncrementalLogger::Log(const VerbosityLevel p_verbosityLevel,
+void cx::log::IncrementalLogger::Log(const VerbosityLevel p_verbosityLevel,
                                    const std::string&   p_fileName,
                                    const std::string&   p_functionName,
                                    const size_t         p_lineNumber,

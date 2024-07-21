@@ -32,7 +32,7 @@
 #include "ModelNotificationContext.h"
 #include "PlayerInformation.h"
 
-namespace cxlog
+namespace cx::log
 {
     class ILogger;
 }
@@ -83,7 +83,7 @@ public:
                     std::unique_ptr<cxmodel::IChip>&& p_droppedChip,
                     const size_t p_column,
                     std::vector<IBoard::Position>& p_takenPositions,
-                    cxlog::ILogger& p_logger);
+                    cx::log::ILogger& p_logger);
 
     // ICommand:
     [[nodiscard]] CommandCompletionStatus Execute() override;
@@ -96,7 +96,7 @@ private:
     const std::unique_ptr<cxmodel::IChip> m_droppedChip;
     const size_t m_column;
     std::vector<IBoard::Position>& m_takenPositions;
-    cxlog::ILogger& m_logger;
+    cx::log::ILogger& m_logger;
 
     // Members stored for undoing the drop:
     const PlayerInformation m_previousPlayerInformation;

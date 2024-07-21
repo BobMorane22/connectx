@@ -24,7 +24,7 @@
 #ifndef VERBOSITYLEVEL_H_E308C91C_1203_4880_A4AD_1983D6680B59
 #define VERBOSITYLEVEL_H_E308C91C_1203_4880_A4AD_1983D6680B59
 
-namespace cxlog
+namespace cx::log
 {
 
 /***********************************************************************************************//**
@@ -66,7 +66,7 @@ enum class VerbosityLevel
  * @return @c true iff the logging scope of @c p_first is less than the logging scope of
  *         @c p_second.
  *
- * @see cxlog::VerbosityLevel
+ * @see cx::log::VerbosityLevel
  *
  **************************************************************************************************/
 bool operator<(VerbosityLevel p_first, VerbosityLevel p_second);
@@ -83,7 +83,7 @@ bool operator<(VerbosityLevel p_first, VerbosityLevel p_second);
  * @return @c true iff the logging scope of @c p_first is less than or equal to the logging
  *         scope of @c p_second.
  *
- * @see cxlog::VerbosityLevel
+ * @see cx::log::VerbosityLevel
  *
  **************************************************************************************************/
 bool operator<=(VerbosityLevel p_first, VerbosityLevel p_second);
@@ -99,7 +99,7 @@ bool operator<=(VerbosityLevel p_first, VerbosityLevel p_second);
  * @return @c true iff the logging scope of @c p_first is greater than the logging scope of
  *         @c p_second.
  *
- * @see cxlog::VerbosityLevel
+ * @see cx::log::VerbosityLevel
  *
  **************************************************************************************************/
 bool operator>(VerbosityLevel p_first, VerbosityLevel p_second);
@@ -116,11 +116,11 @@ bool operator>(VerbosityLevel p_first, VerbosityLevel p_second);
  * @return @c true iff the logging scope of @c p_first is greater than or equal to the logging
  *         scope of @c p_second.
  *
- * @see cxlog::VerbosityLevel
+ * @see cx::log::VerbosityLevel
  *
  **************************************************************************************************/
 bool operator>=(VerbosityLevel p_first, VerbosityLevel p_second);
 
-} // namespace cxlog
+} // namespace cx::log
 
 #endif // VERBOSITYLEVEL_H_E308C91C_1203_4880_A4AD_1983D6680B59

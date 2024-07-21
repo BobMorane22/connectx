@@ -28,7 +28,7 @@
 
 #include "ILogTarget.h"
 
-namespace cxlog
+namespace cx::log
 {
 
 /***********************************************************************************************//**
@@ -67,6 +67,6 @@ private:
     std::ofstream m_fileStream;
 };
 
-} // namespace cxlog
+} // namespace cx::log
 
 #endif // FILELOGTARGET_H_880DA1BC_C2BA_42A2_B1D8_EA6172C15CC0

@@ -35,7 +35,7 @@ namespace cx
     struct ModelReferences;
 }
 
-namespace cxlog
+namespace cx::log
 {
     class IChainLogging;
 }
@@ -69,7 +69,7 @@ public:
      * @return The command line dependent workflow.
      *
      ********************************************************************************************/
-    std::unique_ptr<ICmdArgWorkflowStrategy> Create(int argc, char *argv[], cx::ModelReferences& p_model, cxlog::ILogger& p_logger);
+    std::unique_ptr<ICmdArgWorkflowStrategy> Create(int argc, char *argv[], cx::ModelReferences& p_model, cx::log::ILogger& p_logger);
 
 };
 

@@ -27,21 +27,21 @@
 #include <cxlog/IChainLogging.h>
 #include <cxlog/ILogger.h>
 
-class LoggerMock : public cxlog::ILogger,
-                   public cxlog::IChainLogging
+class LoggerMock : public cx::log::ILogger,
+                   public cx::log::IChainLogging
 {
 public:
 
     ~LoggerMock() override = default;
 
     // ILogger
-    void Log(const cxlog::VerbosityLevel p_verbosityLevel,
+    void Log(const cx::log::VerbosityLevel p_verbosityLevel,
              const std::string&   p_fileName,
              const std::string&   p_functionName,
              const size_t         p_lineNumber,
              const std::string&   p_message) override;
-    void SetVerbosityLevel(const cxlog::VerbosityLevel p_verbosityLevel) override;
-    cxlog::VerbosityLevel GetVerbosityLevel() const override;
+    void SetVerbosityLevel(const cx::log::VerbosityLevel p_verbosityLevel) override;
+    cx::log::VerbosityLevel GetVerbosityLevel() const override;
 
     // IChainLogging
     void SetSucessor(std::unique_ptr<ILogger>&& p_sucessor) override;

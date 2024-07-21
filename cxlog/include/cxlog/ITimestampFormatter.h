@@ -26,7 +26,7 @@
 
 #include <string>
 
-namespace cxlog
+namespace cx::log
 {
 
 /***********************************************************************************************//**
@@ -56,6 +56,6 @@ public:
 
 };
 
-} // namespace cxlog
+} // namespace cx::log
 
 #endif // ITIMESTAMPFORMATTER_H_22F72E26_2882_465A_B401_872CE78017A2

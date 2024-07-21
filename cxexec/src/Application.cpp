@@ -32,7 +32,7 @@
 cx::Application::Application(int argc,
                              char *argv[],
                              cx::ModelReferences& p_model,
-                             cxlog::ILogger& p_logger)
+                             cx::log::ILogger& p_logger)
 {
     PRECONDITION(argc >= 1);
     PRECONDITION(argv);

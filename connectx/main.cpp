@@ -47,12 +47,12 @@ constexpr size_t CMD_STACK_SIZE = 200;
  * @return The newly created logger.
  *
  ********************************************************************************************/
-std::unique_ptr<cxlog::ILogger> CreateFileLogger(cxlog::VerbosityLevel p_verbosity)
+std::unique_ptr<cx::log::ILogger> CreateFileLogger(cx::log::VerbosityLevel p_verbosity)
 {
-    std::unique_ptr<cxlog::ITimestampFormatter> timestampFormatter = std::make_unique<cxlog::ISO8601TimestampFormatter>(cxlog::TimePrecision::MILLISECONDS);
-    std::unique_ptr<cxlog::ILogTarget> logTarget = std::make_unique<cxlog::FileLogTarget>(LOG_TARGET_PATH + std::string{"/connectx.log"});
-    std::unique_ptr<cxlog::IMessageFormatter> formatter = std::make_unique<cxlog::CSVMessageFormatter>(std::move(timestampFormatter));
-    std::unique_ptr<cxlog::ILogger> logger = std::make_unique<cxlog::IncrementalChainedLogger>(std::move(formatter), std::move(logTarget), true);
+    std::unique_ptr<cx::log::ITimestampFormatter> timestampFormatter = std::make_unique<cx::log::ISO8601TimestampFormatter>(cx::log::TimePrecision::MILLISECONDS);
+    std::unique_ptr<cx::log::ILogTarget> logTarget = std::make_unique<cx::log::FileLogTarget>(LOG_TARGET_PATH + std::string{"/connectx.log"});
+    std::unique_ptr<cx::log::IMessageFormatter> formatter = std::make_unique<cx::log::CSVMessageFormatter>(std::move(timestampFormatter));
+    std::unique_ptr<cx::log::ILogger> logger = std::make_unique<cx::log::IncrementalChainedLogger>(std::move(formatter), std::move(logTarget), true);
 
     IF_CONDITION_NOT_MET_DO(logger, return nullptr;);
 
@@ -100,7 +100,7 @@ int main(int argc, char *argv[])
 
     try
     {
-        std::unique_ptr<cxlog::ILogger> logger = CreateFileLogger(cxlog::VerbosityLevel::DEBUG);
+        std::unique_ptr<cx::log::ILogger> logger = CreateFileLogger(cx::log::VerbosityLevel::DEBUG);
         IF_CONDITION_NOT_MET_DO(logger, return EXIT_FAILURE;);
 
         cxmodel::Model concreteModel{std::make_unique<cxmodel::CommandStack>(CMD_STACK_SIZE), *logger};

@@ -30,7 +30,7 @@
 
 #include "ILogTarget.h"
 
-namespace cxlog
+namespace cx::log
 {
 
 /***********************************************************************************************//**
@@ -62,6 +62,6 @@ private:
     std::ostream* m_stdStream{&std::cout};
 };
 
-} // namespace cxlog
+} // namespace cx::log
 
 #endif // STDLOGTARGET_H_CC558CE5_FDFE_4E88_AFDB_6B33BD234DC8

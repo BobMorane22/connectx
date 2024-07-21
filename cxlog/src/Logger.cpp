@@ -23,12 +23,12 @@
 
 #include <cxlog/Logger.h>
 
-void cxlog::Logger::SetVerbosityLevel(const cxlog::VerbosityLevel p_verbosityLevel)
+void cx::log::Logger::SetVerbosityLevel(const cx::log::VerbosityLevel p_verbosityLevel)
 {
     m_verbosityLevel = p_verbosityLevel;
 }
 
-cxlog::VerbosityLevel cxlog::Logger::GetVerbosityLevel() const
+cx::log::VerbosityLevel cx::log::Logger::GetVerbosityLevel() const
 {
     return m_verbosityLevel;
 }

@@ -24,7 +24,7 @@
 #include <cxinv/assertion.h>
 #include <cxlog/StdLogTarget.h>
 
-void cxlog::StdLogTarget::Log(const std::string& p_message)
+void cx::log::StdLogTarget::Log(const std::string& p_message)
 {
     ASSERT_MSG(StdStream().good(), "Standard stream is in a bad state.");
 

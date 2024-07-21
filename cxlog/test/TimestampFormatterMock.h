@@ -26,7 +26,7 @@
 
 #include <cxlog/ITimestampFormatter.h>
 
-class TimestampFormatterMock : public cxlog::ITimestampFormatter
+class TimestampFormatterMock : public cx::log::ITimestampFormatter
 {
 
 public:

@@ -30,7 +30,7 @@
 #include "Logger.h"
 
 
-namespace cxlog
+namespace cx::log
 {
 
 /***********************************************************************************************//**
@@ -92,6 +92,6 @@ private:
     VerbosityLevel m_verbosityLevel{VerbosityLevel::NONE};
 };
 
-} // namespace cxlog
+} // namespace cx::log
 
 #endif // CHAINLOGGER_H_AD94F91A_A9BF_4E77_B948_66F0DB32DD91

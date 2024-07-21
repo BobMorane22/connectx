@@ -47,13 +47,13 @@ std::string MakeCSV(const std::string& p_timestamp,
 
 } // unamed namespace
 
-cxlog::CSVMessageFormatter::CSVMessageFormatter(std::unique_ptr<cxlog::ITimestampFormatter>&& p_timeFormatter)
+cx::log::CSVMessageFormatter::CSVMessageFormatter(std::unique_ptr<cx::log::ITimestampFormatter>&& p_timeFormatter)
  : m_timeFormatter{std::move(p_timeFormatter)}
 {
     PRECONDITION(m_timeFormatter);
 }
 
-std::string cxlog::CSVMessageFormatter::FormatHeaders() const
+std::string cx::log::CSVMessageFormatter::FormatHeaders() const
 {
     return "Timestamp"       + SEPARATOR +
            "Verbosity level" + SEPARATOR +
@@ -63,7 +63,7 @@ std::string cxlog::CSVMessageFormatter::FormatHeaders() const
            "Message"         + NEWLINE;
 }
 
-std::string cxlog::CSVMessageFormatter::FormatMessage(const VerbosityLevel p_verbosityLevel,
+std::string cx::log::CSVMessageFormatter::FormatMessage(const VerbosityLevel p_verbosityLevel,
                                                       const std::string&   p_fileName,
                                                       const std::string&   p_functionName,
                                                       const size_t         p_lineNumber,
@@ -71,28 +71,28 @@ std::string cxlog::CSVMessageFormatter::FormatMessage(const VerbosityLevel p_ver
 {
     switch(p_verbosityLevel)
     {
-        case cxlog::VerbosityLevel::NONE:
+        case cx::log::VerbosityLevel::NONE:
         {
             ASSERT_ERROR_MSG("Do this check in higher level functions.");
             return {};
         }
-        case cxlog::VerbosityLevel::FATAL:
+        case cx::log::VerbosityLevel::FATAL:
         {
             return MakeCSV(m_timeFormatter->FormatTimestamp(), "FATAL", p_fileName, p_functionName, p_lineNumber, p_message);
         }
-        case cxlog::VerbosityLevel::ERROR:
+        case cx::log::VerbosityLevel::ERROR:
         {
             return MakeCSV(m_timeFormatter->FormatTimestamp(), "ERROR", p_fileName, p_functionName, p_lineNumber, p_message);
         }
-        case cxlog::VerbosityLevel::WARNING:
+        case cx::log::VerbosityLevel::WARNING:
         {
             return MakeCSV(m_timeFormatter->FormatTimestamp(), "WARNING", p_fileName, p_functionName, p_lineNumber, p_message);
         }
-        case cxlog::VerbosityLevel::INFO:
+        case cx::log::VerbosityLevel::INFO:
         {
             return MakeCSV(m_timeFormatter->FormatTimestamp(), "INFO", p_fileName, p_functionName, p_lineNumber, p_message);
         }
-        case cxlog::VerbosityLevel::DEBUG:
+        case cx::log::VerbosityLevel::DEBUG:
         {
             return MakeCSV(m_timeFormatter->FormatTimestamp(), "DEBUG", p_fileName, p_functionName, p_lineNumber, p_message);
         }

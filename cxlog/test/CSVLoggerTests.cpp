@@ -35,7 +35,7 @@ TEST(CSVLogger, /*DISABLED_*/CSVStringLogger_ValidStringAsInfo_LoggingIsAdequate
     auto t_logger{CreateCSVStringStreamLogger(t_stream)};
 
     // Log a string:
-    t_logger->Log(cxlog::VerbosityLevel::INFO, _FILE_, _FUNCTION_, _LINE_, GenerateLineToLog());
+    t_logger->Log(cx::log::VerbosityLevel::INFO, _FILE_, _FUNCTION_, _LINE_, GenerateLineToLog());
 
     // Get log result:
     const std::string loggedLine{t_stream.str()};
@@ -49,7 +49,7 @@ TEST(CSVLogger, /*DISABLED_*/CSVStringLogger_ValidStringAsError_LoggingIsAdequat
     auto t_logger{CreateCSVStringStreamLogger(t_stream)};
 
     // Log a string:
-    t_logger->Log(cxlog::VerbosityLevel::ERROR, _FILE_, _FUNCTION_, _LINE_, GenerateLineToLog());
+    t_logger->Log(cx::log::VerbosityLevel::ERROR, _FILE_, _FUNCTION_, _LINE_, GenerateLineToLog());
 
     // Get log result:
     const std::string loggedLine{t_stream.str()};
@@ -63,7 +63,7 @@ TEST(CSVLogger, /*DISABLED_*/CSVStringLogger_ValidStringAsFatal_LoggingIsAdequat
     auto t_logger{CreateCSVStringStreamLogger(t_stream)};
 
     // Log a string:
-    t_logger->Log(cxlog::VerbosityLevel::FATAL, _FILE_, _FUNCTION_, _LINE_, GenerateLineToLog());
+    t_logger->Log(cx::log::VerbosityLevel::FATAL, _FILE_, _FUNCTION_, _LINE_, GenerateLineToLog());
 
     // Get log result:
     const std::string loggedLine{t_stream.str()};
@@ -77,7 +77,7 @@ TEST(CSVLogger, /*DISABLED_*/CSVStringLogger_ValidStringAsDebug_LoggingIsAdequat
     auto t_logger{CreateCSVStringStreamLogger(t_stream)};
 
     // Log a string:
-    t_logger->Log(cxlog::VerbosityLevel::DEBUG, _FILE_, _FUNCTION_, _LINE_, GenerateLineToLog());
+    t_logger->Log(cx::log::VerbosityLevel::DEBUG, _FILE_, _FUNCTION_, _LINE_, GenerateLineToLog());
 
     // Get log result:
     const std::string loggedLine{t_stream.str()};
@@ -91,9 +91,9 @@ TEST(CSVLogger, /*DISABLED_*/CSVStringLogger_ValidStrings_AllLinesLoggued)
     auto t_logger{CreateCSVStringStreamLogger(t_stream)};
 
     // Log a string:
-    t_logger->Log(cxlog::VerbosityLevel::INFO,  _FILE_, _FUNCTION_, _LINE_, GenerateLineToLog());
-    t_logger->Log(cxlog::VerbosityLevel::ERROR, _FILE_, _FUNCTION_, _LINE_, GenerateLineToLog());
-    t_logger->Log(cxlog::VerbosityLevel::FATAL, _FILE_, _FUNCTION_, _LINE_, GenerateLineToLog());
+    t_logger->Log(cx::log::VerbosityLevel::INFO,  _FILE_, _FUNCTION_, _LINE_, GenerateLineToLog());
+    t_logger->Log(cx::log::VerbosityLevel::ERROR, _FILE_, _FUNCTION_, _LINE_, GenerateLineToLog());
+    t_logger->Log(cx::log::VerbosityLevel::FATAL, _FILE_, _FUNCTION_, _LINE_, GenerateLineToLog());
 
     // Get log result:
     const std::string loggedLines{t_stream.str()};

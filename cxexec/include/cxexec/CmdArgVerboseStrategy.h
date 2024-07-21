@@ -33,7 +33,7 @@ namespace cx
     class ModelReferences;
 }
 
-namespace cxlog
+namespace cx::log
 {
     class ILogger;
 }
@@ -63,7 +63,7 @@ public:
      *      A chain logger.
      *
      ********************************************************************************************/
-    CmdArgVerboseStrategy(int argc, char *argv[], cx::ModelReferences& p_model, cxlog::ILogger* p_logger);
+    CmdArgVerboseStrategy(int argc, char *argv[], cx::ModelReferences& p_model, cx::log::ILogger* p_logger);
 
     int Handle() override;
 
@@ -73,7 +73,7 @@ private:
     int m_argc;
     char **m_argv;
     cx::ModelReferences& m_model;
-    cxlog::ILogger* m_logger;
+    cx::log::ILogger* m_logger;
 
 };
 

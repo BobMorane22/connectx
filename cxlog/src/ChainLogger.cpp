@@ -23,12 +23,12 @@
 
 #include <cxlog/ChainLogger.h>
 
-void cxlog::ChainLogger::SetSucessor(std::unique_ptr<ILogger>&& p_sucessor)
+void cx::log::ChainLogger::SetSucessor(std::unique_ptr<ILogger>&& p_sucessor)
 {
     m_successor = std::move(p_sucessor);
 }
 
-bool cxlog::ChainLogger::HasSucessor() const
+bool cx::log::ChainLogger::HasSucessor() const
 {
     if(m_successor)
     {

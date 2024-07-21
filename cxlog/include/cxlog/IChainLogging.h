@@ -30,7 +30,7 @@
 
 #include "ILogger.h"
 
-namespace cxlog
+namespace cx::log
 {
 
 /***********************************************************************************************//**
@@ -69,6 +69,6 @@ public:
 
 };
 
-} // namespace cxlog
+} // namespace cx::log
 
 #endif // ICHAINLOGGING_H_6EBF284E_68F3_4217_A3CB_C3665E9EA8D5

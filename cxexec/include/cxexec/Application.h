@@ -31,7 +31,7 @@
 #include "IApplication.h"
 #include "ICmdArgWorkflowStrategy.h"
 
-namespace cxlog
+namespace cx::log
 {
     class ILogger;
 }
@@ -75,7 +75,7 @@ public:
      *      The command line argument workflow is not @c nullptr.
      *
      ********************************************************************************************/
-    Application(int argc, char *argv[], cx::ModelReferences& p_model, cxlog::ILogger& p_logger);
+    Application(int argc, char *argv[], cx::ModelReferences& p_model, cx::log::ILogger& p_logger);
 
     int Run() override;
 

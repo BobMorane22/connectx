@@ -23,16 +23,16 @@
 
 #include <cxlog/ILogger.h>
 
-class LoggerMock : public cxlog::ILogger
+class LoggerMock : public cx::log::ILogger
 {
 
 public:
 
-    void Log(const cxlog::VerbosityLevel p_verbosityLevel, const std::string& p_fileName, const std::string& p_functionName, const size_t p_lineNumber, const std::string& p_message) override;
-    void SetVerbosityLevel(const cxlog::VerbosityLevel p_verbosityLevel) override;
-    cxlog::VerbosityLevel GetVerbosityLevel() const override;
+    void Log(const cx::log::VerbosityLevel p_verbosityLevel, const std::string& p_fileName, const std::string& p_functionName, const size_t p_lineNumber, const std::string& p_message) override;
+    void SetVerbosityLevel(const cx::log::VerbosityLevel p_verbosityLevel) override;
+    cx::log::VerbosityLevel GetVerbosityLevel() const override;
 
 private:
 
-    cxlog::VerbosityLevel m_verbosityLevel{cxlog::VerbosityLevel::NONE};
+    cx::log::VerbosityLevel m_verbosityLevel{cx::log::VerbosityLevel::NONE};
 };

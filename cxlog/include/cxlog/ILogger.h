@@ -29,7 +29,7 @@
 #include "ILogTarget.h"
 #include "VerbosityLevel.h"
 
-namespace cxlog
+namespace cx::log
 {
 
 /***********************************************************************************************//**
@@ -90,6 +90,6 @@ public:
 
 };
 
-} // namespace cxlog
+} // namespace cx::log
 
 #endif // ILOGGER_H_C23F1D75_6DA4_499E_A502_FBEC85D074DB

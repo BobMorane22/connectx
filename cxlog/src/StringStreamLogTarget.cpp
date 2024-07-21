@@ -24,12 +24,12 @@
 #include <cxinv/assertion.h>
 #include <cxlog/StringStreamLogTarget.h>
 
-cxlog::StringStreamLogTarget::StringStreamLogTarget(std::ostringstream& p_stringStream)
+cx::log::StringStreamLogTarget::StringStreamLogTarget(std::ostringstream& p_stringStream)
  : m_stringStream{p_stringStream}
 {
 }
 
-void cxlog::StringStreamLogTarget::Log(const std::string& p_message)
+void cx::log::StringStreamLogTarget::Log(const std::string& p_message)
 {
     if(INL_ASSERT(StringStream().good()))
     {
