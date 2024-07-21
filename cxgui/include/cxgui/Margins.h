@@ -33,25 +33,25 @@ namespace cxgui
  * @brief Margin size of the top.
  *
  ********************************************************************************************/
-using TopMargin = cxstd::StrongType<int, struct TopMarginTag, cxstd::Addable, cxstd::Comparable>;
+using TopMargin = cx::cmn::StrongType<int, struct TopMarginTag, cx::cmn::Addable, cx::cmn::Comparable>;
 
 /******************************************************************************************//**
  * @brief Margin size of the bottom.
  *
  ********************************************************************************************/
-using BottomMargin = cxstd::StrongType<int, struct BottomMarginTag, cxstd::Addable, cxstd::Comparable>;
+using BottomMargin = cx::cmn::StrongType<int, struct BottomMarginTag, cx::cmn::Addable, cx::cmn::Comparable>;
 
 /******************************************************************************************//**
  * @brief Margin size of the left side.
  *
  ********************************************************************************************/
-using LeftMargin = cxstd::StrongType<int, struct LeftMarginTag, cxstd::Addable, cxstd::Comparable>;
+using LeftMargin = cx::cmn::StrongType<int, struct LeftMarginTag, cx::cmn::Addable, cx::cmn::Comparable>;
 
 /******************************************************************************************//**
  * @brief Margin size of the right side.
  *
  ********************************************************************************************/
-using RightMargin = cxstd::StrongType<int, struct RightMarginTag, cxstd::Addable, cxstd::Comparable>;
+using RightMargin = cx::cmn::StrongType<int, struct RightMarginTag, cx::cmn::Addable, cx::cmn::Comparable>;
 
 /******************************************************************************************//**
  * @brief Widget margin sizes.

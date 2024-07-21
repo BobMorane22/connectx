@@ -33,13 +33,13 @@ namespace cxgui
  * @brief Ratio for horizontal scaling.
  *
  *************************************************************************************************/
-using HorizontalScalingRatio = cxstd::StrongType<double, struct HorizontalScalingRatioTag, cxstd::EqualityComparable>;
+using HorizontalScalingRatio = cx::cmn::StrongType<double, struct HorizontalScalingRatioTag, cx::cmn::EqualityComparable>;
 
 /**********************************************************************************************//**
  * @brief Ratio for vertical scaling.
  *
  *************************************************************************************************/
-using VerticalScalingRatio = cxstd::StrongType<double, struct VerticalScalingRatioTag, cxstd::EqualityComparable>;
+using VerticalScalingRatio = cx::cmn::StrongType<double, struct VerticalScalingRatioTag, cx::cmn::EqualityComparable>;
 
 /**********************************************************************************************//**
  * @brief Two dimensional scaling ratios.

@@ -30,14 +30,14 @@ namespace cxmath
 {
 
 /** Continuous height dimension. */
-using Height = cxstd::StrongType<double, struct HeightTag,
-                                 cxstd::EqualityComparable,
-                                 cxstd::Addable>;
+using Height = cx::cmn::StrongType<double, struct HeightTag,
+                                 cx::cmn::EqualityComparable,
+                                 cx::cmn::Addable>;
 
 /** Continuous width dimension. */
-using Width = cxstd::StrongType<double, struct WidthTag,
-                                cxstd::EqualityComparable,
-                                cxstd::Addable>;
+using Width = cx::cmn::StrongType<double, struct WidthTag,
+                                cx::cmn::EqualityComparable,
+                                cx::cmn::Addable>;
 
 /**********************************************************************************************//**
  * @brief Continuous 2D dimensions.

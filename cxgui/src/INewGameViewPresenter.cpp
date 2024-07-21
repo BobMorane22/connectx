@@ -78,10 +78,10 @@ cxmodel::Status cxgui::Validate(const cxmodel::NewGameInformation& p_gameInforma
 std::vector<cxmodel::ChipColor> cxgui::GetRemainingDefaultColors(const std::vector<cxmodel::ChipColor>& p_alreadyChosenColors,
                                                                  const cxgui::INewGameViewPresenter& p_presenter)
 {
-    auto defaultRemainingColors = cxstd::ComputeStrictDifference(p_presenter.GetDefaultChipColors(), p_alreadyChosenColors);
+    auto defaultRemainingColors = cx::cmn::ComputeStrictDifference(p_presenter.GetDefaultChipColors(), p_alreadyChosenColors);
     ASSERT(!defaultRemainingColors.empty());
 
-    cxstd::Unique(defaultRemainingColors);
+    cx::cmn::Unique(defaultRemainingColors);
     ASSERT(!defaultRemainingColors.empty());
 
     return defaultRemainingColors;

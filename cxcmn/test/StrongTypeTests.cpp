@@ -27,8 +27,8 @@
 
 #include <cxcmn/StrongType.h>
 
-using StrongInt = cxstd::StrongType<int, struct StrongIntTag>;
-using StrongString = cxstd::StrongType<std::string, struct StrongStringTag>;
+using StrongInt = cx::cmn::StrongType<int, struct StrongIntTag>;
+using StrongString = cx::cmn::StrongType<std::string, struct StrongStringTag>;
 
 TEST(StrongType, /*DISABLED_*/Constructor_ByValue_ValidStrongType)
 {
@@ -107,7 +107,7 @@ TEST(StrongType, /*DISABLED_*/Get_ByConstRef_ValidConstRefReturned)
 namespace
 {
 
-using ECInt = cxstd::StrongType<int, struct IntTag, cxstd::EqualityComparable>;
+using ECInt = cx::cmn::StrongType<int, struct IntTag, cx::cmn::EqualityComparable>;
 
 } // namespace
 
@@ -139,7 +139,7 @@ TEST(EqualityComparable, OperatorEquals_TwoDifferentUnderlying_ReturnsFalse)
 namespace
 {
 
-using AInt = cxstd::StrongType<int, struct IntTag, cxstd::Addable>;
+using AInt = cx::cmn::StrongType<int, struct IntTag, cx::cmn::Addable>;
 
 } // namespace
 
@@ -206,7 +206,7 @@ TEST(Addable, OperatorIncrementMinus_Chaining_ReturnsResult)
 namespace
 {
 
-using CInt = cxstd::StrongType<int, struct IntTag, cxstd::EqualityComparable, cxstd::Comparable>;
+using CInt = cx::cmn::StrongType<int, struct IntTag, cx::cmn::EqualityComparable, cx::cmn::Comparable>;
 
 } // namespace
 

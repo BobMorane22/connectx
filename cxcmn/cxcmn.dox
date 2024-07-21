@@ -16,19 +16,19 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file cxstd.dox
+ * @file cxcmn.dox
  * @date 2022
  *
  *************************************************************************************************/
 
 /**********************************************************************************************//**
  * @ingroup helpermacros
- * @namespace cxstd
+ * @namespace cx::cmn
  *
  * @brief Extended Standard Library like tools.
  *
- * The `cxstd` namespace contains tools to be used across whole codebases, much like the tools
- * in the Standard Library.
+ * The `cx::cmn` namespace contains common tools to be used across whole codebases, much like
+ * the tools in the Standard Library.
  *
  *************************************************************************************************/
 

@@ -80,7 +80,7 @@ bool operator>=(const Unsortable& p_lhs, const Unsortable& p_rhs) = delete;
 } // namespace
 
 /*************************************************************************************************
- *                            cxstd::ComputeStricDifference
+ *                            cx::cmn::ComputeStricDifference
  ************************************************************************************************/
 namespace
 {
@@ -107,7 +107,7 @@ TYPED_TEST(ComputeStrictDifferenceFixture, ComputeStrictDifference_LhsAndRhsEmpt
     ASSERT_TRUE(lhs.empty());
     ASSERT_TRUE(rhs.empty());
 
-    const Container result = cxstd::ComputeStrictDifference(lhs, rhs);
+    const Container result = cx::cmn::ComputeStrictDifference(lhs, rhs);
     ASSERT_TRUE(result.empty());
 }
 
@@ -121,7 +121,7 @@ TYPED_TEST(ComputeStrictDifferenceFixture, ComputeStrictDifference_LhsEmptyButRh
     const Container rhs{Unsortable::A()};
     ASSERT_TRUE(!rhs.empty());
 
-    const Container result = cxstd::ComputeStrictDifference(lhs, rhs);
+    const Container result = cx::cmn::ComputeStrictDifference(lhs, rhs);
     ASSERT_TRUE(result.empty());
 }
 
@@ -135,7 +135,7 @@ TYPED_TEST(ComputeStrictDifferenceFixture, ComputeStrictDifference_LhsNotEmptyBu
     const Container rhs;
     ASSERT_TRUE(rhs.empty());
 
-    const Container result = cxstd::ComputeStrictDifference(lhs, rhs);
+    const Container result = cx::cmn::ComputeStrictDifference(lhs, rhs);
     ASSERT_TRUE(result == lhs);
 }
 
@@ -149,7 +149,7 @@ TYPED_TEST(ComputeStrictDifferenceFixture, ComputeStrictDifference_LhsAndRhsMutu
     const Container rhs{Unsortable::B()};
     ASSERT_TRUE(!rhs.empty());
 
-    const Container result = cxstd::ComputeStrictDifference(lhs, rhs);
+    const Container result = cx::cmn::ComputeStrictDifference(lhs, rhs);
     ASSERT_TRUE(result == lhs);
 }
 
@@ -186,7 +186,7 @@ TYPED_TEST(ComputeStrictDifferenceFixture, ComputeStrictDifference_LhsAndRhsNotM
     };
     ASSERT_TRUE(!expected.empty());
 
-    const Container result = cxstd::ComputeStrictDifference(lhs, rhs);
+    const Container result = cx::cmn::ComputeStrictDifference(lhs, rhs);
     ASSERT_TRUE(result == expected);
 }
 
@@ -223,12 +223,12 @@ TYPED_TEST(ComputeStrictDifferenceFixture, ComputeStrictDifference_LhsAndRhsNotM
     };
     ASSERT_TRUE(!expected.empty());
 
-    const Container result = cxstd::ComputeStrictDifference(lhs, rhs);
+    const Container result = cx::cmn::ComputeStrictDifference(lhs, rhs);
     ASSERT_TRUE(result == expected);
 }
 
 /*************************************************************************************************
- *                                    cxstd::Unique
+ *                                    cx::cmn::Unique
  ************************************************************************************************/
 namespace
 {
@@ -253,7 +253,7 @@ TYPED_TEST(UniqueFixture, Unique_EmptyCollection_DoesNothing)
     Container collection;
     ASSERT_TRUE(collection.empty());
 
-    cxstd::Unique(collection);
+    cx::cmn::Unique(collection);
     ASSERT_TRUE(collection.empty());
 }
 
@@ -271,7 +271,7 @@ TYPED_TEST(UniqueFixture, Unique_CollectionWithNoDuplicates_DoesNothing)
 
     const Container expected = collection;
 
-    cxstd::Unique(collection);
+    cx::cmn::Unique(collection);
     ASSERT_TRUE(collection == expected);
 }
 
@@ -301,7 +301,7 @@ TYPED_TEST(UniqueFixture, Unique_CollectionWithSortedDuplicates_DuplicatesRemove
         Unsortable::E(),
     };
 
-    cxstd::Unique(collection);
+    cx::cmn::Unique(collection);
     ASSERT_TRUE(collection == expected);
 }
 
@@ -331,6 +331,6 @@ TYPED_TEST(UniqueFixture, Unique_CollectionWithUnsortedDuplicates_DuplicatesRemo
         Unsortable::A(),
     };
 
-    cxstd::Unique(collection);
+    cx::cmn::Unique(collection);
     ASSERT_TRUE(collection == expected);
 }

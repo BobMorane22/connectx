@@ -23,7 +23,7 @@
 
 #include <algorithm>
 
-namespace cxstd
+namespace cx::cmn
 {
 
 /**********************************************************************************************//**
@@ -142,4 +142,4 @@ void Unique(UnsortedContainer& p_collection)
     p_collection = unique;
 }
 
-} // namespace cxstd
+} // namespace cx::cmn

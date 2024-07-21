@@ -104,7 +104,7 @@ public:
      * is displayed over two rows and hence has a row span of 2.
      *
      *********************************************************************************************/
-    using RowSpan = cxstd::StrongType<size_t, struct RowSpanTag, cxstd::Addable, cxstd::Comparable>;
+    using RowSpan = cx::cmn::StrongType<size_t, struct RowSpanTag, cx::cmn::Addable, cx::cmn::Comparable>;
     
     /******************************************************************************************//**
      * @brief Describes a number of columns needed to arrange some widget in a layout.
@@ -125,7 +125,7 @@ public:
      * is displayed over two columns and hence has a column span of 2.
      *
      *********************************************************************************************/
-    using ColumnSpan = cxstd::StrongType<size_t, struct RowSpanTag, cxstd::Addable, cxstd::Comparable>;
+    using ColumnSpan = cx::cmn::StrongType<size_t, struct RowSpanTag, cx::cmn::Addable, cx::cmn::Comparable>;
 
     /******************************************************************************************//**
      * @brief Necessary information to position a widget in a layout.

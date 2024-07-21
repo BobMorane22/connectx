@@ -27,7 +27,7 @@
 #include <type_traits>
 #include <utility>
 
-namespace cxstd
+namespace cx::cmn
 {
 
 /**********************************************************************************************//**
@@ -261,7 +261,7 @@ struct Comparable
      *****************************************************************************************/
     [[nodiscard]] constexpr bool operator<(const CRTP& p_other) const
     {
-        static_assert(std::is_base_of_v<cxstd::EqualityComparable<CRTP>, CRTP>, "Equality comparison must be defined.");
+        static_assert(std::is_base_of_v<cx::cmn::EqualityComparable<CRTP>, CRTP>, "Equality comparison must be defined.");
 
         return static_cast<const CRTP*>(this)->Get() < static_cast<const CRTP*>(&p_other)->Get();
     }
@@ -276,7 +276,7 @@ struct Comparable
      *****************************************************************************************/
     [[nodiscard]] constexpr bool operator>(const CRTP& p_other) const
     {
-        static_assert(std::is_base_of_v<cxstd::EqualityComparable<CRTP>, CRTP>, "Equality comparison must be defined.");
+        static_assert(std::is_base_of_v<cx::cmn::EqualityComparable<CRTP>, CRTP>, "Equality comparison must be defined.");
 
         return static_cast<const CRTP*>(this)->Get() > static_cast<const CRTP*>(&p_other)->Get();
     }
@@ -291,7 +291,7 @@ struct Comparable
      *****************************************************************************************/
     [[nodiscard]] constexpr bool operator<=(const CRTP& p_other) const
     {
-        static_assert(std::is_base_of_v<cxstd::EqualityComparable<CRTP>, CRTP>, "Equality comparison must be defined.");
+        static_assert(std::is_base_of_v<cx::cmn::EqualityComparable<CRTP>, CRTP>, "Equality comparison must be defined.");
 
         return static_cast<const CRTP*>(this)->Get() <= static_cast<const CRTP*>(&p_other)->Get();
     }
@@ -306,12 +306,12 @@ struct Comparable
      *****************************************************************************************/
     [[nodiscard]] constexpr bool operator>=(const CRTP& p_other) const
     {
-        static_assert(std::is_base_of_v<cxstd::EqualityComparable<CRTP>, CRTP>, "Equality comparison must be defined.");
+        static_assert(std::is_base_of_v<cx::cmn::EqualityComparable<CRTP>, CRTP>, "Equality comparison must be defined.");
 
         return static_cast<const CRTP*>(this)->Get() >= static_cast<const CRTP*>(&p_other)->Get();
     }
 };
 
-} // namespace cxstd
+} // namespace cx::cmn
 
 #endif // STRONGTYPE_H_4E2D47C9_3530_4EF1_8A36_EE3FB6958D12

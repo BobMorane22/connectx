@@ -49,19 +49,19 @@ public:
     * (or decremented) by the climb rate.
     *
     *********************************************************************************************/
-    using ClimbRate = cxstd::StrongType<int, struct ClimbRateTag>;
+    using ClimbRate = cx::cmn::StrongType<int, struct ClimbRateTag>;
 
     /******************************************************************************************//**
     * @brief Minimum allowed value in a spin box.
     *
     *********************************************************************************************/
-    using Minimum = cxstd::StrongType<int, struct MinumumTag, cxstd::Comparable>;
+    using Minimum = cx::cmn::StrongType<int, struct MinumumTag, cx::cmn::Comparable>;
 
     /******************************************************************************************//**
     * @brief Maximum allowed value in a spin box.
     *
     *********************************************************************************************/
-    using Maximum = cxstd::StrongType<int, struct MaximumTag, cxstd::Comparable>;
+    using Maximum = cx::cmn::StrongType<int, struct MaximumTag, cx::cmn::Comparable>;
 
     /******************************************************************************************//**
     * @brief Range of values allowed in a spin box.

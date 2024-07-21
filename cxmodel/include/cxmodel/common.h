@@ -32,31 +32,31 @@ namespace cxmodel
 {
 
 /** Represents a row in the game board. */
-using Row = cxstd::StrongType<size_t, struct RowTag,
-                              cxstd::EqualityComparable,
-                              cxstd::Comparable,
-                              cxstd::Addable
+using Row = cx::cmn::StrongType<size_t, struct RowTag,
+                              cx::cmn::EqualityComparable,
+                              cx::cmn::Comparable,
+                              cx::cmn::Addable
 >;
 
 /** Represents the height of the game board, in terms of the number of column. */
-using Height = cxstd::StrongType<size_t, struct BoardHeightTag,
-                                 cxstd::EqualityComparable,
-                                 cxstd::Comparable,
-                                 cxstd::Addable
+using Height = cx::cmn::StrongType<size_t, struct BoardHeightTag,
+                                 cx::cmn::EqualityComparable,
+                                 cx::cmn::Comparable,
+                                 cx::cmn::Addable
 >;
 
 /** Represents a column in the game board. */
-using Column = cxstd::StrongType<size_t, struct ColumnTag,
-                                 cxstd::EqualityComparable,
-                                 cxstd::Comparable,
-                                 cxstd::Addable
+using Column = cx::cmn::StrongType<size_t, struct ColumnTag,
+                                 cx::cmn::EqualityComparable,
+                                 cx::cmn::Comparable,
+                                 cx::cmn::Addable
 >;
 
 /** Represents the width of the game board, in terms of the number of column. */
-using Width = cxstd::StrongType<size_t, struct BoardWidthTag,
-                                cxstd::EqualityComparable,
-                                cxstd::Comparable,
-                                cxstd::Addable
+using Width = cx::cmn::StrongType<size_t, struct BoardWidthTag,
+                                cx::cmn::EqualityComparable,
+                                cx::cmn::Comparable,
+                                cx::cmn::Addable
 >;
 
 } // namespace cxmodel

@@ -16,7 +16,7 @@
 #
 #************************************************************************************************/
 #*************************************************************************************************
-# CMake configuration file for the cxstd library.
+# CMake configuration file for the cxcmn library.
 #
 # @file CMakeLists.txt
 # @date 2022

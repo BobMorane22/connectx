@@ -38,13 +38,13 @@ namespace cxgui
  * @brief Number of frames per second in the animation.
  *
  *************************************************************************************************/
-using FPS = cxstd::StrongType<size_t, struct FpsTag, cxstd::EqualityComparable>;
+using FPS = cx::cmn::StrongType<size_t, struct FpsTag, cx::cmn::EqualityComparable>;
 
 /**********************************************************************************************//**
  * @brief Number of chips widths travelled per second.
  *
  *************************************************************************************************/
-using AnimationSpeed = cxstd::StrongType<size_t, struct AnimationSpeedTag, cxstd::EqualityComparable>;
+using AnimationSpeed = cx::cmn::StrongType<size_t, struct AnimationSpeedTag, cx::cmn::EqualityComparable>;
 
 /**********************************************************************************************//**
  * @brief Type of feature for which to get the line width.

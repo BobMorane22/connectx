@@ -35,7 +35,7 @@ namespace cxgui
  * @brief Period of time (in ms) between each of the timer ticks.
  *
  *************************************************************************************************/
-using Period = cxstd::StrongType<double, struct PeriodTag>;
+using Period = cx::cmn::StrongType<double, struct PeriodTag>;
 
 /**********************************************************************************************//**
  * @brief A timer interface.

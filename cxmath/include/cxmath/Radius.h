@@ -33,10 +33,10 @@ namespace cxmath
  * @brief Represents the radius of a circle or a sphere.
  *
  *************************************************************************************************/
-using Radius = cxstd::StrongType<double, struct RadiusTag,
-                                 cxstd::EqualityComparable,
-                                 cxstd::Comparable,
-                                 cxstd::Addable>;
+using Radius = cx::cmn::StrongType<double, struct RadiusTag,
+                                 cx::cmn::EqualityComparable,
+                                 cx::cmn::Comparable,
+                                 cx::cmn::Addable>;
 
 } // namespace cxmath
 
