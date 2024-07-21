@@ -26,7 +26,7 @@
 
 #include <functional>
 
-#include <cxstd/StrongType.h>
+#include <cxcmn/StrongType.h>
 
 namespace cxgui
 {

@@ -26,7 +26,7 @@
 #include <gdkmm/monitor.h>
 
 #include <cxinv/assertion.h>
-#include <cxstd/helpers.h>
+#include <cxcmn/helpers.h>
 #include <cxmath/math.h>
 #include <cxmodel/Disc.h>
 #include <cxgui/AnimatedBoardModel.h>

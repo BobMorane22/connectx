@@ -24,7 +24,7 @@
 #ifndef SPINBOX_H_C1FF0482_BE33_4283_ADB6_3DB5FA8445D7
 #define SPINBOX_H_C1FF0482_BE33_4283_ADB6_3DB5FA8445D7
 
-#include <cxstd/StrongType.h>
+#include <cxcmn/StrongType.h>
 #include <cxgui/IWidget.h>
 
 namespace cxgui

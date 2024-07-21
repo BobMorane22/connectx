@@ -30,7 +30,7 @@ set(SOURCE_FILES
 )
 
 add_lib_unit_test(
-  cxstd
+  cxcmn
   SOURCES ${SOURCE_FILES}
   LIBS ${LIBRARIES}
 )

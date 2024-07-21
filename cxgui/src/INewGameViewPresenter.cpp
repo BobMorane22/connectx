@@ -24,8 +24,8 @@
 #include <vector>
 
 #include <cxinv/assertion.h>
-#include <cxstd/algorithm.h>
-#include <cxstd/helpers.h>
+#include <cxcmn/algorithm.h>
+#include <cxcmn/helpers.h>
 #include <cxmodel/ChipColor.h>
 #include <cxmodel/IChip.h>
 #include <cxmodel/IPlayer.h>

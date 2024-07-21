@@ -56,7 +56,7 @@ set(SOURCE_FILES
 
 set(LIBRARIES
   cxunit
-  cxstd
+  cxcmn
   cxinv
   cxmath
   cxmodel

@@ -24,7 +24,7 @@
 #ifndef SCALINGRATIOS_H_C98BAFA1_22F4_4A84_9345_AF318597FB2F
 #define SCALINGRATIOS_H_C98BAFA1_22F4_4A84_9345_AF318597FB2F
 
-#include <cxstd/StrongType.h>
+#include <cxcmn/StrongType.h>
 
 namespace cxgui
 {

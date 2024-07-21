@@ -27,7 +27,7 @@
 
 #include <gtest/gtest.h>
 
-#include <cxstd/algorithm.h>
+#include <cxcmn/algorithm.h>
 
 namespace
 {

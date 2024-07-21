@@ -22,7 +22,7 @@
  *************************************************************************************************/
 
 #include <cxinv/assertion.h>
-#include <cxstd/helpers.h>
+#include <cxcmn/helpers.h>
 #include <cxgui/EventPropagation.h>
 #include <cxgui/gtkmmConversions.h>
 #include <cxgui/Gtkmm3Layout.h>

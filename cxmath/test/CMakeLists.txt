@@ -31,7 +31,7 @@ set(SOURCE_FILES
 
 set(LIBRARIES
   cxunit
-  cxstd
+  cxcmn
 )
 
 add_lib_unit_test(

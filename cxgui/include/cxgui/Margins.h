@@ -24,7 +24,7 @@
 #ifndef MARGINS_H_D69C1309_AC7D_4008_8139_04EE2888BFF6
 #define MARGINS_H_D69C1309_AC7D_4008_8139_04EE2888BFF6
 
-#include <cxstd/StrongType.h>
+#include <cxcmn/StrongType.h>
 
 namespace cxgui
 {

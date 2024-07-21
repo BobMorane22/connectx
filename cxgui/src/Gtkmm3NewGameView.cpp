@@ -25,7 +25,7 @@
 #include <memory>
 #include <sstream>
 
-#include <cxstd/helpers.h>
+#include <cxcmn/helpers.h>
 #include <cxinv/assertion.h>
 #include <cxmodel/IChip.h>
 #include <cxmodel/NewGameInformation.h>

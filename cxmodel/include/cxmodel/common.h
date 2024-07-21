@@ -26,7 +26,7 @@
 
 #include <cstddef>
 
-#include <cxstd/StrongType.h>
+#include <cxcmn/StrongType.h>
 
 namespace cxmodel
 {

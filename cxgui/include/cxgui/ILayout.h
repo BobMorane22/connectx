@@ -24,7 +24,7 @@
 #ifndef ILAYOUT_H_D6AEBC20_3580_4018_B083_08451439CC56
 #define ILAYOUT_H_D6AEBC20_3580_4018_B083_08451439CC56
 
-#include <cxstd/StrongType.h>
+#include <cxcmn/StrongType.h>
 #include <cxmodel/common.h>
 #include <cxgui/IWidget.h>
 

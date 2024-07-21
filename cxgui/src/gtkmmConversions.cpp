@@ -23,7 +23,7 @@
 
 #include <gdk/gdkkeysyms.h>
 
-#include <cxstd/helpers.h>
+#include <cxcmn/helpers.h>
 #include <cxgui/DialogRole.h>
 #include <cxgui/EventPropagation.h>
 #include <cxgui/gtkmmConversions.h>

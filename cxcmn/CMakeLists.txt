@@ -23,7 +23,7 @@
 #
 #************************************************************************************************/
 
-set(TARGET_NAME cxstd)
+set(TARGET_NAME cxcmn)
 
 # Header-only library:
 add_library(${TARGET_NAME}
