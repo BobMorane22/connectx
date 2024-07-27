@@ -90,7 +90,7 @@ public:
     {
         for(auto&& connection : m_connections)
         {
-            IF_CONDITION_NOT_MET_DO(!connection, continue;);
+            IF_CONDITION_NOT_MET_DO(connection, continue;);
 
             connection->Disconnect();
         }
