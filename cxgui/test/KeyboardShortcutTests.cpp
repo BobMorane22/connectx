@@ -28,7 +28,7 @@
 
 TEST(KeyboardShortcut, Constructor_SingleKey_ValidFirstKey)
 {
-    using namespace cx::gui;
+    using namespace cx::cmn::ui;
     const KeyboardShortcut shortcut{Key::F1};
 
     ASSERT_TRUE(shortcut.m_first == Key::F1);
@@ -37,7 +37,7 @@ TEST(KeyboardShortcut, Constructor_SingleKey_ValidFirstKey)
 
 TEST(KeyboardShortcut, Constructor_ImplicitSingleKey_ValidFirstKey)
 {
-    using namespace cx::gui;
+    using namespace cx::cmn::ui;
     const KeyboardShortcut shortcut{{Key::F1}};
 
     ASSERT_TRUE(shortcut.m_first == Key::F1);
@@ -46,7 +46,7 @@ TEST(KeyboardShortcut, Constructor_ImplicitSingleKey_ValidFirstKey)
 
 TEST(KeyboardShortcut, Constructor_TwoKeys_BothKeysValid)
 {
-    using namespace cx::gui;
+    using namespace cx::cmn::ui;
     const KeyboardShortcut shortcut{Key::CTRL + Key::Q};
 
     ASSERT_TRUE(shortcut.m_first == Key::CTRL);
@@ -55,7 +55,7 @@ TEST(KeyboardShortcut, Constructor_TwoKeys_BothKeysValid)
 
 TEST(KeyboardShortcut, Constructor_TwoSameKeys_PreconditionFails)
 {
-    using namespace cx::gui;
+    using namespace cx::cmn::ui;
 
     cx::unit::DisableStdStreamsRAII redirector;
     const KeyboardShortcut shortcut{Key::CTRL + Key::CTRL};

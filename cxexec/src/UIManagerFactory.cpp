@@ -66,11 +66,11 @@ cx::UIManagerFactory::UIManagerFactory(int argc, char *argv[], cx::ModelReferenc
     POSTCONDITION(m_argv);
 }
 
-std::unique_ptr<cx::IUIManager> cx::UIManagerFactory::Create(cx::gui::WidgetsToolkit p_toolkit) const
+std::unique_ptr<cx::IUIManager> cx::UIManagerFactory::Create(cx::cmn::ui::WidgetsToolkit p_toolkit) const
 {
     switch(p_toolkit)
     {
-        case cx::gui::WidgetsToolkit::GTKMM3:
+        case cx::cmn::ui::WidgetsToolkit::GTKMM3:
             return std::make_unique<cx::Gtkmm3UIManager>(m_argc, m_argv, m_model);
 
         default:

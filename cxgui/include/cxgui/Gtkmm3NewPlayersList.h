@@ -32,7 +32,7 @@ namespace cx::model
     enum class PlayerType;
 }
 
-namespace cx::gui
+namespace cx::cmn::ui
 {
     class IAbstractWidgetsFactory;
     class IColorPicker;
@@ -46,7 +46,7 @@ namespace cx::gui
     class WidgetsFactories;
 }
 
-namespace cx::gui
+namespace cx::cmn::ui
 {
 
 /***********************************************************************************************//**
@@ -55,7 +55,7 @@ namespace cx::gui
  * Widget containing rows of players to be registered for a Connect X game, as well as the color
  * they have chosen for their chips.
  *
- * @see cx::gui::NewPlayerRow
+ * @see cx::cmn::ui::NewPlayerRow
  *
  **************************************************************************************************/
 class Gtkmm3NewPlayersList final : public INewPlayersList,
@@ -90,7 +90,7 @@ public:
     /*******************************************************************************************//**
      * @brief Sets the delegate for widget common facilities.
      *
-     * The delegate is reponsible to carry the implementation for generic `cx::gui::IWidget` operations.
+     * The delegate is reponsible to carry the implementation for generic `cx::cmn::ui::IWidget` operations.
      * It is meant to avoid implementation duplication.
      *
      * @param p_delegate
@@ -102,9 +102,9 @@ public:
      *      The registered widget delegate is valid.
      *
      **********************************************************************************************/
-    void SetDelegate(std::unique_ptr<cx::gui::IWidget> p_delegate);
+    void SetDelegate(std::unique_ptr<cx::cmn::ui::IWidget> p_delegate);
 
-    // cx::gui::INewPlayersList:
+    // cx::cmn::ui::INewPlayersList:
     [[nodiscard]] size_t GetNbPlayers() const override;
     [[nodiscard]] cx::model::ChipColor GetRowPlayerChipColor(
         const size_t p_index) const override;
@@ -124,7 +124,7 @@ public:
         const cx::model::ChipColor& p_newPlayerNewChipColor) override;
     [[nodiscard]] std::unique_ptr<ISignal<void>> OnPlayerUpdated() override;
 
-    // cx::gui::IWidget:
+    // cx::cmn::ui::IWidget:
     [[nodiscard]] size_t GetWidth() const override;
     [[nodiscard]] size_t GetHeight() const override;
     void SetEnabled(
@@ -157,7 +157,7 @@ private:
 
 private:
 
-    std::unique_ptr<cx::gui::IWidget> m_delegate;
+    std::unique_ptr<cx::cmn::ui::IWidget> m_delegate;
     const INewGameViewPresenter& m_presenter;
     const WidgetsFactories& m_widgetsFactories;
 
@@ -176,6 +176,6 @@ private:
 
 };
 
-} // namespace cx::gui
+} // namespace cx::cmn::ui
 
 #endif // GTKMM3NEWPLAYERSLIST_H_FDB93AF1_A5AC_4484_9857_0B207BAE8724

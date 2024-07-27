@@ -30,7 +30,7 @@
 #include <cxmodel/IUndoRedo.h>
 #include <cxgui/MainWindowController.h>
 
-cx::gui::MainWindowController::MainWindowController(cx::model::IConnectXGameActions& p_modelAsGameActions,
+cx::cmn::ui::MainWindowController::MainWindowController(cx::model::IConnectXGameActions& p_modelAsGameActions,
                                                   cx::model::IUndoRedo& p_modelAsUndoRedo)
 : m_modelAsGameActions{p_modelAsGameActions}
 , m_modelAsUndoRedo{p_modelAsUndoRedo}
@@ -38,12 +38,12 @@ cx::gui::MainWindowController::MainWindowController(cx::model::IConnectXGameActi
 {
 }
 
-void cx::gui::MainWindowController::OnStart(cx::model::NewGameInformation p_gameInformation)
+void cx::cmn::ui::MainWindowController::OnStart(cx::model::NewGameInformation p_gameInformation)
 {
     m_modelAsGameActions.CreateNewGame(std::move(p_gameInformation));
 }
 
-void cx::gui::MainWindowController::OnDown(const cx::model::ChipColor& p_chipColor, size_t p_column)
+void cx::cmn::ui::MainWindowController::OnDown(const cx::model::ChipColor& p_chipColor, size_t p_column)
 {
     IF_PRECONDITION_NOT_MET_DO(p_chipColor != cx::model::MakeTransparent(), return;);
 
@@ -51,32 +51,32 @@ void cx::gui::MainWindowController::OnDown(const cx::model::ChipColor& p_chipCol
     m_modelAsGameActions.DropChip(*m_currentChip, p_column);
 }
 
-void cx::gui::MainWindowController::OnMoveLeftOneColumn()
+void cx::cmn::ui::MainWindowController::OnMoveLeftOneColumn()
 {
     m_modelAsGameActions.MoveLeftOneColumn();
 }
 
-void cx::gui::MainWindowController::OnMoveRightOneColumn()
+void cx::cmn::ui::MainWindowController::OnMoveRightOneColumn()
 {
     m_modelAsGameActions.MoveRightOneColumn();
 }
 
-void cx::gui::MainWindowController::OnNewGame()
+void cx::cmn::ui::MainWindowController::OnNewGame()
 {
     m_modelAsGameActions.EndCurrentGame(); 
 }
 
-void cx::gui::MainWindowController::OnReinitializeCurrentGame()
+void cx::cmn::ui::MainWindowController::OnReinitializeCurrentGame()
 {
     m_modelAsGameActions.ReinitializeCurrentGame();
 }
 
-void cx::gui::MainWindowController::OnUndo()
+void cx::cmn::ui::MainWindowController::OnUndo()
 {
     m_modelAsUndoRedo.Undo();
 }
 
-void cx::gui::MainWindowController::OnRedo()
+void cx::cmn::ui::MainWindowController::OnRedo()
 {
     m_modelAsUndoRedo.Redo();
 }

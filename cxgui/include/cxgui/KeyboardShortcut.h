@@ -28,7 +28,7 @@
 
 #include <cxgui/Keys.h>
 
-namespace cx::gui
+namespace cx::cmn::ui
 {
 
 /**********************************************************************************************//**
@@ -65,7 +65,7 @@ struct KeyboardShortcut final
      *      conversion to be able to write expressions such as:
      *
      *      @code{.cpp}
-     *             m_myMenuItem->RegisterKeyboardShortcut({cx::gui::Key::F1});
+     *             m_myMenuItem->RegisterKeyboardShortcut({cx::cmn::ui::Key::F1});
      *      @endcode
      *
      * @param p_shortcut
@@ -100,6 +100,6 @@ struct KeyboardShortcut final
  *************************************************************************************************/
 [[nodiscard]] KeyboardShortcut operator+(Key p_first, Key p_second);
 
-} // namespace cx::gui
+} // namespace cx::cmn::ui
 
 #endif // KEYBOARDSHORTCUT_H_D28AD8FB_B8CC_47FD_BE0F_C7F60C5BF3BC

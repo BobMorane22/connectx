@@ -28,16 +28,16 @@
 namespace
 {
 
-constexpr cx::gui::HorizontalScalingRatio DEFAULT_HORIZONTAL_RATIO{1.0};
-constexpr cx::gui::VerticalScalingRatio DEFAULT_VERTICAL_RATIO{1.0};
+constexpr cx::cmn::ui::HorizontalScalingRatio DEFAULT_HORIZONTAL_RATIO{1.0};
+constexpr cx::cmn::ui::VerticalScalingRatio DEFAULT_VERTICAL_RATIO{1.0};
 
 } // namespace
 
 TEST(ScalingRatios, Constructor_TwoArguments_RatiosSet)
 {
-    constexpr cx::gui::HorizontalScalingRatio hRatioExpected{2.0};
-    constexpr cx::gui::VerticalScalingRatio vRatioExpected{3.0};
-    constexpr cx::gui::ScalingRatios ratios{hRatioExpected, vRatioExpected};
+    constexpr cx::cmn::ui::HorizontalScalingRatio hRatioExpected{2.0};
+    constexpr cx::cmn::ui::VerticalScalingRatio vRatioExpected{3.0};
+    constexpr cx::cmn::ui::ScalingRatios ratios{hRatioExpected, vRatioExpected};
 
     ASSERT_TRUE(ratios.m_horizontalRatio == hRatioExpected);
     ASSERT_TRUE(ratios.m_verticalRatio == vRatioExpected);
@@ -45,8 +45,8 @@ TEST(ScalingRatios, Constructor_TwoArguments_RatiosSet)
 
 TEST(ScalingRatios, Constructor_HorizontalArgumentOnly_RatiosSet)
 {
-    constexpr cx::gui::HorizontalScalingRatio hRatioExpected{2.0};
-    constexpr cx::gui::ScalingRatios ratios{hRatioExpected};
+    constexpr cx::cmn::ui::HorizontalScalingRatio hRatioExpected{2.0};
+    constexpr cx::cmn::ui::ScalingRatios ratios{hRatioExpected};
 
     ASSERT_TRUE(ratios.m_horizontalRatio == hRatioExpected);
     ASSERT_TRUE(ratios.m_verticalRatio == DEFAULT_VERTICAL_RATIO);
@@ -54,8 +54,8 @@ TEST(ScalingRatios, Constructor_HorizontalArgumentOnly_RatiosSet)
 
 TEST(ScalingRatios, Constructor_VerticalArgumentOnly_RatiosSet)
 {
-    constexpr cx::gui::VerticalScalingRatio vRatioExpected{3.0};
-    constexpr cx::gui::ScalingRatios ratios{vRatioExpected};
+    constexpr cx::cmn::ui::VerticalScalingRatio vRatioExpected{3.0};
+    constexpr cx::cmn::ui::ScalingRatios ratios{vRatioExpected};
 
     ASSERT_TRUE(ratios.m_horizontalRatio == DEFAULT_HORIZONTAL_RATIO);
     ASSERT_TRUE(ratios.m_verticalRatio == vRatioExpected);
@@ -63,70 +63,70 @@ TEST(ScalingRatios, Constructor_VerticalArgumentOnly_RatiosSet)
 
 TEST(ScalingRatios, OperatorEqual_TwoEqualRatiosSet_ReturnsTrue)
 {
-    constexpr cx::gui::HorizontalScalingRatio hSame{2.0};
-    constexpr cx::gui::VerticalScalingRatio vSame{3.0};
+    constexpr cx::cmn::ui::HorizontalScalingRatio hSame{2.0};
+    constexpr cx::cmn::ui::VerticalScalingRatio vSame{3.0};
 
-    constexpr cx::gui::ScalingRatios lhs{hSame, vSame};
-    constexpr cx::gui::ScalingRatios rhs{hSame, vSame};
+    constexpr cx::cmn::ui::ScalingRatios lhs{hSame, vSame};
+    constexpr cx::cmn::ui::ScalingRatios rhs{hSame, vSame};
 
     ASSERT_TRUE(lhs == rhs);
 }
 
 TEST(ScalingRatios, OperatorEqual_TwoDifferentRatiosSet_ReturnsFalse)
 {
-    constexpr cx::gui::HorizontalScalingRatio hSame{2.0};
-    constexpr cx::gui::VerticalScalingRatio vSame{3.0};
+    constexpr cx::cmn::ui::HorizontalScalingRatio hSame{2.0};
+    constexpr cx::cmn::ui::VerticalScalingRatio vSame{3.0};
 
     // Horizontal different:
-    constexpr cx::gui::ScalingRatios lhsA{cx::gui::HorizontalScalingRatio{5.0}, vSame};
-    constexpr cx::gui::ScalingRatios rhsA{hSame, vSame};
+    constexpr cx::cmn::ui::ScalingRatios lhsA{cx::cmn::ui::HorizontalScalingRatio{5.0}, vSame};
+    constexpr cx::cmn::ui::ScalingRatios rhsA{hSame, vSame};
 
     ASSERT_FALSE(lhsA == rhsA);
 
     // Vertical different:
-    constexpr cx::gui::ScalingRatios lhsB{hSame, cx::gui::VerticalScalingRatio{5.0}};
-    constexpr cx::gui::ScalingRatios rhsB{hSame, vSame};
+    constexpr cx::cmn::ui::ScalingRatios lhsB{hSame, cx::cmn::ui::VerticalScalingRatio{5.0}};
+    constexpr cx::cmn::ui::ScalingRatios rhsB{hSame, vSame};
 
     ASSERT_FALSE(lhsB == rhsB);
 
     // Both different:
-    constexpr cx::gui::ScalingRatios lhsC{cx::gui::HorizontalScalingRatio{5.0}, cx::gui::VerticalScalingRatio{6.0}};
-    constexpr cx::gui::ScalingRatios rhsC{hSame, vSame};
+    constexpr cx::cmn::ui::ScalingRatios lhsC{cx::cmn::ui::HorizontalScalingRatio{5.0}, cx::cmn::ui::VerticalScalingRatio{6.0}};
+    constexpr cx::cmn::ui::ScalingRatios rhsC{hSame, vSame};
 
     ASSERT_FALSE(lhsC == rhsC);
 }
 
 TEST(ScalingRatios, OperatorNotEqual_TwoEqualRatiosSet_ReturnsFalse)
 {
-    constexpr cx::gui::HorizontalScalingRatio hSame{2.0};
-    constexpr cx::gui::VerticalScalingRatio vSame{3.0};
+    constexpr cx::cmn::ui::HorizontalScalingRatio hSame{2.0};
+    constexpr cx::cmn::ui::VerticalScalingRatio vSame{3.0};
 
-    constexpr cx::gui::ScalingRatios lhs{hSame, vSame};
-    constexpr cx::gui::ScalingRatios rhs{hSame, vSame};
+    constexpr cx::cmn::ui::ScalingRatios lhs{hSame, vSame};
+    constexpr cx::cmn::ui::ScalingRatios rhs{hSame, vSame};
 
     ASSERT_FALSE(lhs != rhs);
 }
 
 TEST(ScalingRatios, OperatorNotEqual_TwoDifferentRatiosSet_ReturnsTrue)
 {
-    constexpr cx::gui::HorizontalScalingRatio hSame{2.0};
-    constexpr cx::gui::VerticalScalingRatio vSame{3.0};
+    constexpr cx::cmn::ui::HorizontalScalingRatio hSame{2.0};
+    constexpr cx::cmn::ui::VerticalScalingRatio vSame{3.0};
 
     // Horizontal different:
-    constexpr cx::gui::ScalingRatios lhsA{cx::gui::HorizontalScalingRatio{5.0}, vSame};
-    constexpr cx::gui::ScalingRatios rhsA{hSame, vSame};
+    constexpr cx::cmn::ui::ScalingRatios lhsA{cx::cmn::ui::HorizontalScalingRatio{5.0}, vSame};
+    constexpr cx::cmn::ui::ScalingRatios rhsA{hSame, vSame};
 
     ASSERT_TRUE(lhsA != rhsA);
 
     // Vertical different:
-    constexpr cx::gui::ScalingRatios lhsB{hSame, cx::gui::VerticalScalingRatio{5.0}};
-    constexpr cx::gui::ScalingRatios rhsB{hSame, vSame};
+    constexpr cx::cmn::ui::ScalingRatios lhsB{hSame, cx::cmn::ui::VerticalScalingRatio{5.0}};
+    constexpr cx::cmn::ui::ScalingRatios rhsB{hSame, vSame};
 
     ASSERT_TRUE(lhsB != rhsB);
 
     // Both different:
-    constexpr cx::gui::ScalingRatios lhsC{cx::gui::HorizontalScalingRatio{5.0}, cx::gui::VerticalScalingRatio{6.0}};
-    constexpr cx::gui::ScalingRatios rhsC{hSame, vSame};
+    constexpr cx::cmn::ui::ScalingRatios lhsC{cx::cmn::ui::HorizontalScalingRatio{5.0}, cx::cmn::ui::VerticalScalingRatio{6.0}};
+    constexpr cx::cmn::ui::ScalingRatios rhsC{hSame, vSame};
 
     ASSERT_TRUE(lhsC != rhsC);
 }

@@ -32,7 +32,7 @@
 #include <cxgui/IAnimatedBoardModel.h>
 #include <cxgui/IAnimatedBoardPresenter.h>
 
-using namespace cx::gui;
+using namespace cx::cmn::ui;
 
 namespace
 {
@@ -54,8 +54,8 @@ public:
         ASSERT_ERROR_MSG("Unknown frame animation strategy");
     }
 
-    std::optional<cx::gui::BoardAnimationNotificationContext> PerformAnimation(cx::gui::AnimationInformations<cx::math::Height>& /*p_verticalAnimationInfo*/,
-                                                                             cx::gui::AnimationInformations<cx::math::Width>& /*p_horizontalAnimationInfo*/) override
+    std::optional<cx::cmn::ui::BoardAnimationNotificationContext> PerformAnimation(cx::cmn::ui::AnimationInformations<cx::math::Height>& /*p_verticalAnimationInfo*/,
+                                                                             cx::cmn::ui::AnimationInformations<cx::math::Width>& /*p_horizontalAnimationInfo*/) override
     {
         return std::nullopt;
     }
@@ -77,8 +77,8 @@ public:
     {
     }
 
-    std::optional<cx::gui::BoardAnimationNotificationContext> PerformAnimation(cx::gui::AnimationInformations<cx::math::Height>& p_verticalAnimationInfo,
-                                                                             cx::gui::AnimationInformations<cx::math::Width>& p_horizontalAnimationInfo) override;
+    std::optional<cx::cmn::ui::BoardAnimationNotificationContext> PerformAnimation(cx::cmn::ui::AnimationInformations<cx::math::Height>& p_verticalAnimationInfo,
+                                                                             cx::cmn::ui::AnimationInformations<cx::math::Width>& p_horizontalAnimationInfo) override;
 
 private:
 
@@ -86,8 +86,8 @@ private:
     const IAnimatedBoardPresenter& m_presenter;
 };
 
-std::optional<cx::gui::BoardAnimationNotificationContext> MoveChipLeftOneColumnFrameAnimationStrategy::MoveChipLeftOneColumnFrameAnimationStrategy::PerformAnimation(cx::gui::AnimationInformations<cx::math::Height>& /*p_verticalAnimationInfo*/,
-                                                                                                                                                                   cx::gui::AnimationInformations<cx::math::Width>& p_horizontalAnimationInfo)
+std::optional<cx::cmn::ui::BoardAnimationNotificationContext> MoveChipLeftOneColumnFrameAnimationStrategy::MoveChipLeftOneColumnFrameAnimationStrategy::PerformAnimation(cx::cmn::ui::AnimationInformations<cx::math::Height>& /*p_verticalAnimationInfo*/,
+                                                                                                                                                                   cx::cmn::ui::AnimationInformations<cx::math::Width>& p_horizontalAnimationInfo)
 {
     const double fps = static_cast<double>(m_animationModel.GetFPS().Get());
     const double speed = static_cast<double>(m_animationModel.GetAnimationSpeed().Get());
@@ -110,7 +110,7 @@ std::optional<cx::gui::BoardAnimationNotificationContext> MoveChipLeftOneColumnF
 
         // End animation:
         p_horizontalAnimationInfo.Reset();
-        return cx::gui::BoardAnimationNotificationContext::POST_ANIMATE_MOVE_LEFT_ONE_COLUMN;
+        return cx::cmn::ui::BoardAnimationNotificationContext::POST_ANIMATE_MOVE_LEFT_ONE_COLUMN;
     }
     else
     {
@@ -137,8 +137,8 @@ public:
     {
     }
 
-    std::optional<cx::gui::BoardAnimationNotificationContext> PerformAnimation(cx::gui::AnimationInformations<cx::math::Height>& p_verticalAnimationInfo,
-                                                                             cx::gui::AnimationInformations<cx::math::Width>& p_horizontalAnimationInfo) override;
+    std::optional<cx::cmn::ui::BoardAnimationNotificationContext> PerformAnimation(cx::cmn::ui::AnimationInformations<cx::math::Height>& p_verticalAnimationInfo,
+                                                                             cx::cmn::ui::AnimationInformations<cx::math::Width>& p_horizontalAnimationInfo) override;
 
 private:
 
@@ -146,8 +146,8 @@ private:
     IAnimatedBoardPresenter& m_presenter;
 };
 
-std::optional<cx::gui::BoardAnimationNotificationContext> MoveChipRightOneColumnFrameAnimationStrategy::MoveChipRightOneColumnFrameAnimationStrategy::PerformAnimation(cx::gui::AnimationInformations<cx::math::Height>& /*p_verticalAnimationInfo*/,
-                                                                                                                                                                     cx::gui::AnimationInformations<cx::math::Width>& p_horizontalAnimationInfo)
+std::optional<cx::cmn::ui::BoardAnimationNotificationContext> MoveChipRightOneColumnFrameAnimationStrategy::MoveChipRightOneColumnFrameAnimationStrategy::PerformAnimation(cx::cmn::ui::AnimationInformations<cx::math::Height>& /*p_verticalAnimationInfo*/,
+                                                                                                                                                                     cx::cmn::ui::AnimationInformations<cx::math::Width>& p_horizontalAnimationInfo)
 {
     const double fps = static_cast<double>(m_animationModel.GetFPS().Get());
     const double speed = static_cast<double>(m_animationModel.GetAnimationSpeed().Get());
@@ -170,7 +170,7 @@ std::optional<cx::gui::BoardAnimationNotificationContext> MoveChipRightOneColumn
         // End animation:
         p_horizontalAnimationInfo.Reset();
         m_presenter.Sync();
-        return cx::gui::BoardAnimationNotificationContext::POST_ANIMATE_MOVE_RIGHT_ONE_COLUMN;
+        return cx::cmn::ui::BoardAnimationNotificationContext::POST_ANIMATE_MOVE_RIGHT_ONE_COLUMN;
     }
     else
     {
@@ -197,8 +197,8 @@ public:
     {
     }
 
-    std::optional<cx::gui::BoardAnimationNotificationContext> PerformAnimation(cx::gui::AnimationInformations<cx::math::Height>& p_verticalAnimationInfo,
-                                                                             cx::gui::AnimationInformations<cx::math::Width>& p_horizontalAnimationInfo) override;
+    std::optional<cx::cmn::ui::BoardAnimationNotificationContext> PerformAnimation(cx::cmn::ui::AnimationInformations<cx::math::Height>& p_verticalAnimationInfo,
+                                                                             cx::cmn::ui::AnimationInformations<cx::math::Width>& p_horizontalAnimationInfo) override;
 
 private:
 
@@ -206,8 +206,8 @@ private:
     IAnimatedBoardPresenter& m_presenter;
 };
 
-std::optional<cx::gui::BoardAnimationNotificationContext> MoveChipRightToTargetFrameAnimationStrategy::MoveChipRightToTargetFrameAnimationStrategy::PerformAnimation(cx::gui::AnimationInformations<cx::math::Height>& /*p_verticalAnimationInfo*/,
-                                                                                                                                                                   cx::gui::AnimationInformations<cx::math::Width>& p_horizontalAnimationInfo)
+std::optional<cx::cmn::ui::BoardAnimationNotificationContext> MoveChipRightToTargetFrameAnimationStrategy::MoveChipRightToTargetFrameAnimationStrategy::PerformAnimation(cx::cmn::ui::AnimationInformations<cx::math::Height>& /*p_verticalAnimationInfo*/,
+                                                                                                                                                                   cx::cmn::ui::AnimationInformations<cx::math::Width>& p_horizontalAnimationInfo)
 {
     // Simulates the drop column computed by the model for the bot...
     const cx::model::Column target{m_presenter.GetBotTarget()};
@@ -229,7 +229,7 @@ std::optional<cx::gui::BoardAnimationNotificationContext> MoveChipRightToTargetF
         m_animationModel.UpdateCurrentColumn(target);
         m_presenter.Sync();
 
-        return cx::gui::BoardAnimationNotificationContext::POST_ANIMATE_MOVE_RIGHT_TO_TARGET;
+        return cx::cmn::ui::BoardAnimationNotificationContext::POST_ANIMATE_MOVE_RIGHT_TO_TARGET;
     }
     else
     {
@@ -267,8 +267,8 @@ public:
     {
     }
 
-    std::optional<cx::gui::BoardAnimationNotificationContext> PerformAnimation(cx::gui::AnimationInformations<cx::math::Height>& p_verticalAnimationInfo,
-                                                                             cx::gui::AnimationInformations<cx::math::Width>& p_horizontalAnimationInfo) override;
+    std::optional<cx::cmn::ui::BoardAnimationNotificationContext> PerformAnimation(cx::cmn::ui::AnimationInformations<cx::math::Height>& p_verticalAnimationInfo,
+                                                                             cx::cmn::ui::AnimationInformations<cx::math::Width>& p_horizontalAnimationInfo) override;
 
 private:
 
@@ -295,8 +295,8 @@ cx::model::Row DropChipFrameAnimationStrategy::GetDropPosition(const cx::model::
     return dropRow;
 }
 
-std::optional<cx::gui::BoardAnimationNotificationContext> DropChipFrameAnimationStrategy::DropChipFrameAnimationStrategy::PerformAnimation(cx::gui::AnimationInformations<cx::math::Height>& p_verticalAnimationInfo,
-                                                                                                                                         cx::gui::AnimationInformations<cx::math::Width>& /*p_horizontalAnimationInfo*/)
+std::optional<cx::cmn::ui::BoardAnimationNotificationContext> DropChipFrameAnimationStrategy::DropChipFrameAnimationStrategy::PerformAnimation(cx::cmn::ui::AnimationInformations<cx::math::Height>& p_verticalAnimationInfo,
+                                                                                                                                         cx::cmn::ui::AnimationInformations<cx::math::Width>& /*p_horizontalAnimationInfo*/)
 {
     const double cellHeight = m_animationModel.GetCellDimensions().m_height.Get();
     const double oneAnimationHeight = (GetDropPosition(m_animationModel.GetCurrentColumn()) + cx::model::Row{1}).Get() * cellHeight;
@@ -331,7 +331,7 @@ std::optional<cx::gui::BoardAnimationNotificationContext> DropChipFrameAnimation
 
         m_presenter.Sync();
 
-        return cx::gui::BoardAnimationNotificationContext::POST_ANIMATE_DROP_CHIP;
+        return cx::cmn::ui::BoardAnimationNotificationContext::POST_ANIMATE_DROP_CHIP;
     }
     else
     {
@@ -359,8 +359,8 @@ public:
     {
     }
 
-    std::optional<cx::gui::BoardAnimationNotificationContext> PerformAnimation(cx::gui::AnimationInformations<cx::math::Height>& p_verticalAnimationInfo,
-                                                                             cx::gui::AnimationInformations<cx::math::Width>& p_horizontalAnimationInfo) override;
+    std::optional<cx::cmn::ui::BoardAnimationNotificationContext> PerformAnimation(cx::cmn::ui::AnimationInformations<cx::math::Height>& p_verticalAnimationInfo,
+                                                                             cx::cmn::ui::AnimationInformations<cx::math::Width>& p_horizontalAnimationInfo) override;
 
 private:
 
@@ -370,8 +370,8 @@ private:
     IAnimatedBoardPresenter& m_presenter;
 };
 
-std::optional<cx::gui::BoardAnimationNotificationContext> UndoDropChipFrameAnimationStrategy::UndoDropChipFrameAnimationStrategy::PerformAnimation(cx::gui::AnimationInformations<cx::math::Height>& /*p_verticalAnimationInfo*/,
-                                                                                                                                                 cx::gui::AnimationInformations<cx::math::Width>& /*p_horizontalAnimationInfo*/)
+std::optional<cx::cmn::ui::BoardAnimationNotificationContext> UndoDropChipFrameAnimationStrategy::UndoDropChipFrameAnimationStrategy::PerformAnimation(cx::cmn::ui::AnimationInformations<cx::math::Height>& /*p_verticalAnimationInfo*/,
+                                                                                                                                                 cx::cmn::ui::AnimationInformations<cx::math::Width>& /*p_horizontalAnimationInfo*/)
 {
     // Reinitialize chip:
     m_animationModel.ResetChipPositions();
@@ -379,7 +379,7 @@ std::optional<cx::gui::BoardAnimationNotificationContext> UndoDropChipFrameAnima
     
     m_presenter.Sync();
     
-    return cx::gui::BoardAnimationNotificationContext::POST_ANIMATE_UNDO_DROP_CHIP;
+    return cx::cmn::ui::BoardAnimationNotificationContext::POST_ANIMATE_UNDO_DROP_CHIP;
 }
 
 /**************************************************************************************************
@@ -398,8 +398,8 @@ public:
     {
     }
 
-    std::optional<cx::gui::BoardAnimationNotificationContext> PerformAnimation(cx::gui::AnimationInformations<cx::math::Height>& p_verticalAnimationInfo,
-                                                                             cx::gui::AnimationInformations<cx::math::Width>& p_horizontalAnimationInfo) override;
+    std::optional<cx::cmn::ui::BoardAnimationNotificationContext> PerformAnimation(cx::cmn::ui::AnimationInformations<cx::math::Height>& p_verticalAnimationInfo,
+                                                                             cx::cmn::ui::AnimationInformations<cx::math::Width>& p_horizontalAnimationInfo) override;
 
 private:
 
@@ -409,8 +409,8 @@ private:
     IAnimatedBoardPresenter& m_presenter;
 };
 
-std::optional<cx::gui::BoardAnimationNotificationContext> RedoDropChipFrameAnimationStrategy::RedoDropChipFrameAnimationStrategy::PerformAnimation(cx::gui::AnimationInformations<cx::math::Height>& /*p_verticalAnimationInfo*/,
-                                                                                                                                                 cx::gui::AnimationInformations<cx::math::Width>& /*p_horizontalAnimationInfo*/)
+std::optional<cx::cmn::ui::BoardAnimationNotificationContext> RedoDropChipFrameAnimationStrategy::RedoDropChipFrameAnimationStrategy::PerformAnimation(cx::cmn::ui::AnimationInformations<cx::math::Height>& /*p_verticalAnimationInfo*/,
+                                                                                                                                                 cx::cmn::ui::AnimationInformations<cx::math::Width>& /*p_horizontalAnimationInfo*/)
 {
     // Reinitialize chip:
     m_animationModel.ResetChipPositions();
@@ -418,7 +418,7 @@ std::optional<cx::gui::BoardAnimationNotificationContext> RedoDropChipFrameAnima
     
     m_presenter.Sync();
     
-    return cx::gui::BoardAnimationNotificationContext::POST_ANIMATE_REDO_DROP_CHIP;
+    return cx::cmn::ui::BoardAnimationNotificationContext::POST_ANIMATE_REDO_DROP_CHIP;
 }
 
 /**************************************************************************************************
@@ -437,8 +437,8 @@ public:
     {
     }
 
-    std::optional<cx::gui::BoardAnimationNotificationContext> PerformAnimation(cx::gui::AnimationInformations<cx::math::Height>& p_verticalAnimationInfo,
-                                                                             cx::gui::AnimationInformations<cx::math::Width>& p_horizontalAnimationInfo) override;
+    std::optional<cx::cmn::ui::BoardAnimationNotificationContext> PerformAnimation(cx::cmn::ui::AnimationInformations<cx::math::Height>& p_verticalAnimationInfo,
+                                                                             cx::cmn::ui::AnimationInformations<cx::math::Width>& p_horizontalAnimationInfo) override;
 
 private:
 
@@ -448,8 +448,8 @@ private:
     IAnimatedBoardPresenter& m_presenter;
 };
 
-std::optional<cx::gui::BoardAnimationNotificationContext> ReinitializeFrameAnimationStrategy::ReinitializeFrameAnimationStrategy::PerformAnimation(cx::gui::AnimationInformations<cx::math::Height>& /*p_verticalAnimationInfo*/,
-                                                                                                                                                 cx::gui::AnimationInformations<cx::math::Width>& /*p_horizontalAnimationInfo*/)
+std::optional<cx::cmn::ui::BoardAnimationNotificationContext> ReinitializeFrameAnimationStrategy::ReinitializeFrameAnimationStrategy::PerformAnimation(cx::cmn::ui::AnimationInformations<cx::math::Height>& /*p_verticalAnimationInfo*/,
+                                                                                                                                                 cx::cmn::ui::AnimationInformations<cx::math::Width>& /*p_horizontalAnimationInfo*/)
 {
     // Reinitialize chip:
     m_animationModel.ResetChipPositions();
@@ -457,7 +457,7 @@ std::optional<cx::gui::BoardAnimationNotificationContext> ReinitializeFrameAnima
     
     m_presenter.Sync();
     
-    return cx::gui::BoardAnimationNotificationContext::POST_ANIMATE_REINITIALIZE_BOARD;
+    return cx::cmn::ui::BoardAnimationNotificationContext::POST_ANIMATE_REINITIALIZE_BOARD;
 }
 
 } // unamed namespace
@@ -467,31 +467,31 @@ std::optional<cx::gui::BoardAnimationNotificationContext> ReinitializeFrameAnima
  * Factory method.
  *
  *************************************************************************************************/
-std::unique_ptr<IFrameAnimationStrategy> cx::gui::CreateFrameAnimationStrategy(IAnimatedBoardModel& p_animationModel,
+std::unique_ptr<IFrameAnimationStrategy> cx::cmn::ui::CreateFrameAnimationStrategy(IAnimatedBoardModel& p_animationModel,
                                                                              IAnimatedBoardPresenter& p_presenter,
                                                                              const BoardAnimation p_animation)
 {
     switch(p_animation)
     {
-        case cx::gui::BoardAnimation::MOVE_CHIP_LEFT_ONE_COLUMN:
+        case cx::cmn::ui::BoardAnimation::MOVE_CHIP_LEFT_ONE_COLUMN:
             return std::make_unique<MoveChipLeftOneColumnFrameAnimationStrategy>(p_animationModel, p_presenter);
 
-        case cx::gui::BoardAnimation::MOVE_CHIP_RIGHT_ONE_COLUMN:
+        case cx::cmn::ui::BoardAnimation::MOVE_CHIP_RIGHT_ONE_COLUMN:
             return std::make_unique<MoveChipRightOneColumnFrameAnimationStrategy>(p_animationModel, p_presenter);
 
-        case cx::gui::BoardAnimation::MOVE_CHIP_RIGHT_TO_TARGET:
+        case cx::cmn::ui::BoardAnimation::MOVE_CHIP_RIGHT_TO_TARGET:
             return std::make_unique<MoveChipRightToTargetFrameAnimationStrategy>(p_animationModel, p_presenter);
 
-        case cx::gui::BoardAnimation::DROP_CHIP:
+        case cx::cmn::ui::BoardAnimation::DROP_CHIP:
             return std::make_unique<DropChipFrameAnimationStrategy>(p_animationModel, p_presenter);
 
-        case cx::gui::BoardAnimation::UNDO_DROP_CHIP:
+        case cx::cmn::ui::BoardAnimation::UNDO_DROP_CHIP:
             return std::make_unique<UndoDropChipFrameAnimationStrategy>(p_animationModel, p_presenter);
 
-        case cx::gui::BoardAnimation::REDO_DROP_CHIP:
+        case cx::cmn::ui::BoardAnimation::REDO_DROP_CHIP:
             return std::make_unique<RedoDropChipFrameAnimationStrategy>(p_animationModel, p_presenter);
 
-        case cx::gui::BoardAnimation::REINITIALIZE:
+        case cx::cmn::ui::BoardAnimation::REINITIALIZE:
             return std::make_unique<ReinitializeFrameAnimationStrategy>(p_animationModel, p_presenter);
 
         default:

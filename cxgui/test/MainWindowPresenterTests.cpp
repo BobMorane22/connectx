@@ -122,47 +122,47 @@ TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetWindowTitle_GetWindowTitl
 
 TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetMenuLabel_GameMenu_GameMenuLabelReturned)
 {
-    ASSERT_EQ(GetPresenter().GetMenuLabel(cx::gui::MenuItem::GAME), "Game");
+    ASSERT_EQ(GetPresenter().GetMenuLabel(cx::cmn::ui::MenuItem::GAME), "Game");
 }
 
 TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetMenuLabel_NewGameMenu_NewGameMenuLabelReturned)
 {
-    ASSERT_EQ(GetPresenter().GetMenuLabel(cx::gui::MenuItem::NEW_GAME), "New");
+    ASSERT_EQ(GetPresenter().GetMenuLabel(cx::cmn::ui::MenuItem::NEW_GAME), "New");
 }
 
 TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetMenuLabel_ReinitializeMenu_ReinitializeMenuLabelReturned)
 {
-    ASSERT_EQ(GetPresenter().GetMenuLabel(cx::gui::MenuItem::REINITIALIZE_GAME), "Reinitialize");
+    ASSERT_EQ(GetPresenter().GetMenuLabel(cx::cmn::ui::MenuItem::REINITIALIZE_GAME), "Reinitialize");
 }
 
 TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetMenuLabel_UndoMenu_UndoMenuLabelReturned)
 {
-    ASSERT_EQ(GetPresenter().GetMenuLabel(cx::gui::MenuItem::UNDO), "Undo");
+    ASSERT_EQ(GetPresenter().GetMenuLabel(cx::cmn::ui::MenuItem::UNDO), "Undo");
 }
 
 TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetMenuLabel_RedoMenu_RedoMenuLabelReturned)
 {
-    ASSERT_EQ(GetPresenter().GetMenuLabel(cx::gui::MenuItem::REDO), "Redo");
+    ASSERT_EQ(GetPresenter().GetMenuLabel(cx::cmn::ui::MenuItem::REDO), "Redo");
 }
 
 TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetMenuLabel_QuitMenu_QuitMenuLabelReturned)
 {
-    ASSERT_EQ(GetPresenter().GetMenuLabel(cx::gui::MenuItem::QUIT), "Quit");
+    ASSERT_EQ(GetPresenter().GetMenuLabel(cx::cmn::ui::MenuItem::QUIT), "Quit");
 }
 
 TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetMenuLabel_HelpMenu_HelpMenuLabelReturned)
 {
-    ASSERT_EQ(GetPresenter().GetMenuLabel(cx::gui::MenuItem::HELP), "Help");
+    ASSERT_EQ(GetPresenter().GetMenuLabel(cx::cmn::ui::MenuItem::HELP), "Help");
 }
 
 TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetMenuLabel_ContentsMenu_ContentsMenuLabelReturned)
 {
-    ASSERT_EQ(GetPresenter().GetMenuLabel(cx::gui::MenuItem::CONTENTS), "Contents");
+    ASSERT_EQ(GetPresenter().GetMenuLabel(cx::cmn::ui::MenuItem::CONTENTS), "Contents");
 }
 
 TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/GetMenuLabel_AboutMenu_AboutMenuLabelReturned)
 {
-    ASSERT_EQ(GetPresenter().GetMenuLabel(cx::gui::MenuItem::ABOUT), "About");
+    ASSERT_EQ(GetPresenter().GetMenuLabel(cx::cmn::ui::MenuItem::ABOUT), "About");
 }
 
 TEST_F(MainWindowPresenterTestFixture, /*DISABLED_*/Update_CreateNewGame_NewGameInformationUpdated)

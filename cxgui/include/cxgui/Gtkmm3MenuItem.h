@@ -37,16 +37,16 @@ namespace Gtk
     class Grid;
 }
 
-namespace cx::gui::FreeDesktop
+namespace cx::cmn::ui::FreeDesktop
 {
     enum class StdActionIcon;
 }
 
-namespace cx::gui
+namespace cx::cmn::ui
 {
 
 /**********************************************************************************************//**
- * @brief Gtkmm 3 implementation for the `cx::gui::IMenuItem` interface.
+ * @brief Gtkmm 3 implementation for the `cx::cmn::ui::IMenuItem` interface.
  *
  *************************************************************************************************/
 class Gtkmm3MenuItem : public IMenuItem,
@@ -79,7 +79,7 @@ public:
     /*******************************************************************************************//**
      * @brief Sets the delegate for widget common facilities.
      *
-     * The delegate is reponsible to carry the implementation for generic `cx::gui::IWidget` operations.
+     * The delegate is reponsible to carry the implementation for generic `cx::cmn::ui::IWidget` operations.
      * It is meant to avoid implementation duplication.
      *
      * @param p_delegate
@@ -93,11 +93,11 @@ public:
      **********************************************************************************************/
     void SetDelegate(std::unique_ptr<IWidget> p_delegate);
 
-    // cx::gui::IMenuItem:
+    // cx::cmn::ui::IMenuItem:
     [[nodiscard]] std::unique_ptr<ISignal<void>> OnTriggered() override;
     void RegisterKeyboardShortcut(const KeyboardShortcut& p_shortcut) override;
 
-    // cx::gui::IWidget:
+    // cx::cmn::ui::IWidget:
     [[nodiscard]] size_t GetWidth() const override;
     [[nodiscard]] size_t GetHeight() const override;
     void SetEnabled(EnabledState p_enabled) override;
@@ -115,6 +115,6 @@ private:
 
 };
 
-} // namespace cx::gui
+} // namespace cx::cmn::ui
 
 #endif // GTKMM3MENUITEM_H_C4184C81_A135_45A6_A70F_71CDA081E9F2

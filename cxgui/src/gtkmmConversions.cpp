@@ -31,41 +31,41 @@
 #include <cxgui/KeyboardKeyPressedEvent.h>
 
 template<>
-std::optional<cx::gui::KeyboardKeyPressedEvent> cx::gui::FromGtk<cx::gui::KeyboardKeyPressedEvent, GdkEventKey>(const GdkEventKey& p_event)
+std::optional<cx::cmn::ui::KeyboardKeyPressedEvent> cx::cmn::ui::FromGtk<cx::cmn::ui::KeyboardKeyPressedEvent, GdkEventKey>(const GdkEventKey& p_event)
 {
     RETURN_IF(p_event.type != GdkEventType::GDK_KEY_PRESS, std::nullopt);
 
     switch(p_event.keyval)
     {
-        case GDK_KEY_Left  : return cx::gui::KeyboardKeyPressedEvent::KEY_LEFT;
-        case GDK_KEY_Right : return cx::gui::KeyboardKeyPressedEvent::KEY_RIGHT;
-        case GDK_KEY_Down  : return cx::gui::KeyboardKeyPressedEvent::KEY_DOWN;
+        case GDK_KEY_Left  : return cx::cmn::ui::KeyboardKeyPressedEvent::KEY_LEFT;
+        case GDK_KEY_Right : return cx::cmn::ui::KeyboardKeyPressedEvent::KEY_RIGHT;
+        case GDK_KEY_Down  : return cx::cmn::ui::KeyboardKeyPressedEvent::KEY_DOWN;
     }
 
     return std::nullopt;
 }
 
 template<>
-std::optional<bool> cx::gui::ToGtk<bool, cx::gui::EventPropagation>(const cx::gui::EventPropagation& p_propagate)
+std::optional<bool> cx::cmn::ui::ToGtk<bool, cx::cmn::ui::EventPropagation>(const cx::cmn::ui::EventPropagation& p_propagate)
 {
     switch(p_propagate)
     {
-        case cx::gui::EventPropagation::PROPAGATE : return false;
-        case cx::gui::EventPropagation::STOP      : return true;
+        case cx::cmn::ui::EventPropagation::PROPAGATE : return false;
+        case cx::cmn::ui::EventPropagation::STOP      : return true;
     };
 
     return std::nullopt;
 }
 
 template<>
-std::optional<guint> cx::gui::ToGtk<guint, cx::gui::Key>(const cx::gui::Key& p_key)
+std::optional<guint> cx::cmn::ui::ToGtk<guint, cx::cmn::ui::Key>(const cx::cmn::ui::Key& p_key)
 {
     switch(p_key)
     {
-        case cx::gui::Key::F1 : return GDK_KEY_F1;
-        case cx::gui::Key::Q  : return GDK_KEY_q;
-        case cx::gui::Key::Y  : return GDK_KEY_y;
-        case cx::gui::Key::Z  : return GDK_KEY_z;
+        case cx::cmn::ui::Key::F1 : return GDK_KEY_F1;
+        case cx::cmn::ui::Key::Q  : return GDK_KEY_q;
+        case cx::cmn::ui::Key::Y  : return GDK_KEY_y;
+        case cx::cmn::ui::Key::Z  : return GDK_KEY_z;
         default             : return std::nullopt;
     }
 
@@ -74,11 +74,11 @@ std::optional<guint> cx::gui::ToGtk<guint, cx::gui::Key>(const cx::gui::Key& p_k
 }
 
 template<>
-std::optional<Gdk::ModifierType> cx::gui::ToGtk<Gdk::ModifierType, cx::gui::Key>(const cx::gui::Key& p_key)
+std::optional<Gdk::ModifierType> cx::cmn::ui::ToGtk<Gdk::ModifierType, cx::cmn::ui::Key>(const cx::cmn::ui::Key& p_key)
 {
     switch(p_key)
     {
-        case cx::gui::Key::CTRL : return Gdk::ModifierType::CONTROL_MASK;
+        case cx::cmn::ui::Key::CTRL : return Gdk::ModifierType::CONTROL_MASK;
         default               : return std::nullopt;
     }
 
@@ -87,40 +87,40 @@ std::optional<Gdk::ModifierType> cx::gui::ToGtk<Gdk::ModifierType, cx::gui::Key>
 }
 
 template<>
-std::optional<Gtk::MessageType> cx::gui::ToGtk<Gtk::MessageType, cx::gui::DialogRole>(const cx::gui::DialogRole& p_role)
+std::optional<Gtk::MessageType> cx::cmn::ui::ToGtk<Gtk::MessageType, cx::cmn::ui::DialogRole>(const cx::cmn::ui::DialogRole& p_role)
 {
     switch(p_role)
     {
-        case cx::gui::DialogRole::INFORMATION : return Gtk::MESSAGE_INFO;
-        case cx::gui::DialogRole::QUESTION    : return Gtk::MESSAGE_QUESTION;
-        case cx::gui::DialogRole::WARNING     : return Gtk::MESSAGE_WARNING;
-        case cx::gui::DialogRole::ERROR       : return Gtk::MESSAGE_ERROR;
+        case cx::cmn::ui::DialogRole::INFORMATION : return Gtk::MESSAGE_INFO;
+        case cx::cmn::ui::DialogRole::QUESTION    : return Gtk::MESSAGE_QUESTION;
+        case cx::cmn::ui::DialogRole::WARNING     : return Gtk::MESSAGE_WARNING;
+        case cx::cmn::ui::DialogRole::ERROR       : return Gtk::MESSAGE_ERROR;
     }
 
     return std::nullopt;
 }
 
-template<> std::optional<Gtk::Align> cx::gui::ToGtk<Gtk::Align, cx::gui::ILayout::VerticalAlignement>(const cx::gui::ILayout::VerticalAlignement& p_alignement)
+template<> std::optional<Gtk::Align> cx::cmn::ui::ToGtk<Gtk::Align, cx::cmn::ui::ILayout::VerticalAlignement>(const cx::cmn::ui::ILayout::VerticalAlignement& p_alignement)
 {
     switch(p_alignement)
     {
-        case cx::gui::ILayout::VerticalAlignement::TOP    : return Gtk::Align::ALIGN_START;
-        case cx::gui::ILayout::VerticalAlignement::CENTER : return Gtk::Align::ALIGN_CENTER;
-        case cx::gui::ILayout::VerticalAlignement::BOTTOM : return Gtk::Align::ALIGN_END;
-        case cx::gui::ILayout::VerticalAlignement::FILL   : return Gtk::Align::ALIGN_FILL;
+        case cx::cmn::ui::ILayout::VerticalAlignement::TOP    : return Gtk::Align::ALIGN_START;
+        case cx::cmn::ui::ILayout::VerticalAlignement::CENTER : return Gtk::Align::ALIGN_CENTER;
+        case cx::cmn::ui::ILayout::VerticalAlignement::BOTTOM : return Gtk::Align::ALIGN_END;
+        case cx::cmn::ui::ILayout::VerticalAlignement::FILL   : return Gtk::Align::ALIGN_FILL;
     }
 
     return std::nullopt;
 }
 
-template<> std::optional<Gtk::Align> cx::gui::ToGtk<Gtk::Align, cx::gui::ILayout::HorizontalAlignement>(const cx::gui::ILayout::HorizontalAlignement& p_alignement)
+template<> std::optional<Gtk::Align> cx::cmn::ui::ToGtk<Gtk::Align, cx::cmn::ui::ILayout::HorizontalAlignement>(const cx::cmn::ui::ILayout::HorizontalAlignement& p_alignement)
 {
     switch(p_alignement)
     {
-        case cx::gui::ILayout::HorizontalAlignement::LEFT   : return Gtk::Align::ALIGN_START;
-        case cx::gui::ILayout::HorizontalAlignement::CENTER : return Gtk::Align::ALIGN_CENTER;
-        case cx::gui::ILayout::HorizontalAlignement::RIGHT  : return Gtk::Align::ALIGN_END;
-        case cx::gui::ILayout::HorizontalAlignement::FILL   : return Gtk::Align::ALIGN_FILL;
+        case cx::cmn::ui::ILayout::HorizontalAlignement::LEFT   : return Gtk::Align::ALIGN_START;
+        case cx::cmn::ui::ILayout::HorizontalAlignement::CENTER : return Gtk::Align::ALIGN_CENTER;
+        case cx::cmn::ui::ILayout::HorizontalAlignement::RIGHT  : return Gtk::Align::ALIGN_END;
+        case cx::cmn::ui::ILayout::HorizontalAlignement::FILL   : return Gtk::Align::ALIGN_FILL;
     }
 
     return std::nullopt;

@@ -25,26 +25,26 @@
 
 #include <cxgui/Gtkmm3AnimatedBoardTimerRAII.h>
 
-cx::gui::Gtkmm3AnimatedBoardTimerRAII::Gtkmm3AnimatedBoardTimer::Gtkmm3AnimatedBoardTimer()
+cx::cmn::ui::Gtkmm3AnimatedBoardTimerRAII::Gtkmm3AnimatedBoardTimer::Gtkmm3AnimatedBoardTimer()
 : m_period{Period{1000.0}}
 {
 }
 
-void cx::gui::Gtkmm3AnimatedBoardTimerRAII::Gtkmm3AnimatedBoardTimer::SetCallback(Callback&& p_callback)
+void cx::cmn::ui::Gtkmm3AnimatedBoardTimerRAII::Gtkmm3AnimatedBoardTimer::SetCallback(Callback&& p_callback)
 {
     IF_PRECONDITION_NOT_MET_DO(bool(p_callback), return;);
 
     m_callback = std::move(p_callback);
 }
 
-void cx::gui::Gtkmm3AnimatedBoardTimerRAII::Gtkmm3AnimatedBoardTimer::SetPeriod(Period&& p_period)
+void cx::cmn::ui::Gtkmm3AnimatedBoardTimerRAII::Gtkmm3AnimatedBoardTimer::SetPeriod(Period&& p_period)
 {
     IF_PRECONDITION_NOT_MET_DO(p_period.Get() > 0.0, return;);
 
     m_period = std::move(p_period);
 }
 
-void cx::gui::Gtkmm3AnimatedBoardTimerRAII::Gtkmm3AnimatedBoardTimer::Start()
+void cx::cmn::ui::Gtkmm3AnimatedBoardTimerRAII::Gtkmm3AnimatedBoardTimer::Start()
 {
     IF_PRECONDITION_NOT_MET_DO(bool(m_callback), return;);
     IF_PRECONDITION_NOT_MET_DO(m_period.Get() > 0.0, return;);
@@ -52,12 +52,12 @@ void cx::gui::Gtkmm3AnimatedBoardTimerRAII::Gtkmm3AnimatedBoardTimer::Start()
     m_timer = Glib::signal_timeout().connect(m_callback, m_period.Get());
 }
 
-void cx::gui::Gtkmm3AnimatedBoardTimerRAII::Gtkmm3AnimatedBoardTimer::Stop()
+void cx::cmn::ui::Gtkmm3AnimatedBoardTimerRAII::Gtkmm3AnimatedBoardTimer::Stop()
 {
     m_timer.disconnect();
 }
 
-cx::gui::Gtkmm3AnimatedBoardTimerRAII::Gtkmm3AnimatedBoardTimerRAII(ITimer::Callback&& p_callback, Period&& p_period)
+cx::cmn::ui::Gtkmm3AnimatedBoardTimerRAII::Gtkmm3AnimatedBoardTimerRAII(ITimer::Callback&& p_callback, Period&& p_period)
 {
     PRECONDITION(bool(p_callback));
     PRECONDITION(p_period.Get() > 0.0);
@@ -70,7 +70,7 @@ cx::gui::Gtkmm3AnimatedBoardTimerRAII::Gtkmm3AnimatedBoardTimerRAII(ITimer::Call
     m_animatedBoardTimer->Start();
 }
 
-cx::gui::Gtkmm3AnimatedBoardTimerRAII::~Gtkmm3AnimatedBoardTimerRAII()
+cx::cmn::ui::Gtkmm3AnimatedBoardTimerRAII::~Gtkmm3AnimatedBoardTimerRAII()
 {
     m_animatedBoardTimer->Stop();
 }

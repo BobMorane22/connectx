@@ -31,7 +31,7 @@
 #include <cxgui/AnimationInformation.h>
 
 
-namespace cx::gui
+namespace cx::cmn::ui
 {
 
 enum class BoardAnimationNotificationContext;
@@ -39,9 +39,9 @@ class IAnimatedBoardModel;
 class IAnimatedBoardPresenter;
 enum class BoardAnimation;
 
-} // namespace cx::gui
+} // namespace cx::cmn::ui
 
-namespace cx::gui
+namespace cx::cmn::ui
 {
 
 /**********************************************************************************************//**
@@ -72,8 +72,8 @@ public:
      * @return An optional notification to be handled by the caller.
      *
      *********************************************************************************************/
-    virtual std::optional<cx::gui::BoardAnimationNotificationContext> PerformAnimation(cx::gui::AnimationInformations<cx::math::Height>& p_verticalAnimationInfo,
-                                                                                     cx::gui::AnimationInformations<cx::math::Width>& p_horizontalAnimationInfo) = 0;
+    virtual std::optional<cx::cmn::ui::BoardAnimationNotificationContext> PerformAnimation(cx::cmn::ui::AnimationInformations<cx::math::Height>& p_verticalAnimationInfo,
+                                                                                     cx::cmn::ui::AnimationInformations<cx::math::Width>& p_horizontalAnimationInfo) = 0;
 
 
 };
@@ -93,6 +93,6 @@ std::unique_ptr<IFrameAnimationStrategy> CreateFrameAnimationStrategy(IAnimatedB
                                                                       IAnimatedBoardPresenter& p_presenter,
                                                                       const BoardAnimation p_animation);
 
-} // namespace cx::gui
+} // namespace cx::cmn::ui
 
 #endif // FRAMEANIMATIONSTRATEGY_H_04405A9C_707A_45E2_90CC_38952DF4A8A8

@@ -27,7 +27,7 @@
 #include <cxcmn/StrongType.h>
 #include <cxgui/IWidget.h>
 
-namespace cx::gui
+namespace cx::cmn::ui
 {
 
 /**********************************************************************************************//**
@@ -37,7 +37,7 @@ namespace cx::gui
 *      Only integer types are supported.
 *
 *************************************************************************************************/
-class ISpinBox : public cx::gui::IWidget
+class ISpinBox : public cx::cmn::ui::IWidget
 {
 
 public:
@@ -108,7 +108,7 @@ public:
 
 public:
 
-    // cx::gui::IWidget:
+    // cx::cmn::ui::IWidget:
     [[nodiscard]] size_t GetWidth() const override = 0;
     [[nodiscard]] size_t GetHeight() const override = 0;
     void SetEnabled(EnabledState p_enabled) override = 0;
@@ -116,6 +116,6 @@ public:
     
 };
 
-} // namespace cx::gui
+} // namespace cx::cmn::ui
 
 #endif // SPINBOX_H_C1FF0482_BE33_4283_ADB6_3DB5FA8445D7

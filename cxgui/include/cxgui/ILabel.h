@@ -26,7 +26,7 @@
 
 #include <cxgui/IWidget.h>
 
-namespace cx::gui
+namespace cx::cmn::ui
 {
 
 /**********************************************************************************************//**
@@ -64,6 +64,6 @@ public:
 
 };
 
-} // namespace cx::gui
+} // namespace cx::cmn::ui
 
 #endif // ILABEL_H_30710FC9_8E82_412E_8023_809CA23BC187

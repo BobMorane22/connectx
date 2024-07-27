@@ -26,18 +26,18 @@
 #include <cxmodel/IPlayer.h>
 #include <cxgui/WinGameResolutionDialogPresenter.h>
 
-cx::gui::WinGameResolutionDialogPresenter::WinGameResolutionDialogPresenter(const cx::model::IConnectXGameInformation& p_modelAsInformation)
+cx::cmn::ui::WinGameResolutionDialogPresenter::WinGameResolutionDialogPresenter(const cx::model::IConnectXGameInformation& p_modelAsInformation)
 : m_modelAsInformation{p_modelAsInformation}
 {
 
 }
 
-std::string cx::gui::WinGameResolutionDialogPresenter::GetTitle() const
+std::string cx::cmn::ui::WinGameResolutionDialogPresenter::GetTitle() const
 {
     return "Game won!";
 }
 
-std::string cx::gui::WinGameResolutionDialogPresenter::GetResolutionMessage() const
+std::string cx::cmn::ui::WinGameResolutionDialogPresenter::GetResolutionMessage() const
 {
     if(INL_ASSERT(m_modelAsInformation.IsWon()))
     {
@@ -47,7 +47,7 @@ std::string cx::gui::WinGameResolutionDialogPresenter::GetResolutionMessage() co
     return "";
 }
 
-std::string cx::gui::WinGameResolutionDialogPresenter::GetStartNewGameButtonText() const
+std::string cx::cmn::ui::WinGameResolutionDialogPresenter::GetStartNewGameButtonText() const
 {
     return "Start new game";
 }

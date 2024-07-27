@@ -30,7 +30,7 @@
 #include <cxgui/KeyboardKeyPressedEvent.h>
 #include <cxgui/Margins.h>
 
-cx::gui::Gtkmm3Menu::Gtkmm3Menu(const std::string& p_title)
+cx::cmn::ui::Gtkmm3Menu::Gtkmm3Menu(const std::string& p_title)
 {
     PRECONDITION(!p_title.empty());    
 
@@ -38,7 +38,7 @@ cx::gui::Gtkmm3Menu::Gtkmm3Menu(const std::string& p_title)
     m_titleMenuItem.set_submenu(*this);
 }
 
-void cx::gui::Gtkmm3Menu::Register(cx::gui::IMenuItem& p_item)
+void cx::cmn::ui::Gtkmm3Menu::Register(cx::cmn::ui::IMenuItem& p_item)
 {
     auto* gtkMenuItem = dynamic_cast<Gtk::MenuItem*>(&p_item);
     IF_CONDITION_NOT_MET_DO(gtkMenuItem, return;);
@@ -46,12 +46,12 @@ void cx::gui::Gtkmm3Menu::Register(cx::gui::IMenuItem& p_item)
     add(*gtkMenuItem);
 }
 
-Gtk::MenuItem& cx::gui::Gtkmm3Menu::GetTitleMenuItem()
+Gtk::MenuItem& cx::cmn::ui::Gtkmm3Menu::GetTitleMenuItem()
 {
     return m_titleMenuItem;
 }
 
-void cx::gui::Gtkmm3Menu::SetDelegate(std::unique_ptr<IWidget> p_delegate)
+void cx::cmn::ui::Gtkmm3Menu::SetDelegate(std::unique_ptr<IWidget> p_delegate)
 {
     IF_PRECONDITION_NOT_MET_DO(p_delegate, return;);
 
@@ -60,37 +60,37 @@ void cx::gui::Gtkmm3Menu::SetDelegate(std::unique_ptr<IWidget> p_delegate)
     POSTCONDITION(m_delegate);
 }
 
-size_t cx::gui::Gtkmm3Menu::GetWidth() const
+size_t cx::cmn::ui::Gtkmm3Menu::GetWidth() const
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return 0u;);
     return m_delegate->GetWidth();
 }
 
-size_t cx::gui::Gtkmm3Menu::GetHeight() const
+size_t cx::cmn::ui::Gtkmm3Menu::GetHeight() const
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return 0u;);
     return m_delegate->GetHeight();
 }
 
-void cx::gui::Gtkmm3Menu::SetEnabled(cx::gui::EnabledState p_enabled)
+void cx::cmn::ui::Gtkmm3Menu::SetEnabled(cx::cmn::ui::EnabledState p_enabled)
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return;);
     m_delegate->SetEnabled(p_enabled);
 }
 
-void cx::gui::Gtkmm3Menu::SetMargins(const Margins& p_newMarginSizes)
+void cx::cmn::ui::Gtkmm3Menu::SetMargins(const Margins& p_newMarginSizes)
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return;);
     m_delegate->SetMargins(p_newMarginSizes);
 }
 
-void cx::gui::Gtkmm3Menu::SetTooltip(const std::string& p_tooltipContents)
+void cx::cmn::ui::Gtkmm3Menu::SetTooltip(const std::string& p_tooltipContents)
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return;);
     m_delegate->SetTooltip(p_tooltipContents);
 }
 
-std::unique_ptr<cx::gui::ISignal<cx::gui::EventPropagation, cx::gui::KeyboardKeyPressedEvent>> cx::gui::Gtkmm3Menu::OnKeyPressed()
+std::unique_ptr<cx::cmn::ui::ISignal<cx::cmn::ui::EventPropagation, cx::cmn::ui::KeyboardKeyPressedEvent>> cx::cmn::ui::Gtkmm3Menu::OnKeyPressed()
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return nullptr;);
     return m_delegate->OnKeyPressed();

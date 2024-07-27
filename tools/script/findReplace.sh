@@ -32,6 +32,7 @@ newValue=$2
 cx -f "cpp" "${oldValue}" "${newValue}"
 cx -f "cc"  "${oldValue}" "${newValue}"
 cx -f "h"   "${oldValue}" "${newValue}"
+cx -f "in"  "${oldValue}" "${newValue}"
 cx -f "hpp" "${oldValue}" "${newValue}"
 cx -f "ipp" "${oldValue}" "${newValue}"
 cx -f "dox" "${oldValue}" "${newValue}"

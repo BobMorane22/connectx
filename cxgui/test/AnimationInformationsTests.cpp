@@ -29,7 +29,7 @@ using DisplacementType = double;
 
 TEST(AnimationInformations, Constructor_Default_DefaultAnimationInformationsCreated)
 {
-    const cx::gui::AnimationInformations<DisplacementType> info;
+    const cx::cmn::ui::AnimationInformations<DisplacementType> info;
 
     ASSERT_TRUE(info.m_isAnimating == false);
     ASSERT_TRUE(info.m_nbOfRenderedFrames == 0u);
@@ -39,25 +39,25 @@ TEST(AnimationInformations, Constructor_Default_DefaultAnimationInformationsCrea
 
 TEST(AnimationInformations, Start_NotAnimating_IsAnimatingIsTrue)
 {
-    cx::gui::AnimationInformations<DisplacementType> info;
+    cx::cmn::ui::AnimationInformations<DisplacementType> info;
     info.m_isAnimating = false;
     info.m_animation = std::nullopt;
     info.m_currentDisplacement = 0.0;
 
-    info.Start(cx::gui::BoardAnimation::MOVE_CHIP_LEFT_ONE_COLUMN);
+    info.Start(cx::cmn::ui::BoardAnimation::MOVE_CHIP_LEFT_ONE_COLUMN);
 
     ASSERT_TRUE(info.m_isAnimating == true);
     ASSERT_TRUE(info.m_nbOfRenderedFrames == 0u);
-    ASSERT_TRUE(info.m_animation == cx::gui::BoardAnimation::MOVE_CHIP_LEFT_ONE_COLUMN);
+    ASSERT_TRUE(info.m_animation == cx::cmn::ui::BoardAnimation::MOVE_CHIP_LEFT_ONE_COLUMN);
     ASSERT_TRUE(info.m_currentDisplacement == 0.0);
 }
 
 TEST(AnimationInformations, Stop_Animating_IsAnimatingIsFalse)
 {
-    cx::gui::AnimationInformations<DisplacementType> info;
+    cx::cmn::ui::AnimationInformations<DisplacementType> info;
     info.m_isAnimating = true;
     info.m_nbOfRenderedFrames = 5u;
-    info.m_animation = cx::gui::BoardAnimation::MOVE_CHIP_LEFT_ONE_COLUMN;
+    info.m_animation = cx::cmn::ui::BoardAnimation::MOVE_CHIP_LEFT_ONE_COLUMN;
     info.m_currentDisplacement = 50.0;
 
     info.Stop();
@@ -70,10 +70,10 @@ TEST(AnimationInformations, Stop_Animating_IsAnimatingIsFalse)
 
 TEST(AnimationInformations, Reset_IsAnimatingAndHasDisplacement_DefaultIsBack)
 {
-    cx::gui::AnimationInformations<DisplacementType> info;
+    cx::cmn::ui::AnimationInformations<DisplacementType> info;
     info.m_isAnimating = true;
     info.m_nbOfRenderedFrames = 5u;
-    info.m_animation = cx::gui::BoardAnimation::MOVE_CHIP_LEFT_ONE_COLUMN;
+    info.m_animation = cx::cmn::ui::BoardAnimation::MOVE_CHIP_LEFT_ONE_COLUMN;
     info.m_currentDisplacement = 50.0;
 
     info.Reset();

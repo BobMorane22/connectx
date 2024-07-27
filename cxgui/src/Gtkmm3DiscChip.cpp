@@ -23,7 +23,7 @@
 
 #include <cxgui/Gtkmm3DiscChip.h>
 
-cx::gui::Gtkmm3DiscChip::Gtkmm3DiscChip(const cx::model::ChipColor& p_fillColor,
+cx::cmn::ui::Gtkmm3DiscChip::Gtkmm3DiscChip(const cx::model::ChipColor& p_fillColor,
                                       const cx::model::ChipColor& p_backgroundColor,
                                       int p_dimension)
 : Gtkmm3Chip{p_fillColor,
@@ -33,7 +33,7 @@ cx::gui::Gtkmm3DiscChip::Gtkmm3DiscChip(const cx::model::ChipColor& p_fillColor,
 {
 }
 
-void cx::gui::Gtkmm3DiscChip::DrawBorder(const Cairo::RefPtr<Cairo::Context>& p_context) const
+void cx::cmn::ui::Gtkmm3DiscChip::DrawBorder(const Cairo::RefPtr<Cairo::Context>& p_context) const
 {
     const Gtk::Allocation allocation{get_allocation()};
 

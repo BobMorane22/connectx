@@ -28,7 +28,7 @@
 
 #include <cxmodel/ModelNotificationContext.h>
 
-namespace cx::gui
+namespace cx::cmn::ui
 {
 
 /*********************************************************************************************//**
@@ -51,6 +51,6 @@ public:
 
 };
 
-} // namespace cx::gui
+} // namespace cx::cmn::ui
 
 #endif // ISTATUSBARPRESENTER_H_ABE6731E_14D3_4B54_B017_22D806A7BC0B

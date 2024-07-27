@@ -30,9 +30,9 @@
 #include <cxgui/KeyboardKeyPressedEvent.h>
 #include <cxgui/IMenu.h>
 
-void cx::gui::Gtkmm3MenuBar::Register(cx::gui::IMenu& p_menu)
+void cx::cmn::ui::Gtkmm3MenuBar::Register(cx::cmn::ui::IMenu& p_menu)
 {
-    auto* gtkmm3Menu = dynamic_cast<cx::gui::Gtkmm3Menu*>(&p_menu);
+    auto* gtkmm3Menu = dynamic_cast<cx::cmn::ui::Gtkmm3Menu*>(&p_menu);
     IF_CONDITION_NOT_MET_DO(gtkmm3Menu, return;);
 
     Gtk::MenuItem& gtkMenuItem = gtkmm3Menu->GetTitleMenuItem();
@@ -40,7 +40,7 @@ void cx::gui::Gtkmm3MenuBar::Register(cx::gui::IMenu& p_menu)
     add(gtkMenuItem);
 }
 
-void cx::gui::Gtkmm3MenuBar::SetDelegate(std::unique_ptr<IWidget> p_delegate)
+void cx::cmn::ui::Gtkmm3MenuBar::SetDelegate(std::unique_ptr<IWidget> p_delegate)
 {
     IF_PRECONDITION_NOT_MET_DO(p_delegate, return;);
 
@@ -49,37 +49,37 @@ void cx::gui::Gtkmm3MenuBar::SetDelegate(std::unique_ptr<IWidget> p_delegate)
     POSTCONDITION(m_delegate);
 }
 
-size_t cx::gui::Gtkmm3MenuBar::GetWidth() const
+size_t cx::cmn::ui::Gtkmm3MenuBar::GetWidth() const
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return 0u;);
     return m_delegate->GetWidth();
 }
 
-size_t cx::gui::Gtkmm3MenuBar::GetHeight() const
+size_t cx::cmn::ui::Gtkmm3MenuBar::GetHeight() const
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return 0u;);
     return m_delegate->GetHeight();
 }
 
-void cx::gui::Gtkmm3MenuBar::SetEnabled(cx::gui::EnabledState p_enabled)
+void cx::cmn::ui::Gtkmm3MenuBar::SetEnabled(cx::cmn::ui::EnabledState p_enabled)
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return;);
     m_delegate->SetEnabled(p_enabled);
 }
 
-void cx::gui::Gtkmm3MenuBar::SetMargins(const Margins& p_newMarginSizes)
+void cx::cmn::ui::Gtkmm3MenuBar::SetMargins(const Margins& p_newMarginSizes)
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return;);
     m_delegate->SetMargins(p_newMarginSizes);
 }
 
-void cx::gui::Gtkmm3MenuBar::SetTooltip(const std::string& p_tooltipContents)
+void cx::cmn::ui::Gtkmm3MenuBar::SetTooltip(const std::string& p_tooltipContents)
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return;);
     m_delegate->SetTooltip(p_tooltipContents);
 }
 
-std::unique_ptr<cx::gui::ISignal<cx::gui::EventPropagation, cx::gui::KeyboardKeyPressedEvent>> cx::gui::Gtkmm3MenuBar::OnKeyPressed()
+std::unique_ptr<cx::cmn::ui::ISignal<cx::cmn::ui::EventPropagation, cx::cmn::ui::KeyboardKeyPressedEvent>> cx::cmn::ui::Gtkmm3MenuBar::OnKeyPressed()
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return nullptr;);
     return m_delegate->OnKeyPressed();

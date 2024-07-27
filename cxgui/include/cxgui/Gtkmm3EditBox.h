@@ -28,7 +28,7 @@
 
 #include <cxgui/IEditBox.h>
 
-namespace cx::gui
+namespace cx::cmn::ui
 {
 
 /**********************************************************************************************//**
@@ -44,7 +44,7 @@ public:
     /*******************************************************************************************//**
      * @brief Sets the delegate for widget common facilities.
      *
-     * The delegate is reponsible to carry the implementation for generic `cx::gui::IWidget` operations.
+     * The delegate is reponsible to carry the implementation for generic `cx::cmn::ui::IWidget` operations.
      * It is meant to avoid implementation duplication.
      *
      * @param p_delegate
@@ -58,12 +58,12 @@ public:
      **********************************************************************************************/
     void SetDelegate(std::unique_ptr<IWidget> p_delegate);
 
-    // cx::gui::IEditBox:
+    // cx::cmn::ui::IEditBox:
     void UpdateContents(const std::string& p_newContents) override;
     [[nodiscard]] std::string GetContents() const override;
     [[nodiscard]] std::unique_ptr<ISignal<void>> OnContentsChanged() override;
 
-    // cx::gui::IWidget:
+    // cx::cmn::ui::IWidget:
     [[nodiscard]]  size_t GetWidth() const override;
     [[nodiscard]]  size_t GetHeight() const override;
     void SetEnabled(EnabledState p_enabled) override;
@@ -77,6 +77,6 @@ private:
 
 };
 
-} // namespace cx::gui
+} // namespace cx::cmn::ui
 
 #endif // GTKMM3EDITBOX_H_3E389CC2_EA4C_481C_BF50_E5EDAF31336D

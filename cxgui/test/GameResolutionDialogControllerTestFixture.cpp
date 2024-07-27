@@ -30,7 +30,7 @@ GameResolutionDialogControllerTestFixture::GameResolutionDialogControllerTestFix
     m_model = std::make_unique<GameResolutionDialogControllerMockModel>(*this);
     EXPECT_TRUE(m_model);
 
-    m_controller = std::make_unique<cx::gui::GameResolutionDialogController>(*m_model);
+    m_controller = std::make_unique<cx::cmn::ui::GameResolutionDialogController>(*m_model);
     EXPECT_TRUE(m_controller);
 }
 
@@ -39,7 +39,7 @@ bool GameResolutionDialogControllerTestFixture::GetNewGameRequested() const
     return m_newGameRequested;
 }
 
-cx::gui::IGameResolutionDialogController& GameResolutionDialogControllerTestFixture::GetController()
+cx::cmn::ui::IGameResolutionDialogController& GameResolutionDialogControllerTestFixture::GetController()
 {
     EXPECT_TRUE(m_controller);
     return *m_controller;

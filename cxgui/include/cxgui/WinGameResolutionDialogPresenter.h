@@ -26,7 +26,7 @@
 
 #include "IGameResolutionDialogPresenter.h"
 
-namespace cx::gui
+namespace cx::cmn::ui
 {
 
 /*********************************************************************************************//**
@@ -58,6 +58,6 @@ private:
     std::string m_resolutionMessage;
 };
 
-} // namespace cx::gui
+} // namespace cx::cmn::ui
 
 #endif // WINGAMERESOLUTIONDIALOGPRESENTER_H_FEF07B2E_B0F6_4FAC_88B7_FE78EC4007CE

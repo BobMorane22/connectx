@@ -34,20 +34,20 @@ namespace Gtk
     class Widget;
 }
 
-namespace cx::gui
+namespace cx::cmn::ui
 {
     enum class EnabledState;
     struct Margins;
 }
 
-namespace cx::gui
+namespace cx::cmn::ui
 {
 
 /**********************************************************************************************//**
  * @brief Delegate for generic widget facilities.
  *
  * This delegate contains the implementation for all generic widget facilities. All
- * Widgets implementing the `cx::gui::IWidget` interface should use this delegate to
+ * Widgets implementing the `cx::cmn::ui::IWidget` interface should use this delegate to
  * avoid duplicating implementations. The delegate also implements this inteface
  * so direct delegation is always possible (i.e no additionnal work is needed, calls
  * may simply be forwarded to the delegate).
@@ -73,7 +73,7 @@ public:
      *********************************************************************************************/
     void SetUnderlying(Gtk::Widget* p_underlying);
 
-    // cx::gui::IWidget:
+    // cx::cmn::ui::IWidget:
     [[nodiscard]] size_t GetWidth() const override;
     [[nodiscard]] size_t GetHeight() const override;
     void SetEnabled(EnabledState p_enabled) override;
@@ -122,6 +122,6 @@ template<typename Widget, typename... Args>
     return widget;
 }
 
-} // namespace cx::gui
+} // namespace cx::cmn::ui
 
 #endif // GTKMM3WIDGETDELEGATE_H_9F639EAC_D67C_40B9_8652_436419A7E59E

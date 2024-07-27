@@ -30,11 +30,11 @@
 
 #include <cxgui/IButton.h>
 
-namespace cx::gui
+namespace cx::cmn::ui
 {
 
 /**********************************************************************************************//**
- * @brief Gtkmm 3 implementation of the `cx::gui::IButton` interface.
+ * @brief Gtkmm 3 implementation of the `cx::cmn::ui::IButton` interface.
  *
  *************************************************************************************************/
 class Gtkmm3Button : public IButton,
@@ -65,7 +65,7 @@ public:
     /*******************************************************************************************//**
      * @brief Sets the delegate for widget common facilities.
      *
-     * The delegate is reponsible to carry the implementation for generic `cx::gui::IWidget` operations.
+     * The delegate is reponsible to carry the implementation for generic `cx::cmn::ui::IWidget` operations.
      * It is meant to avoid implementation duplication.
      *
      * @param p_delegate
@@ -79,12 +79,12 @@ public:
      **********************************************************************************************/
     void SetDelegate(std::unique_ptr<IWidget> p_delegate);
 
-    // cx::gui::IButton:
+    // cx::cmn::ui::IButton:
     void UpdateContents(const std::string& p_newContents) override;
     [[nodiscard]] std::string GetContents() const override;
     [[nodiscard]] std::unique_ptr<ISignal<void>> OnClicked() override;
 
-    // cx::gui::IWidget:
+    // cx::cmn::ui::IWidget:
     [[nodiscard]] size_t GetWidth() const override;
     [[nodiscard]] size_t GetHeight() const override;
     void SetEnabled(EnabledState p_enabled) override;
@@ -98,6 +98,6 @@ private:
 
 };
 
-} // namespace cx::gui
+} // namespace cx::cmn::ui
 
 #endif // GTKMM3BUTTON_H_28BFEAFC_06B4_4950_A338_12355AA185D0

@@ -26,7 +26,7 @@
 
 #include "IGameResolutionDialogPresenter.h"
 
-namespace cx::gui
+namespace cx::cmn::ui
 {
 
 /*********************************************************************************************//**
@@ -44,6 +44,6 @@ public:
 
 };
 
-} // namespace cx::gui
+} // namespace cx::cmn::ui
 
 #endif // TIEGAMERESOLUTIONDIALOGPRESENTER_H_A74AF7F6_BBD5_464F_BDC4_EE45E452F226

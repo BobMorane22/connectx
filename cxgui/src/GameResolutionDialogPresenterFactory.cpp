@@ -32,7 +32,7 @@ namespace
 {
 
 // Fallback presenter.
-class NoGameResolutionDialogPresenter : public cx::gui::IGameResolutionDialogPresenter
+class NoGameResolutionDialogPresenter : public cx::cmn::ui::IGameResolutionDialogPresenter
 {
     std::string GetTitle() const override {return "";}                    // LCOV_EXCL_LINE
     std::string GetResolutionMessage() const override {return "";}        // LCOV_EXCL_LINE
@@ -41,22 +41,22 @@ class NoGameResolutionDialogPresenter : public cx::gui::IGameResolutionDialogPre
 
 } // namespace
 
-std::unique_ptr<cx::gui::IGameResolutionDialogPresenter> cx::gui::GameResolutionDialogPresenterFactory::Make(const cx::model::IConnectXGameInformation& p_modelAsInformation,
+std::unique_ptr<cx::cmn::ui::IGameResolutionDialogPresenter> cx::cmn::ui::GameResolutionDialogPresenterFactory::Make(const cx::model::IConnectXGameInformation& p_modelAsInformation,
                                                                                                          cx::model::GameResolution p_resolution)
 {
-    std::unique_ptr<cx::gui::IGameResolutionDialogPresenter> presenter = std::make_unique<NoGameResolutionDialogPresenter>();
+    std::unique_ptr<cx::cmn::ui::IGameResolutionDialogPresenter> presenter = std::make_unique<NoGameResolutionDialogPresenter>();
     ASSERT(presenter);
 
     switch(p_resolution)
     {
         case cx::model::GameResolution::WIN:
         {
-            presenter = std::make_unique<cx::gui::WinGameResolutionDialogPresenter>(p_modelAsInformation);
+            presenter = std::make_unique<cx::cmn::ui::WinGameResolutionDialogPresenter>(p_modelAsInformation);
             break;
         }
         case cx::model::GameResolution::TIE:
         {
-            presenter = std::make_unique<cx::gui::TieGameResolutionDialogPresenter>();
+            presenter = std::make_unique<cx::cmn::ui::TieGameResolutionDialogPresenter>();
             break;
         }
         default:   // LCOV_EXCL_LINE

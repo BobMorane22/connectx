@@ -24,7 +24,7 @@
 #ifndef ONOFFSTATE_H_5B6F01AB_D8D4_499B_9CE6_F6AE38705942
 #define ONOFFSTATE_H_5B6F01AB_D8D4_499B_9CE6_F6AE38705942
 
-namespace cx::gui
+namespace cx::cmn::ui
 {
 
 /**********************************************************************************************//**
@@ -37,7 +37,7 @@ enum class OnOffState
     OFF,
 };
 
-} // namespace cx::gui
+} // namespace cx::cmn::ui
 
 #endif // ONOFFSTATE_H_5B6F01AB_D8D4_499B_9CE6_F6AE38705942
 

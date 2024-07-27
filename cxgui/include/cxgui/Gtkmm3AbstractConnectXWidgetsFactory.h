@@ -28,7 +28,7 @@
 
 #include <cxgui/IAbstractConnectXWidgetsFactory.h>
 
-namespace cx::gui
+namespace cx::cmn::ui
 {
     class IAboutWindowPresenter;
     class IAbstractWidgetsFactory;
@@ -37,7 +37,7 @@ namespace cx::gui
     class WidgetsFactories;
 }
 
-namespace cx::gui
+namespace cx::cmn::ui
 {
 
 /**********************************************************************************************//**
@@ -83,7 +83,7 @@ public:
     *********************************************************************************************/
     void RegisterStandardWidgetsFactory(IAbstractWidgetsFactory& p_stdAbstractWidgetsFactory);
 
-    // cx::gui::IAbstractConnectXWidgetsFactory:
+    // cx::cmn::ui::IAbstractConnectXWidgetsFactory:
     [[nodiscard]] std::unique_ptr<IWindow> CreateMainWindow(cx::model::ModelSubject& p_model,
         IMainWindowController& p_controller,
         IMainWindowPresenter& p_presenter) const override;
@@ -96,14 +96,14 @@ public:
         INewGameViewPresenter& p_presenter,
         INewGameViewController& p_controller,
         IWindow& p_parentWindow,
-        cx::gui::ILayout& p_mainLayout,
+        cx::cmn::ui::ILayout& p_mainLayout,
         const cx::model::Column& p_viewLeft,
         const cx::model::Row& p_viewTop) const override;
     [[nodiscard]] virtual std::unique_ptr<IView> CreateGameView(
         IGameViewPresenter& p_presenter,
         IGameViewController& p_controller,
         IWindow& p_parentWindow,
-        cx::gui::ILayout& p_mainLayout,
+        cx::cmn::ui::ILayout& p_mainLayout,
         const cx::model::Column& p_viewLeft,
         const cx::model::Row& p_viewTop) const override;
     [[nodiscard]] std::unique_ptr<INewPlayersList> CreateNewPlayersList(
@@ -130,6 +130,6 @@ private:
 
 };
 
-} // namespace cx::gui
+} // namespace cx::cmn::ui
 
 #endif // GTKMM3ABSTRACTCONNECTXWIDGETSFACTORY_H_B3944DEE_5157_44D5_91D7_B238464FDD05

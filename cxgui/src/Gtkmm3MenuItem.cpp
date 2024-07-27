@@ -39,7 +39,7 @@
 namespace
 {
 
-class Gtkmm3OnTriggeredSignal : public cx::gui::ISignal<void>
+class Gtkmm3OnTriggeredSignal : public cx::cmn::ui::ISignal<void>
 {
 
 public:
@@ -49,11 +49,11 @@ public:
     {
     }
 
-    std::unique_ptr<cx::gui::IConnection> Connect(const std::function<void()>& p_slot) override
+    std::unique_ptr<cx::cmn::ui::IConnection> Connect(const std::function<void()>& p_slot) override
     {
         sigc::connection gtkConnection = m_triggeredMenuItem.signal_activate().connect(p_slot);
 
-        return std::make_unique<cx::gui::Gtkmm3Connection>(gtkConnection);
+        return std::make_unique<cx::cmn::ui::Gtkmm3Connection>(gtkConnection);
     }
 
 private:
@@ -63,15 +63,15 @@ private:
 
 }
 
-cx::gui::Gtkmm3MenuItem::Gtkmm3MenuItem(const std::string& p_label,
-                                      const std::optional<cx::gui::FreeDesktop::StdActionIcon>& p_icon)
+cx::cmn::ui::Gtkmm3MenuItem::Gtkmm3MenuItem(const std::string& p_label,
+                                      const std::optional<cx::cmn::ui::FreeDesktop::StdActionIcon>& p_icon)
 {
     PRECONDITION(!p_label.empty());
 
     // We handle the icon:
     if(p_icon)
     {
-        const std::string iconName = cx::gui::FreeDesktop::StdNameGet(*p_icon);
+        const std::string iconName = cx::cmn::ui::FreeDesktop::StdNameGet(*p_icon);
         m_icon = std::make_unique<Gtk::Image>(iconName, Gtk::BuiltinIconSize::ICON_SIZE_MENU);
     }
     else
@@ -104,13 +104,13 @@ cx::gui::Gtkmm3MenuItem::Gtkmm3MenuItem(const std::string& p_label,
     add(*m_layout);
 }
 
-cx::gui::Gtkmm3MenuItem::~Gtkmm3MenuItem()
+cx::cmn::ui::Gtkmm3MenuItem::~Gtkmm3MenuItem()
 {
     // Before anything is destroyed, we remove it from the menu item:
     remove();
 }
 
-void cx::gui::Gtkmm3MenuItem::SetDelegate(std::unique_ptr<IWidget> p_delegate)
+void cx::cmn::ui::Gtkmm3MenuItem::SetDelegate(std::unique_ptr<IWidget> p_delegate)
 {
     IF_PRECONDITION_NOT_MET_DO(p_delegate, return;);
 
@@ -119,12 +119,12 @@ void cx::gui::Gtkmm3MenuItem::SetDelegate(std::unique_ptr<IWidget> p_delegate)
     POSTCONDITION(m_delegate);
 }
 
-std::unique_ptr<cx::gui::ISignal<void>> cx::gui::Gtkmm3MenuItem::OnTriggered()
+std::unique_ptr<cx::cmn::ui::ISignal<void>> cx::cmn::ui::Gtkmm3MenuItem::OnTriggered()
 {
     return std::make_unique<Gtkmm3OnTriggeredSignal>(*this);
 }
 
-void cx::gui::Gtkmm3MenuItem::RegisterKeyboardShortcut(const cx::gui::KeyboardShortcut& p_shortcut)
+void cx::cmn::ui::Gtkmm3MenuItem::RegisterKeyboardShortcut(const cx::cmn::ui::KeyboardShortcut& p_shortcut)
 {
     Gdk::ModifierType modifier = ~Gdk::ModifierType::MODIFIER_MASK; // No modifier.
     guint key = GDK_KEY_VoidSymbol; // Invalid key.
@@ -133,16 +133,16 @@ void cx::gui::Gtkmm3MenuItem::RegisterKeyboardShortcut(const cx::gui::KeyboardSh
     {
         // In this case, we have a modifier as the first key, and an action key
         // as the second key.
-        auto modifierConversion = cx::gui::ToGtk<Gdk::ModifierType>(p_shortcut.m_first);
+        auto modifierConversion = cx::cmn::ui::ToGtk<Gdk::ModifierType>(p_shortcut.m_first);
         modifierConversion.value_or(~Gdk::ModifierType::MODIFIER_MASK);
 
-        auto keyConversion = cx::gui::ToGtk<guint>(*p_shortcut.m_second);
+        auto keyConversion = cx::cmn::ui::ToGtk<guint>(*p_shortcut.m_second);
         key = keyConversion.value_or(GDK_KEY_VoidSymbol);
     }
     else
     {
         // In this case, we do not have a modifier. The shortcut consitsts of a single key.
-        auto keyConversion = cx::gui::ToGtk<guint>(p_shortcut.m_first);
+        auto keyConversion = cx::cmn::ui::ToGtk<guint>(p_shortcut.m_first);
         key = keyConversion.value_or(GDK_KEY_VoidSymbol);
     }
 
@@ -150,37 +150,37 @@ void cx::gui::Gtkmm3MenuItem::RegisterKeyboardShortcut(const cx::gui::KeyboardSh
     set_accel_key(gtkKeyboardShortcut);
 }
 
-size_t cx::gui::Gtkmm3MenuItem::GetWidth() const
+size_t cx::cmn::ui::Gtkmm3MenuItem::GetWidth() const
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return 0u;);
     return m_delegate->GetWidth();
 }
 
-size_t cx::gui::Gtkmm3MenuItem::GetHeight() const
+size_t cx::cmn::ui::Gtkmm3MenuItem::GetHeight() const
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return 0u;);
     return m_delegate->GetHeight();
 }
 
-void cx::gui::Gtkmm3MenuItem::SetEnabled(cx::gui::EnabledState p_enabled)
+void cx::cmn::ui::Gtkmm3MenuItem::SetEnabled(cx::cmn::ui::EnabledState p_enabled)
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return;);
     m_delegate->SetEnabled(p_enabled);
 }
 
-void cx::gui::Gtkmm3MenuItem::SetMargins(const Margins& p_newMarginSizes)
+void cx::cmn::ui::Gtkmm3MenuItem::SetMargins(const Margins& p_newMarginSizes)
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return;);
     m_delegate->SetMargins(p_newMarginSizes);
 }
 
-void cx::gui::Gtkmm3MenuItem::SetTooltip(const std::string& p_tooltipContents)
+void cx::cmn::ui::Gtkmm3MenuItem::SetTooltip(const std::string& p_tooltipContents)
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return;);
     m_delegate->SetTooltip(p_tooltipContents);
 }
 
-std::unique_ptr<cx::gui::ISignal<cx::gui::EventPropagation, cx::gui::KeyboardKeyPressedEvent>> cx::gui::Gtkmm3MenuItem::OnKeyPressed()
+std::unique_ptr<cx::cmn::ui::ISignal<cx::cmn::ui::EventPropagation, cx::cmn::ui::KeyboardKeyPressedEvent>> cx::cmn::ui::Gtkmm3MenuItem::OnKeyPressed()
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return nullptr;);
     return m_delegate->OnKeyPressed();

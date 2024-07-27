@@ -30,7 +30,7 @@
 #include <cxmodel/ModelNotificationContext.h>
 #include <cxgui/IAnimatedBoardModel.h>
 
-namespace cx::gui
+namespace cx::cmn::ui
 {
     class IAboutWindowPresenter;
     class IGameResolutionDialogPresenter;
@@ -51,7 +51,7 @@ namespace cx::gui
     class IWindow;
 }
 
-namespace cx::gui
+namespace cx::cmn::ui
 {
 
 /**********************************************************************************************//**
@@ -180,7 +180,7 @@ public:
         INewGameViewPresenter& p_presenter,
         INewGameViewController& p_controller,
         IWindow& p_parentWindow,
-        cx::gui::ILayout& p_mainLayout,
+        cx::cmn::ui::ILayout& p_mainLayout,
         const cx::model::Column& p_viewLeft,
         const cx::model::Row& p_viewTop) const = 0;
 
@@ -211,7 +211,7 @@ public:
         IGameViewPresenter& p_presenter,
         IGameViewController& p_controller,
         IWindow& p_parentWindow,
-        cx::gui::ILayout& p_mainLayout,
+        cx::cmn::ui::ILayout& p_mainLayout,
         const cx::model::Column& p_viewLeft,
         const cx::model::Row& p_viewTop) const = 0;
 
@@ -310,6 +310,6 @@ public:
 
 };
 
-} // namespace cx::gui
+} // namespace cx::cmn::ui
 
 #endif // IABSTRACTCONNECTXWIDGETSFACTORY_H_27E986AD_66DF_4324_96AB_AC531266A928

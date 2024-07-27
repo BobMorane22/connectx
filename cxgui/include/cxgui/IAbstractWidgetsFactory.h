@@ -31,7 +31,7 @@
 // Can't forward declare because the interfaces contains nested classes used by this factory.
 #include <cxgui/ISpinBox.h>
 
-namespace cx::gui
+namespace cx::cmn::ui
 {
     enum class DialogRole;
     class IButton;
@@ -53,7 +53,7 @@ namespace cx::gui
     }
 }
 
-namespace cx::gui
+namespace cx::cmn::ui
 {
 
 /**********************************************************************************************//**
@@ -338,6 +338,6 @@ public:
 
 };
 
-} // namespace cx::gui
+} // namespace cx::cmn::ui
 
 #endif // IABSTRACTWIDGETSFACTORY_H_FE309A25_8E9C_4F60_852F_0ADD5750890F

@@ -24,11 +24,11 @@
 #ifndef RESSOURCE_H_D6D99B29_F158_42A4_AC30_338E9E749D07
 #define RESSOURCE_H_D6D99B29_F158_42A4_AC30_338E9E749D07
 
-namespace cx::gui
+namespace cx::cmn::ui
 {
 
 inline constexpr char RESSOURCE_ICONS_PATH[] = "@CMAKE_INSTALL_PREFIX@/@CMAKE_INSTALL_DATADIR@/@PROJECT_NAME@/icons";
 
-} // namespace cx::gui
+} // namespace cx::cmn::ui
 
 #endif // RESSOURCE_H_D6D99B29_F158_42A4_AC30_338E9E749D07

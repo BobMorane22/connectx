@@ -29,8 +29,8 @@
 #include <cxgui/KeyboardKeyPressedEvent.h>
 #include <cxgui/Margins.h>
 
-cx::gui::ISpinBox::Range::Range(const cx::gui::ISpinBox::Minimum& p_min,
-                              const cx::gui::ISpinBox::Maximum& p_max)
+cx::cmn::ui::ISpinBox::Range::Range(const cx::cmn::ui::ISpinBox::Minimum& p_min,
+                              const cx::cmn::ui::ISpinBox::Maximum& p_max)
 : m_min{0}, m_max{0}
 {
     PRECONDITION(p_max.Get() > p_min.Get());
@@ -42,9 +42,9 @@ cx::gui::ISpinBox::Range::Range(const cx::gui::ISpinBox::Minimum& p_min,
     INVARIANT(m_max.Get() > m_min.Get());
 }
 
-cx::gui::Gtkmm3SpinBox::Gtkmm3SpinBox(int p_initialValue,
-                                    const cx::gui::ISpinBox::ClimbRate& p_climbRate,
-                                    const cx::gui::ISpinBox::Range& p_range)
+cx::cmn::ui::Gtkmm3SpinBox::Gtkmm3SpinBox(int p_initialValue,
+                                    const cx::cmn::ui::ISpinBox::ClimbRate& p_climbRate,
+                                    const cx::cmn::ui::ISpinBox::Range& p_range)
 : m_limits{p_range}
 {
     PRECONDITION(p_climbRate.Get() >  0);
@@ -58,7 +58,7 @@ cx::gui::Gtkmm3SpinBox::Gtkmm3SpinBox(int p_initialValue,
     set_adjustment(adjustment);
 }
 
-void cx::gui::Gtkmm3SpinBox::SetDelegate(std::unique_ptr<cx::gui::IWidget> p_delegate)
+void cx::cmn::ui::Gtkmm3SpinBox::SetDelegate(std::unique_ptr<cx::cmn::ui::IWidget> p_delegate)
 {
     IF_PRECONDITION_NOT_MET_DO(p_delegate, return;);
 
@@ -67,7 +67,7 @@ void cx::gui::Gtkmm3SpinBox::SetDelegate(std::unique_ptr<cx::gui::IWidget> p_del
     POSTCONDITION(m_delegate);
 }
 
-int cx::gui::Gtkmm3SpinBox::GetValue() const
+int cx::cmn::ui::Gtkmm3SpinBox::GetValue() const
 {
     const int value = get_value_as_int();
 
@@ -77,37 +77,37 @@ int cx::gui::Gtkmm3SpinBox::GetValue() const
     return value;
 }
 
-size_t cx::gui::Gtkmm3SpinBox::GetWidth() const
+size_t cx::cmn::ui::Gtkmm3SpinBox::GetWidth() const
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return 0u;);
     return m_delegate->GetWidth();
 }
 
-size_t cx::gui::Gtkmm3SpinBox::GetHeight() const
+size_t cx::cmn::ui::Gtkmm3SpinBox::GetHeight() const
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return 0u;);
     return m_delegate->GetHeight();
 }
 
-void cx::gui::Gtkmm3SpinBox::SetEnabled(EnabledState p_enabled)
+void cx::cmn::ui::Gtkmm3SpinBox::SetEnabled(EnabledState p_enabled)
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return;);
     m_delegate->SetEnabled(p_enabled);
 }
 
-void cx::gui::Gtkmm3SpinBox::SetMargins(const Margins& p_newMarginSizes)
+void cx::cmn::ui::Gtkmm3SpinBox::SetMargins(const Margins& p_newMarginSizes)
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return;);
     m_delegate->SetMargins(p_newMarginSizes);
 }
 
-void cx::gui::Gtkmm3SpinBox::SetTooltip(const std::string& p_tooltipContents)
+void cx::cmn::ui::Gtkmm3SpinBox::SetTooltip(const std::string& p_tooltipContents)
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return;);
     m_delegate->SetTooltip(p_tooltipContents);
 }
 
-std::unique_ptr<cx::gui::ISignal<cx::gui::EventPropagation, cx::gui::KeyboardKeyPressedEvent>> cx::gui::Gtkmm3SpinBox::OnKeyPressed()
+std::unique_ptr<cx::cmn::ui::ISignal<cx::cmn::ui::EventPropagation, cx::cmn::ui::KeyboardKeyPressedEvent>> cx::cmn::ui::Gtkmm3SpinBox::OnKeyPressed()
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return nullptr;);
     return m_delegate->OnKeyPressed();

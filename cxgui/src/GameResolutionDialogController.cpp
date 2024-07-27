@@ -24,12 +24,12 @@
 #include <cxmodel/IConnectXGameActions.h>
 #include <cxgui/GameResolutionDialogController.h>
 
-cx::gui::GameResolutionDialogController::GameResolutionDialogController(cx::model::IConnectXGameActions& p_modelAsActions)
+cx::cmn::ui::GameResolutionDialogController::GameResolutionDialogController(cx::model::IConnectXGameActions& p_modelAsActions)
 : m_modelAsActions{p_modelAsActions}
 {
 }
 
-void cx::gui::GameResolutionDialogController::OnNewGameRequested()
+void cx::cmn::ui::GameResolutionDialogController::OnNewGameRequested()
 {
     m_modelAsActions.EndCurrentGame();
 }

@@ -27,7 +27,7 @@
 #include <cxmodel/ChipColor.h>
 #include <cxgui/IWidget.h>
 
-namespace cx::gui
+namespace cx::cmn::ui
 {
 
 /**********************************************************************************************//**
@@ -80,6 +80,6 @@ public:
     virtual void UnHighlight() = 0;
 };
 
-} // namespace cx::gui
+} // namespace cx::cmn::ui
 
 #endif // ICHIP_H_77522105_D372_4CF2_9AE7_68B8BD308F44

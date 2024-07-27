@@ -26,7 +26,7 @@
 #include <cxinv/assertion.h>
 #include <cxgui/IAnimatedBoardModel.h>
 
-cx::model::Column cx::gui::ComputeColumnFromPosition(const cx::gui::IAnimatedBoardModel& p_model, const cx::math::Position& p_position)
+cx::model::Column cx::cmn::ui::ComputeColumnFromPosition(const cx::cmn::ui::IAnimatedBoardModel& p_model, const cx::math::Position& p_position)
 {
     IF_PRECONDITION_NOT_MET_DO(p_position.m_x >= 0.0 && p_position.m_y >= 0.0, return cx::model::Column{0u};);
 
@@ -42,7 +42,7 @@ cx::model::Column cx::gui::ComputeColumnFromPosition(const cx::gui::IAnimatedBoa
     return column;
 }
 
-cx::math::Position cx::gui::ComputeChipPositionFromColumn(const cx::gui::IAnimatedBoardModel& p_model, const cx::model::Column& p_column)
+cx::math::Position cx::cmn::ui::ComputeChipPositionFromColumn(const cx::cmn::ui::IAnimatedBoardModel& p_model, const cx::model::Column& p_column)
 {
     const cx::math::Dimensions& cellDimensions = p_model.GetCellDimensions();    
     const double cellWidth = cellDimensions.m_width.Get();

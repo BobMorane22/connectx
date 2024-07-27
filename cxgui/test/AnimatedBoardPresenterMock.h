@@ -26,21 +26,21 @@
 
 #include <cxgui/IAnimatedBoardPresenter.h>
 
-class AnimatedBoardPresenterMock : public cx::gui::IAnimatedBoardPresenter
+class AnimatedBoardPresenterMock : public cx::cmn::ui::IAnimatedBoardPresenter
 {
 
 public:
 
     AnimatedBoardPresenterMock();
 
-    // cx::gui::IAnimatedBoardPresenter:
+    // cx::cmn::ui::IAnimatedBoardPresenter:
     void Sync() override;
     [[nodiscard]] cx::model::Height GetBoardHeight() const override;
     [[nodiscard]] cx::model::Width GetBoardWidth() const override;
-    [[nodiscard]] cx::gui::Color GetGameViewBoardColor() const override;
-    [[nodiscard]] cx::gui::Color GetGameViewColumnHighlightColor() const override;
+    [[nodiscard]] cx::cmn::ui::Color GetGameViewBoardColor() const override;
+    [[nodiscard]] cx::cmn::ui::Color GetGameViewColumnHighlightColor() const override;
     [[nodiscard]] cx::model::ChipColor GetActivePlayerChipColor() const override;
-    [[nodiscard]] const cx::gui::IGameViewPresenter::ChipColors& GetBoardChipColors() const override;
+    [[nodiscard]] const cx::cmn::ui::IGameViewPresenter::ChipColors& GetBoardChipColors() const override;
     [[nodiscard]] cx::model::Column GetBotTarget() const override;
 
     // Testing:
@@ -59,7 +59,7 @@ private:
     cx::model::Height m_boardHeight{6u};
     cx::model::Width m_boardWidth{7u};
 
-    cx::gui::IGameViewPresenter::ChipColors m_chipColors;
+    cx::cmn::ui::IGameViewPresenter::ChipColors m_chipColors;
 
     cx::model::Column m_lastBotTarget{5u};
 };

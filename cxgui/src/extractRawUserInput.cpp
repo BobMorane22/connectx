@@ -33,7 +33,7 @@ constexpr char NUMERICAL_VALUE_OUT_OF_BOUND[] = "Numerical values out of range."
 
 } // namespace
 
-cx::model::Status cx::gui::extractRawUserInput(const std::string& p_raw, unsigned long& p_extracted)
+cx::model::Status cx::cmn::ui::extractRawUserInput(const std::string& p_raw, unsigned long& p_extracted)
 {
     try
     {

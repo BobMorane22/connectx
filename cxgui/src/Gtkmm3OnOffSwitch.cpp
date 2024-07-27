@@ -35,7 +35,7 @@
 namespace
 {
 
-class Gtkmm3OnStateChangedSignal : public cx::gui::ISignal<void>
+class Gtkmm3OnStateChangedSignal : public cx::cmn::ui::ISignal<void>
 {
 
 public:
@@ -45,12 +45,12 @@ public:
     {
     }
 
-    [[nodiscard]] std::unique_ptr<cx::gui::IConnection> Connect(const std::function<void()>& p_slot) override
+    [[nodiscard]] std::unique_ptr<cx::cmn::ui::IConnection> Connect(const std::function<void()>& p_slot) override
     {
         sigc::connection gtkConnection = m_switch.connect_property_changed_with_return("active", p_slot);
         IF_CONDITION_NOT_MET_DO(gtkConnection.connected(), return nullptr;);
 
-        return std::make_unique<cx::gui::Gtkmm3Connection>(gtkConnection);
+        return std::make_unique<cx::cmn::ui::Gtkmm3Connection>(gtkConnection);
     }
 
 private:
@@ -60,7 +60,7 @@ private:
 
 } // namespace
 
-void cx::gui::Gtkmm3OnOffSwitch::SetDelegate(std::unique_ptr<cx::gui::IWidget> p_delegate)
+void cx::cmn::ui::Gtkmm3OnOffSwitch::SetDelegate(std::unique_ptr<cx::cmn::ui::IWidget> p_delegate)
 {
     IF_PRECONDITION_NOT_MET_DO(p_delegate, return;);
 
@@ -69,7 +69,7 @@ void cx::gui::Gtkmm3OnOffSwitch::SetDelegate(std::unique_ptr<cx::gui::IWidget> p
     POSTCONDITION(m_delegate);
 }
 
-cx::gui::OnOffState cx::gui::Gtkmm3OnOffSwitch::GetState() const
+cx::cmn::ui::OnOffState cx::cmn::ui::Gtkmm3OnOffSwitch::GetState() const
 {
     if(get_active())
     {
@@ -79,7 +79,7 @@ cx::gui::OnOffState cx::gui::Gtkmm3OnOffSwitch::GetState() const
     return OnOffState::OFF;
 }
 
-void cx::gui::Gtkmm3OnOffSwitch::SetState(cx::gui::OnOffState p_newState)
+void cx::cmn::ui::Gtkmm3OnOffSwitch::SetState(cx::cmn::ui::OnOffState p_newState)
 {
     if(p_newState == OnOffState::ON)
     {
@@ -91,42 +91,42 @@ void cx::gui::Gtkmm3OnOffSwitch::SetState(cx::gui::OnOffState p_newState)
     }
 }
 
-std::unique_ptr<cx::gui::ISignal<void>> cx::gui::Gtkmm3OnOffSwitch::OnStateChanged()
+std::unique_ptr<cx::cmn::ui::ISignal<void>> cx::cmn::ui::Gtkmm3OnOffSwitch::OnStateChanged()
 {
     return std::make_unique<Gtkmm3OnStateChangedSignal>(*this);
 }
 
-size_t cx::gui::Gtkmm3OnOffSwitch::GetWidth() const
+size_t cx::cmn::ui::Gtkmm3OnOffSwitch::GetWidth() const
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return 0u;);
     return m_delegate->GetWidth();
 }
 
-size_t cx::gui::Gtkmm3OnOffSwitch::GetHeight() const
+size_t cx::cmn::ui::Gtkmm3OnOffSwitch::GetHeight() const
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return 0u;);
     return m_delegate->GetHeight();
 }
 
-void cx::gui::Gtkmm3OnOffSwitch::SetEnabled(EnabledState p_enabled)
+void cx::cmn::ui::Gtkmm3OnOffSwitch::SetEnabled(EnabledState p_enabled)
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return;);
     m_delegate->SetEnabled(p_enabled);
 }
 
-void cx::gui::Gtkmm3OnOffSwitch::SetMargins(const Margins& p_newMarginSizes)
+void cx::cmn::ui::Gtkmm3OnOffSwitch::SetMargins(const Margins& p_newMarginSizes)
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return;);
     m_delegate->SetMargins(p_newMarginSizes);
 }
 
-void cx::gui::Gtkmm3OnOffSwitch::SetTooltip(const std::string& p_tooltipContents)
+void cx::cmn::ui::Gtkmm3OnOffSwitch::SetTooltip(const std::string& p_tooltipContents)
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return;);
     m_delegate->SetTooltip(p_tooltipContents);
 }
 
-std::unique_ptr<cx::gui::ISignal<cx::gui::EventPropagation, cx::gui::KeyboardKeyPressedEvent>> cx::gui::Gtkmm3OnOffSwitch::OnKeyPressed()
+std::unique_ptr<cx::cmn::ui::ISignal<cx::cmn::ui::EventPropagation, cx::cmn::ui::KeyboardKeyPressedEvent>> cx::cmn::ui::Gtkmm3OnOffSwitch::OnKeyPressed()
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return nullptr;);
     return m_delegate->OnKeyPressed();

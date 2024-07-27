@@ -24,23 +24,23 @@
 #include <cxinv/assertion.h>
 #include <cxgui/KeyboardShortcut.h>
 
-cx::gui::KeyboardShortcut::KeyboardShortcut(cx::gui::Key p_first)
+cx::cmn::ui::KeyboardShortcut::KeyboardShortcut(cx::cmn::ui::Key p_first)
 : m_first{p_first}
 , m_second{std::nullopt}
 {
 }
 
-cx::gui::KeyboardShortcut::KeyboardShortcut(const cx::gui::KeyboardShortcut& p_shortcut)
+cx::cmn::ui::KeyboardShortcut::KeyboardShortcut(const cx::cmn::ui::KeyboardShortcut& p_shortcut)
 {
     m_first = p_shortcut.m_first;
     m_second = p_shortcut.m_second;
 }
 
-[[nodiscard]] cx::gui::KeyboardShortcut cx::gui::operator+(cx::gui::Key p_first, cx::gui::Key p_second)
+[[nodiscard]] cx::cmn::ui::KeyboardShortcut cx::cmn::ui::operator+(cx::cmn::ui::Key p_first, cx::cmn::ui::Key p_second)
 {
     PRECONDITION(p_first != p_second);
 
-    cx::gui::KeyboardShortcut shortcut{p_first};
+    cx::cmn::ui::KeyboardShortcut shortcut{p_first};
 
     if(p_first != p_second)
     {

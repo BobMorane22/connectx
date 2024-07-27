@@ -51,7 +51,7 @@
 #include <cxgui/ISpinBox.h>
 #include <cxgui/WidgetsFactories.h>
 
-cx::gui::Gtkmm3AbstractConnectXWidgetsFactory::Gtkmm3AbstractConnectXWidgetsFactory(
+cx::cmn::ui::Gtkmm3AbstractConnectXWidgetsFactory::Gtkmm3AbstractConnectXWidgetsFactory(
     Glib::RefPtr<Gtk::Application> p_gtkApplication)
 {
     PRECONDITION(bool(p_gtkApplication));
@@ -62,7 +62,7 @@ cx::gui::Gtkmm3AbstractConnectXWidgetsFactory::Gtkmm3AbstractConnectXWidgetsFact
     InvariantsCheck();
 }
 
-void cx::gui::Gtkmm3AbstractConnectXWidgetsFactory::RegisterStandardWidgetsFactory(
+void cx::cmn::ui::Gtkmm3AbstractConnectXWidgetsFactory::RegisterStandardWidgetsFactory(
     IAbstractWidgetsFactory& p_stdAbstractWidgetsFactory)
 {
     m_widgetsFactories = std::make_unique<WidgetsFactories>(
@@ -73,14 +73,14 @@ void cx::gui::Gtkmm3AbstractConnectXWidgetsFactory::RegisterStandardWidgetsFacto
     InvariantsCheck();
 }
 
-std::unique_ptr<cx::gui::IWindow> cx::gui::Gtkmm3AbstractConnectXWidgetsFactory::CreateMainWindow(
+std::unique_ptr<cx::cmn::ui::IWindow> cx::cmn::ui::Gtkmm3AbstractConnectXWidgetsFactory::CreateMainWindow(
     cx::model::ModelSubject& p_model,
     IMainWindowController& p_controller,
     IMainWindowPresenter& p_presenter) const
 {
     IF_PRECONDITION_NOT_MET_DO(m_widgetsFactories, return nullptr;);
 
-    auto mainWindow = cx::gui::CreateWidget<Gtkmm3MainWindow>(
+    auto mainWindow = cx::cmn::ui::CreateWidget<Gtkmm3MainWindow>(
         *(m_gtkApplication.get()),
         p_model,
         p_controller,
@@ -96,7 +96,7 @@ std::unique_ptr<cx::gui::IWindow> cx::gui::Gtkmm3AbstractConnectXWidgetsFactory:
     return mainWindow;
 }
 
-std::unique_ptr<cx::gui::IWindow> cx::gui::Gtkmm3AbstractConnectXWidgetsFactory::CreateAboutWindow(
+std::unique_ptr<cx::cmn::ui::IWindow> cx::cmn::ui::Gtkmm3AbstractConnectXWidgetsFactory::CreateAboutWindow(
     std::unique_ptr<IAboutWindowPresenter> p_presenter) const
 {
     IF_PRECONDITION_NOT_MET_DO(p_presenter, return nullptr;);
@@ -114,7 +114,7 @@ std::unique_ptr<cx::gui::IWindow> cx::gui::Gtkmm3AbstractConnectXWidgetsFactory:
     return aboutWindow;
 }
 
-std::unique_ptr<cx::gui::IWindow> cx::gui::Gtkmm3AbstractConnectXWidgetsFactory::CreateGameResolutionDialog(
+std::unique_ptr<cx::cmn::ui::IWindow> cx::cmn::ui::Gtkmm3AbstractConnectXWidgetsFactory::CreateGameResolutionDialog(
     std::unique_ptr<IGameResolutionDialogPresenter> p_presenter,
     std::unique_ptr<IGameResolutionDialogController> p_controller) const
 {
@@ -133,11 +133,11 @@ std::unique_ptr<cx::gui::IWindow> cx::gui::Gtkmm3AbstractConnectXWidgetsFactory:
     return gameResolutionDialog;
 }
 
-std::unique_ptr<cx::gui::IView> cx::gui::Gtkmm3AbstractConnectXWidgetsFactory::CreateNewGameView(
+std::unique_ptr<cx::cmn::ui::IView> cx::cmn::ui::Gtkmm3AbstractConnectXWidgetsFactory::CreateNewGameView(
     INewGameViewPresenter& p_presenter,
     INewGameViewController& p_controller,
     IWindow& p_parentWindow,
-    cx::gui::ILayout& p_mainLayout,
+    cx::cmn::ui::ILayout& p_mainLayout,
     const cx::model::Column& p_viewLeft,
     const cx::model::Row& p_viewTop) const
 {
@@ -156,11 +156,11 @@ std::unique_ptr<cx::gui::IView> cx::gui::Gtkmm3AbstractConnectXWidgetsFactory::C
     return newGameView;
 }
 
-std::unique_ptr<cx::gui::IView> cx::gui::Gtkmm3AbstractConnectXWidgetsFactory::CreateGameView(
+std::unique_ptr<cx::cmn::ui::IView> cx::cmn::ui::Gtkmm3AbstractConnectXWidgetsFactory::CreateGameView(
     IGameViewPresenter& p_presenter,
     IGameViewController& p_controller,
     IWindow& p_parentWindow,
-    cx::gui::ILayout& p_mainLayout,
+    cx::cmn::ui::ILayout& p_mainLayout,
     const cx::model::Column& p_viewLeft,
     const cx::model::Row& p_viewTop) const
 {
@@ -179,8 +179,8 @@ std::unique_ptr<cx::gui::IView> cx::gui::Gtkmm3AbstractConnectXWidgetsFactory::C
     return gameView;
 }
 
-std::unique_ptr<cx::gui::INewPlayersList> cx::gui::Gtkmm3AbstractConnectXWidgetsFactory::CreateNewPlayersList(
-    const cx::gui::INewGameViewPresenter& p_presenter) const
+std::unique_ptr<cx::cmn::ui::INewPlayersList> cx::cmn::ui::Gtkmm3AbstractConnectXWidgetsFactory::CreateNewPlayersList(
+    const cx::cmn::ui::INewGameViewPresenter& p_presenter) const
 {
     IF_CONDITION_NOT_MET_DO(m_widgetsFactories, return nullptr;);
 
@@ -192,7 +192,7 @@ std::unique_ptr<cx::gui::INewPlayersList> cx::gui::Gtkmm3AbstractConnectXWidgets
     return newPlayersList;
 }
 
-std::unique_ptr<cx::gui::IColorPicker> cx::gui::Gtkmm3AbstractConnectXWidgetsFactory::CreateColorPicker(
+std::unique_ptr<cx::cmn::ui::IColorPicker> cx::cmn::ui::Gtkmm3AbstractConnectXWidgetsFactory::CreateColorPicker(
     const std::vector<cx::model::ChipColor>& p_colors) const
 {
     IF_PRECONDITION_NOT_MET_DO(!p_colors.empty(), return nullptr;);
@@ -203,9 +203,9 @@ std::unique_ptr<cx::gui::IColorPicker> cx::gui::Gtkmm3AbstractConnectXWidgetsFac
     return picker;
 }
 
-std::unique_ptr<cx::gui::IAnimatedBoard> cx::gui::Gtkmm3AbstractConnectXWidgetsFactory::CreateGameBoard(
-    const cx::gui::IGameViewPresenter& p_presenter,
-    const cx::gui::AnimationSpeed& p_speed) const
+std::unique_ptr<cx::cmn::ui::IAnimatedBoard> cx::cmn::ui::Gtkmm3AbstractConnectXWidgetsFactory::CreateGameBoard(
+    const cx::cmn::ui::IGameViewPresenter& p_presenter,
+    const cx::cmn::ui::AnimationSpeed& p_speed) const
 {
     auto animatedBoard = CreateWidget<Gtkmm3AnimatedBoard>(p_presenter, p_speed);
 
@@ -215,7 +215,7 @@ std::unique_ptr<cx::gui::IAnimatedBoard> cx::gui::Gtkmm3AbstractConnectXWidgetsF
     return animatedBoard;
 }
 
-std::unique_ptr<cx::gui::IChip> cx::gui::Gtkmm3AbstractConnectXWidgetsFactory::CreateChip(
+std::unique_ptr<cx::cmn::ui::IChip> cx::cmn::ui::Gtkmm3AbstractConnectXWidgetsFactory::CreateChip(
    const cx::model::ChipColor& p_fillColor,
    const cx::model::ChipColor& p_backgroundColor,
    int p_diameter) const
@@ -231,7 +231,7 @@ std::unique_ptr<cx::gui::IChip> cx::gui::Gtkmm3AbstractConnectXWidgetsFactory::C
     return chip;
 }
 
-void cx::gui::Gtkmm3AbstractConnectXWidgetsFactory::InvariantsCheck() const 
+void cx::cmn::ui::Gtkmm3AbstractConnectXWidgetsFactory::InvariantsCheck() const 
 {
     INVARIANT(m_gtkApplication);
 }

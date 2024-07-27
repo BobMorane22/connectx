@@ -26,7 +26,7 @@
 
 #include <memory>
 
-namespace cx::gui
+namespace cx::cmn::ui
 {
     enum class WidgetsToolkit;
 }
@@ -77,7 +77,7 @@ public:
      *      The manager.
      *
      ********************************************************************************************/
-    [[nodiscard]] std::unique_ptr<IUIManager> Create(cx::gui::WidgetsToolkit p_toolkit) const;
+    [[nodiscard]] std::unique_ptr<IUIManager> Create(cx::cmn::ui::WidgetsToolkit p_toolkit) const;
 
 private:
 

@@ -32,7 +32,7 @@
 #include <cxgui/Gtkmm3BoardElementCache.h>
 #include <cxgui/IAnimatedBoard.h>
 
-namespace cx::gui
+namespace cx::cmn::ui
 {
 
 enum class BoardAnimation;
@@ -42,7 +42,7 @@ class IGameViewPresenter;
 
 }
 
-namespace cx::gui
+namespace cx::cmn::ui
 {
 
 /**********************************************************************************************//**
@@ -65,7 +65,7 @@ public:
      *      would mean that a chip will move three columns (or rows) per second when animated.
      *
      *********************************************************************************************/
-    Gtkmm3AnimatedBoard(const IGameViewPresenter& p_presenter, const cx::gui::AnimationSpeed& p_speed);
+    Gtkmm3AnimatedBoard(const IGameViewPresenter& p_presenter, const cx::cmn::ui::AnimationSpeed& p_speed);
 
     /******************************************************************************************//**
      * @brief Destructor.
@@ -76,7 +76,7 @@ public:
     /*******************************************************************************************//**
      * @brief Sets the delegate for widget common facilities.
      *
-     * The delegate is reponsible to carry the implementation for generic `cx::gui::IWidget` operations.
+     * The delegate is reponsible to carry the implementation for generic `cx::cmn::ui::IWidget` operations.
      * It is meant to avoid implementation duplication.
      *
      * @param p_delegate
@@ -90,11 +90,11 @@ public:
      **********************************************************************************************/
     void SetDelegate(std::unique_ptr<IWidget> p_delegate);
 
-    // cx::gui::IAnimatedBoard:
+    // cx::cmn::ui::IAnimatedBoard:
     [[nodiscard]] const cx::model::Column& GetCurrentColumn() const override;
     [[nodiscard]] cx::model::ChipColor GetCurrentChipColor() const override;
 
-    // cx::gui::IWidget:
+    // cx::cmn::ui::IWidget:
     [[nodiscard]] size_t GetWidth() const override;
     [[nodiscard]] size_t GetHeight() const override;
     void SetEnabled(EnabledState p_enabled) override;
@@ -153,6 +153,6 @@ private:
 
 };
 
-} // namespace cx::gui
+} // namespace cx::cmn::ui
 
 #endif // GTKMM3ANIMATEDBOARD_H_5A2F73E1_EAC4_4C34_9F79_7540148552C2

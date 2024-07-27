@@ -23,17 +23,17 @@
 
 #include <cxgui/TieGameResolutionDialogPresenter.h>
 
-std::string cx::gui::TieGameResolutionDialogPresenter::GetTitle() const
+std::string cx::cmn::ui::TieGameResolutionDialogPresenter::GetTitle() const
 {
     return "Game tied!";
 }
 
-std::string cx::gui::TieGameResolutionDialogPresenter::GetResolutionMessage() const
+std::string cx::cmn::ui::TieGameResolutionDialogPresenter::GetResolutionMessage() const
 {
      return "Nobody wins, nobody looses!";
 }
 
-std::string cx::gui::TieGameResolutionDialogPresenter::GetStartNewGameButtonText() const
+std::string cx::cmn::ui::TieGameResolutionDialogPresenter::GetStartNewGameButtonText() const
 {
     return "Start new game";
 }

@@ -72,7 +72,7 @@ private:
 TEST(WinGameResolutionDialogPresenter, GetTitle_ValidModel_TitleReturned)
 {
     ModelMock model;
-    cx::gui::WinGameResolutionDialogPresenter presenter{model};
+    cx::cmn::ui::WinGameResolutionDialogPresenter presenter{model};
 
     ASSERT_EQ("Game won!", presenter.GetTitle());
 }
@@ -84,7 +84,7 @@ TEST(WinGameResolutionDialogPresenter, GetResolutionMessage_GameWon_GameWonResol
     model.SetIsWon(true);
     model.SetActivePlayer(cx::model::CreatePlayer("John Doe", cx::model::MakeRed(), cx::model::PlayerType::HUMAN));
 
-    cx::gui::WinGameResolutionDialogPresenter presenter{model};
+    cx::cmn::ui::WinGameResolutionDialogPresenter presenter{model};
 
     ASSERT_EQ("Congratulations to John Doe!", presenter.GetResolutionMessage());
 }
@@ -98,7 +98,7 @@ TEST(WinGameResolutionDialogPresenter, GetResolutionMessage_GameNotWon_NoMessage
     model.SetIsWon(false);
     model.SetActivePlayer(cx::model::CreatePlayer("John Doe", cx::model::MakeRed(), cx::model::PlayerType::HUMAN));
 
-    cx::gui::WinGameResolutionDialogPresenter presenter{model};
+    cx::cmn::ui::WinGameResolutionDialogPresenter presenter{model};
 
     ASSERT_EQ("", streamDisabler.GetStdErrContents());
     ASSERT_EQ("", presenter.GetResolutionMessage());
@@ -109,7 +109,7 @@ TEST(WinGameResolutionDialogPresenter, GetResolutionMessage_GameNotWon_NoMessage
 TEST(WinGameResolutionDialogPresenter, GetStartNewGameButtonText_ValidModel_StartNewGameButtonTextReturned)
 {
     ModelMock model;
-    cx::gui::WinGameResolutionDialogPresenter presenter{model};
+    cx::cmn::ui::WinGameResolutionDialogPresenter presenter{model};
 
     ASSERT_EQ("Start new game", presenter.GetStartNewGameButtonText());
 }

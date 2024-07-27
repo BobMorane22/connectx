@@ -24,7 +24,7 @@
 #ifndef KEYBOARDKEYPRESSEDEVENT_H_AF108023_81EE_4BB7_8267_3D08C10B7095
 #define KEYBOARDKEYPRESSEDEVENT_H_AF108023_81EE_4BB7_8267_3D08C10B7095
 
-namespace cx::gui
+namespace cx::cmn::ui
 {
 
 /**********************************************************************************************//**
@@ -45,6 +45,6 @@ enum class KeyboardKeyPressedEvent
     KEY_DOWN,
 };
 
-} // namespace cx::gui
+} // namespace cx::cmn::ui
 
 #endif // KEYBOARDKEYPRESSEDEVENT_H_AF108023_81EE_4BB7_8267_3D08C10B7095

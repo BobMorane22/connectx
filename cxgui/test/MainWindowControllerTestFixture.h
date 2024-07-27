@@ -49,8 +49,8 @@ public:
     bool GetRedoCalled() const;
 
     cx::model::IConnectXGameActions& GetModel();
-    cx::gui::IMainWindowController& GetController();
-    cx::gui::INewGameViewController& GetNewGameViewController();
+    cx::cmn::ui::IMainWindowController& GetController();
+    cx::cmn::ui::INewGameViewController& GetNewGameViewController();
 
 private:
 
@@ -94,7 +94,7 @@ private:
     bool m_undoCalled = false;
     bool m_redoCalled = false;
 
-    std::unique_ptr<cx::gui::IMainWindowController> m_controller;
+    std::unique_ptr<cx::cmn::ui::IMainWindowController> m_controller;
     std::unique_ptr<MainWindowControllerMockModel> m_model;
 };
 

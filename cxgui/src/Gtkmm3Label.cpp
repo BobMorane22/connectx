@@ -24,18 +24,18 @@
 #include <cxinv/assertion.h>
 #include <cxgui/Gtkmm3Label.h>
 
-cx::gui::Gtkmm3Label::Gtkmm3Label()
+cx::cmn::ui::Gtkmm3Label::Gtkmm3Label()
 : Gtkmm3Label("")
 {
 }
 
-cx::gui::Gtkmm3Label::Gtkmm3Label(const std::string& p_contents)
+cx::cmn::ui::Gtkmm3Label::Gtkmm3Label(const std::string& p_contents)
 : Gtk::Label{p_contents}
 {
     set_use_markup(true);
 }
 
-void cx::gui::Gtkmm3Label::SetDelegate(std::unique_ptr<IWidget> p_delegate)
+void cx::cmn::ui::Gtkmm3Label::SetDelegate(std::unique_ptr<IWidget> p_delegate)
 {
     IF_PRECONDITION_NOT_MET_DO(p_delegate, return;);
 
@@ -44,47 +44,47 @@ void cx::gui::Gtkmm3Label::SetDelegate(std::unique_ptr<IWidget> p_delegate)
     POSTCONDITION(m_delegate);
 }
 
-void cx::gui::Gtkmm3Label::UpdateContents(const std::string& p_newContents) 
+void cx::cmn::ui::Gtkmm3Label::UpdateContents(const std::string& p_newContents) 
 {
     set_markup(p_newContents);
 }
 
-std::string cx::gui::Gtkmm3Label::GetContents() const
+std::string cx::cmn::ui::Gtkmm3Label::GetContents() const
 {
     return get_text();
 }
 
-size_t cx::gui::Gtkmm3Label::GetWidth() const 
+size_t cx::cmn::ui::Gtkmm3Label::GetWidth() const 
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return 0u;);
     return m_delegate->GetWidth();
 }
 
-size_t cx::gui::Gtkmm3Label::GetHeight() const 
+size_t cx::cmn::ui::Gtkmm3Label::GetHeight() const 
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return 0u;);
     return m_delegate->GetHeight();
 }
 
-void cx::gui::Gtkmm3Label::SetEnabled(EnabledState p_enabled) 
+void cx::cmn::ui::Gtkmm3Label::SetEnabled(EnabledState p_enabled) 
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return;);
     m_delegate->SetEnabled(p_enabled);
 }
 
-void cx::gui::Gtkmm3Label::SetMargins(const Margins& p_newMarginSizes) 
+void cx::cmn::ui::Gtkmm3Label::SetMargins(const Margins& p_newMarginSizes) 
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return;);
     m_delegate->SetMargins(p_newMarginSizes);
 }
 
-void cx::gui::Gtkmm3Label::SetTooltip(const std::string& p_tooltipContents)
+void cx::cmn::ui::Gtkmm3Label::SetTooltip(const std::string& p_tooltipContents)
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return;);
     m_delegate->SetTooltip(p_tooltipContents);
 }
 
-std::unique_ptr<cx::gui::ISignal<cx::gui::EventPropagation, cx::gui::KeyboardKeyPressedEvent>> cx::gui::Gtkmm3Label::OnKeyPressed()
+std::unique_ptr<cx::cmn::ui::ISignal<cx::cmn::ui::EventPropagation, cx::cmn::ui::KeyboardKeyPressedEvent>> cx::cmn::ui::Gtkmm3Label::OnKeyPressed()
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return nullptr;);
     return m_delegate->OnKeyPressed();

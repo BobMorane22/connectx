@@ -30,7 +30,7 @@
 namespace
 {
 
-class Gtkmm3OnClickedSignal : public cx::gui::ISignal<void>
+class Gtkmm3OnClickedSignal : public cx::cmn::ui::ISignal<void>
 {
 
 public:
@@ -40,12 +40,12 @@ public:
     {
     }
 
-    [[nodiscard]] std::unique_ptr<cx::gui::IConnection> Connect(const std::function<void()>& p_slot) override
+    [[nodiscard]] std::unique_ptr<cx::cmn::ui::IConnection> Connect(const std::function<void()>& p_slot) override
     {
         sigc::connection gtkConnection = m_button.signal_clicked().connect(p_slot);
         IF_CONDITION_NOT_MET_DO(gtkConnection.connected(), return nullptr;);
 
-        return std::make_unique<cx::gui::Gtkmm3Connection>(gtkConnection);
+        return std::make_unique<cx::cmn::ui::Gtkmm3Connection>(gtkConnection);
     }
 
 private:
@@ -56,17 +56,17 @@ private:
 
 } // namespace
 
-cx::gui::Gtkmm3Button::Gtkmm3Button()
-: cx::gui::Gtkmm3Button("")
+cx::cmn::ui::Gtkmm3Button::Gtkmm3Button()
+: cx::cmn::ui::Gtkmm3Button("")
 {
 }
 
-cx::gui::Gtkmm3Button::Gtkmm3Button(const std::string& p_label)
+cx::cmn::ui::Gtkmm3Button::Gtkmm3Button(const std::string& p_label)
 {
     set_label(p_label);
 }
 
-void cx::gui::Gtkmm3Button::SetDelegate(std::unique_ptr<IWidget> p_delegate)
+void cx::cmn::ui::Gtkmm3Button::SetDelegate(std::unique_ptr<IWidget> p_delegate)
 {
     IF_PRECONDITION_NOT_MET_DO(p_delegate, return;);
 
@@ -75,52 +75,52 @@ void cx::gui::Gtkmm3Button::SetDelegate(std::unique_ptr<IWidget> p_delegate)
     POSTCONDITION(m_delegate);
 }
 
-void cx::gui::Gtkmm3Button::UpdateContents(const std::string& p_newContents)
+void cx::cmn::ui::Gtkmm3Button::UpdateContents(const std::string& p_newContents)
 {
     set_label(p_newContents);
 }
 
-std::string cx::gui::Gtkmm3Button::GetContents() const
+std::string cx::cmn::ui::Gtkmm3Button::GetContents() const
 {
     return get_label();
 }
 
-std::unique_ptr<cx::gui::ISignal<void>> cx::gui::Gtkmm3Button::OnClicked()
+std::unique_ptr<cx::cmn::ui::ISignal<void>> cx::cmn::ui::Gtkmm3Button::OnClicked()
 {
     return std::make_unique<Gtkmm3OnClickedSignal>(*this);
 }
 
-size_t cx::gui::Gtkmm3Button::GetWidth() const 
+size_t cx::cmn::ui::Gtkmm3Button::GetWidth() const 
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return 0u;);
     return m_delegate->GetWidth();
 }
 
-size_t cx::gui::Gtkmm3Button::GetHeight() const 
+size_t cx::cmn::ui::Gtkmm3Button::GetHeight() const 
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return 0u;);
     return m_delegate->GetHeight();
 }
 
-void cx::gui::Gtkmm3Button::SetEnabled(EnabledState p_enabled) 
+void cx::cmn::ui::Gtkmm3Button::SetEnabled(EnabledState p_enabled) 
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return;);
     m_delegate->SetEnabled(p_enabled);
 }
 
-void cx::gui::Gtkmm3Button::SetMargins(const Margins& p_newMarginSizes) 
+void cx::cmn::ui::Gtkmm3Button::SetMargins(const Margins& p_newMarginSizes) 
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return;);
     m_delegate->SetMargins(p_newMarginSizes);
 }
 
-void cx::gui::Gtkmm3Button::SetTooltip(const std::string& p_tooltipContents)
+void cx::cmn::ui::Gtkmm3Button::SetTooltip(const std::string& p_tooltipContents)
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return;);
     m_delegate->SetTooltip(p_tooltipContents);
 }
 
-std::unique_ptr<cx::gui::ISignal<cx::gui::EventPropagation, cx::gui::KeyboardKeyPressedEvent>> cx::gui::Gtkmm3Button::OnKeyPressed()
+std::unique_ptr<cx::cmn::ui::ISignal<cx::cmn::ui::EventPropagation, cx::cmn::ui::KeyboardKeyPressedEvent>> cx::cmn::ui::Gtkmm3Button::OnKeyPressed()
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return nullptr;);
     return m_delegate->OnKeyPressed();

@@ -26,7 +26,7 @@
 #include <cxgui/IAbstractConnectXWidgetsFactory.h>
 #include <cxgui/WidgetsFactories.h>
 
-cx::gui::WidgetsFactories::WidgetsFactories(
+cx::cmn::ui::WidgetsFactories::WidgetsFactories(
     IAbstractWidgetsFactory& p_stdFactory,
     IAbstractConnectXWidgetsFactory& p_connectxFactory)
 : m_stdFactory{p_stdFactory}
@@ -34,12 +34,12 @@ cx::gui::WidgetsFactories::WidgetsFactories(
 {
 }
 
-const cx::gui::IAbstractWidgetsFactory& cx::gui::WidgetsFactories::GetStandardWidgetsFactory() const
+const cx::cmn::ui::IAbstractWidgetsFactory& cx::cmn::ui::WidgetsFactories::GetStandardWidgetsFactory() const
 {
     return m_stdFactory;
 }
 
-const cx::gui::IAbstractConnectXWidgetsFactory& cx::gui::WidgetsFactories::GetConnectXWidgetsFactory() const
+const cx::cmn::ui::IAbstractConnectXWidgetsFactory& cx::cmn::ui::WidgetsFactories::GetConnectXWidgetsFactory() const
 {
     return m_connectxFactory;
 }

@@ -29,7 +29,7 @@
 #include <cxgui/IView.h>
 #include <cxgui/KeyboardKeyPressedEvent.h>
 
-namespace cx::gui
+namespace cx::cmn::ui
 {
     enum class EventPropagation;
     class IChip;
@@ -41,7 +41,7 @@ namespace cx::gui
     class WidgetsFactories;
 }
 
-namespace cx::gui
+namespace cx::cmn::ui
 {
 
 /*********************************************************************************************//**
@@ -49,9 +49,9 @@ namespace cx::gui
  *
  ************************************************************************************************/
 class Gtkmm3GameView : public IView,
-                       private cx::gui::IBoardAnimationObserver,
-                       private cx::gui::IUserActionObserver,
-                       private cx::gui::BoardAnimationSubject
+                       private cx::cmn::ui::IBoardAnimationObserver,
+                       private cx::cmn::ui::IUserActionObserver,
+                       private cx::cmn::ui::BoardAnimationSubject
 {
 
 public:
@@ -79,7 +79,7 @@ public:
         WidgetsFactories& p_widgetsFactories,
         IGameViewPresenter& p_presenter, IGameViewController& p_controller,
         IWindow& p_parentWindow,
-        cx::gui::ILayout& p_mainLayout,
+        cx::cmn::ui::ILayout& p_mainLayout,
         const cx::model::Column& p_viewLeft,
         const cx::model::Row& p_viewTop);
 
@@ -89,7 +89,7 @@ public:
      ********************************************************************************************/
     ~Gtkmm3GameView() override;
     
-    // cx::gui::IView:
+    // cx::cmn::ui::IView:
     void Activate() override;
     void DeActivate() override;
     void Update(cx::model::ModelNotificationContext p_context) override;
@@ -104,11 +104,11 @@ public:
 
 private:
 
-    // cx::gui::IBoardAnimationObserver:
-    void Update(cx::gui::BoardAnimationNotificationContext p_context, cx::gui::BoardAnimationSubject* p_subject) override;
+    // cx::cmn::ui::IBoardAnimationObserver:
+    void Update(cx::cmn::ui::BoardAnimationNotificationContext p_context, cx::cmn::ui::BoardAnimationSubject* p_subject) override;
 
-    // cx::gui::IUserActionObserver:
-    void Update(cx::gui::UserAction p_context, cx::gui::UserActionSubject* p_subject) override;
+    // cx::cmn::ui::IUserActionObserver:
+    void Update(cx::cmn::ui::UserAction p_context, cx::cmn::ui::UserActionSubject* p_subject) override;
 
     void SetLayout();
     void PopulateWidgets();
@@ -139,7 +139,7 @@ private:
 
     IWindow& m_parentWindow;                  // The window containing the view in its main layout.
 
-    cx::gui::ILayout& m_mainLayout;
+    cx::cmn::ui::ILayout& m_mainLayout;
 
     const cx::model::Column m_viewLeft;
     const cx::model::Row m_viewTop;
@@ -167,6 +167,6 @@ private:
     std::unique_ptr<IConnection> m_keysPressedConnection;
 };
 
-} // namespace cx::gui
+} // namespace cx::cmn::ui
 
 #endif // GTKMM3GAMEVIEW_H_AA8C282C_9CC4_45F4_BE91_C8840160BA1B

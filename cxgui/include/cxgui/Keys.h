@@ -24,7 +24,7 @@
 #ifndef KEYS_H_D04F81A0_26F8_4AE3_A82A_CE92C90FA94A
 #define KEYS_H_D04F81A0_26F8_4AE3_A82A_CE92C90FA94A
 
-namespace cx::gui
+namespace cx::cmn::ui
 {
 
 /**********************************************************************************************//**
@@ -40,6 +40,6 @@ enum class Key
     Z,
 };
 
-} // namespace cx::gui
+} // namespace cx::cmn::ui
 
 #endif // KEYS_H_D04F81A0_26F8_4AE3_A82A_CE92C90FA94A
