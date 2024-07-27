@@ -1,0 +1,158 @@
+/**************************************************************************************************
+ *  This file is part of Connect X.
+ *
+ *  Connect X is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  Connect X is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with Connect X. If not, see <https://www.gnu.org/licenses/>.
+ *
+ *************************************************************************************************/
+/**********************************************************************************************//**
+ * @file Gtkmm3AnimatedBoard.h
+ * @date 2021
+ *
+ *************************************************************************************************/
+
+#ifndef GTKMM3ANIMATEDBOARD_H_5A2F73E1_EAC4_4C34_9F79_7540148552C2
+#define GTKMM3ANIMATEDBOARD_H_5A2F73E1_EAC4_4C34_9F79_7540148552C2
+
+#include <gtkmm/drawingarea.h>
+
+#include <cxmath/Dimensions.h>
+#include <cxuicmn/AnimationInformation.h>
+#include <cxuicmn/Gtkmm3AnimatedBoardTimerRAII.h>
+#include <cxuicmn/Gtkmm3BoardElementCache.h>
+#include <cxuicmn/IAnimatedBoard.h>
+
+namespace cx::cmn::ui
+{
+
+enum class BoardAnimation;
+class IAnimatedBoardModel;
+class IAnimatedBoardPresenter;
+class IGameViewPresenter;
+
+}
+
+namespace cx::cmn::ui
+{
+
+/**********************************************************************************************//**
+ * @brief Gtkmm3 implementation of an animated game board.
+ *
+ *************************************************************************************************/
+class Gtkmm3AnimatedBoard : public IAnimatedBoard,
+                            public Gtk::DrawingArea
+{
+
+public:
+
+    /******************************************************************************************//**
+     * @brief Constructor.
+     *
+     * @param p_presenter
+     *      The Game View presenter.
+     * @param p_speed
+     *      The number of positions a chip should move, per second. For example, a value of '3'
+     *      would mean that a chip will move three columns (or rows) per second when animated.
+     *
+     *********************************************************************************************/
+    Gtkmm3AnimatedBoard(const IGameViewPresenter& p_presenter, const cx::cmn::ui::AnimationSpeed& p_speed);
+
+    /******************************************************************************************//**
+     * @brief Destructor.
+     *
+     *********************************************************************************************/
+    ~Gtkmm3AnimatedBoard() override = default;
+
+    /*******************************************************************************************//**
+     * @brief Sets the delegate for widget common facilities.
+     *
+     * The delegate is reponsible to carry the implementation for generic `cx::cmn::ui::IWidget` operations.
+     * It is meant to avoid implementation duplication.
+     *
+     * @param p_delegate
+     *      The widget delegate.
+     *
+     * @pre
+     *      The widget delegate instance given as an argument is valid.
+     * @post
+     *      The registered widget delegate is valid.
+     *
+     **********************************************************************************************/
+    void SetDelegate(std::unique_ptr<IWidget> p_delegate);
+
+    // cx::cmn::ui::IAnimatedBoard:
+    [[nodiscard]] const cx::model::Column& GetCurrentColumn() const override;
+    [[nodiscard]] cx::model::ChipColor GetCurrentChipColor() const override;
+
+    // cx::cmn::ui::IWidget:
+    [[nodiscard]] size_t GetWidth() const override;
+    [[nodiscard]] size_t GetHeight() const override;
+    void SetEnabled(EnabledState p_enabled) override;
+    void SetMargins(const Margins& p_newMarginSizes) override;
+    void SetTooltip(const std::string& p_tooltipContents) override;
+    [[nodiscard]] std::unique_ptr<ISignal<EventPropagation, KeyboardKeyPressedEvent>> OnKeyPressed() override;
+
+private:
+
+    void PerformChipAnimation(BoardAnimation p_animation);
+
+    bool on_draw(const Cairo::RefPtr<Cairo::Context>& p_context) override;
+    void DrawActiveColumnHighlight(const Cairo::RefPtr<Cairo::Context>& p_context);
+    void DrawBoardElement(const Cairo::RefPtr<Cairo::Context>& p_context, const cx::model::Row& p_row, const cx::model::Column& p_column);
+
+    bool Redraw();
+
+    bool OnResize(const cx::math::Dimensions& p_newDimensions);
+
+    void Update(BoardAnimationNotificationContext p_context, BoardAnimationSubject* p_subject) override;
+
+    void CustomizeHeightAccordingToMonitorDimensions();
+
+    // Handlers:
+    bool OnMouseButtonPressed(GdkEventButton* p_event);
+    bool OnMouseMotion(GdkEventMotion* p_event);
+
+private:
+
+    std::unique_ptr<IWidget> m_delegate;
+
+    // A Game View presenter cache:
+    std::unique_ptr<IAnimatedBoardPresenter> m_presenter;
+    std::unique_ptr<IAnimatedBoardModel> m_animationModel;
+
+    // Clock (ticks m_FPS times per second):
+    std::unique_ptr<Gtkmm3AnimatedBoardTimerRAII> m_timer;
+
+    AnimationInformations<cx::math::Width> m_moveLeftAnimationInfo;
+    AnimationInformations<cx::math::Width> m_moveRightAnimationInfo;
+    AnimationInformations<cx::math::Height> m_dropAnimationInfo;
+
+    cx::math::Dimensions m_lastFrameDimensions{cx::math::Height{0.0}, cx::math::Width{0.0}};
+
+    // Surfaces in RAM on which to perform the drawing, in memory, before effectively
+    // drawing on the screen. Caching these surfaces here avoids recreating them on every
+    // frame draw, which helps performancewise:
+    Gtkmm3BoardElementCache m_boardElementsCache;       // For individual discs.
+    Cairo::RefPtr<Cairo::Surface> m_columnHilightCache; // For the column hilight.
+    Cairo::RefPtr<Cairo::Surface> m_surfaceCache;       // For the whole drawn surface.
+
+    // Signals:
+    sigc::connection m_mouseButtonPressedConnection;
+    sigc::connection m_mouseMotionConnection;
+    sigc::connection m_initialSizeAllocationConnection;
+
+};
+
+} // namespace cx::cmn::ui
+
+#endif // GTKMM3ANIMATEDBOARD_H_5A2F73E1_EAC4_4C34_9F79_7540148552C2

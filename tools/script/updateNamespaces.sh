@@ -37,7 +37,10 @@
 ./tools/script/findReplace.sh "namespace cxgui" "namespace cx::gui"
 ./tools/script/findReplace.sh "@namespace cxgui" "@namespace cx::gui"
 
-# cxgui -> cx::cmn::ui
-./tools/script/findReplace.sh "cx::gui::" "cx::cmn::ui::"
-./tools/script/findReplace.sh "namespace cx::gui" "namespace cx::cmn::ui"
-./tools/script/findReplace.sh "@namespace cx::gui" "@namespace cx::cmn::ui"
+# cxgui -> cx:ui::cmn
+./tools/script/findReplace.sh "cx::gui::" "cx::ui::cmn::"
+./tools/script/findReplace.sh "namespace cx::gui" "namespace cx::ui::cmn"
+./tools/script/findReplace.sh "@namespace cx::gui" "@namespace cx::ui::cmn"
+./tools/script/findReplace.sh "<cxgui" "<cxuicmn"
+./tools/script/findReplace.sh "\"cxgui" "\"cxuicmn"
+./tools/script/findReplace.sh "PRIVATE cxgui" "PRIVATE cxuicmn"

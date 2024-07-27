@@ -34,7 +34,7 @@ target_link_libraries(${TARGET_NAME}
   PRIVATE cxlog
   PRIVATE cxmath
   PRIVATE cxmodel
-  PRIVATE cxgui
+  PRIVATE cxuicmn
   PRIVATE cxexec
 )
 

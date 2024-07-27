@@ -1,0 +1,68 @@
+/**************************************************************************************************
+ *  This file is part of Connect X.
+ *
+ *  Connect X is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  Connect X is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with Connect X. If not, see <https://www.gnu.org/licenses/>.
+ *
+ *************************************************************************************************/
+/**********************************************************************************************//**
+ * @file GameResolutionDialogPresenterFactory.cpp
+ * @date 2020
+ *
+ *************************************************************************************************/
+
+#include <cxinv/assertion.h>
+#include <cxmodel/GameResolutionStrategyFactory.h>
+#include <cxmodel/IConnectXGameInformation.h>
+#include <cxuicmn/TieGameResolutionDialogPresenter.h>
+#include <cxuicmn/WinGameResolutionDialogPresenter.h>
+#include <cxuicmn/GameResolutionDialogPresenterFactory.h>
+
+namespace
+{
+
+// Fallback presenter.
+class NoGameResolutionDialogPresenter : public cx::cmn::ui::IGameResolutionDialogPresenter
+{
+    std::string GetTitle() const override {return "";}                    // LCOV_EXCL_LINE
+    std::string GetResolutionMessage() const override {return "";}        // LCOV_EXCL_LINE
+    std::string GetStartNewGameButtonText() const override {return "";}   // LCOV_EXCL_LINE
+};
+
+} // namespace
+
+std::unique_ptr<cx::cmn::ui::IGameResolutionDialogPresenter> cx::cmn::ui::GameResolutionDialogPresenterFactory::Make(const cx::model::IConnectXGameInformation& p_modelAsInformation,
+                                                                                                         cx::model::GameResolution p_resolution)
+{
+    std::unique_ptr<cx::cmn::ui::IGameResolutionDialogPresenter> presenter = std::make_unique<NoGameResolutionDialogPresenter>();
+    ASSERT(presenter);
+
+    switch(p_resolution)
+    {
+        case cx::model::GameResolution::WIN:
+        {
+            presenter = std::make_unique<cx::cmn::ui::WinGameResolutionDialogPresenter>(p_modelAsInformation);
+            break;
+        }
+        case cx::model::GameResolution::TIE:
+        {
+            presenter = std::make_unique<cx::cmn::ui::TieGameResolutionDialogPresenter>();
+            break;
+        }
+        default:   // LCOV_EXCL_LINE
+            break; // LCOV_EXCL_LINE
+    }
+
+    ASSERT(presenter);
+    return presenter;
+}

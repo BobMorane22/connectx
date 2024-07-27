@@ -23,13 +23,13 @@
 
 #include <cstdlib>
 #include <cxinv/assertion.h>
-#include <cxgui/IAbstractWidgetsFactory.h>
-#include <cxgui/IAbstractConnectXWidgetsFactory.h>
-#include <cxgui/IMainWindowController.h>
-#include <cxgui/IMainWindowPresenter.h>
-#include <cxgui/IWindow.h>
-#include <cxgui/WidgetsFactories.h>
-#include <cxgui/WidgetsToolkit.h>
+#include <cxuicmn/IAbstractWidgetsFactory.h>
+#include <cxuicmn/IAbstractConnectXWidgetsFactory.h>
+#include <cxuicmn/IMainWindowController.h>
+#include <cxuicmn/IMainWindowPresenter.h>
+#include <cxuicmn/IWindow.h>
+#include <cxuicmn/WidgetsFactories.h>
+#include <cxuicmn/WidgetsToolkit.h>
 #include <cxexec/Gtkmm3UIManager.h>
 #include <cxexec/IUIManager.h>
 #include <cxexec/UIManagerFactory.h>

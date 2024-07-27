@@ -24,8 +24,8 @@
 #include <cstdlib>
 
 #include <cxinv/assertion.h>
-#include <cxgui/IWindow.h>
-#include <cxgui/WidgetsToolkit.h>
+#include <cxuicmn/IWindow.h>
+#include <cxuicmn/WidgetsToolkit.h>
 #include <cxexec/CmdArgMainStrategy.h>
 #include <cxexec/IUIManager.h>
 #include <cxexec/UIManagerFactory.h>

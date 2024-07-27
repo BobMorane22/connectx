@@ -85,7 +85,7 @@ add_subdirectory(cxinv)
 add_subdirectory(cxlog)
 add_subdirectory(cxmath)
 add_subdirectory(cxmodel)
-add_subdirectory(cxgui)
+add_subdirectory(cxuicmn)
 add_subdirectory(cxexec)
 
 # Main Connect X executable:

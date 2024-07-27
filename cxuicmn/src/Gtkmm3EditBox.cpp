@@ -1,0 +1,117 @@
+/**************************************************************************************************
+ *  This file is part of Connect X.
+ *
+ *  Connect X is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  Connect X is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with Connect X. If not, see <https://www.gnu.org/licenses/>.
+ *
+ *************************************************************************************************/
+/**********************************************************************************************//**
+ * @file Gtkmm3EditBox.cpp
+ * @date 2024
+ *
+ *************************************************************************************************/
+
+#include <cxinv/assertion.h>
+#include <cxuicmn/EventPropagation.h>
+#include <cxuicmn/Gtkmm3Connection.h>
+#include <cxuicmn/Gtkmm3EditBox.h>
+#include <cxuicmn/KeyboardKeyPressedEvent.h>
+
+namespace
+{
+
+class Gtkmm3OnContentsChangedSignal : public cx::cmn::ui::ISignal<void>
+{
+
+public:
+
+    explicit Gtkmm3OnContentsChangedSignal(Gtk::Entry& p_entry)
+    : m_entry{p_entry}
+    {
+    }
+
+    [[nodiscard]] std::unique_ptr<cx::cmn::ui::IConnection> Connect(const std::function<void()>& p_slot) override
+    {
+        sigc::connection gtkConnection = m_entry.signal_changed().connect(p_slot);
+        IF_CONDITION_NOT_MET_DO(gtkConnection.connected(), return nullptr;);
+
+        return std::make_unique<cx::cmn::ui::Gtkmm3Connection>(gtkConnection);
+    }
+
+private:
+
+    Gtk::Entry& m_entry;
+
+};
+
+} // namespace
+
+void cx::cmn::ui::Gtkmm3EditBox::SetDelegate(std::unique_ptr<IWidget> p_delegate)
+{
+    IF_PRECONDITION_NOT_MET_DO(p_delegate, return;);
+
+    m_delegate = std::move(p_delegate);
+
+    POSTCONDITION(m_delegate);
+}
+
+void cx::cmn::ui::Gtkmm3EditBox::UpdateContents(const std::string& p_newContents)
+{
+    set_text(p_newContents);
+}
+
+std::string cx::cmn::ui::Gtkmm3EditBox::GetContents() const
+{
+    return get_text();
+}
+
+std::unique_ptr<cx::cmn::ui::ISignal<void>> cx::cmn::ui::Gtkmm3EditBox::OnContentsChanged()
+{
+    return std::make_unique<Gtkmm3OnContentsChangedSignal>(*this);
+}
+
+size_t cx::cmn::ui::Gtkmm3EditBox::GetWidth() const 
+{
+    IF_CONDITION_NOT_MET_DO(m_delegate, return 0u;);
+    return m_delegate->GetWidth();
+}
+
+size_t cx::cmn::ui::Gtkmm3EditBox::GetHeight() const 
+{
+    IF_CONDITION_NOT_MET_DO(m_delegate, return 0u;);
+    return m_delegate->GetHeight();
+}
+
+void cx::cmn::ui::Gtkmm3EditBox::SetEnabled(EnabledState p_enabled) 
+{
+    IF_CONDITION_NOT_MET_DO(m_delegate, return;);
+    m_delegate->SetEnabled(p_enabled);
+}
+
+void cx::cmn::ui::Gtkmm3EditBox::SetMargins(const Margins& p_newMarginSizes) 
+{
+    IF_CONDITION_NOT_MET_DO(m_delegate, return;);
+    m_delegate->SetMargins(p_newMarginSizes);
+}
+
+void cx::cmn::ui::Gtkmm3EditBox::SetTooltip(const std::string& p_tooltipContents)
+{
+    IF_CONDITION_NOT_MET_DO(m_delegate, return;);
+    m_delegate->SetTooltip(p_tooltipContents);
+}
+
+std::unique_ptr<cx::cmn::ui::ISignal<cx::cmn::ui::EventPropagation, cx::cmn::ui::KeyboardKeyPressedEvent>> cx::cmn::ui::Gtkmm3EditBox::OnKeyPressed()
+{
+    IF_CONDITION_NOT_MET_DO(m_delegate, return nullptr;);
+    return m_delegate->OnKeyPressed();
+}
