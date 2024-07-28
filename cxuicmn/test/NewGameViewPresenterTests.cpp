@@ -553,7 +553,7 @@ private:
 
 // We don't really care about the game information contents, except that we
 // need at least one player to get coverage in the `for` loops inside the
-// `cx::cmn::ui::Validate` logic. The tests do not depend on the contents of
+// `cx::ui::cmn::Validate` logic. The tests do not depend on the contents of
 // the new game information, but rather on the presenter validations.
 [[nodiscard]] cx::model::NewGameInformation NewGameInformationCreate()
 {
@@ -576,7 +576,7 @@ TEST(INewGameViewPresenter, /*DISABLED_*/Validate_ValidNewGame_ReturnsSuccess)
                                                      cx::model::MakeSuccess(),
                                                      cx::model::MakeSuccess());
 
-    const cx::model::Status status = cx::cmn::ui::Validate(NewGameInformationCreate(), presenter);
+    const cx::model::Status status = cx::ui::cmn::Validate(NewGameInformationCreate(), presenter);
 
     ASSERT_TRUE(status.IsSuccess());
 }
@@ -590,7 +590,7 @@ TEST(INewGameViewPresenter, /*DISABLED_*/Validate_InvalidInARowValue_ReturnsErro
                                                      cx::model::MakeSuccess(),
                                                      cx::model::MakeSuccess());
 
-    const cx::model::Status status = cx::cmn::ui::Validate(NewGameInformationCreate(), presenter);
+    const cx::model::Status status = cx::ui::cmn::Validate(NewGameInformationCreate(), presenter);
 
     ASSERT_TRUE(!status.IsSuccess());
     ASSERT_TRUE(status.GetMessage() == "In-a-row invalid");
@@ -605,7 +605,7 @@ TEST(INewGameViewPresenter, /*DISABLED_*/Validate_InvalidBoardDimensions_Returns
                                                      cx::model::MakeSuccess(),
                                                      cx::model::MakeSuccess());
 
-    const cx::model::Status status = cx::cmn::ui::Validate(NewGameInformationCreate(), presenter);
+    const cx::model::Status status = cx::ui::cmn::Validate(NewGameInformationCreate(), presenter);
 
     ASSERT_TRUE(!status.IsSuccess());
     ASSERT_TRUE(status.GetMessage() == "Board dimensions invalid");
@@ -620,7 +620,7 @@ TEST(INewGameViewPresenter, /*DISABLED_*/Validate_InvalidPlayerNames_ReturnsErro
                                                      cx::model::MakeSuccess(),
                                                      cx::model::MakeSuccess());
 
-    const cx::model::Status status = cx::cmn::ui::Validate(NewGameInformationCreate(), presenter);
+    const cx::model::Status status = cx::ui::cmn::Validate(NewGameInformationCreate(), presenter);
 
     ASSERT_TRUE(!status.IsSuccess());
     ASSERT_TRUE(status.GetMessage() == "Player names invalid");
@@ -635,7 +635,7 @@ TEST(INewGameViewPresenter, /*DISABLED_*/Validate_InvalidPlayerChipColors_Return
                                                      cx::model::MakeSuccess(),
                                                      cx::model::MakeSuccess());
 
-    const cx::model::Status status = cx::cmn::ui::Validate(NewGameInformationCreate(), presenter);
+    const cx::model::Status status = cx::ui::cmn::Validate(NewGameInformationCreate(), presenter);
 
     ASSERT_TRUE(!status.IsSuccess());
     ASSERT_TRUE(status.GetMessage() == "Player chip colors invalid");
@@ -650,7 +650,7 @@ TEST(INewGameViewPresenter, /*DISABLED_*/Validate_InvalidPlayerTypes_ReturnsErro
                                                      cx::model::MakeError("Player types invalid"),
                                                      cx::model::MakeSuccess());
 
-    const cx::model::Status status = cx::cmn::ui::Validate(NewGameInformationCreate(), presenter);
+    const cx::model::Status status = cx::ui::cmn::Validate(NewGameInformationCreate(), presenter);
 
     ASSERT_TRUE(!status.IsSuccess());
     ASSERT_TRUE(status.GetMessage() == "Player types invalid");
@@ -665,7 +665,7 @@ TEST(INewGameViewPresenter, /*DISABLED_*/Validate_UnwinableGame_ReturnsError)
                                                      cx::model::MakeSuccess(),
                                                      cx::model::MakeError("New game not winnable"));
 
-    const cx::model::Status status = cx::cmn::ui::Validate(NewGameInformationCreate(), presenter);
+    const cx::model::Status status = cx::ui::cmn::Validate(NewGameInformationCreate(), presenter);
 
     ASSERT_TRUE(!status.IsSuccess());
     ASSERT_TRUE(status.GetMessage() == "New game not winnable");

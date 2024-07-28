@@ -27,21 +27,21 @@
 
 TEST(TieGameResolutionDialogPresenter, GetTitle_ValidPresented_TitleReturned)
 {
-    cx::cmn::ui::TieGameResolutionDialogPresenter presenter;
+    cx::ui::cmn::TieGameResolutionDialogPresenter presenter;
 
     ASSERT_EQ("Game tied!", presenter.GetTitle());
 }
 
 TEST(TieGameResolutionDialogPresenter, GetResolutionMessage_ValidPresenter_ResolutionMessageReturned)
 {
-    cx::cmn::ui::TieGameResolutionDialogPresenter presenter;
+    cx::ui::cmn::TieGameResolutionDialogPresenter presenter;
 
     ASSERT_EQ("Nobody wins, nobody looses!", presenter.GetResolutionMessage());
 }
 
 TEST(TieGameResolutionDialogPresenter, GetStartNewGameButtonText_ValidPresenter_StartNewGameButtonTextReturned)
 {
-    cx::cmn::ui::TieGameResolutionDialogPresenter presenter;
+    cx::ui::cmn::TieGameResolutionDialogPresenter presenter;
 
     ASSERT_EQ("Start new game", presenter.GetStartNewGameButtonText());
 }

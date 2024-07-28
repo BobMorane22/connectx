@@ -7,7 +7,8 @@
  *  (at your option) any later version.
  *
  *  Connect X is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  *  GNU General Public License for more details.
  *
  *  You should have received a copy of the GNU General Public License
@@ -15,48 +16,55 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file Gtkmm3Label.h
- * @date 2024
+ * @file Gtkmm3SpinBox.h
+ * @date 2023
  *
  *************************************************************************************************/
 
-#ifndef _H_B84CA49F_51D9_4CCA_944E_42D742A18DDD
-#define _H_B84CA49F_51D9_4CCA_944E_42D742A18DDD
+#ifndef GTKMM3SPINBOX_H_73AD5C68_A06C_4EFB_94EE_928437F83BA6
+#define GTKMM3SPINBOX_H_73AD5C68_A06C_4EFB_94EE_928437F83BA6
 
-#include <gtkmm/label.h>
+#include <memory>
 
-#include <cxuicmn/ILabel.h>
+#include <gtkmm/spinbutton.h>
 
-namespace cx::cmn::ui
+#include <cxuicmn/ISpinBox.h>
+
+namespace cx::ui::cmn
 {
 
-class Gtkmm3Label : public ILabel,
-                    public Gtk::Label
+/**********************************************************************************************//**
+ * @brief Gtkmm 3 implementation for the `cx::ui::cmn::ISpinBox` interface.
+ *
+ *************************************************************************************************/
+class Gtkmm3SpinBox final : public cx::ui::cmn::ISpinBox,
+                            public Gtk::SpinButton
 {
 
 public:
 
-    /*******************************************************************************************//**
-     * @brief Default constructor.
-     *
-     * Creates a label with no contents.
-     *
-     **********************************************************************************************/
-    Gtkmm3Label();
-
-    /*******************************************************************************************//**
+    /******************************************************************************************//**
      * @brief Constructor.
      *
-     * @param p_contents
-     *      The textual contents to appear on the label.
+     * @param p_initialValue
+     *      The initialValue for the spin box.
      *
-     **********************************************************************************************/
-    explicit Gtkmm3Label(const std::string& p_contents);
+     * @param p_climbRate
+     *      The spin box's climb rate.
+     *
+     * @param p_range
+     *      The spin box's value range.
+     *
+     *********************************************************************************************/
+    Gtkmm3SpinBox(
+        int p_initialValue,
+        const ClimbRate& p_climbRate,
+        const Range& p_range);
 
     /*******************************************************************************************//**
      * @brief Sets the delegate for widget common facilities.
      *
-     * The delegate is reponsible to carry the implementation for generic `cx::cmn::ui::IWidget` operations.
+     * The delegate is reponsible to carry the implementation for generic `cx::ui::cmn::IWidget` operations.
      * It is meant to avoid implementation duplication.
      *
      * @param p_delegate
@@ -70,11 +78,10 @@ public:
      **********************************************************************************************/
     void SetDelegate(std::unique_ptr<IWidget> p_delegate);
 
-    // cx::cmn::ui::Ilabel:
-    void UpdateContents(const std::string& p_newContents) override;
-    [[nodiscard]] std::string GetContents() const override;
+    // cx::ui::cmn::ISpinBox:
+    [[nodiscard]] int GetValue() const override;
 
-    // cx::cmn::ui::IWidget:
+    // cx::ui::cmn::IWidget:
     [[nodiscard]] size_t GetWidth() const override;
     [[nodiscard]] size_t GetHeight() const override;
     void SetEnabled(EnabledState p_enabled) override;
@@ -86,8 +93,10 @@ private:
 
     std::unique_ptr<IWidget> m_delegate;
 
+    cx::ui::cmn::ISpinBox::Range m_limits;
+
 };
 
-} // namespace cx::cmn::ui
+} // namespace cx::ui::cmn
 
-#endif // _H_B84CA49F_51D9_4CCA_944E_42D742A18DDD
+#endif // GTKMM3SPINBOX_H_73AD5C68_A06C_4EFB_94EE_928437F83BA6

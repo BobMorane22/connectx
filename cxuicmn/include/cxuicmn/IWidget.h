@@ -28,7 +28,7 @@
 
 #include <cxuicmn/ISignal.h>
 
-namespace cx::cmn::ui
+namespace cx::ui::cmn
 {
     enum class EnabledState;
     enum class EventPropagation;
@@ -36,7 +36,7 @@ namespace cx::cmn::ui
     struct Margins;
 }
 
-namespace cx::cmn::ui
+namespace cx::ui::cmn
 {
 
 /**********************************************************************************************//**
@@ -130,6 +130,6 @@ public:
 
 };
 
-} // namespace cx::cmn::ui
+} // namespace cx::ui::cmn
 
 #endif // IWIDGET_H_845C70A7_65F2_4B7C_8446_A11ED3BC31E8

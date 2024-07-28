@@ -24,7 +24,7 @@
 #include <cxinv/assertion.h>
 #include <cxuicmn/StdActionIcon.h>
 
-std::string cx::cmn::ui::FreeDesktop::StdNameGet(StdActionIcon p_icon)
+std::string cx::ui::cmn::FreeDesktop::StdNameGet(StdActionIcon p_icon)
 {
     switch(p_icon)
     {

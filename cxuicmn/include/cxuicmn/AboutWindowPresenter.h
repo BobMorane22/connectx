@@ -31,7 +31,7 @@ namespace cx::model
 
 #include "IAboutWindowPresenter.h"
 
-namespace cx::cmn::ui
+namespace cx::ui::cmn
 {
 
 /*********************************************************************************************//**
@@ -53,7 +53,7 @@ public:
 
     ~AboutWindowPresenter() override = default;
 
-    // cx::cmn::ui::IAboutWindowPresenter:
+    // cx::ui::cmn::IAboutWindowPresenter:
     std::string GetWindowTitle() const override;
     std::string GetApplicationName() const override;
     std::string GetVersionNumber() const override;
@@ -70,6 +70,6 @@ private:
     std::string m_versionNumber;
 };
 
-} // namespace cx::cmn::ui
+} // namespace cx::ui::cmn
 
 #endif // ABOUTWINDOWPRESENTER_H_FF0579FF_28AC_4A2E_8900_B3D1A73C3E38

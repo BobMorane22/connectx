@@ -31,7 +31,7 @@
 #include <cxmodel/common.h>
 #include <cxuicmn/ScalingRatios.h>
 
-namespace cx::cmn::ui
+namespace cx::ui::cmn
 {
 
 /**********************************************************************************************//**
@@ -270,6 +270,6 @@ public:
  *************************************************************************************************/
 [[nodiscard]] cx::math::Position ComputeChipPositionFromColumn(const IAnimatedBoardModel& p_model, const cx::model::Column& p_column);
 
-} // namespace cx::cmn::ui
+} // namespace cx::ui::cmn
 
 #endif // IANIMATEDBOARDMODEL_H_01D250F8_D2F7_42FE_9D3F_762B6B5D1F37

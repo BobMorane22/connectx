@@ -27,7 +27,7 @@
 #include <functional>
 #include <memory>
 
-namespace cx::cmn::ui
+namespace cx::ui::cmn
 {
 
 /**********************************************************************************************//**
@@ -36,7 +36,7 @@ namespace cx::cmn::ui
  * When a signal handler is "connected" to a signal, it means that when the signal is triggered,
  * the connected signal handler will be executed.
  *
- * @see cx::cmn::ui::ISignal
+ * @see cx::ui::cmn::ISignal
  *
  *************************************************************************************************/
 class IConnection
@@ -80,7 +80,7 @@ public:
  * @tparam Arguments
  *      The associated signal handler's arguments' types.
  *
- * @see cx::cmn::ui::IConnection
+ * @see cx::ui::cmn::IConnection
  *
  *************************************************************************************************/
 template<typename ReturnType, typename... Arguments>
@@ -109,6 +109,6 @@ public:
 
 };
 
-} // namespace cx::cmn::ui
+} // namespace cx::ui::cmn
 
 #endif // ISIGNAL_H_8B7B8C55_0270_4508_9512_C441816FBCAE

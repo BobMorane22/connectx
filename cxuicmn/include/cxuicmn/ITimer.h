@@ -28,7 +28,7 @@
 
 #include <cxcmn/StrongType.h>
 
-namespace cx::cmn::ui
+namespace cx::ui::cmn
 {
 
 /**********************************************************************************************//**
@@ -107,6 +107,6 @@ public:
 
 };
 
-} // namespace cx::cmn::ui
+} // namespace cx::ui::cmn
 
 #endif // ITIMER_H_D383D25B_7FDA_4258_8982_960691C534E8

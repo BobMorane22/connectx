@@ -29,7 +29,7 @@
 #include "IStatusBar.h"
 #include "IStatusBarPresenter.h"
 
-namespace cx::cmn::ui
+namespace cx::ui::cmn
 {
 
 /**********************************************************************************************//**
@@ -54,7 +54,7 @@ public:
     /*******************************************************************************************//**
      * @brief Sets the delegate for widget common facilities.
      *
-     * The delegate is reponsible to carry the implementation for generic `cx::cmn::ui::IWidget` operations.
+     * The delegate is reponsible to carry the implementation for generic `cx::ui::cmn::IWidget` operations.
      * It is meant to avoid implementation duplication.
      *
      * @param p_delegate
@@ -68,10 +68,10 @@ public:
      **********************************************************************************************/
     void SetDelegate(std::unique_ptr<IWidget> p_delegate);
 
-    // cx::cmn::ui::IStatusBar:
+    // cx::ui::cmn::IStatusBar:
     void SetLastUserActionStatus(const std::string& p_lastUserActionDescription) override;
 
-    // cx::cmn::ui::IWidget:
+    // cx::ui::cmn::IWidget:
     [[nodiscard]] size_t GetWidth() const override;
     [[nodiscard]] size_t GetHeight() const override;
     void SetEnabled(EnabledState p_enabled) override;
@@ -91,6 +91,6 @@ private:
 
 };
 
-} // namespace cx::cmn::ui
+} // namespace cx::ui::cmn
 
 #endif // GTKMM3STATUSBAR_H_DDBD40E5_28B4_47C2_8550_C0F49082EFBF

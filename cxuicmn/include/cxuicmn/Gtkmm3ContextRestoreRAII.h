@@ -31,7 +31,7 @@ namespace Cairo
     class Context;
 }
 
-namespace cx::cmn::ui
+namespace cx::ui::cmn
 {
 
 /**********************************************************************************************//**
@@ -75,6 +75,6 @@ private:
 
 };
 
-} // namespace cx::cmn::ui
+} // namespace cx::ui::cmn
 
 #endif // GTKMM3CONTEXTRESTORERAII_H_43F10A87_2AAA_4ED9_86C2_B27FD5590BE7

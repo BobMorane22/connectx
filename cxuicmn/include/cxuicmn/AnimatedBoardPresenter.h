@@ -26,7 +26,7 @@
 
 #include "IAnimatedBoardPresenter.h"
 
-namespace cx::cmn::ui
+namespace cx::ui::cmn
 {
 
 /**********************************************************************************************//**
@@ -41,7 +41,7 @@ namespace cx::cmn::ui
  * cached values in between animations.
  *
  *************************************************************************************************/
-class AnimatedBoardPresenter : public cx::cmn::ui::IAnimatedBoardPresenter
+class AnimatedBoardPresenter : public cx::ui::cmn::IAnimatedBoardPresenter
 {
 
 public:
@@ -54,12 +54,12 @@ public:
      *********************************************************************************************/
     explicit AnimatedBoardPresenter(const IGameViewPresenter& p_presenter);
 
-    // cx::cmn::ui::IAnimatedBoardPresenter:
+    // cx::ui::cmn::IAnimatedBoardPresenter:
     void Sync() override;
     [[nodiscard]] cx::model::Height GetBoardHeight() const override;
     [[nodiscard]] cx::model::Width GetBoardWidth() const override;
-    [[nodiscard]] cx::cmn::ui::Color GetGameViewBoardColor() const override;
-    [[nodiscard]] cx::cmn::ui::Color GetGameViewColumnHighlightColor() const override;
+    [[nodiscard]] cx::ui::cmn::Color GetGameViewBoardColor() const override;
+    [[nodiscard]] cx::ui::cmn::Color GetGameViewColumnHighlightColor() const override;
     [[nodiscard]] cx::model::ChipColor GetActivePlayerChipColor() const override;
     [[nodiscard]] const IGameViewPresenter::ChipColors& GetBoardChipColors() const override;
     [[nodiscard]] cx::model::Column GetBotTarget() const override;
@@ -81,6 +81,6 @@ private:
 
 };
 
-} // namespace cx::cmn::ui
+} // namespace cx::ui::cmn
 
 #endif // ANIMATEDBOARDPRESENTER_H_CEED52F8_D734_4808_A833_448D61C817D9

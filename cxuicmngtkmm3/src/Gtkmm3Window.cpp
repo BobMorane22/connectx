@@ -30,11 +30,11 @@
 #include <cxuicmn/KeyboardKeyPressedEvent.h>
 #include <cxuicmn/WidgetsFactories.h>
 
-void cx::cmn::ui::Gtkmm3Window::ConfigureWindowIcon()
+void cx::ui::cmn::Gtkmm3Window::ConfigureWindowIcon()
 {
     try
     {
-        set_icon_from_file(cx::cmn::ui::RESSOURCE_ICONS_PATH + std::string{"/cxicon16.png"});
+        set_icon_from_file(cx::ui::cmn::RESSOURCE_ICONS_PATH + std::string{"/cxicon16.png"});
     }
     catch(const Glib::FileError& p_exception)
     {
@@ -45,7 +45,7 @@ void cx::cmn::ui::Gtkmm3Window::ConfigureWindowIcon()
     }
 }
 
-cx::cmn::ui::Gtkmm3Window::Gtkmm3Window(WidgetsFactories& p_widgetsFactories)
+cx::ui::cmn::Gtkmm3Window::Gtkmm3Window(WidgetsFactories& p_widgetsFactories)
 : m_widgetsFactories{p_widgetsFactories}
 {
     const IAbstractWidgetsFactory& standardWidgetsFactory = m_widgetsFactories.GetStandardWidgetsFactory();
@@ -60,14 +60,14 @@ cx::cmn::ui::Gtkmm3Window::Gtkmm3Window(WidgetsFactories& p_widgetsFactories)
     POSTCONDITION(m_mainLayout);
 }
 
-int cx::cmn::ui::Gtkmm3Window::Show()
+int cx::ui::cmn::Gtkmm3Window::Show()
 {
     show_all();
 
     return EXIT_SUCCESS;
 }
 
-void cx::cmn::ui::Gtkmm3Window::ShrinkToContents(IWindow::Orientation p_orientation)
+void cx::ui::cmn::Gtkmm3Window::ShrinkToContents(IWindow::Orientation p_orientation)
 {
     if(p_orientation == IWindow::Orientation::VERTICAL)
     {
@@ -83,7 +83,7 @@ void cx::cmn::ui::Gtkmm3Window::ShrinkToContents(IWindow::Orientation p_orientat
     }
 }
 
-void cx::cmn::ui::Gtkmm3Window::Init()
+void cx::ui::cmn::Gtkmm3Window::Init()
 {
     ConfigureWindowIcon();
     InitializeWidgets();
@@ -95,7 +95,7 @@ void cx::cmn::ui::Gtkmm3Window::Init()
     ConfigureSignalHandlers();
 }
 
-void cx::cmn::ui::Gtkmm3Window::SetDelegate(std::unique_ptr<IWidget> p_delegate)
+void cx::ui::cmn::Gtkmm3Window::SetDelegate(std::unique_ptr<IWidget> p_delegate)
 {
     IF_PRECONDITION_NOT_MET_DO(p_delegate, return;);
 
@@ -104,37 +104,37 @@ void cx::cmn::ui::Gtkmm3Window::SetDelegate(std::unique_ptr<IWidget> p_delegate)
     POSTCONDITION(m_delegate);
 }
 
-size_t cx::cmn::ui::Gtkmm3Window::GetWidth() const 
+size_t cx::ui::cmn::Gtkmm3Window::GetWidth() const 
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return 0u;);
     return m_delegate->GetWidth();
 }
 
-size_t cx::cmn::ui::Gtkmm3Window::GetHeight() const 
+size_t cx::ui::cmn::Gtkmm3Window::GetHeight() const 
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return 0u;);
     return m_delegate->GetHeight();
 }
 
-void cx::cmn::ui::Gtkmm3Window::SetEnabled(EnabledState p_enabled) 
+void cx::ui::cmn::Gtkmm3Window::SetEnabled(EnabledState p_enabled) 
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return;);
     m_delegate->SetEnabled(p_enabled);
 }
 
-void cx::cmn::ui::Gtkmm3Window::SetMargins(const Margins& p_newMarginSizes) 
+void cx::ui::cmn::Gtkmm3Window::SetMargins(const Margins& p_newMarginSizes) 
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return;);
     m_delegate->SetMargins(p_newMarginSizes);
 }
 
-void cx::cmn::ui::Gtkmm3Window::SetTooltip(const std::string& p_tooltipContents)
+void cx::ui::cmn::Gtkmm3Window::SetTooltip(const std::string& p_tooltipContents)
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return;);
     m_delegate->SetTooltip(p_tooltipContents);
 }
 
-std::unique_ptr<cx::cmn::ui::ISignal<cx::cmn::ui::EventPropagation, cx::cmn::ui::KeyboardKeyPressedEvent>> cx::cmn::ui::Gtkmm3Window::OnKeyPressed()
+std::unique_ptr<cx::ui::cmn::ISignal<cx::ui::cmn::EventPropagation, cx::ui::cmn::KeyboardKeyPressedEvent>> cx::ui::cmn::Gtkmm3Window::OnKeyPressed()
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return nullptr;);
     return m_delegate->OnKeyPressed();

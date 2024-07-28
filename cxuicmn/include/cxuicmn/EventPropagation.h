@@ -24,7 +24,7 @@
 #ifndef EVENTPROPAGATION_H_5B935E9A_9EBC_4972_BCF8_97E2F936E9F0
 #define EVENTPROPAGATION_H_5B935E9A_9EBC_4972_BCF8_97E2F936E9F0
 
-namespace cx::cmn::ui
+namespace cx::ui::cmn
 {
 
 /**********************************************************************************************//**
@@ -46,6 +46,6 @@ enum class EventPropagation
     PROPAGATE,
 };
 
-} // namespace cx::cmn::ui
+} // namespace cx::ui::cmn
 
 #endif // EVENTPROPAGATION_H_5B935E9A_9EBC_4972_BCF8_97E2F936E9F0

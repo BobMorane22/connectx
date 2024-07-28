@@ -26,21 +26,21 @@
 
 #include <cxuicmn/IWidget.h>
 
-namespace cx::cmn::ui
+namespace cx::ui::cmn
 {
 
 class IMenu;
 
 }
 
-namespace cx::cmn::ui
+namespace cx::ui::cmn
 {
 
 /**********************************************************************************************//**
  * @brief Widgets for displaying menus.
  *
- * @see cx::cmn::ui::IMenu
- * @see cx::cmn::ui::IMenuItem
+ * @see cx::ui::cmn::IMenu
+ * @see cx::ui::cmn::IMenuItem
  *
  *************************************************************************************************/
 class IMenuBar : public IWidget
@@ -67,6 +67,6 @@ public:
 
 };
 
-} // namespace cx::cmn::ui
+} // namespace cx::ui::cmn
 
 #endif // IMENUBAR_H_7283BF86_D1E9_4A7D_8935_A46FD2DAC73F

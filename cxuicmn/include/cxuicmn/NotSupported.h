@@ -27,7 +27,7 @@
 #include <cxinv/assertion.h>
 #include <cxuicmn/ISignal.h>
 
-namespace cx::cmn::ui
+namespace cx::ui::cmn
 {
 
 /**********************************************************************************************//**
@@ -85,6 +85,6 @@ private:
 
 };
 
-} // namespace cx::cmn::ui
+} // namespace cx::ui::cmn
 
 #endif // NOTSUPPORTED_H_1D4D06A8_C263_42FA_A117_3DDD243AEAF2

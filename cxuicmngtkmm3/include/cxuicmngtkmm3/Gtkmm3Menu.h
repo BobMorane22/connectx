@@ -16,35 +16,48 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file Gtkmm3OnOffSwitch.h
- * @date 2022
+ * @file Gtkmm3Menu.h
+ * @date 2024
  *
  *************************************************************************************************/
 
-#ifndef GTKMM3ONOFFSWITCH_H_3F9ABCFC_7442_44F5_8C96_A15828BC28B8
-#define GTKMM3ONOFFSWITCH_H_3F9ABCFC_7442_44F5_8C96_A15828BC28B8
+#ifndef GTKMM3MENU_H_8F6908BA_083B_4C86_A927_97A375555E22
+#define GTKMM3MENU_H_8F6908BA_083B_4C86_A927_97A375555E22
 
-#include <gtkmm/switch.h>
+#include <gtkmm/menu.h>
 
-#include <cxuicmn/IOnOffSwitch.h>
+#include <cxuicmn/IMenu.h>
+#include <cxuicmn/ISignal.h>
 
-namespace cx::cmn::ui
+namespace cx::ui::cmn
 {
 
-/**********************************************************************************************//**
- * @brief A switch that is either "On" or "Off".
+/***********************************************************************************************//**
+ * @brief Gtkmm 3 implementation of the `cx::ui::cmn::IMenu` interface.
  *
- *************************************************************************************************/
-class Gtkmm3OnOffSwitch : public cx::cmn::ui::IOnOffSwitch,
-                          public Gtk::Switch
+ **************************************************************************************************/
+class Gtkmm3Menu : public IMenu,
+                   public Gtk::Menu
 {
 
 public:
 
     /*******************************************************************************************//**
+     * @brief Constructor.
+     *
+     * @param p_title
+     *      The menu title, as shown to the user.
+     *
+     * @pre
+     *      The menu title is not empty.
+     *
+     **********************************************************************************************/
+    explicit Gtkmm3Menu(const std::string& p_title);
+
+    /*******************************************************************************************//**
      * @brief Sets the delegate for widget common facilities.
      *
-     * The delegate is reponsible to carry the implementation for generic `cx::cmn::ui::IWidget` operations.
+     * The delegate is reponsible to carry the implementation for generic `cx::ui::cmn::IWidget` operations.
      * It is meant to avoid implementation duplication.
      *
      * @param p_delegate
@@ -58,12 +71,23 @@ public:
      **********************************************************************************************/
     void SetDelegate(std::unique_ptr<IWidget> p_delegate);
 
-    // cx::cmn::ui::IOnOffSwitch:
-    [[nodiscard]] OnOffState GetState() const override;
-    void SetState(OnOffState p_newState) override;
-    [[nodiscard]] std::unique_ptr<ISignal<void>> OnStateChanged() override;
+    /*******************************************************************************************//**
+     * @brief The Gtk menu item used to show the title.
+     *
+     * Sadly, Gtkmm 3 (at the time of writing: 3.24.5) does not offer the possibility to create
+     * a menu and specify a title "on the spot". The call exists, but was deprecated in Gtkmm
+     * 3.10. We have to go trough an extra menu item (of which the menu is a sub-menu of) to
+     * add a title. This getter exposes this extra menu item.
+     *
+     * @return The menu item through which the title, and the menu, can be added.
+     *
+     **********************************************************************************************/
+    [[nodiscard]] Gtk::MenuItem& GetTitleMenuItem();
 
-    // cx::cmn::ui::IWidget:
+    // cx::ui::cmn::IMenu:
+    void Register(IMenuItem& p_item) override;
+
+    // cx::ui::cmn::IWidget:
     [[nodiscard]] size_t GetWidth() const override;
     [[nodiscard]] size_t GetHeight() const override;
     void SetEnabled(EnabledState p_enabled) override;
@@ -71,13 +95,13 @@ public:
     void SetTooltip(const std::string& p_tooltipContents) override;
     [[nodiscard]] std::unique_ptr<ISignal<EventPropagation, KeyboardKeyPressedEvent>> OnKeyPressed() override;
 
-
 private:
 
+    Gtk::MenuItem m_titleMenuItem;
     std::unique_ptr<IWidget> m_delegate;
 
 };
 
-} // namespace cx::cmn::ui
+} // namespace cx::ui::cmn
 
-#endif // GTKMM3ONOFFSWITCH_H_3F9ABCFC_7442_44F5_8C96_A15828BC28B8
+#endif // GTKMM3MENU_H_8F6908BA_083B_4C86_A927_97A375555E22

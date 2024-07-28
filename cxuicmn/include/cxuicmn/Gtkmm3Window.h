@@ -30,14 +30,14 @@
 #include <cxuicmn/generated/ressources.h>
 #include <cxuicmn/IWindow.h>
 
-namespace cx::cmn::ui
+namespace cx::ui::cmn
 {
     class ILayout;
     class IWidget;
     class WidgetsFactories;
 }
 
-namespace cx::cmn::ui
+namespace cx::ui::cmn
 {
 
 /*********************************************************************************************//**
@@ -86,7 +86,7 @@ public:
     /*******************************************************************************************//**
      * @brief Sets the delegate for widget common facilities.
      *
-     * The delegate is reponsible to carry the implementation for generic `cx::cmn::ui::IWidget` operations.
+     * The delegate is reponsible to carry the implementation for generic `cx::ui::cmn::IWidget` operations.
      * It is meant to avoid implementation duplication.
      *
      * @param p_delegate
@@ -100,11 +100,11 @@ public:
      **********************************************************************************************/
     void SetDelegate(std::unique_ptr<IWidget> p_delegate);
 
-    // cx::cmn::ui::IWindow:
+    // cx::ui::cmn::IWindow:
     [[nodiscard]] int Show() override;
     void ShrinkToContents(IWindow::Orientation p_orientation) override;
 
-    // cx::cmn::ui::IWidget:
+    // cx::ui::cmn::IWidget:
     [[nodiscard]] virtual size_t GetWidth() const override;
     [[nodiscard]] virtual size_t GetHeight() const override;
     void SetEnabled(EnabledState p_enabled) override;
@@ -114,7 +114,7 @@ public:
 
 protected:
 
-    std::unique_ptr<cx::cmn::ui::ILayout> m_mainLayout;
+    std::unique_ptr<cx::ui::cmn::ILayout> m_mainLayout;
 
 private:
 
@@ -192,6 +192,6 @@ private:
     std::unique_ptr<IWidget> m_delegate;
 };
 
-} // namespace cx::cmn::ui
+} // namespace cx::ui::cmn
 
 #endif // GTKMM3WINDOW_H_861FC628_597C_407E_8206_E67F71000A55

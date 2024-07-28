@@ -30,7 +30,7 @@
 #include "INewGameViewPresenter.h"
 #include "MenuItem.h"
 
-namespace cx::cmn::ui
+namespace cx::ui::cmn
 {
 
 /*********************************************************************************************//**
@@ -160,8 +160,8 @@ public:
 
     size_t GetGameViewBoardWidth() const override = 0;
     size_t GetGameViewBoardHeight() const override = 0;
-    [[nodiscard]] cx::cmn::ui::Color GetGameViewBoardColor() const override = 0;
-    [[nodiscard]] cx::cmn::ui::Color GetGameViewColumnHighlightColor() const override = 0;
+    [[nodiscard]] cx::ui::cmn::Color GetGameViewBoardColor() const override = 0;
+    [[nodiscard]] cx::ui::cmn::Color GetGameViewColumnHighlightColor() const override = 0;
 
     const ChipColors& GetGameViewChipColors() const override = 0;
 
@@ -172,6 +172,6 @@ public:
 
 };
 
-} // namespace cx::cmn::ui
+} // namespace cx::ui::cmn
 
 #endif // IMAINWINDOWPRESENTER_H_D8C76920_83D9_4D15_B95A_63282E742221

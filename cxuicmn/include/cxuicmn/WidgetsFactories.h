@@ -24,7 +24,7 @@
 #ifndef WIDGETSFACTORIES_H_4652F2EE_88BE_4042_8BF4_67A223339FF7
 #define WIDGETSFACTORIES_H_4652F2EE_88BE_4042_8BF4_67A223339FF7
 
-namespace cx::cmn::ui
+namespace cx::ui::cmn
 {
 
 class IAbstractWidgetsFactory;
@@ -32,7 +32,7 @@ class IAbstractConnectXWidgetsFactory;
 
 }
 
-namespace cx::cmn::ui
+namespace cx::ui::cmn
 {
 
 /**********************************************************************************************//**
@@ -80,6 +80,6 @@ private:
     IAbstractConnectXWidgetsFactory& m_connectxFactory;
 };
 
-} // namespace cx::cmn::ui
+} // namespace cx::ui::cmn
 
 #endif // WIDGETSFACTORIES_H_4652F2EE_88BE_4042_8BF4_67A223339FF7

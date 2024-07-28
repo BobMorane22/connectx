@@ -25,8 +25,8 @@
 #include <cxcmn/helpers.h>
 #include <cxuicmn/EnabledState.h>
 #include <cxuicmn/EventPropagation.h>
-#include <cxuicmn/Gtkmm3Connection.h>
-#include <cxuicmn/Gtkmm3OnOffSwitch.h>
+#include <cxuicmngtkmm3/Gtkmm3Connection.h>
+#include <cxuicmngtkmm3/Gtkmm3OnOffSwitch.h>
 #include <cxuicmn/ISignal.h>
 #include <cxuicmn/KeyboardKeyPressedEvent.h>
 #include <cxuicmn/Margins.h>
@@ -35,7 +35,7 @@
 namespace
 {
 
-class Gtkmm3OnStateChangedSignal : public cx::cmn::ui::ISignal<void>
+class Gtkmm3OnStateChangedSignal : public cx::ui::cmn::ISignal<void>
 {
 
 public:
@@ -45,12 +45,12 @@ public:
     {
     }
 
-    [[nodiscard]] std::unique_ptr<cx::cmn::ui::IConnection> Connect(const std::function<void()>& p_slot) override
+    [[nodiscard]] std::unique_ptr<cx::ui::cmn::IConnection> Connect(const std::function<void()>& p_slot) override
     {
         sigc::connection gtkConnection = m_switch.connect_property_changed_with_return("active", p_slot);
         IF_CONDITION_NOT_MET_DO(gtkConnection.connected(), return nullptr;);
 
-        return std::make_unique<cx::cmn::ui::Gtkmm3Connection>(gtkConnection);
+        return std::make_unique<cx::ui::cmn::Gtkmm3Connection>(gtkConnection);
     }
 
 private:
@@ -60,7 +60,7 @@ private:
 
 } // namespace
 
-void cx::cmn::ui::Gtkmm3OnOffSwitch::SetDelegate(std::unique_ptr<cx::cmn::ui::IWidget> p_delegate)
+void cx::ui::cmn::Gtkmm3OnOffSwitch::SetDelegate(std::unique_ptr<cx::ui::cmn::IWidget> p_delegate)
 {
     IF_PRECONDITION_NOT_MET_DO(p_delegate, return;);
 
@@ -69,7 +69,7 @@ void cx::cmn::ui::Gtkmm3OnOffSwitch::SetDelegate(std::unique_ptr<cx::cmn::ui::IW
     POSTCONDITION(m_delegate);
 }
 
-cx::cmn::ui::OnOffState cx::cmn::ui::Gtkmm3OnOffSwitch::GetState() const
+cx::ui::cmn::OnOffState cx::ui::cmn::Gtkmm3OnOffSwitch::GetState() const
 {
     if(get_active())
     {
@@ -79,7 +79,7 @@ cx::cmn::ui::OnOffState cx::cmn::ui::Gtkmm3OnOffSwitch::GetState() const
     return OnOffState::OFF;
 }
 
-void cx::cmn::ui::Gtkmm3OnOffSwitch::SetState(cx::cmn::ui::OnOffState p_newState)
+void cx::ui::cmn::Gtkmm3OnOffSwitch::SetState(cx::ui::cmn::OnOffState p_newState)
 {
     if(p_newState == OnOffState::ON)
     {
@@ -91,42 +91,42 @@ void cx::cmn::ui::Gtkmm3OnOffSwitch::SetState(cx::cmn::ui::OnOffState p_newState
     }
 }
 
-std::unique_ptr<cx::cmn::ui::ISignal<void>> cx::cmn::ui::Gtkmm3OnOffSwitch::OnStateChanged()
+std::unique_ptr<cx::ui::cmn::ISignal<void>> cx::ui::cmn::Gtkmm3OnOffSwitch::OnStateChanged()
 {
     return std::make_unique<Gtkmm3OnStateChangedSignal>(*this);
 }
 
-size_t cx::cmn::ui::Gtkmm3OnOffSwitch::GetWidth() const
+size_t cx::ui::cmn::Gtkmm3OnOffSwitch::GetWidth() const
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return 0u;);
     return m_delegate->GetWidth();
 }
 
-size_t cx::cmn::ui::Gtkmm3OnOffSwitch::GetHeight() const
+size_t cx::ui::cmn::Gtkmm3OnOffSwitch::GetHeight() const
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return 0u;);
     return m_delegate->GetHeight();
 }
 
-void cx::cmn::ui::Gtkmm3OnOffSwitch::SetEnabled(EnabledState p_enabled)
+void cx::ui::cmn::Gtkmm3OnOffSwitch::SetEnabled(EnabledState p_enabled)
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return;);
     m_delegate->SetEnabled(p_enabled);
 }
 
-void cx::cmn::ui::Gtkmm3OnOffSwitch::SetMargins(const Margins& p_newMarginSizes)
+void cx::ui::cmn::Gtkmm3OnOffSwitch::SetMargins(const Margins& p_newMarginSizes)
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return;);
     m_delegate->SetMargins(p_newMarginSizes);
 }
 
-void cx::cmn::ui::Gtkmm3OnOffSwitch::SetTooltip(const std::string& p_tooltipContents)
+void cx::ui::cmn::Gtkmm3OnOffSwitch::SetTooltip(const std::string& p_tooltipContents)
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return;);
     m_delegate->SetTooltip(p_tooltipContents);
 }
 
-std::unique_ptr<cx::cmn::ui::ISignal<cx::cmn::ui::EventPropagation, cx::cmn::ui::KeyboardKeyPressedEvent>> cx::cmn::ui::Gtkmm3OnOffSwitch::OnKeyPressed()
+std::unique_ptr<cx::ui::cmn::ISignal<cx::ui::cmn::EventPropagation, cx::ui::cmn::KeyboardKeyPressedEvent>> cx::ui::cmn::Gtkmm3OnOffSwitch::OnKeyPressed()
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return nullptr;);
     return m_delegate->OnKeyPressed();

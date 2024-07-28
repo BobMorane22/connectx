@@ -27,7 +27,7 @@
 #include <cxmodel/ModelNotificationContext.h>
 #include <cxuicmn/IWidget.h>
 
-namespace cx::cmn::ui
+namespace cx::ui::cmn
 {
 
 /*********************************************************************************************//**
@@ -92,6 +92,6 @@ public:
 
 };
 
-} // namespace cx::cmn::ui
+} // namespace cx::ui::cmn
 
 #endif // IWINDOW_H_4807796E_6C76_4D0A_BF7D_81534795BA29

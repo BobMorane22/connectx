@@ -16,57 +16,26 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file Gtkmm3Button.cpp
+ * @file Gtkmm3Label.cpp
  * @date 2024
  *
  *************************************************************************************************/
 
 #include <cxinv/assertion.h>
-#include <cxcmn/helpers.h>
-#include <cxuicmn/Gtkmm3Button.h>
-#include <cxuicmn/Gtkmm3Connection.h>
-#include <cxuicmn/Margins.h>
+#include <cxuicmngtkmm3/Gtkmm3Label.h>
 
-namespace
-{
-
-class Gtkmm3OnClickedSignal : public cx::cmn::ui::ISignal<void>
-{
-
-public:
-
-    explicit Gtkmm3OnClickedSignal(Gtk::Button& p_button)
-    : m_button{p_button}
-    {
-    }
-
-    [[nodiscard]] std::unique_ptr<cx::cmn::ui::IConnection> Connect(const std::function<void()>& p_slot) override
-    {
-        sigc::connection gtkConnection = m_button.signal_clicked().connect(p_slot);
-        IF_CONDITION_NOT_MET_DO(gtkConnection.connected(), return nullptr;);
-
-        return std::make_unique<cx::cmn::ui::Gtkmm3Connection>(gtkConnection);
-    }
-
-private:
-
-    Gtk::Button& m_button;
-
-};
-
-} // namespace
-
-cx::cmn::ui::Gtkmm3Button::Gtkmm3Button()
-: cx::cmn::ui::Gtkmm3Button("")
+cx::ui::cmn::Gtkmm3Label::Gtkmm3Label()
+: Gtkmm3Label("")
 {
 }
 
-cx::cmn::ui::Gtkmm3Button::Gtkmm3Button(const std::string& p_label)
+cx::ui::cmn::Gtkmm3Label::Gtkmm3Label(const std::string& p_contents)
+: Gtk::Label{p_contents}
 {
-    set_label(p_label);
+    set_use_markup(true);
 }
 
-void cx::cmn::ui::Gtkmm3Button::SetDelegate(std::unique_ptr<IWidget> p_delegate)
+void cx::ui::cmn::Gtkmm3Label::SetDelegate(std::unique_ptr<IWidget> p_delegate)
 {
     IF_PRECONDITION_NOT_MET_DO(p_delegate, return;);
 
@@ -75,52 +44,47 @@ void cx::cmn::ui::Gtkmm3Button::SetDelegate(std::unique_ptr<IWidget> p_delegate)
     POSTCONDITION(m_delegate);
 }
 
-void cx::cmn::ui::Gtkmm3Button::UpdateContents(const std::string& p_newContents)
+void cx::ui::cmn::Gtkmm3Label::UpdateContents(const std::string& p_newContents) 
 {
-    set_label(p_newContents);
+    set_markup(p_newContents);
 }
 
-std::string cx::cmn::ui::Gtkmm3Button::GetContents() const
+std::string cx::ui::cmn::Gtkmm3Label::GetContents() const
 {
-    return get_label();
+    return get_text();
 }
 
-std::unique_ptr<cx::cmn::ui::ISignal<void>> cx::cmn::ui::Gtkmm3Button::OnClicked()
-{
-    return std::make_unique<Gtkmm3OnClickedSignal>(*this);
-}
-
-size_t cx::cmn::ui::Gtkmm3Button::GetWidth() const 
+size_t cx::ui::cmn::Gtkmm3Label::GetWidth() const 
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return 0u;);
     return m_delegate->GetWidth();
 }
 
-size_t cx::cmn::ui::Gtkmm3Button::GetHeight() const 
+size_t cx::ui::cmn::Gtkmm3Label::GetHeight() const 
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return 0u;);
     return m_delegate->GetHeight();
 }
 
-void cx::cmn::ui::Gtkmm3Button::SetEnabled(EnabledState p_enabled) 
+void cx::ui::cmn::Gtkmm3Label::SetEnabled(EnabledState p_enabled) 
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return;);
     m_delegate->SetEnabled(p_enabled);
 }
 
-void cx::cmn::ui::Gtkmm3Button::SetMargins(const Margins& p_newMarginSizes) 
+void cx::ui::cmn::Gtkmm3Label::SetMargins(const Margins& p_newMarginSizes) 
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return;);
     m_delegate->SetMargins(p_newMarginSizes);
 }
 
-void cx::cmn::ui::Gtkmm3Button::SetTooltip(const std::string& p_tooltipContents)
+void cx::ui::cmn::Gtkmm3Label::SetTooltip(const std::string& p_tooltipContents)
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return;);
     m_delegate->SetTooltip(p_tooltipContents);
 }
 
-std::unique_ptr<cx::cmn::ui::ISignal<cx::cmn::ui::EventPropagation, cx::cmn::ui::KeyboardKeyPressedEvent>> cx::cmn::ui::Gtkmm3Button::OnKeyPressed()
+std::unique_ptr<cx::ui::cmn::ISignal<cx::ui::cmn::EventPropagation, cx::ui::cmn::KeyboardKeyPressedEvent>> cx::ui::cmn::Gtkmm3Label::OnKeyPressed()
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return nullptr;);
     return m_delegate->OnKeyPressed();

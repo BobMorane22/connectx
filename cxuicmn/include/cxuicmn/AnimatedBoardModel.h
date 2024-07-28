@@ -29,21 +29,21 @@
 #include "BoardAnimation.h"
 #include "IAnimatedBoardModel.h"
 
-namespace cx::cmn::ui
+namespace cx::ui::cmn
 {
 
 class IAnimatedBoardPresenter;
 
 }
 
-namespace cx::cmn::ui
+namespace cx::ui::cmn
 {
 
 /**********************************************************************************************//**
  * @brief Concrete animated board model.
  *
  *************************************************************************************************/
-class AnimatedBoardModel : public cx::cmn::ui::IAnimatedBoardModel
+class AnimatedBoardModel : public cx::ui::cmn::IAnimatedBoardModel
 {
 
 public:
@@ -57,10 +57,10 @@ public:
      *      The animation speed (i.e. the number of chips travelled per second).
      *
      *************************************************************************************************/
-    AnimatedBoardModel(const cx::cmn::ui::IAnimatedBoardPresenter& p_presenter, const cx::cmn::ui::AnimationSpeed& p_animationSpeed);
+    AnimatedBoardModel(const cx::ui::cmn::IAnimatedBoardPresenter& p_presenter, const cx::ui::cmn::AnimationSpeed& p_animationSpeed);
 
     void Update(const cx::math::Dimensions& p_widgetDimensions, bool p_isChipMovingHorizontally) override;
-    void Resize(const cx::cmn::ui::ScalingRatios& p_scalingRatios) override;
+    void Resize(const cx::ui::cmn::ScalingRatios& p_scalingRatios) override;
     void AddChipDisplacement(const cx::math::Height& p_vertical, const cx::math::Width& p_horizontal) override;
     void ResetChipPositions() override;
     void UpdateCurrentColumn(const cx::model::Column& p_newCurrentColumn) override;
@@ -85,9 +85,9 @@ private:
     [[nodiscard]] bool ComputeChipRightPosition(double p_windowWidth, const cx::math::Radius& p_discRadius, double p_horizontalMargin);
     void ComputeChipVerticalPosition(const cx::math::Radius& p_discRadius, double p_height);
 
-    const cx::cmn::ui::IAnimatedBoardPresenter& m_presenter;
+    const cx::ui::cmn::IAnimatedBoardPresenter& m_presenter;
 
-    cx::cmn::ui::AnimationSpeed m_animationSpeed;
+    cx::ui::cmn::AnimationSpeed m_animationSpeed;
 
     cx::math::Dimensions m_widgetDimensions{cx::math::Height{0.0}, cx::math::Width{0.0}};
     cx::math::Dimensions m_cellDimensions{cx::math::Height{0.0}, cx::math::Width{0.0}};
@@ -107,6 +107,6 @@ private:
     cx::model::Column m_currentColumn{0u};
 };
 
-} // namespace cx::cmn::ui
+} // namespace cx::ui::cmn
 
 #endif // ANIMATEDBOARDMODEL_H_71B2242B_9840_4520_818A_DC44B21E2307

@@ -26,12 +26,12 @@
 
 #include <cxuicmn/IWidget.h>
 
-namespace cx::cmn::ui
+namespace cx::ui::cmn
 {
     class IMenuItem;
 }
 
-namespace cx::cmn::ui
+namespace cx::ui::cmn
 {
 
 /**********************************************************************************************//**
@@ -40,8 +40,8 @@ namespace cx::cmn::ui
  * Menus are meant to be used in a menubar. Each menu has a title, which is used to identify it in
  * the menu bar.
  *
- * @see cx::cmn::ui::IMenuBar
- * @see cx::cmn::ui::IMenuItem
+ * @see cx::ui::cmn::IMenuBar
+ * @see cx::ui::cmn::IMenuItem
  *
  *************************************************************************************************/
 class IMenu : public IWidget
@@ -66,6 +66,6 @@ public:
 
 };
 
-} // namespace cx::cmn::ui
+} // namespace cx::ui::cmn
 
 #endif // IMENU_H_2C2DB70B_1417_447D_8614_8D237933B1FF

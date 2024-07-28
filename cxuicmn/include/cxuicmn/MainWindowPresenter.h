@@ -38,14 +38,14 @@ namespace cx::model
     class IConnectXAI;
 }
 
-namespace cx::cmn::ui
+namespace cx::ui::cmn
 {
 
 /**********************************************************************************************//**
  * @brief Main window presenter.
  *
  *************************************************************************************************/
-class MainWindowPresenter : public cx::cmn::ui::IMainWindowPresenter
+class MainWindowPresenter : public cx::ui::cmn::IMainWindowPresenter
 {
 
 public:
@@ -145,8 +145,8 @@ public:
 
     size_t GetGameViewBoardWidth() const override;
     size_t GetGameViewBoardHeight() const override;
-    [[nodiscard]] cx::cmn::ui::Color GetGameViewBoardColor() const override;
-    [[nodiscard]] cx::cmn::ui::Color GetGameViewColumnHighlightColor() const override;
+    [[nodiscard]] cx::ui::cmn::Color GetGameViewBoardColor() const override;
+    [[nodiscard]] cx::ui::cmn::Color GetGameViewColumnHighlightColor() const override;
 
     const ChipColors& GetGameViewChipColors() const override;
 
@@ -182,6 +182,6 @@ private:
     std::vector<std::vector<cx::model::ChipColor>> m_chipColors;
 };
 
-} // namespace cx::cmn::ui
+} // namespace cx::ui::cmn
 
 #endif // MAINWINDOWPRESENTER_H_B80CACC4_E075_49C0_9DFD_29C6C1BCFE67

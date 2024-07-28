@@ -16,35 +16,56 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file Gtkmm3EditBox.h
+ * @file Gtkmm3Button.h
  * @date 2024
  *
  *************************************************************************************************/
 
-#ifndef GTKMM3EDITBOX_H_3E389CC2_EA4C_481C_BF50_E5EDAF31336D
-#define GTKMM3EDITBOX_H_3E389CC2_EA4C_481C_BF50_E5EDAF31336D
+#ifndef GTKMM3BUTTON_H_28BFEAFC_06B4_4950_A338_12355AA185D0
+#define GTKMM3BUTTON_H_28BFEAFC_06B4_4950_A338_12355AA185D0
 
-#include <gtkmm/entry.h>
+#include <string>
 
-#include <cxuicmn/IEditBox.h>
+#include <gtkmm/button.h>
 
-namespace cx::cmn::ui
+#include <cxuicmn/IButton.h>
+
+namespace cx::ui::cmn
 {
 
 /**********************************************************************************************//**
- * @brief Gtkmm 3 implementation of an edit box.
+ * @brief Gtkmm 3 implementation of the `cx::ui::cmn::IButton` interface.
  *
  *************************************************************************************************/
-class Gtkmm3EditBox : public IEditBox,
-                      public Gtk::Entry
+class Gtkmm3Button : public IButton,
+                     public Gtk::Button
+
 {
 
 public:
 
+    /******************************************************************************************//**
+     * @brief Default constructor.
+     *
+     * Creates a button with no contents.
+     *
+     *********************************************************************************************/
+     Gtkmm3Button();
+
+    /******************************************************************************************//**
+     * @brief Constructor.
+     *
+     * @param p_label
+     *      The textual label to appear on the button. The label can be empty. In this case,
+     *      nothing will show on the button.
+     *
+     *********************************************************************************************/
+    explicit Gtkmm3Button(const std::string& p_label);
+
     /*******************************************************************************************//**
      * @brief Sets the delegate for widget common facilities.
      *
-     * The delegate is reponsible to carry the implementation for generic `cx::cmn::ui::IWidget` operations.
+     * The delegate is reponsible to carry the implementation for generic `cx::ui::cmn::IWidget` operations.
      * It is meant to avoid implementation duplication.
      *
      * @param p_delegate
@@ -58,14 +79,14 @@ public:
      **********************************************************************************************/
     void SetDelegate(std::unique_ptr<IWidget> p_delegate);
 
-    // cx::cmn::ui::IEditBox:
+    // cx::ui::cmn::IButton:
     void UpdateContents(const std::string& p_newContents) override;
     [[nodiscard]] std::string GetContents() const override;
-    [[nodiscard]] std::unique_ptr<ISignal<void>> OnContentsChanged() override;
+    [[nodiscard]] std::unique_ptr<ISignal<void>> OnClicked() override;
 
-    // cx::cmn::ui::IWidget:
-    [[nodiscard]]  size_t GetWidth() const override;
-    [[nodiscard]]  size_t GetHeight() const override;
+    // cx::ui::cmn::IWidget:
+    [[nodiscard]] size_t GetWidth() const override;
+    [[nodiscard]] size_t GetHeight() const override;
     void SetEnabled(EnabledState p_enabled) override;
     void SetMargins(const Margins& p_newMarginSizes) override;
     void SetTooltip(const std::string& p_tooltipContents) override;
@@ -77,6 +98,6 @@ private:
 
 };
 
-} // namespace cx::cmn::ui
+} // namespace cx::ui::cmn
 
-#endif // GTKMM3EDITBOX_H_3E389CC2_EA4C_481C_BF50_E5EDAF31336D
+#endif // GTKMM3BUTTON_H_28BFEAFC_06B4_4950_A338_12355AA185D0

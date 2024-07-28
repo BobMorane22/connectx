@@ -28,7 +28,7 @@
 
 #include <cxuicmn/Gtkmm3Window.h>
 
-namespace cx::cmn::ui
+namespace cx::ui::cmn
 {
     class IMenuBar;
     class IMenu;
@@ -46,7 +46,7 @@ namespace Gtk
     class Application;
 }
 
-namespace cx::cmn::ui
+namespace cx::ui::cmn
 {
 
 /*********************************************************************************************//**
@@ -80,7 +80,7 @@ namespace cx::cmn::ui
  * the gaming widgets, such as the board.
  *
  ************************************************************************************************/
-class Gtkmm3MainWindow : public cx::cmn::ui::Gtkmm3Window
+class Gtkmm3MainWindow : public cx::ui::cmn::Gtkmm3Window
 {
 
 public:
@@ -107,7 +107,7 @@ public:
         IMainWindowPresenter& p_presenter,
         WidgetsFactories& p_widgetsFactories);
 
-    // cx::cmn::ui::IWindow:
+    // cx::ui::cmn::IWindow:
     ~Gtkmm3MainWindow() override;
     [[nodiscard]] int Show() override;
 
@@ -189,6 +189,6 @@ private:
     std::unique_ptr<IWindow> m_gameResolution;
 };
 
-} // namespace cx::cmn::ui
+} // namespace cx::ui::cmn
 
 #endif // GTKMM3MAINWINDOW_H_F0ED11E8_831A_4C6A_8A9B_8C329506BD72

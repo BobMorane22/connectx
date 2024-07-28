@@ -23,22 +23,22 @@
 
 #include <cxinv/assertion.h>
 #include <cxuicmn/StdActionIcon.h>
-#include <cxuicmn/Gtkmm3AbstractWidgetsFactory.h>
-#include <cxuicmn/Gtkmm3Button.h>
-#include <cxuicmn/Gtkmm3Dialog.h>
-#include <cxuicmn/Gtkmm3EditBox.h>
-#include <cxuicmn/Gtkmm3Label.h>
-#include <cxuicmn/Gtkmm3Layout.h>
-#include <cxuicmn/Gtkmm3Menu.h>
-#include <cxuicmn/Gtkmm3MenuBar.h>
-#include <cxuicmn/Gtkmm3MenuItem.h>
-#include <cxuicmn/Gtkmm3OnOffSwitch.h>
-#include <cxuicmn/Gtkmm3SpinBox.h>
+#include <cxuicmngtkmm3/Gtkmm3AbstractWidgetsFactory.h>
+#include <cxuicmngtkmm3/Gtkmm3Button.h>
+#include <cxuicmngtkmm3/Gtkmm3Dialog.h>
+#include <cxuicmngtkmm3/Gtkmm3EditBox.h>
+#include <cxuicmngtkmm3/Gtkmm3Label.h>
+#include <cxuicmngtkmm3/Gtkmm3Layout.h>
+#include <cxuicmngtkmm3/Gtkmm3Menu.h>
+#include <cxuicmngtkmm3/Gtkmm3MenuBar.h>
+#include <cxuicmngtkmm3/Gtkmm3MenuItem.h>
+#include <cxuicmngtkmm3/Gtkmm3OnOffSwitch.h>
+#include <cxuicmngtkmm3/Gtkmm3SpinBox.h>
 #include <cxuicmn/Gtkmm3StatusBar.h>
-#include <cxuicmn/Gtkmm3WidgetDelegate.h>
+#include <cxuicmngtkmm3/Gtkmm3WidgetDelegate.h>
 #include <cxuicmn/IStatusBarPresenter.h>
 
-cx::cmn::ui::Gtkmm3AbstractWidgetsFactory::Gtkmm3AbstractWidgetsFactory(Glib::RefPtr<Gtk::Application> p_gtkApplication)
+cx::ui::cmn::Gtkmm3AbstractWidgetsFactory::Gtkmm3AbstractWidgetsFactory(Glib::RefPtr<Gtk::Application> p_gtkApplication)
 {
     PRECONDITION(bool(p_gtkApplication));
 
@@ -47,7 +47,7 @@ cx::cmn::ui::Gtkmm3AbstractWidgetsFactory::Gtkmm3AbstractWidgetsFactory(Glib::Re
     POSTCONDITION(bool(m_gtkApplication));
 }
 
-std::unique_ptr<cx::cmn::ui::ILayout> cx::cmn::ui::Gtkmm3AbstractWidgetsFactory::CreateLayout() const
+std::unique_ptr<cx::ui::cmn::ILayout> cx::ui::cmn::Gtkmm3AbstractWidgetsFactory::CreateLayout() const
 {
     auto layout = CreateWidget<Gtkmm3Layout>();
     POSTCONDITION(layout);
@@ -55,7 +55,7 @@ std::unique_ptr<cx::cmn::ui::ILayout> cx::cmn::ui::Gtkmm3AbstractWidgetsFactory:
     return layout;
 }
 
-std::unique_ptr<cx::cmn::ui::IButton> cx::cmn::ui::Gtkmm3AbstractWidgetsFactory::CreateButton() const 
+std::unique_ptr<cx::ui::cmn::IButton> cx::ui::cmn::Gtkmm3AbstractWidgetsFactory::CreateButton() const 
 {
     auto button = CreateWidget<Gtkmm3Button>();
     POSTCONDITION(button);
@@ -63,7 +63,7 @@ std::unique_ptr<cx::cmn::ui::IButton> cx::cmn::ui::Gtkmm3AbstractWidgetsFactory:
     return button;
 }
 
-std::unique_ptr<cx::cmn::ui::IButton> cx::cmn::ui::Gtkmm3AbstractWidgetsFactory::CreateButton(const std::string& p_contents) const 
+std::unique_ptr<cx::ui::cmn::IButton> cx::ui::cmn::Gtkmm3AbstractWidgetsFactory::CreateButton(const std::string& p_contents) const 
 {
     auto button = CreateWidget<Gtkmm3Button>(p_contents);
     POSTCONDITION(button);
@@ -71,7 +71,7 @@ std::unique_ptr<cx::cmn::ui::IButton> cx::cmn::ui::Gtkmm3AbstractWidgetsFactory:
     return button;
 }
 
-std::unique_ptr<cx::cmn::ui::ILabel> cx::cmn::ui::Gtkmm3AbstractWidgetsFactory::CreateLabel() const 
+std::unique_ptr<cx::ui::cmn::ILabel> cx::ui::cmn::Gtkmm3AbstractWidgetsFactory::CreateLabel() const 
 {
     auto label = CreateWidget<Gtkmm3Label>();
     POSTCONDITION(label);
@@ -79,7 +79,7 @@ std::unique_ptr<cx::cmn::ui::ILabel> cx::cmn::ui::Gtkmm3AbstractWidgetsFactory::
     return label;
 }
 
-std::unique_ptr<cx::cmn::ui::ILabel> cx::cmn::ui::Gtkmm3AbstractWidgetsFactory::CreateLabel(const std::string& p_contents) const 
+std::unique_ptr<cx::ui::cmn::ILabel> cx::ui::cmn::Gtkmm3AbstractWidgetsFactory::CreateLabel(const std::string& p_contents) const 
 {
     auto label = CreateWidget<Gtkmm3Label>(p_contents);
     POSTCONDITION(label);
@@ -87,7 +87,7 @@ std::unique_ptr<cx::cmn::ui::ILabel> cx::cmn::ui::Gtkmm3AbstractWidgetsFactory::
     return label;
 }
 
-std::unique_ptr<cx::cmn::ui::IEditBox> cx::cmn::ui::Gtkmm3AbstractWidgetsFactory::CreateEditBox() const
+std::unique_ptr<cx::ui::cmn::IEditBox> cx::ui::cmn::Gtkmm3AbstractWidgetsFactory::CreateEditBox() const
 {
     auto editBox = CreateWidget<Gtkmm3EditBox>();
     POSTCONDITION(editBox);
@@ -95,7 +95,7 @@ std::unique_ptr<cx::cmn::ui::IEditBox> cx::cmn::ui::Gtkmm3AbstractWidgetsFactory
     return editBox;
 }
 
-std::unique_ptr<cx::cmn::ui::ISpinBox> cx::cmn::ui::Gtkmm3AbstractWidgetsFactory::CreateSpinBox(
+std::unique_ptr<cx::ui::cmn::ISpinBox> cx::ui::cmn::Gtkmm3AbstractWidgetsFactory::CreateSpinBox(
     int p_initialValue,
     const ISpinBox::ClimbRate& p_climbRate,
     const ISpinBox::Range& p_range) const
@@ -106,7 +106,7 @@ std::unique_ptr<cx::cmn::ui::ISpinBox> cx::cmn::ui::Gtkmm3AbstractWidgetsFactory
     return spinBox;
 }
 
-std::unique_ptr<cx::cmn::ui::IOnOffSwitch> cx::cmn::ui::Gtkmm3AbstractWidgetsFactory::CreateOnOffSwitch() const
+std::unique_ptr<cx::ui::cmn::IOnOffSwitch> cx::ui::cmn::Gtkmm3AbstractWidgetsFactory::CreateOnOffSwitch() const
 {
     auto onOffSwitch = CreateWidget<Gtkmm3OnOffSwitch>();
     POSTCONDITION(onOffSwitch);
@@ -114,7 +114,7 @@ std::unique_ptr<cx::cmn::ui::IOnOffSwitch> cx::cmn::ui::Gtkmm3AbstractWidgetsFac
     return onOffSwitch;
 }
 
-std::unique_ptr<cx::cmn::ui::IWindow> cx::cmn::ui::Gtkmm3AbstractWidgetsFactory::CreateDialog(
+std::unique_ptr<cx::ui::cmn::IWindow> cx::ui::cmn::Gtkmm3AbstractWidgetsFactory::CreateDialog(
     IWindow& p_parent,
     DialogRole p_dialogRole,
     const std::string& p_message) const
@@ -130,7 +130,7 @@ std::unique_ptr<cx::cmn::ui::IWindow> cx::cmn::ui::Gtkmm3AbstractWidgetsFactory:
     return dialog;
 }
 
-std::unique_ptr<cx::cmn::ui::IMenuBar> cx::cmn::ui::Gtkmm3AbstractWidgetsFactory::CreateMenuBar() const
+std::unique_ptr<cx::ui::cmn::IMenuBar> cx::ui::cmn::Gtkmm3AbstractWidgetsFactory::CreateMenuBar() const
 {
     auto menuBar = CreateWidget<Gtkmm3MenuBar>();
     POSTCONDITION(menuBar);
@@ -138,7 +138,7 @@ std::unique_ptr<cx::cmn::ui::IMenuBar> cx::cmn::ui::Gtkmm3AbstractWidgetsFactory
     return menuBar;
 }
 
-std::unique_ptr<cx::cmn::ui::IMenu> cx::cmn::ui::Gtkmm3AbstractWidgetsFactory::CreateMenu(const std::string p_title) const
+std::unique_ptr<cx::ui::cmn::IMenu> cx::ui::cmn::Gtkmm3AbstractWidgetsFactory::CreateMenu(const std::string p_title) const
 {
     IF_PRECONDITION_NOT_MET_DO(!p_title.empty(), return nullptr;);
 
@@ -148,7 +148,7 @@ std::unique_ptr<cx::cmn::ui::IMenu> cx::cmn::ui::Gtkmm3AbstractWidgetsFactory::C
     return menu;
 }
 
-std::unique_ptr<cx::cmn::ui::IMenuItem> cx::cmn::ui::Gtkmm3AbstractWidgetsFactory::CreateMenuItem(
+std::unique_ptr<cx::ui::cmn::IMenuItem> cx::ui::cmn::Gtkmm3AbstractWidgetsFactory::CreateMenuItem(
     const std::string p_label,
     const std::optional<FreeDesktop::StdActionIcon>& p_icon) const
 {
@@ -160,7 +160,7 @@ std::unique_ptr<cx::cmn::ui::IMenuItem> cx::cmn::ui::Gtkmm3AbstractWidgetsFactor
     return menuItem;
 }
 
-std::unique_ptr<cx::cmn::ui::IStatusBar> cx::cmn::ui::Gtkmm3AbstractWidgetsFactory::CreateStatusBar(cx::cmn::ui::IStatusBarPresenter& p_presenter) const
+std::unique_ptr<cx::ui::cmn::IStatusBar> cx::ui::cmn::Gtkmm3AbstractWidgetsFactory::CreateStatusBar(cx::ui::cmn::IStatusBarPresenter& p_presenter) const
 {
     auto statusBar = CreateWidget<Gtkmm3StatusBar>(p_presenter);
     POSTCONDITION(statusBar);

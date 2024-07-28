@@ -33,7 +33,7 @@
 #include <cxuicmn/BoardAnimationNotificationContext.h>
 #include <cxuicmn/IBoardInformation.h>
 
-namespace cx::cmn::ui
+namespace cx::ui::cmn
 {
 
 /**********************************************************************************************//**
@@ -78,10 +78,10 @@ using IUserActionObserver = cx::model::IObserver<UserAction>;
  *
  *************************************************************************************************/
 class IAnimatedBoard : public IWidget,
-                       public cx::cmn::ui::IBoardInformation,
-                       public cx::cmn::ui::IBoardAnimationObserver,
-                       public cx::cmn::ui::BoardAnimationSubject,
-                       public cx::cmn::ui::UserActionSubject
+                       public cx::ui::cmn::IBoardInformation,
+                       public cx::ui::cmn::IBoardAnimationObserver,
+                       public cx::ui::cmn::BoardAnimationSubject,
+                       public cx::ui::cmn::UserActionSubject
 {
 
 public:
@@ -112,6 +112,6 @@ public:
 
 };
 
-} // namespace cx::cmn::ui
+} // namespace cx::ui::cmn
 
 #endif // IANIMATEDBOARD_H_138FF453_BD0C_423D_A57F_1C1834CB8749

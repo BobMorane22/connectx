@@ -16,26 +16,27 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file Gtkmm3MenuBar.h
+ * @file Gtkmm3EditBox.h
  * @date 2024
  *
  *************************************************************************************************/
 
-#ifndef GTKMM3MENUBAR_H_B09C49CF_EA28_4DBB_8ED7_BA7E8CEC3CC6
-#define GTKMM3MENUBAR_H_B09C49CF_EA28_4DBB_8ED7_BA7E8CEC3CC6
+#ifndef GTKMM3EDITBOX_H_3E389CC2_EA4C_481C_BF50_E5EDAF31336D
+#define GTKMM3EDITBOX_H_3E389CC2_EA4C_481C_BF50_E5EDAF31336D
 
-#include <gtkmm/menubar.h>
-#include <cxuicmn/IMenuBar.h>
+#include <gtkmm/entry.h>
 
-namespace cx::cmn::ui
+#include <cxuicmn/IEditBox.h>
+
+namespace cx::ui::cmn
 {
 
-/***********************************************************************************************//**
- * @brief Gtkmm 3 implementation of the `cx::cmn::ui::IMenuBar` interface.
+/**********************************************************************************************//**
+ * @brief Gtkmm 3 implementation of an edit box.
  *
- **************************************************************************************************/
-class Gtkmm3MenuBar : public IMenuBar,
-                      public Gtk::MenuBar
+ *************************************************************************************************/
+class Gtkmm3EditBox : public IEditBox,
+                      public Gtk::Entry
 {
 
 public:
@@ -43,7 +44,7 @@ public:
     /*******************************************************************************************//**
      * @brief Sets the delegate for widget common facilities.
      *
-     * The delegate is reponsible to carry the implementation for generic `cx::cmn::ui::IWidget` operations.
+     * The delegate is reponsible to carry the implementation for generic `cx::ui::cmn::IWidget` operations.
      * It is meant to avoid implementation duplication.
      *
      * @param p_delegate
@@ -57,12 +58,14 @@ public:
      **********************************************************************************************/
     void SetDelegate(std::unique_ptr<IWidget> p_delegate);
 
-    // cx::cmn::ui::IMenuBar:
-    void Register(IMenu& p_menu) override;
+    // cx::ui::cmn::IEditBox:
+    void UpdateContents(const std::string& p_newContents) override;
+    [[nodiscard]] std::string GetContents() const override;
+    [[nodiscard]] std::unique_ptr<ISignal<void>> OnContentsChanged() override;
 
-    // cx::cmn::ui::IWidget:
-    [[nodiscard]] size_t GetWidth() const override;
-    [[nodiscard]] size_t GetHeight() const override;
+    // cx::ui::cmn::IWidget:
+    [[nodiscard]]  size_t GetWidth() const override;
+    [[nodiscard]]  size_t GetHeight() const override;
     void SetEnabled(EnabledState p_enabled) override;
     void SetMargins(const Margins& p_newMarginSizes) override;
     void SetTooltip(const std::string& p_tooltipContents) override;
@@ -74,6 +77,6 @@ private:
 
 };
 
-} // namespace cx::cmn::ui
+} // namespace cx::ui::cmn
 
-#endif // GTKMM3MENUBAR_H_B09C49CF_EA28_4DBB_8ED7_BA7E8CEC3CC6
+#endif // GTKMM3EDITBOX_H_3E389CC2_EA4C_481C_BF50_E5EDAF31336D

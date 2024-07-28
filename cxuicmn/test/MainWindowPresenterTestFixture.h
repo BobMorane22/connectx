@@ -45,9 +45,9 @@ public:
 
     void SendNotification(cx::model::ModelNotificationContext p_context);
 
-    cx::cmn::ui::IMainWindowPresenter& GetPresenter();
-    cx::cmn::ui::IGameViewPresenter& GetGameViewPresenter();
-    cx::cmn::ui::INewGameViewPresenter& GetNewGameViewPresenter();
+    cx::ui::cmn::IMainWindowPresenter& GetPresenter();
+    cx::ui::cmn::IGameViewPresenter& GetGameViewPresenter();
+    cx::ui::cmn::INewGameViewPresenter& GetNewGameViewPresenter();
 
     cx::model::IConnectXGameActions& GetActionsModel();
     cx::model::IConnectXGameInformation& GetGameInformationModel();
@@ -124,7 +124,7 @@ private:
 
 private:
 
-    std::unique_ptr<cx::cmn::ui::IMainWindowPresenter> m_presenter;
+    std::unique_ptr<cx::ui::cmn::IMainWindowPresenter> m_presenter;
     std::unique_ptr<MainWindowPresenterModelMock> m_model;
 };
 

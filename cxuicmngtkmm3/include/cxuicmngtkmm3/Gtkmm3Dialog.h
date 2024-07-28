@@ -16,55 +16,62 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file Gtkmm3SpinBox.h
- * @date 2023
+ * @file Gtkmm3Dialog.h
+ * @date 2024
  *
  *************************************************************************************************/
 
-#ifndef GTKMM3SPINBOX_H_73AD5C68_A06C_4EFB_94EE_928437F83BA6
-#define GTKMM3SPINBOX_H_73AD5C68_A06C_4EFB_94EE_928437F83BA6
+#ifndef GTKMM3DIALOG_H_0BE19F00_7BE5_40DA_B880_C87F635AABE8
+#define GTKMM3DIALOG_H_0BE19F00_7BE5_40DA_B880_C87F635AABE8
 
-#include <memory>
+#include <gtkmm/messagedialog.h>
 
-#include <gtkmm/spinbutton.h>
+#include <cxmodel/ModelNotificationContext.h>
+#include <cxuicmn/IWindow.h>
 
-#include <cxuicmn/ISpinBox.h>
+namespace cx::ui::cmn
+{
+    enum class DialogRole;
+}
 
-namespace cx::cmn::ui
+namespace cx::ui::cmn
 {
 
 /**********************************************************************************************//**
- * @brief Gtkmm 3 implementation for the `cx::cmn::ui::ISpinBox` interface.
+ * @brief Gtkmm 3 dialog implementation.
+ *
+ * Unlike Gtkmm, this implementation shares the `IWindow::Show` method. Typical Gtkmm
+ * implementations use the `Gtk::Dialog::run` method (but also inherit from `Gtk::Window::show`)
+ * which adds confusion.
  *
  *************************************************************************************************/
-class Gtkmm3SpinBox final : public cx::cmn::ui::ISpinBox,
-                            public Gtk::SpinButton
+class Gtkmm3Dialog : public IWindow,
+                     public Gtk::MessageDialog
 {
 
 public:
 
-    /******************************************************************************************//**
+    /*******************************************************************************************//**
      * @brief Constructor.
      *
-     * @param p_initialValue
-     *      The initialValue for the spin box.
+     * @param p_parent
+     *      The window over which the dialog will appear.
+     * @param p_role
+     *      The dialog's role. In other words, the type of communication the dialog going to
+     *      be used, as far as the user is concerned.
+     * @param p_message
+     *      The message to display to the user. 
      *
-     * @param p_climbRate
-     *      The spin box's climb rate.
+     * @pre
+     *      The message should not be empty.
      *
-     * @param p_range
-     *      The spin box's value range.
-     *
-     *********************************************************************************************/
-    Gtkmm3SpinBox(
-        int p_initialValue,
-        const ClimbRate& p_climbRate,
-        const Range& p_range);
+     **********************************************************************************************/
+    Gtkmm3Dialog(IWindow& p_parent, DialogRole p_role, const std::string& p_message);
 
     /*******************************************************************************************//**
      * @brief Sets the delegate for widget common facilities.
      *
-     * The delegate is reponsible to carry the implementation for generic `cx::cmn::ui::IWidget` operations.
+     * The delegate is reponsible to carry the implementation for generic `cx::ui::cmn::IWidget` operations.
      * It is meant to avoid implementation duplication.
      *
      * @param p_delegate
@@ -78,10 +85,11 @@ public:
      **********************************************************************************************/
     void SetDelegate(std::unique_ptr<IWidget> p_delegate);
 
-    // cx::cmn::ui::ISpinBox:
-    [[nodiscard]] int GetValue() const override;
+    // cx::ui::cmn::IWindow:
+    [[nodiscard]] virtual int Show() override;
+    void ShrinkToContents(IWindow::Orientation p_orientation) override;
 
-    // cx::cmn::ui::IWidget:
+    // cx::ui::cmn::IWidget:
     [[nodiscard]] size_t GetWidth() const override;
     [[nodiscard]] size_t GetHeight() const override;
     void SetEnabled(EnabledState p_enabled) override;
@@ -91,12 +99,13 @@ public:
 
 private:
 
-    std::unique_ptr<IWidget> m_delegate;
+    // cx::model::IModelObserver:
+    void Update(cx::model::ModelNotificationContext p_context, cx::model::ModelSubject* p_subject) override;
 
-    cx::cmn::ui::ISpinBox::Range m_limits;
+    std::unique_ptr<IWidget> m_delegate;
 
 };
 
-} // namespace cx::cmn::ui
+} // namespace cx::ui::cmn
 
-#endif // GTKMM3SPINBOX_H_73AD5C68_A06C_4EFB_94EE_928437F83BA6
+#endif // GTKMM3DIALOG_H_0BE19F00_7BE5_40DA_B880_C87F635AABE8

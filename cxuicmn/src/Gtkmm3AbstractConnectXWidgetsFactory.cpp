@@ -33,7 +33,7 @@
 #include <cxuicmn/Gtkmm3MainWindow.h>
 #include <cxuicmn/Gtkmm3NewGameView.h>
 #include <cxuicmn/Gtkmm3NewPlayersList.h>
-#include <cxuicmn/Gtkmm3WidgetDelegate.h>
+#include <cxuicmngtkmm3/Gtkmm3WidgetDelegate.h>
 #include <cxuicmn/IAnimatedBoardModel.h>
 #include <cxuicmn/IAnimatedBoardPresenter.h>
 #include <cxuicmn/IButton.h>
@@ -51,7 +51,7 @@
 #include <cxuicmn/ISpinBox.h>
 #include <cxuicmn/WidgetsFactories.h>
 
-cx::cmn::ui::Gtkmm3AbstractConnectXWidgetsFactory::Gtkmm3AbstractConnectXWidgetsFactory(
+cx::ui::cmn::Gtkmm3AbstractConnectXWidgetsFactory::Gtkmm3AbstractConnectXWidgetsFactory(
     Glib::RefPtr<Gtk::Application> p_gtkApplication)
 {
     PRECONDITION(bool(p_gtkApplication));
@@ -62,7 +62,7 @@ cx::cmn::ui::Gtkmm3AbstractConnectXWidgetsFactory::Gtkmm3AbstractConnectXWidgets
     InvariantsCheck();
 }
 
-void cx::cmn::ui::Gtkmm3AbstractConnectXWidgetsFactory::RegisterStandardWidgetsFactory(
+void cx::ui::cmn::Gtkmm3AbstractConnectXWidgetsFactory::RegisterStandardWidgetsFactory(
     IAbstractWidgetsFactory& p_stdAbstractWidgetsFactory)
 {
     m_widgetsFactories = std::make_unique<WidgetsFactories>(
@@ -73,14 +73,14 @@ void cx::cmn::ui::Gtkmm3AbstractConnectXWidgetsFactory::RegisterStandardWidgetsF
     InvariantsCheck();
 }
 
-std::unique_ptr<cx::cmn::ui::IWindow> cx::cmn::ui::Gtkmm3AbstractConnectXWidgetsFactory::CreateMainWindow(
+std::unique_ptr<cx::ui::cmn::IWindow> cx::ui::cmn::Gtkmm3AbstractConnectXWidgetsFactory::CreateMainWindow(
     cx::model::ModelSubject& p_model,
     IMainWindowController& p_controller,
     IMainWindowPresenter& p_presenter) const
 {
     IF_PRECONDITION_NOT_MET_DO(m_widgetsFactories, return nullptr;);
 
-    auto mainWindow = cx::cmn::ui::CreateWidget<Gtkmm3MainWindow>(
+    auto mainWindow = cx::ui::cmn::CreateWidget<Gtkmm3MainWindow>(
         *(m_gtkApplication.get()),
         p_model,
         p_controller,
@@ -96,7 +96,7 @@ std::unique_ptr<cx::cmn::ui::IWindow> cx::cmn::ui::Gtkmm3AbstractConnectXWidgets
     return mainWindow;
 }
 
-std::unique_ptr<cx::cmn::ui::IWindow> cx::cmn::ui::Gtkmm3AbstractConnectXWidgetsFactory::CreateAboutWindow(
+std::unique_ptr<cx::ui::cmn::IWindow> cx::ui::cmn::Gtkmm3AbstractConnectXWidgetsFactory::CreateAboutWindow(
     std::unique_ptr<IAboutWindowPresenter> p_presenter) const
 {
     IF_PRECONDITION_NOT_MET_DO(p_presenter, return nullptr;);
@@ -114,7 +114,7 @@ std::unique_ptr<cx::cmn::ui::IWindow> cx::cmn::ui::Gtkmm3AbstractConnectXWidgets
     return aboutWindow;
 }
 
-std::unique_ptr<cx::cmn::ui::IWindow> cx::cmn::ui::Gtkmm3AbstractConnectXWidgetsFactory::CreateGameResolutionDialog(
+std::unique_ptr<cx::ui::cmn::IWindow> cx::ui::cmn::Gtkmm3AbstractConnectXWidgetsFactory::CreateGameResolutionDialog(
     std::unique_ptr<IGameResolutionDialogPresenter> p_presenter,
     std::unique_ptr<IGameResolutionDialogController> p_controller) const
 {
@@ -133,11 +133,11 @@ std::unique_ptr<cx::cmn::ui::IWindow> cx::cmn::ui::Gtkmm3AbstractConnectXWidgets
     return gameResolutionDialog;
 }
 
-std::unique_ptr<cx::cmn::ui::IView> cx::cmn::ui::Gtkmm3AbstractConnectXWidgetsFactory::CreateNewGameView(
+std::unique_ptr<cx::ui::cmn::IView> cx::ui::cmn::Gtkmm3AbstractConnectXWidgetsFactory::CreateNewGameView(
     INewGameViewPresenter& p_presenter,
     INewGameViewController& p_controller,
     IWindow& p_parentWindow,
-    cx::cmn::ui::ILayout& p_mainLayout,
+    cx::ui::cmn::ILayout& p_mainLayout,
     const cx::model::Column& p_viewLeft,
     const cx::model::Row& p_viewTop) const
 {
@@ -156,11 +156,11 @@ std::unique_ptr<cx::cmn::ui::IView> cx::cmn::ui::Gtkmm3AbstractConnectXWidgetsFa
     return newGameView;
 }
 
-std::unique_ptr<cx::cmn::ui::IView> cx::cmn::ui::Gtkmm3AbstractConnectXWidgetsFactory::CreateGameView(
+std::unique_ptr<cx::ui::cmn::IView> cx::ui::cmn::Gtkmm3AbstractConnectXWidgetsFactory::CreateGameView(
     IGameViewPresenter& p_presenter,
     IGameViewController& p_controller,
     IWindow& p_parentWindow,
-    cx::cmn::ui::ILayout& p_mainLayout,
+    cx::ui::cmn::ILayout& p_mainLayout,
     const cx::model::Column& p_viewLeft,
     const cx::model::Row& p_viewTop) const
 {
@@ -179,8 +179,8 @@ std::unique_ptr<cx::cmn::ui::IView> cx::cmn::ui::Gtkmm3AbstractConnectXWidgetsFa
     return gameView;
 }
 
-std::unique_ptr<cx::cmn::ui::INewPlayersList> cx::cmn::ui::Gtkmm3AbstractConnectXWidgetsFactory::CreateNewPlayersList(
-    const cx::cmn::ui::INewGameViewPresenter& p_presenter) const
+std::unique_ptr<cx::ui::cmn::INewPlayersList> cx::ui::cmn::Gtkmm3AbstractConnectXWidgetsFactory::CreateNewPlayersList(
+    const cx::ui::cmn::INewGameViewPresenter& p_presenter) const
 {
     IF_CONDITION_NOT_MET_DO(m_widgetsFactories, return nullptr;);
 
@@ -192,7 +192,7 @@ std::unique_ptr<cx::cmn::ui::INewPlayersList> cx::cmn::ui::Gtkmm3AbstractConnect
     return newPlayersList;
 }
 
-std::unique_ptr<cx::cmn::ui::IColorPicker> cx::cmn::ui::Gtkmm3AbstractConnectXWidgetsFactory::CreateColorPicker(
+std::unique_ptr<cx::ui::cmn::IColorPicker> cx::ui::cmn::Gtkmm3AbstractConnectXWidgetsFactory::CreateColorPicker(
     const std::vector<cx::model::ChipColor>& p_colors) const
 {
     IF_PRECONDITION_NOT_MET_DO(!p_colors.empty(), return nullptr;);
@@ -203,9 +203,9 @@ std::unique_ptr<cx::cmn::ui::IColorPicker> cx::cmn::ui::Gtkmm3AbstractConnectXWi
     return picker;
 }
 
-std::unique_ptr<cx::cmn::ui::IAnimatedBoard> cx::cmn::ui::Gtkmm3AbstractConnectXWidgetsFactory::CreateGameBoard(
-    const cx::cmn::ui::IGameViewPresenter& p_presenter,
-    const cx::cmn::ui::AnimationSpeed& p_speed) const
+std::unique_ptr<cx::ui::cmn::IAnimatedBoard> cx::ui::cmn::Gtkmm3AbstractConnectXWidgetsFactory::CreateGameBoard(
+    const cx::ui::cmn::IGameViewPresenter& p_presenter,
+    const cx::ui::cmn::AnimationSpeed& p_speed) const
 {
     auto animatedBoard = CreateWidget<Gtkmm3AnimatedBoard>(p_presenter, p_speed);
 
@@ -215,7 +215,7 @@ std::unique_ptr<cx::cmn::ui::IAnimatedBoard> cx::cmn::ui::Gtkmm3AbstractConnectX
     return animatedBoard;
 }
 
-std::unique_ptr<cx::cmn::ui::IChip> cx::cmn::ui::Gtkmm3AbstractConnectXWidgetsFactory::CreateChip(
+std::unique_ptr<cx::ui::cmn::IChip> cx::ui::cmn::Gtkmm3AbstractConnectXWidgetsFactory::CreateChip(
    const cx::model::ChipColor& p_fillColor,
    const cx::model::ChipColor& p_backgroundColor,
    int p_diameter) const
@@ -231,7 +231,7 @@ std::unique_ptr<cx::cmn::ui::IChip> cx::cmn::ui::Gtkmm3AbstractConnectXWidgetsFa
     return chip;
 }
 
-void cx::cmn::ui::Gtkmm3AbstractConnectXWidgetsFactory::InvariantsCheck() const 
+void cx::ui::cmn::Gtkmm3AbstractConnectXWidgetsFactory::InvariantsCheck() const 
 {
     INVARIANT(m_gtkApplication);
 }

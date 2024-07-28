@@ -34,35 +34,21 @@ add_library(${TARGET_NAME}
   src/GameResolutionDialogController.cpp
   src/GameResolutionDialogPresenterFactory.cpp
   src/GameViewKeyHandlerStrategyFactory.cpp
-  src/gtkmmConversions.cpp
   src/Gtkmm3AboutWindow.cpp
-  src/Gtkmm3AbstractWidgetsFactory.cpp
   src/Gtkmm3AbstractConnectXWidgetsFactory.cpp
   src/Gtkmm3AnimatedBoard.cpp
   src/Gtkmm3AnimatedBoardTimerRAII.cpp
   src/Gtkmm3BoardElementCache.cpp
-  src/Gtkmm3Button.cpp
   src/Gtkmm3Chip.cpp
   src/Gtkmm3ColorPicker.cpp
   src/Gtkmm3ContextRestoreRAII.cpp
-  src/Gtkmm3Dialog.cpp
   src/Gtkmm3DiscChip.cpp
-  src/Gtkmm3EditBox.cpp
   src/Gtkmm3GameResolutionDialog.cpp
   src/Gtkmm3GameView.cpp
-  src/Gtkmm3Label.cpp
-  src/Gtkmm3Layout.cpp
   src/Gtkmm3MainWindow.cpp
-  src/Gtkmm3Menu.cpp
-  src/Gtkmm3MenuBar.cpp
-  src/Gtkmm3MenuItem.cpp
   src/Gtkmm3NewGameView.cpp
   src/Gtkmm3NewPlayersList.cpp
-  src/Gtkmm3OnOffSwitch.cpp
-  src/Gtkmm3SpinBox.cpp
   src/Gtkmm3StatusBar.cpp
-  src/Gtkmm3WidgetDelegate.cpp
-  src/Gtkmm3Window.cpp
   src/IAnimatedBoardModel.cpp
   src/INewGameViewPresenter.cpp
   src/KeyboardShortcut.cpp
@@ -88,6 +74,7 @@ target_link_libraries(${TARGET_NAME}
   PRIVATE cxinv
   PRIVATE cxmath
   PRIVATE cxmodel
+  PRIVATE cxuicmngtkmm3
   PRIVATE ${GTKMM_LIBRARIES}
 )
 

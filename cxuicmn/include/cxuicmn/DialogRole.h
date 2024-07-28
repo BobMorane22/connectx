@@ -24,7 +24,7 @@
 #ifndef DIALOGROLE_H_8B81831F_B231_40D3_9D11_35BC694498EB
 #define DIALOGROLE_H_8B81831F_B231_40D3_9D11_35BC694498EB
 
-namespace cx::cmn::ui
+namespace cx::ui::cmn
 {
 
 /**********************************************************************************************//**

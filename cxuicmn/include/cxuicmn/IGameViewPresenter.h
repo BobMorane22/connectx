@@ -30,7 +30,7 @@
 #include <cxmodel/ChipColor.h>
 #include <cxuicmn/common.h>
 
-namespace cx::cmn::ui
+namespace cx::ui::cmn
 {
 
 /*********************************************************************************************//**
@@ -131,7 +131,7 @@ public:
      * @return The board color.
      *
      ********************************************************************************************/
-    [[nodiscard]] virtual cx::cmn::ui::Color GetGameViewBoardColor() const = 0;
+    [[nodiscard]] virtual cx::ui::cmn::Color GetGameViewBoardColor() const = 0;
 
     /******************************************************************************************//**
      * @brief Column highlight color accessor.
@@ -142,7 +142,7 @@ public:
      * @return The column highlight color.
      *
      ********************************************************************************************/
-    [[nodiscard]] virtual cx::cmn::ui::Color GetGameViewColumnHighlightColor() const = 0;
+    [[nodiscard]] virtual cx::ui::cmn::Color GetGameViewColumnHighlightColor() const = 0;
 
     /******************************************************************************************//**
      * @brief Chip colors accessor.
@@ -169,6 +169,6 @@ public:
     [[nodiscard]] virtual size_t GetBotTarget() const = 0;
 };
 
-} // namespace cx::cmn::ui
+} // namespace cx::ui::cmn
 
 #endif // IGAMEVIEWPRESENTER_H_564B2260_1CAE_4391_A361_97CAB8D0102D

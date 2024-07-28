@@ -26,7 +26,7 @@
 
 #include <cxcmn/StrongType.h>
 
-namespace cx::cmn::ui
+namespace cx::ui::cmn
 {
 
 /**********************************************************************************************//**
@@ -111,33 +111,33 @@ constexpr bool operator==(const ScalingRatios& p_lhs, const ScalingRatios& p_rhs
  *********************************************************************************************/
 constexpr bool operator!=(const ScalingRatios& p_lhs, const ScalingRatios& p_rhs);
 
-} // namespace cx::cmn::ui
+} // namespace cx::ui::cmn
 
-constexpr cx::cmn::ui::ScalingRatios::ScalingRatios(HorizontalScalingRatio p_horizontalRatio, VerticalScalingRatio p_verticalRatio)
+constexpr cx::ui::cmn::ScalingRatios::ScalingRatios(HorizontalScalingRatio p_horizontalRatio, VerticalScalingRatio p_verticalRatio)
 : m_horizontalRatio{p_horizontalRatio}
 , m_verticalRatio{p_verticalRatio}
 {
 }
 
-constexpr cx::cmn::ui::ScalingRatios::ScalingRatios(HorizontalScalingRatio p_horizontalRatio)
+constexpr cx::ui::cmn::ScalingRatios::ScalingRatios(HorizontalScalingRatio p_horizontalRatio)
 : m_horizontalRatio{p_horizontalRatio}
 , m_verticalRatio{1.0}
 {
 }
 
-constexpr cx::cmn::ui::ScalingRatios::ScalingRatios(VerticalScalingRatio p_verticalRatio)
+constexpr cx::ui::cmn::ScalingRatios::ScalingRatios(VerticalScalingRatio p_verticalRatio)
 : m_horizontalRatio{1.0}
 , m_verticalRatio{p_verticalRatio}
 {
 }
 
-constexpr bool cx::cmn::ui::operator==(const ScalingRatios& p_lhs, const ScalingRatios& p_rhs)
+constexpr bool cx::ui::cmn::operator==(const ScalingRatios& p_lhs, const ScalingRatios& p_rhs)
 {
     return p_lhs.m_horizontalRatio == p_rhs.m_horizontalRatio &&
            p_lhs.m_verticalRatio == p_rhs.m_verticalRatio;
 }
 
-constexpr bool cx::cmn::ui::operator!=(const ScalingRatios& p_lhs, const ScalingRatios& p_rhs)
+constexpr bool cx::ui::cmn::operator!=(const ScalingRatios& p_lhs, const ScalingRatios& p_rhs)
 {
     return !(p_lhs == p_rhs);
 }

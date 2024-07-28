@@ -26,16 +26,16 @@
 #include <cxinv/assertion.h>
 #include <cxuicmn/EnabledState.h>
 #include <cxuicmn/EventPropagation.h>
-#include <cxuicmn/gtkmmConversions.h>
-#include <cxuicmn/Gtkmm3Connection.h>
-#include <cxuicmn/Gtkmm3WidgetDelegate.h>
+#include <cxuicmngtkmm3/gtkmmConversions.h>
+#include <cxuicmngtkmm3/Gtkmm3Connection.h>
+#include <cxuicmngtkmm3/Gtkmm3WidgetDelegate.h>
 #include <cxuicmn/KeyboardKeyPressedEvent.h>
 #include <cxuicmn/Margins.h>
 
 namespace
 {
 
-class Gtkmm3KeyboardOnKeyPressedEventSignal : public cx::cmn::ui::ISignal<cx::cmn::ui::EventPropagation, cx::cmn::ui::KeyboardKeyPressedEvent>
+class Gtkmm3KeyboardOnKeyPressedEventSignal : public cx::ui::cmn::ISignal<cx::ui::cmn::EventPropagation, cx::ui::cmn::KeyboardKeyPressedEvent>
 {
 
 public:
@@ -45,18 +45,18 @@ public:
     {
     }
 
-    [[nodiscard]] std::unique_ptr<cx::cmn::ui::IConnection> Connect(const std::function<cx::cmn::ui::EventPropagation(cx::cmn::ui::KeyboardKeyPressedEvent)>& p_slot)
+    [[nodiscard]] std::unique_ptr<cx::ui::cmn::IConnection> Connect(const std::function<cx::ui::cmn::EventPropagation(cx::ui::cmn::KeyboardKeyPressedEvent)>& p_slot)
     {
         const auto gtkSlot = [p_slot](GdkEventKey* p_event)
         {
             IF_PRECONDITION_NOT_MET_DO(p_event, return true;);
 
-            const auto event = cx::cmn::ui::FromGtk<cx::cmn::ui::KeyboardKeyPressedEvent>(*p_event);
+            const auto event = cx::ui::cmn::FromGtk<cx::ui::cmn::KeyboardKeyPressedEvent>(*p_event);
             RETURN_IF(!event.has_value(), true);
 
-            const cx::cmn::ui::EventPropagation propagate = p_slot(event.value());
+            const cx::ui::cmn::EventPropagation propagate = p_slot(event.value());
 
-            const auto isHandled = cx::cmn::ui::ToGtk<bool>(propagate);
+            const auto isHandled = cx::ui::cmn::ToGtk<bool>(propagate);
             IF_CONDITION_NOT_MET_DO(isHandled.has_value(), return true;);
 
             return isHandled.value();
@@ -65,7 +65,7 @@ public:
         sigc::connection gtkConnection = m_widget.signal_key_press_event().connect(gtkSlot, false);
         IF_CONDITION_NOT_MET_DO(gtkConnection.connected(), return nullptr;);
 
-        return std::make_unique<cx::cmn::ui::Gtkmm3Connection>(gtkConnection);
+        return std::make_unique<cx::ui::cmn::Gtkmm3Connection>(gtkConnection);
     }
 
 private:
@@ -75,7 +75,7 @@ private:
 
 } // namespace
 
-void cx::cmn::ui::Gtkmm3WidgetDelegate::SetUnderlying(Gtk::Widget* p_underlying)
+void cx::ui::cmn::Gtkmm3WidgetDelegate::SetUnderlying(Gtk::Widget* p_underlying)
 {
     PRECONDITION(p_underlying);
 
@@ -84,7 +84,7 @@ void cx::cmn::ui::Gtkmm3WidgetDelegate::SetUnderlying(Gtk::Widget* p_underlying)
     POSTCONDITION(m_underlying);
 }
 
-size_t cx::cmn::ui::Gtkmm3WidgetDelegate::GetWidth() const
+size_t cx::ui::cmn::Gtkmm3WidgetDelegate::GetWidth() const
 {
     IF_PRECONDITION_NOT_MET_DO(m_underlying, return 0u;);
 
@@ -94,7 +94,7 @@ size_t cx::cmn::ui::Gtkmm3WidgetDelegate::GetWidth() const
     return static_cast<size_t>(width);
 }
 
-size_t cx::cmn::ui::Gtkmm3WidgetDelegate::GetHeight() const {
+size_t cx::ui::cmn::Gtkmm3WidgetDelegate::GetHeight() const {
     IF_PRECONDITION_NOT_MET_DO(m_underlying, return 0u;);
 
     const int height = m_underlying->get_height();
@@ -103,14 +103,14 @@ size_t cx::cmn::ui::Gtkmm3WidgetDelegate::GetHeight() const {
     return static_cast<size_t>(height);
 }
 
-void cx::cmn::ui::Gtkmm3WidgetDelegate::SetEnabled(EnabledState p_enabled)
+void cx::ui::cmn::Gtkmm3WidgetDelegate::SetEnabled(EnabledState p_enabled)
 {
     IF_PRECONDITION_NOT_MET_DO(m_underlying, return;);
 
     m_underlying->set_sensitive(p_enabled == EnabledState::Enabled ? true : false);
 }
 
-void cx::cmn::ui::Gtkmm3WidgetDelegate::SetMargins(const Margins& p_newMarginSizes)
+void cx::ui::cmn::Gtkmm3WidgetDelegate::SetMargins(const Margins& p_newMarginSizes)
 {
     IF_PRECONDITION_NOT_MET_DO(m_underlying, return;);
 
@@ -125,14 +125,14 @@ void cx::cmn::ui::Gtkmm3WidgetDelegate::SetMargins(const Margins& p_newMarginSiz
     m_underlying->set_margin_bottom(bottom);
 }
 
-void cx::cmn::ui::Gtkmm3WidgetDelegate::SetTooltip(const std::string& p_tooltipContents)
+void cx::ui::cmn::Gtkmm3WidgetDelegate::SetTooltip(const std::string& p_tooltipContents)
 {
     IF_PRECONDITION_NOT_MET_DO(m_underlying, return;);
 
     m_underlying->set_tooltip_text(p_tooltipContents);
 }
 
-std::unique_ptr<cx::cmn::ui::ISignal<cx::cmn::ui::EventPropagation, cx::cmn::ui::KeyboardKeyPressedEvent>> cx::cmn::ui::Gtkmm3WidgetDelegate::OnKeyPressed()
+std::unique_ptr<cx::ui::cmn::ISignal<cx::ui::cmn::EventPropagation, cx::ui::cmn::KeyboardKeyPressedEvent>> cx::ui::cmn::Gtkmm3WidgetDelegate::OnKeyPressed()
 {
     IF_PRECONDITION_NOT_MET_DO(m_underlying, return nullptr;);
 

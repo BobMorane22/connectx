@@ -26,7 +26,7 @@
 
 #include <cxmodel/NewGameInformation.h>
 
-namespace cx::cmn::ui
+namespace cx::ui::cmn
 {
 
 /*********************************************************************************************//**
@@ -56,6 +56,6 @@ public:
 
 };
 
-} // namespace cx::cmn::ui
+} // namespace cx::ui::cmn
 
 #endif // INEWGAMEVIEWCONTROLLER_H_C4599F8B_25C5_4F7A_9A04_07CE371790CE

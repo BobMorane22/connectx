@@ -24,7 +24,7 @@
 #ifndef IGAMERESOLUTIONDIALOGCONTROLLER_H_95FD78FD_1348_4332_962B_3433710806E5
 #define IGAMERESOLUTIONDIALOGCONTROLLER_H_95FD78FD_1348_4332_962B_3433710806E5
 
-namespace cx::cmn::ui
+namespace cx::ui::cmn
 {
 
 /*********************************************************************************************//**
@@ -50,6 +50,6 @@ public:
 
 };
 
-} // namespace cx::cmn::ui
+} // namespace cx::ui::cmn
 
 #endif // IGAMERESOLUTIONDIALOGCONTROLLER_H_95FD78FD_1348_4332_962B_3433710806E5

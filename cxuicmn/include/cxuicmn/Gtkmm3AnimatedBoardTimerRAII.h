@@ -30,7 +30,7 @@
 
 #include <cxuicmn/ITimer.h>
 
-namespace cx::cmn::ui
+namespace cx::ui::cmn
 {
 
 /**********************************************************************************************//**
@@ -100,6 +100,6 @@ private:
 
 };
 
-} // namespace cx::cmn::ui
+} // namespace cx::ui::cmn
 
 #endif // GTKMM3ANIMATEDBOARDTIMERRAII_H_059D3527_FB5A_4FF2_9A36_2786BDA81BDC

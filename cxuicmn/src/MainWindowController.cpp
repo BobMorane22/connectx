@@ -30,7 +30,7 @@
 #include <cxmodel/IUndoRedo.h>
 #include <cxuicmn/MainWindowController.h>
 
-cx::cmn::ui::MainWindowController::MainWindowController(cx::model::IConnectXGameActions& p_modelAsGameActions,
+cx::ui::cmn::MainWindowController::MainWindowController(cx::model::IConnectXGameActions& p_modelAsGameActions,
                                                   cx::model::IUndoRedo& p_modelAsUndoRedo)
 : m_modelAsGameActions{p_modelAsGameActions}
 , m_modelAsUndoRedo{p_modelAsUndoRedo}
@@ -38,12 +38,12 @@ cx::cmn::ui::MainWindowController::MainWindowController(cx::model::IConnectXGame
 {
 }
 
-void cx::cmn::ui::MainWindowController::OnStart(cx::model::NewGameInformation p_gameInformation)
+void cx::ui::cmn::MainWindowController::OnStart(cx::model::NewGameInformation p_gameInformation)
 {
     m_modelAsGameActions.CreateNewGame(std::move(p_gameInformation));
 }
 
-void cx::cmn::ui::MainWindowController::OnDown(const cx::model::ChipColor& p_chipColor, size_t p_column)
+void cx::ui::cmn::MainWindowController::OnDown(const cx::model::ChipColor& p_chipColor, size_t p_column)
 {
     IF_PRECONDITION_NOT_MET_DO(p_chipColor != cx::model::MakeTransparent(), return;);
 
@@ -51,32 +51,32 @@ void cx::cmn::ui::MainWindowController::OnDown(const cx::model::ChipColor& p_chi
     m_modelAsGameActions.DropChip(*m_currentChip, p_column);
 }
 
-void cx::cmn::ui::MainWindowController::OnMoveLeftOneColumn()
+void cx::ui::cmn::MainWindowController::OnMoveLeftOneColumn()
 {
     m_modelAsGameActions.MoveLeftOneColumn();
 }
 
-void cx::cmn::ui::MainWindowController::OnMoveRightOneColumn()
+void cx::ui::cmn::MainWindowController::OnMoveRightOneColumn()
 {
     m_modelAsGameActions.MoveRightOneColumn();
 }
 
-void cx::cmn::ui::MainWindowController::OnNewGame()
+void cx::ui::cmn::MainWindowController::OnNewGame()
 {
     m_modelAsGameActions.EndCurrentGame(); 
 }
 
-void cx::cmn::ui::MainWindowController::OnReinitializeCurrentGame()
+void cx::ui::cmn::MainWindowController::OnReinitializeCurrentGame()
 {
     m_modelAsGameActions.ReinitializeCurrentGame();
 }
 
-void cx::cmn::ui::MainWindowController::OnUndo()
+void cx::ui::cmn::MainWindowController::OnUndo()
 {
     m_modelAsUndoRedo.Undo();
 }
 
-void cx::cmn::ui::MainWindowController::OnRedo()
+void cx::ui::cmn::MainWindowController::OnRedo()
 {
     m_modelAsUndoRedo.Redo();
 }

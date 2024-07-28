@@ -26,21 +26,21 @@
 
 #include <gtkmm/grid.h>
 
-#include "ILayout.h"
+#include <cxuicmn/ILayout.h>
 
-namespace cx::cmn::ui
+namespace cx::ui::cmn
 {
     class IWidget;
 }
  
-namespace cx::cmn::ui
+namespace cx::ui::cmn
 {
 
 /**********************************************************************************************//**
- * @brief Gtkmm 3 implementation for the `cx::cmn::ui::ILayout` interface.
+ * @brief Gtkmm 3 implementation for the `cx::ui::cmn::ILayout` interface.
  *
  *************************************************************************************************/
-class Gtkmm3Layout : public ILayout,
+class Gtkmm3Layout : public cx::ui::cmn::ILayout,
                      public Gtk::Grid
 {
 
@@ -49,7 +49,7 @@ public:
     /*******************************************************************************************//**
      * @brief Sets the delegate for widget common facilities.
      *
-     * The delegate is reponsible to carry the implementation for generic `cx::cmn::ui::IWidget` operations.
+     * The delegate is reponsible to carry the implementation for generic `cx::ui::cmn::IWidget` operations.
      * It is meant to avoid implementation duplication.
      *
      * @param p_delegate
@@ -63,7 +63,7 @@ public:
      **********************************************************************************************/
     void SetDelegate(std::unique_ptr<IWidget> p_delegate);
 
-    // cx::cmn::ui::ILayout:
+    // cx::ui::cmn::ILayout:
     void Register(IWidget& p_widget,
                   const ILayout::RowDescriptor& p_row,
                   const ILayout::ColumnDescriptor& p_column,
@@ -79,7 +79,7 @@ public:
     void SetRowSpacingMode(RowSpacingMode p_newMode) override;
     void SetColumnSpacingMode(ColumnSpacingMode p_newMode) override;
 
-    // cx::cmn::ui::IWidget:
+    // cx::ui::cmn::IWidget:
     [[nodiscard]] size_t GetWidth() const override;
     [[nodiscard]] size_t GetHeight() const override;
     void SetEnabled(EnabledState p_enabled) override;
@@ -93,6 +93,6 @@ private:
 
 };
 
-} // namespace cx::cmn::ui
+} // namespace cx::ui::cmn
 
 #endif // GTKMM3CONTAINER_H_AB4FF2E5_DFE6_47C2_8EAC_5FC4FED66A24

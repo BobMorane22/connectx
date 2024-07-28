@@ -25,49 +25,49 @@
 #include <cxmodel/ModelNotificationContext.h>
 #include <cxuicmn/AboutWindowPresenter.h>
 
-cx::cmn::ui::AboutWindowPresenter::AboutWindowPresenter(const cx::model::IVersioning& p_model)
+cx::ui::cmn::AboutWindowPresenter::AboutWindowPresenter(const cx::model::IVersioning& p_model)
  : m_applicationName{p_model.GetName()}
  , m_versionNumber{p_model.GetVersionNumber()}
 {
     // Nothing to do...
 }
 
-std::string cx::cmn::ui::AboutWindowPresenter::GetWindowTitle() const
+std::string cx::ui::cmn::AboutWindowPresenter::GetWindowTitle() const
 {
     return "About";
 }
 
-std::string cx::cmn::ui::AboutWindowPresenter::GetApplicationName() const
+std::string cx::ui::cmn::AboutWindowPresenter::GetApplicationName() const
 {
     return m_applicationName;
 }
 
-std::string cx::cmn::ui::AboutWindowPresenter::GetVersionNumber() const
+std::string cx::ui::cmn::AboutWindowPresenter::GetVersionNumber() const
 {
     return m_versionNumber;
 }
 
-std::string cx::cmn::ui::AboutWindowPresenter::GetApplicationDescription() const
+std::string cx::ui::cmn::AboutWindowPresenter::GetApplicationDescription() const
 {
     return "Connect X is a scalable Four-In-A-Row clone";
 }
 
-std::string cx::cmn::ui::AboutWindowPresenter::GetWebsiteLinkContents() const
+std::string cx::ui::cmn::AboutWindowPresenter::GetWebsiteLinkContents() const
 {
     return "<a href=\"https://github.com/BobMorane22/connectx\">Website</a>";
 }
 
-std::string cx::cmn::ui::AboutWindowPresenter::GetLicenseDescription() const
+std::string cx::ui::cmn::AboutWindowPresenter::GetLicenseDescription() const
 {
     return "License: GNU GPL v3";
 }
 
-std::string cx::cmn::ui::AboutWindowPresenter::GetCopyrightNotice() const
+std::string cx::ui::cmn::AboutWindowPresenter::GetCopyrightNotice() const
 {
     return "Copyright © 2020 - Éric Poirier";
 }
 
-std::string cx::cmn::ui::AboutWindowPresenter::GetCloseText() const
+std::string cx::ui::cmn::AboutWindowPresenter::GetCloseText() const
 {
     return "Close";
 }

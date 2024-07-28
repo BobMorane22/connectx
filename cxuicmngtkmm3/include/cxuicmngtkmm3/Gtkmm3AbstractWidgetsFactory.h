@@ -28,7 +28,7 @@
 
 #include <cxuicmn/IAbstractWidgetsFactory.h>
 
-namespace cx::cmn::ui
+namespace cx::ui::cmn
 {
 
 /**********************************************************************************************//**
@@ -86,6 +86,6 @@ private:
     Glib::RefPtr<Gtk::Application> m_gtkApplication;
 };
 
-} // namespace cx::cmn::ui
+} // namespace cx::ui::cmn
 
 #endif // GTKMM3ABSTRACTWIDGETSFACTORY_H_5986FF4A_306A_4809_8E54_BA7B1D8FDEEA

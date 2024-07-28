@@ -26,7 +26,7 @@
 
 #include <cxmodel/Status.h>
 
-namespace cx::cmn::ui
+namespace cx::ui::cmn
 {
 
 /******************************************************************************************//**
@@ -43,6 +43,6 @@ namespace cx::cmn::ui
  ********************************************************************************************/
 cx::model::Status extractRawUserInput(const std::string& p_raw, unsigned long& p_extracted);
 
-} // namespace cx::cmn::ui
+} // namespace cx::ui::cmn
 
 #endif // EXTRACTRAWUSERINPUT_H_E59E21D1_FC74_469C_9360_9ECC7EE8D51F

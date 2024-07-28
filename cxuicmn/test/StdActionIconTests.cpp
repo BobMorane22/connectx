@@ -28,7 +28,7 @@
 
 TEST(StdNameGet, FunctionCall_ActionIconGiven_ValidNameReturned)
 {
-    using namespace cx::cmn::ui::FreeDesktop;
+    using namespace cx::ui::cmn::FreeDesktop;
 
     ASSERT_TRUE(StdNameGet(StdActionIcon::ADDRESS_BOOK_NEW) == "address-book-new");
     ASSERT_TRUE(StdNameGet(StdActionIcon::APPLICATION_EXIT) == "application-exit");
@@ -131,7 +131,7 @@ TEST(StdNameGet, FunctionCall_ActionIconGiven_ValidNameReturned)
 
 TEST(StdNameGet, FunctionCall_InvalidActionGiven_AssertAndEmptyNameReturned)
 {
-    using namespace cx::cmn::ui::FreeDesktop;
+    using namespace cx::ui::cmn::FreeDesktop;
 
     cx::unit::DisableStdStreamsRAII streamDisabler;
     const auto invalid = static_cast<StdActionIcon>(-1);

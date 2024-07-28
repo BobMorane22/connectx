@@ -38,7 +38,7 @@ namespace cx::model
     enum class PlayerType;
 }
 
-namespace cx::cmn::ui
+namespace cx::ui::cmn
 {
 
 /***********************************************************************************************//**
@@ -48,7 +48,7 @@ namespace cx::cmn::ui
  * they have chosen for their chips.
  *
  **************************************************************************************************/
-class INewPlayersList : public cx::cmn::ui::IWidget
+class INewPlayersList : public cx::ui::cmn::IWidget
 { 
 
 public:
@@ -210,6 +210,6 @@ public:
 
 };
 
-} // namespace cx::cmn::ui
+} // namespace cx::ui::cmn
 
 #endif // INEWPLAYERSLIST_H_683F8110_A4C7_4915_A304_7940FD621B84

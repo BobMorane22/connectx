@@ -7,8 +7,7 @@
  *  (at your option) any later version.
  *
  *  Connect X is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  *  GNU General Public License for more details.
  *
  *  You should have received a copy of the GNU General Public License
@@ -16,62 +15,48 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file Gtkmm3Dialog.h
+ * @file Gtkmm3Label.h
  * @date 2024
  *
  *************************************************************************************************/
 
-#ifndef GTKMM3DIALOG_H_0BE19F00_7BE5_40DA_B880_C87F635AABE8
-#define GTKMM3DIALOG_H_0BE19F00_7BE5_40DA_B880_C87F635AABE8
+#ifndef _H_B84CA49F_51D9_4CCA_944E_42D742A18DDD
+#define _H_B84CA49F_51D9_4CCA_944E_42D742A18DDD
 
-#include <gtkmm/messagedialog.h>
+#include <gtkmm/label.h>
 
-#include <cxmodel/ModelNotificationContext.h>
-#include <cxuicmn/IWindow.h>
+#include <cxuicmn/ILabel.h>
 
-namespace cx::cmn::ui
-{
-    enum class DialogRole;
-}
-
-namespace cx::cmn::ui
+namespace cx::ui::cmn
 {
 
-/**********************************************************************************************//**
- * @brief Gtkmm 3 dialog implementation.
- *
- * Unlike Gtkmm, this implementation shares the `IWindow::Show` method. Typical Gtkmm
- * implementations use the `Gtk::Dialog::run` method (but also inherit from `Gtk::Window::show`)
- * which adds confusion.
- *
- *************************************************************************************************/
-class Gtkmm3Dialog : public IWindow,
-                     public Gtk::MessageDialog
+class Gtkmm3Label : public ILabel,
+                    public Gtk::Label
 {
 
 public:
 
     /*******************************************************************************************//**
-     * @brief Constructor.
+     * @brief Default constructor.
      *
-     * @param p_parent
-     *      The window over which the dialog will appear.
-     * @param p_role
-     *      The dialog's role. In other words, the type of communication the dialog going to
-     *      be used, as far as the user is concerned.
-     * @param p_message
-     *      The message to display to the user. 
-     *
-     * @pre
-     *      The message should not be empty.
+     * Creates a label with no contents.
      *
      **********************************************************************************************/
-    Gtkmm3Dialog(IWindow& p_parent, DialogRole p_role, const std::string& p_message);
+    Gtkmm3Label();
+
+    /*******************************************************************************************//**
+     * @brief Constructor.
+     *
+     * @param p_contents
+     *      The textual contents to appear on the label.
+     *
+     **********************************************************************************************/
+    explicit Gtkmm3Label(const std::string& p_contents);
 
     /*******************************************************************************************//**
      * @brief Sets the delegate for widget common facilities.
      *
-     * The delegate is reponsible to carry the implementation for generic `cx::cmn::ui::IWidget` operations.
+     * The delegate is reponsible to carry the implementation for generic `cx::ui::cmn::IWidget` operations.
      * It is meant to avoid implementation duplication.
      *
      * @param p_delegate
@@ -85,11 +70,11 @@ public:
      **********************************************************************************************/
     void SetDelegate(std::unique_ptr<IWidget> p_delegate);
 
-    // cx::cmn::ui::IWindow:
-    [[nodiscard]] virtual int Show() override;
-    void ShrinkToContents(IWindow::Orientation p_orientation) override;
+    // cx::ui::cmn::Ilabel:
+    void UpdateContents(const std::string& p_newContents) override;
+    [[nodiscard]] std::string GetContents() const override;
 
-    // cx::cmn::ui::IWidget:
+    // cx::ui::cmn::IWidget:
     [[nodiscard]] size_t GetWidth() const override;
     [[nodiscard]] size_t GetHeight() const override;
     void SetEnabled(EnabledState p_enabled) override;
@@ -99,13 +84,10 @@ public:
 
 private:
 
-    // cx::model::IModelObserver:
-    void Update(cx::model::ModelNotificationContext p_context, cx::model::ModelSubject* p_subject) override;
-
     std::unique_ptr<IWidget> m_delegate;
 
 };
 
-} // namespace cx::cmn::ui
+} // namespace cx::ui::cmn
 
-#endif // GTKMM3DIALOG_H_0BE19F00_7BE5_40DA_B880_C87F635AABE8
+#endif // _H_B84CA49F_51D9_4CCA_944E_42D742A18DDD

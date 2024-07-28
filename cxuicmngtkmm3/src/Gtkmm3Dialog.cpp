@@ -16,42 +16,46 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file Gtkmm3Menu.cpp
+ * @file Gtkmm3Dialog.cpp
  * @date 2024
  *
  *************************************************************************************************/
 
-#include <gtkmm/menuitem.h>
+#include <gtkmm/enums.h>
+#include <gtkmm/messagedialog.h>
 
 #include <cxinv/assertion.h>
-#include <cxuicmn/EventPropagation.h>
-#include <cxuicmn/Gtkmm3Menu.h>
-#include <cxuicmn/Gtkmm3MenuItem.h>
-#include <cxuicmn/KeyboardKeyPressedEvent.h>
-#include <cxuicmn/Margins.h>
+#include <cxuicmn/DialogRole.h>
+#include <cxuicmngtkmm3/gtkmmConversions.h>
+#include <cxuicmngtkmm3/Gtkmm3Dialog.h>
 
-cx::cmn::ui::Gtkmm3Menu::Gtkmm3Menu(const std::string& p_title)
+
+cx::ui::cmn::Gtkmm3Dialog::Gtkmm3Dialog(cx::ui::cmn::IWindow& p_parent, DialogRole p_role, const std::string& p_message)
+: Gtk::MessageDialog(dynamic_cast<Gtk::Window&>(p_parent), p_message, true, Gtk::MESSAGE_INFO, Gtk::ButtonsType::BUTTONS_OK, true)
 {
-    PRECONDITION(!p_title.empty());    
+    PRECONDITION(!p_message.empty());
 
-    m_titleMenuItem.set_label(p_title);
-    m_titleMenuItem.set_submenu(*this);
+    const auto messageTypeConversion = cx::ui::cmn::ToGtk<Gtk::MessageType>(p_role);
+    Glib::PropertyProxy<Gtk::MessageType> messageType = property_message_type();
+    messageType.set_value(messageTypeConversion.value_or(Gtk::MESSAGE_OTHER));
 }
 
-void cx::cmn::ui::Gtkmm3Menu::Register(cx::cmn::ui::IMenuItem& p_item)
+int cx::ui::cmn::Gtkmm3Dialog::Show()
 {
-    auto* gtkMenuItem = dynamic_cast<Gtk::MenuItem*>(&p_item);
-    IF_CONDITION_NOT_MET_DO(gtkMenuItem, return;);
-
-    add(*gtkMenuItem);
+    return run();
 }
 
-Gtk::MenuItem& cx::cmn::ui::Gtkmm3Menu::GetTitleMenuItem()
+void cx::ui::cmn::Gtkmm3Dialog::ShrinkToContents(IWindow::Orientation /*p_orientation*/)
 {
-    return m_titleMenuItem;
+    // Nothing to do.
 }
 
-void cx::cmn::ui::Gtkmm3Menu::SetDelegate(std::unique_ptr<IWidget> p_delegate)
+void cx::ui::cmn::Gtkmm3Dialog::Update(cx::model::ModelNotificationContext /*p_context*/, cx::model::ModelSubject* /*p_subject*/)
+{
+    // Nothing to do.
+}
+
+void cx::ui::cmn::Gtkmm3Dialog::SetDelegate(std::unique_ptr<IWidget> p_delegate)
 {
     IF_PRECONDITION_NOT_MET_DO(p_delegate, return;);
 
@@ -60,37 +64,37 @@ void cx::cmn::ui::Gtkmm3Menu::SetDelegate(std::unique_ptr<IWidget> p_delegate)
     POSTCONDITION(m_delegate);
 }
 
-size_t cx::cmn::ui::Gtkmm3Menu::GetWidth() const
+size_t cx::ui::cmn::Gtkmm3Dialog::GetWidth() const 
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return 0u;);
     return m_delegate->GetWidth();
 }
 
-size_t cx::cmn::ui::Gtkmm3Menu::GetHeight() const
+size_t cx::ui::cmn::Gtkmm3Dialog::GetHeight() const 
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return 0u;);
     return m_delegate->GetHeight();
 }
 
-void cx::cmn::ui::Gtkmm3Menu::SetEnabled(cx::cmn::ui::EnabledState p_enabled)
+void cx::ui::cmn::Gtkmm3Dialog::SetEnabled(EnabledState p_enabled) 
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return;);
     m_delegate->SetEnabled(p_enabled);
 }
 
-void cx::cmn::ui::Gtkmm3Menu::SetMargins(const Margins& p_newMarginSizes)
+void cx::ui::cmn::Gtkmm3Dialog::SetMargins(const Margins& p_newMarginSizes) 
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return;);
     m_delegate->SetMargins(p_newMarginSizes);
 }
 
-void cx::cmn::ui::Gtkmm3Menu::SetTooltip(const std::string& p_tooltipContents)
+void cx::ui::cmn::Gtkmm3Dialog::SetTooltip(const std::string& p_tooltipContents)
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return;);
     m_delegate->SetTooltip(p_tooltipContents);
 }
 
-std::unique_ptr<cx::cmn::ui::ISignal<cx::cmn::ui::EventPropagation, cx::cmn::ui::KeyboardKeyPressedEvent>> cx::cmn::ui::Gtkmm3Menu::OnKeyPressed()
+std::unique_ptr<cx::ui::cmn::ISignal<cx::ui::cmn::EventPropagation, cx::ui::cmn::KeyboardKeyPressedEvent>> cx::ui::cmn::Gtkmm3Dialog::OnKeyPressed()
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return nullptr;);
     return m_delegate->OnKeyPressed();

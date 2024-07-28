@@ -26,7 +26,7 @@
 
 #include <string>
 
-namespace cx::cmn::ui::FreeDesktop
+namespace cx::ui::cmn::FreeDesktop
 {
 
 /**********************************************************************************************//**
@@ -347,6 +347,6 @@ enum class StdActionIcon
  *************************************************************************************************/
 [[nodiscard]] std::string StdNameGet(StdActionIcon p_icon);
 
-} // namespace cx::cmn::ui::FreeDesktop
+} // namespace cx::ui::cmn::FreeDesktop
 
 #endif // STDACTIONICON_H_0C3D0B5F_2E98_498A_9B07_15166FE0EC0D

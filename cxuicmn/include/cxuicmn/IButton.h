@@ -27,7 +27,7 @@
 #include <cxuicmn/ISignal.h>
 #include <cxuicmn/IWidget.h>
 
-namespace cx::cmn::ui
+namespace cx::ui::cmn
 {
 
 /**********************************************************************************************//**
@@ -74,6 +74,6 @@ public:
 
 };
 
-} // namespace cx::cmn::ui
+} // namespace cx::ui::cmn
 
 #endif // IBUTTON_H_1C2926A8_3089_41A9_A788_6E72D152DB1D

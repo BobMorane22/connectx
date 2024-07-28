@@ -30,11 +30,11 @@ AboutWindowPresenterTestFixture::AboutWindowPresenterTestFixture()
     m_model = std::make_unique<AboutWindowPresenterModelMock>();
     EXPECT_TRUE(m_model);
 
-    m_presenter = std::make_unique<cx::cmn::ui::AboutWindowPresenter>(*m_model);
+    m_presenter = std::make_unique<cx::ui::cmn::AboutWindowPresenter>(*m_model);
     EXPECT_TRUE(m_presenter);
 }
 
-cx::cmn::ui::IAboutWindowPresenter& AboutWindowPresenterTestFixture::GetPresenter()
+cx::ui::cmn::IAboutWindowPresenter& AboutWindowPresenterTestFixture::GetPresenter()
 {
     EXPECT_TRUE(m_presenter);
     return *m_presenter;

@@ -22,7 +22,7 @@
  *************************************************************************************************/
 
 #include <cxinv/assertion.h>
-#include <cxuicmn/Gtkmm3AbstractWidgetsFactory.h>
+#include <cxuicmngtkmm3/Gtkmm3AbstractWidgetsFactory.h>
 #include <cxuicmn/Gtkmm3AbstractConnectXWidgetsFactory.h>
 #include <cxuicmn/Gtkmm3MainWindow.h>
 #include <cxuicmn/IWindow.h>
@@ -41,11 +41,11 @@ cx::Gtkmm3UIManager::Gtkmm3UIManager(int argc, char *argv[], cx::ModelReferences
         Glib::RefPtr<Gtk::Application> gtkApplication = Gtk::Application::create(argc, argv, "bobmorane.connectx");
         ASSERT(gtkApplication);
 
-        m_abstractWidgetsFactory = std::make_unique<cx::cmn::ui::Gtkmm3AbstractWidgetsFactory>(gtkApplication);
+        m_abstractWidgetsFactory = std::make_unique<cx::ui::cmn::Gtkmm3AbstractWidgetsFactory>(gtkApplication);
         ASSERT(m_abstractWidgetsFactory);
 
         {
-            auto abstractConnectXWidgetsFactory = std::make_unique<cx::cmn::ui::Gtkmm3AbstractConnectXWidgetsFactory>(gtkApplication);
+            auto abstractConnectXWidgetsFactory = std::make_unique<cx::ui::cmn::Gtkmm3AbstractConnectXWidgetsFactory>(gtkApplication);
             ASSERT(abstractConnectXWidgetsFactory);
 
             abstractConnectXWidgetsFactory->RegisterStandardWidgetsFactory(*m_abstractWidgetsFactory);
@@ -54,15 +54,15 @@ cx::Gtkmm3UIManager::Gtkmm3UIManager(int argc, char *argv[], cx::ModelReferences
             ASSERT(m_abstractConnectXWidgetsFactory);
         }
 
-        m_widgetsFactories = std::make_unique<cx::cmn::ui::WidgetsFactories>(*m_abstractWidgetsFactory, *m_abstractConnectXWidgetsFactory);
+        m_widgetsFactories = std::make_unique<cx::ui::cmn::WidgetsFactories>(*m_abstractWidgetsFactory, *m_abstractConnectXWidgetsFactory);
         ASSERT(m_widgetsFactories);
     }
 
     // At this point, the Gtkmm engine is initialized. This means that Gtkmm widgets can safely be
     // instantiated...
 
-    m_controller = std::make_unique<cx::cmn::ui::MainWindowController>(p_model.m_asGameActions, p_model.m_asUndoRedo);
-    m_presenter = std::make_unique<cx::cmn::ui::MainWindowPresenter>(p_model.m_asLimits, p_model.m_asGameInformation, p_model.m_asUndoRedo, p_model.m_asAi);
+    m_controller = std::make_unique<cx::ui::cmn::MainWindowController>(p_model.m_asGameActions, p_model.m_asUndoRedo);
+    m_presenter = std::make_unique<cx::ui::cmn::MainWindowPresenter>(p_model.m_asLimits, p_model.m_asGameInformation, p_model.m_asUndoRedo, p_model.m_asAi);
 
     m_mainWindow = m_abstractConnectXWidgetsFactory->CreateMainWindow(p_model.m_asSubject, *m_controller, *m_presenter);
     ASSERT(m_mainWindow);

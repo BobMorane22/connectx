@@ -27,7 +27,7 @@
 #include "IGameViewController.h"
 #include "INewGameViewController.h"
 
-namespace cx::cmn::ui
+namespace cx::ui::cmn
 {
 
 /*********************************************************************************************//**
@@ -72,6 +72,6 @@ public:
 
 };
 
-} // namespace cx::cmn::ui
+} // namespace cx::ui::cmn
 
 #endif // IMAINWINDOWCONTROLLER_H_B4A715D5_611A_42C2_8C60_16C5C14FD28A

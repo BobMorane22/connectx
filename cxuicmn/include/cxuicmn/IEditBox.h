@@ -27,7 +27,7 @@
 #include <cxuicmn/ISignal.h>
 #include <cxuicmn/IWidget.h>
 
-namespace cx::cmn::ui
+namespace cx::ui::cmn
 {
 
 class IEditBox : public IWidget
@@ -70,6 +70,6 @@ public:
 
 };
 
-} // namespace cx::cmn::ui
+} // namespace cx::ui::cmn
 
 #endif // IEDITBOX_H_D31E12BC_892F_4930_BF5C_41C904B92362
