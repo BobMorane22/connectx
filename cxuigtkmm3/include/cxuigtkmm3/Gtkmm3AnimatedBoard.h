@@ -27,10 +27,10 @@
 #include <gtkmm/drawingarea.h>
 
 #include <cxmath/Dimensions.h>
-#include <cxuicmn/AnimationInformation.h>
+#include <cxui/AnimationInformation.h>
 #include <cxuigtkmm3/Gtkmm3AnimatedBoardTimerRAII.h>
 #include <cxuigtkmm3/Gtkmm3BoardElementCache.h>
-#include <cxuicmn/IAnimatedBoard.h>
+#include <cxui/IAnimatedBoard.h>
 
 namespace cx::ui::cmn
 {

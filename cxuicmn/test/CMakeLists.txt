@@ -19,39 +19,17 @@
 # CMake configuration file for the cxuicmn unit test executable.
 #
 # @file CMakeLists.txt
-# @date 2021
+# @date 2024
 #
 #************************************************************************************************/
 
 set(SOURCE_FILES
-  AboutWindowPresenterTestFixture.cpp
-  AboutWindowPresenterTests.cpp
-  AnimatedBoardModelMock.cpp
-  AnimatedBoardModelTests.cpp
-  AnimatedBoardPresenterMock.cpp
-  AnimatedBoardPresenterTests.cpp
-  AnimationInformationsTests.cpp
-  ConfigurableMainWindowPresenterTestFixture.cpp
   extractRawUserInputTests.cpp
-  FrameAnimationStrategyTests.cpp
-  GameViewPresenterTests.cpp
-  GameResolutionDialogControllerTestFixture.cpp
-  GameResolutionDialogControllerTests.cpp
-  GameResolutionDialogPresenterFactoryTests.cpp
-  IAnimatedBoardModelTests.cpp
   KeyboardShortcutTests.cpp
-  MainWindowControllerTestFixture.cpp
-  MainWindowControllerTests.cpp
-  MainWindowPresenterTestFixture.cpp
-  MainWindowPresenterTests.cpp
-  MenuItemTests.cpp
-  NewGameViewPresenterTests.cpp
   ScalingRatiosTests.cpp
   StatusBarPresenterTests.cpp
   StdActionIconTests.cpp
-  TieGameResolutionDialogPresenterTests.cpp
   widgetUtilitiesTests.cpp
-  WinGameResolutionDialogPresenterTests.cpp
 )
 
 set(LIBRARIES

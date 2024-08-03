@@ -24,25 +24,25 @@
 #include <cxinv/assertion.h>
 #include <cxmodel/IChip.h>
 #include <cxmodel/ModelNotificationContext.h>
-#include <cxuicmn/BoardAnimation.h>
+#include <cxui/BoardAnimation.h>
 #include <cxuicmn/common.h>
 #include <cxuicmn/EventPropagation.h>
-#include <cxuicmn/GameViewKeyHandlerStrategyFactory.h>
+#include <cxui/GameViewKeyHandlerStrategyFactory.h>
 #include <cxuigtkmm3/Gtkmm3GameView.h>
-#include <cxuicmn/IAbstractConnectXWidgetsFactory.h>
+#include <cxui/IAbstractConnectXWidgetsFactory.h>
 #include <cxuicmn/IAbstractWidgetsFactory.h>
-#include <cxuicmn/IAnimatedBoard.h>
-#include <cxuicmn/IAnimatedBoardPresenter.h>
+#include <cxui/IAnimatedBoard.h>
+#include <cxui/IAnimatedBoardPresenter.h>
 #include <cxuicmn/IChip.h>
-#include <cxuicmn/IGameViewController.h>
-#include <cxuicmn/IGameViewPresenter.h>
+#include <cxui/IGameViewController.h>
+#include <cxui/IGameViewPresenter.h>
 #include <cxuicmn/ILabel.h>
 #include <cxuicmn/ILayout.h>
 #include <cxuicmn/IWindow.h>
 #include <cxuicmn/KeyboardKeyPressedEvent.h>
 #include <cxuicmn/Margins.h>
 #include <cxuicmn/NotSupported.h>
-#include <cxuicmn/WidgetsFactories.h>
+#include <cxui/WidgetsFactories.h>
 
 namespace
 {

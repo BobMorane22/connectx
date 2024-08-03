@@ -24,11 +24,11 @@
 #include <cstdlib>
 #include <cxinv/assertion.h>
 #include <cxuicmn/IAbstractWidgetsFactory.h>
-#include <cxuicmn/IAbstractConnectXWidgetsFactory.h>
-#include <cxuicmn/IMainWindowController.h>
-#include <cxuicmn/IMainWindowPresenter.h>
+#include <cxui/IAbstractConnectXWidgetsFactory.h>
+#include <cxui/IMainWindowController.h>
+#include <cxui/IMainWindowPresenter.h>
 #include <cxuicmn/IWindow.h>
-#include <cxuicmn/WidgetsFactories.h>
+#include <cxui/WidgetsFactories.h>
 #include <cxuicmn/WidgetsToolkit.h>
 #include <cxexec/Gtkmm3UIManager.h>
 #include <cxexec/IUIManager.h>

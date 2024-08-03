@@ -24,7 +24,7 @@
 #ifndef GTKMM3GAMERESOLUTIONDIALOG_H_E524D346_789D_4165_ABD3_4B876F7FBBD7
 #define GTKMM3GAMERESOLUTIONDIALOG_H_E524D346_789D_4165_ABD3_4B876F7FBBD7
 
-#include <cxuicmn/WidgetsFactories.h>
+#include <cxui/WidgetsFactories.h>
 #include <cxuicmngtkmm3/Gtkmm3Window.h>
 
 namespace cx::ui::cmn

@@ -24,9 +24,9 @@
 #define GTKMM3GAMEVIEW_H_AA8C282C_9CC4_45F4_BE91_C8840160BA1B
 
 
-#include <cxuicmn/IAnimatedBoard.h> // Can't forward declare because of gui specific subject/observer.  #include <cxuicmn/IView.h>
+#include <cxui/IAnimatedBoard.h> // Can't forward declare because of gui specific subject/observer.  #include <cxui/IView.h>
 #include <cxuicmn/ISignal.h>
-#include <cxuicmn/IView.h>
+#include <cxui/IView.h>
 #include <cxuicmn/KeyboardKeyPressedEvent.h>
 
 namespace cx::ui::cmn

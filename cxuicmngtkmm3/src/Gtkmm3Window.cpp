@@ -27,7 +27,7 @@
 #include <cxuicmn/IAbstractWidgetsFactory.h>
 #include <cxuicmn/ILayout.h>
 #include <cxuicmn/KeyboardKeyPressedEvent.h>
-#include <cxuicmn/WidgetsFactories.h>
+#include <cxui/WidgetsFactories.h>
 #include <cxuicmngtkmm3/Gtkmm3Window.h>
 
 void cx::ui::cmn::Gtkmm3Window::ConfigureWindowIcon()

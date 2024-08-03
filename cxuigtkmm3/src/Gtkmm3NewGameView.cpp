@@ -34,19 +34,19 @@
 #include <cxuicmn/EnabledState.h>
 #include <cxuicmn/extractRawUserInput.h>
 #include <cxuigtkmm3/Gtkmm3NewGameView.h>
-#include <cxuicmn/IAbstractConnectXWidgetsFactory.h>
+#include <cxui/IAbstractConnectXWidgetsFactory.h>
 #include <cxuicmn/IAbstractWidgetsFactory.h>
 #include <cxuicmn/IButton.h>
 #include <cxuicmn/IWindow.h>
 #include <cxuicmn/ILabel.h>
 #include <cxuicmn/ILayout.h>
-#include <cxuicmn/INewGameViewController.h>
-#include <cxuicmn/INewGameViewPresenter.h>
-#include <cxuicmn/INewPlayersList.h>
+#include <cxui/INewGameViewController.h>
+#include <cxui/INewGameViewPresenter.h>
+#include <cxui/INewPlayersList.h>
 #include <cxuicmn/ISpinBox.h>
 #include <cxuicmn/Margins.h>
 #include <cxuicmn/NotSupported.h>
-#include <cxuicmn/WidgetsFactories.h>
+#include <cxui/WidgetsFactories.h>
 #include <cxuicmn/widgetUtilities.h>
 
 namespace

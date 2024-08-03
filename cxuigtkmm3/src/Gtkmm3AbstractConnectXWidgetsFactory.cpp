@@ -22,7 +22,7 @@
  *************************************************************************************************/
 
 #include <cxinv/assertion.h>
-#include <cxuicmn/BoardAnimation.h>
+#include <cxui/BoardAnimation.h>
 #include <cxuigtkmm3/Gtkmm3AboutWindow.h>
 #include <cxuigtkmm3/Gtkmm3AbstractConnectXWidgetsFactory.h>
 #include <cxuigtkmm3/Gtkmm3AnimatedBoard.h>
@@ -34,22 +34,22 @@
 #include <cxuigtkmm3/Gtkmm3NewGameView.h>
 #include <cxuigtkmm3/Gtkmm3NewPlayersList.h>
 #include <cxuicmngtkmm3/Gtkmm3WidgetDelegate.h>
-#include <cxuicmn/IAnimatedBoardModel.h>
-#include <cxuicmn/IAnimatedBoardPresenter.h>
+#include <cxui/IAnimatedBoardModel.h>
+#include <cxui/IAnimatedBoardPresenter.h>
 #include <cxuicmn/IButton.h>
-#include <cxuicmn/IGameResolutionDialogController.h>
-#include <cxuicmn/IGameResolutionDialogPresenter.h>
-#include <cxuicmn/IGameViewController.h>
-#include <cxuicmn/IGameViewPresenter.h>
+#include <cxui/IGameResolutionDialogController.h>
+#include <cxui/IGameResolutionDialogPresenter.h>
+#include <cxui/IGameViewController.h>
+#include <cxui/IGameViewPresenter.h>
 #include <cxuicmn/ILabel.h>
 #include <cxuicmn/ILayout.h>
-#include <cxuicmn/IMainWindowController.h>
-#include <cxuicmn/IMainWindowPresenter.h>
-#include <cxuicmn/INewGameViewController.h>
-#include <cxuicmn/INewGameViewPresenter.h>
-#include <cxuicmn/INewPlayersList.h>
+#include <cxui/IMainWindowController.h>
+#include <cxui/IMainWindowPresenter.h>
+#include <cxui/INewGameViewController.h>
+#include <cxui/INewGameViewPresenter.h>
+#include <cxui/INewPlayersList.h>
 #include <cxuicmn/ISpinBox.h>
-#include <cxuicmn/WidgetsFactories.h>
+#include <cxui/WidgetsFactories.h>
 
 cx::ui::cmn::Gtkmm3AbstractConnectXWidgetsFactory::Gtkmm3AbstractConnectXWidgetsFactory(
     Glib::RefPtr<Gtk::Application> p_gtkApplication)

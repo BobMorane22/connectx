@@ -23,9 +23,9 @@
 
 #include <cxinv/assertion.h>
 #include <cxuicmn/IWindow.h>
-#include <cxuicmn/MainWindowController.h>
-#include <cxuicmn/MainWindowPresenter.h>
-#include <cxuicmn/WidgetsFactories.h>
+#include <cxui/MainWindowController.h>
+#include <cxui/MainWindowPresenter.h>
+#include <cxui/WidgetsFactories.h>
 #include <cxuicmngtkmm3/Gtkmm3AbstractWidgetsFactory.h>
 #include <cxuigtkmm3/Gtkmm3AbstractConnectXWidgetsFactory.h>
 #include <cxuigtkmm3/Gtkmm3MainWindow.h>

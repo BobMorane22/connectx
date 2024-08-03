@@ -19,34 +19,19 @@
 # CMake configuration file for the cxuicmn library.
 #
 # @file CMakeLists.txt
-# @date 2021
+# @date 2024
 #
 #************************************************************************************************/
 
 set(TARGET_NAME cxuicmn)
 
 add_library(${TARGET_NAME}
-  src/AboutWindowPresenter.cpp
-  src/AnimatedBoardModel.cpp
-  src/AnimatedBoardPresenter.cpp
   src/extractRawUserInput.cpp
-  src/FrameAnimationStrategy.cpp
-  src/GameResolutionDialogController.cpp
-  src/GameResolutionDialogPresenterFactory.cpp
-  src/GameViewKeyHandlerStrategyFactory.cpp
-  src/IAnimatedBoardModel.cpp
-  src/INewGameViewPresenter.cpp
   src/KeyboardShortcut.cpp
-  src/MainWindowController.cpp
-  src/MainWindowPresenter.cpp
-  src/MenuItem.cpp
   src/pathHelpers.cpp
   src/StatusBarPresenter.cpp
   src/StdActionIcon.cpp
-  src/TieGameResolutionDialogPresenter.cpp
-  src/WidgetsFactories.cpp
   src/widgetUtilities.cpp
-  src/WinGameResolutionDialogPresenter.cpp
 )
 
 target_include_directories(${TARGET_NAME}
@@ -59,7 +44,6 @@ target_link_libraries(${TARGET_NAME}
   PRIVATE cxinv
   PRIVATE cxmath
   PRIVATE cxmodel
-  PRIVATE cxuicmngtkmm3
   PRIVATE ${GTKMM_LIBRARIES}
 )
 

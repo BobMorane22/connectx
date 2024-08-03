@@ -30,18 +30,18 @@
 #include <cxuicmn/EnabledState.h>
 #include <cxuicmn/EventPropagation.h>
 #include <cxuigtkmm3/Gtkmm3NewPlayersList.h>
-#include <cxuicmn/IAbstractConnectXWidgetsFactory.h>
+#include <cxui/IAbstractConnectXWidgetsFactory.h>
 #include <cxuicmn/IAbstractWidgetsFactory.h>
 #include <cxuicmn/IColorPicker.h>
 #include <cxuicmn/IOnOffSwitch.h>
 #include <cxuicmn/IEditBox.h>
 #include <cxuicmn/ILabel.h>
 #include <cxuicmn/ILayout.h>
-#include <cxuicmn/INewGameViewPresenter.h>
+#include <cxui/INewGameViewPresenter.h>
 #include <cxuicmn/KeyboardKeyPressedEvent.h>
 #include <cxuicmn/Margins.h>
 #include <cxuicmn/OnOffState.h>
-#include <cxuicmn/WidgetsFactories.h>
+#include <cxui/WidgetsFactories.h>
 
 namespace
 {

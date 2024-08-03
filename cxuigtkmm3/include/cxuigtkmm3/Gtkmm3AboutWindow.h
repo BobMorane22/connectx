@@ -24,7 +24,7 @@
 #ifndef GTKMM3ABOUTWINDOW_H_396864CD_88A3_43F2_B08B_3F9FEBE89DE1
 #define GTKMM3ABOUTWINDOW_H_396864CD_88A3_43F2_B08B_3F9FEBE89DE1
 
-#include <cxuicmn/IAboutWindowPresenter.h>
+#include <cxui/IAboutWindowPresenter.h>
 
 #include <cxuicmngtkmm3/Gtkmm3Window.h>
 

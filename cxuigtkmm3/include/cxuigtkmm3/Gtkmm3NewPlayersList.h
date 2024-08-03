@@ -25,7 +25,7 @@
 
 #include <gtkmm/grid.h>
 
-#include <cxuicmn/INewPlayersList.h>
+#include <cxui/INewPlayersList.h>
 
 namespace cx::model
 {

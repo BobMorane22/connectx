@@ -23,15 +23,15 @@
 
 #include <cxuicmn/common.h>
 #include <cxuigtkmm3/Gtkmm3GameResolutionDialog.h>
-#include <cxuicmn/IAbstractConnectXWidgetsFactory.h>
+#include <cxui/IAbstractConnectXWidgetsFactory.h>
 #include <cxuicmn/IAbstractWidgetsFactory.h>
 #include <cxuicmn/IButton.h>
-#include <cxuicmn/IGameResolutionDialogController.h>
-#include <cxuicmn/IGameResolutionDialogPresenter.h>
+#include <cxui/IGameResolutionDialogController.h>
+#include <cxui/IGameResolutionDialogPresenter.h>
 #include <cxuicmn/ILabel.h>
 #include <cxuicmn/ILayout.h>
 #include <cxuicmn/Margins.h>
-#include <cxuicmn/WidgetsFactories.h>
+#include <cxui/WidgetsFactories.h>
 
 cx::ui::cmn::Gtkmm3GameResolutionDialog::Gtkmm3GameResolutionDialog(
     cx::ui::cmn::WidgetsFactories& p_widgetsFactories,

@@ -29,14 +29,14 @@
 #include <cxcmn/helpers.h>
 #include <cxmath/math.h>
 #include <cxmodel/Disc.h>
-#include <cxuicmn/AnimatedBoardModel.h>
-#include <cxuicmn/AnimatedBoardPresenter.h>
+#include <cxui/AnimatedBoardModel.h>
+#include <cxui/AnimatedBoardPresenter.h>
 #include <cxuicmn/common.h>
 #include <cxuicmn/EventPropagation.h>
-#include <cxuicmn/FrameAnimationStrategy.h>
+#include <cxui/FrameAnimationStrategy.h>
 #include <cxuigtkmm3/Gtkmm3AnimatedBoard.h>
 #include <cxuigtkmm3/Gtkmm3ContextRestoreRAII.h>
-#include <cxuicmn/IGameViewPresenter.h>
+#include <cxui/IGameViewPresenter.h>
 #include <cxuicmn/KeyboardKeyPressedEvent.h>
 #include <cxuicmn/pathHelpers.h>
 

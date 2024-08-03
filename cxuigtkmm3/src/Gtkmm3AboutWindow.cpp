@@ -22,14 +22,14 @@
  *************************************************************************************************/
 
 #include <cxuigtkmm3/Gtkmm3AboutWindow.h>
-#include <cxuicmn/IAboutWindowPresenter.h>
-#include <cxuicmn/IAbstractConnectXWidgetsFactory.h>
+#include <cxui/IAboutWindowPresenter.h>
+#include <cxui/IAbstractConnectXWidgetsFactory.h>
 #include <cxuicmn/IAbstractWidgetsFactory.h>
 #include <cxuicmn/IButton.h>
 #include <cxuicmn/ILabel.h>
 #include <cxuicmn/ILayout.h>
 #include <cxuicmn/Margins.h>
-#include <cxuicmn/WidgetsFactories.h>
+#include <cxui/WidgetsFactories.h>
 
 cx::ui::cmn::Gtkmm3AboutWindow::Gtkmm3AboutWindow(
     cx::ui::cmn::WidgetsFactories& p_widgetsFactories,

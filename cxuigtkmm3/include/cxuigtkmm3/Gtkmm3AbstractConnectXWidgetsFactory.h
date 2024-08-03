@@ -26,7 +26,7 @@
 
 #include <gtkmm/application.h>
 
-#include <cxuicmn/IAbstractConnectXWidgetsFactory.h>
+#include <cxui/IAbstractConnectXWidgetsFactory.h>
 
 namespace cx::ui::cmn
 {

@@ -27,7 +27,7 @@
 
 #include <cxmodel/common.h>
 #include <cxmodel/Status.h>
-#include <cxuicmn/IView.h>
+#include <cxui/IView.h>
 
 namespace cx::model
 {
