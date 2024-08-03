@@ -23,7 +23,7 @@
 
 #include <cxinv/assertion.h>
 
-#include <cxuicmn/Gtkmm3AnimatedBoardTimerRAII.h>
+#include <cxuigtkmm3/Gtkmm3AnimatedBoardTimerRAII.h>
 
 cx::ui::cmn::Gtkmm3AnimatedBoardTimerRAII::Gtkmm3AnimatedBoardTimer::Gtkmm3AnimatedBoardTimer()
 : m_period{Period{1000.0}}

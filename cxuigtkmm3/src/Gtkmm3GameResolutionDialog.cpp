@@ -22,7 +22,7 @@
  *************************************************************************************************/
 
 #include <cxuicmn/common.h>
-#include <cxuicmn/Gtkmm3GameResolutionDialog.h>
+#include <cxuigtkmm3/Gtkmm3GameResolutionDialog.h>
 #include <cxuicmn/IAbstractConnectXWidgetsFactory.h>
 #include <cxuicmn/IAbstractWidgetsFactory.h>
 #include <cxuicmn/IButton.h>

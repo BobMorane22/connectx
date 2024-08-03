@@ -26,8 +26,8 @@
 
 #include <gtkmm/statusbar.h>
 
-#include "IStatusBar.h"
-#include "IStatusBarPresenter.h"
+#include <cxuicmn/IStatusBar.h>
+#include <cxuicmn/IStatusBarPresenter.h>
 
 namespace cx::ui::cmn
 {

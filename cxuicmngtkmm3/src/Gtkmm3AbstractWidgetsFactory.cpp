@@ -34,7 +34,7 @@
 #include <cxuicmngtkmm3/Gtkmm3MenuItem.h>
 #include <cxuicmngtkmm3/Gtkmm3OnOffSwitch.h>
 #include <cxuicmngtkmm3/Gtkmm3SpinBox.h>
-#include <cxuicmn/Gtkmm3StatusBar.h>
+#include <cxuicmngtkmm3/Gtkmm3StatusBar.h>
 #include <cxuicmngtkmm3/Gtkmm3WidgetDelegate.h>
 #include <cxuicmn/IStatusBarPresenter.h>
 

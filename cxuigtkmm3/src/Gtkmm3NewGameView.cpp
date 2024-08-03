@@ -33,7 +33,7 @@
 #include <cxuicmn/DialogRole.h>
 #include <cxuicmn/EnabledState.h>
 #include <cxuicmn/extractRawUserInput.h>
-#include <cxuicmn/Gtkmm3NewGameView.h>
+#include <cxuigtkmm3/Gtkmm3NewGameView.h>
 #include <cxuicmn/IAbstractConnectXWidgetsFactory.h>
 #include <cxuicmn/IAbstractWidgetsFactory.h>
 #include <cxuicmn/IButton.h>

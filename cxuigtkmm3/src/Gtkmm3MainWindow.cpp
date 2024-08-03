@@ -33,7 +33,7 @@
 #include <cxuicmn/EnabledState.h>
 #include <cxuicmn/GameResolutionDialogController.h>
 #include <cxuicmn/GameResolutionDialogPresenterFactory.h>
-#include <cxuicmn/Gtkmm3MainWindow.h>
+#include <cxuigtkmm3/Gtkmm3MainWindow.h>
 #include <cxuicmn/IAbstractWidgetsFactory.h>
 #include <cxuicmn/IAbstractConnectXWidgetsFactory.h>
 #include <cxuicmn/IAnimatedBoardPresenter.h>

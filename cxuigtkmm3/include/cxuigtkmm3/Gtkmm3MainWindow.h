@@ -26,7 +26,8 @@
 
 #include <memory>
 
-#include <cxuicmn/Gtkmm3Window.h>
+#include <cxmodel/common.h>
+#include <cxuicmngtkmm3/Gtkmm3Window.h>
 
 namespace cx::ui::cmn
 {

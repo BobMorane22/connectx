@@ -34,8 +34,8 @@
 #include <cxuicmn/common.h>
 #include <cxuicmn/EventPropagation.h>
 #include <cxuicmn/FrameAnimationStrategy.h>
-#include <cxuicmn/Gtkmm3AnimatedBoard.h>
-#include <cxuicmn/Gtkmm3ContextRestoreRAII.h>
+#include <cxuigtkmm3/Gtkmm3AnimatedBoard.h>
+#include <cxuigtkmm3/Gtkmm3ContextRestoreRAII.h>
 #include <cxuicmn/IGameViewPresenter.h>
 #include <cxuicmn/KeyboardKeyPressedEvent.h>
 #include <cxuicmn/pathHelpers.h>

@@ -23,7 +23,7 @@
 
 #include <cxinv/assertion.h>
 #include <cxuicmn/EventPropagation.h>
-#include <cxuicmn/Gtkmm3StatusBar.h>
+#include <cxuicmngtkmm3/Gtkmm3StatusBar.h>
 #include <cxuicmn/KeyboardKeyPressedEvent.h>
 #include <cxuicmn/Margins.h>
 

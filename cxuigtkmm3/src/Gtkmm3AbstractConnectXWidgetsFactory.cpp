@@ -23,16 +23,16 @@
 
 #include <cxinv/assertion.h>
 #include <cxuicmn/BoardAnimation.h>
-#include <cxuicmn/Gtkmm3AboutWindow.h>
-#include <cxuicmn/Gtkmm3AbstractConnectXWidgetsFactory.h>
-#include <cxuicmn/Gtkmm3AnimatedBoard.h>
-#include <cxuicmn/Gtkmm3ColorPicker.h>
-#include <cxuicmn/Gtkmm3DiscChip.h>
-#include <cxuicmn/Gtkmm3GameResolutionDialog.h>
-#include <cxuicmn/Gtkmm3GameView.h>
-#include <cxuicmn/Gtkmm3MainWindow.h>
-#include <cxuicmn/Gtkmm3NewGameView.h>
-#include <cxuicmn/Gtkmm3NewPlayersList.h>
+#include <cxuigtkmm3/Gtkmm3AboutWindow.h>
+#include <cxuigtkmm3/Gtkmm3AbstractConnectXWidgetsFactory.h>
+#include <cxuigtkmm3/Gtkmm3AnimatedBoard.h>
+#include <cxuigtkmm3/Gtkmm3ColorPicker.h>
+#include <cxuigtkmm3/Gtkmm3DiscChip.h>
+#include <cxuigtkmm3/Gtkmm3GameResolutionDialog.h>
+#include <cxuigtkmm3/Gtkmm3GameView.h>
+#include <cxuigtkmm3/Gtkmm3MainWindow.h>
+#include <cxuigtkmm3/Gtkmm3NewGameView.h>
+#include <cxuigtkmm3/Gtkmm3NewPlayersList.h>
 #include <cxuicmngtkmm3/Gtkmm3WidgetDelegate.h>
 #include <cxuicmn/IAnimatedBoardModel.h>
 #include <cxuicmn/IAnimatedBoardPresenter.h>

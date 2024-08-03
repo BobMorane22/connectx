@@ -28,8 +28,8 @@
 
 #include <cxmath/Dimensions.h>
 #include <cxuicmn/AnimationInformation.h>
-#include <cxuicmn/Gtkmm3AnimatedBoardTimerRAII.h>
-#include <cxuicmn/Gtkmm3BoardElementCache.h>
+#include <cxuigtkmm3/Gtkmm3AnimatedBoardTimerRAII.h>
+#include <cxuigtkmm3/Gtkmm3BoardElementCache.h>
 #include <cxuicmn/IAnimatedBoard.h>
 
 namespace cx::ui::cmn

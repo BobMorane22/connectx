@@ -21,7 +21,7 @@
  *
  *************************************************************************************************/
 
-#include <cxuicmn/Gtkmm3AboutWindow.h>
+#include <cxuigtkmm3/Gtkmm3AboutWindow.h>
 #include <cxuicmn/IAboutWindowPresenter.h>
 #include <cxuicmn/IAbstractConnectXWidgetsFactory.h>
 #include <cxuicmn/IAbstractWidgetsFactory.h>

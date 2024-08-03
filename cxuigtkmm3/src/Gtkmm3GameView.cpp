@@ -28,7 +28,7 @@
 #include <cxuicmn/common.h>
 #include <cxuicmn/EventPropagation.h>
 #include <cxuicmn/GameViewKeyHandlerStrategyFactory.h>
-#include <cxuicmn/Gtkmm3GameView.h>
+#include <cxuigtkmm3/Gtkmm3GameView.h>
 #include <cxuicmn/IAbstractConnectXWidgetsFactory.h>
 #include <cxuicmn/IAbstractWidgetsFactory.h>
 #include <cxuicmn/IAnimatedBoard.h>

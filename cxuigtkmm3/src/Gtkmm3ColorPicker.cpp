@@ -23,7 +23,7 @@
 
 #include <cxinv/assertion.h>
 #include <cxuicmn/EventPropagation.h>
-#include <cxuicmn/Gtkmm3ColorPicker.h>
+#include <cxuigtkmm3/Gtkmm3ColorPicker.h>
 #include <cxuicmngtkmm3/Gtkmm3Connection.h>
 #include <cxuicmn/KeyboardKeyPressedEvent.h>
 #include <cxuicmn/Margins.h>

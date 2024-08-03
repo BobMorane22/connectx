@@ -29,7 +29,7 @@
 #include <cxuicmn/common.h>
 #include <cxuicmn/EnabledState.h>
 #include <cxuicmn/EventPropagation.h>
-#include <cxuicmn/Gtkmm3NewPlayersList.h>
+#include <cxuigtkmm3/Gtkmm3NewPlayersList.h>
 #include <cxuicmn/IAbstractConnectXWidgetsFactory.h>
 #include <cxuicmn/IAbstractWidgetsFactory.h>
 #include <cxuicmn/IColorPicker.h>

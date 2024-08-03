@@ -16,25 +16,30 @@
 #
 #************************************************************************************************/
 #*************************************************************************************************
-# CMake configuration file for the cxexec library.
+# CMake configuration file for the cxuigtkmm3 library.
 #
 # @file CMakeLists.txt
-# @date 2021
+# @date 2024
 #
 #************************************************************************************************/
-set(TARGET_NAME cxexec)
+
+set(TARGET_NAME cxuigtkmm3)
 
 add_library(${TARGET_NAME}
-  src/Application.cpp
-  src/CmdArgHelpStrategy.cpp
-  src/CmdArgInvalidStrategy.cpp
-  src/CmdArgMainStrategy.cpp
-  src/CmdArgNoStrategy.cpp
-  src/CmdArgVerboseStrategy.cpp
-  src/CmdArgVersionStrategy.cpp
-  src/CmdArgWorkflowFactory.cpp
-  src/Gtkmm3UIManager.cpp
-  src/UIManagerFactory.cpp
+  src/Gtkmm3AboutWindow.cpp
+  src/Gtkmm3AbstractConnectXWidgetsFactory.cpp
+  src/Gtkmm3AnimatedBoard.cpp
+  src/Gtkmm3AnimatedBoardTimerRAII.cpp
+  src/Gtkmm3BoardElementCache.cpp
+  src/Gtkmm3Chip.cpp
+  src/Gtkmm3ColorPicker.cpp
+  src/Gtkmm3ContextRestoreRAII.cpp
+  src/Gtkmm3DiscChip.cpp
+  src/Gtkmm3GameResolutionDialog.cpp
+  src/Gtkmm3GameView.cpp
+  src/Gtkmm3MainWindow.cpp
+  src/Gtkmm3NewGameView.cpp
+  src/Gtkmm3NewPlayersList.cpp
 )
 
 target_include_directories(${TARGET_NAME}
@@ -46,13 +51,8 @@ target_link_libraries(${TARGET_NAME}
   PRIVATE cxcmn
   PRIVATE cxinv
   PRIVATE cxmath
-  PRIVATE cxlog
   PRIVATE cxmodel
   PRIVATE cxuicmn
   PRIVATE cxuicmngtkmm3
-  PRIVATE cxuigtkmm3
   PRIVATE ${GTKMM_LIBRARIES}
 )
-
-# Unit tests:
-add_subdirectory(test)

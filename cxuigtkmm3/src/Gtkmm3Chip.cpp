@@ -23,7 +23,7 @@
 
 #include <cxinv/assertion.h>
 #include <cxuicmn/EventPropagation.h>
-#include <cxuicmn/Gtkmm3Chip.h>
+#include <cxuigtkmm3/Gtkmm3Chip.h>
 #include <cxuicmn/KeyboardKeyPressedEvent.h>
 
 cx::ui::cmn::Gtkmm3Chip::Gtkmm3Chip(const cx::model::ChipColor& p_fillColor,

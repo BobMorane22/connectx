@@ -26,7 +26,7 @@
 #include <gdkmm/pixbuf.h>
 
 #include <cxinv/assertion.h>
-#include <cxuicmn/Gtkmm3BoardElementCache.h>
+#include <cxuigtkmm3/Gtkmm3BoardElementCache.h>
 
 void cx::ui::cmn::Gtkmm3BoardElementCache::Add(const cx::model::ChipColor& p_color, const Cairo::RefPtr<Cairo::Surface>& p_surface)
 {

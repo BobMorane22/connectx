@@ -16,50 +16,17 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file Gtkmm3DiscChip.h
- * @date 2020
+ * @file cxuigtkmm3.dox
+ * @date 2024
  *
  *************************************************************************************************/
-
-#ifndef GTKMM3DISCCHIP_H_62BF81A1_A9D1_400E_83C5_2B8FE8CF5B34
-#define GTKMM3DISCCHIP_H_62BF81A1_A9D1_400E_83C5_2B8FE8CF5B34
-
-#include <cxuicmn/Gtkmm3Chip.h>
-
-namespace cx::ui::cmn
-{
 
 /**********************************************************************************************//**
- * @brief Gtkmm3 implementation of a chip which has a disc shape.
+ * @namespace cx::ui::gtkmm3
+ *
+ * @brief Connect X specific widget implementations using Gtkmm 3.
+ *
+ * The `cx::ui::gtkmm3` namespace contains all Connect X specific widgets, as well as facilities
+ * to work with them.
  *
  *************************************************************************************************/
-class Gtkmm3DiscChip : public Gtkmm3Chip
-{
-
-public:
-
-    /******************************************************************************************//**
-     * @brief Constructor.
-     *
-     * @param p_fillColor
-     *      The color filling the center of the disc (inside its border).
-     * @param p_backgroundColor
-     *      The color around the disc (outside its border).
-     * @param p_dimension
-     *      The disc dimension (both width and height, in pixels).
-     *
-     ********************************************************************************************/
-    Gtkmm3DiscChip(const cx::model::ChipColor& p_fillColor,
-                   const cx::model::ChipColor& p_backgroundColor,
-                   int p_dimension);
-
-private:
-
-    // cx::ui::cmn::Gtkmm3Chip:
-    void DrawBorder(const Cairo::RefPtr<Cairo::Context>& p_context) const override final;
-
-};
-
-} // namespace cx::ui::cmn
-
-#endif // GTKMM3DISCCHIP_H_62BF81A1_A9D1_400E_83C5_2B8FE8CF5B34

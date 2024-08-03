@@ -24,11 +24,11 @@
 #include <glibmm/fileutils.h>
 
 #include <cxuicmn/EventPropagation.h>
-#include <cxuicmn/Gtkmm3Window.h>
 #include <cxuicmn/IAbstractWidgetsFactory.h>
 #include <cxuicmn/ILayout.h>
 #include <cxuicmn/KeyboardKeyPressedEvent.h>
 #include <cxuicmn/WidgetsFactories.h>
+#include <cxuicmngtkmm3/Gtkmm3Window.h>
 
 void cx::ui::cmn::Gtkmm3Window::ConfigureWindowIcon()
 {

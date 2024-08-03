@@ -87,6 +87,7 @@ add_subdirectory(cxmath)
 add_subdirectory(cxmodel)
 add_subdirectory(cxuicmn)
 add_subdirectory(cxuicmngtkmm3)
+add_subdirectory(cxuigtkmm3)
 add_subdirectory(cxexec)
 
 # Main Connect X executable:

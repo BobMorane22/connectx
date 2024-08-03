@@ -34,21 +34,6 @@ add_library(${TARGET_NAME}
   src/GameResolutionDialogController.cpp
   src/GameResolutionDialogPresenterFactory.cpp
   src/GameViewKeyHandlerStrategyFactory.cpp
-  src/Gtkmm3AboutWindow.cpp
-  src/Gtkmm3AbstractConnectXWidgetsFactory.cpp
-  src/Gtkmm3AnimatedBoard.cpp
-  src/Gtkmm3AnimatedBoardTimerRAII.cpp
-  src/Gtkmm3BoardElementCache.cpp
-  src/Gtkmm3Chip.cpp
-  src/Gtkmm3ColorPicker.cpp
-  src/Gtkmm3ContextRestoreRAII.cpp
-  src/Gtkmm3DiscChip.cpp
-  src/Gtkmm3GameResolutionDialog.cpp
-  src/Gtkmm3GameView.cpp
-  src/Gtkmm3MainWindow.cpp
-  src/Gtkmm3NewGameView.cpp
-  src/Gtkmm3NewPlayersList.cpp
-  src/Gtkmm3StatusBar.cpp
   src/IAnimatedBoardModel.cpp
   src/INewGameViewPresenter.cpp
   src/KeyboardShortcut.cpp

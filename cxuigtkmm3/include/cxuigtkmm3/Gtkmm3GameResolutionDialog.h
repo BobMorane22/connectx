@@ -16,20 +16,22 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file Gtkmm3AboutWindow.h
+ * @file Gtkmm3GameResolutionDialog.h
  * @date 2020
  *
  *************************************************************************************************/
 
-#ifndef GTKMM3ABOUTWINDOW_H_396864CD_88A3_43F2_B08B_3F9FEBE89DE1
-#define GTKMM3ABOUTWINDOW_H_396864CD_88A3_43F2_B08B_3F9FEBE89DE1
+#ifndef GTKMM3GAMERESOLUTIONDIALOG_H_E524D346_789D_4165_ABD3_4B876F7FBBD7
+#define GTKMM3GAMERESOLUTIONDIALOG_H_E524D346_789D_4165_ABD3_4B876F7FBBD7
 
-#include "IAboutWindowPresenter.h"
-#include "Gtkmm3Window.h"
+#include <cxuicmn/WidgetsFactories.h>
+#include <cxuicmngtkmm3/Gtkmm3Window.h>
 
 namespace cx::ui::cmn
 {
     class IButton;
+    class IGameResolutionDialogController;
+    class IGameResolutionDialogPresenter;
     class ILabel;
     class WidgetsFactories;
 }
@@ -37,11 +39,16 @@ namespace cx::ui::cmn
 namespace cx::ui::cmn
 {
 
-/**********************************************************************************************//**
- * @brief Gtkmm3 About window.
+/*********************************************************************************************//**
+ * @brief Window shown when a game is resolved (win, tie, etc).
  *
- *************************************************************************************************/
-class Gtkmm3AboutWindow : public Gtkmm3Window
+ * When a game is resolved (won, tied, etc), this window is popped for the user to read some
+ * resolution message a pick a next action.
+ *
+ * @note This window is modal.
+ *
+ ************************************************************************************************/
+class Gtkmm3GameResolutionDialog : public Gtkmm3Window
 {
 
 public:
@@ -49,24 +56,24 @@ public:
     /******************************************************************************************//**
      * @brief Constructor.
      *
-     * @param p_widgetsFactories
-     *      The factories to create widget instances.
-     * @param p_presenter
-     *      An about window presenter implemetation.
-     *
      * @pre
-     *      The specified presenter is valid.
-     * @post
-     *      The stored presenter is valid.
+     *     The presenter is valid.
      *
-     *********************************************************************************************/
-     Gtkmm3AboutWindow(
-        WidgetsFactories& p_widgetsFactories,
-        std::unique_ptr<IAboutWindowPresenter> p_presenter);
+     * @param p_widgetsFactories
+     *     The necessary factories to instanciate widgets.
+     * @param p_presenter
+     *     The window presenter.
+     * @param p_controller
+     *     The window presenter.
+     *
+     ********************************************************************************************/
+    Gtkmm3GameResolutionDialog(
+       WidgetsFactories& p_widgetsFactories,
+       std::unique_ptr<IGameResolutionDialogPresenter> p_presenter,
+       std::unique_ptr<IGameResolutionDialogController> p_controller);
 
 private:
 
-    // cx::model::IModelObserver:
     void Update(cx::model::ModelNotificationContext p_context, cx::model::ModelSubject* p_subject) final;
 
     void InitializeWidgets() final;
@@ -77,20 +84,16 @@ private:
     void ConfigureWidgets() final;
     void ConfigureSignalHandlers() final;
 
-    std::unique_ptr<IAboutWindowPresenter> m_presenter;
+    const std::unique_ptr<IGameResolutionDialogPresenter> m_presenter;
+    const std::unique_ptr<IGameResolutionDialogController> m_controller;
 
-    WidgetsFactories& m_widgetsFactories;
-    std::unique_ptr<ILabel> m_name;
-    std::unique_ptr<ILabel> m_version;
-    std::unique_ptr<ILabel> m_description;
-    std::unique_ptr<ILabel> m_website;
-    std::unique_ptr<ILabel> m_license;
-    std::unique_ptr<ILabel> m_copyright;
-
-    std::unique_ptr<IButton> m_close;
+    cx::ui::cmn::WidgetsFactories& m_widgetsFactories;
+    std::unique_ptr<ILabel> m_title;
+    std::unique_ptr<ILabel> m_message;
+    std::unique_ptr<IButton> m_startNewGame;
 
 };
 
 } // namespace cx::ui::cmn
 
-#endif // GTKMM3ABOUTWINDOW_H_396864CD_88A3_43F2_B08B_3F9FEBE89DE1
+#endif // GTKMM3GAMERESOLUTIONDIALOG_H_E524D346_789D_4165_ABD3_4B876F7FBBD7

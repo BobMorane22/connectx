@@ -22,13 +22,13 @@
  *************************************************************************************************/
 
 #include <cxinv/assertion.h>
-#include <cxuicmngtkmm3/Gtkmm3AbstractWidgetsFactory.h>
-#include <cxuicmn/Gtkmm3AbstractConnectXWidgetsFactory.h>
-#include <cxuicmn/Gtkmm3MainWindow.h>
 #include <cxuicmn/IWindow.h>
 #include <cxuicmn/MainWindowController.h>
 #include <cxuicmn/MainWindowPresenter.h>
 #include <cxuicmn/WidgetsFactories.h>
+#include <cxuicmngtkmm3/Gtkmm3AbstractWidgetsFactory.h>
+#include <cxuigtkmm3/Gtkmm3AbstractConnectXWidgetsFactory.h>
+#include <cxuigtkmm3/Gtkmm3MainWindow.h>
 #include <cxexec/Gtkmm3UIManager.h>
 #include <cxexec/ModelReferences.h>
 

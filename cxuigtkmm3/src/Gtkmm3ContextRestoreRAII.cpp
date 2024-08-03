@@ -16,37 +16,26 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file Gtkmm3DiscChip.cpp
- * @date 2020
+ * @file Gtkmm3ContextRestoreRAII.cpp
+ * @date 2021
  *
  *************************************************************************************************/
 
-#include <cxuicmn/Gtkmm3DiscChip.h>
+#include <cairomm/context.h>
 
-cx::ui::cmn::Gtkmm3DiscChip::Gtkmm3DiscChip(const cx::model::ChipColor& p_fillColor,
-                                      const cx::model::ChipColor& p_backgroundColor,
-                                      int p_dimension)
-: Gtkmm3Chip{p_fillColor,
-             p_backgroundColor,
-             p_dimension,
-             p_dimension}
+#include <cxinv/assertion.h>
+#include <cxuigtkmm3/Gtkmm3ContextRestoreRAII.h>
+
+cx::ui::cmn::Gtkmm3ContextRestoreRAII::Gtkmm3ContextRestoreRAII(const Cairo::RefPtr<Cairo::Context>& p_context)
+: m_context{p_context}
 {
+    ASSERT_MSG(bool(m_context), "Invalid context.");
+    m_context->save();
 }
 
-void cx::ui::cmn::Gtkmm3DiscChip::DrawBorder(const Cairo::RefPtr<Cairo::Context>& p_context) const
+cx::ui::cmn::Gtkmm3ContextRestoreRAII::~Gtkmm3ContextRestoreRAII()
 {
-    const Gtk::Allocation allocation{get_allocation()};
-
-    const int width{allocation.get_width()};
-    const int height{allocation.get_height()};
-    const int smallestDimension{std::min(width, height)};
-
-    const int xCenter{width / 2};
-    const int yCenter{height / 2};
-
-    p_context->arc(xCenter,
-                   yCenter,
-                   smallestDimension / 2.5,
-                   0.0,
-                   2.0 * M_PI); // Not standard C...
+    ASSERT_MSG(bool(m_context), "Invalid context.");
+    m_context->restore();
 }
+
