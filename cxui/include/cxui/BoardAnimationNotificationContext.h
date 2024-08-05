@@ -27,7 +27,7 @@
 #include <cxmodel/IObserver.h>
 #include <cxmodel/Subject.h>
 
-namespace cx::ui::cmn
+namespace cx::ui
 {
 
 /**********************************************************************************************//**
@@ -90,14 +90,14 @@ enum class BoardAnimationNotificationContext
  * @brief Board animation notifications observer.
  *
  *************************************************************************************************/
-using IBoardAnimationObserver = cx::model::IObserver<cx::ui::cmn::BoardAnimationNotificationContext>;
+using IBoardAnimationObserver = cx::model::IObserver<cx::ui::BoardAnimationNotificationContext>;
 
 /**********************************************************************************************//**
  * @brief Board animation notifications subject.
  *
  *************************************************************************************************/
-using BoardAnimationSubject = cx::model::Subject<cx::ui::cmn::BoardAnimationNotificationContext>;
+using BoardAnimationSubject = cx::model::Subject<cx::ui::BoardAnimationNotificationContext>;
 
-} // namespace cx::ui::cmn
+} // namespace cx::ui
 
 #endif // BOARDANIMATIONNOTIFICATIONCONTEXT_H_6D195C5E_A7B3_4F4F_9BCA_8E42F897BCA4

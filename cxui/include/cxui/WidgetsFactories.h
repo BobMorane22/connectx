@@ -26,13 +26,15 @@
 
 namespace cx::ui::cmn
 {
-
-class IAbstractWidgetsFactory;
-class IAbstractConnectXWidgetsFactory;
-
+    class IAbstractWidgetsFactory;
 }
 
-namespace cx::ui::cmn
+namespace cx::ui
+{
+    class IAbstractConnectXWidgetsFactory;
+}
+
+namespace cx::ui
 {
 
 /**********************************************************************************************//**
@@ -60,13 +62,15 @@ public:
      *      Connect X specific widgets abstract factory.
      *
      *********************************************************************************************/
-    WidgetsFactories(IAbstractWidgetsFactory& p_stdFactory, IAbstractConnectXWidgetsFactory& p_connectxFactory);
+    WidgetsFactories(
+        cx::ui::cmn::IAbstractWidgetsFactory& p_stdFactory,
+        IAbstractConnectXWidgetsFactory& p_connectxFactory);
 
     /******************************************************************************************//**
      * @brief Get the standard widgets factory.
      *
      *********************************************************************************************/
-    [[nodiscard]] const IAbstractWidgetsFactory& GetStandardWidgetsFactory() const;
+    [[nodiscard]] const cx::ui::cmn::IAbstractWidgetsFactory& GetStandardWidgetsFactory() const;
 
     /******************************************************************************************//**
      * @brief Get the Connect X widgets factory.
@@ -76,10 +80,10 @@ public:
 
 private:
 
-    IAbstractWidgetsFactory& m_stdFactory;
+    cx::ui::cmn::IAbstractWidgetsFactory& m_stdFactory;
     IAbstractConnectXWidgetsFactory& m_connectxFactory;
 };
 
-} // namespace cx::ui::cmn
+} // namespace cx::ui
 
 #endif // WIDGETSFACTORIES_H_4652F2EE_88BE_4042_8BF4_67A223339FF7

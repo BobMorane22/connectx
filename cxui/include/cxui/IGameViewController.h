@@ -26,7 +26,7 @@
 
 #include <cxmodel/ChipColor.h>
 
-namespace cx::ui::cmn
+namespace cx::ui
 {
 
 /*********************************************************************************************//**
@@ -93,6 +93,6 @@ public:
 
 };
 
-} // namespace cx::ui::cmn
+} // namespace cx::ui
 
 #endif // IGAMEVIEWCONTROLLER_H_3C41DCA5_1218_4228_A8C9_545FC5071BD3

@@ -30,7 +30,7 @@
 #include <cxmodel/ChipColor.h>
 #include <cxuicmn/common.h>
 
-namespace cx::ui::cmn
+namespace cx::ui
 {
 
 /*********************************************************************************************//**
@@ -169,6 +169,6 @@ public:
     [[nodiscard]] virtual size_t GetBotTarget() const = 0;
 };
 
-} // namespace cx::ui::cmn
+} // namespace cx::ui
 
 #endif // IGAMEVIEWPRESENTER_H_564B2260_1CAE_4391_A361_97CAB8D0102D

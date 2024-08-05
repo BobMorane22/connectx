@@ -33,7 +33,7 @@
 #include <cxuicmn/IAbstractWidgetsFactory.h>
 #include <cxui/IAnimatedBoard.h>
 #include <cxui/IAnimatedBoardPresenter.h>
-#include <cxuicmn/IChip.h>
+#include <cxui/IChip.h>
 #include <cxui/IGameViewController.h>
 #include <cxui/IGameViewPresenter.h>
 #include <cxuicmn/ILabel.h>
@@ -47,15 +47,15 @@
 namespace
 {
 
-constexpr cx::ui::cmn::AnimationSpeed NUMBER_CHIPS_MOVED_PER_SECOND{3u};
+constexpr cx::ui::AnimationSpeed NUMBER_CHIPS_MOVED_PER_SECOND{3u};
 
 } // namespace
 
 cx::ui::cmn::Gtkmm3GameView::Gtkmm3GameView(
-    WidgetsFactories& p_widgetsFactories,
-    IGameViewPresenter& p_presenter,
-    IGameViewController& p_controller,
-    IWindow& p_parentWindow,
+    cx::ui::WidgetsFactories& p_widgetsFactories,
+    cx::ui::IGameViewPresenter& p_presenter,
+    cx::ui::IGameViewController& p_controller,
+    cx::ui::cmn::IWindow& p_parentWindow,
     cx::ui::cmn::ILayout& p_mainLayout,
     const cx::model::Column& p_viewLeft,
     const cx::model::Row& p_viewTop)
@@ -231,13 +231,13 @@ std::unique_ptr<cx::ui::cmn::ISignal<cx::ui::cmn::EventPropagation, cx::ui::cmn:
     return std::make_unique<NotSupported<EventPropagation, KeyboardKeyPressedEvent>>();
 }
 
-void cx::ui::cmn::Gtkmm3GameView::Update(cx::ui::cmn::BoardAnimationNotificationContext p_context, cx::ui::cmn::BoardAnimationSubject* p_subject)
+void cx::ui::cmn::Gtkmm3GameView::Update(cx::ui::BoardAnimationNotificationContext p_context, cx::ui::BoardAnimationSubject* p_subject)
 {
     IF_CONDITION_NOT_MET_DO(p_subject, return;);
 
     switch(p_context)
     {
-        case cx::ui::cmn::BoardAnimationNotificationContext::ANIMATION_MODEL_VALID:
+        case cx::ui::BoardAnimationNotificationContext::ANIMATION_MODEL_VALID:
         {
             // If the first player is a bot, we simulate a chip drop. This is necessary
             // to start the board animation process.
@@ -249,20 +249,20 @@ void cx::ui::cmn::Gtkmm3GameView::Update(cx::ui::cmn::BoardAnimationNotification
 
             return;
         }
-        case cx::ui::cmn::BoardAnimationNotificationContext::ANIMATE_MOVE_LEFT_ONE_COLUMN:
-        case cx::ui::cmn::BoardAnimationNotificationContext::ANIMATE_MOVE_RIGHT_ONE_COLUMN:
-        case cx::ui::cmn::BoardAnimationNotificationContext::ANIMATE_MOVE_RIGHT_TO_TARGET:
-        case cx::ui::cmn::BoardAnimationNotificationContext::ANIMATE_MOVE_DROP_CHIP:
-        case cx::ui::cmn::BoardAnimationNotificationContext::ANIMATE_UNDO_DROP_CHIP:
-        case cx::ui::cmn::BoardAnimationNotificationContext::ANIMATE_REDO_DROP_CHIP:
-        case cx::ui::cmn::BoardAnimationNotificationContext::ANIMATE_REINITIALIZE_BOARD:
+        case cx::ui::BoardAnimationNotificationContext::ANIMATE_MOVE_LEFT_ONE_COLUMN:
+        case cx::ui::BoardAnimationNotificationContext::ANIMATE_MOVE_RIGHT_ONE_COLUMN:
+        case cx::ui::BoardAnimationNotificationContext::ANIMATE_MOVE_RIGHT_TO_TARGET:
+        case cx::ui::BoardAnimationNotificationContext::ANIMATE_MOVE_DROP_CHIP:
+        case cx::ui::BoardAnimationNotificationContext::ANIMATE_UNDO_DROP_CHIP:
+        case cx::ui::BoardAnimationNotificationContext::ANIMATE_REDO_DROP_CHIP:
+        case cx::ui::BoardAnimationNotificationContext::ANIMATE_REINITIALIZE_BOARD:
         {
             return;
         }
 
-        case cx::ui::cmn::BoardAnimationNotificationContext::POST_ANIMATE_MOVE_LEFT_ONE_COLUMN:
-        case cx::ui::cmn::BoardAnimationNotificationContext::POST_ANIMATE_MOVE_RIGHT_ONE_COLUMN:
-        case cx::ui::cmn::BoardAnimationNotificationContext::POST_ANIMATE_DROP_CHIP:
+        case cx::ui::BoardAnimationNotificationContext::POST_ANIMATE_MOVE_LEFT_ONE_COLUMN:
+        case cx::ui::BoardAnimationNotificationContext::POST_ANIMATE_MOVE_RIGHT_ONE_COLUMN:
+        case cx::ui::BoardAnimationNotificationContext::POST_ANIMATE_DROP_CHIP:
         {
             if(m_presenter.IsCurrentPlayerABot())
             {
@@ -273,30 +273,30 @@ void cx::ui::cmn::Gtkmm3GameView::Update(cx::ui::cmn::BoardAnimationNotification
             EnableKeyHandlers();
             break;
         }
-        case cx::ui::cmn::BoardAnimationNotificationContext::POST_ANIMATE_UNDO_DROP_CHIP:
-        case cx::ui::cmn::BoardAnimationNotificationContext::POST_ANIMATE_REDO_DROP_CHIP:
+        case cx::ui::BoardAnimationNotificationContext::POST_ANIMATE_UNDO_DROP_CHIP:
+        case cx::ui::BoardAnimationNotificationContext::POST_ANIMATE_REDO_DROP_CHIP:
         {
             break;
         }
-        case cx::ui::cmn::BoardAnimationNotificationContext::POST_ANIMATE_MOVE_RIGHT_TO_TARGET:
+        case cx::ui::BoardAnimationNotificationContext::POST_ANIMATE_MOVE_RIGHT_TO_TARGET:
         {
             m_controller.OnDown(m_presenter.GetGameViewActivePlayerChipColor(), m_presenter.GetBotTarget());
             break;
         }
-        case cx::ui::cmn::BoardAnimationNotificationContext::POST_ANIMATE_REINITIALIZE_BOARD:
+        case cx::ui::BoardAnimationNotificationContext::POST_ANIMATE_REINITIALIZE_BOARD:
         {
             break;
         }
     }
 }
 
-void cx::ui::cmn::Gtkmm3GameView::Update(cx::ui::cmn::UserAction p_context, cx::ui::cmn::UserActionSubject* p_subject)
+void cx::ui::cmn::Gtkmm3GameView::Update(cx::ui::UserAction p_context, cx::ui::UserActionSubject* p_subject)
 {
     IF_CONDITION_NOT_MET_DO(p_subject, return;);
 
     switch(p_context)
     {
-        case cx::ui::cmn::UserAction::MOUSE_CLICKED:
+        case cx::ui::UserAction::MOUSE_CLICKED:
         {
             m_controller.OnDown(m_presenter.GetGameViewActivePlayerChipColor(), m_board->GetCurrentColumn().Get());
         }
@@ -437,7 +437,7 @@ void cx::ui::cmn::Gtkmm3GameView::UpdateChipDropped()
     IF_CONDITION_NOT_MET_DO(m_board, return;);
 
     SyncPlayers();
-    Notify(cx::ui::cmn::BoardAnimationNotificationContext::ANIMATE_MOVE_DROP_CHIP);
+    Notify(cx::ui::BoardAnimationNotificationContext::ANIMATE_MOVE_DROP_CHIP);
 }
 
 void cx::ui::cmn::Gtkmm3GameView::UpdateUndoChipDropped()
@@ -445,7 +445,7 @@ void cx::ui::cmn::Gtkmm3GameView::UpdateUndoChipDropped()
     IF_CONDITION_NOT_MET_DO(m_board, return;);
 
     SyncPlayers();
-    Notify(cx::ui::cmn::BoardAnimationNotificationContext::ANIMATE_UNDO_DROP_CHIP);
+    Notify(cx::ui::BoardAnimationNotificationContext::ANIMATE_UNDO_DROP_CHIP);
 }
 
 void cx::ui::cmn::Gtkmm3GameView::UpdateRedoChipDropped()
@@ -453,7 +453,7 @@ void cx::ui::cmn::Gtkmm3GameView::UpdateRedoChipDropped()
     IF_CONDITION_NOT_MET_DO(m_board, return;);
 
     SyncPlayers();
-    Notify(cx::ui::cmn::BoardAnimationNotificationContext::ANIMATE_REDO_DROP_CHIP);
+    Notify(cx::ui::BoardAnimationNotificationContext::ANIMATE_REDO_DROP_CHIP);
 }
 
 void cx::ui::cmn::Gtkmm3GameView::UpdateChipDroppedFailed()
@@ -464,25 +464,25 @@ void cx::ui::cmn::Gtkmm3GameView::UpdateChipDroppedFailed()
 void cx::ui::cmn::Gtkmm3GameView::UpdateChipMovedLeftOneColumn()
 {
     IF_CONDITION_NOT_MET_DO(m_board, return;);
-    Notify(cx::ui::cmn::BoardAnimationNotificationContext::ANIMATE_MOVE_LEFT_ONE_COLUMN);
+    Notify(cx::ui::BoardAnimationNotificationContext::ANIMATE_MOVE_LEFT_ONE_COLUMN);
 }
 
 void cx::ui::cmn::Gtkmm3GameView::UpdateChipMovedRightOneColumn()
 {
     IF_CONDITION_NOT_MET_DO(m_board, return;);
-    Notify(cx::ui::cmn::BoardAnimationNotificationContext::ANIMATE_MOVE_RIGHT_ONE_COLUMN);
+    Notify(cx::ui::BoardAnimationNotificationContext::ANIMATE_MOVE_RIGHT_ONE_COLUMN);
 }
 
 void cx::ui::cmn::Gtkmm3GameView::UpdateChipMovedRightToTarget()
 {
     IF_CONDITION_NOT_MET_DO(m_board, return;);
-    Notify(cx::ui::cmn::BoardAnimationNotificationContext::ANIMATE_MOVE_RIGHT_TO_TARGET);
+    Notify(cx::ui::BoardAnimationNotificationContext::ANIMATE_MOVE_RIGHT_TO_TARGET);
 }
 
 void cx::ui::cmn::Gtkmm3GameView::UpdateGameResolved()
 {
     IF_CONDITION_NOT_MET_DO(m_board, return;);
-    Notify(cx::ui::cmn::BoardAnimationNotificationContext::ANIMATE_REINITIALIZE_BOARD);
+    Notify(cx::ui::BoardAnimationNotificationContext::ANIMATE_REINITIALIZE_BOARD);
 }
 
 void cx::ui::cmn::Gtkmm3GameView::UpdateGameReinitialized()
@@ -490,7 +490,7 @@ void cx::ui::cmn::Gtkmm3GameView::UpdateGameReinitialized()
     IF_CONDITION_NOT_MET_DO(m_board, return;);
 
     SyncPlayers();
-    Notify(cx::ui::cmn::BoardAnimationNotificationContext::ANIMATE_REINITIALIZE_BOARD);
+    Notify(cx::ui::BoardAnimationNotificationContext::ANIMATE_REINITIALIZE_BOARD);
 }
 
 void cx::ui::cmn::Gtkmm3GameView::SyncPlayers()

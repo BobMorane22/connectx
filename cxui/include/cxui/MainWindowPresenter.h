@@ -38,14 +38,14 @@ namespace cx::model
     class IConnectXAI;
 }
 
-namespace cx::ui::cmn
+namespace cx::ui
 {
 
 /**********************************************************************************************//**
  * @brief Main window presenter.
  *
  *************************************************************************************************/
-class MainWindowPresenter : public cx::ui::cmn::IMainWindowPresenter
+class MainWindowPresenter : public cx::ui::IMainWindowPresenter
 {
 
 public:
@@ -182,6 +182,6 @@ private:
     std::vector<std::vector<cx::model::ChipColor>> m_chipColors;
 };
 
-} // namespace cx::ui::cmn
+} // namespace cx::ui
 
 #endif // MAINWINDOWPRESENTER_H_B80CACC4_E075_49C0_9DFD_29C6C1BCFE67

@@ -28,11 +28,15 @@
 
 #include <cxuicmngtkmm3/Gtkmm3Window.h>
 
+namespace cx::ui
+{
+    class WidgetsFactories;
+}
+
 namespace cx::ui::cmn
 {
     class IButton;
     class ILabel;
-    class WidgetsFactories;
 }
 
 namespace cx::ui::cmn

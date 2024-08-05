@@ -25,7 +25,7 @@
 
 #include <cxui/MenuItem.h>
 
-std::string cx::ui::cmn::MakeLabel(MenuItem p_menuItem)
+std::string cx::ui::MakeLabel(MenuItem p_menuItem)
 {
     switch(p_menuItem)
     {

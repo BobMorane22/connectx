@@ -32,8 +32,8 @@
 #include <cxui/WidgetsFactories.h>
 
 cx::ui::cmn::Gtkmm3AboutWindow::Gtkmm3AboutWindow(
-    cx::ui::cmn::WidgetsFactories& p_widgetsFactories,
-    std::unique_ptr<IAboutWindowPresenter> p_presenter)
+    cx::ui::WidgetsFactories& p_widgetsFactories,
+    std::unique_ptr<cx::ui::IAboutWindowPresenter> p_presenter)
  : Gtkmm3Window(p_widgetsFactories)
  , m_widgetsFactories{p_widgetsFactories}
 {

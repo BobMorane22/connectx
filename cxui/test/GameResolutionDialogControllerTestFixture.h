@@ -38,7 +38,7 @@ public:
 
     bool GetNewGameRequested() const;
 
-    cx::ui::cmn::IGameResolutionDialogController& GetController();
+    cx::ui::IGameResolutionDialogController& GetController();
 
 private:
 
@@ -66,7 +66,7 @@ private:
     bool m_newGameRequested = false;
 
     std::unique_ptr<GameResolutionDialogControllerMockModel> m_model;
-    std::unique_ptr<cx::ui::cmn::IGameResolutionDialogController> m_controller;
+    std::unique_ptr<cx::ui::IGameResolutionDialogController> m_controller;
 
 };
 

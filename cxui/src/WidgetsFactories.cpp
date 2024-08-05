@@ -26,20 +26,20 @@
 #include <cxui/IAbstractConnectXWidgetsFactory.h>
 #include <cxui/WidgetsFactories.h>
 
-cx::ui::cmn::WidgetsFactories::WidgetsFactories(
-    IAbstractWidgetsFactory& p_stdFactory,
+cx::ui::WidgetsFactories::WidgetsFactories(
+    cx::ui::cmn::IAbstractWidgetsFactory& p_stdFactory,
     IAbstractConnectXWidgetsFactory& p_connectxFactory)
 : m_stdFactory{p_stdFactory}
 , m_connectxFactory{p_connectxFactory}
 {
 }
 
-const cx::ui::cmn::IAbstractWidgetsFactory& cx::ui::cmn::WidgetsFactories::GetStandardWidgetsFactory() const
+const cx::ui::cmn::IAbstractWidgetsFactory& cx::ui::WidgetsFactories::GetStandardWidgetsFactory() const
 {
     return m_stdFactory;
 }
 
-const cx::ui::cmn::IAbstractConnectXWidgetsFactory& cx::ui::cmn::WidgetsFactories::GetConnectXWidgetsFactory() const
+const cx::ui::IAbstractConnectXWidgetsFactory& cx::ui::WidgetsFactories::GetConnectXWidgetsFactory() const
 {
     return m_connectxFactory;
 }

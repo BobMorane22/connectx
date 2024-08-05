@@ -38,7 +38,7 @@ namespace cx::model
     enum class PlayerType;
 }
 
-namespace cx::ui::cmn
+namespace cx::ui
 {
 
 /***********************************************************************************************//**
@@ -206,10 +206,10 @@ public:
      *      A signal to connect to for when a player is updated in the list.
      *
      **********************************************************************************************/
-    [[nodiscard]] virtual std::unique_ptr<ISignal<void>> OnPlayerUpdated() = 0;
+    [[nodiscard]] virtual std::unique_ptr<cx::ui::cmn::ISignal<void>> OnPlayerUpdated() = 0;
 
 };
 
-} // namespace cx::ui::cmn
+} // namespace cx::ui
 
 #endif // INEWPLAYERSLIST_H_683F8110_A4C7_4915_A304_7940FD621B84

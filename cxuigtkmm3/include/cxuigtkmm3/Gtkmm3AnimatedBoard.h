@@ -32,7 +32,7 @@
 #include <cxuigtkmm3/Gtkmm3BoardElementCache.h>
 #include <cxui/IAnimatedBoard.h>
 
-namespace cx::ui::cmn
+namespace cx::ui
 {
 
 enum class BoardAnimation;
@@ -49,7 +49,7 @@ namespace cx::ui::cmn
  * @brief Gtkmm3 implementation of an animated game board.
  *
  *************************************************************************************************/
-class Gtkmm3AnimatedBoard : public IAnimatedBoard,
+class Gtkmm3AnimatedBoard : public cx::ui::IAnimatedBoard,
                             public Gtk::DrawingArea
 {
 
@@ -65,7 +65,7 @@ public:
      *      would mean that a chip will move three columns (or rows) per second when animated.
      *
      *********************************************************************************************/
-    Gtkmm3AnimatedBoard(const IGameViewPresenter& p_presenter, const cx::ui::cmn::AnimationSpeed& p_speed);
+    Gtkmm3AnimatedBoard(const IGameViewPresenter& p_presenter, const cx::ui::AnimationSpeed& p_speed);
 
     /******************************************************************************************//**
      * @brief Destructor.
@@ -90,7 +90,7 @@ public:
      **********************************************************************************************/
     void SetDelegate(std::unique_ptr<IWidget> p_delegate);
 
-    // cx::ui::cmn::IAnimatedBoard:
+    // cx::ui::IAnimatedBoard:
     [[nodiscard]] const cx::model::Column& GetCurrentColumn() const override;
     [[nodiscard]] cx::model::ChipColor GetCurrentChipColor() const override;
 

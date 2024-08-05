@@ -72,7 +72,7 @@ void DisplayWarningDialog(
 } // namespace
 
 cx::ui::cmn::Gtkmm3NewGameView::Gtkmm3NewGameView(
-    WidgetsFactories& p_widgetsFactories,
+    cx::ui::WidgetsFactories& p_widgetsFactories,
     INewGameViewPresenter& p_presenter,
     INewGameViewController& p_controller,
     IWindow& p_parentWindow,

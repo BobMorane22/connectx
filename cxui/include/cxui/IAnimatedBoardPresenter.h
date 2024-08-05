@@ -27,7 +27,7 @@
 #include <cxmodel/common.h>
 #include <cxui/IGameViewPresenter.h>
 
-namespace cx::ui::cmn
+namespace cx::ui
 {
 
 /**********************************************************************************************//**
@@ -108,6 +108,6 @@ public:
 
 };
 
-} // namespace cx::ui::cmn
+} // namespace cx::ui
 
 #endif // IANIMATEDBOARDPRESENTER_H_A2048E6E_9B10_4BE6_93E7_CD07D492BE33

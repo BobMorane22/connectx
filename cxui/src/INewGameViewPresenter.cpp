@@ -33,7 +33,7 @@
 #include <cxui/INewGameViewPresenter.h>
 
 
-cx::model::Status cx::ui::cmn::Validate(const cx::model::NewGameInformation& p_gameInformation, const cx::ui::cmn::INewGameViewPresenter& p_presenter)
+cx::model::Status cx::ui::Validate(const cx::model::NewGameInformation& p_gameInformation, const cx::ui::INewGameViewPresenter& p_presenter)
 {
     const auto inARowInputStatus = p_presenter.IsInARowValueValid(p_gameInformation.m_inARowValue);
     RETURN_IF(!inARowInputStatus.IsSuccess(), inARowInputStatus);
@@ -75,8 +75,8 @@ cx::model::Status cx::ui::cmn::Validate(const cx::model::NewGameInformation& p_g
     return cx::model::MakeSuccess();
 }
 
-std::vector<cx::model::ChipColor> cx::ui::cmn::GetRemainingDefaultColors(const std::vector<cx::model::ChipColor>& p_alreadyChosenColors,
-                                                                 const cx::ui::cmn::INewGameViewPresenter& p_presenter)
+std::vector<cx::model::ChipColor> cx::ui::GetRemainingDefaultColors(const std::vector<cx::model::ChipColor>& p_alreadyChosenColors,
+                                                                    const cx::ui::INewGameViewPresenter& p_presenter)
 {
     auto defaultRemainingColors = cx::cmn::ComputeStrictDifference(p_presenter.GetDefaultChipColors(), p_alreadyChosenColors);
     ASSERT(!defaultRemainingColors.empty());

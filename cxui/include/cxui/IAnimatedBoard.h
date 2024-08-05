@@ -31,9 +31,9 @@
 #include <cxmodel/Subject.h>
 #include <cxmodel/ChipColor.h>
 #include <cxui/BoardAnimationNotificationContext.h>
-#include <cxuicmn/IBoardInformation.h>
+#include <cxui/IBoardInformation.h>
 
-namespace cx::ui::cmn
+namespace cx::ui
 {
 
 /**********************************************************************************************//**
@@ -77,11 +77,11 @@ using IUserActionObserver = cx::model::IObserver<UserAction>;
  * game must not go on and the user should not be able to interract with the board.
  *
  *************************************************************************************************/
-class IAnimatedBoard : public IWidget,
-                       public cx::ui::cmn::IBoardInformation,
-                       public cx::ui::cmn::IBoardAnimationObserver,
-                       public cx::ui::cmn::BoardAnimationSubject,
-                       public cx::ui::cmn::UserActionSubject
+class IAnimatedBoard : public cx::ui::cmn::IWidget,
+                       public cx::ui::IBoardInformation,
+                       public cx::ui::IBoardAnimationObserver,
+                       public cx::ui::BoardAnimationSubject,
+                       public cx::ui::UserActionSubject
 {
 
 public:
@@ -112,6 +112,6 @@ public:
 
 };
 
-} // namespace cx::ui::cmn
+} // namespace cx::ui
 
 #endif // IANIMATEDBOARD_H_138FF453_BD0C_423D_A57F_1C1834CB8749

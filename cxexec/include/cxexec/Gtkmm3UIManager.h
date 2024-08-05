@@ -99,13 +99,13 @@ private:
 
     // Widgets factories.
     std::unique_ptr<cx::ui::cmn::IAbstractWidgetsFactory> m_abstractWidgetsFactory;
-    std::unique_ptr<cx::ui::cmn::IAbstractConnectXWidgetsFactory> m_abstractConnectXWidgetsFactory;
-    std::unique_ptr<cx::ui::cmn::WidgetsFactories> m_widgetsFactories;
+    std::unique_ptr<cx::ui::IAbstractConnectXWidgetsFactory> m_abstractConnectXWidgetsFactory;
+    std::unique_ptr<cx::ui::WidgetsFactories> m_widgetsFactories;
 
     // Main window.
     std::unique_ptr<cx::ui::cmn::IWindow> m_mainWindow;
-    std::unique_ptr<cx::ui::cmn::IMainWindowController> m_controller;
-    std::unique_ptr<cx::ui::cmn::IMainWindowPresenter> m_presenter;
+    std::unique_ptr<cx::ui::IMainWindowController> m_controller;
+    std::unique_ptr<cx::ui::IMainWindowPresenter> m_presenter;
 
 };
 

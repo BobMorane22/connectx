@@ -30,9 +30,13 @@
 namespace cx::ui::cmn
 {
     class IButton;
+    class ILabel;
+}
+
+namespace cx::ui
+{
     class IGameResolutionDialogController;
     class IGameResolutionDialogPresenter;
-    class ILabel;
     class WidgetsFactories;
 }
 
@@ -68,9 +72,9 @@ public:
      *
      ********************************************************************************************/
     Gtkmm3GameResolutionDialog(
-       WidgetsFactories& p_widgetsFactories,
-       std::unique_ptr<IGameResolutionDialogPresenter> p_presenter,
-       std::unique_ptr<IGameResolutionDialogController> p_controller);
+       cx::ui::WidgetsFactories& p_widgetsFactories,
+       std::unique_ptr<cx::ui::IGameResolutionDialogPresenter> p_presenter,
+       std::unique_ptr<cx::ui::IGameResolutionDialogController> p_controller);
 
 private:
 
@@ -87,7 +91,7 @@ private:
     const std::unique_ptr<IGameResolutionDialogPresenter> m_presenter;
     const std::unique_ptr<IGameResolutionDialogController> m_controller;
 
-    cx::ui::cmn::WidgetsFactories& m_widgetsFactories;
+    cx::ui::WidgetsFactories& m_widgetsFactories;
     std::unique_ptr<ILabel> m_title;
     std::unique_ptr<ILabel> m_message;
     std::unique_ptr<IButton> m_startNewGame;

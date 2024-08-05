@@ -29,21 +29,21 @@
 #include "BoardAnimation.h"
 #include "IAnimatedBoardModel.h"
 
-namespace cx::ui::cmn
+namespace cx::ui
 {
 
 class IAnimatedBoardPresenter;
 
 }
 
-namespace cx::ui::cmn
+namespace cx::ui
 {
 
 /**********************************************************************************************//**
  * @brief Concrete animated board model.
  *
  *************************************************************************************************/
-class AnimatedBoardModel : public cx::ui::cmn::IAnimatedBoardModel
+class AnimatedBoardModel : public cx::ui::IAnimatedBoardModel
 {
 
 public:
@@ -57,7 +57,7 @@ public:
      *      The animation speed (i.e. the number of chips travelled per second).
      *
      *************************************************************************************************/
-    AnimatedBoardModel(const cx::ui::cmn::IAnimatedBoardPresenter& p_presenter, const cx::ui::cmn::AnimationSpeed& p_animationSpeed);
+    AnimatedBoardModel(const cx::ui::IAnimatedBoardPresenter& p_presenter, const cx::ui::AnimationSpeed& p_animationSpeed);
 
     void Update(const cx::math::Dimensions& p_widgetDimensions, bool p_isChipMovingHorizontally) override;
     void Resize(const cx::ui::cmn::ScalingRatios& p_scalingRatios) override;
@@ -85,9 +85,9 @@ private:
     [[nodiscard]] bool ComputeChipRightPosition(double p_windowWidth, const cx::math::Radius& p_discRadius, double p_horizontalMargin);
     void ComputeChipVerticalPosition(const cx::math::Radius& p_discRadius, double p_height);
 
-    const cx::ui::cmn::IAnimatedBoardPresenter& m_presenter;
+    const cx::ui::IAnimatedBoardPresenter& m_presenter;
 
-    cx::ui::cmn::AnimationSpeed m_animationSpeed;
+    cx::ui::AnimationSpeed m_animationSpeed;
 
     cx::math::Dimensions m_widgetDimensions{cx::math::Height{0.0}, cx::math::Width{0.0}};
     cx::math::Dimensions m_cellDimensions{cx::math::Height{0.0}, cx::math::Width{0.0}};
@@ -107,6 +107,6 @@ private:
     cx::model::Column m_currentColumn{0u};
 };
 
-} // namespace cx::ui::cmn
+} // namespace cx::ui
 
 #endif // ANIMATEDBOARDMODEL_H_71B2242B_9840_4520_818A_DC44B21E2307

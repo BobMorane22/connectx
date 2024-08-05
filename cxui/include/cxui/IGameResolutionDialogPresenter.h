@@ -26,7 +26,7 @@
 
 #include <string>
 
-namespace cx::ui::cmn
+namespace cx::ui
 {
 
 /*********************************************************************************************//**
@@ -69,6 +69,6 @@ public:
     virtual std::string GetStartNewGameButtonText() const = 0;
 };
 
-} // namespace cx::ui::cmn
+} // namespace cx::ui
 
 #endif // IGAMERESOLUTIONDIALOGPRESENTER_H_3EBAACE1_3C59_4BB0_B395_9DD85C080FB7

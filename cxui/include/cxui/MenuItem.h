@@ -24,7 +24,7 @@
 #ifndef MENUITEM_H_A0647363_208A_493B_A9B8_4C275516DCCC
 #define MENUITEM_H_A0647363_208A_493B_A9B8_4C275516DCCC
 
-namespace cx::ui::cmn
+namespace cx::ui
 {
 
 /**********************************************************************************************//**
@@ -71,6 +71,6 @@ enum class MenuItem
  ********************************************************************************************/
 std::string MakeLabel(MenuItem p_menuItem);
 
-} // namespace cx::ui::cmn
+} // namespace cx::ui
 
 #endif // MENUITEM_H_A0647363_208A_493B_A9B8_4C275516DCCC

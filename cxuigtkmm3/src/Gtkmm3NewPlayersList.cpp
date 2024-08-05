@@ -31,8 +31,8 @@
 #include <cxuicmn/EventPropagation.h>
 #include <cxuigtkmm3/Gtkmm3NewPlayersList.h>
 #include <cxui/IAbstractConnectXWidgetsFactory.h>
+#include <cxui/IColorPicker.h>
 #include <cxuicmn/IAbstractWidgetsFactory.h>
-#include <cxuicmn/IColorPicker.h>
 #include <cxuicmn/IOnOffSwitch.h>
 #include <cxuicmn/IEditBox.h>
 #include <cxuicmn/ILabel.h>
@@ -123,7 +123,7 @@ public:
     Gtkmm3OnPlayerUpdatedSignal(
         std::vector<std::unique_ptr<cx::ui::cmn::IOnOffSwitch>>& p_playerTypes,
         std::vector<std::unique_ptr<cx::ui::cmn::IEditBox>>& p_playerNames,
-        std::vector<std::unique_ptr<cx::ui::cmn::IColorPicker>>& p_playerChipColors)
+        std::vector<std::unique_ptr<cx::ui::IColorPicker>>& p_playerChipColors)
     : m_playerTypes{p_playerTypes}
     , m_playerNames{p_playerNames}
     , m_playerChipColors{p_playerChipColors}
@@ -147,7 +147,7 @@ public:
             connections.push_back(control->OnContentsChanged()->Connect(p_slot));
         }
 
-        for(std::unique_ptr<cx::ui::cmn::IColorPicker>& control : m_playerChipColors)
+        for(std::unique_ptr<cx::ui::IColorPicker>& control : m_playerChipColors)
         {
             IF_CONDITION_NOT_MET_DO(control, continue;);
             connections.push_back(control->OnSelectionChanged()->Connect(p_slot));
@@ -160,7 +160,7 @@ private:
 
     std::vector<std::unique_ptr<cx::ui::cmn::IOnOffSwitch>>& m_playerTypes;
     std::vector<std::unique_ptr<cx::ui::cmn::IEditBox>>& m_playerNames;
-    std::vector<std::unique_ptr<cx::ui::cmn::IColorPicker>>& m_playerChipColors;
+    std::vector<std::unique_ptr<cx::ui::IColorPicker>>& m_playerChipColors;
 
 };
 

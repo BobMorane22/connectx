@@ -30,7 +30,7 @@
 #include "INewGameViewPresenter.h"
 #include "MenuItem.h"
 
-namespace cx::ui::cmn
+namespace cx::ui
 {
 
 /*********************************************************************************************//**
@@ -172,6 +172,6 @@ public:
 
 };
 
-} // namespace cx::ui::cmn
+} // namespace cx::ui
 
 #endif // IMAINWINDOWPRESENTER_H_D8C76920_83D9_4D15_B95A_63282E742221

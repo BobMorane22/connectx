@@ -26,7 +26,7 @@
 
 #include "IAnimatedBoardPresenter.h"
 
-namespace cx::ui::cmn
+namespace cx::ui
 {
 
 /**********************************************************************************************//**
@@ -41,7 +41,7 @@ namespace cx::ui::cmn
  * cached values in between animations.
  *
  *************************************************************************************************/
-class AnimatedBoardPresenter : public cx::ui::cmn::IAnimatedBoardPresenter
+class AnimatedBoardPresenter : public cx::ui::IAnimatedBoardPresenter
 {
 
 public:
@@ -54,7 +54,7 @@ public:
      *********************************************************************************************/
     explicit AnimatedBoardPresenter(const IGameViewPresenter& p_presenter);
 
-    // cx::ui::cmn::IAnimatedBoardPresenter:
+    // cx::ui::IAnimatedBoardPresenter:
     void Sync() override;
     [[nodiscard]] cx::model::Height GetBoardHeight() const override;
     [[nodiscard]] cx::model::Width GetBoardWidth() const override;
@@ -81,6 +81,6 @@ private:
 
 };
 
-} // namespace cx::ui::cmn
+} // namespace cx::ui
 
 #endif // ANIMATEDBOARDPRESENTER_H_CEED52F8_D734_4808_A833_448D61C817D9

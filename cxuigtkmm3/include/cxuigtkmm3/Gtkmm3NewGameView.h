@@ -34,17 +34,21 @@ namespace cx::model
     class NewGameInformation;
 }
 
+namespace cx::ui
+{
+    class WidgetsFactories;
+    class INewGameViewController;
+    class INewGameViewPresenter;
+    class INewPlayersList;
+}
+
 namespace cx::ui::cmn
 {
     class IButton;
     class ILabel;
     class ILayout;
-    class INewGameViewController;
-    class INewGameViewPresenter;
-    class INewPlayersList;
     class ISpinBox;
     class IWindow;
-    class WidgetsFactories;
 }
 
 namespace cx::ui::cmn
@@ -54,7 +58,7 @@ namespace cx::ui::cmn
  * @brief Gtkmm 3 implementation of the view for creating new games.
  *
  ************************************************************************************************/
-class Gtkmm3NewGameView : public cx::ui::cmn::IView
+class Gtkmm3NewGameView : public cx::ui::IView
 {
 
 public:
@@ -79,7 +83,7 @@ public:
      *
      ********************************************************************************************/
     Gtkmm3NewGameView(
-       WidgetsFactories& p_widgetsFactories,
+       cx::ui::WidgetsFactories& p_widgetsFactories,
        INewGameViewPresenter& p_presenter,
        INewGameViewController& p_controller,
        IWindow& p_parentWindow,
@@ -87,7 +91,7 @@ public:
        const cx::model::Column& p_viewLeft,
        const cx::model::Row& p_viewTop);
 
-    // cx::ui::cmn::IView:
+    // cx::ui::IView:
     void Activate() override;
     void DeActivate() override;
     void Update(cx::model::ModelNotificationContext p_context) override;
@@ -115,7 +119,7 @@ private:
 
 private:
 
-    WidgetsFactories& m_widgetsFactories;
+    cx::ui::WidgetsFactories& m_widgetsFactories;
 
     INewGameViewPresenter& m_presenter;
     INewGameViewController& m_controller;

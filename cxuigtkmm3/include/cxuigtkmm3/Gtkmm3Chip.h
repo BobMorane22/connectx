@@ -26,7 +26,7 @@
 
 #include <gtkmm/drawingarea.h>
 
-#include <cxuicmn/IChip.h>
+#include <cxui/IChip.h>
 
 namespace cx::ui::cmn
 {
@@ -38,7 +38,7 @@ namespace cx::ui::cmn
  * to the chip. It is the concrete class' job to specify a chip shape.
  *
  ************************************************************************************************/
-class Gtkmm3Chip : public IChip,
+class Gtkmm3Chip : public cx::ui::IChip,
                    public Gtk::DrawingArea
 {
 

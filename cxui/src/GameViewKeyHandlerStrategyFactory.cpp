@@ -24,19 +24,19 @@
 #include <cxinv/assertion.h>
 #include <cxuicmn/EventPropagation.h>
 #include <cxui/GameViewKeyHandlerStrategyFactory.h>
-#include <cxuicmn/IBoardInformation.h>
+#include <cxui/IBoardInformation.h>
 #include <cxui/IGameViewController.h>
 #include <cxuicmn/KeyboardKeyPressedEvent.h>
 
-namespace cx::ui::cmn
+namespace cx::ui
 {
 
-class GameViewDownKeyHandlerStrategy : public cx::ui::cmn::IGameViewKeyHandlerStrategy
+class GameViewDownKeyHandlerStrategy : public cx::ui::IGameViewKeyHandlerStrategy
 {
 
 public:
 
-    [[nodiscard]] EventPropagation Handle(IGameViewController& p_controller, IBoardInformation& p_gameBoard) override;
+    [[nodiscard]] cx::ui::cmn::EventPropagation Handle(IGameViewController& p_controller, IBoardInformation& p_gameBoard) override;
 
 };
 
@@ -47,15 +47,15 @@ cx::ui::cmn::EventPropagation GameViewDownKeyHandlerStrategy::Handle(IGameViewCo
 
     p_controller.OnDown(chipColor, p_gameBoard.GetCurrentColumn().Get());
 
-    return EventPropagation::STOP;
+    return cx::ui::cmn::EventPropagation::STOP;
 }
 
-class GameViewLeftKeyHandlerStrategy : public cx::ui::cmn::IGameViewKeyHandlerStrategy
+class GameViewLeftKeyHandlerStrategy : public cx::ui::IGameViewKeyHandlerStrategy
 {
 
 public:
 
-    [[nodiscard]] EventPropagation Handle(IGameViewController& p_controller, IBoardInformation& p_gameBoard) override;
+    [[nodiscard]] cx::ui::cmn::EventPropagation Handle(IGameViewController& p_controller, IBoardInformation& p_gameBoard) override;
 
 };
 
@@ -63,15 +63,15 @@ cx::ui::cmn::EventPropagation GameViewLeftKeyHandlerStrategy::Handle(IGameViewCo
 {
     p_controller.OnMoveLeftOneColumn();
 
-    return EventPropagation::STOP;
+    return cx::ui::cmn::EventPropagation::STOP;
 }
 
-class GameViewRightKeyHandlerStrategy : public cx::ui::cmn::IGameViewKeyHandlerStrategy
+class GameViewRightKeyHandlerStrategy : public cx::ui::IGameViewKeyHandlerStrategy
 {
 
 public:
 
-    [[nodiscard]] EventPropagation Handle(IGameViewController& p_controller, IBoardInformation& p_gameBoard) override;
+    [[nodiscard]] cx::ui::cmn::EventPropagation Handle(IGameViewController& p_controller, IBoardInformation& p_gameBoard) override;
 
 };
 
@@ -79,23 +79,23 @@ cx::ui::cmn::EventPropagation GameViewRightKeyHandlerStrategy::Handle(IGameViewC
 {
     p_controller.OnMoveRightOneColumn();
 
-    return EventPropagation::STOP;
+    return cx::ui::cmn::EventPropagation::STOP;
 }
 
-} // namespace cx::ui::cmn
+} // namespace cx::ui
 
-std::unique_ptr<cx::ui::cmn::IGameViewKeyHandlerStrategy> cx::ui::cmn::GameViewKeyHandlerStrategyFactory::Create(cx::ui::cmn::KeyboardKeyPressedEvent p_event)
+std::unique_ptr<cx::ui::IGameViewKeyHandlerStrategy> cx::ui::GameViewKeyHandlerStrategyFactory::Create(cx::ui::cmn::KeyboardKeyPressedEvent p_event)
 {
     switch(p_event)
     {
         case cx::ui::cmn::KeyboardKeyPressedEvent::KEY_LEFT:
-            return std::make_unique<cx::ui::cmn::GameViewLeftKeyHandlerStrategy>();
+            return std::make_unique<cx::ui::GameViewLeftKeyHandlerStrategy>();
 
         case cx::ui::cmn::KeyboardKeyPressedEvent::KEY_RIGHT:
-            return std::make_unique<cx::ui::cmn::GameViewRightKeyHandlerStrategy>();
+            return std::make_unique<cx::ui::GameViewRightKeyHandlerStrategy>();
 
         case cx::ui::cmn::KeyboardKeyPressedEvent::KEY_DOWN:
-            return std::make_unique<cx::ui::cmn::GameViewDownKeyHandlerStrategy>();
+            return std::make_unique<cx::ui::GameViewDownKeyHandlerStrategy>();
 
         default:
             return nullptr;

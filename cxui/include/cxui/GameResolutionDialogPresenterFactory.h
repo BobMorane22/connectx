@@ -34,7 +34,7 @@ namespace cx::model
     class IConnectXGameInformation;
 }
 
-namespace cx::ui::cmn
+namespace cx::ui
 {
 
 /*********************************************************************************************//**
@@ -60,6 +60,6 @@ public:
 
 };
 
-} // namespace cx::ui::cmn
+} // namespace cx::ui
 
 #endif // GAMERESOLUTIONDIALOGPRESENTERFACTORY_H_0DEB58AF_5E6C_41B3_BDA0_DE2C38CE8416

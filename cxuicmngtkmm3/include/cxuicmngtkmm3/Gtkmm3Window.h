@@ -30,11 +30,14 @@
 #include <cxuicmn/generated/ressources.h>
 #include <cxuicmn/IWindow.h>
 
+namespace cx::ui
+{
+    class WidgetsFactories;
+}
 namespace cx::ui::cmn
 {
     class ILayout;
     class IWidget;
-    class WidgetsFactories;
 }
 
 namespace cx::ui::cmn

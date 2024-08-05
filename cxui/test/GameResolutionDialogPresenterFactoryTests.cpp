@@ -65,18 +65,18 @@ TEST(GameResolutionDialogPresenterFactory, Make_WinGameResolution_WinGameResolut
 {
     ModelMock model;
 
-    auto presenter = cx::ui::cmn::GameResolutionDialogPresenterFactory::Make(model, cx::model::GameResolution::WIN);
+    auto presenter = cx::ui::GameResolutionDialogPresenterFactory::Make(model, cx::model::GameResolution::WIN);
     ASSERT_TRUE(presenter);
 
-    ASSERT_TRUE(dynamic_cast<cx::ui::cmn::WinGameResolutionDialogPresenter*>(presenter.get()));
+    ASSERT_TRUE(dynamic_cast<cx::ui::WinGameResolutionDialogPresenter*>(presenter.get()));
 }
 
 TEST(GameResolutionDialogPresenterFactory, Make_TieGameResolution_TieGameResolutionDialogPresenterReturned)
 {
     ModelMock model;
 
-    auto presenter = cx::ui::cmn::GameResolutionDialogPresenterFactory::Make(model, cx::model::GameResolution::TIE);
+    auto presenter = cx::ui::GameResolutionDialogPresenterFactory::Make(model, cx::model::GameResolution::TIE);
     ASSERT_TRUE(presenter);
 
-    ASSERT_TRUE(dynamic_cast<cx::ui::cmn::TieGameResolutionDialogPresenter*>(presenter.get()));
+    ASSERT_TRUE(dynamic_cast<cx::ui::TieGameResolutionDialogPresenter*>(presenter.get()));
 }

@@ -34,7 +34,7 @@
 #include <cxui/WidgetsFactories.h>
 
 cx::ui::cmn::Gtkmm3GameResolutionDialog::Gtkmm3GameResolutionDialog(
-    cx::ui::cmn::WidgetsFactories& p_widgetsFactories,
+    cx::ui::WidgetsFactories& p_widgetsFactories,
     std::unique_ptr<IGameResolutionDialogPresenter> p_presenter,
     std::unique_ptr<IGameResolutionDialogController> p_controller)
 : cx::ui::cmn::Gtkmm3Window{p_widgetsFactories}

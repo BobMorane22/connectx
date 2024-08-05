@@ -27,30 +27,30 @@
 
 TEST(MenuItem, /*DISABLED_*/MakeLabel_Game_GameLabelReturned)
 {
-    ASSERT_EQ("Game", cx::ui::cmn::MakeLabel(cx::ui::cmn::MenuItem::GAME));
+    ASSERT_EQ("Game", cx::ui::MakeLabel(cx::ui::MenuItem::GAME));
 }
 
 TEST(MenuItem, /*DISABLED_*/MakeLabel_Quit_QuitLabelReturned)
 {
-    ASSERT_EQ("Quit", cx::ui::cmn::MakeLabel(cx::ui::cmn::MenuItem::QUIT));
+    ASSERT_EQ("Quit", cx::ui::MakeLabel(cx::ui::MenuItem::QUIT));
 }
 
 TEST(MenuItem, /*DISABLED_*/MakeLabel_NewGame_NewGameLabelReturned)
 {
-    ASSERT_EQ("New", cx::ui::cmn::MakeLabel(cx::ui::cmn::MenuItem::NEW_GAME));
+    ASSERT_EQ("New", cx::ui::MakeLabel(cx::ui::MenuItem::NEW_GAME));
 }
 
 TEST(MenuItem, /*DISABLED_*/MakeLabel_Reinitialize_ReinitializeLabelReturned)
 {
-    ASSERT_EQ("Reinitialize", cx::ui::cmn::MakeLabel(cx::ui::cmn::MenuItem::REINITIALIZE_GAME));
+    ASSERT_EQ("Reinitialize", cx::ui::MakeLabel(cx::ui::MenuItem::REINITIALIZE_GAME));
 }
 
 TEST(MenuItem, /*DISABLED_*/MakeLabel_Help_HelpLabelReturned)
 {
-    ASSERT_EQ("Help", cx::ui::cmn::MakeLabel(cx::ui::cmn::MenuItem::HELP));
+    ASSERT_EQ("Help", cx::ui::MakeLabel(cx::ui::MenuItem::HELP));
 }
 
 TEST(MenuItem, /*DISABLED_*/MakeLabel_About_AboutLabelReturned)
 {
-    ASSERT_EQ("About", cx::ui::cmn::MakeLabel(cx::ui::cmn::MenuItem::ABOUT));
+    ASSERT_EQ("About", cx::ui::MakeLabel(cx::ui::MenuItem::ABOUT));
 }

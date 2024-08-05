@@ -27,11 +27,15 @@
 namespace cx::ui::cmn
 {
     enum class EventPropagation;
+}
+
+namespace cx::ui
+{
     class IBoardInformation;
     class IGameViewController;
 }
 
-namespace cx::ui::cmn
+namespace cx::ui
 {
 
 /*********************************************************************************************//**
@@ -60,10 +64,10 @@ public:
      * @return The event propagation status.
      *
      ********************************************************************************************/
-    [[nodiscard]] virtual EventPropagation Handle(IGameViewController& p_controller, IBoardInformation& p_gameBoard) = 0;
+    [[nodiscard]] virtual cx::ui::cmn::EventPropagation Handle(IGameViewController& p_controller, IBoardInformation& p_gameBoard) = 0;
 
 };
 
-} // namespace cx::ui::cmn
+} // namespace cx::ui
 
 #endif // IGAMEKEYHANDLERSTRATEGY_H_31AC17A9_F085_49C8_A86E_543E65DC78DC

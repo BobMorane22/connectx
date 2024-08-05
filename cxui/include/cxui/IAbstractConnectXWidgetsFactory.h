@@ -32,6 +32,12 @@
 
 namespace cx::ui::cmn
 {
+    class ILayout;
+    class IWindow;
+}
+
+namespace cx::ui
+{
     class IAboutWindowPresenter;
     class IGameResolutionDialogPresenter;
     class IGameResolutionDialogController;
@@ -45,13 +51,11 @@ namespace cx::ui::cmn
     class IAnimatedBoard;
     class IChip;
     class IColorPicker;
-    class ILayout;
     class INewPlayersList;
     class IView;
-    class IWindow;
 }
 
-namespace cx::ui::cmn
+namespace cx::ui
 {
 
 /**********************************************************************************************//**
@@ -96,7 +100,7 @@ public:
      *      A Connect X main window instance.
      *
      *********************************************************************************************/
-    [[nodiscard]] virtual std::unique_ptr<IWindow> CreateMainWindow(
+    [[nodiscard]] virtual std::unique_ptr<cx::ui::cmn::IWindow> CreateMainWindow(
         cx::model::ModelSubject& p_model,
         IMainWindowController& p_controller,
         IMainWindowPresenter& p_presenter) const = 0;
@@ -117,7 +121,7 @@ public:
      *      An about window instance.
      *
      *********************************************************************************************/
-    [[nodiscard]] virtual std::unique_ptr<IWindow> CreateAboutWindow(
+    [[nodiscard]] virtual std::unique_ptr<cx::ui::cmn::IWindow> CreateAboutWindow(
         std::unique_ptr<IAboutWindowPresenter> p_presenter) const = 0;
 
     /******************************************************************************************//**
@@ -143,7 +147,7 @@ public:
      *      A game resolution dialog instance.
      *
      *********************************************************************************************/
-    [[nodiscard]] virtual std::unique_ptr<IWindow> CreateGameResolutionDialog(
+    [[nodiscard]] virtual std::unique_ptr<cx::ui::cmn::IWindow> CreateGameResolutionDialog(
         std::unique_ptr<IGameResolutionDialogPresenter> p_presenter,
         std::unique_ptr<IGameResolutionDialogController> p_controller) const = 0;
 
@@ -179,7 +183,7 @@ public:
     [[nodiscard]] virtual std::unique_ptr<IView> CreateNewGameView(
         INewGameViewPresenter& p_presenter,
         INewGameViewController& p_controller,
-        IWindow& p_parentWindow,
+        cx::ui::cmn::IWindow& p_parentWindow,
         cx::ui::cmn::ILayout& p_mainLayout,
         const cx::model::Column& p_viewLeft,
         const cx::model::Row& p_viewTop) const = 0;
@@ -210,7 +214,7 @@ public:
     [[nodiscard]] virtual std::unique_ptr<IView> CreateGameView(
         IGameViewPresenter& p_presenter,
         IGameViewController& p_controller,
-        IWindow& p_parentWindow,
+        cx::ui::cmn::IWindow& p_parentWindow,
         cx::ui::cmn::ILayout& p_mainLayout,
         const cx::model::Column& p_viewLeft,
         const cx::model::Row& p_viewTop) const = 0;
@@ -310,6 +314,6 @@ public:
 
 };
 
-} // namespace cx::ui::cmn
+} // namespace cx::ui
 
 #endif // IABSTRACTCONNECTXWIDGETSFACTORY_H_27E986AD_66DF_4324_96AB_AC531266A928

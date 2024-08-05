@@ -30,8 +30,12 @@
 
 namespace cx::ui::cmn
 {
-    class IAboutWindowPresenter;
     class IAbstractWidgetsFactory;
+}
+
+namespace cx::ui
+{
+    class IAboutWindowPresenter;
     class IGameResolutionDialogPresenter;
     class IGameResolutionDialogController;
     class WidgetsFactories;
@@ -83,24 +87,24 @@ public:
     *********************************************************************************************/
     void RegisterStandardWidgetsFactory(IAbstractWidgetsFactory& p_stdAbstractWidgetsFactory);
 
-    // cx::ui::cmn::IAbstractConnectXWidgetsFactory:
-    [[nodiscard]] std::unique_ptr<IWindow> CreateMainWindow(cx::model::ModelSubject& p_model,
-        IMainWindowController& p_controller,
-        IMainWindowPresenter& p_presenter) const override;
-    [[nodiscard]] virtual std::unique_ptr<IWindow> CreateAboutWindow(
+    // cx::ui::IAbstractConnectXWidgetsFactory:
+    [[nodiscard]] std::unique_ptr<cx::ui::cmn::IWindow> CreateMainWindow(cx::model::ModelSubject& p_model,
+        cx::ui::IMainWindowController& p_controller,
+        cx::ui::IMainWindowPresenter& p_presenter) const override;
+    [[nodiscard]] virtual std::unique_ptr<cx::ui::cmn::IWindow> CreateAboutWindow(
         std::unique_ptr<IAboutWindowPresenter> p_presenter) const override;
-    [[nodiscard]] virtual std::unique_ptr<IWindow> CreateGameResolutionDialog(
+    [[nodiscard]] virtual std::unique_ptr<cx::ui::cmn::IWindow> CreateGameResolutionDialog(
         std::unique_ptr<IGameResolutionDialogPresenter> p_presenter,
         std::unique_ptr<IGameResolutionDialogController> p_controller) const override;
-    [[nodiscard]] virtual std::unique_ptr<IView> CreateNewGameView(
-        INewGameViewPresenter& p_presenter,
-        INewGameViewController& p_controller,
-        IWindow& p_parentWindow,
+    [[nodiscard]] virtual std::unique_ptr<cx::ui::IView> CreateNewGameView(
+        cx::ui::INewGameViewPresenter& p_presenter,
+        cx::ui::INewGameViewController& p_controller,
+        cx::ui::cmn::IWindow& p_parentWindow,
         cx::ui::cmn::ILayout& p_mainLayout,
         const cx::model::Column& p_viewLeft,
         const cx::model::Row& p_viewTop) const override;
     [[nodiscard]] virtual std::unique_ptr<IView> CreateGameView(
-        IGameViewPresenter& p_presenter,
+        cx::ui::IGameViewPresenter& p_presenter,
         IGameViewController& p_controller,
         IWindow& p_parentWindow,
         cx::ui::cmn::ILayout& p_mainLayout,
@@ -126,7 +130,7 @@ private:
 
     Glib::RefPtr<Gtk::Application> m_gtkApplication;
 
-    std::unique_ptr<WidgetsFactories> m_widgetsFactories;
+    std::unique_ptr<cx::ui::WidgetsFactories> m_widgetsFactories;
 
 };
 

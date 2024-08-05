@@ -31,7 +31,7 @@
 #include <cxmodel/common.h>
 #include <cxuicmn/ScalingRatios.h>
 
-namespace cx::ui::cmn
+namespace cx::ui
 {
 
 /**********************************************************************************************//**
@@ -103,7 +103,7 @@ public:
      *      The horizontal and vertical scaling ratios.
      *
      *********************************************************************************************/
-    virtual void Resize(const ScalingRatios& p_scalingRatios) = 0;
+    virtual void Resize(const cx::ui::cmn::ScalingRatios& p_scalingRatios) = 0;
 
     /******************************************************************************************//**
      * @brief Adds vertical and horizontal displacements to the main chip.
@@ -270,6 +270,6 @@ public:
  *************************************************************************************************/
 [[nodiscard]] cx::math::Position ComputeChipPositionFromColumn(const IAnimatedBoardModel& p_model, const cx::model::Column& p_column);
 
-} // namespace cx::ui::cmn
+} // namespace cx::ui
 
 #endif // IANIMATEDBOARDMODEL_H_01D250F8_D2F7_42FE_9D3F_762B6B5D1F37

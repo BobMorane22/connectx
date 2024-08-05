@@ -31,7 +31,7 @@ namespace cx::model
     enum class ModelNotificationContext;
 }
 
-namespace cx::ui::cmn
+namespace cx::ui
 {
 
 /*********************************************************************************************//**
@@ -42,7 +42,7 @@ namespace cx::ui::cmn
  * the application. The visible view is the last onw that was activated.
  *
  ************************************************************************************************/
-class IView : public IWidget
+class IView : public cx::ui::cmn::IWidget
 {
 
 public:
@@ -86,6 +86,6 @@ public:
 
 };
 
-} // namespace cx::ui::cmn
+} // namespace cx::ui
 
 #endif // IVIEW_H_DADC38E4_6E1F_4DED_A6F9_5D66F1558C89

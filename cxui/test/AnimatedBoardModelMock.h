@@ -26,19 +26,19 @@
 
 #include <cxui/IAnimatedBoardModel.h>
 
-class AnimatedBoardModelMock : public cx::ui::cmn::IAnimatedBoardModel
+class AnimatedBoardModelMock : public cx::ui::IAnimatedBoardModel
 {
 
 public:
 
-    // cx::ui::cmn::IAnimatedBoardModel:
+    // cx::ui::IAnimatedBoardModel:
     void Update(const cx::math::Dimensions& p_widgetDimensions, bool p_isChipMovingHorizontally) override;
     void Resize(const cx::ui::cmn::ScalingRatios& p_scalingRatios) override;
     void AddChipDisplacement(const cx::math::Height& p_vertical, const cx::math::Width& p_horizontal) override;
     void ResetChipPositions() override;
     void UpdateCurrentColumn(const cx::model::Column& p_newCurrentColumn) override;
-    [[nodiscard]] cx::ui::cmn::FPS GetFPS() const override;
-    [[nodiscard]] cx::ui::cmn::AnimationSpeed GetAnimationSpeed() const override;
+    [[nodiscard]] cx::ui::FPS GetFPS() const override;
+    [[nodiscard]] cx::ui::AnimationSpeed GetAnimationSpeed() const override;
     [[nodiscard]] const cx::math::Dimensions& GetAnimatedAreaDimensions() const override;
     [[nodiscard]] const cx::math::Dimensions& GetCellDimensions() const override;
     [[nodiscard]] cx::math::Radius GetChipRadius() const override;
@@ -46,13 +46,13 @@ public:
     [[nodiscard]] cx::math::Width GetHorizontalMargin() const override;
     [[nodiscard]] const cx::math::Position& GetMirrorChipPosition() const override;
     [[nodiscard]] bool IsMirrorChipNeeded() const override;
-    [[nodiscard]] cx::math::Width GetLineWidth(cx::ui::cmn::Feature p_feature) const override;
+    [[nodiscard]] cx::math::Width GetLineWidth(cx::ui::Feature p_feature) const override;
     [[nodiscard]] const cx::model::Column& GetCurrentColumn() const override;
 
     // Testing:
     void SetAnimatedAreaDimensions(const cx::math::Dimensions& p_widgetDimensions);
-    void SetFPS(const cx::ui::cmn::FPS& p_fps);
-    void SetAnimationSpeed(const cx::ui::cmn::AnimationSpeed& p_animationSpeed);
+    void SetFPS(const cx::ui::FPS& p_fps);
+    void SetAnimationSpeed(const cx::ui::AnimationSpeed& p_animationSpeed);
     void SetCurrentColumn(const cx::model::Column& p_currentColumn);
     void SetCellDimensions(const cx::math::Dimensions& p_cellDimensions);
 
@@ -71,8 +71,8 @@ private:
     bool m_updateCurrentColumnCalled = false;
 
     cx::math::Dimensions m_widgetDimensions{cx::math::Height{0.0}, cx::math::Width{0.0}};
-    cx::ui::cmn::FPS m_fps{24u};
-    cx::ui::cmn::AnimationSpeed m_animationSpeed{3u};
+    cx::ui::FPS m_fps{24u};
+    cx::ui::AnimationSpeed m_animationSpeed{3u};
     cx::math::Position m_currentChipPosition;
 
     cx::math::Dimensions m_cellDimensions{cx::math::Height{0.0}, cx::math::Width{0.0}};

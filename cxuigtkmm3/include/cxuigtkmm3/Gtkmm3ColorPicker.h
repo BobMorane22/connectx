@@ -29,7 +29,7 @@
 #include <gtkmm/combobox.h>
 #include <gtkmm/liststore.h>
 
-#include <cxuicmn/IColorPicker.h>
+#include <cxui/IColorPicker.h>
 
 namespace cx::ui::cmn
 {
@@ -43,7 +43,7 @@ namespace cx::ui::cmn
  * @invariant Thw treeview model is valid.
  *
  *************************************************************************************************/
-class Gtkmm3ColorPicker : public IColorPicker,
+class Gtkmm3ColorPicker : public cx::ui::IColorPicker,
                           public Gtk::ComboBox
 {
 
@@ -81,7 +81,7 @@ public:
      *********************************************************************************************/
     void SetDelegate(std::unique_ptr<IWidget> p_delegate);
 
-    // cx::ui::cmn::IColorPicker:
+    // cx::ui::IColorPicker:
     [[nodiscard]] Color GetCurrentSelection() const override;
     void SetCurrentSelection(const cx::ui::cmn::Color& p_color) override;
     [[nodiscard]] std::unique_ptr<ISignal<void>> OnSelectionChanged() override;

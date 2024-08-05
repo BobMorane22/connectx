@@ -16,54 +16,70 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file IColorPicker.h
+ * @file IChip.h
  * @date 2024
  *
  *************************************************************************************************/
 
-#ifndef ICOLORPICKER_H_FC678E04_F896_472E_A3A9_769E584E01FF
-#define ICOLORPICKER_H_FC678E04_F896_472E_A3A9_769E584E01FF
+#ifndef ICHIP_H_77522105_D372_4CF2_9AE7_68B8BD308F44
+#define ICHIP_H_77522105_D372_4CF2_9AE7_68B8BD308F44
 
-#include <cxuicmn/common.h>
-#include <cxuicmn/ISignal.h>
+#include <cxmodel/ChipColor.h>
 #include <cxuicmn/IWidget.h>
 
-namespace cx::ui::cmn
+namespace cx::ui
 {
 
-class IColorPicker : public IWidget
+/**********************************************************************************************//**
+ * @brief Chip for dropping in the Connect X game board.
+ *
+ * A chip is a piece with which Connect X players can fill the board.
+ *
+ *************************************************************************************************/
+class IChip : public cx::ui::cmn::IWidget
 {
 
 public:
 
     /******************************************************************************************//**
-     * @brief Sets the current selected color.
-     *
-     * @param p_color
-     *      The color to make visible in the combo box.
+     * @brief Destructor.
      *
      ********************************************************************************************/
-    [[nodiscard]] virtual Color GetCurrentSelection() const = 0;
+    virtual ~IChip() = default;
 
     /******************************************************************************************//**
-     * @brief Sets the current selected color.
+     * @brief Changes the chip's fill color.
      *
-     * @param p_color
-     *      The color to make visible in the combo box.
+     * @param p_newFillColor
+     *      The new fill color.
      *
      ********************************************************************************************/
-    virtual void SetCurrentSelection(const cx::ui::cmn::Color& p_color) = 0;
+    virtual void ChangeColor(const cx::model::ChipColor& p_newFillColor) = 0;
 
     /******************************************************************************************//**
-     * @brief Get the signal for when the color selection is changed by the user.
+     * @brief Chip color accessor.
      *
      * @return
-     *      A signal to connect to for when the color selection is changed.
+     *      The chip's color.
      *
      ********************************************************************************************/
-    [[nodiscard]] virtual std::unique_ptr<ISignal<void>> OnSelectionChanged() = 0;
+    [[nodiscard]] virtual cx::model::ChipColor GetColor() const = 0;
+
+    /******************************************************************************************//**
+     * @brief Highlights the current chip.
+     *
+     * The chip's background is hilighted.
+     *
+     ********************************************************************************************/
+    virtual void Highlight() = 0;
+
+    /******************************************************************************************//**
+     * @brief Removes highlighting from the current chip, if any.
+     *
+     ********************************************************************************************/
+    virtual void UnHighlight() = 0;
 };
 
-} // namespace cx::ui::cmn
+} // namespace cx::ui
 
-#endif // ICOLORPICKER_H_FC678E04_F896_472E_A3A9_769E584E01FF
+#endif // ICHIP_H_77522105_D372_4CF2_9AE7_68B8BD308F44

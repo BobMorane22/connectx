@@ -45,7 +45,7 @@ void cx::ui::cmn::Gtkmm3Window::ConfigureWindowIcon()
     }
 }
 
-cx::ui::cmn::Gtkmm3Window::Gtkmm3Window(WidgetsFactories& p_widgetsFactories)
+cx::ui::cmn::Gtkmm3Window::Gtkmm3Window(cx::ui::WidgetsFactories& p_widgetsFactories)
 : m_widgetsFactories{p_widgetsFactories}
 {
     const IAbstractWidgetsFactory& standardWidgetsFactory = m_widgetsFactories.GetStandardWidgetsFactory();

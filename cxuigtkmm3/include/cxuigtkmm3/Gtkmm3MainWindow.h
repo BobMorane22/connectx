@@ -34,12 +34,15 @@ namespace cx::ui::cmn
     class IMenuBar;
     class IMenu;
     class IMenuItem;
-    class IMainWindowController;
-    class IMainWindowPresenter;
     class IStatusBar;
     class IStatusBarPresenter;
+}
+
+namespace cx::ui
+{
+    class IMainWindowController;
+    class IMainWindowPresenter;
     class IView;
-    class WidgetsFactories;
 }
 
 namespace Gtk
@@ -104,9 +107,9 @@ public:
     Gtkmm3MainWindow(
         Gtk::Application& p_gtkApplication,
         cx::model::ModelSubject& p_model,
-        IMainWindowController& p_controller,
-        IMainWindowPresenter& p_presenter,
-        WidgetsFactories& p_widgetsFactories);
+        cx::ui::IMainWindowController& p_controller,
+        cx::ui::IMainWindowPresenter& p_presenter,
+        cx::ui::WidgetsFactories& p_widgetsFactories);
 
     // cx::ui::cmn::IWindow:
     ~Gtkmm3MainWindow() override;
@@ -157,12 +160,12 @@ private:
 
     cx::model::ModelSubject& m_model;
 
-    IMainWindowController& m_controller;
-    IMainWindowPresenter& m_presenter;
+    cx::ui::IMainWindowController& m_controller;
+    cx::ui::IMainWindowPresenter& m_presenter;
     std::unique_ptr<IStatusBarPresenter> m_statusBarPresenter;
 
     // Widgets factories:
-    WidgetsFactories& m_widgetsFactories;
+    cx::ui::WidgetsFactories& m_widgetsFactories;
 
     // Status bar:
     std::unique_ptr<IStatusBar> m_statusBar;
@@ -182,8 +185,8 @@ private:
     // Views:
     const cx::model::Column m_viewLeft;
     const cx::model::Row m_viewTop;
-    std::unique_ptr<IView> m_newGameView;
-    std::unique_ptr<IView> m_gameView;
+    std::unique_ptr<cx::ui::IView> m_newGameView;
+    std::unique_ptr<cx::ui::IView> m_gameView;
 
     // Other windows:
     std::unique_ptr<IWindow> m_aboutWindow;

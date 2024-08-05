@@ -35,14 +35,19 @@ namespace cx::model
 namespace cx::ui::cmn
 {
     class IAbstractWidgetsFactory;
-    class IColorPicker;
     class IEditBox;
     class ILabel;
     class ILayout;
+    class IOnOffSwitch;
+}
+
+namespace cx::ui
+{
+    class IColorPicker;
+    class IEditBox;
     class INewGameViewPresenter;
     class NewPlayerRow;
     class NewPlayerTitleRow;
-    class IOnOffSwitch;
     class WidgetsFactories;
 }
 
@@ -58,7 +63,7 @@ namespace cx::ui::cmn
  * @see cx::ui::cmn::NewPlayerRow
  *
  **************************************************************************************************/
-class Gtkmm3NewPlayersList final : public INewPlayersList,
+class Gtkmm3NewPlayersList final : public cx::ui::INewPlayersList,
                                    public Gtk::Grid
 {
 
@@ -78,8 +83,8 @@ public:
      *
      **********************************************************************************************/
     Gtkmm3NewPlayersList(
-        const INewGameViewPresenter& p_presenter,
-        const WidgetsFactories& p_widgetsFactories);
+        const cx::ui::INewGameViewPresenter& p_presenter,
+        const cx::ui::WidgetsFactories& p_widgetsFactories);
 
     /*******************************************************************************************//**
      * @brief Default destructor.
@@ -104,7 +109,7 @@ public:
      **********************************************************************************************/
     void SetDelegate(std::unique_ptr<cx::ui::cmn::IWidget> p_delegate);
 
-    // cx::ui::cmn::INewPlayersList:
+    // cx::ui::INewPlayersList:
     [[nodiscard]] size_t GetNbPlayers() const override;
     [[nodiscard]] cx::model::ChipColor GetRowPlayerChipColor(
         const size_t p_index) const override;
@@ -158,8 +163,8 @@ private:
 private:
 
     std::unique_ptr<cx::ui::cmn::IWidget> m_delegate;
-    const INewGameViewPresenter& m_presenter;
-    const WidgetsFactories& m_widgetsFactories;
+    const cx::ui::INewGameViewPresenter& m_presenter;
+    const cx::ui::WidgetsFactories& m_widgetsFactories;
 
     // Widget's main layout:
     std::unique_ptr<ILayout> m_layout;

@@ -31,7 +31,7 @@
 namespace
 {
 
-class GameViewPresenterMock : public cx::ui::cmn::IGameViewPresenter
+class GameViewPresenterMock : public cx::ui::IGameViewPresenter
 {
 
 public:
@@ -50,7 +50,7 @@ public:
         m_botTarget = 5u;
     }
 
-    // cx::ui::cmn::IGameViewPresenter (not used):
+    // cx::ui::IGameViewPresenter (not used):
     std::string GetGameViewTitle() const override {throw cx::unit::NotImplementedException();}
     cx::model::ChipColor GetGameViewNextPlayerChipColor() const override {throw cx::unit::NotImplementedException();}
     std::string GetGameViewActivePlayerLabelText() const override {throw cx::unit::NotImplementedException();}
@@ -58,7 +58,7 @@ public:
     std::string GetGameViewActivePlayerName() const override {throw cx::unit::NotImplementedException();}
     std::string GetGameViewNextPlayerName() const override {throw cx::unit::NotImplementedException();}
 
-    // cx::ui::cmn::IGameViewPresenter (wrapped by the cx::ui::cmn::AnimatedBoardPresenter):
+    // cx::ui::IGameViewPresenter (wrapped by the cx::ui::AnimatedBoardPresenter):
     cx::model::ChipColor GetGameViewActivePlayerChipColor() const override {return m_activePlayerChipColor;}
     size_t GetGameViewBoardWidth() const override {return m_boardWidth;}
     size_t GetGameViewBoardHeight() const override {return m_boardHeight;}
@@ -102,11 +102,11 @@ public:
         m_underlyingPresenter = std::make_unique<GameViewPresenterMock>();
         EXPECT_TRUE(m_underlyingPresenter);
 
-        m_presenter = std::make_unique<cx::ui::cmn::AnimatedBoardPresenter>(*m_underlyingPresenter);
+        m_presenter = std::make_unique<cx::ui::AnimatedBoardPresenter>(*m_underlyingPresenter);
         EXPECT_TRUE(m_presenter);
     }
 
-    cx::ui::cmn::AnimatedBoardPresenter& GetPresenter()
+    cx::ui::AnimatedBoardPresenter& GetPresenter()
     {
         EXPECT_TRUE(m_presenter);
         return *m_presenter;
@@ -120,7 +120,7 @@ public:
 
 private:
 
-    std::unique_ptr<cx::ui::cmn::AnimatedBoardPresenter> m_presenter;
+    std::unique_ptr<cx::ui::AnimatedBoardPresenter> m_presenter;
     std::unique_ptr<GameViewPresenterMock> m_underlyingPresenter;
 
 };
@@ -135,7 +135,7 @@ TEST_F(AnimatedBoardPresenterTestFixture, /*DISABLED_*/Sync_NoChangeToModel_Sync
     const cx::model::Height boardHeightBefore = presenter.GetBoardHeight();
     const cx::model::Width boardWidthBefore = presenter.GetBoardWidth();
     const cx::model::ChipColor activePlayerChipColorBefore = presenter.GetActivePlayerChipColor();
-    const cx::ui::cmn::IGameViewPresenter::ChipColors boardColorsBefore = presenter.GetBoardChipColors();
+    const cx::ui::IGameViewPresenter::ChipColors boardColorsBefore = presenter.GetBoardChipColors();
     const cx::model::Column botTargetBefore = presenter.GetBotTarget();
 
     // No changes were made to the underlying presenter, but we sync anyway:
@@ -145,7 +145,7 @@ TEST_F(AnimatedBoardPresenterTestFixture, /*DISABLED_*/Sync_NoChangeToModel_Sync
     const cx::model::Height boardHeightAfter = presenter.GetBoardHeight();
     const cx::model::Width boardWidthAfter = presenter.GetBoardWidth();
     const cx::model::ChipColor activePlayerChipColorAfter = presenter.GetActivePlayerChipColor();
-    const cx::ui::cmn::IGameViewPresenter::ChipColors boardColorsAfter = presenter.GetBoardChipColors();
+    const cx::ui::IGameViewPresenter::ChipColors boardColorsAfter = presenter.GetBoardChipColors();
     const cx::model::Column botTargetAfter = presenter.GetBotTarget();
 
     // Everything should match:
@@ -170,7 +170,7 @@ TEST_F(AnimatedBoardPresenterTestFixture, /*DISABLED_*/Sync_ChangesToModel_Syncs
     const cx::model::Height boardHeightBefore = presenter.GetBoardHeight();
     const cx::model::Width boardWidthBefore = presenter.GetBoardWidth();
     const cx::model::ChipColor activePlayerChipColorBefore = presenter.GetActivePlayerChipColor();
-    const cx::ui::cmn::IGameViewPresenter::ChipColors boardColorsBefore = presenter.GetBoardChipColors();
+    const cx::ui::IGameViewPresenter::ChipColors boardColorsBefore = presenter.GetBoardChipColors();
     const cx::model::Column botTargetBefore = presenter.GetBotTarget();
 
     // We update the underlying presenter and sync:
@@ -181,7 +181,7 @@ TEST_F(AnimatedBoardPresenterTestFixture, /*DISABLED_*/Sync_ChangesToModel_Syncs
     const cx::model::Height boardHeightAfter = presenter.GetBoardHeight();
     const cx::model::Width boardWidthAfter = presenter.GetBoardWidth();
     const cx::model::ChipColor activePlayerChipColorAfter = presenter.GetActivePlayerChipColor();
-    const cx::ui::cmn::IGameViewPresenter::ChipColors boardColorsAfter = presenter.GetBoardChipColors();
+    const cx::ui::IGameViewPresenter::ChipColors boardColorsAfter = presenter.GetBoardChipColors();
     const cx::model::Column botTargetAfter = presenter.GetBotTarget();
 
     // Returned values should be updated:

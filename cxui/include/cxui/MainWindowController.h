@@ -34,14 +34,14 @@ namespace cx::model
     class IUndoRedo;
 }
 
-namespace cx::ui::cmn
+namespace cx::ui
 {
 
 /**********************************************************************************************//**
  * @brief Main window controller.
  *
  *************************************************************************************************/
-class MainWindowController : public cx::ui::cmn::IMainWindowController
+class MainWindowController : public cx::ui::IMainWindowController
 {
 
 public:
@@ -86,6 +86,6 @@ private:
     std::unique_ptr<cx::model::IChip> m_currentChip;
 };
 
-} // namespace cx::ui::cmn
+} // namespace cx::ui
 
 #endif // MAINWINDOWCONTROLLER_H_2377676C_13C5_4D43_8AFA_0C90ABC44C5C

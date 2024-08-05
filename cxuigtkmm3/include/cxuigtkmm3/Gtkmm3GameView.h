@@ -32,12 +32,16 @@
 namespace cx::ui::cmn
 {
     enum class EventPropagation;
-    class IChip;
-    class IGameViewController;
-    class IGameViewPresenter;
     class ILabel;
     class ILayout;
     class IWindow;
+}
+
+namespace cx::ui
+{
+    class IChip;
+    class IGameViewController;
+    class IGameViewPresenter;
     class WidgetsFactories;
 }
 
@@ -48,10 +52,10 @@ namespace cx::ui::cmn
  * @brief Gtkmm3 implementation of the view for playing the game.
  *
  ************************************************************************************************/
-class Gtkmm3GameView : public IView,
-                       private cx::ui::cmn::IBoardAnimationObserver,
-                       private cx::ui::cmn::IUserActionObserver,
-                       private cx::ui::cmn::BoardAnimationSubject
+class Gtkmm3GameView : public cx::ui::IView,
+                       private cx::ui::IBoardAnimationObserver,
+                       private cx::ui::IUserActionObserver,
+                       private cx::ui::BoardAnimationSubject
 {
 
 public:
@@ -76,9 +80,10 @@ public:
      *
      ********************************************************************************************/
     Gtkmm3GameView(
-        WidgetsFactories& p_widgetsFactories,
-        IGameViewPresenter& p_presenter, IGameViewController& p_controller,
-        IWindow& p_parentWindow,
+        cx::ui::WidgetsFactories& p_widgetsFactories,
+        cx::ui::IGameViewPresenter& p_presenter,
+        cx::ui::IGameViewController& p_controller,
+        cx::ui::cmn::IWindow& p_parentWindow,
         cx::ui::cmn::ILayout& p_mainLayout,
         const cx::model::Column& p_viewLeft,
         const cx::model::Row& p_viewTop);
@@ -89,12 +94,12 @@ public:
      ********************************************************************************************/
     ~Gtkmm3GameView() override;
     
-    // cx::ui::cmn::IView:
+    // cx::ui::IView:
     void Activate() override;
     void DeActivate() override;
     void Update(cx::model::ModelNotificationContext p_context) override;
 
-    // IWidget:
+    // cx::ui::cmn::IWidget:
     [[nodiscard]] size_t GetWidth() const override;
     [[nodiscard]] size_t GetHeight() const override;
     void SetEnabled(EnabledState p_enabled) override;
@@ -104,11 +109,11 @@ public:
 
 private:
 
-    // cx::ui::cmn::IBoardAnimationObserver:
-    void Update(cx::ui::cmn::BoardAnimationNotificationContext p_context, cx::ui::cmn::BoardAnimationSubject* p_subject) override;
+    // cx::ui::IBoardAnimationObserver:
+    void Update(cx::ui::BoardAnimationNotificationContext p_context, cx::ui::BoardAnimationSubject* p_subject) override;
 
-    // cx::ui::cmn::IUserActionObserver:
-    void Update(cx::ui::cmn::UserAction p_context, cx::ui::cmn::UserActionSubject* p_subject) override;
+    // cx::ui::IUserActionObserver:
+    void Update(cx::ui::UserAction p_context, cx::ui::UserActionSubject* p_subject) override;
 
     void SetLayout();
     void PopulateWidgets();

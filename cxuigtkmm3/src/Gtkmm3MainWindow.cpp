@@ -58,9 +58,9 @@
 cx::ui::cmn::Gtkmm3MainWindow::Gtkmm3MainWindow(
     Gtk::Application& p_gtkApplication,
     cx::model::ModelSubject& p_model,
-    cx::ui::cmn::IMainWindowController& p_controller,
-    cx::ui::cmn::IMainWindowPresenter& p_presenter,
-    cx::ui::cmn::WidgetsFactories& p_widgetsFactories)
+    cx::ui::IMainWindowController& p_controller,
+    cx::ui::IMainWindowPresenter& p_presenter,
+    cx::ui::WidgetsFactories& p_widgetsFactories)
  : cx::ui::cmn::Gtkmm3Window{p_widgetsFactories}
  , m_gtkApplication{p_gtkApplication}
  , m_model{p_model}

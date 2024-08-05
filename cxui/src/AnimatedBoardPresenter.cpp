@@ -23,13 +23,13 @@
 
 #include <cxui/AnimatedBoardPresenter.h>
 
-cx::ui::cmn::AnimatedBoardPresenter::AnimatedBoardPresenter(const IGameViewPresenter& p_presenter)
+cx::ui::AnimatedBoardPresenter::AnimatedBoardPresenter(const IGameViewPresenter& p_presenter)
 : m_gameVewPresenter{p_presenter}
 {
     Sync();
 }
 
-void cx::ui::cmn::AnimatedBoardPresenter::Sync()
+void cx::ui::AnimatedBoardPresenter::Sync()
 {
     m_cache.m_boardHeight = cx::model::Height{m_gameVewPresenter.GetGameViewBoardHeight()};
     m_cache.m_boardWidth = cx::model::Width{m_gameVewPresenter.GetGameViewBoardWidth()};
@@ -38,37 +38,37 @@ void cx::ui::cmn::AnimatedBoardPresenter::Sync()
     m_cache.m_botTarget = cx::model::Column{m_gameVewPresenter.GetBotTarget()};
 }
 
-cx::model::Height cx::ui::cmn::AnimatedBoardPresenter::GetBoardHeight() const
+cx::model::Height cx::ui::AnimatedBoardPresenter::GetBoardHeight() const
 {
     return m_cache.m_boardHeight;
 }
 
-cx::model::Width cx::ui::cmn::AnimatedBoardPresenter::GetBoardWidth() const
+cx::model::Width cx::ui::AnimatedBoardPresenter::GetBoardWidth() const
 {
     return m_cache.m_boardWidth;
 }
 
-cx::ui::cmn::Color cx::ui::cmn::AnimatedBoardPresenter::GetGameViewBoardColor() const
+cx::ui::cmn::Color cx::ui::AnimatedBoardPresenter::GetGameViewBoardColor() const
 {
     return m_gameVewPresenter.GetGameViewBoardColor();
 }
 
-cx::ui::cmn::Color cx::ui::cmn::AnimatedBoardPresenter::GetGameViewColumnHighlightColor() const
+cx::ui::cmn::Color cx::ui::AnimatedBoardPresenter::GetGameViewColumnHighlightColor() const
 {
     return m_gameVewPresenter.GetGameViewColumnHighlightColor();
 }
 
-cx::model::ChipColor cx::ui::cmn::AnimatedBoardPresenter::GetActivePlayerChipColor() const
+cx::model::ChipColor cx::ui::AnimatedBoardPresenter::GetActivePlayerChipColor() const
 {
     return m_cache.m_activePlayerChipColor;
 }
 
-const cx::ui::cmn::IGameViewPresenter::ChipColors& cx::ui::cmn::AnimatedBoardPresenter::GetBoardChipColors() const
+const cx::ui::IGameViewPresenter::ChipColors& cx::ui::AnimatedBoardPresenter::GetBoardChipColors() const
 {
     return m_cache.m_boardColors;
 }
 
-cx::model::Column cx::ui::cmn::AnimatedBoardPresenter::GetBotTarget() const
+cx::model::Column cx::ui::AnimatedBoardPresenter::GetBotTarget() const
 {
     return m_cache.m_botTarget;
 }

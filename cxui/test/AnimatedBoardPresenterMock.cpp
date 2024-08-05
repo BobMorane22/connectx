@@ -58,7 +58,7 @@ cx::model::ChipColor AnimatedBoardPresenterMock::GetActivePlayerChipColor() cons
     return cx::model::MakeTransparent();
 }
 
-const cx::ui::cmn::IGameViewPresenter::ChipColors& AnimatedBoardPresenterMock::GetBoardChipColors() const
+const cx::ui::IGameViewPresenter::ChipColors& AnimatedBoardPresenterMock::GetBoardChipColors() const
 {
     return m_chipColors;
 }
