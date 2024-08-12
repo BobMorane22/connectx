@@ -28,7 +28,7 @@
 #include <vector>
 
 #include <cxmodel/ChipColor.h>
-#include <cxuicmn/common.h>
+#include <cxcmnui/common.h>
 
 namespace cx::ui
 {
@@ -131,7 +131,7 @@ public:
      * @return The board color.
      *
      ********************************************************************************************/
-    [[nodiscard]] virtual cx::ui::cmn::Color GetGameViewBoardColor() const = 0;
+    [[nodiscard]] virtual cx::cmn::ui::Color GetGameViewBoardColor() const = 0;
 
     /******************************************************************************************//**
      * @brief Column highlight color accessor.
@@ -142,7 +142,7 @@ public:
      * @return The column highlight color.
      *
      ********************************************************************************************/
-    [[nodiscard]] virtual cx::ui::cmn::Color GetGameViewColumnHighlightColor() const = 0;
+    [[nodiscard]] virtual cx::cmn::ui::Color GetGameViewColumnHighlightColor() const = 0;
 
     /******************************************************************************************//**
      * @brief Chip colors accessor.

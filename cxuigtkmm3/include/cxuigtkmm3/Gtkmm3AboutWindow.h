@@ -26,20 +26,20 @@
 
 #include <cxui/IAboutWindowPresenter.h>
 
-#include <cxuicmngtkmm3/Gtkmm3Window.h>
+#include <cxcmnuigtkmm3/Gtkmm3Window.h>
 
 namespace cx::ui
 {
     class WidgetsFactories;
 }
 
-namespace cx::ui::cmn
+namespace cx::cmn::ui
 {
     class IButton;
     class ILabel;
 }
 
-namespace cx::ui::cmn
+namespace cx::cmn::ui
 {
 
 /**********************************************************************************************//**
@@ -66,8 +66,8 @@ public:
      *
      *********************************************************************************************/
      Gtkmm3AboutWindow(
-        WidgetsFactories& p_widgetsFactories,
-        std::unique_ptr<IAboutWindowPresenter> p_presenter);
+        cx::ui::WidgetsFactories& p_widgetsFactories,
+        std::unique_ptr<cx::ui::IAboutWindowPresenter> p_presenter);
 
 private:
 
@@ -82,9 +82,9 @@ private:
     void ConfigureWidgets() final;
     void ConfigureSignalHandlers() final;
 
-    std::unique_ptr<IAboutWindowPresenter> m_presenter;
+    std::unique_ptr<cx::ui::IAboutWindowPresenter> m_presenter;
 
-    WidgetsFactories& m_widgetsFactories;
+    cx::ui::WidgetsFactories& m_widgetsFactories;
     std::unique_ptr<ILabel> m_name;
     std::unique_ptr<ILabel> m_version;
     std::unique_ptr<ILabel> m_description;
@@ -96,6 +96,6 @@ private:
 
 };
 
-} // namespace cx::ui::cmn
+} // namespace cx::cmn::ui
 
 #endif // GTKMM3ABOUTWINDOW_H_396864CD_88A3_43F2_B08B_3F9FEBE89DE1

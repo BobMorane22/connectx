@@ -1,0 +1,97 @@
+/**************************************************************************************************
+ *  This file is part of Connect X.
+ *
+ *  Connect X is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  Connect X is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with Connect X. If not, see <https://www.gnu.org/licenses/>.
+ *
+ *************************************************************************************************/
+/**********************************************************************************************//**
+ * @file IWindow.h
+ * @date 2020
+ *
+ *************************************************************************************************/
+
+#ifndef IWINDOW_H_4807796E_6C76_4D0A_BF7D_81534795BA29
+#define IWINDOW_H_4807796E_6C76_4D0A_BF7D_81534795BA29
+
+#include <cxmodel/ModelNotificationContext.h>
+#include <cxcmnui/IWidget.h>
+
+namespace cx::cmn::ui
+{
+
+/*********************************************************************************************//**
+ * @brief Interface for creating a standard window.
+ *
+ * This interface presents the basic utilities needed to create windows.
+ *
+ ************************************************************************************************/
+class IWindow : public IWidget,
+                public cx::model::IModelObserver
+{
+
+public:
+
+    /*****************************************************************************************//**
+     * @brief Window orientation on which to operate.
+     *
+     ********************************************************************************************/
+    enum class Orientation
+    {
+        /** Operate on width only. */
+        HORIZONTAL,
+
+        /** Operate on height only. */
+        VERTICAL,
+
+        /** Operate on both width and height */
+        ALL,
+    };
+
+public:
+
+    /******************************************************************************************//**
+     * @brief Default destructor.
+     *
+     ********************************************************************************************/
+    virtual ~IWindow() = default;
+
+    /******************************************************************************************//**
+     * @brief Shows the window on the screen.
+     *
+     * Shows the window on the screen for a user to see.
+     *
+     * @return
+     *      `EXIT_SUCCESS` if the window if the window terminated the application without
+     *       errors, `EXIT_FAILURE` otherwise.
+     *
+     ********************************************************************************************/
+    [[nodiscard]] virtual int Show() = 0;
+
+    /******************************************************************************************//**
+     * @brief Make any extra space removed on the window.
+     *
+     * Once this call completes, there should be no extra window space with no widgets in it.
+     * Useful when dynamically changing a layout.
+     *
+     * @param p_orientation
+     *      The window dimension(s) to shrink.
+     *
+     ********************************************************************************************/
+    virtual void ShrinkToContents(Orientation p_orientation) = 0;
+
+};
+
+} // namespace cx::cmn::ui
+
+#endif // IWINDOW_H_4807796E_6C76_4D0A_BF7D_81534795BA29

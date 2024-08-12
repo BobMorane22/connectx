@@ -25,7 +25,7 @@
 #define ICHIP_H_77522105_D372_4CF2_9AE7_68B8BD308F44
 
 #include <cxmodel/ChipColor.h>
-#include <cxuicmn/IWidget.h>
+#include <cxcmnui/IWidget.h>
 
 namespace cx::ui
 {
@@ -36,7 +36,7 @@ namespace cx::ui
  * A chip is a piece with which Connect X players can fill the board.
  *
  *************************************************************************************************/
-class IChip : public cx::ui::cmn::IWidget
+class IChip : public cx::cmn::ui::IWidget
 {
 
 public:

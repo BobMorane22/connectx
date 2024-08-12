@@ -32,7 +32,7 @@ namespace cx::model
     enum class PlayerType;
 }
 
-namespace cx::ui::cmn
+namespace cx::cmn::ui
 {
     class IAbstractWidgetsFactory;
     class IEditBox;
@@ -51,7 +51,7 @@ namespace cx::ui
     class WidgetsFactories;
 }
 
-namespace cx::ui::cmn
+namespace cx::cmn::ui
 {
 
 /***********************************************************************************************//**
@@ -60,7 +60,7 @@ namespace cx::ui::cmn
  * Widget containing rows of players to be registered for a Connect X game, as well as the color
  * they have chosen for their chips.
  *
- * @see cx::ui::cmn::NewPlayerRow
+ * @see cx::cmn::ui::NewPlayerRow
  *
  **************************************************************************************************/
 class Gtkmm3NewPlayersList final : public cx::ui::INewPlayersList,
@@ -95,7 +95,7 @@ public:
     /*******************************************************************************************//**
      * @brief Sets the delegate for widget common facilities.
      *
-     * The delegate is reponsible to carry the implementation for generic `cx::ui::cmn::IWidget` operations.
+     * The delegate is reponsible to carry the implementation for generic `cx::cmn::ui::IWidget` operations.
      * It is meant to avoid implementation duplication.
      *
      * @param p_delegate
@@ -107,7 +107,7 @@ public:
      *      The registered widget delegate is valid.
      *
      **********************************************************************************************/
-    void SetDelegate(std::unique_ptr<cx::ui::cmn::IWidget> p_delegate);
+    void SetDelegate(std::unique_ptr<cx::cmn::ui::IWidget> p_delegate);
 
     // cx::ui::INewPlayersList:
     [[nodiscard]] size_t GetNbPlayers() const override;
@@ -129,7 +129,7 @@ public:
         const cx::model::ChipColor& p_newPlayerNewChipColor) override;
     [[nodiscard]] std::unique_ptr<ISignal<void>> OnPlayerUpdated() override;
 
-    // cx::ui::cmn::IWidget:
+    // cx::cmn::ui::IWidget:
     [[nodiscard]] size_t GetWidth() const override;
     [[nodiscard]] size_t GetHeight() const override;
     void SetEnabled(
@@ -162,7 +162,7 @@ private:
 
 private:
 
-    std::unique_ptr<cx::ui::cmn::IWidget> m_delegate;
+    std::unique_ptr<cx::cmn::ui::IWidget> m_delegate;
     const cx::ui::INewGameViewPresenter& m_presenter;
     const cx::ui::WidgetsFactories& m_widgetsFactories;
 
@@ -177,10 +177,10 @@ private:
     // Player rows:
     std::vector<std::unique_ptr<IOnOffSwitch>> m_playerTypes;
     std::vector<std::unique_ptr<IEditBox>> m_playerNames;
-    std::vector<std::unique_ptr<IColorPicker>> m_playerChipColors;
+    std::vector<std::unique_ptr<cx::ui::IColorPicker>> m_playerChipColors;
 
 };
 
-} // namespace cx::ui::cmn
+} // namespace cx::cmn::ui
 
 #endif // GTKMM3NEWPLAYERSLIST_H_FDB93AF1_A5AC_4484_9857_0B207BAE8724

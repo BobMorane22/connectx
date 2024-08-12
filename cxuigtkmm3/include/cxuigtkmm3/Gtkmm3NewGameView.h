@@ -42,7 +42,7 @@ namespace cx::ui
     class INewPlayersList;
 }
 
-namespace cx::ui::cmn
+namespace cx::cmn::ui
 {
     class IButton;
     class ILabel;
@@ -51,7 +51,7 @@ namespace cx::ui::cmn
     class IWindow;
 }
 
-namespace cx::ui::cmn
+namespace cx::cmn::ui
 {
 
 /*********************************************************************************************//**
@@ -84,10 +84,10 @@ public:
      ********************************************************************************************/
     Gtkmm3NewGameView(
        cx::ui::WidgetsFactories& p_widgetsFactories,
-       INewGameViewPresenter& p_presenter,
-       INewGameViewController& p_controller,
+       cx::ui::INewGameViewPresenter& p_presenter,
+       cx::ui::INewGameViewController& p_controller,
        IWindow& p_parentWindow,
-       cx::ui::cmn::ILayout& p_mainLayout,
+       cx::cmn::ui::ILayout& p_mainLayout,
        const cx::model::Column& p_viewLeft,
        const cx::model::Row& p_viewTop);
 
@@ -121,12 +121,12 @@ private:
 
     cx::ui::WidgetsFactories& m_widgetsFactories;
 
-    INewGameViewPresenter& m_presenter;
-    INewGameViewController& m_controller;
+    cx::ui::INewGameViewPresenter& m_presenter;
+    cx::ui::INewGameViewController& m_controller;
 
     IWindow& m_parentWindow;
 
-    cx::ui::cmn::ILayout& m_mainLayout;
+    cx::cmn::ui::ILayout& m_mainLayout;
 
     const cx::model::Column m_viewLeft;
     const cx::model::Row m_viewTop;
@@ -147,7 +147,7 @@ private:
     std::unique_ptr<ISpinBox> m_boardHeightSpinBox;
 
     std::unique_ptr<ILabel> m_playersSectionTitle;
-    std::unique_ptr<INewPlayersList> m_playersList;
+    std::unique_ptr<cx::ui::INewPlayersList> m_playersList;
 
     std::unique_ptr<IButton> m_removePlayerButton;
     std::unique_ptr<IButton> m_addPlayerButton;
@@ -155,6 +155,6 @@ private:
 
 };
 
-} // namespace cx::ui::cmn
+} // namespace cx::cmn::ui
 
 #endif // GTKMM3NEWGAMEVIEW_H_C5E65447_64C6_4DFE_B0F7_E6E9DB14BEAF

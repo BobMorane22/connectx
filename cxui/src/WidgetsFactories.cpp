@@ -22,19 +22,19 @@
  *************************************************************************************************/
 
 #include <cxinv/assertion.h>
-#include <cxuicmn/IAbstractWidgetsFactory.h>
+#include <cxcmnui/IAbstractWidgetsFactory.h>
 #include <cxui/IAbstractConnectXWidgetsFactory.h>
 #include <cxui/WidgetsFactories.h>
 
 cx::ui::WidgetsFactories::WidgetsFactories(
-    cx::ui::cmn::IAbstractWidgetsFactory& p_stdFactory,
+    cx::cmn::ui::IAbstractWidgetsFactory& p_stdFactory,
     IAbstractConnectXWidgetsFactory& p_connectxFactory)
 : m_stdFactory{p_stdFactory}
 , m_connectxFactory{p_connectxFactory}
 {
 }
 
-const cx::ui::cmn::IAbstractWidgetsFactory& cx::ui::WidgetsFactories::GetStandardWidgetsFactory() const
+const cx::cmn::ui::IAbstractWidgetsFactory& cx::ui::WidgetsFactories::GetStandardWidgetsFactory() const
 {
     return m_stdFactory;
 }

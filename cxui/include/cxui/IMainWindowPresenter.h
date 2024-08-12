@@ -160,8 +160,8 @@ public:
 
     size_t GetGameViewBoardWidth() const override = 0;
     size_t GetGameViewBoardHeight() const override = 0;
-    [[nodiscard]] cx::ui::cmn::Color GetGameViewBoardColor() const override = 0;
-    [[nodiscard]] cx::ui::cmn::Color GetGameViewColumnHighlightColor() const override = 0;
+    [[nodiscard]] cx::cmn::ui::Color GetGameViewBoardColor() const override = 0;
+    [[nodiscard]] cx::cmn::ui::Color GetGameViewColumnHighlightColor() const override = 0;
 
     const ChipColors& GetGameViewChipColors() const override = 0;
 

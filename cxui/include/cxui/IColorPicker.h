@@ -24,14 +24,14 @@
 #ifndef ICOLORPICKER_H_FC678E04_F896_472E_A3A9_769E584E01FF
 #define ICOLORPICKER_H_FC678E04_F896_472E_A3A9_769E584E01FF
 
-#include <cxuicmn/common.h>
-#include <cxuicmn/ISignal.h>
-#include <cxuicmn/IWidget.h>
+#include <cxcmnui/common.h>
+#include <cxcmnui/ISignal.h>
+#include <cxcmnui/IWidget.h>
 
 namespace cx::ui
 {
 
-class IColorPicker : public cx::ui::cmn::IWidget
+class IColorPicker : public cx::cmn::ui::IWidget
 {
 
 public:
@@ -43,7 +43,7 @@ public:
      *      The color to make visible in the combo box.
      *
      ********************************************************************************************/
-    [[nodiscard]] virtual cx::ui::cmn::Color GetCurrentSelection() const = 0;
+    [[nodiscard]] virtual cx::cmn::ui::Color GetCurrentSelection() const = 0;
 
     /******************************************************************************************//**
      * @brief Sets the current selected color.
@@ -52,7 +52,7 @@ public:
      *      The color to make visible in the combo box.
      *
      ********************************************************************************************/
-    virtual void SetCurrentSelection(const cx::ui::cmn::Color& p_color) = 0;
+    virtual void SetCurrentSelection(const cx::cmn::ui::Color& p_color) = 0;
 
     /******************************************************************************************//**
      * @brief Get the signal for when the color selection is changed by the user.
@@ -61,7 +61,7 @@ public:
      *      A signal to connect to for when the color selection is changed.
      *
      ********************************************************************************************/
-    [[nodiscard]] virtual std::unique_ptr<cx::ui::cmn::ISignal<void>> OnSelectionChanged() = 0;
+    [[nodiscard]] virtual std::unique_ptr<cx::cmn::ui::ISignal<void>> OnSelectionChanged() = 0;
 };
 
 } // namespace cx::ui

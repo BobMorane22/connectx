@@ -62,8 +62,8 @@ public:
     cx::model::ChipColor GetGameViewActivePlayerChipColor() const override {return m_activePlayerChipColor;}
     size_t GetGameViewBoardWidth() const override {return m_boardWidth;}
     size_t GetGameViewBoardHeight() const override {return m_boardHeight;}
-    [[nodiscard]] cx::ui::cmn::Color GetGameViewBoardColor() const override {return cx::ui::cmn::Color{8481u, 8481u, 51143u};}
-    [[nodiscard]] cx::ui::cmn::Color GetGameViewColumnHighlightColor() const override {return cx::ui::cmn::Color{19660u, 19660u, 19660u, 32767u};}
+    [[nodiscard]] cx::cmn::ui::Color GetGameViewBoardColor() const override {return cx::cmn::ui::Color{8481u, 8481u, 51143u};}
+    [[nodiscard]] cx::cmn::ui::Color GetGameViewColumnHighlightColor() const override {return cx::cmn::ui::Color{19660u, 19660u, 19660u, 32767u};}
     const ChipColors& GetGameViewChipColors() const override {return m_boardColors;}
     [[nodiscard]] virtual bool IsCurrentPlayerABot() const {return false;};
     [[nodiscard]] virtual size_t GetBotTarget() const {return m_botTarget;};
@@ -210,12 +210,12 @@ TEST_F(AnimatedBoardPresenterTestFixture, /*DISABLED_*/GetBoardWidth_ValidPresen
 
 TEST_F(AnimatedBoardPresenterTestFixture, /*DISABLED_*/GetGameViewBoardColor_ValidPresenter_BoardColorReturned)
 {
-    ASSERT_TRUE((GetPresenter().GetGameViewBoardColor() == cx::ui::cmn::Color{8481u, 8481u, 51143u}));
+    ASSERT_TRUE((GetPresenter().GetGameViewBoardColor() == cx::cmn::ui::Color{8481u, 8481u, 51143u}));
 }
 
 TEST_F(AnimatedBoardPresenterTestFixture, /*DISABLED_*/GetGameViewColumnHighlightColor_ValidPresenter_ColumnHighlightColorReturned)
 {
-    ASSERT_TRUE((GetPresenter().GetGameViewColumnHighlightColor() == cx::ui::cmn::Color{19660u, 19660u, 19660u, 32767u}));
+    ASSERT_TRUE((GetPresenter().GetGameViewColumnHighlightColor() == cx::cmn::ui::Color{19660u, 19660u, 19660u, 32767u}));
 }
 
 TEST_F(AnimatedBoardPresenterTestFixture, /*DISABLED_*/GetActivePlayerChipColor_ValidPresenter_ActivePlayerChipColorReturned)

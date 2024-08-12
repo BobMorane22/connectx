@@ -23,13 +23,13 @@
 
 #include <cstdlib>
 #include <cxinv/assertion.h>
-#include <cxuicmn/IAbstractWidgetsFactory.h>
+#include <cxcmnui/IAbstractWidgetsFactory.h>
 #include <cxui/IAbstractConnectXWidgetsFactory.h>
 #include <cxui/IMainWindowController.h>
 #include <cxui/IMainWindowPresenter.h>
-#include <cxuicmn/IWindow.h>
+#include <cxcmnui/IWindow.h>
 #include <cxui/WidgetsFactories.h>
-#include <cxuicmn/WidgetsToolkit.h>
+#include <cxcmnui/WidgetsToolkit.h>
 #include <cxexec/Gtkmm3UIManager.h>
 #include <cxexec/IUIManager.h>
 #include <cxexec/UIManagerFactory.h>
@@ -66,11 +66,11 @@ cx::UIManagerFactory::UIManagerFactory(int argc, char *argv[], cx::ModelReferenc
     POSTCONDITION(m_argv);
 }
 
-std::unique_ptr<cx::IUIManager> cx::UIManagerFactory::Create(cx::ui::cmn::WidgetsToolkit p_toolkit) const
+std::unique_ptr<cx::IUIManager> cx::UIManagerFactory::Create(cx::cmn::ui::WidgetsToolkit p_toolkit) const
 {
     switch(p_toolkit)
     {
-        case cx::ui::cmn::WidgetsToolkit::GTKMM3:
+        case cx::cmn::ui::WidgetsToolkit::GTKMM3:
             return std::make_unique<cx::Gtkmm3UIManager>(m_argc, m_argv, m_model);
 
         default:

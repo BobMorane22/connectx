@@ -25,9 +25,9 @@
 #define GTKMM3GAMERESOLUTIONDIALOG_H_E524D346_789D_4165_ABD3_4B876F7FBBD7
 
 #include <cxui/WidgetsFactories.h>
-#include <cxuicmngtkmm3/Gtkmm3Window.h>
+#include <cxcmnuigtkmm3/Gtkmm3Window.h>
 
-namespace cx::ui::cmn
+namespace cx::cmn::ui
 {
     class IButton;
     class ILabel;
@@ -40,7 +40,7 @@ namespace cx::ui
     class WidgetsFactories;
 }
 
-namespace cx::ui::cmn
+namespace cx::cmn::ui
 {
 
 /*********************************************************************************************//**
@@ -88,8 +88,8 @@ private:
     void ConfigureWidgets() final;
     void ConfigureSignalHandlers() final;
 
-    const std::unique_ptr<IGameResolutionDialogPresenter> m_presenter;
-    const std::unique_ptr<IGameResolutionDialogController> m_controller;
+    const std::unique_ptr<cx::ui::IGameResolutionDialogPresenter> m_presenter;
+    const std::unique_ptr<cx::ui::IGameResolutionDialogController> m_controller;
 
     cx::ui::WidgetsFactories& m_widgetsFactories;
     std::unique_ptr<ILabel> m_title;
@@ -98,6 +98,6 @@ private:
 
 };
 
-} // namespace cx::ui::cmn
+} // namespace cx::cmn::ui
 
 #endif // GTKMM3GAMERESOLUTIONDIALOG_H_E524D346_789D_4165_ABD3_4B876F7FBBD7

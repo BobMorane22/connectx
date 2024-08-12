@@ -28,7 +28,7 @@
 
 #include <cxui/IChip.h>
 
-namespace cx::ui::cmn
+namespace cx::cmn::ui
 {
 
 /*********************************************************************************************//**
@@ -65,7 +65,7 @@ public:
     /******************************************************************************************//**
      * @brief Sets the delegate for widget common facilities.
      *
-     * The delegate is reponsible to carry the implementation for generic `cx::ui::cmn::IWidget` operations.
+     * The delegate is reponsible to carry the implementation for generic `cx::cmn::ui::IWidget` operations.
      * It is meant to avoid implementation duplication.
      *
      * @param p_delegate
@@ -79,13 +79,13 @@ public:
      *********************************************************************************************/
     void SetDelegate(std::unique_ptr<IWidget> p_delegate);
 
-    // cx::ui::cmn::IChip:
+    // cx::cmn::ui::IChip:
     void ChangeColor(const cx::model::ChipColor& p_newFillColor) override final;
     [[nodiscard]] cx::model::ChipColor GetColor() const override final;
     void Highlight() override final;
     void UnHighlight() override final;
 
-    // cx::ui::cmn::IWidget:
+    // cx::cmn::ui::IWidget:
     [[nodiscard]] size_t GetWidth() const override final;
     [[nodiscard]] size_t GetHeight() const override final;
     void SetEnabled(EnabledState p_enabled) override final;
@@ -124,6 +124,6 @@ private:
     cx::model::ChipColor m_initialBackgroundColor;
 };
 
-} // namespace cx::ui::cmn
+} // namespace cx::cmn::ui
 
 #endif // GTKMM3CHIP_H_1CEF1E8A_30D4_45E4_932A_B86F7A39371D

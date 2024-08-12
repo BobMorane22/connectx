@@ -24,7 +24,7 @@
 #ifndef IANIMATEDBOARD_H_138FF453_BD0C_423D_A57F_1C1834CB8749
 #define IANIMATEDBOARD_H_138FF453_BD0C_423D_A57F_1C1834CB8749
 
-#include <cxuicmn/IWidget.h>
+#include <cxcmnui/IWidget.h>
 
 #include <cxmodel/common.h>
 #include <cxmodel/IObserver.h>
@@ -77,7 +77,7 @@ using IUserActionObserver = cx::model::IObserver<UserAction>;
  * game must not go on and the user should not be able to interract with the board.
  *
  *************************************************************************************************/
-class IAnimatedBoard : public cx::ui::cmn::IWidget,
+class IAnimatedBoard : public cx::cmn::ui::IWidget,
                        public cx::ui::IBoardInformation,
                        public cx::ui::IBoardAnimationObserver,
                        public cx::ui::BoardAnimationSubject,

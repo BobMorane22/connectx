@@ -1,0 +1,30 @@
+#include <cairomm/context.h>
+
+#include <cxmath/math.h>
+#include <cxmath/Position.h>
+#include <cxcmnui/pathHelpers.h>
+
+void cx::cmn::ui::MakeRectanglarPath(const Cairo::RefPtr<Cairo::Context>& p_context,
+                               const cx::math::Position& p_topLeft,
+                               double p_height,
+                               double p_width)
+{
+    p_context->move_to(p_topLeft.m_x, p_topLeft.m_y);
+    p_context->line_to(p_topLeft.m_x + p_width, p_topLeft.m_y);
+    p_context->line_to(p_topLeft.m_x + p_width, p_topLeft.m_y + p_height);
+    p_context->line_to(p_topLeft.m_x, p_topLeft.m_y + p_height);
+    p_context->line_to(p_topLeft.m_x, p_topLeft.m_y);
+}
+
+void cx::cmn::ui::MakeCircularPath(const Cairo::RefPtr<Cairo::Context>& p_context,
+                             const cx::math::Position& p_centerPosition,
+                             double p_radius)
+{
+    
+    // We draw an arc from 0 to 2pi at the specified center position:
+    p_context->arc(p_centerPosition.m_x,
+                   p_centerPosition.m_y,
+                   p_radius,
+                   0.0,
+                   2.0 * cx::math::pi<double>);
+}

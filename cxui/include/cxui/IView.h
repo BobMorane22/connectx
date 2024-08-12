@@ -24,7 +24,7 @@
 #ifndef IVIEW_H_DADC38E4_6E1F_4DED_A6F9_5D66F1558C89
 #define IVIEW_H_DADC38E4_6E1F_4DED_A6F9_5D66F1558C89
 
-#include <cxuicmn/IWidget.h>
+#include <cxcmnui/IWidget.h>
 
 namespace cx::model
 {
@@ -42,7 +42,7 @@ namespace cx::ui
  * the application. The visible view is the last onw that was activated.
  *
  ************************************************************************************************/
-class IView : public cx::ui::cmn::IWidget
+class IView : public cx::cmn::ui::IWidget
 {
 
 public:

@@ -28,9 +28,9 @@
 
 #include <glibmm/main.h>
 
-#include <cxuicmn/ITimer.h>
+#include <cxcmnui/ITimer.h>
 
-namespace cx::ui::cmn
+namespace cx::cmn::ui
 {
 
 /**********************************************************************************************//**
@@ -100,6 +100,6 @@ private:
 
 };
 
-} // namespace cx::ui::cmn
+} // namespace cx::cmn::ui
 
 #endif // GTKMM3ANIMATEDBOARDTIMERRAII_H_059D3527_FB5A_4FF2_9A36_2786BDA81BDC

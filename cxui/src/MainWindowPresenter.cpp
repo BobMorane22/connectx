@@ -507,14 +507,14 @@ size_t cx::ui::MainWindowPresenter::GetGameViewBoardHeight() const
     return m_currentBoardHeight;
 }
 
-cx::ui::cmn::Color cx::ui::MainWindowPresenter::GetGameViewBoardColor() const
+cx::cmn::ui::Color cx::ui::MainWindowPresenter::GetGameViewBoardColor() const
 {
-    return cx::ui::cmn::Color{8481u, 8481u, 51143u};
+    return cx::cmn::ui::Color{8481u, 8481u, 51143u};
 }
 
-cx::ui::cmn::Color cx::ui::MainWindowPresenter::GetGameViewColumnHighlightColor() const
+cx::cmn::ui::Color cx::ui::MainWindowPresenter::GetGameViewColumnHighlightColor() const
 {
-    return cx::ui::cmn::Color{19660u, 19660u, 19660u, 32767u};
+    return cx::cmn::ui::Color{19660u, 19660u, 19660u, 32767u};
 }
 
 const cx::ui::IGameViewPresenter::ChipColors& cx::ui::MainWindowPresenter::GetGameViewChipColors() const

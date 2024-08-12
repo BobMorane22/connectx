@@ -28,7 +28,7 @@
 
 #include <cxui/IAbstractConnectXWidgetsFactory.h>
 
-namespace cx::ui::cmn
+namespace cx::cmn::ui
 {
     class IAbstractWidgetsFactory;
 }
@@ -41,7 +41,7 @@ namespace cx::ui
     class WidgetsFactories;
 }
 
-namespace cx::ui::cmn
+namespace cx::cmn::ui
 {
 
 /**********************************************************************************************//**
@@ -53,7 +53,7 @@ namespace cx::ui::cmn
  *       The stored `Gtk::Application` instance is valid.
  *
  *************************************************************************************************/
-class Gtkmm3AbstractConnectXWidgetsFactory final : public IAbstractConnectXWidgetsFactory
+class Gtkmm3AbstractConnectXWidgetsFactory final : public cx::ui::IAbstractConnectXWidgetsFactory
 {
 
 public:
@@ -88,37 +88,37 @@ public:
     void RegisterStandardWidgetsFactory(IAbstractWidgetsFactory& p_stdAbstractWidgetsFactory);
 
     // cx::ui::IAbstractConnectXWidgetsFactory:
-    [[nodiscard]] std::unique_ptr<cx::ui::cmn::IWindow> CreateMainWindow(cx::model::ModelSubject& p_model,
+    [[nodiscard]] std::unique_ptr<cx::cmn::ui::IWindow> CreateMainWindow(cx::model::ModelSubject& p_model,
         cx::ui::IMainWindowController& p_controller,
         cx::ui::IMainWindowPresenter& p_presenter) const override;
-    [[nodiscard]] virtual std::unique_ptr<cx::ui::cmn::IWindow> CreateAboutWindow(
-        std::unique_ptr<IAboutWindowPresenter> p_presenter) const override;
-    [[nodiscard]] virtual std::unique_ptr<cx::ui::cmn::IWindow> CreateGameResolutionDialog(
-        std::unique_ptr<IGameResolutionDialogPresenter> p_presenter,
-        std::unique_ptr<IGameResolutionDialogController> p_controller) const override;
+    [[nodiscard]] virtual std::unique_ptr<cx::cmn::ui::IWindow> CreateAboutWindow(
+        std::unique_ptr<cx::ui::IAboutWindowPresenter> p_presenter) const override;
+    [[nodiscard]] virtual std::unique_ptr<cx::cmn::ui::IWindow> CreateGameResolutionDialog(
+        std::unique_ptr<cx::ui::IGameResolutionDialogPresenter> p_presenter,
+        std::unique_ptr<cx::ui::IGameResolutionDialogController> p_controller) const override;
     [[nodiscard]] virtual std::unique_ptr<cx::ui::IView> CreateNewGameView(
         cx::ui::INewGameViewPresenter& p_presenter,
         cx::ui::INewGameViewController& p_controller,
-        cx::ui::cmn::IWindow& p_parentWindow,
-        cx::ui::cmn::ILayout& p_mainLayout,
+        cx::cmn::ui::IWindow& p_parentWindow,
+        cx::cmn::ui::ILayout& p_mainLayout,
         const cx::model::Column& p_viewLeft,
         const cx::model::Row& p_viewTop) const override;
-    [[nodiscard]] virtual std::unique_ptr<IView> CreateGameView(
-        cx::ui::IGameViewPresenter& p_presenter,
-        IGameViewController& p_controller,
-        IWindow& p_parentWindow,
-        cx::ui::cmn::ILayout& p_mainLayout,
-        const cx::model::Column& p_viewLeft,
-        const cx::model::Row& p_viewTop) const override;
-    [[nodiscard]] std::unique_ptr<INewPlayersList> CreateNewPlayersList(
-        const INewGameViewPresenter& p_presenter) const override;
-    [[nodiscard]] std::unique_ptr<IColorPicker> CreateColorPicker(
-        const std::vector<cx::model::ChipColor>& p_colors) const override;
-    [[nodiscard]] std::unique_ptr<IAnimatedBoard> CreateGameBoard(
-        const IGameViewPresenter& p_presenter,
-        const AnimationSpeed& p_speed) const override;
-    [[nodiscard]] std::unique_ptr<IChip> CreateChip(
-        const cx::model::ChipColor& p_fillColor,
+    [[nodiscard]] virtual std::unique_ptr<cx::ui::IView> CreateGameView(
+    cx::ui::IGameViewPresenter& p_presenter,
+    cx::ui::IGameViewController& p_controller,
+    cx::cmn::ui::IWindow& p_parentWindow,
+    cx::cmn::ui::ILayout& p_mainLayout,
+    const cx::model::Column& p_viewLeft,
+    const cx::model::Row& p_viewTop) const override;
+[[nodiscard]] std::unique_ptr<cx::ui::INewPlayersList> CreateNewPlayersList(
+    const cx::ui::INewGameViewPresenter& p_presenter) const override;
+[[nodiscard]] std::unique_ptr<cx::ui::IColorPicker> CreateColorPicker(
+    const std::vector<cx::model::ChipColor>& p_colors) const override;
+[[nodiscard]] std::unique_ptr<cx::ui::IAnimatedBoard> CreateGameBoard(
+    const cx::ui::IGameViewPresenter& p_presenter,
+    const cx::ui::AnimationSpeed& p_speed) const override;
+[[nodiscard]] std::unique_ptr<cx::ui::IChip> CreateChip(
+    const cx::model::ChipColor& p_fillColor,
         const cx::model::ChipColor& p_backgroundColor,
         int p_diameter) const override;
 
@@ -134,6 +134,6 @@ private:
 
 };
 
-} // namespace cx::ui::cmn
+} // namespace cx::cmn::ui
 
 #endif // GTKMM3ABSTRACTCONNECTXWIDGETSFACTORY_H_B3944DEE_5157_44D5_91D7_B238464FDD05

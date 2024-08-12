@@ -42,7 +42,7 @@ class IGameViewPresenter;
 
 }
 
-namespace cx::ui::cmn
+namespace cx::cmn::ui
 {
 
 /**********************************************************************************************//**
@@ -65,7 +65,7 @@ public:
      *      would mean that a chip will move three columns (or rows) per second when animated.
      *
      *********************************************************************************************/
-    Gtkmm3AnimatedBoard(const IGameViewPresenter& p_presenter, const cx::ui::AnimationSpeed& p_speed);
+    Gtkmm3AnimatedBoard(const cx::ui::IGameViewPresenter& p_presenter, const cx::ui::AnimationSpeed& p_speed);
 
     /******************************************************************************************//**
      * @brief Destructor.
@@ -76,7 +76,7 @@ public:
     /*******************************************************************************************//**
      * @brief Sets the delegate for widget common facilities.
      *
-     * The delegate is reponsible to carry the implementation for generic `cx::ui::cmn::IWidget` operations.
+     * The delegate is reponsible to carry the implementation for generic `cx::cmn::ui::IWidget` operations.
      * It is meant to avoid implementation duplication.
      *
      * @param p_delegate
@@ -94,7 +94,7 @@ public:
     [[nodiscard]] const cx::model::Column& GetCurrentColumn() const override;
     [[nodiscard]] cx::model::ChipColor GetCurrentChipColor() const override;
 
-    // cx::ui::cmn::IWidget:
+    // cx::cmn::ui::IWidget:
     [[nodiscard]] size_t GetWidth() const override;
     [[nodiscard]] size_t GetHeight() const override;
     void SetEnabled(EnabledState p_enabled) override;
@@ -104,7 +104,7 @@ public:
 
 private:
 
-    void PerformChipAnimation(BoardAnimation p_animation);
+    void PerformChipAnimation(cx::ui::BoardAnimation p_animation);
 
     bool on_draw(const Cairo::RefPtr<Cairo::Context>& p_context) override;
     void DrawActiveColumnHighlight(const Cairo::RefPtr<Cairo::Context>& p_context);
@@ -114,7 +114,9 @@ private:
 
     bool OnResize(const cx::math::Dimensions& p_newDimensions);
 
-    void Update(BoardAnimationNotificationContext p_context, BoardAnimationSubject* p_subject) override;
+    void Update(
+        cx::ui::BoardAnimationNotificationContext p_context,
+        cx::ui::BoardAnimationSubject* p_subject) override;
 
     void CustomizeHeightAccordingToMonitorDimensions();
 
@@ -127,15 +129,15 @@ private:
     std::unique_ptr<IWidget> m_delegate;
 
     // A Game View presenter cache:
-    std::unique_ptr<IAnimatedBoardPresenter> m_presenter;
-    std::unique_ptr<IAnimatedBoardModel> m_animationModel;
+    std::unique_ptr<cx::ui::IAnimatedBoardPresenter> m_presenter;
+    std::unique_ptr<cx::ui::IAnimatedBoardModel> m_animationModel;
 
     // Clock (ticks m_FPS times per second):
     std::unique_ptr<Gtkmm3AnimatedBoardTimerRAII> m_timer;
 
-    AnimationInformations<cx::math::Width> m_moveLeftAnimationInfo;
-    AnimationInformations<cx::math::Width> m_moveRightAnimationInfo;
-    AnimationInformations<cx::math::Height> m_dropAnimationInfo;
+    cx::ui::AnimationInformations<cx::math::Width> m_moveLeftAnimationInfo;
+    cx::ui::AnimationInformations<cx::math::Width> m_moveRightAnimationInfo;
+    cx::ui::AnimationInformations<cx::math::Height> m_dropAnimationInfo;
 
     cx::math::Dimensions m_lastFrameDimensions{cx::math::Height{0.0}, cx::math::Width{0.0}};
 
@@ -153,6 +155,6 @@ private:
 
 };
 
-} // namespace cx::ui::cmn
+} // namespace cx::cmn::ui
 
 #endif // GTKMM3ANIMATEDBOARD_H_5A2F73E1_EAC4_4C34_9F79_7540148552C2

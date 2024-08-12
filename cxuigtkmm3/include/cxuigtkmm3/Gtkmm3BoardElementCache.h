@@ -38,7 +38,7 @@ namespace Cairo
 }
 /** @endcond */
 
-namespace cx::ui::cmn
+namespace cx::cmn::ui
 {
 
 /**********************************************************************************************//**
@@ -131,6 +131,6 @@ private:
 
 };
 
-} // namespace cx::ui::cmn
+} // namespace cx::cmn::ui
 
 #endif // GTKMM3BOARDELEMENTCACHE_H_04E2F9C3_26E9_49C3_99BB_A2D2F75C3DC5

@@ -28,7 +28,7 @@ void AnimatedBoardModelMock::Update(const cx::math::Dimensions& /*p_widgetDimens
     m_updateCalled = true;
 }
 
-void AnimatedBoardModelMock::Resize(const cx::ui::cmn::ScalingRatios& /*p_scalingRatios*/)
+void AnimatedBoardModelMock::Resize(const cx::cmn::ui::ScalingRatios& /*p_scalingRatios*/)
 {
     m_resizeCalled = true;
 }

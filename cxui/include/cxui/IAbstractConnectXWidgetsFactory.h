@@ -30,7 +30,7 @@
 #include <cxmodel/ModelNotificationContext.h>
 #include <cxui/IAnimatedBoardModel.h>
 
-namespace cx::ui::cmn
+namespace cx::cmn::ui
 {
     class ILayout;
     class IWindow;
@@ -100,7 +100,7 @@ public:
      *      A Connect X main window instance.
      *
      *********************************************************************************************/
-    [[nodiscard]] virtual std::unique_ptr<cx::ui::cmn::IWindow> CreateMainWindow(
+    [[nodiscard]] virtual std::unique_ptr<cx::cmn::ui::IWindow> CreateMainWindow(
         cx::model::ModelSubject& p_model,
         IMainWindowController& p_controller,
         IMainWindowPresenter& p_presenter) const = 0;
@@ -121,7 +121,7 @@ public:
      *      An about window instance.
      *
      *********************************************************************************************/
-    [[nodiscard]] virtual std::unique_ptr<cx::ui::cmn::IWindow> CreateAboutWindow(
+    [[nodiscard]] virtual std::unique_ptr<cx::cmn::ui::IWindow> CreateAboutWindow(
         std::unique_ptr<IAboutWindowPresenter> p_presenter) const = 0;
 
     /******************************************************************************************//**
@@ -147,7 +147,7 @@ public:
      *      A game resolution dialog instance.
      *
      *********************************************************************************************/
-    [[nodiscard]] virtual std::unique_ptr<cx::ui::cmn::IWindow> CreateGameResolutionDialog(
+    [[nodiscard]] virtual std::unique_ptr<cx::cmn::ui::IWindow> CreateGameResolutionDialog(
         std::unique_ptr<IGameResolutionDialogPresenter> p_presenter,
         std::unique_ptr<IGameResolutionDialogController> p_controller) const = 0;
 
@@ -183,8 +183,8 @@ public:
     [[nodiscard]] virtual std::unique_ptr<IView> CreateNewGameView(
         INewGameViewPresenter& p_presenter,
         INewGameViewController& p_controller,
-        cx::ui::cmn::IWindow& p_parentWindow,
-        cx::ui::cmn::ILayout& p_mainLayout,
+        cx::cmn::ui::IWindow& p_parentWindow,
+        cx::cmn::ui::ILayout& p_mainLayout,
         const cx::model::Column& p_viewLeft,
         const cx::model::Row& p_viewTop) const = 0;
 
@@ -214,8 +214,8 @@ public:
     [[nodiscard]] virtual std::unique_ptr<IView> CreateGameView(
         IGameViewPresenter& p_presenter,
         IGameViewController& p_controller,
-        cx::ui::cmn::IWindow& p_parentWindow,
-        cx::ui::cmn::ILayout& p_mainLayout,
+        cx::cmn::ui::IWindow& p_parentWindow,
+        cx::cmn::ui::ILayout& p_mainLayout,
         const cx::model::Column& p_viewLeft,
         const cx::model::Row& p_viewTop) const = 0;
 

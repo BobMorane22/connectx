@@ -26,7 +26,7 @@
 
 #include <memory>
 
-#include <cxuicmn/KeyboardKeyPressedEvent.h>
+#include <cxcmnui/KeyboardKeyPressedEvent.h>
 
 #include "IGameViewKeyHandlerStrategy.h"
 
@@ -51,7 +51,7 @@ public:
      * @return The strategy, `nullptr` otherwise.
      *
      ********************************************************************************************/
-    [[nodiscard]] static std::unique_ptr<cx::ui::IGameViewKeyHandlerStrategy> Create(cx::ui::cmn::KeyboardKeyPressedEvent p_event);
+    [[nodiscard]] static std::unique_ptr<cx::ui::IGameViewKeyHandlerStrategy> Create(cx::cmn::ui::KeyboardKeyPressedEvent p_event);
 
 };
 

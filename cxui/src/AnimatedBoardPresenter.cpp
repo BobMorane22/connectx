@@ -48,12 +48,12 @@ cx::model::Width cx::ui::AnimatedBoardPresenter::GetBoardWidth() const
     return m_cache.m_boardWidth;
 }
 
-cx::ui::cmn::Color cx::ui::AnimatedBoardPresenter::GetGameViewBoardColor() const
+cx::cmn::ui::Color cx::ui::AnimatedBoardPresenter::GetGameViewBoardColor() const
 {
     return m_gameVewPresenter.GetGameViewBoardColor();
 }
 
-cx::ui::cmn::Color cx::ui::AnimatedBoardPresenter::GetGameViewColumnHighlightColor() const
+cx::cmn::ui::Color cx::ui::AnimatedBoardPresenter::GetGameViewColumnHighlightColor() const
 {
     return m_gameVewPresenter.GetGameViewColumnHighlightColor();
 }

@@ -1,0 +1,127 @@
+/**************************************************************************************************
+ *  This file is part of Connect X.
+ *
+ *  Connect X is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  Connect X is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with Connect X. If not, see <https://www.gnu.org/licenses/>.
+ *
+ *************************************************************************************************/
+/**********************************************************************************************//**
+ * @file Gtkmm3Button.cpp
+ * @date 2024
+ *
+ *************************************************************************************************/
+
+#include <cxinv/assertion.h>
+#include <cxcmn/helpers.h>
+#include <cxcmnui/Margins.h>
+#include <cxcmnuigtkmm3/Gtkmm3Button.h>
+#include <cxcmnuigtkmm3/Gtkmm3Connection.h>
+
+namespace
+{
+
+class Gtkmm3OnClickedSignal : public cx::cmn::ui::ISignal<void>
+{
+
+public:
+
+    explicit Gtkmm3OnClickedSignal(Gtk::Button& p_button)
+    : m_button{p_button}
+    {
+    }
+
+    [[nodiscard]] std::unique_ptr<cx::cmn::ui::IConnection> Connect(const std::function<void()>& p_slot) override
+    {
+        sigc::connection gtkConnection = m_button.signal_clicked().connect(p_slot);
+        IF_CONDITION_NOT_MET_DO(gtkConnection.connected(), return nullptr;);
+
+        return std::make_unique<cx::cmn::ui::Gtkmm3Connection>(gtkConnection);
+    }
+
+private:
+
+    Gtk::Button& m_button;
+
+};
+
+} // namespace
+
+cx::cmn::ui::Gtkmm3Button::Gtkmm3Button()
+: cx::cmn::ui::Gtkmm3Button("")
+{
+}
+
+cx::cmn::ui::Gtkmm3Button::Gtkmm3Button(const std::string& p_label)
+{
+    set_label(p_label);
+}
+
+void cx::cmn::ui::Gtkmm3Button::SetDelegate(std::unique_ptr<IWidget> p_delegate)
+{
+    IF_PRECONDITION_NOT_MET_DO(p_delegate, return;);
+
+    m_delegate = std::move(p_delegate);
+
+    POSTCONDITION(m_delegate);
+}
+
+void cx::cmn::ui::Gtkmm3Button::UpdateContents(const std::string& p_newContents)
+{
+    set_label(p_newContents);
+}
+
+std::string cx::cmn::ui::Gtkmm3Button::GetContents() const
+{
+    return get_label();
+}
+
+std::unique_ptr<cx::cmn::ui::ISignal<void>> cx::cmn::ui::Gtkmm3Button::OnClicked()
+{
+    return std::make_unique<Gtkmm3OnClickedSignal>(*this);
+}
+
+size_t cx::cmn::ui::Gtkmm3Button::GetWidth() const 
+{
+    IF_CONDITION_NOT_MET_DO(m_delegate, return 0u;);
+    return m_delegate->GetWidth();
+}
+
+size_t cx::cmn::ui::Gtkmm3Button::GetHeight() const 
+{
+    IF_CONDITION_NOT_MET_DO(m_delegate, return 0u;);
+    return m_delegate->GetHeight();
+}
+
+void cx::cmn::ui::Gtkmm3Button::SetEnabled(EnabledState p_enabled) 
+{
+    IF_CONDITION_NOT_MET_DO(m_delegate, return;);
+    m_delegate->SetEnabled(p_enabled);
+}
+
+void cx::cmn::ui::Gtkmm3Button::SetMargins(const Margins& p_newMarginSizes) 
+{
+    IF_CONDITION_NOT_MET_DO(m_delegate, return;);
+    m_delegate->SetMargins(p_newMarginSizes);
+}
+
+void cx::cmn::ui::Gtkmm3Button::SetTooltip(const std::string& p_tooltipContents)
+{
+    IF_CONDITION_NOT_MET_DO(m_delegate, return;);
+    m_delegate->SetTooltip(p_tooltipContents);
+}
+
+std::unique_ptr<cx::cmn::ui::ISignal<cx::cmn::ui::EventPropagation, cx::cmn::ui::KeyboardKeyPressedEvent>> cx::cmn::ui::Gtkmm3Button::OnKeyPressed()
+{
+    IF_CONDITION_NOT_MET_DO(m_delegate, return nullptr;);
+    return m_delegate->OnKeyPressed();
+}

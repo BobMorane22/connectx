@@ -22,11 +22,11 @@
  *************************************************************************************************/
 
 #include <cxinv/assertion.h>
-#include <cxuicmn/IWindow.h>
+#include <cxcmnui/IWindow.h>
 #include <cxui/MainWindowController.h>
 #include <cxui/MainWindowPresenter.h>
 #include <cxui/WidgetsFactories.h>
-#include <cxuicmngtkmm3/Gtkmm3AbstractWidgetsFactory.h>
+#include <cxcmnuigtkmm3/Gtkmm3AbstractWidgetsFactory.h>
 #include <cxuigtkmm3/Gtkmm3AbstractConnectXWidgetsFactory.h>
 #include <cxuigtkmm3/Gtkmm3MainWindow.h>
 #include <cxexec/Gtkmm3UIManager.h>
@@ -41,11 +41,11 @@ cx::Gtkmm3UIManager::Gtkmm3UIManager(int argc, char *argv[], cx::ModelReferences
         Glib::RefPtr<Gtk::Application> gtkApplication = Gtk::Application::create(argc, argv, "bobmorane.connectx");
         ASSERT(gtkApplication);
 
-        m_abstractWidgetsFactory = std::make_unique<cx::ui::cmn::Gtkmm3AbstractWidgetsFactory>(gtkApplication);
+        m_abstractWidgetsFactory = std::make_unique<cx::cmn::ui::Gtkmm3AbstractWidgetsFactory>(gtkApplication);
         ASSERT(m_abstractWidgetsFactory);
 
         {
-            auto abstractConnectXWidgetsFactory = std::make_unique<cx::ui::cmn::Gtkmm3AbstractConnectXWidgetsFactory>(gtkApplication);
+            auto abstractConnectXWidgetsFactory = std::make_unique<cx::cmn::ui::Gtkmm3AbstractConnectXWidgetsFactory>(gtkApplication);
             ASSERT(abstractConnectXWidgetsFactory);
 
             abstractConnectXWidgetsFactory->RegisterStandardWidgetsFactory(*m_abstractWidgetsFactory);

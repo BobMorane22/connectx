@@ -69,7 +69,7 @@ public:
      * @return The board color.
      *
      ********************************************************************************************/
-    [[nodiscard]] virtual cx::ui::cmn::Color GetGameViewBoardColor() const = 0;
+    [[nodiscard]] virtual cx::cmn::ui::Color GetGameViewBoardColor() const = 0;
 
     /******************************************************************************************//**
      * @brief Retreive the column highlight color (not cached).
@@ -80,7 +80,7 @@ public:
      * @return The column highlight color.
      *
      ********************************************************************************************/
-    [[nodiscard]] virtual cx::ui::cmn::Color GetGameViewColumnHighlightColor() const = 0;
+    [[nodiscard]] virtual cx::cmn::ui::Color GetGameViewColumnHighlightColor() const = 0;
 
     /******************************************************************************************//**
      * @brief Retreive the cached active player chip color.

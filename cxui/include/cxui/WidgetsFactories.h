@@ -24,7 +24,7 @@
 #ifndef WIDGETSFACTORIES_H_4652F2EE_88BE_4042_8BF4_67A223339FF7
 #define WIDGETSFACTORIES_H_4652F2EE_88BE_4042_8BF4_67A223339FF7
 
-namespace cx::ui::cmn
+namespace cx::cmn::ui
 {
     class IAbstractWidgetsFactory;
 }
@@ -63,14 +63,14 @@ public:
      *
      *********************************************************************************************/
     WidgetsFactories(
-        cx::ui::cmn::IAbstractWidgetsFactory& p_stdFactory,
+        cx::cmn::ui::IAbstractWidgetsFactory& p_stdFactory,
         IAbstractConnectXWidgetsFactory& p_connectxFactory);
 
     /******************************************************************************************//**
      * @brief Get the standard widgets factory.
      *
      *********************************************************************************************/
-    [[nodiscard]] const cx::ui::cmn::IAbstractWidgetsFactory& GetStandardWidgetsFactory() const;
+    [[nodiscard]] const cx::cmn::ui::IAbstractWidgetsFactory& GetStandardWidgetsFactory() const;
 
     /******************************************************************************************//**
      * @brief Get the Connect X widgets factory.
@@ -80,7 +80,7 @@ public:
 
 private:
 
-    cx::ui::cmn::IAbstractWidgetsFactory& m_stdFactory;
+    cx::cmn::ui::IAbstractWidgetsFactory& m_stdFactory;
     IAbstractConnectXWidgetsFactory& m_connectxFactory;
 };
 

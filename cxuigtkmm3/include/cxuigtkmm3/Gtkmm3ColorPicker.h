@@ -31,7 +31,7 @@
 
 #include <cxui/IColorPicker.h>
 
-namespace cx::ui::cmn
+namespace cx::cmn::ui
 {
 
 /**********************************************************************************************//**
@@ -67,7 +67,7 @@ public:
     /******************************************************************************************//**
      * @brief Sets the delegate for widget common facilities.
      *
-     * The delegate is reponsible to carry the implementation for generic `cx::ui::cmn::IWidget` operations.
+     * The delegate is reponsible to carry the implementation for generic `cx::cmn::ui::IWidget` operations.
      * It is meant to avoid implementation duplication.
      *
      * @param p_delegate
@@ -83,10 +83,10 @@ public:
 
     // cx::ui::IColorPicker:
     [[nodiscard]] Color GetCurrentSelection() const override;
-    void SetCurrentSelection(const cx::ui::cmn::Color& p_color) override;
+    void SetCurrentSelection(const cx::cmn::ui::Color& p_color) override;
     [[nodiscard]] std::unique_ptr<ISignal<void>> OnSelectionChanged() override;
 
-    // cx::ui::cmn::IWidget:
+    // cx::cmn::ui::IWidget:
     [[nodiscard]] size_t GetWidth() const override;
     [[nodiscard]] size_t GetHeight() const override;
     void SetEnabled(EnabledState p_enabled) override;
@@ -96,7 +96,7 @@ public:
 
 private:
 
-    void AddElement(const cx::ui::cmn::Color& p_color, bool p_setActive);
+    void AddElement(const cx::cmn::ui::Color& p_color, bool p_setActive);
     void OnRenderCell(const Gtk::TreeModel::const_iterator& iter);
     void OnComboChanged();
 
@@ -119,6 +119,6 @@ private:
 
 };
 
-} // namespace cx::ui::cmn
+} // namespace cx::cmn::ui
 
 #endif // GTKMM3COLORPICKER_H_1EEA8946_AD91_4032_B0F1_53AC7C01CA2D

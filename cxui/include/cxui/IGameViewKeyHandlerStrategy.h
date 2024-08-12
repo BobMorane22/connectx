@@ -24,7 +24,7 @@
 #ifndef IGAMEKEYHANDLERSTRATEGY_H_31AC17A9_F085_49C8_A86E_543E65DC78DC
 #define IGAMEKEYHANDLERSTRATEGY_H_31AC17A9_F085_49C8_A86E_543E65DC78DC
 
-namespace cx::ui::cmn
+namespace cx::cmn::ui
 {
     enum class EventPropagation;
 }
@@ -64,7 +64,7 @@ public:
      * @return The event propagation status.
      *
      ********************************************************************************************/
-    [[nodiscard]] virtual cx::ui::cmn::EventPropagation Handle(IGameViewController& p_controller, IBoardInformation& p_gameBoard) = 0;
+    [[nodiscard]] virtual cx::cmn::ui::EventPropagation Handle(IGameViewController& p_controller, IBoardInformation& p_gameBoard) = 0;
 
 };
 

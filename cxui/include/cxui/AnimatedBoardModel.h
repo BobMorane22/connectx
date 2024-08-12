@@ -60,7 +60,7 @@ public:
     AnimatedBoardModel(const cx::ui::IAnimatedBoardPresenter& p_presenter, const cx::ui::AnimationSpeed& p_animationSpeed);
 
     void Update(const cx::math::Dimensions& p_widgetDimensions, bool p_isChipMovingHorizontally) override;
-    void Resize(const cx::ui::cmn::ScalingRatios& p_scalingRatios) override;
+    void Resize(const cx::cmn::ui::ScalingRatios& p_scalingRatios) override;
     void AddChipDisplacement(const cx::math::Height& p_vertical, const cx::math::Width& p_horizontal) override;
     void ResetChipPositions() override;
     void UpdateCurrentColumn(const cx::model::Column& p_newCurrentColumn) override;

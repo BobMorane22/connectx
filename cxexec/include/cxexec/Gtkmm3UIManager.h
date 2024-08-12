@@ -33,7 +33,7 @@ namespace cx
     class ModelReferences;
 }
 
-namespace cx::ui::cmn
+namespace cx::cmn::ui
 {
     class IAbstractWidgetsFactory;
     class IAbstractConnectCWidgetsFactory;
@@ -98,12 +98,12 @@ private:
 private:
 
     // Widgets factories.
-    std::unique_ptr<cx::ui::cmn::IAbstractWidgetsFactory> m_abstractWidgetsFactory;
+    std::unique_ptr<cx::cmn::ui::IAbstractWidgetsFactory> m_abstractWidgetsFactory;
     std::unique_ptr<cx::ui::IAbstractConnectXWidgetsFactory> m_abstractConnectXWidgetsFactory;
     std::unique_ptr<cx::ui::WidgetsFactories> m_widgetsFactories;
 
     // Main window.
-    std::unique_ptr<cx::ui::cmn::IWindow> m_mainWindow;
+    std::unique_ptr<cx::cmn::ui::IWindow> m_mainWindow;
     std::unique_ptr<cx::ui::IMainWindowController> m_controller;
     std::unique_ptr<cx::ui::IMainWindowPresenter> m_presenter;
 

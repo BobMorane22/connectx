@@ -64,7 +64,7 @@ set(LIBRARIES
   cxinv
   cxmath
   cxmodel
-  cxuicmn
+  cxcmnui
   cxui
 )
 

@@ -30,8 +30,8 @@
 
 #include <cxmodel/ChipColor.h>
 #include <cxmodel/IPlayer.h>
-#include <cxuicmn/ISignal.h>
-#include <cxuicmn/IWidget.h>
+#include <cxcmnui/ISignal.h>
+#include <cxcmnui/IWidget.h>
 
 namespace cx::model
 {
@@ -48,7 +48,7 @@ namespace cx::ui
  * they have chosen for their chips.
  *
  **************************************************************************************************/
-class INewPlayersList : public cx::ui::cmn::IWidget
+class INewPlayersList : public cx::cmn::ui::IWidget
 { 
 
 public:
@@ -206,7 +206,7 @@ public:
      *      A signal to connect to for when a player is updated in the list.
      *
      **********************************************************************************************/
-    [[nodiscard]] virtual std::unique_ptr<cx::ui::cmn::ISignal<void>> OnPlayerUpdated() = 0;
+    [[nodiscard]] virtual std::unique_ptr<cx::cmn::ui::ISignal<void>> OnPlayerUpdated() = 0;
 
 };
 

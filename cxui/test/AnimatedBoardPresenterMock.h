@@ -37,8 +37,8 @@ public:
     void Sync() override;
     [[nodiscard]] cx::model::Height GetBoardHeight() const override;
     [[nodiscard]] cx::model::Width GetBoardWidth() const override;
-    [[nodiscard]] cx::ui::cmn::Color GetGameViewBoardColor() const override;
-    [[nodiscard]] cx::ui::cmn::Color GetGameViewColumnHighlightColor() const override;
+    [[nodiscard]] cx::cmn::ui::Color GetGameViewBoardColor() const override;
+    [[nodiscard]] cx::cmn::ui::Color GetGameViewColumnHighlightColor() const override;
     [[nodiscard]] cx::model::ChipColor GetActivePlayerChipColor() const override;
     [[nodiscard]] const cx::ui::IGameViewPresenter::ChipColors& GetBoardChipColors() const override;
     [[nodiscard]] cx::model::Column GetBotTarget() const override;

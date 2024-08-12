@@ -25,11 +25,11 @@
 
 
 #include <cxui/IAnimatedBoard.h> // Can't forward declare because of gui specific subject/observer.  #include <cxui/IView.h>
-#include <cxuicmn/ISignal.h>
+#include <cxcmnui/ISignal.h>
 #include <cxui/IView.h>
-#include <cxuicmn/KeyboardKeyPressedEvent.h>
+#include <cxcmnui/KeyboardKeyPressedEvent.h>
 
-namespace cx::ui::cmn
+namespace cx::cmn::ui
 {
     enum class EventPropagation;
     class ILabel;
@@ -45,7 +45,7 @@ namespace cx::ui
     class WidgetsFactories;
 }
 
-namespace cx::ui::cmn
+namespace cx::cmn::ui
 {
 
 /*********************************************************************************************//**
@@ -83,8 +83,8 @@ public:
         cx::ui::WidgetsFactories& p_widgetsFactories,
         cx::ui::IGameViewPresenter& p_presenter,
         cx::ui::IGameViewController& p_controller,
-        cx::ui::cmn::IWindow& p_parentWindow,
-        cx::ui::cmn::ILayout& p_mainLayout,
+        cx::cmn::ui::IWindow& p_parentWindow,
+        cx::cmn::ui::ILayout& p_mainLayout,
         const cx::model::Column& p_viewLeft,
         const cx::model::Row& p_viewTop);
 
@@ -99,7 +99,7 @@ public:
     void DeActivate() override;
     void Update(cx::model::ModelNotificationContext p_context) override;
 
-    // cx::ui::cmn::IWidget:
+    // cx::cmn::ui::IWidget:
     [[nodiscard]] size_t GetWidth() const override;
     [[nodiscard]] size_t GetHeight() const override;
     void SetEnabled(EnabledState p_enabled) override;
@@ -137,14 +137,14 @@ private:
 
 private:
 
-    WidgetsFactories& m_widgetsFactories;
+    cx::ui::WidgetsFactories& m_widgetsFactories;
 
-    IGameViewPresenter& m_presenter;
-    IGameViewController& m_controller;
+    cx::ui::IGameViewPresenter& m_presenter;
+    cx::ui::IGameViewController& m_controller;
 
     IWindow& m_parentWindow;                  // The window containing the view in its main layout.
 
-    cx::ui::cmn::ILayout& m_mainLayout;
+    cx::cmn::ui::ILayout& m_mainLayout;
 
     const cx::model::Column m_viewLeft;
     const cx::model::Row m_viewTop;
@@ -160,18 +160,18 @@ private:
 
     std::unique_ptr<ILabel> m_activePlayerLabel;
     std::unique_ptr<ILabel> m_activePlayerName;
-    std::unique_ptr<IChip> m_activePlayerChip;
+    std::unique_ptr<cx::ui::IChip> m_activePlayerChip;
 
     std::unique_ptr<ILabel> m_nextPlayerLabel;
     std::unique_ptr<ILabel> m_nextPlayerName;
-    std::unique_ptr<IChip> m_nextPlayerChip;
+    std::unique_ptr<cx::ui::IChip> m_nextPlayerChip;
 
-    std::unique_ptr<IAnimatedBoard> m_board;
+    std::unique_ptr<cx::ui::IAnimatedBoard> m_board;
 
     // Connections:
     std::unique_ptr<IConnection> m_keysPressedConnection;
 };
 
-} // namespace cx::ui::cmn
+} // namespace cx::cmn::ui
 
 #endif // GTKMM3GAMEVIEW_H_AA8C282C_9CC4_45F4_BE91_C8840160BA1B

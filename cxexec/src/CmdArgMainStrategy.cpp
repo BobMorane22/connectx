@@ -24,8 +24,8 @@
 #include <cstdlib>
 
 #include <cxinv/assertion.h>
-#include <cxuicmn/IWindow.h>
-#include <cxuicmn/WidgetsToolkit.h>
+#include <cxcmnui/IWindow.h>
+#include <cxcmnui/WidgetsToolkit.h>
 #include <cxexec/CmdArgMainStrategy.h>
 #include <cxexec/IUIManager.h>
 #include <cxexec/UIManagerFactory.h>
@@ -38,7 +38,7 @@ cx::CmdArgMainStrategy::CmdArgMainStrategy(int argc, char *argv[], cx::ModelRefe
     argc = 1;
 
     const UIManagerFactory factory{argc, argv, p_model};
-    m_uiMgr = factory.Create(cx::ui::cmn::WidgetsToolkit::GTKMM3);
+    m_uiMgr = factory.Create(cx::cmn::ui::WidgetsToolkit::GTKMM3);
 
     POSTCONDITION(m_uiMgr);
 }

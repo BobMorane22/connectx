@@ -29,7 +29,7 @@
 #include <cxmath/Radius.h>
 #include <cxmodel/ChipColor.h>
 #include <cxmodel/common.h>
-#include <cxuicmn/ScalingRatios.h>
+#include <cxcmnui/ScalingRatios.h>
 
 namespace cx::ui
 {
@@ -103,7 +103,7 @@ public:
      *      The horizontal and vertical scaling ratios.
      *
      *********************************************************************************************/
-    virtual void Resize(const cx::ui::cmn::ScalingRatios& p_scalingRatios) = 0;
+    virtual void Resize(const cx::cmn::ui::ScalingRatios& p_scalingRatios) = 0;
 
     /******************************************************************************************//**
      * @brief Adds vertical and horizontal displacements to the main chip.

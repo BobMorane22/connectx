@@ -43,14 +43,14 @@ cx::model::Width AnimatedBoardPresenterMock::GetBoardWidth() const
     return m_boardWidth;
 }
 
-cx::ui::cmn::Color AnimatedBoardPresenterMock::GetGameViewBoardColor() const
+cx::cmn::ui::Color AnimatedBoardPresenterMock::GetGameViewBoardColor() const
 {
-    return cx::ui::cmn::Color{8481u, 8481u, 51143u};
+    return cx::cmn::ui::Color{8481u, 8481u, 51143u};
 }
 
-cx::ui::cmn::Color AnimatedBoardPresenterMock::GetGameViewColumnHighlightColor() const
+cx::cmn::ui::Color AnimatedBoardPresenterMock::GetGameViewColumnHighlightColor() const
 {
-    return cx::ui::cmn::Color{19660u, 19660u, 19660u, 32767u};
+    return cx::cmn::ui::Color{19660u, 19660u, 19660u, 32767u};
 }
 
 cx::model::ChipColor AnimatedBoardPresenterMock::GetActivePlayerChipColor() const

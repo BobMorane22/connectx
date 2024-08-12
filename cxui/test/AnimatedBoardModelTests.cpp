@@ -149,8 +149,8 @@ public:
     void Sync() override {FAIL();}
     [[nodiscard]] cx::model::Height GetBoardHeight() const override {return cx::model::Height{6u};}
     [[nodiscard]] cx::model::Width GetBoardWidth() const override {return cx::model::Width{7u};}
-    [[nodiscard]] cx::ui::cmn::Color GetGameViewBoardColor() const override {return cx::ui::cmn::Color{8481u, 8481u, 51143u};}
-    [[nodiscard]] cx::ui::cmn::Color GetGameViewColumnHighlightColor() const override {return cx::ui::cmn::Color{19660u, 19660u, 19660u, 32767u};}
+    [[nodiscard]] cx::cmn::ui::Color GetGameViewBoardColor() const override {return cx::cmn::ui::Color{8481u, 8481u, 51143u};}
+    [[nodiscard]] cx::cmn::ui::Color GetGameViewColumnHighlightColor() const override {return cx::cmn::ui::Color{19660u, 19660u, 19660u, 32767u};}
     [[nodiscard]] cx::model::ChipColor GetActivePlayerChipColor() const override {return cx::model::MakeRed();}
     [[nodiscard]] const cx::ui::IGameViewPresenter::ChipColors& GetBoardChipColors() const override {return m_chipColors;}
     [[nodiscard]] cx::model::Column GetBotTarget() const {return cx::model::Column{5u};}
@@ -268,7 +268,7 @@ TEST_F(AnimationModelTestFixture, /*DISABLED_*/Resize_ValidAndHorizontal_Resizin
     const NotSynced whatChanged = Validate(model,
                                   [](cx::ui::IAnimatedBoardModel& p_model)
                                   {
-                                      const cx::ui::cmn::ScalingRatios ratios{cx::ui::cmn::HorizontalScalingRatio{2.0}};
+                                      const cx::cmn::ui::ScalingRatios ratios{cx::cmn::ui::HorizontalScalingRatio{2.0}};
                                       p_model.Resize(ratios);
                                   });
 
@@ -291,7 +291,7 @@ TEST_F(AnimationModelTestFixture, /*DISABLED_*/Resize_ValidAndVertical_ResizingO
     const NotSynced whatChanged = Validate(model,
                                   [](cx::ui::IAnimatedBoardModel& p_model)
                                   {
-                                      const cx::ui::cmn::ScalingRatios ratios{cx::ui::cmn::VerticalScalingRatio{3.0}};
+                                      const cx::cmn::ui::ScalingRatios ratios{cx::cmn::ui::VerticalScalingRatio{3.0}};
                                       p_model.Resize(ratios);
                                   });
 
@@ -311,7 +311,7 @@ TEST_F(AnimationModelTestFixtureStdErrStreamRedirector, /*DISABLED_*/Resize_Inva
     const NotSynced whatChanged = Validate(model,
                                   [](cx::ui::IAnimatedBoardModel& p_model)
                                   {
-                                      const cx::ui::cmn::ScalingRatios ratios{cx::ui::cmn::HorizontalScalingRatio{-1.0}, cx::ui::cmn::VerticalScalingRatio{2.0}};
+                                      const cx::cmn::ui::ScalingRatios ratios{cx::cmn::ui::HorizontalScalingRatio{-1.0}, cx::cmn::ui::VerticalScalingRatio{2.0}};
                                       p_model.Resize(ratios);
                                   });
 
@@ -327,7 +327,7 @@ TEST_F(AnimationModelTestFixtureStdErrStreamRedirector, /*DISABLED_*/Resize_Inva
     const NotSynced whatChanged = Validate(model,
                                   [](cx::ui::IAnimatedBoardModel& p_model)
                                   {
-                                      const cx::ui::cmn::ScalingRatios ratios{cx::ui::cmn::HorizontalScalingRatio{1.0}, cx::ui::cmn::VerticalScalingRatio{-2.0}};
+                                      const cx::cmn::ui::ScalingRatios ratios{cx::cmn::ui::HorizontalScalingRatio{1.0}, cx::cmn::ui::VerticalScalingRatio{-2.0}};
                                       p_model.Resize(ratios);
                                   });
 

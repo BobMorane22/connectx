@@ -1,0 +1,69 @@
+/**************************************************************************************************
+ *  This file is part of Connect X.
+ *
+ *  Connect X is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  Connect X is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with Connect X. If not, see <https://www.gnu.org/licenses/>.
+ *
+ *************************************************************************************************/
+/**********************************************************************************************//**
+ * @file common.h
+ * @date 2020
+ *
+ *************************************************************************************************/
+
+#ifndef COMMON_H_E38DC86D_677A_4508_9D75_1B9C3C899679
+#define COMMON_H_E38DC86D_677A_4508_9D75_1B9C3C899679
+
+#include <cxmodel/ChipColor.h>
+
+namespace cx::cmn::ui
+{
+
+/******************************************************************************************//**
+ * @brief Color depth used in the cxgui library.
+ *
+ ********************************************************************************************/
+using Color = cx::model::Color<unsigned short int>;
+
+static_assert(sizeof(cx::cmn::ui::Color) == sizeof(cx::model::ChipColor));
+
+/** Dialog global margin (on each sides). */
+inline constexpr int DIALOG_SIDE_MARGIN = 10;
+
+/** Dialog titles bottom margin space. */
+inline constexpr int TITLE_BOTTOM_MARGIN = 20;
+
+/** Section titles bottom margin space. */
+inline constexpr int SECTION_BOTTOM_MARGIN = 10;
+
+/** Controls bottom margin space. */
+inline constexpr int CONTROL_BOTTOM_MARGIN = 5;
+
+/** Controls side margin space. */
+inline constexpr int CONTROL_SIDE_MARGIN = 5;
+
+/** Indentation space in a dialog. For example, add this to control text to indent it once. */
+inline constexpr char INDENT_MARK[] = "    ";
+
+/** Default chip size, in pixels */
+inline constexpr int DEFAULT_CHIP_SIZE = 40;
+
+/** Stop event propagation (top level enties are not aware of the event). */
+inline constexpr bool STOP_EVENT_PROPAGATION = true;
+
+/** Handler event propagation (top level entities are aware of the event). */
+inline constexpr bool PROPAGATE_EVENT = false;
+
+} // namespace cx::cmn::ui
+
+#endif // COMMON_H_E38DC86D_677A_4508_9D75_1B9C3C899679

@@ -403,7 +403,7 @@ void cx::ui::AnimatedBoardModel::Update(const cx::math::Dimensions& p_widgetDime
     m_isMirrorChipNeeded = (mirrorToTheLeft || mirrorToTheRight);
 }
 
-void cx::ui::AnimatedBoardModel::Resize(const cx::ui::cmn::ScalingRatios& p_scalingRatios)
+void cx::ui::AnimatedBoardModel::Resize(const cx::cmn::ui::ScalingRatios& p_scalingRatios)
 {
     IF_PRECONDITION_NOT_MET_DO(p_scalingRatios.m_horizontalRatio.Get() > 0.0 &&
                                p_scalingRatios.m_verticalRatio.Get() > 0.0,
