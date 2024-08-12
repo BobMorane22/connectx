@@ -29,33 +29,35 @@
 #include <cxcmnuigtkmm3/gtkmmConversions.h>
 #include <cxcmnuigtkmm3/Gtkmm3Dialog.h>
 
-
-cx::cmn::ui::Gtkmm3Dialog::Gtkmm3Dialog(cx::cmn::ui::IWindow& p_parent, DialogRole p_role, const std::string& p_message)
+cx::cmn::ui::gtkmm3::Gtkmm3Dialog::Gtkmm3Dialog(
+    cx::cmn::ui::IWindow& p_parent,
+    cx::cmn::ui::DialogRole p_role,
+    const std::string& p_message)
 : Gtk::MessageDialog(dynamic_cast<Gtk::Window&>(p_parent), p_message, true, Gtk::MESSAGE_INFO, Gtk::ButtonsType::BUTTONS_OK, true)
 {
     PRECONDITION(!p_message.empty());
 
-    const auto messageTypeConversion = cx::cmn::ui::ToGtk<Gtk::MessageType>(p_role);
+    const auto messageTypeConversion = cx::cmn::ui::gtkmm3::ToGtk<Gtk::MessageType>(p_role);
     Glib::PropertyProxy<Gtk::MessageType> messageType = property_message_type();
     messageType.set_value(messageTypeConversion.value_or(Gtk::MESSAGE_OTHER));
 }
 
-int cx::cmn::ui::Gtkmm3Dialog::Show()
+int cx::cmn::ui::gtkmm3::Gtkmm3Dialog::Show()
 {
     return run();
 }
 
-void cx::cmn::ui::Gtkmm3Dialog::ShrinkToContents(IWindow::Orientation /*p_orientation*/)
+void cx::cmn::ui::gtkmm3::Gtkmm3Dialog::ShrinkToContents(IWindow::Orientation /*p_orientation*/)
 {
     // Nothing to do.
 }
 
-void cx::cmn::ui::Gtkmm3Dialog::Update(cx::model::ModelNotificationContext /*p_context*/, cx::model::ModelSubject* /*p_subject*/)
+void cx::cmn::ui::gtkmm3::Gtkmm3Dialog::Update(cx::model::ModelNotificationContext /*p_context*/, cx::model::ModelSubject* /*p_subject*/)
 {
     // Nothing to do.
 }
 
-void cx::cmn::ui::Gtkmm3Dialog::SetDelegate(std::unique_ptr<IWidget> p_delegate)
+void cx::cmn::ui::gtkmm3::Gtkmm3Dialog::SetDelegate(std::unique_ptr<IWidget> p_delegate)
 {
     IF_PRECONDITION_NOT_MET_DO(p_delegate, return;);
 
@@ -64,37 +66,37 @@ void cx::cmn::ui::Gtkmm3Dialog::SetDelegate(std::unique_ptr<IWidget> p_delegate)
     POSTCONDITION(m_delegate);
 }
 
-size_t cx::cmn::ui::Gtkmm3Dialog::GetWidth() const 
+size_t cx::cmn::ui::gtkmm3::Gtkmm3Dialog::GetWidth() const 
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return 0u;);
     return m_delegate->GetWidth();
 }
 
-size_t cx::cmn::ui::Gtkmm3Dialog::GetHeight() const 
+size_t cx::cmn::ui::gtkmm3::Gtkmm3Dialog::GetHeight() const 
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return 0u;);
     return m_delegate->GetHeight();
 }
 
-void cx::cmn::ui::Gtkmm3Dialog::SetEnabled(EnabledState p_enabled) 
+void cx::cmn::ui::gtkmm3::Gtkmm3Dialog::SetEnabled(EnabledState p_enabled) 
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return;);
     m_delegate->SetEnabled(p_enabled);
 }
 
-void cx::cmn::ui::Gtkmm3Dialog::SetMargins(const Margins& p_newMarginSizes) 
+void cx::cmn::ui::gtkmm3::Gtkmm3Dialog::SetMargins(const Margins& p_newMarginSizes) 
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return;);
     m_delegate->SetMargins(p_newMarginSizes);
 }
 
-void cx::cmn::ui::Gtkmm3Dialog::SetTooltip(const std::string& p_tooltipContents)
+void cx::cmn::ui::gtkmm3::Gtkmm3Dialog::SetTooltip(const std::string& p_tooltipContents)
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return;);
     m_delegate->SetTooltip(p_tooltipContents);
 }
 
-std::unique_ptr<cx::cmn::ui::ISignal<cx::cmn::ui::EventPropagation, cx::cmn::ui::KeyboardKeyPressedEvent>> cx::cmn::ui::Gtkmm3Dialog::OnKeyPressed()
+std::unique_ptr<cx::cmn::ui::ISignal<cx::cmn::ui::EventPropagation, cx::cmn::ui::KeyboardKeyPressedEvent>> cx::cmn::ui::gtkmm3::Gtkmm3Dialog::OnKeyPressed()
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return nullptr;);
     return m_delegate->OnKeyPressed();

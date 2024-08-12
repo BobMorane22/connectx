@@ -52,7 +52,7 @@ namespace cx::cmn::ui
  * @note This window is modal.
  *
  ************************************************************************************************/
-class Gtkmm3GameResolutionDialog : public Gtkmm3Window
+class Gtkmm3GameResolutionDialog : public cx::cmn::ui::gtkmm3::Gtkmm3Window
 {
 
 public:

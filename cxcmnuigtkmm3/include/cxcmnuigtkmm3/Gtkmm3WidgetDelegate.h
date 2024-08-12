@@ -34,26 +34,26 @@ namespace Gtk
     class Widget;
 }
 
-namespace cx::cmn::ui
+namespace cx::cmn::ui::gtkmm3
 {
     enum class EnabledState;
     struct Margins;
 }
 
-namespace cx::cmn::ui
+namespace cx::cmn::ui::gtkmm3
 {
 
 /**********************************************************************************************//**
  * @brief Delegate for generic widget facilities.
  *
  * This delegate contains the implementation for all generic widget facilities. All
- * Widgets implementing the `cx::cmn::ui::IWidget` interface should use this delegate to
+ * Widgets implementing the `cx::cmn::ui::gtkmm3::IWidget` interface should use this delegate to
  * avoid duplicating implementations. The delegate also implements this inteface
  * so direct delegation is always possible (i.e no additionnal work is needed, calls
  * may simply be forwarded to the delegate).
  *
  *************************************************************************************************/
-class Gtkmm3WidgetDelegate : public IWidget
+class Gtkmm3WidgetDelegate : public cx::cmn::ui::IWidget
 {
 
 public:
@@ -73,13 +73,13 @@ public:
      *********************************************************************************************/
     void SetUnderlying(Gtk::Widget* p_underlying);
 
-    // cx::cmn::ui::IWidget:
+    // cx::cmn::ui::gtkmm3::IWidget:
     [[nodiscard]] size_t GetWidth() const override;
     [[nodiscard]] size_t GetHeight() const override;
-    void SetEnabled(EnabledState p_enabled) override;
-    void SetMargins(const Margins& p_newMarginSizes) override;
+    void SetEnabled(cx::cmn::ui::EnabledState p_enabled) override;
+    void SetMargins(const cx::cmn::ui::Margins& p_newMarginSizes) override;
     void SetTooltip(const std::string& p_tooltipContents) override;
-    [[nodiscard]] std::unique_ptr<ISignal<EventPropagation, KeyboardKeyPressedEvent>> OnKeyPressed() override;
+    [[nodiscard]] std::unique_ptr<ISignal<cx::cmn::ui::EventPropagation, cx::cmn::ui::KeyboardKeyPressedEvent>> OnKeyPressed() override;
 
 private:
 
@@ -122,6 +122,6 @@ template<typename Widget, typename... Args>
     return widget;
 }
 
-} // namespace cx::cmn::ui
+} // namespace cx::cmn::ui::gtkmm3
 
 #endif // GTKMM3WIDGETDELEGATE_H_9F639EAC_D67C_40B9_8652_436419A7E59E

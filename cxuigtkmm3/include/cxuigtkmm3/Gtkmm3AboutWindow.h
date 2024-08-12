@@ -28,15 +28,15 @@
 
 #include <cxcmnuigtkmm3/Gtkmm3Window.h>
 
-namespace cx::ui
-{
-    class WidgetsFactories;
-}
-
 namespace cx::cmn::ui
 {
     class IButton;
     class ILabel;
+}
+
+namespace cx::ui
+{
+    class WidgetsFactories;
 }
 
 namespace cx::cmn::ui
@@ -46,7 +46,7 @@ namespace cx::cmn::ui
  * @brief Gtkmm3 About window.
  *
  *************************************************************************************************/
-class Gtkmm3AboutWindow : public Gtkmm3Window
+class Gtkmm3AboutWindow : public cx::cmn::ui::gtkmm3::Gtkmm3Window
 {
 
 public:

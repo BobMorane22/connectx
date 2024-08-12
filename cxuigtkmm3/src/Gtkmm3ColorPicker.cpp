@@ -46,7 +46,7 @@ public:
         sigc::connection gtkConnection = m_comboBox.signal_changed().connect(p_slot);
         IF_CONDITION_NOT_MET_DO(gtkConnection.connected(), return nullptr;);
 
-        return std::make_unique<cx::cmn::ui::Gtkmm3Connection>(gtkConnection);
+        return std::make_unique<cx::cmn::ui::gtkmm3::Gtkmm3Connection>(gtkConnection);
     }
 
 private:

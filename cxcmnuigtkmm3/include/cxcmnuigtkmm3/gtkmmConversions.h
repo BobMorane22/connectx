@@ -33,7 +33,7 @@
 
 #include <cxcmnui/ILayout.h>
 
-namespace cx::cmn::ui
+namespace cx::cmn::ui::gtkmm3
 {
     enum class DialogRole;
     enum class Key;
@@ -41,7 +41,7 @@ namespace cx::cmn::ui
     enum class EventPropagation;
 }
 
-namespace cx::cmn::ui
+namespace cx::cmn::ui::gtkmm3
 {
 
 /**********************************************************************************************//**
@@ -94,6 +94,6 @@ template<> [[nodiscard]] std::optional<Gtk::MessageType> ToGtk<Gtk::MessageType,
 template<> [[nodiscard]] std::optional<Gtk::Align> ToGtk<Gtk::Align, ILayout::VerticalAlignement>(const ILayout::VerticalAlignement& p_alignement);
 template<> [[nodiscard]] std::optional<Gtk::Align> ToGtk<Gtk::Align, ILayout::HorizontalAlignement>(const ILayout::HorizontalAlignement& p_alignement);
 
-} // namespace cx::cmn::ui
+} // namespace cx::cmn::ui::gtkmm3
 
 #endif // GTKMMCONVERSIONS_H_B4274961_44D3_4DE7_BB4D_2374BE3AB908

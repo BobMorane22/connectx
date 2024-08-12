@@ -31,7 +31,7 @@
 #include <cxcmnuigtkmm3/gtkmmConversions.h>
 
 template<>
-std::optional<cx::cmn::ui::KeyboardKeyPressedEvent> cx::cmn::ui::FromGtk<cx::cmn::ui::KeyboardKeyPressedEvent, GdkEventKey>(const GdkEventKey& p_event)
+std::optional<cx::cmn::ui::KeyboardKeyPressedEvent> cx::cmn::ui::gtkmm3::FromGtk<cx::cmn::ui::KeyboardKeyPressedEvent, GdkEventKey>(const GdkEventKey& p_event)
 {
     RETURN_IF(p_event.type != GdkEventType::GDK_KEY_PRESS, std::nullopt);
 
@@ -46,7 +46,7 @@ std::optional<cx::cmn::ui::KeyboardKeyPressedEvent> cx::cmn::ui::FromGtk<cx::cmn
 }
 
 template<>
-std::optional<bool> cx::cmn::ui::ToGtk<bool, cx::cmn::ui::EventPropagation>(const cx::cmn::ui::EventPropagation& p_propagate)
+std::optional<bool> cx::cmn::ui::gtkmm3::ToGtk<bool, cx::cmn::ui::EventPropagation>(const cx::cmn::ui::EventPropagation& p_propagate)
 {
     switch(p_propagate)
     {
@@ -58,7 +58,7 @@ std::optional<bool> cx::cmn::ui::ToGtk<bool, cx::cmn::ui::EventPropagation>(cons
 }
 
 template<>
-std::optional<guint> cx::cmn::ui::ToGtk<guint, cx::cmn::ui::Key>(const cx::cmn::ui::Key& p_key)
+std::optional<guint> cx::cmn::ui::gtkmm3::ToGtk<guint, cx::cmn::ui::Key>(const cx::cmn::ui::Key& p_key)
 {
     switch(p_key)
     {
@@ -74,7 +74,7 @@ std::optional<guint> cx::cmn::ui::ToGtk<guint, cx::cmn::ui::Key>(const cx::cmn::
 }
 
 template<>
-std::optional<Gdk::ModifierType> cx::cmn::ui::ToGtk<Gdk::ModifierType, cx::cmn::ui::Key>(const cx::cmn::ui::Key& p_key)
+std::optional<Gdk::ModifierType> cx::cmn::ui::gtkmm3::ToGtk<Gdk::ModifierType, cx::cmn::ui::Key>(const cx::cmn::ui::Key& p_key)
 {
     switch(p_key)
     {
@@ -87,7 +87,7 @@ std::optional<Gdk::ModifierType> cx::cmn::ui::ToGtk<Gdk::ModifierType, cx::cmn::
 }
 
 template<>
-std::optional<Gtk::MessageType> cx::cmn::ui::ToGtk<Gtk::MessageType, cx::cmn::ui::DialogRole>(const cx::cmn::ui::DialogRole& p_role)
+std::optional<Gtk::MessageType> cx::cmn::ui::gtkmm3::ToGtk<Gtk::MessageType, cx::cmn::ui::DialogRole>(const cx::cmn::ui::DialogRole& p_role)
 {
     switch(p_role)
     {
@@ -100,7 +100,8 @@ std::optional<Gtk::MessageType> cx::cmn::ui::ToGtk<Gtk::MessageType, cx::cmn::ui
     return std::nullopt;
 }
 
-template<> std::optional<Gtk::Align> cx::cmn::ui::ToGtk<Gtk::Align, cx::cmn::ui::ILayout::VerticalAlignement>(const cx::cmn::ui::ILayout::VerticalAlignement& p_alignement)
+template<>
+std::optional<Gtk::Align> cx::cmn::ui::gtkmm3::ToGtk<Gtk::Align, cx::cmn::ui::ILayout::VerticalAlignement>(const cx::cmn::ui::ILayout::VerticalAlignement& p_alignement)
 {
     switch(p_alignement)
     {
@@ -113,7 +114,8 @@ template<> std::optional<Gtk::Align> cx::cmn::ui::ToGtk<Gtk::Align, cx::cmn::ui:
     return std::nullopt;
 }
 
-template<> std::optional<Gtk::Align> cx::cmn::ui::ToGtk<Gtk::Align, cx::cmn::ui::ILayout::HorizontalAlignement>(const cx::cmn::ui::ILayout::HorizontalAlignement& p_alignement)
+template<>
+std::optional<Gtk::Align> cx::cmn::ui::gtkmm3::ToGtk<Gtk::Align, cx::cmn::ui::ILayout::HorizontalAlignement>(const cx::cmn::ui::ILayout::HorizontalAlignement& p_alignement)
 {
     switch(p_alignement)
     {

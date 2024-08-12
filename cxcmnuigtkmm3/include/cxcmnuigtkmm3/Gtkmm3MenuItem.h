@@ -11,8 +11,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  *  GNU General Public License for more details.
  *
- *  You should have received a copy of the GNU General Public License
- *  along with Connect X. If not, see <https://www.gnu.org/licenses/>.
+ *  You should have received a copy of the GNU General Public License *  along with Connect X. If not, see <https://www.gnu.org/licenses/>.
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
@@ -42,14 +41,14 @@ namespace cx::cmn::ui::FreeDesktop
     enum class StdActionIcon;
 }
 
-namespace cx::cmn::ui
+namespace cx::cmn::ui::gtkmm3
 {
 
 /**********************************************************************************************//**
- * @brief Gtkmm 3 implementation for the `cx::cmn::ui::IMenuItem` interface.
+ * @brief Gtkmm 3 implementation for the `cx::cmn::ui::gtkmm3::IMenuItem` interface.
  *
  *************************************************************************************************/
-class Gtkmm3MenuItem : public IMenuItem,
+class Gtkmm3MenuItem : public cx::cmn::ui::IMenuItem,
                        public Gtk::MenuItem
 {
 
@@ -67,8 +66,9 @@ public:
      *      The text is not empty.
      *
      *********************************************************************************************/
-    Gtkmm3MenuItem(const std::string& p_label,
-                   const std::optional<FreeDesktop::StdActionIcon>& p_icon = std::nullopt);
+    Gtkmm3MenuItem(
+        const std::string& p_label,
+        const std::optional<cx::cmn::ui::FreeDesktop::StdActionIcon>& p_icon = std::nullopt);
 
     /******************************************************************************************//**
      * @brief Destructor.
@@ -79,7 +79,7 @@ public:
     /*******************************************************************************************//**
      * @brief Sets the delegate for widget common facilities.
      *
-     * The delegate is reponsible to carry the implementation for generic `cx::cmn::ui::IWidget` operations.
+     * The delegate is reponsible to carry the implementation for generic `cx::cmn::ui::gtkmm3::IWidget` operations.
      * It is meant to avoid implementation duplication.
      *
      * @param p_delegate
@@ -91,19 +91,19 @@ public:
      *      The registered widget delegate is valid.
      *
      **********************************************************************************************/
-    void SetDelegate(std::unique_ptr<IWidget> p_delegate);
+    void SetDelegate(std::unique_ptr<cx::cmn::ui::IWidget> p_delegate);
 
     // cx::cmn::ui::IMenuItem:
-    [[nodiscard]] std::unique_ptr<ISignal<void>> OnTriggered() override;
-    void RegisterKeyboardShortcut(const KeyboardShortcut& p_shortcut) override;
+    [[nodiscard]] std::unique_ptr<cx::cmn::ui::ISignal<void>> OnTriggered() override;
+    void RegisterKeyboardShortcut(const cx::cmn::ui::KeyboardShortcut& p_shortcut) override;
 
     // cx::cmn::ui::IWidget:
     [[nodiscard]] size_t GetWidth() const override;
     [[nodiscard]] size_t GetHeight() const override;
-    void SetEnabled(EnabledState p_enabled) override;
-    void SetMargins(const Margins& p_newMarginSizes) override;
+    void SetEnabled(cx::cmn::ui::EnabledState p_enabled) override;
+    void SetMargins(const cx::cmn::ui::Margins& p_newMarginSizes) override;
     void SetTooltip(const std::string& p_tooltipContents) override;
-    [[nodiscard]] std::unique_ptr<ISignal<EventPropagation, KeyboardKeyPressedEvent>> OnKeyPressed() override;
+    [[nodiscard]] std::unique_ptr<ISignal<cx::cmn::ui::EventPropagation, cx::cmn::ui::KeyboardKeyPressedEvent>> OnKeyPressed() override;
 
 private:
 
@@ -111,10 +111,10 @@ private:
     std::unique_ptr<Gtk::Image> m_icon;
     std::unique_ptr<Gtk::AccelLabel> m_accelerator;
 
-    std::unique_ptr<IWidget> m_delegate;
+    std::unique_ptr<cx::cmn::ui::IWidget> m_delegate;
 
 };
 
-} // namespace cx::cmn::ui
+} // namespace cx::cmn::ui::gtkmm3
 
 #endif // GTKMM3MENUITEM_H_C4184C81_A135_45A6_A70F_71CDA081E9F2

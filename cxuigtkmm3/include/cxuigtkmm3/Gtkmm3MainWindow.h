@@ -84,7 +84,7 @@ namespace cx::cmn::ui
  * the gaming widgets, such as the board.
  *
  ************************************************************************************************/
-class Gtkmm3MainWindow : public cx::cmn::ui::Gtkmm3Window
+class Gtkmm3MainWindow : public cx::cmn::ui::gtkmm3::Gtkmm3Window
 {
 
 public:

@@ -29,11 +29,11 @@
 #include <cxcmnui/IMenu.h>
 #include <cxcmnui/ISignal.h>
 
-namespace cx::cmn::ui
+namespace cx::cmn::ui::gtkmm3
 {
 
 /***********************************************************************************************//**
- * @brief Gtkmm 3 implementation of the `cx::cmn::ui::IMenu` interface.
+ * @brief Gtkmm 3 implementation of the `cx::cmn::ui::gtkmm3::IMenu` interface.
  *
  **************************************************************************************************/
 class Gtkmm3Menu : public IMenu,
@@ -57,7 +57,7 @@ public:
     /*******************************************************************************************//**
      * @brief Sets the delegate for widget common facilities.
      *
-     * The delegate is reponsible to carry the implementation for generic `cx::cmn::ui::IWidget` operations.
+     * The delegate is reponsible to carry the implementation for generic `cx::cmn::ui::gtkmm3::IWidget` operations.
      * It is meant to avoid implementation duplication.
      *
      * @param p_delegate
@@ -84,10 +84,10 @@ public:
      **********************************************************************************************/
     [[nodiscard]] Gtk::MenuItem& GetTitleMenuItem();
 
-    // cx::cmn::ui::IMenu:
+    // cx::cmn::ui::gtkmm3::IMenu:
     void Register(IMenuItem& p_item) override;
 
-    // cx::cmn::ui::IWidget:
+    // cx::cmn::ui::gtkmm3::IWidget:
     [[nodiscard]] size_t GetWidth() const override;
     [[nodiscard]] size_t GetHeight() const override;
     void SetEnabled(EnabledState p_enabled) override;
@@ -102,6 +102,6 @@ private:
 
 };
 
-} // namespace cx::cmn::ui
+} // namespace cx::cmn::ui::gtkmm3
 
 #endif // GTKMM3MENU_H_8F6908BA_083B_4C86_A927_97A375555E22

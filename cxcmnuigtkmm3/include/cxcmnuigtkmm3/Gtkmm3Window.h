@@ -30,17 +30,18 @@
 #include <cxcmnui/generated/ressources.h>
 #include <cxcmnui/IWindow.h>
 
-namespace cx::ui
-{
-    class WidgetsFactories;
-}
 namespace cx::cmn::ui
 {
     class ILayout;
     class IWidget;
 }
 
-namespace cx::cmn::ui
+namespace cx::ui
+{
+    class WidgetsFactories;
+}
+
+namespace cx::cmn::ui::gtkmm3
 {
 
 /*********************************************************************************************//**
@@ -89,7 +90,7 @@ public:
     /*******************************************************************************************//**
      * @brief Sets the delegate for widget common facilities.
      *
-     * The delegate is reponsible to carry the implementation for generic `cx::cmn::ui::IWidget` operations.
+     * The delegate is reponsible to carry the implementation for generic `cx::cmn::ui::gtkmm3::IWidget` operations.
      * It is meant to avoid implementation duplication.
      *
      * @param p_delegate
@@ -101,17 +102,17 @@ public:
      *      The registered widget delegate is valid.
      *
      **********************************************************************************************/
-    void SetDelegate(std::unique_ptr<IWidget> p_delegate);
+    void SetDelegate(std::unique_ptr<cx::cmn::ui::IWidget> p_delegate);
 
     // cx::cmn::ui::IWindow:
     [[nodiscard]] int Show() override;
-    void ShrinkToContents(IWindow::Orientation p_orientation) override;
+    void ShrinkToContents(cx::cmn::ui::IWindow::Orientation p_orientation) override;
 
     // cx::cmn::ui::IWidget:
     [[nodiscard]] virtual size_t GetWidth() const override;
     [[nodiscard]] virtual size_t GetHeight() const override;
-    void SetEnabled(EnabledState p_enabled) override;
-    void SetMargins(const Margins& p_newMarginSizes) override;
+    void SetEnabled(cx::cmn::ui::EnabledState p_enabled) override;
+    void SetMargins(const cx::cmn::ui::Margins& p_newMarginSizes) override;
     void SetTooltip(const std::string& p_tooltipContents) override;
     [[nodiscard]] std::unique_ptr<ISignal<EventPropagation, KeyboardKeyPressedEvent>> OnKeyPressed() override;
 
@@ -192,9 +193,9 @@ private:
 private:
 
     cx::ui::WidgetsFactories& m_widgetsFactories;
-    std::unique_ptr<IWidget> m_delegate;
+    std::unique_ptr<cx::cmn::ui::IWidget> m_delegate;
 };
 
-} // namespace cx::cmn::ui
+} // namespace cx::cmn::ui::gtkmm3
 
 #endif // GTKMM3WINDOW_H_861FC628_597C_407E_8206_E67F71000A55

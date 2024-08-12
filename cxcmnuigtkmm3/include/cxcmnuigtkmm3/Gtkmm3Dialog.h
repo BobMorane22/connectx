@@ -34,7 +34,7 @@ namespace cx::cmn::ui
     enum class DialogRole;
 }
 
-namespace cx::cmn::ui
+namespace cx::cmn::ui::gtkmm3
 {
 
 /**********************************************************************************************//**
@@ -45,7 +45,7 @@ namespace cx::cmn::ui
  * which adds confusion.
  *
  *************************************************************************************************/
-class Gtkmm3Dialog : public IWindow,
+class Gtkmm3Dialog : public cx::cmn::ui::IWindow,
                      public Gtk::MessageDialog
 {
 
@@ -66,12 +66,15 @@ public:
      *      The message should not be empty.
      *
      **********************************************************************************************/
-    Gtkmm3Dialog(IWindow& p_parent, DialogRole p_role, const std::string& p_message);
+    Gtkmm3Dialog(
+        cx::cmn::ui::IWindow& p_parent,
+        cx::cmn::ui::DialogRole p_role,
+        const std::string& p_message);
 
     /*******************************************************************************************//**
      * @brief Sets the delegate for widget common facilities.
      *
-     * The delegate is reponsible to carry the implementation for generic `cx::cmn::ui::IWidget` operations.
+     * The delegate is reponsible to carry the implementation for generic `cx::cmn::ui::gtkmm3::IWidget` operations.
      * It is meant to avoid implementation duplication.
      *
      * @param p_delegate
@@ -83,29 +86,29 @@ public:
      *      The registered widget delegate is valid.
      *
      **********************************************************************************************/
-    void SetDelegate(std::unique_ptr<IWidget> p_delegate);
+    void SetDelegate(std::unique_ptr<cx::cmn::ui::IWidget> p_delegate);
 
     // cx::cmn::ui::IWindow:
     [[nodiscard]] virtual int Show() override;
-    void ShrinkToContents(IWindow::Orientation p_orientation) override;
+    void ShrinkToContents(cx::cmn::ui::IWindow::Orientation p_orientation) override;
 
     // cx::cmn::ui::IWidget:
     [[nodiscard]] size_t GetWidth() const override;
     [[nodiscard]] size_t GetHeight() const override;
-    void SetEnabled(EnabledState p_enabled) override;
-    void SetMargins(const Margins& p_newMarginSizes) override;
+    void SetEnabled(cx::cmn::ui::EnabledState p_enabled) override;
+    void SetMargins(const cx::cmn::ui::Margins& p_newMarginSizes) override;
     void SetTooltip(const std::string& p_tooltipContents) override;
-    [[nodiscard]] std::unique_ptr<ISignal<EventPropagation, KeyboardKeyPressedEvent>> OnKeyPressed() override;
+    [[nodiscard]] std::unique_ptr<ISignal<cx::cmn::ui::EventPropagation, cx::cmn::ui::KeyboardKeyPressedEvent>> OnKeyPressed() override;
 
 private:
 
     // cx::model::IModelObserver:
     void Update(cx::model::ModelNotificationContext p_context, cx::model::ModelSubject* p_subject) override;
 
-    std::unique_ptr<IWidget> m_delegate;
+    std::unique_ptr<cx::cmn::ui::IWidget> m_delegate;
 
 };
 
-} // namespace cx::cmn::ui
+} // namespace cx::cmn::ui::gtkmm3
 
 #endif // GTKMM3DIALOG_H_0BE19F00_7BE5_40DA_B880_C87F635AABE8

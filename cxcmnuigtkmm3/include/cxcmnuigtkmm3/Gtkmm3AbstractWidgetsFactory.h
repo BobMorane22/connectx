@@ -28,7 +28,7 @@
 
 #include <cxcmnui/IAbstractWidgetsFactory.h>
 
-namespace cx::cmn::ui
+namespace cx::cmn::ui::gtkmm3
 {
 
 /**********************************************************************************************//**
@@ -59,26 +59,26 @@ public:
     explicit Gtkmm3AbstractWidgetsFactory(Glib::RefPtr<Gtk::Application> p_gtkApplication);
 
     // IAbstractWidgetsFactory:
-    [[nodiscard]] std::unique_ptr<ILayout> CreateLayout() const override;
-    [[nodiscard]] std::unique_ptr<IButton> CreateButton() const override;
-    [[nodiscard]] std::unique_ptr<IButton> CreateButton(const std::string& p_contents) const override;
-    [[nodiscard]] std::unique_ptr<ILabel> CreateLabel() const override;
-    [[nodiscard]] std::unique_ptr<ILabel> CreateLabel(const std::string& p_contents) const override;
-    [[nodiscard]] std::unique_ptr<IEditBox> CreateEditBox() const override;
-    [[nodiscard]] std::unique_ptr<ISpinBox> CreateSpinBox(
+    [[nodiscard]] std::unique_ptr<cx::cmn::ui::ILayout> CreateLayout() const override;
+    [[nodiscard]] std::unique_ptr<cx::cmn::ui::IButton> CreateButton() const override;
+    [[nodiscard]] std::unique_ptr<cx::cmn::ui::IButton> CreateButton(const std::string& p_contents) const override;
+    [[nodiscard]] std::unique_ptr<cx::cmn::ui::ILabel> CreateLabel() const override;
+    [[nodiscard]] std::unique_ptr<cx::cmn::ui::ILabel> CreateLabel(const std::string& p_contents) const override;
+    [[nodiscard]] std::unique_ptr<cx::cmn::ui::IEditBox> CreateEditBox() const override;
+    [[nodiscard]] std::unique_ptr<cx::cmn::ui::ISpinBox> CreateSpinBox(
         int p_initialValue,
-        const ISpinBox::ClimbRate& p_climbRate,
-        const ISpinBox::Range& p_range) const override;
-    [[nodiscard]] std::unique_ptr<IOnOffSwitch> CreateOnOffSwitch() const override;
-    [[nodiscard]] std::unique_ptr<IWindow> CreateDialog(
-        IWindow& p_parent,
-        DialogRole p_dialogRole,
+        const cx::cmn::ui::ISpinBox::ClimbRate& p_climbRate,
+        const cx::cmn::ui::ISpinBox::Range& p_range) const override;
+    [[nodiscard]] std::unique_ptr<cx::cmn::ui::IOnOffSwitch> CreateOnOffSwitch() const override;
+    [[nodiscard]] std::unique_ptr<cx::cmn::ui::IWindow> CreateDialog(
+        cx::cmn::ui::IWindow& p_parent,
+        cx::cmn::ui::DialogRole p_dialogRole,
         const std::string& p_message) const override;
-    [[nodiscard]] std::unique_ptr<IMenuBar> CreateMenuBar() const override;
-    [[nodiscard]] std::unique_ptr<IMenu> CreateMenu(const std::string p_title) const override;
-    [[nodiscard]] std::unique_ptr<IMenuItem> CreateMenuItem(
+    [[nodiscard]] std::unique_ptr<cx::cmn::ui::IMenuBar> CreateMenuBar() const override;
+    [[nodiscard]] std::unique_ptr<cx::cmn::ui::IMenu> CreateMenu(const std::string p_title) const override;
+    [[nodiscard]] std::unique_ptr<cx::cmn::ui::IMenuItem> CreateMenuItem(
         const std::string p_label,
-        const std::optional<FreeDesktop::StdActionIcon>& p_icon = std::nullopt) const override;
+        const std::optional<cx::cmn::ui::FreeDesktop::StdActionIcon>& p_icon = std::nullopt) const override;
     [[nodiscard]] std::unique_ptr<IStatusBar> CreateStatusBar(IStatusBarPresenter& p_presenter) const override;
 
 private:
@@ -86,6 +86,6 @@ private:
     Glib::RefPtr<Gtk::Application> m_gtkApplication;
 };
 
-} // namespace cx::cmn::ui
+} // namespace cx::cmn::ui::gtkmm3
 
 #endif // GTKMM3ABSTRACTWIDGETSFACTORY_H_5986FF4A_306A_4809_8E54_BA7B1D8FDEEA

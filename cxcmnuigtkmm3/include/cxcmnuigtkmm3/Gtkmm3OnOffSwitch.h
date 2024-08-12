@@ -28,7 +28,7 @@
 
 #include <cxcmnui/IOnOffSwitch.h>
 
-namespace cx::cmn::ui
+namespace cx::cmn::ui::gtkmm3
 {
 
 /**********************************************************************************************//**
@@ -44,7 +44,7 @@ public:
     /*******************************************************************************************//**
      * @brief Sets the delegate for widget common facilities.
      *
-     * The delegate is reponsible to carry the implementation for generic `cx::cmn::ui::IWidget` operations.
+     * The delegate is reponsible to carry the implementation for generic `cx::cmn::ui::gtkmm3::IWidget` operations.
      * It is meant to avoid implementation duplication.
      *
      * @param p_delegate
@@ -58,12 +58,12 @@ public:
      **********************************************************************************************/
     void SetDelegate(std::unique_ptr<IWidget> p_delegate);
 
-    // cx::cmn::ui::IOnOffSwitch:
+    // cx::cmn::ui::gtkmm3::IOnOffSwitch:
     [[nodiscard]] OnOffState GetState() const override;
     void SetState(OnOffState p_newState) override;
     [[nodiscard]] std::unique_ptr<ISignal<void>> OnStateChanged() override;
 
-    // cx::cmn::ui::IWidget:
+    // cx::cmn::ui::gtkmm3::IWidget:
     [[nodiscard]] size_t GetWidth() const override;
     [[nodiscard]] size_t GetHeight() const override;
     void SetEnabled(EnabledState p_enabled) override;
@@ -78,6 +78,6 @@ private:
 
 };
 
-} // namespace cx::cmn::ui
+} // namespace cx::cmn::ui::gtkmm3
 
 #endif // GTKMM3ONOFFSWITCH_H_3F9ABCFC_7442_44F5_8C96_A15828BC28B8

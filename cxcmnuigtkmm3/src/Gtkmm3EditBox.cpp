@@ -45,7 +45,7 @@ public:
         sigc::connection gtkConnection = m_entry.signal_changed().connect(p_slot);
         IF_CONDITION_NOT_MET_DO(gtkConnection.connected(), return nullptr;);
 
-        return std::make_unique<cx::cmn::ui::Gtkmm3Connection>(gtkConnection);
+        return std::make_unique<cx::cmn::ui::gtkmm3::Gtkmm3Connection>(gtkConnection);
     }
 
 private:
@@ -56,7 +56,8 @@ private:
 
 } // namespace
 
-void cx::cmn::ui::Gtkmm3EditBox::SetDelegate(std::unique_ptr<IWidget> p_delegate)
+void cx::cmn::ui::gtkmm3::Gtkmm3EditBox::SetDelegate(
+    std::unique_ptr<cx::cmn::ui::IWidget> p_delegate)
 {
     IF_PRECONDITION_NOT_MET_DO(p_delegate, return;);
 
@@ -65,52 +66,52 @@ void cx::cmn::ui::Gtkmm3EditBox::SetDelegate(std::unique_ptr<IWidget> p_delegate
     POSTCONDITION(m_delegate);
 }
 
-void cx::cmn::ui::Gtkmm3EditBox::UpdateContents(const std::string& p_newContents)
+void cx::cmn::ui::gtkmm3::Gtkmm3EditBox::UpdateContents(const std::string& p_newContents)
 {
     set_text(p_newContents);
 }
 
-std::string cx::cmn::ui::Gtkmm3EditBox::GetContents() const
+std::string cx::cmn::ui::gtkmm3::Gtkmm3EditBox::GetContents() const
 {
     return get_text();
 }
 
-std::unique_ptr<cx::cmn::ui::ISignal<void>> cx::cmn::ui::Gtkmm3EditBox::OnContentsChanged()
+std::unique_ptr<cx::cmn::ui::ISignal<void>> cx::cmn::ui::gtkmm3::Gtkmm3EditBox::OnContentsChanged()
 {
     return std::make_unique<Gtkmm3OnContentsChangedSignal>(*this);
 }
 
-size_t cx::cmn::ui::Gtkmm3EditBox::GetWidth() const 
+size_t cx::cmn::ui::gtkmm3::Gtkmm3EditBox::GetWidth() const 
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return 0u;);
     return m_delegate->GetWidth();
 }
 
-size_t cx::cmn::ui::Gtkmm3EditBox::GetHeight() const 
+size_t cx::cmn::ui::gtkmm3::Gtkmm3EditBox::GetHeight() const 
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return 0u;);
     return m_delegate->GetHeight();
 }
 
-void cx::cmn::ui::Gtkmm3EditBox::SetEnabled(EnabledState p_enabled) 
+void cx::cmn::ui::gtkmm3::Gtkmm3EditBox::SetEnabled(EnabledState p_enabled) 
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return;);
     m_delegate->SetEnabled(p_enabled);
 }
 
-void cx::cmn::ui::Gtkmm3EditBox::SetMargins(const Margins& p_newMarginSizes) 
+void cx::cmn::ui::gtkmm3::Gtkmm3EditBox::SetMargins(const Margins& p_newMarginSizes) 
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return;);
     m_delegate->SetMargins(p_newMarginSizes);
 }
 
-void cx::cmn::ui::Gtkmm3EditBox::SetTooltip(const std::string& p_tooltipContents)
+void cx::cmn::ui::gtkmm3::Gtkmm3EditBox::SetTooltip(const std::string& p_tooltipContents)
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return;);
     m_delegate->SetTooltip(p_tooltipContents);
 }
 
-std::unique_ptr<cx::cmn::ui::ISignal<cx::cmn::ui::EventPropagation, cx::cmn::ui::KeyboardKeyPressedEvent>> cx::cmn::ui::Gtkmm3EditBox::OnKeyPressed()
+std::unique_ptr<cx::cmn::ui::ISignal<cx::cmn::ui::EventPropagation, cx::cmn::ui::KeyboardKeyPressedEvent>> cx::cmn::ui::gtkmm3::Gtkmm3EditBox::OnKeyPressed()
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return nullptr;);
     return m_delegate->OnKeyPressed();

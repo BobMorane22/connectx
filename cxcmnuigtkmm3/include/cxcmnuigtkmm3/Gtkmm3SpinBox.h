@@ -30,11 +30,11 @@
 
 #include <cxcmnui/ISpinBox.h>
 
-namespace cx::cmn::ui
+namespace cx::cmn::ui::gtkmm3
 {
 
 /**********************************************************************************************//**
- * @brief Gtkmm 3 implementation for the `cx::cmn::ui::ISpinBox` interface.
+ * @brief Gtkmm 3 implementation for the `cx::cmn::ui::gtkmm3::ISpinBox` interface.
  *
  *************************************************************************************************/
 class Gtkmm3SpinBox final : public cx::cmn::ui::ISpinBox,
@@ -64,7 +64,7 @@ public:
     /*******************************************************************************************//**
      * @brief Sets the delegate for widget common facilities.
      *
-     * The delegate is reponsible to carry the implementation for generic `cx::cmn::ui::IWidget` operations.
+     * The delegate is reponsible to carry the implementation for generic `cx::cmn::ui::gtkmm3::IWidget` operations.
      * It is meant to avoid implementation duplication.
      *
      * @param p_delegate
@@ -78,10 +78,10 @@ public:
      **********************************************************************************************/
     void SetDelegate(std::unique_ptr<IWidget> p_delegate);
 
-    // cx::cmn::ui::ISpinBox:
+    // cx::cmn::ui::gtkmm3::ISpinBox:
     [[nodiscard]] int GetValue() const override;
 
-    // cx::cmn::ui::IWidget:
+    // cx::cmn::ui::gtkmm3::IWidget:
     [[nodiscard]] size_t GetWidth() const override;
     [[nodiscard]] size_t GetHeight() const override;
     void SetEnabled(EnabledState p_enabled) override;
@@ -97,6 +97,6 @@ private:
 
 };
 
-} // namespace cx::cmn::ui
+} // namespace cx::cmn::ui::gtkmm3
 
 #endif // GTKMM3SPINBOX_H_73AD5C68_A06C_4EFB_94EE_928437F83BA6

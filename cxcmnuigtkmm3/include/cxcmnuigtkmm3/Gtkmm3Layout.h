@@ -33,11 +33,11 @@ namespace cx::cmn::ui
     class IWidget;
 }
  
-namespace cx::cmn::ui
+namespace cx::cmn::ui::gtkmm3
 {
 
 /**********************************************************************************************//**
- * @brief Gtkmm 3 implementation for the `cx::cmn::ui::ILayout` interface.
+ * @brief Gtkmm 3 implementation for the `cx::cmn::ui::gtkmm3::ILayout` interface.
  *
  *************************************************************************************************/
 class Gtkmm3Layout : public cx::cmn::ui::ILayout,
@@ -49,7 +49,7 @@ public:
     /*******************************************************************************************//**
      * @brief Sets the delegate for widget common facilities.
      *
-     * The delegate is reponsible to carry the implementation for generic `cx::cmn::ui::IWidget` operations.
+     * The delegate is reponsible to carry the implementation for generic `cx::cmn::ui::gtkmm3::IWidget` operations.
      * It is meant to avoid implementation duplication.
      *
      * @param p_delegate
@@ -65,27 +65,38 @@ public:
 
     // cx::cmn::ui::ILayout:
     void Register(IWidget& p_widget,
-                  const ILayout::RowDescriptor& p_row,
-                  const ILayout::ColumnDescriptor& p_column,
-                  const Alignement& p_alignement = {}) override;
+        const cx::cmn::ui::ILayout::RowDescriptor& p_row,
+        const cx::cmn::ui::ILayout::ColumnDescriptor& p_column,
+        const cx::cmn::ui::ILayout::Alignement& p_alignement = {}) override;
     void Register(Gtk::Widget& p_gtkWidget,
-                  const ILayout::RowDescriptor& p_row,
-                  const ILayout::ColumnDescriptor& p_column,
-                  const Alignement& p_alignement = {}) override;
-    void Unregister(IWidget& p_widget) override;
-    void Unregister(Gtk::Widget& p_gtkWidget) override;
-    [[nodiscard]] const IWidget* GetWidgetAtPosition(const cx::model::Row& p_row, const cx::model::Column& p_column) const override;
-    [[nodiscard]] IWidget* GetWidgetAtPosition(const cx::model::Row& p_row, const cx::model::Column& p_column) override;
-    void SetRowSpacingMode(RowSpacingMode p_newMode) override;
-    void SetColumnSpacingMode(ColumnSpacingMode p_newMode) override;
+        const cx::cmn::ui::ILayout::RowDescriptor& p_row,
+        const cx::cmn::ui::ILayout::ColumnDescriptor& p_column,
+        const cx::cmn::ui::ILayout::Alignement& p_alignement = {}) override;
+    void Unregister(
+        cx::cmn::ui::IWidget& p_widget) override;
+    void Unregister(
+        Gtk::Widget& p_gtkWidget) override;
+    [[nodiscard]] const IWidget* GetWidgetAtPosition(
+        const cx::model::Row& p_row,
+        const cx::model::Column& p_column) const override;
+    [[nodiscard]] cx::cmn::ui::IWidget* GetWidgetAtPosition(
+        const cx::model::Row& p_row,
+        const cx::model::Column& p_column) override;
+    void SetRowSpacingMode(
+        cx::cmn::ui::ILayout::RowSpacingMode p_newMode) override;
+    void SetColumnSpacingMode(
+        cx::cmn::ui::ILayout::ColumnSpacingMode p_newMode) override;
 
     // cx::cmn::ui::IWidget:
     [[nodiscard]] size_t GetWidth() const override;
     [[nodiscard]] size_t GetHeight() const override;
-    void SetEnabled(EnabledState p_enabled) override;
-    void SetMargins(const Margins& p_newMarginSizes) override;
-    void SetTooltip(const std::string& p_tooltipContents) override;
-    [[nodiscard]] std::unique_ptr<ISignal<EventPropagation, KeyboardKeyPressedEvent>> OnKeyPressed() override;
+    void SetEnabled(
+        cx::cmn::ui::EnabledState p_enabled) override;
+    void SetMargins(
+        const cx::cmn::ui::Margins& p_newMarginSizes) override;
+    void SetTooltip(
+        const std::string& p_tooltipContents) override;
+    [[nodiscard]] std::unique_ptr<cx::cmn::ui::ISignal<cx::cmn::ui::EventPropagation, cx::cmn::ui::KeyboardKeyPressedEvent>> OnKeyPressed() override;
 
 private:
 
@@ -93,6 +104,6 @@ private:
 
 };
 
-} // namespace cx::cmn::ui
+} // namespace cx::cmn::ui::gtkmm3
 
 #endif // GTKMM3CONTAINER_H_AB4FF2E5_DFE6_47C2_8EAC_5FC4FED66A24

@@ -41,7 +41,7 @@ cx::Gtkmm3UIManager::Gtkmm3UIManager(int argc, char *argv[], cx::ModelReferences
         Glib::RefPtr<Gtk::Application> gtkApplication = Gtk::Application::create(argc, argv, "bobmorane.connectx");
         ASSERT(gtkApplication);
 
-        m_abstractWidgetsFactory = std::make_unique<cx::cmn::ui::Gtkmm3AbstractWidgetsFactory>(gtkApplication);
+        m_abstractWidgetsFactory = std::make_unique<cx::cmn::ui::gtkmm3::Gtkmm3AbstractWidgetsFactory>(gtkApplication);
         ASSERT(m_abstractWidgetsFactory);
 
         {

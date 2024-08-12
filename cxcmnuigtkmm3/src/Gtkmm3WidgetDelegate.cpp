@@ -25,9 +25,9 @@
 
 #include <cxinv/assertion.h>
 #include <cxcmnui/EnabledState.h>
+#include <cxcmnui/EventPropagation.h>
 #include <cxcmnui/KeyboardKeyPressedEvent.h>
 #include <cxcmnui/Margins.h>
-#include <cxcmnui/EventPropagation.h>
 #include <cxcmnuigtkmm3/gtkmmConversions.h>
 #include <cxcmnuigtkmm3/Gtkmm3Connection.h>
 #include <cxcmnuigtkmm3/Gtkmm3WidgetDelegate.h>
@@ -51,12 +51,12 @@ public:
         {
             IF_PRECONDITION_NOT_MET_DO(p_event, return true;);
 
-            const auto event = cx::cmn::ui::FromGtk<cx::cmn::ui::KeyboardKeyPressedEvent>(*p_event);
+            const auto event = cx::cmn::ui::gtkmm3::FromGtk<cx::cmn::ui::KeyboardKeyPressedEvent>(*p_event);
             RETURN_IF(!event.has_value(), true);
 
             const cx::cmn::ui::EventPropagation propagate = p_slot(event.value());
 
-            const auto isHandled = cx::cmn::ui::ToGtk<bool>(propagate);
+            const auto isHandled = cx::cmn::ui::gtkmm3::ToGtk<bool>(propagate);
             IF_CONDITION_NOT_MET_DO(isHandled.has_value(), return true;);
 
             return isHandled.value();
@@ -65,7 +65,7 @@ public:
         sigc::connection gtkConnection = m_widget.signal_key_press_event().connect(gtkSlot, false);
         IF_CONDITION_NOT_MET_DO(gtkConnection.connected(), return nullptr;);
 
-        return std::make_unique<cx::cmn::ui::Gtkmm3Connection>(gtkConnection);
+        return std::make_unique<cx::cmn::ui::gtkmm3::Gtkmm3Connection>(gtkConnection);
     }
 
 private:
@@ -75,7 +75,7 @@ private:
 
 } // namespace
 
-void cx::cmn::ui::Gtkmm3WidgetDelegate::SetUnderlying(Gtk::Widget* p_underlying)
+void cx::cmn::ui::gtkmm3::Gtkmm3WidgetDelegate::SetUnderlying(Gtk::Widget* p_underlying)
 {
     PRECONDITION(p_underlying);
 
@@ -84,7 +84,7 @@ void cx::cmn::ui::Gtkmm3WidgetDelegate::SetUnderlying(Gtk::Widget* p_underlying)
     POSTCONDITION(m_underlying);
 }
 
-size_t cx::cmn::ui::Gtkmm3WidgetDelegate::GetWidth() const
+size_t cx::cmn::ui::gtkmm3::Gtkmm3WidgetDelegate::GetWidth() const
 {
     IF_PRECONDITION_NOT_MET_DO(m_underlying, return 0u;);
 
@@ -94,7 +94,7 @@ size_t cx::cmn::ui::Gtkmm3WidgetDelegate::GetWidth() const
     return static_cast<size_t>(width);
 }
 
-size_t cx::cmn::ui::Gtkmm3WidgetDelegate::GetHeight() const {
+size_t cx::cmn::ui::gtkmm3::Gtkmm3WidgetDelegate::GetHeight() const {
     IF_PRECONDITION_NOT_MET_DO(m_underlying, return 0u;);
 
     const int height = m_underlying->get_height();
@@ -103,14 +103,14 @@ size_t cx::cmn::ui::Gtkmm3WidgetDelegate::GetHeight() const {
     return static_cast<size_t>(height);
 }
 
-void cx::cmn::ui::Gtkmm3WidgetDelegate::SetEnabled(EnabledState p_enabled)
+void cx::cmn::ui::gtkmm3::Gtkmm3WidgetDelegate::SetEnabled(cx::cmn::ui::EnabledState p_enabled)
 {
     IF_PRECONDITION_NOT_MET_DO(m_underlying, return;);
 
-    m_underlying->set_sensitive(p_enabled == EnabledState::Enabled ? true : false);
+    m_underlying->set_sensitive(p_enabled == cx::cmn::ui::EnabledState::Enabled ? true : false);
 }
 
-void cx::cmn::ui::Gtkmm3WidgetDelegate::SetMargins(const Margins& p_newMarginSizes)
+void cx::cmn::ui::gtkmm3::Gtkmm3WidgetDelegate::SetMargins(const cx::cmn::ui::Margins& p_newMarginSizes)
 {
     IF_PRECONDITION_NOT_MET_DO(m_underlying, return;);
 
@@ -125,14 +125,14 @@ void cx::cmn::ui::Gtkmm3WidgetDelegate::SetMargins(const Margins& p_newMarginSiz
     m_underlying->set_margin_bottom(bottom);
 }
 
-void cx::cmn::ui::Gtkmm3WidgetDelegate::SetTooltip(const std::string& p_tooltipContents)
+void cx::cmn::ui::gtkmm3::Gtkmm3WidgetDelegate::SetTooltip(const std::string& p_tooltipContents)
 {
     IF_PRECONDITION_NOT_MET_DO(m_underlying, return;);
 
     m_underlying->set_tooltip_text(p_tooltipContents);
 }
 
-std::unique_ptr<cx::cmn::ui::ISignal<cx::cmn::ui::EventPropagation, cx::cmn::ui::KeyboardKeyPressedEvent>> cx::cmn::ui::Gtkmm3WidgetDelegate::OnKeyPressed()
+std::unique_ptr<cx::cmn::ui::ISignal<cx::cmn::ui::EventPropagation, cx::cmn::ui::KeyboardKeyPressedEvent>> cx::cmn::ui::gtkmm3::Gtkmm3WidgetDelegate::OnKeyPressed()
 {
     IF_PRECONDITION_NOT_MET_DO(m_underlying, return nullptr;);
 
