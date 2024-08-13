@@ -30,7 +30,7 @@
 
 #include <cxcmnui/ITimer.h>
 
-namespace cx::cmn::ui
+namespace cx::ui::gtkmm3
 {
 
 /**********************************************************************************************//**
@@ -61,7 +61,9 @@ public:
      *      The period is greater than 0 ms.
      *
      *************************************************************************************************/
-    Gtkmm3AnimatedBoardTimerRAII(ITimer::Callback&& p_callback, Period&& p_period);
+    Gtkmm3AnimatedBoardTimerRAII(
+        cx::cmn::ui::ITimer::Callback&& p_callback,
+        cx::cmn::ui::Period&& p_period);
 
     /**********************************************************************************************//**
      * @brief Destructor.
@@ -76,7 +78,7 @@ private:
     // Specific implementation of a timer using the Glib technology.
     // This timer is used specifically in the animations of the game
     // board, for frames drawing.
-    class Gtkmm3AnimatedBoardTimer : public ITimer
+    class Gtkmm3AnimatedBoardTimer : public cx::cmn::ui::ITimer
     {
 
     public:
@@ -84,22 +86,22 @@ private:
         Gtkmm3AnimatedBoardTimer();
 
         void SetCallback(Callback&& p_callback) override;
-        void SetPeriod(Period&& p_period) override;
+        void SetPeriod(cx::cmn::ui::Period&& p_period) override;
 
         void Start() override;
         void Stop() override;
 
     private:
 
-        ITimer::Callback m_callback;
-        Period m_period;
+        cx::cmn::ui::ITimer::Callback m_callback;
+        cx::cmn::ui::Period m_period;
         sigc::connection m_timer;
     };
 
-    std::unique_ptr<ITimer> m_animatedBoardTimer;
+    std::unique_ptr<cx::cmn::ui::ITimer> m_animatedBoardTimer;
 
 };
 
-} // namespace cx::cmn::ui
+} // namespace cx::ui::gtkmm3
 
 #endif // GTKMM3ANIMATEDBOARDTIMERRAII_H_059D3527_FB5A_4FF2_9A36_2786BDA81BDC

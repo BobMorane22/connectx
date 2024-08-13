@@ -31,7 +31,7 @@
 
 #include <cxui/IColorPicker.h>
 
-namespace cx::cmn::ui
+namespace cx::ui::gtkmm3
 {
 
 /**********************************************************************************************//**
@@ -62,7 +62,7 @@ public:
      *      The list of colors is not empty.
      *
      *********************************************************************************************/
-    explicit Gtkmm3ColorPicker(const std::vector<Color>& p_colors);
+    explicit Gtkmm3ColorPicker(const std::vector<cx::cmn::ui::Color>& p_colors);
 
     /******************************************************************************************//**
      * @brief Sets the delegate for widget common facilities.
@@ -82,17 +82,17 @@ public:
     void SetDelegate(std::unique_ptr<IWidget> p_delegate);
 
     // cx::ui::IColorPicker:
-    [[nodiscard]] Color GetCurrentSelection() const override;
+    [[nodiscard]] cx::cmn::ui::Color GetCurrentSelection() const override;
     void SetCurrentSelection(const cx::cmn::ui::Color& p_color) override;
-    [[nodiscard]] std::unique_ptr<ISignal<void>> OnSelectionChanged() override;
+    [[nodiscard]] std::unique_ptr<cx::cmn::ui::ISignal<void>> OnSelectionChanged() override;
 
     // cx::cmn::ui::IWidget:
     [[nodiscard]] size_t GetWidth() const override;
     [[nodiscard]] size_t GetHeight() const override;
-    void SetEnabled(EnabledState p_enabled) override;
-    void SetMargins(const Margins& p_newMarginSizes) override;
+    void SetEnabled(cx::cmn::ui::EnabledState p_enabled) override;
+    void SetMargins(const cx::cmn::ui::Margins& p_newMarginSizes) override;
     void SetTooltip(const std::string& p_tooltipContents) override;
-    [[nodiscard]] std::unique_ptr<ISignal<EventPropagation, KeyboardKeyPressedEvent>> OnKeyPressed() override;
+    [[nodiscard]] std::unique_ptr<cx::cmn::ui::ISignal<cx::cmn::ui::EventPropagation, cx::cmn::ui::KeyboardKeyPressedEvent>> OnKeyPressed() override;
 
 private:
 
@@ -115,10 +115,10 @@ private:
     Gtk::CellRendererText m_renderer;
     Glib::RefPtr<Gtk::ListStore> m_treeModel;
 
-    std::unique_ptr<IWidget> m_delegate;
+    std::unique_ptr<cx::cmn::ui::IWidget> m_delegate;
 
 };
 
-} // namespace cx::cmn::ui
+} // namespace cx::ui::gtkmm3
 
 #endif // GTKMM3COLORPICKER_H_1EEA8946_AD91_4032_B0F1_53AC7C01CA2D

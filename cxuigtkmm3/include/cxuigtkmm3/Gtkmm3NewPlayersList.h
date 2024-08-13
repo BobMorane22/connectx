@@ -51,7 +51,7 @@ namespace cx::ui
     class WidgetsFactories;
 }
 
-namespace cx::cmn::ui
+namespace cx::ui::gtkmm3
 {
 
 /***********************************************************************************************//**
@@ -127,18 +127,18 @@ public:
         cx::model::PlayerType p_newPlayerType,
         const std::string& p_newPlayerNewName,
         const cx::model::ChipColor& p_newPlayerNewChipColor) override;
-    [[nodiscard]] std::unique_ptr<ISignal<void>> OnPlayerUpdated() override;
+    [[nodiscard]] std::unique_ptr<cx::cmn::ui::ISignal<void>> OnPlayerUpdated() override;
 
     // cx::cmn::ui::IWidget:
     [[nodiscard]] size_t GetWidth() const override;
     [[nodiscard]] size_t GetHeight() const override;
     void SetEnabled(
-        EnabledState p_enabled) override;
+        cx::cmn::ui::EnabledState p_enabled) override;
     void SetMargins(
-        const Margins& p_newMarginSizes) override;
+        const cx::cmn::ui::Margins& p_newMarginSizes) override;
     void SetTooltip(
         const std::string& p_tooltipContents) override;
-    [[nodiscard]] std::unique_ptr<ISignal<EventPropagation, KeyboardKeyPressedEvent>> OnKeyPressed() override;
+    [[nodiscard]] std::unique_ptr<cx::cmn::ui::ISignal<cx::cmn::ui::EventPropagation, cx::cmn::ui::KeyboardKeyPressedEvent>> OnKeyPressed() override;
 
 private:
 
@@ -147,7 +147,7 @@ private:
     void RegisterNewPlayerRow(
         size_t p_rowIndex,
         const std::vector<cx::model::ChipColor>& p_alreadyChosenColors,
-        EnabledState p_enabled);
+        cx::cmn::ui::EnabledState p_enabled);
 
     bool RemovePlayerRow(
         const size_t p_index);
@@ -167,20 +167,20 @@ private:
     const cx::ui::WidgetsFactories& m_widgetsFactories;
 
     // Widget's main layout:
-    std::unique_ptr<ILayout> m_layout;
+    std::unique_ptr<cx::cmn::ui::ILayout> m_layout;
 
     // Title row:
-    std::unique_ptr<ILabel> m_isBotTitle;
-    std::unique_ptr<ILabel> m_playerNameTitle;
-    std::unique_ptr<ILabel> m_chipColorTitle;
+    std::unique_ptr<cx::cmn::ui::ILabel> m_isBotTitle;
+    std::unique_ptr<cx::cmn::ui::ILabel> m_playerNameTitle;
+    std::unique_ptr<cx::cmn::ui::ILabel> m_chipColorTitle;
 
     // Player rows:
-    std::vector<std::unique_ptr<IOnOffSwitch>> m_playerTypes;
-    std::vector<std::unique_ptr<IEditBox>> m_playerNames;
+    std::vector<std::unique_ptr<cx::cmn::ui::IOnOffSwitch>> m_playerTypes;
+    std::vector<std::unique_ptr<cx::cmn::ui::IEditBox>> m_playerNames;
     std::vector<std::unique_ptr<cx::ui::IColorPicker>> m_playerChipColors;
 
 };
 
-} // namespace cx::cmn::ui
+} // namespace cx::ui::gtkmm3
 
 #endif // GTKMM3NEWPLAYERSLIST_H_FDB93AF1_A5AC_4484_9857_0B207BAE8724

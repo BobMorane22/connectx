@@ -41,7 +41,7 @@ namespace cx::ui
     class WidgetsFactories;
 }
 
-namespace cx::cmn::ui
+namespace cx::ui::gtkmm3
 {
 
 /**********************************************************************************************//**
@@ -85,7 +85,7 @@ public:
     *      The stored widget factories are valid.
     *
     *********************************************************************************************/
-    void RegisterStandardWidgetsFactory(IAbstractWidgetsFactory& p_stdAbstractWidgetsFactory);
+    void RegisterStandardWidgetsFactory(cx::cmn::ui::IAbstractWidgetsFactory& p_stdAbstractWidgetsFactory);
 
     // cx::ui::IAbstractConnectXWidgetsFactory:
     [[nodiscard]] std::unique_ptr<cx::cmn::ui::IWindow> CreateMainWindow(cx::model::ModelSubject& p_model,
@@ -134,6 +134,6 @@ private:
 
 };
 
-} // namespace cx::cmn::ui
+} // namespace cx::ui::gtkmm3
 
 #endif // GTKMM3ABSTRACTCONNECTXWIDGETSFACTORY_H_B3944DEE_5157_44D5_91D7_B238464FDD05

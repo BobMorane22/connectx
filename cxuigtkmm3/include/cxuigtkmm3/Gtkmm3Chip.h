@@ -28,7 +28,7 @@
 
 #include <cxui/IChip.h>
 
-namespace cx::cmn::ui
+namespace cx::ui::gtkmm3
 {
 
 /*********************************************************************************************//**
@@ -88,10 +88,10 @@ public:
     // cx::cmn::ui::IWidget:
     [[nodiscard]] size_t GetWidth() const override final;
     [[nodiscard]] size_t GetHeight() const override final;
-    void SetEnabled(EnabledState p_enabled) override final;
-    void SetMargins(const Margins& p_newMarginSizes) override final;
+    void SetEnabled(cx::cmn::ui::EnabledState p_enabled) override final;
+    void SetMargins(const cx::cmn::ui::Margins& p_newMarginSizes) override final;
     void SetTooltip(const std::string& p_tooltipContents) override final;
-    [[nodiscard]] std::unique_ptr<ISignal<EventPropagation, KeyboardKeyPressedEvent>> OnKeyPressed() override;
+    [[nodiscard]] std::unique_ptr<cx::cmn::ui::ISignal<cx::cmn::ui::EventPropagation, cx::cmn::ui::KeyboardKeyPressedEvent>> OnKeyPressed() override;
 
 private:
 
@@ -117,13 +117,13 @@ private:
 
 private:
 
-    std::unique_ptr<IWidget> m_delegate;
+    std::unique_ptr<cx::cmn::ui::IWidget> m_delegate;
 
     cx::model::ChipColor m_fillColor;
     cx::model::ChipColor m_backgroundColor;
     cx::model::ChipColor m_initialBackgroundColor;
 };
 
-} // namespace cx::cmn::ui
+} // namespace cx::ui::gtkmm3
 
 #endif // GTKMM3CHIP_H_1CEF1E8A_30D4_45E4_932A_B86F7A39371D

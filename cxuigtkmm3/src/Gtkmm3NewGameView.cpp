@@ -71,7 +71,7 @@ void DisplayWarningDialog(
 
 } // namespace
 
-cx::cmn::ui::Gtkmm3NewGameView::Gtkmm3NewGameView(
+cx::ui::gtkmm3::Gtkmm3NewGameView::Gtkmm3NewGameView(
     cx::ui::WidgetsFactories& p_widgetsFactories,
     cx::ui::INewGameViewPresenter& p_presenter,
     cx::ui::INewGameViewController& p_controller,
@@ -92,6 +92,8 @@ cx::cmn::ui::Gtkmm3NewGameView::Gtkmm3NewGameView(
 
     m_viewLayout = standardWidgetsFactory.CreateLayout();
     m_playersList = connectXWidgetsFactory.CreateNewPlayersList(m_presenter);
+
+    using namespace cx::cmn::ui;
 
     constexpr ISpinBox::ClimbRate climbRate{1u};
     {
@@ -158,54 +160,54 @@ cx::cmn::ui::Gtkmm3NewGameView::Gtkmm3NewGameView(
     POSTCONDITION(m_playersSectionTitle);
 }
 
-void cx::cmn::ui::Gtkmm3NewGameView::Activate()
+void cx::ui::gtkmm3::Gtkmm3NewGameView::Activate()
 {
    m_mainLayout.Register(*m_viewLayout,
-                         {m_viewTop, ILayout::RowSpan{1u}},
-                         {m_viewLeft, ILayout::ColumnSpan{2u}});
+                         {m_viewTop, cx::cmn::ui::ILayout::RowSpan{1u}},
+                         {m_viewLeft, cx::cmn::ui::ILayout::ColumnSpan{2u}});
 }
 
-void cx::cmn::ui::Gtkmm3NewGameView::DeActivate()
+void cx::ui::gtkmm3::Gtkmm3NewGameView::DeActivate()
 {
     // Nothing to do...
 }
 
-void cx::cmn::ui::Gtkmm3NewGameView::Update(cx::model::ModelNotificationContext /*p_context*/)
+void cx::ui::gtkmm3::Gtkmm3NewGameView::Update(cx::model::ModelNotificationContext /*p_context*/)
 {
     // Noting to do...
 }
 
-size_t cx::cmn::ui::Gtkmm3NewGameView::GetWidth() const 
+size_t cx::ui::gtkmm3::Gtkmm3NewGameView::GetWidth() const 
 {
     return m_viewLayout->GetWidth();
 }
 
-size_t cx::cmn::ui::Gtkmm3NewGameView::GetHeight() const 
+size_t cx::ui::gtkmm3::Gtkmm3NewGameView::GetHeight() const 
 {
     return m_viewLayout->GetHeight();
 }
 
-void cx::cmn::ui::Gtkmm3NewGameView::SetEnabled(EnabledState p_enabled) 
+void cx::ui::gtkmm3::Gtkmm3NewGameView::SetEnabled(cx::cmn::ui::EnabledState p_enabled) 
 {
     return m_viewLayout->SetEnabled(p_enabled);
 }
 
-void cx::cmn::ui::Gtkmm3NewGameView::SetMargins(const Margins& p_newMarginSizes) 
+void cx::ui::gtkmm3::Gtkmm3NewGameView::SetMargins(const cx::cmn::ui::Margins& p_newMarginSizes) 
 {
     return m_viewLayout->SetMargins(p_newMarginSizes);
 }
 
-void cx::cmn::ui::Gtkmm3NewGameView::SetTooltip(const std::string& p_tooltipContents)
+void cx::ui::gtkmm3::Gtkmm3NewGameView::SetTooltip(const std::string& p_tooltipContents)
 {
     return m_viewLayout->SetTooltip(p_tooltipContents);
 }
 
-std::unique_ptr<cx::cmn::ui::ISignal<cx::cmn::ui::EventPropagation, cx::cmn::ui::KeyboardKeyPressedEvent>> cx::cmn::ui::Gtkmm3NewGameView::OnKeyPressed()
+std::unique_ptr<cx::cmn::ui::ISignal<cx::cmn::ui::EventPropagation, cx::cmn::ui::KeyboardKeyPressedEvent>> cx::ui::gtkmm3::Gtkmm3NewGameView::OnKeyPressed()
 {
-    return std::make_unique<NotSupported<EventPropagation, KeyboardKeyPressedEvent>>();
+    return std::make_unique<cx::cmn::ui::NotSupported<cx::cmn::ui::EventPropagation, cx::cmn::ui::KeyboardKeyPressedEvent>>();
 }
 
-void cx::cmn::ui::Gtkmm3NewGameView::SetLayout()
+void cx::ui::gtkmm3::Gtkmm3NewGameView::SetLayout()
 {
     constexpr cx::model::Column column0{0u};
     constexpr cx::model::Column column1{1u};
@@ -223,6 +225,8 @@ void cx::cmn::ui::Gtkmm3NewGameView::SetLayout()
     constexpr cx::model::Row row8{8u};
     constexpr cx::model::Row row9{9u};
     constexpr cx::cmn::ui::ILayout::RowSpan singleRowSpan{1u};
+
+    using namespace cx::cmn::ui;
 
     constexpr ILayout::Alignement hAlignLeft{
         ILayout::VerticalAlignement::FILL,
@@ -247,7 +251,7 @@ void cx::cmn::ui::Gtkmm3NewGameView::SetLayout()
     m_viewLayout->Register(*m_startButton,         {row9,  singleRowSpan}, {column0, fullColumnSpan}              );
 }
 
-void cx::cmn::ui::Gtkmm3NewGameView::PopulateWidgets()
+void cx::ui::gtkmm3::Gtkmm3NewGameView::PopulateWidgets()
 {
     m_title->UpdateContents(m_presenter.GetNewGameViewTitle());
 
@@ -261,8 +265,10 @@ void cx::cmn::ui::Gtkmm3NewGameView::PopulateWidgets()
     m_playersSectionTitle->UpdateContents(m_presenter.GetNewGameViewPlayersSectionTitle());
 }
 
-void cx::cmn::ui::Gtkmm3NewGameView::ConfigureWidgets()
+void cx::ui::gtkmm3::Gtkmm3NewGameView::ConfigureWidgets()
 {
+    using namespace cx::cmn::ui;
+
     // Window margin:
     m_mainLayout.SetMargins({
         TopMargin{DIALOG_SIDE_MARGIN},
@@ -312,7 +318,7 @@ void cx::cmn::ui::Gtkmm3NewGameView::ConfigureWidgets()
     m_startButton->SetMargins({TopMargin{0u}, BottomMargin{CONTROL_BOTTOM_MARGIN}, LeftMargin{0u}, RightMargin{0u}});
 }
 
-void cx::cmn::ui::Gtkmm3NewGameView::OnStart()
+void cx::ui::gtkmm3::Gtkmm3NewGameView::OnStart()
 {
     cx::model::NewGameInformation gameInformation;
     const auto extractionStatus = ExtractGameInformation(gameInformation);
@@ -339,7 +345,7 @@ void cx::cmn::ui::Gtkmm3NewGameView::OnStart()
     m_controller.OnStart(std::move(gameInformation));
 }
 
-void cx::cmn::ui::Gtkmm3NewGameView::OnAddPlayer()
+void cx::ui::gtkmm3::Gtkmm3NewGameView::OnAddPlayer()
 {
     if(m_presenter.CanAddAnotherPlayer(m_playersList->GetNbPlayers()))
     {
@@ -351,7 +357,7 @@ void cx::cmn::ui::Gtkmm3NewGameView::OnAddPlayer()
     EnabledStateUpdate(*m_addPlayerButton, m_presenter.CanAddAnotherPlayer(m_playersList->GetNbPlayers()));
 }
 
-void cx::cmn::ui::Gtkmm3NewGameView::OnRemovePlayer()
+void cx::ui::gtkmm3::Gtkmm3NewGameView::OnRemovePlayer()
 {
     if(m_presenter.CanRemoveAnotherPlayer(m_playersList->GetNbPlayers()))
     {
@@ -365,7 +371,7 @@ void cx::cmn::ui::Gtkmm3NewGameView::OnRemovePlayer()
     EnabledStateUpdate(*m_addPlayerButton, m_presenter.CanAddAnotherPlayer(m_playersList->GetNbPlayers()));
 }
 
-void cx::cmn::ui::Gtkmm3NewGameView::OnNewGameParameterUpdated()
+void cx::ui::gtkmm3::Gtkmm3NewGameView::OnNewGameParameterUpdated()
 {
     m_startButton->SetEnabled(cx::cmn::ui::EnabledState::Disabled);
 
@@ -390,7 +396,7 @@ void cx::cmn::ui::Gtkmm3NewGameView::OnNewGameParameterUpdated()
     m_startButton->SetTooltip("");
 }
 
-cx::model::Status cx::cmn::ui::Gtkmm3NewGameView::ExtractGameInformation(cx::model::NewGameInformation& p_gameInformation) const
+cx::model::Status cx::ui::gtkmm3::Gtkmm3NewGameView::ExtractGameInformation(cx::model::NewGameInformation& p_gameInformation) const
 {
     // Extracting game parameters from the GUI:
     const int valueInARow = m_inARowSpinBox->GetValue();

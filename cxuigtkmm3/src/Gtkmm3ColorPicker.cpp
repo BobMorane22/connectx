@@ -57,12 +57,12 @@ private:
 
 } // namespace
 
-cx::cmn::ui::Gtkmm3ColorPicker::Record::Record()
+cx::ui::gtkmm3::Gtkmm3ColorPicker::Record::Record()
 {
     add(m_color);
 }
 
-cx::cmn::ui::Gtkmm3ColorPicker::Gtkmm3ColorPicker(const std::vector<Color>& p_colors)
+cx::ui::gtkmm3::Gtkmm3ColorPicker::Gtkmm3ColorPicker(const std::vector<cx::cmn::ui::Color>& p_colors)
 {
     PRECONDITION(!p_colors.empty());
 
@@ -76,14 +76,14 @@ cx::cmn::ui::Gtkmm3ColorPicker::Gtkmm3ColorPicker(const std::vector<Color>& p_co
         AddElement(color, true);
     }
 
-    set_cell_data_func(m_renderer, sigc::mem_fun(*this, &cx::cmn::ui::Gtkmm3ColorPicker::OnRenderCell));
+    set_cell_data_func(m_renderer, sigc::mem_fun(*this, &cx::ui::gtkmm3::Gtkmm3ColorPicker::OnRenderCell));
     pack_start(m_renderer);
 
     // Connect signal handler:
     signal_changed().connect([this](){OnComboChanged();});
 }
 
-void cx::cmn::ui::Gtkmm3ColorPicker::SetDelegate(std::unique_ptr<IWidget> p_delegate)
+void cx::ui::gtkmm3::Gtkmm3ColorPicker::SetDelegate(std::unique_ptr<IWidget> p_delegate)
 {
     IF_PRECONDITION_NOT_MET_DO(p_delegate, return;);
 
@@ -92,7 +92,7 @@ void cx::cmn::ui::Gtkmm3ColorPicker::SetDelegate(std::unique_ptr<IWidget> p_dele
     POSTCONDITION(m_delegate);
 }
 
-cx::cmn::ui::Color cx::cmn::ui::Gtkmm3ColorPicker::GetCurrentSelection() const 
+cx::cmn::ui::Color cx::ui::gtkmm3::Gtkmm3ColorPicker::GetCurrentSelection() const 
 {
     cx::cmn::ui::Color currentColor{0, 0, 0, 0}; // Transparent...
 
@@ -116,7 +116,7 @@ cx::cmn::ui::Color cx::cmn::ui::Gtkmm3ColorPicker::GetCurrentSelection() const
     return currentColor;
 }
 
-void cx::cmn::ui::Gtkmm3ColorPicker::SetCurrentSelection(const cx::cmn::ui::Color& p_color) 
+void cx::ui::gtkmm3::Gtkmm3ColorPicker::SetCurrentSelection(const cx::cmn::ui::Color& p_color) 
 {
     IF_PRECONDITION_NOT_MET_DO(bool(m_treeModel), return;);
 
@@ -137,48 +137,48 @@ void cx::cmn::ui::Gtkmm3ColorPicker::SetCurrentSelection(const cx::cmn::ui::Colo
     }
 }
 
-std::unique_ptr<cx::cmn::ui::ISignal<void>> cx::cmn::ui::Gtkmm3ColorPicker::OnSelectionChanged()
+std::unique_ptr<cx::cmn::ui::ISignal<void>> cx::ui::gtkmm3::Gtkmm3ColorPicker::OnSelectionChanged()
 {
     return std::make_unique<Gtkmm3OnSelectionChangedSignal>(*this);
 }
 
-size_t cx::cmn::ui::Gtkmm3ColorPicker::GetWidth() const 
+size_t cx::ui::gtkmm3::Gtkmm3ColorPicker::GetWidth() const 
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return 0u;);
     return m_delegate->GetWidth();
 }
 
-size_t cx::cmn::ui::Gtkmm3ColorPicker::GetHeight() const 
+size_t cx::ui::gtkmm3::Gtkmm3ColorPicker::GetHeight() const 
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return 0u;);
     return m_delegate->GetHeight();
 }
 
-void cx::cmn::ui::Gtkmm3ColorPicker::SetEnabled(EnabledState p_enabled) 
+void cx::ui::gtkmm3::Gtkmm3ColorPicker::SetEnabled(cx::cmn::ui::EnabledState p_enabled) 
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return;);
     m_delegate->SetEnabled(p_enabled);
 }
 
-void cx::cmn::ui::Gtkmm3ColorPicker::SetMargins(const Margins& p_newMarginSizes) 
+void cx::ui::gtkmm3::Gtkmm3ColorPicker::SetMargins(const cx::cmn::ui::Margins& p_newMarginSizes) 
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return;);
     m_delegate->SetMargins(p_newMarginSizes);
 }
 
-void cx::cmn::ui::Gtkmm3ColorPicker::SetTooltip(const std::string& p_tooltipContents)
+void cx::ui::gtkmm3::Gtkmm3ColorPicker::SetTooltip(const std::string& p_tooltipContents)
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return;);
     m_delegate->SetTooltip(p_tooltipContents);
 }
 
-std::unique_ptr<cx::cmn::ui::ISignal<cx::cmn::ui::EventPropagation, cx::cmn::ui::KeyboardKeyPressedEvent>> cx::cmn::ui::Gtkmm3ColorPicker::OnKeyPressed()
+std::unique_ptr<cx::cmn::ui::ISignal<cx::cmn::ui::EventPropagation, cx::cmn::ui::KeyboardKeyPressedEvent>> cx::ui::gtkmm3::Gtkmm3ColorPicker::OnKeyPressed()
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return nullptr;);
     return m_delegate->OnKeyPressed();
 }
 
-void cx::cmn::ui::Gtkmm3ColorPicker::AddElement(const cx::cmn::ui::Color& p_color, bool p_setActive)
+void cx::ui::gtkmm3::Gtkmm3ColorPicker::AddElement(const cx::cmn::ui::Color& p_color, bool p_setActive)
 {
     IF_PRECONDITION_NOT_MET_DO(bool(m_treeModel), return;);
 
@@ -197,7 +197,7 @@ void cx::cmn::ui::Gtkmm3ColorPicker::AddElement(const cx::cmn::ui::Color& p_colo
     INVARIANT(bool(m_treeModel));
 }
 
-void cx::cmn::ui::Gtkmm3ColorPicker::OnRenderCell(const Gtk::TreeModel::const_iterator& iter)
+void cx::ui::gtkmm3::Gtkmm3ColorPicker::OnRenderCell(const Gtk::TreeModel::const_iterator& iter)
 {
     auto row = *iter;
     const Gdk::RGBA color = row[m_records.m_color];
@@ -212,7 +212,7 @@ void cx::cmn::ui::Gtkmm3ColorPicker::OnRenderCell(const Gtk::TreeModel::const_it
     INVARIANT(bool(m_treeModel));
 }
 
-void cx::cmn::ui::Gtkmm3ColorPicker::OnComboChanged()
+void cx::ui::gtkmm3::Gtkmm3ColorPicker::OnComboChanged()
 {
     const cx::cmn::ui::Color currentColor = GetCurrentSelection();
     Gdk::RGBA currentGdkColor;

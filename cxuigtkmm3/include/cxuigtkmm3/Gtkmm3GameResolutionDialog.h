@@ -40,7 +40,7 @@ namespace cx::ui
     class WidgetsFactories;
 }
 
-namespace cx::cmn::ui
+namespace cx::ui::gtkmm3
 {
 
 /*********************************************************************************************//**
@@ -92,12 +92,12 @@ private:
     const std::unique_ptr<cx::ui::IGameResolutionDialogController> m_controller;
 
     cx::ui::WidgetsFactories& m_widgetsFactories;
-    std::unique_ptr<ILabel> m_title;
-    std::unique_ptr<ILabel> m_message;
-    std::unique_ptr<IButton> m_startNewGame;
+    std::unique_ptr<cx::cmn::ui::ILabel> m_title;
+    std::unique_ptr<cx::cmn::ui::ILabel> m_message;
+    std::unique_ptr<cx::cmn::ui::IButton> m_startNewGame;
 
 };
 
-} // namespace cx::cmn::ui
+} // namespace cx::ui::gtkmm3
 
 #endif // GTKMM3GAMERESOLUTIONDIALOG_H_E524D346_789D_4165_ABD3_4B876F7FBBD7

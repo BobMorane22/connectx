@@ -39,7 +39,7 @@ namespace cx::ui
     class WidgetsFactories;
 }
 
-namespace cx::cmn::ui
+namespace cx::ui::gtkmm3
 {
 
 /**********************************************************************************************//**
@@ -85,17 +85,17 @@ private:
     std::unique_ptr<cx::ui::IAboutWindowPresenter> m_presenter;
 
     cx::ui::WidgetsFactories& m_widgetsFactories;
-    std::unique_ptr<ILabel> m_name;
-    std::unique_ptr<ILabel> m_version;
-    std::unique_ptr<ILabel> m_description;
-    std::unique_ptr<ILabel> m_website;
-    std::unique_ptr<ILabel> m_license;
-    std::unique_ptr<ILabel> m_copyright;
+    std::unique_ptr<cx::cmn::ui::ILabel> m_name;
+    std::unique_ptr<cx::cmn::ui::ILabel> m_version;
+    std::unique_ptr<cx::cmn::ui::ILabel> m_description;
+    std::unique_ptr<cx::cmn::ui::ILabel> m_website;
+    std::unique_ptr<cx::cmn::ui::ILabel> m_license;
+    std::unique_ptr<cx::cmn::ui::ILabel> m_copyright;
 
-    std::unique_ptr<IButton> m_close;
+    std::unique_ptr<cx::cmn::ui::IButton> m_close;
 
 };
 
-} // namespace cx::cmn::ui
+} // namespace cx::ui::gtkmm3
 
 #endif // GTKMM3ABOUTWINDOW_H_396864CD_88A3_43F2_B08B_3F9FEBE89DE1

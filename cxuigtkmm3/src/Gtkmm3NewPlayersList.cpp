@@ -166,13 +166,13 @@ private:
 
 } // namespace
 
-cx::cmn::ui::Gtkmm3NewPlayersList::Gtkmm3NewPlayersList(
+cx::ui::gtkmm3::Gtkmm3NewPlayersList::Gtkmm3NewPlayersList(
     const cx::ui::INewGameViewPresenter& p_presenter,
     const cx::ui::WidgetsFactories& p_widgetsFactories)
 : m_presenter{p_presenter}
 , m_widgetsFactories{p_widgetsFactories}
 {
-    const IAbstractWidgetsFactory& standardWidgetsFactory = p_widgetsFactories.GetStandardWidgetsFactory();
+    const cx::cmn::ui::IAbstractWidgetsFactory& standardWidgetsFactory = p_widgetsFactories.GetStandardWidgetsFactory();
     m_layout = standardWidgetsFactory.CreateLayout();
 
     {
@@ -182,17 +182,17 @@ cx::cmn::ui::Gtkmm3NewPlayersList::Gtkmm3NewPlayersList(
     }
 
     RegisterTitleRow();
-    RegisterNewPlayerRow(1u, GetAllColors(), EnabledState::Enabled);
-    RegisterNewPlayerRow(2u, GetAllColors(), EnabledState::Enabled);
+    RegisterNewPlayerRow(1u, GetAllColors(), cx::cmn::ui::EnabledState::Enabled);
+    RegisterNewPlayerRow(2u, GetAllColors(), cx::cmn::ui::EnabledState::Enabled);
 
     POSTCONDITION(m_layout);
 
     InvariantsCheck();
 }
 
-cx::cmn::ui::Gtkmm3NewPlayersList::~Gtkmm3NewPlayersList() = default;
+cx::ui::gtkmm3::Gtkmm3NewPlayersList::~Gtkmm3NewPlayersList() = default;
 
-void cx::cmn::ui::Gtkmm3NewPlayersList::SetDelegate(
+void cx::ui::gtkmm3::Gtkmm3NewPlayersList::SetDelegate(
     std::unique_ptr<cx::cmn::ui::IWidget> p_delegate)
 {
     IF_PRECONDITION_NOT_MET_DO(p_delegate, return;);
@@ -204,12 +204,12 @@ void cx::cmn::ui::Gtkmm3NewPlayersList::SetDelegate(
     InvariantsCheck();
 }
 
-size_t cx::cmn::ui::Gtkmm3NewPlayersList::GetNbPlayers() const
+size_t cx::ui::gtkmm3::Gtkmm3NewPlayersList::GetNbPlayers() const
 {
     return m_playerNames.size();
 }
 
-cx::model::ChipColor cx::cmn::ui::Gtkmm3NewPlayersList::GetRowPlayerChipColor(
+cx::model::ChipColor cx::ui::gtkmm3::Gtkmm3NewPlayersList::GetRowPlayerChipColor(
     const size_t p_index) const
 {
     PRECONDITION(p_index < GetNbPlayers());
@@ -220,18 +220,18 @@ cx::model::ChipColor cx::cmn::ui::Gtkmm3NewPlayersList::GetRowPlayerChipColor(
     return control->GetCurrentSelection();
 }
 
-std::string cx::cmn::ui::Gtkmm3NewPlayersList::GetPlayerNameAtRow(
+std::string cx::ui::gtkmm3::Gtkmm3NewPlayersList::GetPlayerNameAtRow(
     const size_t p_index) const
 {
     PRECONDITION(p_index < GetNbPlayers());
 
-    const std::unique_ptr<IEditBox>& control = m_playerNames[p_index];
+    const std::unique_ptr<cx::cmn::ui::IEditBox>& control = m_playerNames[p_index];
     IF_CONDITION_NOT_MET_DO(control, return {};);
 
     return control->GetContents();
 }
 
-std::vector<cx::model::ChipColor> cx::cmn::ui::Gtkmm3NewPlayersList::GetAllColors() const
+std::vector<cx::model::ChipColor> cx::ui::gtkmm3::Gtkmm3NewPlayersList::GetAllColors() const
 {
     std::vector<cx::model::ChipColor> colors;
 
@@ -244,11 +244,11 @@ std::vector<cx::model::ChipColor> cx::cmn::ui::Gtkmm3NewPlayersList::GetAllColor
     return colors;
 }
 
-std::vector<std::string> cx::cmn::ui::Gtkmm3NewPlayersList::GetAllPlayerNames() const
+std::vector<std::string> cx::ui::gtkmm3::Gtkmm3NewPlayersList::GetAllPlayerNames() const
 {
     std::vector<std::string> names;
 
-    for(const std::unique_ptr<IEditBox>& control : m_playerNames)
+    for(const std::unique_ptr<cx::cmn::ui::IEditBox>& control : m_playerNames)
     {
         IF_CONDITION_NOT_MET_DO(control, return {};);
         names.push_back(control->GetContents());
@@ -257,11 +257,11 @@ std::vector<std::string> cx::cmn::ui::Gtkmm3NewPlayersList::GetAllPlayerNames() 
     return names;
 }
 
-std::vector<cx::model::PlayerType> cx::cmn::ui::Gtkmm3NewPlayersList::GetAllPlayerTypes() const
+std::vector<cx::model::PlayerType> cx::ui::gtkmm3::Gtkmm3NewPlayersList::GetAllPlayerTypes() const
 {
     std::vector<cx::model::PlayerType> types;
 
-    for(const std::unique_ptr<IOnOffSwitch>& control : m_playerTypes)
+    for(const std::unique_ptr<cx::cmn::ui::IOnOffSwitch>& control : m_playerTypes)
     {
         IF_CONDITION_NOT_MET_DO(control, return {};);
 
@@ -277,7 +277,7 @@ std::vector<cx::model::PlayerType> cx::cmn::ui::Gtkmm3NewPlayersList::GetAllPlay
     return types;
 }
 
-bool cx::cmn::ui::Gtkmm3NewPlayersList::AddPlayer(
+bool cx::ui::gtkmm3::Gtkmm3NewPlayersList::AddPlayer(
     size_t p_rowIndex)
 {
     if(p_rowIndex > 0u)
@@ -287,12 +287,12 @@ bool cx::cmn::ui::Gtkmm3NewPlayersList::AddPlayer(
 
     const size_t sizeBefore{GetNbPlayers()};
 
-    RegisterNewPlayerRow(p_rowIndex, GetAllColors(), EnabledState::Enabled);
+    RegisterNewPlayerRow(p_rowIndex, GetAllColors(), cx::cmn::ui::EnabledState::Enabled);
         
     const size_t sizeAfter{GetNbPlayers()};
 
     // We check if the new row has indeed been added:
-    IF_CONDITION_NOT_MET_DO(sizeAfter == sizeBefore + 1, return false;);
+    IF_CONDITION_NOT_MET_DO(sizeAfter == sizeBefore + 1u, return false;);
 
     show_all();
 
@@ -301,7 +301,7 @@ bool cx::cmn::ui::Gtkmm3NewPlayersList::AddPlayer(
     return true;
 }
 
-bool cx::cmn::ui::Gtkmm3NewPlayersList::RemovePlayer(
+bool cx::ui::gtkmm3::Gtkmm3NewPlayersList::RemovePlayer(
     const size_t p_index)
 {
     IF_PRECONDITION_NOT_MET_DO(p_index < GetNbPlayers(), return false;);
@@ -313,7 +313,7 @@ bool cx::cmn::ui::Gtkmm3NewPlayersList::RemovePlayer(
     return result;
 }
 
-bool cx::cmn::ui::Gtkmm3NewPlayersList::UpdatePlayer(
+bool cx::ui::gtkmm3::Gtkmm3NewPlayersList::UpdatePlayer(
     const size_t p_index,
     cx::model::PlayerType p_playerNewType,
     const std::string& p_playerNewName,
@@ -329,7 +329,7 @@ bool cx::cmn::ui::Gtkmm3NewPlayersList::UpdatePlayer(
     return result;
 }
 
-std::unique_ptr<cx::cmn::ui::ISignal<void>> cx::cmn::ui::Gtkmm3NewPlayersList::OnPlayerUpdated()
+std::unique_ptr<cx::cmn::ui::ISignal<void>> cx::ui::gtkmm3::Gtkmm3NewPlayersList::OnPlayerUpdated()
 {
     auto signal = std::make_unique<Gtkmm3OnPlayerUpdatedSignal>(
                       m_playerTypes,
@@ -341,13 +341,15 @@ std::unique_ptr<cx::cmn::ui::ISignal<void>> cx::cmn::ui::Gtkmm3NewPlayersList::O
      return signal;
 }
 
-void cx::cmn::ui::Gtkmm3NewPlayersList::RegisterTitleRow()
+void cx::ui::gtkmm3::Gtkmm3NewPlayersList::RegisterTitleRow()
 {
-    const IAbstractWidgetsFactory& widgetsFactory = m_widgetsFactories.GetStandardWidgetsFactory();
+    const cx::cmn::ui::IAbstractWidgetsFactory& widgetsFactory = m_widgetsFactories.GetStandardWidgetsFactory();
 
     m_isBotTitle = widgetsFactory.CreateLabel(m_presenter.GetNewGameViewIsManagedColumnHeaderText());
     m_playerNameTitle = widgetsFactory.CreateLabel(m_presenter.GetNewGameViewNameColumnHeaderText());
     m_chipColorTitle = widgetsFactory.CreateLabel(m_presenter.GetNewGameViewDiscColumnHeaderText());
+
+    using namespace cx::cmn::ui;
 
     m_layout->Register(
         *m_isBotTitle,
@@ -372,10 +374,10 @@ void cx::cmn::ui::Gtkmm3NewPlayersList::RegisterTitleRow()
     InvariantsCheck();
 }
 
-void cx::cmn::ui::Gtkmm3NewPlayersList::RegisterNewPlayerRow(
+void cx::ui::gtkmm3::Gtkmm3NewPlayersList::RegisterNewPlayerRow(
     size_t p_rowIndex,
     const std::vector<cx::model::ChipColor>& p_alreadyChosenColors,
-    EnabledState p_enabled)
+    cx::cmn::ui::EnabledState p_enabled)
 {
     if(p_rowIndex > 0u)
     {
@@ -383,18 +385,19 @@ void cx::cmn::ui::Gtkmm3NewPlayersList::RegisterNewPlayerRow(
     }
 
     // Creating the widgets:
-    const IAbstractWidgetsFactory& standardWidgetsFactory = m_widgetsFactories.GetStandardWidgetsFactory();
+    const cx::cmn::ui::IAbstractWidgetsFactory& standardWidgetsFactory = m_widgetsFactories.GetStandardWidgetsFactory();
     const cx::ui::IAbstractConnectXWidgetsFactory& connectXWidgetsFactory = m_widgetsFactories.GetConnectXWidgetsFactory();
 
-    std::unique_ptr<IEditBox> playerName = standardWidgetsFactory.CreateEditBox();
+    std::unique_ptr<cx::cmn::ui::IEditBox> playerName = standardWidgetsFactory.CreateEditBox();
 
     const auto defaultColors = GetRemainingDefaultColors(p_alreadyChosenColors, m_presenter);
     IF_CONDITION_NOT_MET_DO(!defaultColors.empty(), return;);
     std::unique_ptr<cx::ui::IColorPicker> playerChipColor = connectXWidgetsFactory.CreateColorPicker(defaultColors);
 
-    std::unique_ptr<IOnOffSwitch> playerType = standardWidgetsFactory.CreateOnOffSwitch();
+    std::unique_ptr<cx::cmn::ui::IOnOffSwitch> playerType = standardWidgetsFactory.CreateOnOffSwitch();
 
     // Configuring the widgets:
+    using namespace cx::cmn::ui;
     playerName->UpdateContents(m_presenter.GetDefaultPlayerName(p_rowIndex));
     playerName->SetMargins({TopMargin{0}, BottomMargin{0}, LeftMargin{0}, RightMargin{CONTROL_SIDE_MARGIN}});
 
@@ -428,19 +431,19 @@ void cx::cmn::ui::Gtkmm3NewPlayersList::RegisterNewPlayerRow(
     InvariantsCheck();
 }
 
-bool cx::cmn::ui::Gtkmm3NewPlayersList::RemovePlayerRow(
+bool cx::ui::gtkmm3::Gtkmm3NewPlayersList::RemovePlayerRow(
     const size_t p_index)
 {
     IF_PRECONDITION_NOT_MET_DO(p_index < GetNbPlayers(), return false;);
 
     // Remove the row from the rows container:
     {
-        const std::unique_ptr<IOnOffSwitch>& control = m_playerTypes[p_index];
+        const std::unique_ptr<cx::cmn::ui::IOnOffSwitch>& control = m_playerTypes[p_index];
         IF_CONDITION_NOT_MET_DO(control, return false;);
         m_layout->Unregister(*control);
     }
     {
-        const std::unique_ptr<IEditBox>& control = m_playerNames[p_index];
+        const std::unique_ptr<cx::cmn::ui::IEditBox>& control = m_playerNames[p_index];
         IF_CONDITION_NOT_MET_DO(control, return false;);
         m_layout->Unregister(*control);
     }
@@ -460,7 +463,7 @@ bool cx::cmn::ui::Gtkmm3NewPlayersList::RemovePlayerRow(
     return true;
 }
 
-bool cx::cmn::ui::Gtkmm3NewPlayersList::UpdatePlayerRow(
+bool cx::ui::gtkmm3::Gtkmm3NewPlayersList::UpdatePlayerRow(
     const size_t p_index,
     cx::model::PlayerType p_playerNewType,
     const std::string& p_playerNewName,
@@ -472,14 +475,14 @@ bool cx::cmn::ui::Gtkmm3NewPlayersList::UpdatePlayerRow(
     const cx::model::Row row{p_index};
     constexpr cx::model::Column column0{0u};
     {
-        IWidget* widget = m_layout->GetWidgetAtPosition(row, column0);
-        auto* control = dynamic_cast<IOnOffSwitch*>(widget);
+        cx::cmn::ui::IWidget* widget = m_layout->GetWidgetAtPosition(row, column0);
+        auto* control = dynamic_cast<cx::cmn::ui::IOnOffSwitch*>(widget);
         IF_CONDITION_NOT_MET_DO(control, return false;);
 
-        auto newState = OnOffState::ON;
+        auto newState = cx::cmn::ui::OnOffState::ON;
         if(p_playerNewType == cx::model::PlayerType::HUMAN)
         {
-            newState = OnOffState::OFF;
+            newState = cx::cmn::ui::OnOffState::OFF;
         }
 
         control->SetState(newState);
@@ -487,8 +490,8 @@ bool cx::cmn::ui::Gtkmm3NewPlayersList::UpdatePlayerRow(
 
     constexpr cx::model::Column column1{1u};
     {
-        IWidget* widget = m_layout->GetWidgetAtPosition(row, column1);
-        auto* control = dynamic_cast<IEditBox*>(widget);
+        cx::cmn::ui::IWidget* widget = m_layout->GetWidgetAtPosition(row, column1);
+        auto* control = dynamic_cast<cx::cmn::ui::IEditBox*>(widget);
         IF_CONDITION_NOT_MET_DO(control, return false;);
 
         control->UpdateContents(p_playerNewName);
@@ -496,7 +499,7 @@ bool cx::cmn::ui::Gtkmm3NewPlayersList::UpdatePlayerRow(
 
     constexpr cx::model::Column column2{2u};
     {
-        IWidget* widget = m_layout->GetWidgetAtPosition(row, column2);
+        cx::cmn::ui::IWidget* widget = m_layout->GetWidgetAtPosition(row, column2);
         auto* control = dynamic_cast<cx::ui::IColorPicker*>(widget);
         IF_CONDITION_NOT_MET_DO(control, return false;);
 
@@ -508,7 +511,7 @@ bool cx::cmn::ui::Gtkmm3NewPlayersList::UpdatePlayerRow(
     return true;
 }
 
-void cx::cmn::ui::Gtkmm3NewPlayersList::InvariantsCheck() const
+void cx::ui::gtkmm3::Gtkmm3NewPlayersList::InvariantsCheck() const
 {
     INVARIANT(m_layout);
 
@@ -516,28 +519,28 @@ void cx::cmn::ui::Gtkmm3NewPlayersList::InvariantsCheck() const
     INVARIANT(m_playerNameTitle);
     INVARIANT(m_chipColorTitle);
 
-    INVARIANT(std::none_of(std::cbegin(m_playerTypes),      std::cend(m_playerTypes),      IsNullptr<IOnOffSwitch>));
-    INVARIANT(std::none_of(std::cbegin(m_playerNames),      std::cend(m_playerNames),      IsNullptr<IEditBox>));
+    INVARIANT(std::none_of(std::cbegin(m_playerTypes),      std::cend(m_playerTypes),      IsNullptr<cx::cmn::ui::IOnOffSwitch>));
+    INVARIANT(std::none_of(std::cbegin(m_playerNames),      std::cend(m_playerNames),      IsNullptr<cx::cmn::ui::IEditBox>));
     INVARIANT(std::none_of(std::cbegin(m_playerChipColors), std::cend(m_playerChipColors), IsNullptr<cx::ui::IColorPicker>));
 
     INVARIANT(m_playerTypes.size() == m_playerNames.size());
     INVARIANT(m_playerNames.size() == m_playerChipColors.size());
 }
 
-size_t cx::cmn::ui::Gtkmm3NewPlayersList::GetWidth() const
+size_t cx::ui::gtkmm3::Gtkmm3NewPlayersList::GetWidth() const
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return 0u;);
     return m_delegate->GetWidth();
 }
 
-size_t cx::cmn::ui::Gtkmm3NewPlayersList::GetHeight() const
+size_t cx::ui::gtkmm3::Gtkmm3NewPlayersList::GetHeight() const
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return 0u;);
     return m_delegate->GetHeight();
 }
 
-void cx::cmn::ui::Gtkmm3NewPlayersList::SetEnabled(
-    EnabledState p_enabled)
+void cx::ui::gtkmm3::Gtkmm3NewPlayersList::SetEnabled(
+    cx::cmn::ui::EnabledState p_enabled)
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return;);
     m_delegate->SetEnabled(p_enabled);
@@ -545,8 +548,8 @@ void cx::cmn::ui::Gtkmm3NewPlayersList::SetEnabled(
     InvariantsCheck();
 }
 
-void cx::cmn::ui::Gtkmm3NewPlayersList::SetMargins(
-    const Margins& p_newMarginSizes)
+void cx::ui::gtkmm3::Gtkmm3NewPlayersList::SetMargins(
+    const cx::cmn::ui::Margins& p_newMarginSizes)
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return;);
     m_delegate->SetMargins(p_newMarginSizes);
@@ -554,7 +557,7 @@ void cx::cmn::ui::Gtkmm3NewPlayersList::SetMargins(
     InvariantsCheck();
 }
 
-void cx::cmn::ui::Gtkmm3NewPlayersList::SetTooltip(
+void cx::ui::gtkmm3::Gtkmm3NewPlayersList::SetTooltip(
     const std::string& p_tooltipContents)
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return;);
@@ -563,7 +566,7 @@ void cx::cmn::ui::Gtkmm3NewPlayersList::SetTooltip(
     InvariantsCheck();
 }
 
-std::unique_ptr<cx::cmn::ui::ISignal<cx::cmn::ui::EventPropagation, cx::cmn::ui::KeyboardKeyPressedEvent>> cx::cmn::ui::Gtkmm3NewPlayersList::OnKeyPressed()
+std::unique_ptr<cx::cmn::ui::ISignal<cx::cmn::ui::EventPropagation, cx::cmn::ui::KeyboardKeyPressedEvent>> cx::ui::gtkmm3::Gtkmm3NewPlayersList::OnKeyPressed()
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return nullptr;);
     return m_delegate->OnKeyPressed();

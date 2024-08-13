@@ -50,7 +50,7 @@ namespace Gtk
     class Application;
 }
 
-namespace cx::cmn::ui
+namespace cx::ui::gtkmm3
 {
 
 /*********************************************************************************************//**
@@ -162,25 +162,25 @@ private:
 
     cx::ui::IMainWindowController& m_controller;
     cx::ui::IMainWindowPresenter& m_presenter;
-    std::unique_ptr<IStatusBarPresenter> m_statusBarPresenter;
+    std::unique_ptr<cx::cmn::ui::IStatusBarPresenter> m_statusBarPresenter;
 
     // Widgets factories:
     cx::ui::WidgetsFactories& m_widgetsFactories;
 
     // Status bar:
-    std::unique_ptr<IStatusBar> m_statusBar;
+    std::unique_ptr<cx::cmn::ui::IStatusBar> m_statusBar;
 
     // Menu bar:
-    std::unique_ptr<IMenuBar> m_menuBar;
-    std::unique_ptr<IMenu> m_gameMenu;
-    std::unique_ptr<IMenuItem> m_newGameMenuItem;
-    std::unique_ptr<IMenuItem> m_reinitializeMenuItem;
-    std::unique_ptr<IMenuItem> m_undoMenuItem;
-    std::unique_ptr<IMenuItem> m_redoMenuItem;
-    std::unique_ptr<IMenuItem> m_quitMenuItem;
-    std::unique_ptr<IMenu> m_helpMenu;
-    std::unique_ptr<IMenuItem> m_contentsMenuItem;
-    std::unique_ptr<IMenuItem> m_aboutMenuItem;
+    std::unique_ptr<cx::cmn::ui::IMenuBar> m_menuBar;
+    std::unique_ptr<cx::cmn::ui::IMenu> m_gameMenu;
+    std::unique_ptr<cx::cmn::ui::IMenuItem> m_newGameMenuItem;
+    std::unique_ptr<cx::cmn::ui::IMenuItem> m_reinitializeMenuItem;
+    std::unique_ptr<cx::cmn::ui::IMenuItem> m_undoMenuItem;
+    std::unique_ptr<cx::cmn::ui::IMenuItem> m_redoMenuItem;
+    std::unique_ptr<cx::cmn::ui::IMenuItem> m_quitMenuItem;
+    std::unique_ptr<cx::cmn::ui::IMenu> m_helpMenu;
+    std::unique_ptr<cx::cmn::ui::IMenuItem> m_contentsMenuItem;
+    std::unique_ptr<cx::cmn::ui::IMenuItem> m_aboutMenuItem;
 
     // Views:
     const cx::model::Column m_viewLeft;
@@ -189,10 +189,10 @@ private:
     std::unique_ptr<cx::ui::IView> m_gameView;
 
     // Other windows:
-    std::unique_ptr<IWindow> m_aboutWindow;
-    std::unique_ptr<IWindow> m_gameResolution;
+    std::unique_ptr<cx::cmn::ui::IWindow> m_aboutWindow;
+    std::unique_ptr<cx::cmn::ui::IWindow> m_gameResolution;
 };
 
-} // namespace cx::cmn::ui
+} // namespace cx::ui::gtkmm3
 
 #endif // GTKMM3MAINWINDOW_H_F0ED11E8_831A_4C6A_8A9B_8C329506BD72

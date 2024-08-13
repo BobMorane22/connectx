@@ -45,7 +45,7 @@ namespace cx::ui
     class WidgetsFactories;
 }
 
-namespace cx::cmn::ui
+namespace cx::ui::gtkmm3
 {
 
 /*********************************************************************************************//**
@@ -102,10 +102,10 @@ public:
     // cx::cmn::ui::IWidget:
     [[nodiscard]] size_t GetWidth() const override;
     [[nodiscard]] size_t GetHeight() const override;
-    void SetEnabled(EnabledState p_enabled) override;
-    void SetMargins(const Margins& p_newMarginSizes) override;
+    void SetEnabled(cx::cmn::ui::EnabledState p_enabled) override;
+    void SetMargins(const cx::cmn::ui::Margins& p_newMarginSizes) override;
     void SetTooltip(const std::string& p_tooltipContents) override;
-    [[nodiscard]] std::unique_ptr<ISignal<EventPropagation, KeyboardKeyPressedEvent>> OnKeyPressed() override;
+    [[nodiscard]] std::unique_ptr<cx::cmn::ui::ISignal<cx::cmn::ui::EventPropagation, cx::cmn::ui::KeyboardKeyPressedEvent>> OnKeyPressed() override;
 
 private:
 
@@ -119,7 +119,7 @@ private:
     void PopulateWidgets();
     void ConfigureWidgets();
 
-    EventPropagation OnKeyPressed(KeyboardKeyPressedEvent p_event);
+    cx::cmn::ui::EventPropagation OnKeyPressed(cx::cmn::ui::KeyboardKeyPressedEvent p_event);
     void EnableKeyHandlers();
     void DisableKeyHandlers();
 
@@ -142,36 +142,36 @@ private:
     cx::ui::IGameViewPresenter& m_presenter;
     cx::ui::IGameViewController& m_controller;
 
-    IWindow& m_parentWindow;                  // The window containing the view in its main layout.
+    cx::cmn::ui::IWindow& m_parentWindow;                  // The window containing the view in its main layout.
 
     cx::cmn::ui::ILayout& m_mainLayout;
 
     const cx::model::Column m_viewLeft;
     const cx::model::Row m_viewTop;
 
-    std::unique_ptr<ILayout> m_viewLayout;
+    std::unique_ptr<cx::cmn::ui::ILayout> m_viewLayout;
 
     bool m_areKeyboardEventsAccepted = false;  // Indicates if the window accepts keyboard events or not.
 
     // Controls:
-    std::unique_ptr<ILabel> m_title;
+    std::unique_ptr<cx::cmn::ui::ILabel> m_title;
 
-    std::unique_ptr<ILayout> m_playersInfoLayout;
+    std::unique_ptr<cx::cmn::ui::ILayout> m_playersInfoLayout;
 
-    std::unique_ptr<ILabel> m_activePlayerLabel;
-    std::unique_ptr<ILabel> m_activePlayerName;
+    std::unique_ptr<cx::cmn::ui::ILabel> m_activePlayerLabel;
+    std::unique_ptr<cx::cmn::ui::ILabel> m_activePlayerName;
     std::unique_ptr<cx::ui::IChip> m_activePlayerChip;
 
-    std::unique_ptr<ILabel> m_nextPlayerLabel;
-    std::unique_ptr<ILabel> m_nextPlayerName;
+    std::unique_ptr<cx::cmn::ui::ILabel> m_nextPlayerLabel;
+    std::unique_ptr<cx::cmn::ui::ILabel> m_nextPlayerName;
     std::unique_ptr<cx::ui::IChip> m_nextPlayerChip;
 
     std::unique_ptr<cx::ui::IAnimatedBoard> m_board;
 
     // Connections:
-    std::unique_ptr<IConnection> m_keysPressedConnection;
+    std::unique_ptr<cx::cmn::ui::IConnection> m_keysPressedConnection;
 };
 
-} // namespace cx::cmn::ui
+} // namespace cx::ui::gtkmm3
 
 #endif // GTKMM3GAMEVIEW_H_AA8C282C_9CC4_45F4_BE91_C8840160BA1B

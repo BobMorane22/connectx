@@ -51,7 +51,7 @@ namespace cx::cmn::ui
     class IWindow;
 }
 
-namespace cx::cmn::ui
+namespace cx::ui::gtkmm3
 {
 
 /*********************************************************************************************//**
@@ -86,7 +86,7 @@ public:
        cx::ui::WidgetsFactories& p_widgetsFactories,
        cx::ui::INewGameViewPresenter& p_presenter,
        cx::ui::INewGameViewController& p_controller,
-       IWindow& p_parentWindow,
+       cx::cmn::ui::IWindow& p_parentWindow,
        cx::cmn::ui::ILayout& p_mainLayout,
        const cx::model::Column& p_viewLeft,
        const cx::model::Row& p_viewTop);
@@ -99,10 +99,10 @@ public:
     // IWidget:
     [[nodiscard]] size_t GetWidth() const override;
     [[nodiscard]] size_t GetHeight() const override;
-    void SetEnabled(EnabledState p_enabled) override;
-    void SetMargins(const Margins& p_newMarginSizes) override;
+    void SetEnabled(cx::cmn::ui::EnabledState p_enabled) override;
+    void SetMargins(const cx::cmn::ui::Margins& p_newMarginSizes) override;
     void SetTooltip(const std::string& p_tooltipContents) override;
-    [[nodiscard]] std::unique_ptr<ISignal<EventPropagation, KeyboardKeyPressedEvent>> OnKeyPressed() override;
+    [[nodiscard]] std::unique_ptr<cx::cmn::ui::ISignal<cx::cmn::ui::EventPropagation, cx::cmn::ui::KeyboardKeyPressedEvent>> OnKeyPressed() override;
 
 private:
 
@@ -124,37 +124,37 @@ private:
     cx::ui::INewGameViewPresenter& m_presenter;
     cx::ui::INewGameViewController& m_controller;
 
-    IWindow& m_parentWindow;
+    cx::cmn::ui::IWindow& m_parentWindow;
 
     cx::cmn::ui::ILayout& m_mainLayout;
 
     const cx::model::Column m_viewLeft;
     const cx::model::Row m_viewTop;
 
-    std::unique_ptr<ILayout> m_viewLayout;
+    std::unique_ptr<cx::cmn::ui::ILayout> m_viewLayout;
 
     // Controls:
-    std::unique_ptr<ILabel> m_title;
+    std::unique_ptr<cx::cmn::ui::ILabel> m_title;
 
-    std::unique_ptr<ILabel> m_gameSectionTitle;
-    std::unique_ptr<ILabel> m_inARowLabel;
-    std::unique_ptr<ISpinBox> m_inARowSpinBox;
+    std::unique_ptr<cx::cmn::ui::ILabel> m_gameSectionTitle;
+    std::unique_ptr<cx::cmn::ui::ILabel> m_inARowLabel;
+    std::unique_ptr<cx::cmn::ui::ISpinBox> m_inARowSpinBox;
 
-    std::unique_ptr<ILabel> m_gridSectionTitle;
-    std::unique_ptr<ILabel> m_gridWidthLabel;
-    std::unique_ptr<ISpinBox> m_boardWidthSpinBox;
-    std::unique_ptr<ILabel> m_gridHeightLabel;
-    std::unique_ptr<ISpinBox> m_boardHeightSpinBox;
+    std::unique_ptr<cx::cmn::ui::ILabel> m_gridSectionTitle;
+    std::unique_ptr<cx::cmn::ui::ILabel> m_gridWidthLabel;
+    std::unique_ptr<cx::cmn::ui::ISpinBox> m_boardWidthSpinBox;
+    std::unique_ptr<cx::cmn::ui::ILabel> m_gridHeightLabel;
+    std::unique_ptr<cx::cmn::ui::ISpinBox> m_boardHeightSpinBox;
 
-    std::unique_ptr<ILabel> m_playersSectionTitle;
+    std::unique_ptr<cx::cmn::ui::ILabel> m_playersSectionTitle;
     std::unique_ptr<cx::ui::INewPlayersList> m_playersList;
 
-    std::unique_ptr<IButton> m_removePlayerButton;
-    std::unique_ptr<IButton> m_addPlayerButton;
-    std::unique_ptr<IButton> m_startButton;
+    std::unique_ptr<cx::cmn::ui::IButton> m_removePlayerButton;
+    std::unique_ptr<cx::cmn::ui::IButton> m_addPlayerButton;
+    std::unique_ptr<cx::cmn::ui::IButton> m_startButton;
 
 };
 
-} // namespace cx::cmn::ui
+} // namespace cx::ui::gtkmm3
 
 #endif // GTKMM3NEWGAMEVIEW_H_C5E65447_64C6_4DFE_B0F7_E6E9DB14BEAF

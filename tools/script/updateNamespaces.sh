@@ -3,8 +3,8 @@
 # --------------------------------------------------------------------------
 # FIND AND REPLACE
 # --------------------------------------------------------------------------
-OLD=cx::cmn::ui
-NEW=cx::cmn::ui::gtkmm3
+OLD=::Gtkmm3Gtkmm3
+NEW=::Gtkmm3
 
 ## Find and replace globally.
 ## -------------------------------------------------------------------------
@@ -15,7 +15,7 @@ NEW=cx::cmn::ui::gtkmm3
 
 ## Find and replace in specific directory.
 ## -------------------------------------------------------------------------
-TARGET=/home/bob/Programming/connectx/cxcmnuigtkmm3/include/cxcmnuigtkmm3
+TARGET=/home/bob/Programming/connectx/cxuigtkmm3/src
 
-echo "Executing : find -D exec $TARGET -type f -exec sed -i s/$OLD/$NEW/g {} \;"
+echo "Executing : find -D exec $TARGET -type f -exec sed -i s/"$OLD"/"$NEW"/g {} \;"
 find -D exec $TARGET -type f -exec sed -i s/$OLD/$NEW/g {} \;

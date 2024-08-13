@@ -51,7 +51,7 @@ constexpr cx::ui::AnimationSpeed NUMBER_CHIPS_MOVED_PER_SECOND{3u};
 
 } // namespace
 
-cx::cmn::ui::Gtkmm3GameView::Gtkmm3GameView(
+cx::ui::gtkmm3::Gtkmm3GameView::Gtkmm3GameView(
     cx::ui::WidgetsFactories& p_widgetsFactories,
     cx::ui::IGameViewPresenter& p_presenter,
     cx::ui::IGameViewController& p_controller,
@@ -67,7 +67,7 @@ cx::cmn::ui::Gtkmm3GameView::Gtkmm3GameView(
 , m_viewLeft{p_viewLeft}
 , m_viewTop{p_viewTop}
 {
-    const IAbstractWidgetsFactory& standardWidgetsFactory = m_widgetsFactories.GetStandardWidgetsFactory();
+    const cx::cmn::ui::IAbstractWidgetsFactory& standardWidgetsFactory = m_widgetsFactories.GetStandardWidgetsFactory();
     const cx::ui::IAbstractConnectXWidgetsFactory& connectXWidgetsFactory = m_widgetsFactories.GetConnectXWidgetsFactory();
 
     m_board = connectXWidgetsFactory.CreateGameBoard(m_presenter, NUMBER_CHIPS_MOVED_PER_SECOND);
@@ -108,12 +108,12 @@ cx::cmn::ui::Gtkmm3GameView::Gtkmm3GameView(
     POSTCONDITION(m_nextPlayerName);
 }
 
-cx::cmn::ui::Gtkmm3GameView::~Gtkmm3GameView()
+cx::ui::gtkmm3::Gtkmm3GameView::~Gtkmm3GameView()
 {
     DisableKeyHandlers();
 }
 
-void cx::cmn::ui::Gtkmm3GameView::Activate()
+void cx::ui::gtkmm3::Gtkmm3GameView::Activate()
 {
     EnableKeyHandlers();
 
@@ -137,7 +137,7 @@ void cx::cmn::ui::Gtkmm3GameView::Activate()
     UpdateGameReinitialized();
 }
 
-void cx::cmn::ui::Gtkmm3GameView::DeActivate()
+void cx::ui::gtkmm3::Gtkmm3GameView::DeActivate()
 {
     // Since the Game View is recreated every time, we need to clear
     // the view layout from the main layout, otherwise we will have a
@@ -151,7 +151,7 @@ void cx::cmn::ui::Gtkmm3GameView::DeActivate()
     DisableKeyHandlers();
 }
 
-void cx::cmn::ui::Gtkmm3GameView::Update(cx::model::ModelNotificationContext p_context)
+void cx::ui::gtkmm3::Gtkmm3GameView::Update(cx::model::ModelNotificationContext p_context)
 {
     switch(p_context)
     {
@@ -201,37 +201,37 @@ void cx::cmn::ui::Gtkmm3GameView::Update(cx::model::ModelNotificationContext p_c
     }
 }
 
-size_t cx::cmn::ui::Gtkmm3GameView::GetWidth() const 
+size_t cx::ui::gtkmm3::Gtkmm3GameView::GetWidth() const 
 {
     return m_viewLayout->GetWidth();
 }
 
-size_t cx::cmn::ui::Gtkmm3GameView::GetHeight() const 
+size_t cx::ui::gtkmm3::Gtkmm3GameView::GetHeight() const 
 {
     return m_viewLayout->GetHeight();
 }
 
-void cx::cmn::ui::Gtkmm3GameView::SetEnabled(EnabledState p_enabled) 
+void cx::ui::gtkmm3::Gtkmm3GameView::SetEnabled(cx::cmn::ui::EnabledState p_enabled) 
 {
     return m_viewLayout->SetEnabled(p_enabled);
 }
 
-void cx::cmn::ui::Gtkmm3GameView::SetMargins(const Margins& p_newMarginSizes) 
+void cx::ui::gtkmm3::Gtkmm3GameView::SetMargins(const cx::cmn::ui::Margins& p_newMarginSizes) 
 {
     return m_viewLayout->SetMargins(p_newMarginSizes);
 }
 
-void cx::cmn::ui::Gtkmm3GameView::SetTooltip(const std::string& p_tooltipContents)
+void cx::ui::gtkmm3::Gtkmm3GameView::SetTooltip(const std::string& p_tooltipContents)
 {
     return m_viewLayout->SetTooltip(p_tooltipContents);
 }
 
-std::unique_ptr<cx::cmn::ui::ISignal<cx::cmn::ui::EventPropagation, cx::cmn::ui::KeyboardKeyPressedEvent>> cx::cmn::ui::Gtkmm3GameView::OnKeyPressed()
+std::unique_ptr<cx::cmn::ui::ISignal<cx::cmn::ui::EventPropagation, cx::cmn::ui::KeyboardKeyPressedEvent>> cx::ui::gtkmm3::Gtkmm3GameView::OnKeyPressed()
 {
-    return std::make_unique<NotSupported<EventPropagation, KeyboardKeyPressedEvent>>();
+    return std::make_unique<cx::cmn::ui::NotSupported<cx::cmn::ui::EventPropagation, cx::cmn::ui::KeyboardKeyPressedEvent>>();
 }
 
-void cx::cmn::ui::Gtkmm3GameView::Update(cx::ui::BoardAnimationNotificationContext p_context, cx::ui::BoardAnimationSubject* p_subject)
+void cx::ui::gtkmm3::Gtkmm3GameView::Update(cx::ui::BoardAnimationNotificationContext p_context, cx::ui::BoardAnimationSubject* p_subject)
 {
     IF_CONDITION_NOT_MET_DO(p_subject, return;);
 
@@ -290,7 +290,7 @@ void cx::cmn::ui::Gtkmm3GameView::Update(cx::ui::BoardAnimationNotificationConte
     }
 }
 
-void cx::cmn::ui::Gtkmm3GameView::Update(cx::ui::UserAction p_context, cx::ui::UserActionSubject* p_subject)
+void cx::ui::gtkmm3::Gtkmm3GameView::Update(cx::ui::UserAction p_context, cx::ui::UserActionSubject* p_subject)
 {
     IF_CONDITION_NOT_MET_DO(p_subject, return;);
 
@@ -303,10 +303,12 @@ void cx::cmn::ui::Gtkmm3GameView::Update(cx::ui::UserAction p_context, cx::ui::U
     }
 }
 
-void cx::cmn::ui::Gtkmm3GameView::SetLayout()
+void cx::ui::gtkmm3::Gtkmm3GameView::SetLayout()
 {
     IF_CONDITION_NOT_MET_DO(m_viewLayout, return;);
     IF_CONDITION_NOT_MET_DO(m_playersInfoLayout, return;);
+
+    using namespace cx::cmn::ui;
 
     constexpr cx::model::Row row0{0u};
     constexpr cx::model::Row row1{1u};
@@ -350,7 +352,7 @@ void cx::cmn::ui::Gtkmm3GameView::SetLayout()
     }
 }
 
-void cx::cmn::ui::Gtkmm3GameView::PopulateWidgets()
+void cx::ui::gtkmm3::Gtkmm3GameView::PopulateWidgets()
 {
     m_title->UpdateContents(m_presenter.GetGameViewTitle());
 
@@ -363,8 +365,10 @@ void cx::cmn::ui::Gtkmm3GameView::PopulateWidgets()
     m_nextPlayerChip->ChangeColor(m_presenter.GetGameViewNextPlayerChipColor());
 }
 
-void cx::cmn::ui::Gtkmm3GameView::ConfigureWidgets()
+void cx::ui::gtkmm3::Gtkmm3GameView::ConfigureWidgets()
 {
+    using namespace cx::cmn::ui;
+
     // Window margin:
     m_mainLayout.SetMargins({
         cx::cmn::ui::TopMargin{DIALOG_SIDE_MARGIN},
@@ -389,7 +393,7 @@ void cx::cmn::ui::Gtkmm3GameView::ConfigureWidgets()
     });
 }
 
-cx::cmn::ui::EventPropagation cx::cmn::ui::Gtkmm3GameView::OnKeyPressed(KeyboardKeyPressedEvent p_event)
+cx::cmn::ui::EventPropagation cx::ui::gtkmm3::Gtkmm3GameView::OnKeyPressed(cx::cmn::ui::KeyboardKeyPressedEvent p_event)
 {
     IF_PRECONDITION_NOT_MET_DO(m_board, return cx::cmn::ui::EventPropagation::STOP;);
 
@@ -412,18 +416,18 @@ cx::cmn::ui::EventPropagation cx::cmn::ui::Gtkmm3GameView::OnKeyPressed(Keyboard
     return strategy->Handle(m_controller, *m_board);
 }
 
-void cx::cmn::ui::Gtkmm3GameView::EnableKeyHandlers()
+void cx::ui::gtkmm3::Gtkmm3GameView::EnableKeyHandlers()
 {
     m_areKeyboardEventsAccepted = true;
 
     m_keysPressedConnection = m_parentWindow.OnKeyPressed()->Connect(
-        [this](KeyboardKeyPressedEvent p_event)
+        [this](cx::cmn::ui::KeyboardKeyPressedEvent p_event)
         {
             return OnKeyPressed(p_event);
         });
 }
 
-void cx::cmn::ui::Gtkmm3GameView::DisableKeyHandlers()
+void cx::ui::gtkmm3::Gtkmm3GameView::DisableKeyHandlers()
 {
     IF_CONDITION_NOT_MET_DO(m_keysPressedConnection, return;);
 
@@ -432,7 +436,7 @@ void cx::cmn::ui::Gtkmm3GameView::DisableKeyHandlers()
     m_areKeyboardEventsAccepted = false;
 }
 
-void cx::cmn::ui::Gtkmm3GameView::UpdateChipDropped()
+void cx::ui::gtkmm3::Gtkmm3GameView::UpdateChipDropped()
 {
     IF_CONDITION_NOT_MET_DO(m_board, return;);
 
@@ -440,7 +444,7 @@ void cx::cmn::ui::Gtkmm3GameView::UpdateChipDropped()
     Notify(cx::ui::BoardAnimationNotificationContext::ANIMATE_MOVE_DROP_CHIP);
 }
 
-void cx::cmn::ui::Gtkmm3GameView::UpdateUndoChipDropped()
+void cx::ui::gtkmm3::Gtkmm3GameView::UpdateUndoChipDropped()
 {
     IF_CONDITION_NOT_MET_DO(m_board, return;);
 
@@ -448,7 +452,7 @@ void cx::cmn::ui::Gtkmm3GameView::UpdateUndoChipDropped()
     Notify(cx::ui::BoardAnimationNotificationContext::ANIMATE_UNDO_DROP_CHIP);
 }
 
-void cx::cmn::ui::Gtkmm3GameView::UpdateRedoChipDropped()
+void cx::ui::gtkmm3::Gtkmm3GameView::UpdateRedoChipDropped()
 {
     IF_CONDITION_NOT_MET_DO(m_board, return;);
 
@@ -456,36 +460,36 @@ void cx::cmn::ui::Gtkmm3GameView::UpdateRedoChipDropped()
     Notify(cx::ui::BoardAnimationNotificationContext::ANIMATE_REDO_DROP_CHIP);
 }
 
-void cx::cmn::ui::Gtkmm3GameView::UpdateChipDroppedFailed()
+void cx::ui::gtkmm3::Gtkmm3GameView::UpdateChipDroppedFailed()
 {
     EnableKeyHandlers();
 }
 
-void cx::cmn::ui::Gtkmm3GameView::UpdateChipMovedLeftOneColumn()
+void cx::ui::gtkmm3::Gtkmm3GameView::UpdateChipMovedLeftOneColumn()
 {
     IF_CONDITION_NOT_MET_DO(m_board, return;);
     Notify(cx::ui::BoardAnimationNotificationContext::ANIMATE_MOVE_LEFT_ONE_COLUMN);
 }
 
-void cx::cmn::ui::Gtkmm3GameView::UpdateChipMovedRightOneColumn()
+void cx::ui::gtkmm3::Gtkmm3GameView::UpdateChipMovedRightOneColumn()
 {
     IF_CONDITION_NOT_MET_DO(m_board, return;);
     Notify(cx::ui::BoardAnimationNotificationContext::ANIMATE_MOVE_RIGHT_ONE_COLUMN);
 }
 
-void cx::cmn::ui::Gtkmm3GameView::UpdateChipMovedRightToTarget()
+void cx::ui::gtkmm3::Gtkmm3GameView::UpdateChipMovedRightToTarget()
 {
     IF_CONDITION_NOT_MET_DO(m_board, return;);
     Notify(cx::ui::BoardAnimationNotificationContext::ANIMATE_MOVE_RIGHT_TO_TARGET);
 }
 
-void cx::cmn::ui::Gtkmm3GameView::UpdateGameResolved()
+void cx::ui::gtkmm3::Gtkmm3GameView::UpdateGameResolved()
 {
     IF_CONDITION_NOT_MET_DO(m_board, return;);
     Notify(cx::ui::BoardAnimationNotificationContext::ANIMATE_REINITIALIZE_BOARD);
 }
 
-void cx::cmn::ui::Gtkmm3GameView::UpdateGameReinitialized()
+void cx::ui::gtkmm3::Gtkmm3GameView::UpdateGameReinitialized()
 {
     IF_CONDITION_NOT_MET_DO(m_board, return;);
 
@@ -493,7 +497,7 @@ void cx::cmn::ui::Gtkmm3GameView::UpdateGameReinitialized()
     Notify(cx::ui::BoardAnimationNotificationContext::ANIMATE_REINITIALIZE_BOARD);
 }
 
-void cx::cmn::ui::Gtkmm3GameView::SyncPlayers()
+void cx::ui::gtkmm3::Gtkmm3GameView::SyncPlayers()
 {
     m_activePlayerChip->ChangeColor(m_presenter.GetGameViewActivePlayerChipColor());
     m_activePlayerName->UpdateContents(m_presenter.GetGameViewActivePlayerName());
