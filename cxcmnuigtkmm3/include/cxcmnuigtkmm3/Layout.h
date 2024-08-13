@@ -16,27 +16,32 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file Gtkmm3OnOffSwitch.h
- * @date 2022
+ * @file Layout.h
+ * @date 2023
  *
  *************************************************************************************************/
 
-#ifndef GTKMM3ONOFFSWITCH_H_3F9ABCFC_7442_44F5_8C96_A15828BC28B8
-#define GTKMM3ONOFFSWITCH_H_3F9ABCFC_7442_44F5_8C96_A15828BC28B8
+#ifndef GTKMM3LAYOUT_H_AB4FF2E5_DFE6_47C2_8EAC_5FC4FED66A24
+#define GTKMM3LAYOUT_H_AB4FF2E5_DFE6_47C2_8EAC_5FC4FED66A24
 
-#include <gtkmm/switch.h>
+#include <gtkmm/grid.h>
 
-#include <cxcmnui/IOnOffSwitch.h>
+#include <cxcmnui/ILayout.h>
 
+namespace cx::cmn::ui
+{
+    class IWidget;
+}
+ 
 namespace cx::cmn::ui::gtkmm3
 {
 
 /**********************************************************************************************//**
- * @brief A switch that is either "On" or "Off".
+ * @brief Gtkmm 3 implementation for the `cx::cmn::ui::gtkmm3::ILayout` interface.
  *
  *************************************************************************************************/
-class Gtkmm3OnOffSwitch : public cx::cmn::ui::IOnOffSwitch,
-                          public Gtk::Switch
+class Layout : public cx::cmn::ui::ILayout,
+               public Gtk::Grid
 {
 
 public:
@@ -58,19 +63,40 @@ public:
      **********************************************************************************************/
     void SetDelegate(std::unique_ptr<IWidget> p_delegate);
 
-    // cx::cmn::ui::gtkmm3::IOnOffSwitch:
-    [[nodiscard]] OnOffState GetState() const override;
-    void SetState(OnOffState p_newState) override;
-    [[nodiscard]] std::unique_ptr<ISignal<void>> OnStateChanged() override;
+    // cx::cmn::ui::ILayout:
+    void Register(IWidget& p_widget,
+        const cx::cmn::ui::ILayout::RowDescriptor& p_row,
+        const cx::cmn::ui::ILayout::ColumnDescriptor& p_column,
+        const cx::cmn::ui::ILayout::Alignement& p_alignement = {}) override;
+    void Register(Gtk::Widget& p_gtkWidget,
+        const cx::cmn::ui::ILayout::RowDescriptor& p_row,
+        const cx::cmn::ui::ILayout::ColumnDescriptor& p_column,
+        const cx::cmn::ui::ILayout::Alignement& p_alignement = {}) override;
+    void Unregister(
+        cx::cmn::ui::IWidget& p_widget) override;
+    void Unregister(
+        Gtk::Widget& p_gtkWidget) override;
+    [[nodiscard]] const IWidget* GetWidgetAtPosition(
+        const cx::model::Row& p_row,
+        const cx::model::Column& p_column) const override;
+    [[nodiscard]] cx::cmn::ui::IWidget* GetWidgetAtPosition(
+        const cx::model::Row& p_row,
+        const cx::model::Column& p_column) override;
+    void SetRowSpacingMode(
+        cx::cmn::ui::ILayout::RowSpacingMode p_newMode) override;
+    void SetColumnSpacingMode(
+        cx::cmn::ui::ILayout::ColumnSpacingMode p_newMode) override;
 
-    // cx::cmn::ui::gtkmm3::IWidget:
+    // cx::cmn::ui::IWidget:
     [[nodiscard]] size_t GetWidth() const override;
     [[nodiscard]] size_t GetHeight() const override;
-    void SetEnabled(EnabledState p_enabled) override;
-    void SetMargins(const Margins& p_newMarginSizes) override;
-    void SetTooltip(const std::string& p_tooltipContents) override;
-    [[nodiscard]] std::unique_ptr<ISignal<EventPropagation, KeyboardKeyPressedEvent>> OnKeyPressed() override;
-
+    void SetEnabled(
+        cx::cmn::ui::EnabledState p_enabled) override;
+    void SetMargins(
+        const cx::cmn::ui::Margins& p_newMarginSizes) override;
+    void SetTooltip(
+        const std::string& p_tooltipContents) override;
+    [[nodiscard]] std::unique_ptr<cx::cmn::ui::ISignal<cx::cmn::ui::EventPropagation, cx::cmn::ui::KeyboardKeyPressedEvent>> OnKeyPressed() override;
 
 private:
 
@@ -80,4 +106,4 @@ private:
 
 } // namespace cx::cmn::ui::gtkmm3
 
-#endif // GTKMM3ONOFFSWITCH_H_3F9ABCFC_7442_44F5_8C96_A15828BC28B8
+#endif // GTKMM3LAYOUT_H_AB4FF2E5_DFE6_47C2_8EAC_5FC4FED66A24

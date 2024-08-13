@@ -16,7 +16,7 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file Gtkmm3WidgetDelegate.h
+ * @file WidgetDelegate.h
  * @date 2023
  *
  *************************************************************************************************/
@@ -53,7 +53,7 @@ namespace cx::cmn::ui::gtkmm3
  * may simply be forwarded to the delegate).
  *
  *************************************************************************************************/
-class Gtkmm3WidgetDelegate : public cx::cmn::ui::IWidget
+class WidgetDelegate : public cx::cmn::ui::IWidget
 {
 
 public:
@@ -73,7 +73,7 @@ public:
      *********************************************************************************************/
     void SetUnderlying(Gtk::Widget* p_underlying);
 
-    // cx::cmn::ui::gtkmm3::IWidget:
+    // cx::cmn::ui::IWidget:
     [[nodiscard]] size_t GetWidth() const override;
     [[nodiscard]] size_t GetHeight() const override;
     void SetEnabled(cx::cmn::ui::EnabledState p_enabled) override;
@@ -113,7 +113,7 @@ template<typename Widget, typename... Args>
     auto* gtkWidget = dynamic_cast<Gtk::Widget*>(widget.get());
     IF_CONDITION_NOT_MET_DO(gtkWidget, return nullptr;);
 
-    auto delegate = std::make_unique<Gtkmm3WidgetDelegate>();
+    auto delegate = std::make_unique<WidgetDelegate>();
     IF_CONDITION_NOT_MET_DO(delegate, return nullptr;);
 
     delegate->SetUnderlying(gtkWidget);

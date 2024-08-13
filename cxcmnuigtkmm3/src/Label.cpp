@@ -16,26 +16,26 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file Gtkmm3Label.cpp
+ * @file Label.cpp
  * @date 2024
  *
  *************************************************************************************************/
 
 #include <cxinv/assertion.h>
-#include <cxcmnuigtkmm3/Gtkmm3Label.h>
+#include <cxcmnuigtkmm3/Label.h>
 
-cx::cmn::ui::gtkmm3::Gtkmm3Label::Gtkmm3Label()
-: Gtkmm3Label("")
+cx::cmn::ui::gtkmm3::Label::Label()
+: Label("")
 {
 }
 
-cx::cmn::ui::gtkmm3::Gtkmm3Label::Gtkmm3Label(const std::string& p_contents)
+cx::cmn::ui::gtkmm3::Label::Label(const std::string& p_contents)
 : Gtk::Label{p_contents}
 {
     set_use_markup(true);
 }
 
-void cx::cmn::ui::gtkmm3::Gtkmm3Label::SetDelegate(std::unique_ptr<IWidget> p_delegate)
+void cx::cmn::ui::gtkmm3::Label::SetDelegate(std::unique_ptr<IWidget> p_delegate)
 {
     IF_PRECONDITION_NOT_MET_DO(p_delegate, return;);
 
@@ -44,47 +44,47 @@ void cx::cmn::ui::gtkmm3::Gtkmm3Label::SetDelegate(std::unique_ptr<IWidget> p_de
     POSTCONDITION(m_delegate);
 }
 
-void cx::cmn::ui::gtkmm3::Gtkmm3Label::UpdateContents(const std::string& p_newContents) 
+void cx::cmn::ui::gtkmm3::Label::UpdateContents(const std::string& p_newContents) 
 {
     set_markup(p_newContents);
 }
 
-std::string cx::cmn::ui::gtkmm3::Gtkmm3Label::GetContents() const
+std::string cx::cmn::ui::gtkmm3::Label::GetContents() const
 {
     return get_text();
 }
 
-size_t cx::cmn::ui::gtkmm3::Gtkmm3Label::GetWidth() const 
+size_t cx::cmn::ui::gtkmm3::Label::GetWidth() const 
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return 0u;);
     return m_delegate->GetWidth();
 }
 
-size_t cx::cmn::ui::gtkmm3::Gtkmm3Label::GetHeight() const 
+size_t cx::cmn::ui::gtkmm3::Label::GetHeight() const 
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return 0u;);
     return m_delegate->GetHeight();
 }
 
-void cx::cmn::ui::gtkmm3::Gtkmm3Label::SetEnabled(EnabledState p_enabled) 
+void cx::cmn::ui::gtkmm3::Label::SetEnabled(EnabledState p_enabled) 
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return;);
     m_delegate->SetEnabled(p_enabled);
 }
 
-void cx::cmn::ui::gtkmm3::Gtkmm3Label::SetMargins(const Margins& p_newMarginSizes) 
+void cx::cmn::ui::gtkmm3::Label::SetMargins(const Margins& p_newMarginSizes) 
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return;);
     m_delegate->SetMargins(p_newMarginSizes);
 }
 
-void cx::cmn::ui::gtkmm3::Gtkmm3Label::SetTooltip(const std::string& p_tooltipContents)
+void cx::cmn::ui::gtkmm3::Label::SetTooltip(const std::string& p_tooltipContents)
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return;);
     m_delegate->SetTooltip(p_tooltipContents);
 }
 
-std::unique_ptr<cx::cmn::ui::ISignal<cx::cmn::ui::EventPropagation, cx::cmn::ui::KeyboardKeyPressedEvent>> cx::cmn::ui::gtkmm3::Gtkmm3Label::OnKeyPressed()
+std::unique_ptr<cx::cmn::ui::ISignal<cx::cmn::ui::EventPropagation, cx::cmn::ui::KeyboardKeyPressedEvent>> cx::cmn::ui::gtkmm3::Label::OnKeyPressed()
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return nullptr;);
     return m_delegate->OnKeyPressed();

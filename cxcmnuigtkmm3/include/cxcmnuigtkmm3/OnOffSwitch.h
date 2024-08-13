@@ -16,60 +16,30 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file Gtkmm3Dialog.h
- * @date 2024
+ * @file OnOffSwitch.h
+ * @date 2022
  *
  *************************************************************************************************/
 
-#ifndef GTKMM3DIALOG_H_0BE19F00_7BE5_40DA_B880_C87F635AABE8
-#define GTKMM3DIALOG_H_0BE19F00_7BE5_40DA_B880_C87F635AABE8
+#ifndef GTKMM3ONOFFSWITCH_H_3F9ABCFC_7442_44F5_8C96_A15828BC28B8
+#define GTKMM3ONOFFSWITCH_H_3F9ABCFC_7442_44F5_8C96_A15828BC28B8
 
-#include <gtkmm/messagedialog.h>
+#include <gtkmm/switch.h>
 
-#include <cxmodel/ModelNotificationContext.h>
-#include <cxcmnui/IWindow.h>
-
-namespace cx::cmn::ui
-{
-    enum class DialogRole;
-}
+#include <cxcmnui/IOnOffSwitch.h>
 
 namespace cx::cmn::ui::gtkmm3
 {
 
 /**********************************************************************************************//**
- * @brief Gtkmm 3 dialog implementation.
- *
- * Unlike Gtkmm, this implementation shares the `IWindow::Show` method. Typical Gtkmm
- * implementations use the `Gtk::Dialog::run` method (but also inherit from `Gtk::Window::show`)
- * which adds confusion.
+ * @brief A switch that is either "On" or "Off".
  *
  *************************************************************************************************/
-class Gtkmm3Dialog : public cx::cmn::ui::IWindow,
-                     public Gtk::MessageDialog
+class OnOffSwitch : public cx::cmn::ui::IOnOffSwitch,
+                    public Gtk::Switch
 {
 
 public:
-
-    /*******************************************************************************************//**
-     * @brief Constructor.
-     *
-     * @param p_parent
-     *      The window over which the dialog will appear.
-     * @param p_role
-     *      The dialog's role. In other words, the type of communication the dialog going to
-     *      be used, as far as the user is concerned.
-     * @param p_message
-     *      The message to display to the user. 
-     *
-     * @pre
-     *      The message should not be empty.
-     *
-     **********************************************************************************************/
-    Gtkmm3Dialog(
-        cx::cmn::ui::IWindow& p_parent,
-        cx::cmn::ui::DialogRole p_role,
-        const std::string& p_message);
 
     /*******************************************************************************************//**
      * @brief Sets the delegate for widget common facilities.
@@ -86,29 +56,28 @@ public:
      *      The registered widget delegate is valid.
      *
      **********************************************************************************************/
-    void SetDelegate(std::unique_ptr<cx::cmn::ui::IWidget> p_delegate);
+    void SetDelegate(std::unique_ptr<IWidget> p_delegate);
 
-    // cx::cmn::ui::IWindow:
-    [[nodiscard]] virtual int Show() override;
-    void ShrinkToContents(cx::cmn::ui::IWindow::Orientation p_orientation) override;
+    // cx::cmn::ui::IOnOffSwitch:
+    [[nodiscard]] OnOffState GetState() const override;
+    void SetState(OnOffState p_newState) override;
+    [[nodiscard]] std::unique_ptr<ISignal<void>> OnStateChanged() override;
 
     // cx::cmn::ui::IWidget:
     [[nodiscard]] size_t GetWidth() const override;
     [[nodiscard]] size_t GetHeight() const override;
-    void SetEnabled(cx::cmn::ui::EnabledState p_enabled) override;
-    void SetMargins(const cx::cmn::ui::Margins& p_newMarginSizes) override;
+    void SetEnabled(EnabledState p_enabled) override;
+    void SetMargins(const Margins& p_newMarginSizes) override;
     void SetTooltip(const std::string& p_tooltipContents) override;
-    [[nodiscard]] std::unique_ptr<ISignal<cx::cmn::ui::EventPropagation, cx::cmn::ui::KeyboardKeyPressedEvent>> OnKeyPressed() override;
+    [[nodiscard]] std::unique_ptr<ISignal<EventPropagation, KeyboardKeyPressedEvent>> OnKeyPressed() override;
+
 
 private:
 
-    // cx::model::IModelObserver:
-    void Update(cx::model::ModelNotificationContext p_context, cx::model::ModelSubject* p_subject) override;
-
-    std::unique_ptr<cx::cmn::ui::IWidget> m_delegate;
+    std::unique_ptr<IWidget> m_delegate;
 
 };
 
 } // namespace cx::cmn::ui::gtkmm3
 
-#endif // GTKMM3DIALOG_H_0BE19F00_7BE5_40DA_B880_C87F635AABE8
+#endif // GTKMM3ONOFFSWITCH_H_3F9ABCFC_7442_44F5_8C96_A15828BC28B8

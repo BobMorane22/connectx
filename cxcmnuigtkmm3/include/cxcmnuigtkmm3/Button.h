@@ -16,43 +16,51 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file Gtkmm3Menu.h
+ * @file Button.h
  * @date 2024
  *
  *************************************************************************************************/
 
-#ifndef GTKMM3MENU_H_8F6908BA_083B_4C86_A927_97A375555E22
-#define GTKMM3MENU_H_8F6908BA_083B_4C86_A927_97A375555E22
+#ifndef GTKMM3BUTTON_H_28BFEAFC_06B4_4950_A338_12355AA185D0
+#define GTKMM3BUTTON_H_28BFEAFC_06B4_4950_A338_12355AA185D0
 
-#include <gtkmm/menu.h>
+#include <string>
 
-#include <cxcmnui/IMenu.h>
-#include <cxcmnui/ISignal.h>
+#include <gtkmm/button.h>
+
+#include <cxcmnui/IButton.h>
 
 namespace cx::cmn::ui::gtkmm3
 {
 
-/***********************************************************************************************//**
- * @brief Gtkmm 3 implementation of the `cx::cmn::ui::gtkmm3::IMenu` interface.
+/**********************************************************************************************//**
+ * @brief Gtkmm 3 implementation of the `cx::cmn::ui::gtkmm3::IButton` interface.
  *
- **************************************************************************************************/
-class Gtkmm3Menu : public IMenu,
-                   public Gtk::Menu
+ *************************************************************************************************/
+class Button : public IButton,
+               public Gtk::Button
+
 {
 
 public:
 
-    /*******************************************************************************************//**
+    /******************************************************************************************//**
+     * @brief Default constructor.
+     *
+     * Creates a button with no contents.
+     *
+     *********************************************************************************************/
+     Button();
+
+    /******************************************************************************************//**
      * @brief Constructor.
      *
-     * @param p_title
-     *      The menu title, as shown to the user.
+     * @param p_label
+     *      The textual label to appear on the button. The label can be empty. In this case,
+     *      nothing will show on the button.
      *
-     * @pre
-     *      The menu title is not empty.
-     *
-     **********************************************************************************************/
-    explicit Gtkmm3Menu(const std::string& p_title);
+     *********************************************************************************************/
+    explicit Button(const std::string& p_label);
 
     /*******************************************************************************************//**
      * @brief Sets the delegate for widget common facilities.
@@ -71,23 +79,12 @@ public:
      **********************************************************************************************/
     void SetDelegate(std::unique_ptr<IWidget> p_delegate);
 
-    /*******************************************************************************************//**
-     * @brief The Gtk menu item used to show the title.
-     *
-     * Sadly, Gtkmm 3 (at the time of writing: 3.24.5) does not offer the possibility to create
-     * a menu and specify a title "on the spot". The call exists, but was deprecated in Gtkmm
-     * 3.10. We have to go trough an extra menu item (of which the menu is a sub-menu of) to
-     * add a title. This getter exposes this extra menu item.
-     *
-     * @return The menu item through which the title, and the menu, can be added.
-     *
-     **********************************************************************************************/
-    [[nodiscard]] Gtk::MenuItem& GetTitleMenuItem();
+    // cx::cmn::ui::IButton:
+    void UpdateContents(const std::string& p_newContents) override;
+    [[nodiscard]] std::string GetContents() const override;
+    [[nodiscard]] std::unique_ptr<ISignal<void>> OnClicked() override;
 
-    // cx::cmn::ui::gtkmm3::IMenu:
-    void Register(IMenuItem& p_item) override;
-
-    // cx::cmn::ui::gtkmm3::IWidget:
+    // cx::cmn::ui::IWidget:
     [[nodiscard]] size_t GetWidth() const override;
     [[nodiscard]] size_t GetHeight() const override;
     void SetEnabled(EnabledState p_enabled) override;
@@ -97,11 +94,10 @@ public:
 
 private:
 
-    Gtk::MenuItem m_titleMenuItem;
     std::unique_ptr<IWidget> m_delegate;
 
 };
 
 } // namespace cx::cmn::ui::gtkmm3
 
-#endif // GTKMM3MENU_H_8F6908BA_083B_4C86_A927_97A375555E22
+#endif // GTKMM3BUTTON_H_28BFEAFC_06B4_4950_A338_12355AA185D0

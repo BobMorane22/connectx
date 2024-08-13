@@ -23,10 +23,10 @@
 
 #include <cxinv/assertion.h>
 #include <cxcmnui/EventPropagation.h>
-#include <cxuigtkmm3/Gtkmm3ColorPicker.h>
-#include <cxcmnuigtkmm3/Gtkmm3Connection.h>
 #include <cxcmnui/KeyboardKeyPressedEvent.h>
 #include <cxcmnui/Margins.h>
+#include <cxuigtkmm3/Gtkmm3ColorPicker.h>
+#include <cxcmnuigtkmm3/Connection.h>
 
 namespace
 {
@@ -46,7 +46,7 @@ public:
         sigc::connection gtkConnection = m_comboBox.signal_changed().connect(p_slot);
         IF_CONDITION_NOT_MET_DO(gtkConnection.connected(), return nullptr;);
 
-        return std::make_unique<cx::cmn::ui::gtkmm3::Gtkmm3Connection>(gtkConnection);
+        return std::make_unique<cx::cmn::ui::gtkmm3::Connection>(gtkConnection);
     }
 
 private:

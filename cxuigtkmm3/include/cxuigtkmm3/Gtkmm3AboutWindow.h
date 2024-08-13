@@ -26,7 +26,7 @@
 
 #include <cxui/IAboutWindowPresenter.h>
 
-#include <cxcmnuigtkmm3/Gtkmm3Window.h>
+#include <cxcmnuigtkmm3/Window.h>
 
 namespace cx::cmn::ui
 {
@@ -46,7 +46,7 @@ namespace cx::cmn::ui
  * @brief Gtkmm3 About window.
  *
  *************************************************************************************************/
-class Gtkmm3AboutWindow : public cx::cmn::ui::gtkmm3::Gtkmm3Window
+class Gtkmm3AboutWindow : public cx::cmn::ui::gtkmm3::Window
 {
 
 public:

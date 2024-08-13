@@ -26,9 +26,9 @@
 #include <cxui/MainWindowController.h>
 #include <cxui/MainWindowPresenter.h>
 #include <cxui/WidgetsFactories.h>
-#include <cxcmnuigtkmm3/Gtkmm3AbstractWidgetsFactory.h>
 #include <cxuigtkmm3/Gtkmm3AbstractConnectXWidgetsFactory.h>
 #include <cxuigtkmm3/Gtkmm3MainWindow.h>
+#include <cxcmnuigtkmm3/AbstractWidgetsFactory.h>
 #include <cxexec/Gtkmm3UIManager.h>
 #include <cxexec/ModelReferences.h>
 
@@ -41,7 +41,7 @@ cx::Gtkmm3UIManager::Gtkmm3UIManager(int argc, char *argv[], cx::ModelReferences
         Glib::RefPtr<Gtk::Application> gtkApplication = Gtk::Application::create(argc, argv, "bobmorane.connectx");
         ASSERT(gtkApplication);
 
-        m_abstractWidgetsFactory = std::make_unique<cx::cmn::ui::gtkmm3::Gtkmm3AbstractWidgetsFactory>(gtkApplication);
+        m_abstractWidgetsFactory = std::make_unique<cx::cmn::ui::gtkmm3::AbstractWidgetsFactory>(gtkApplication);
         ASSERT(m_abstractWidgetsFactory);
 
         {

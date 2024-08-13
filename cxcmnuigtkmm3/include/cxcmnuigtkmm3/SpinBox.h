@@ -16,51 +16,50 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file Gtkmm3Button.h
- * @date 2024
+ * @file SpinBox.h
+ * @date 2023
  *
  *************************************************************************************************/
 
-#ifndef GTKMM3BUTTON_H_28BFEAFC_06B4_4950_A338_12355AA185D0
-#define GTKMM3BUTTON_H_28BFEAFC_06B4_4950_A338_12355AA185D0
+#ifndef GTKMM3SPINBOX_H_73AD5C68_A06C_4EFB_94EE_928437F83BA6
+#define GTKMM3SPINBOX_H_73AD5C68_A06C_4EFB_94EE_928437F83BA6
 
-#include <string>
+#include <memory>
 
-#include <gtkmm/button.h>
+#include <gtkmm/spinbutton.h>
 
-#include <cxcmnui/IButton.h>
+#include <cxcmnui/ISpinBox.h>
 
 namespace cx::cmn::ui::gtkmm3
 {
 
 /**********************************************************************************************//**
- * @brief Gtkmm 3 implementation of the `cx::cmn::ui::gtkmm3::IButton` interface.
+ * @brief Gtkmm 3 implementation for the `cx::cmn::ui::gtkmm3::ISpinBox` interface.
  *
  *************************************************************************************************/
-class Gtkmm3Button : public IButton,
-                     public Gtk::Button
-
+class SpinBox final : public cx::cmn::ui::ISpinBox,
+                      public Gtk::SpinButton
 {
 
 public:
 
     /******************************************************************************************//**
-     * @brief Default constructor.
-     *
-     * Creates a button with no contents.
-     *
-     *********************************************************************************************/
-     Gtkmm3Button();
-
-    /******************************************************************************************//**
      * @brief Constructor.
      *
-     * @param p_label
-     *      The textual label to appear on the button. The label can be empty. In this case,
-     *      nothing will show on the button.
+     * @param p_initialValue
+     *      The initialValue for the spin box.
+     *
+     * @param p_climbRate
+     *      The spin box's climb rate.
+     *
+     * @param p_range
+     *      The spin box's value range.
      *
      *********************************************************************************************/
-    explicit Gtkmm3Button(const std::string& p_label);
+    SpinBox(
+        int p_initialValue,
+        const ClimbRate& p_climbRate,
+        const Range& p_range);
 
     /*******************************************************************************************//**
      * @brief Sets the delegate for widget common facilities.
@@ -79,10 +78,8 @@ public:
      **********************************************************************************************/
     void SetDelegate(std::unique_ptr<IWidget> p_delegate);
 
-    // cx::cmn::ui::gtkmm3::IButton:
-    void UpdateContents(const std::string& p_newContents) override;
-    [[nodiscard]] std::string GetContents() const override;
-    [[nodiscard]] std::unique_ptr<ISignal<void>> OnClicked() override;
+    // cx::cmn::ui::gtkmm3::ISpinBox:
+    [[nodiscard]] int GetValue() const override;
 
     // cx::cmn::ui::gtkmm3::IWidget:
     [[nodiscard]] size_t GetWidth() const override;
@@ -96,8 +93,10 @@ private:
 
     std::unique_ptr<IWidget> m_delegate;
 
+    cx::cmn::ui::ISpinBox::Range m_limits;
+
 };
 
 } // namespace cx::cmn::ui::gtkmm3
 
-#endif // GTKMM3BUTTON_H_28BFEAFC_06B4_4950_A338_12355AA185D0
+#endif // GTKMM3SPINBOX_H_73AD5C68_A06C_4EFB_94EE_928437F83BA6

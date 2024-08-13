@@ -16,35 +16,60 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file Gtkmm3Layout.h
- * @date 2023
+ * @file Dialog.h
+ * @date 2024
  *
  *************************************************************************************************/
 
-#ifndef GTKMM3CONTAINER_H_AB4FF2E5_DFE6_47C2_8EAC_5FC4FED66A24
-#define GTKMM3CONTAINER_H_AB4FF2E5_DFE6_47C2_8EAC_5FC4FED66A24
+#ifndef GTKMM3DIALOG_H_0BE19F00_7BE5_40DA_B880_C87F635AABE8
+#define GTKMM3DIALOG_H_0BE19F00_7BE5_40DA_B880_C87F635AABE8
 
-#include <gtkmm/grid.h>
+#include <gtkmm/messagedialog.h>
 
-#include <cxcmnui/ILayout.h>
+#include <cxmodel/ModelNotificationContext.h>
+#include <cxcmnui/IWindow.h>
 
 namespace cx::cmn::ui
 {
-    class IWidget;
+    enum class DialogRole;
 }
- 
+
 namespace cx::cmn::ui::gtkmm3
 {
 
 /**********************************************************************************************//**
- * @brief Gtkmm 3 implementation for the `cx::cmn::ui::gtkmm3::ILayout` interface.
+ * @brief Gtkmm 3 dialog implementation.
+ *
+ * Unlike Gtkmm, this implementation shares the `IWindow::Show` method. Typical Gtkmm
+ * implementations use the `Gtk::Dialog::run` method (but also inherit from `Gtk::Window::show`)
+ * which adds confusion.
  *
  *************************************************************************************************/
-class Gtkmm3Layout : public cx::cmn::ui::ILayout,
-                     public Gtk::Grid
+class Dialog : public cx::cmn::ui::IWindow,
+               public Gtk::MessageDialog
 {
 
 public:
+
+    /*******************************************************************************************//**
+     * @brief Constructor.
+     *
+     * @param p_parent
+     *      The window over which the dialog will appear.
+     * @param p_role
+     *      The dialog's role. In other words, the type of communication the dialog going to
+     *      be used, as far as the user is concerned.
+     * @param p_message
+     *      The message to display to the user. 
+     *
+     * @pre
+     *      The message should not be empty.
+     *
+     **********************************************************************************************/
+    Dialog(
+        cx::cmn::ui::IWindow& p_parent,
+        cx::cmn::ui::DialogRole p_role,
+        const std::string& p_message);
 
     /*******************************************************************************************//**
      * @brief Sets the delegate for widget common facilities.
@@ -61,49 +86,29 @@ public:
      *      The registered widget delegate is valid.
      *
      **********************************************************************************************/
-    void SetDelegate(std::unique_ptr<IWidget> p_delegate);
+    void SetDelegate(std::unique_ptr<cx::cmn::ui::IWidget> p_delegate);
 
-    // cx::cmn::ui::ILayout:
-    void Register(IWidget& p_widget,
-        const cx::cmn::ui::ILayout::RowDescriptor& p_row,
-        const cx::cmn::ui::ILayout::ColumnDescriptor& p_column,
-        const cx::cmn::ui::ILayout::Alignement& p_alignement = {}) override;
-    void Register(Gtk::Widget& p_gtkWidget,
-        const cx::cmn::ui::ILayout::RowDescriptor& p_row,
-        const cx::cmn::ui::ILayout::ColumnDescriptor& p_column,
-        const cx::cmn::ui::ILayout::Alignement& p_alignement = {}) override;
-    void Unregister(
-        cx::cmn::ui::IWidget& p_widget) override;
-    void Unregister(
-        Gtk::Widget& p_gtkWidget) override;
-    [[nodiscard]] const IWidget* GetWidgetAtPosition(
-        const cx::model::Row& p_row,
-        const cx::model::Column& p_column) const override;
-    [[nodiscard]] cx::cmn::ui::IWidget* GetWidgetAtPosition(
-        const cx::model::Row& p_row,
-        const cx::model::Column& p_column) override;
-    void SetRowSpacingMode(
-        cx::cmn::ui::ILayout::RowSpacingMode p_newMode) override;
-    void SetColumnSpacingMode(
-        cx::cmn::ui::ILayout::ColumnSpacingMode p_newMode) override;
+    // cx::cmn::ui::IWindow:
+    [[nodiscard]] virtual int Show() override;
+    void ShrinkToContents(cx::cmn::ui::IWindow::Orientation p_orientation) override;
 
     // cx::cmn::ui::IWidget:
     [[nodiscard]] size_t GetWidth() const override;
     [[nodiscard]] size_t GetHeight() const override;
-    void SetEnabled(
-        cx::cmn::ui::EnabledState p_enabled) override;
-    void SetMargins(
-        const cx::cmn::ui::Margins& p_newMarginSizes) override;
-    void SetTooltip(
-        const std::string& p_tooltipContents) override;
-    [[nodiscard]] std::unique_ptr<cx::cmn::ui::ISignal<cx::cmn::ui::EventPropagation, cx::cmn::ui::KeyboardKeyPressedEvent>> OnKeyPressed() override;
+    void SetEnabled(cx::cmn::ui::EnabledState p_enabled) override;
+    void SetMargins(const cx::cmn::ui::Margins& p_newMarginSizes) override;
+    void SetTooltip(const std::string& p_tooltipContents) override;
+    [[nodiscard]] std::unique_ptr<ISignal<cx::cmn::ui::EventPropagation, cx::cmn::ui::KeyboardKeyPressedEvent>> OnKeyPressed() override;
 
 private:
 
-    std::unique_ptr<IWidget> m_delegate;
+    // cx::model::IModelObserver:
+    void Update(cx::model::ModelNotificationContext p_context, cx::model::ModelSubject* p_subject) override;
+
+    std::unique_ptr<cx::cmn::ui::IWidget> m_delegate;
 
 };
 
 } // namespace cx::cmn::ui::gtkmm3
 
-#endif // GTKMM3CONTAINER_H_AB4FF2E5_DFE6_47C2_8EAC_5FC4FED66A24
+#endif // GTKMM3DIALOG_H_0BE19F00_7BE5_40DA_B880_C87F635AABE8

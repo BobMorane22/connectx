@@ -61,7 +61,7 @@ cx::cmn::ui::Gtkmm3MainWindow::Gtkmm3MainWindow(
     cx::ui::IMainWindowController& p_controller,
     cx::ui::IMainWindowPresenter& p_presenter,
     cx::ui::WidgetsFactories& p_widgetsFactories)
- : cx::cmn::ui::gtkmm3::Gtkmm3Window{p_widgetsFactories}
+ : cx::cmn::ui::gtkmm3::Window{p_widgetsFactories}
  , m_gtkApplication{p_gtkApplication}
  , m_model{p_model}
  , m_controller{p_controller}

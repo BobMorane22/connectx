@@ -7,7 +7,8 @@
  *  (at your option) any later version.
  *
  *  Connect X is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  *  GNU General Public License for more details.
  *
  *  You should have received a copy of the GNU General Public License
@@ -15,43 +16,29 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file Gtkmm3Label.h
+ * @file MenuBar.h
  * @date 2024
  *
  *************************************************************************************************/
 
-#ifndef _H_B84CA49F_51D9_4CCA_944E_42D742A18DDD
-#define _H_B84CA49F_51D9_4CCA_944E_42D742A18DDD
+#ifndef GTKMM3MENUBAR_H_B09C49CF_EA28_4DBB_8ED7_BA7E8CEC3CC6
+#define GTKMM3MENUBAR_H_B09C49CF_EA28_4DBB_8ED7_BA7E8CEC3CC6
 
-#include <gtkmm/label.h>
-
-#include <cxcmnui/ILabel.h>
+#include <gtkmm/menubar.h>
+#include <cxcmnui/IMenuBar.h>
 
 namespace cx::cmn::ui::gtkmm3
 {
 
-class Gtkmm3Label : public ILabel,
-                    public Gtk::Label
+/***********************************************************************************************//**
+ * @brief Gtkmm 3 implementation of the `cx::cmn::ui::gtkmm3::IMenuBar` interface.
+ *
+ **************************************************************************************************/
+class MenuBar : public IMenuBar,
+                public Gtk::MenuBar
 {
 
 public:
-
-    /*******************************************************************************************//**
-     * @brief Default constructor.
-     *
-     * Creates a label with no contents.
-     *
-     **********************************************************************************************/
-    Gtkmm3Label();
-
-    /*******************************************************************************************//**
-     * @brief Constructor.
-     *
-     * @param p_contents
-     *      The textual contents to appear on the label.
-     *
-     **********************************************************************************************/
-    explicit Gtkmm3Label(const std::string& p_contents);
 
     /*******************************************************************************************//**
      * @brief Sets the delegate for widget common facilities.
@@ -70,9 +57,8 @@ public:
      **********************************************************************************************/
     void SetDelegate(std::unique_ptr<IWidget> p_delegate);
 
-    // cx::cmn::ui::gtkmm3::Ilabel:
-    void UpdateContents(const std::string& p_newContents) override;
-    [[nodiscard]] std::string GetContents() const override;
+    // cx::cmn::ui::gtkmm3::IMenuBar:
+    void Register(IMenu& p_menu) override;
 
     // cx::cmn::ui::gtkmm3::IWidget:
     [[nodiscard]] size_t GetWidth() const override;
@@ -90,4 +76,4 @@ private:
 
 } // namespace cx::cmn::ui::gtkmm3
 
-#endif // _H_B84CA49F_51D9_4CCA_944E_42D742A18DDD
+#endif // GTKMM3MENUBAR_H_B09C49CF_EA28_4DBB_8ED7_BA7E8CEC3CC6

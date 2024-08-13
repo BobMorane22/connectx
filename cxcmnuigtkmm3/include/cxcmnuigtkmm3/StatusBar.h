@@ -11,45 +11,33 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  *  GNU General Public License for more details.
  *
- *  You should have received a copy of the GNU General Public License *  along with Connect X. If not, see <https://www.gnu.org/licenses/>.
+ *  You should have received a copy of the GNU General Public License
+ *  along with Connect X. If not, see <https://www.gnu.org/licenses/>.
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file Gtkmm3MenuItem.h
- * @date 2023
+ * @file StatusBar.h
+ * @date 2020
  *
  *************************************************************************************************/
 
-#ifndef GTKMM3MENUITEM_H_C4184C81_A135_45A6_A70F_71CDA081E9F2
-#define GTKMM3MENUITEM_H_C4184C81_A135_45A6_A70F_71CDA081E9F2
+#ifndef GTKMM3STATUSBAR_H_DDBD40E5_28B4_47C2_8550_C0F49082EFBF
+#define GTKMM3STATUSBAR_H_DDBD40E5_28B4_47C2_8550_C0F49082EFBF
 
-#include <memory>
-#include <optional>
+#include <gtkmm/statusbar.h>
 
-#include <gtkmm/image.h>
-#include <gtkmm/menuitem.h>
-
-#include <cxcmnui/IMenuItem.h>
-
-namespace Gtk
-{
-    class Grid;
-}
-
-namespace cx::cmn::ui::FreeDesktop
-{
-    enum class StdActionIcon;
-}
+#include <cxcmnui/IStatusBar.h>
+#include <cxcmnui/IStatusBarPresenter.h>
 
 namespace cx::cmn::ui::gtkmm3
 {
 
 /**********************************************************************************************//**
- * @brief Gtkmm 3 implementation for the `cx::cmn::ui::gtkmm3::IMenuItem` interface.
+ * @brief Main window status bar.
  *
  *************************************************************************************************/
-class Gtkmm3MenuItem : public cx::cmn::ui::IMenuItem,
-                       public Gtk::MenuItem
+class StatusBar : public IStatusBar,
+                  public Gtk::Statusbar
 {
 
 public:
@@ -57,24 +45,11 @@ public:
     /******************************************************************************************//**
      * @brief Constructor.
      *
-     * @param p_label
-     *      The text to appear on the menu item.
-     * @param p_icon
-     *      The optional icon to appear on the menu item.
-     *
-     * @pre
-     *      The text is not empty.
+     * @param p_presenter
+     *      A status bar presenter.
      *
      *********************************************************************************************/
-    Gtkmm3MenuItem(
-        const std::string& p_label,
-        const std::optional<cx::cmn::ui::FreeDesktop::StdActionIcon>& p_icon = std::nullopt);
-
-    /******************************************************************************************//**
-     * @brief Destructor.
-     *
-     *********************************************************************************************/
-    ~Gtkmm3MenuItem() override;
+    explicit StatusBar(IStatusBarPresenter& p_presenter);
 
     /*******************************************************************************************//**
      * @brief Sets the delegate for widget common facilities.
@@ -91,30 +66,31 @@ public:
      *      The registered widget delegate is valid.
      *
      **********************************************************************************************/
-    void SetDelegate(std::unique_ptr<cx::cmn::ui::IWidget> p_delegate);
+    void SetDelegate(std::unique_ptr<IWidget> p_delegate);
 
-    // cx::cmn::ui::IMenuItem:
-    [[nodiscard]] std::unique_ptr<cx::cmn::ui::ISignal<void>> OnTriggered() override;
-    void RegisterKeyboardShortcut(const cx::cmn::ui::KeyboardShortcut& p_shortcut) override;
+    // cx::cmn::ui::IStatusBar:
+    void SetLastUserActionStatus(const std::string& p_lastUserActionDescription) override;
 
     // cx::cmn::ui::IWidget:
     [[nodiscard]] size_t GetWidth() const override;
     [[nodiscard]] size_t GetHeight() const override;
-    void SetEnabled(cx::cmn::ui::EnabledState p_enabled) override;
-    void SetMargins(const cx::cmn::ui::Margins& p_newMarginSizes) override;
+    void SetEnabled(EnabledState p_enabled) override;
+    void SetMargins(const Margins& p_newMarginSizes) override;
     void SetTooltip(const std::string& p_tooltipContents) override;
-    [[nodiscard]] std::unique_ptr<ISignal<cx::cmn::ui::EventPropagation, cx::cmn::ui::KeyboardKeyPressedEvent>> OnKeyPressed() override;
+    [[nodiscard]] std::unique_ptr<ISignal<EventPropagation, KeyboardKeyPressedEvent>> OnKeyPressed() override;
 
 private:
 
-    std::unique_ptr<Gtk::Grid> m_layout;
-    std::unique_ptr<Gtk::Image> m_icon;
-    std::unique_ptr<Gtk::AccelLabel> m_accelerator;
+    virtual void Update(cx::model::ModelNotificationContext p_context, cx::model::ModelSubject* p_subject) override;
 
-    std::unique_ptr<cx::cmn::ui::IWidget> m_delegate;
+private:
+
+    std::unique_ptr<IWidget> m_delegate;
+
+    IStatusBarPresenter& m_presenter;
 
 };
 
 } // namespace cx::cmn::ui::gtkmm3
 
-#endif // GTKMM3MENUITEM_H_C4184C81_A135_45A6_A70F_71CDA081E9F2
+#endif // GTKMM3STATUSBAR_H_DDBD40E5_28B4_47C2_8550_C0F49082EFBF

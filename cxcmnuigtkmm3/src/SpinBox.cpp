@@ -16,23 +16,50 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file Gtkmm3StatusBar.cpp
- * @date 2020
+ * @file SpinBox.cpp
+ * @date 2023
  *
  *************************************************************************************************/
 
 #include <cxinv/assertion.h>
+#include <cxcmn/helpers.h>
+#include <cxcmnui/EnabledState.h>
 #include <cxcmnui/EventPropagation.h>
 #include <cxcmnui/KeyboardKeyPressedEvent.h>
 #include <cxcmnui/Margins.h>
-#include <cxcmnuigtkmm3/Gtkmm3StatusBar.h>
+#include <cxcmnuigtkmm3/SpinBox.h>
 
-cx::cmn::ui::gtkmm3::Gtkmm3StatusBar::Gtkmm3StatusBar(IStatusBarPresenter& p_presenter)
- : m_presenter{p_presenter}
+cx::cmn::ui::ISpinBox::Range::Range(const cx::cmn::ui::ISpinBox::Minimum& p_min,
+                              const cx::cmn::ui::ISpinBox::Maximum& p_max)
+: m_min{0}, m_max{0}
 {
+    PRECONDITION(p_max.Get() > p_min.Get());
+
+    m_min = p_min;
+    m_max = p_max;
+
+    POSTCONDITION(m_max.Get() > m_min.Get());
+    INVARIANT(m_max.Get() > m_min.Get());
 }
 
-void cx::cmn::ui::gtkmm3::Gtkmm3StatusBar::SetDelegate(std::unique_ptr<IWidget> p_delegate)
+cx::cmn::ui::gtkmm3::SpinBox::SpinBox(
+    int p_initialValue,
+    const cx::cmn::ui::ISpinBox::ClimbRate& p_climbRate,
+    const cx::cmn::ui::ISpinBox::Range& p_range)
+: m_limits{p_range}
+{
+    PRECONDITION(p_climbRate.Get() >  0);
+
+    const double initialValue = static_cast<double>(p_initialValue);
+    const double climbRate = static_cast<double>(p_climbRate.Get());
+    const double min = static_cast<double>(p_range.m_min.Get());
+    const double max = static_cast<double>(p_range.m_max.Get());
+
+    auto adjustment = Gtk::Adjustment::create(initialValue, min, max, climbRate);
+    set_adjustment(adjustment);
+}
+
+void cx::cmn::ui::gtkmm3::SpinBox::SetDelegate(std::unique_ptr<cx::cmn::ui::IWidget> p_delegate)
 {
     IF_PRECONDITION_NOT_MET_DO(p_delegate, return;);
 
@@ -41,50 +68,47 @@ void cx::cmn::ui::gtkmm3::Gtkmm3StatusBar::SetDelegate(std::unique_ptr<IWidget> 
     POSTCONDITION(m_delegate);
 }
 
-void cx::cmn::ui::gtkmm3::Gtkmm3StatusBar::SetLastUserActionStatus(const std::string& p_lastUserActionDescription)
+int cx::cmn::ui::gtkmm3::SpinBox::GetValue() const
 {
-    push(p_lastUserActionDescription);
+    const int value = get_value_as_int();
+
+    POSTCONDITION(m_limits.m_min.Get() <= value);
+    POSTCONDITION(m_limits.m_max.Get() >= value);
+
+    return value;
 }
 
-void cx::cmn::ui::gtkmm3::Gtkmm3StatusBar::Update(cx::model::ModelNotificationContext, cx::model::ModelSubject* p_subject)
-{
-    if(p_subject)
-    {
-        SetLastUserActionStatus(m_presenter.GetStatusBarMessage());
-    }
-}
-
-size_t cx::cmn::ui::gtkmm3::Gtkmm3StatusBar::GetWidth() const 
+size_t cx::cmn::ui::gtkmm3::SpinBox::GetWidth() const
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return 0u;);
     return m_delegate->GetWidth();
 }
 
-size_t cx::cmn::ui::gtkmm3::Gtkmm3StatusBar::GetHeight() const 
+size_t cx::cmn::ui::gtkmm3::SpinBox::GetHeight() const
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return 0u;);
     return m_delegate->GetHeight();
 }
 
-void cx::cmn::ui::gtkmm3::Gtkmm3StatusBar::SetEnabled(EnabledState p_enabled) 
+void cx::cmn::ui::gtkmm3::SpinBox::SetEnabled(EnabledState p_enabled)
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return;);
     m_delegate->SetEnabled(p_enabled);
 }
 
-void cx::cmn::ui::gtkmm3::Gtkmm3StatusBar::SetMargins(const Margins& p_newMarginSizes) 
+void cx::cmn::ui::gtkmm3::SpinBox::SetMargins(const Margins& p_newMarginSizes)
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return;);
     m_delegate->SetMargins(p_newMarginSizes);
 }
 
-void cx::cmn::ui::gtkmm3::Gtkmm3StatusBar::SetTooltip(const std::string& p_tooltipContents)
+void cx::cmn::ui::gtkmm3::SpinBox::SetTooltip(const std::string& p_tooltipContents)
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return;);
     m_delegate->SetTooltip(p_tooltipContents);
 }
 
-std::unique_ptr<cx::cmn::ui::ISignal<cx::cmn::ui::EventPropagation, cx::cmn::ui::KeyboardKeyPressedEvent>> cx::cmn::ui::gtkmm3::Gtkmm3StatusBar::OnKeyPressed()
+std::unique_ptr<cx::cmn::ui::ISignal<cx::cmn::ui::EventPropagation, cx::cmn::ui::KeyboardKeyPressedEvent>> cx::cmn::ui::gtkmm3::SpinBox::OnKeyPressed()
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return nullptr;);
     return m_delegate->OnKeyPressed();

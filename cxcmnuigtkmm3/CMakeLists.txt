@@ -26,21 +26,21 @@
 set(TARGET_NAME cxcmnuigtkmm3)
 
 add_library(${TARGET_NAME}
-  src/Gtkmm3AbstractWidgetsFactory.cpp
-  src/Gtkmm3Button.cpp
-  src/Gtkmm3Dialog.cpp
-  src/Gtkmm3EditBox.cpp
-  src/Gtkmm3Label.cpp
-  src/Gtkmm3Layout.cpp
-  src/Gtkmm3Menu.cpp
-  src/Gtkmm3MenuBar.cpp
-  src/Gtkmm3MenuItem.cpp
-  src/Gtkmm3OnOffSwitch.cpp
-  src/Gtkmm3SpinBox.cpp
-  src/Gtkmm3StatusBar.cpp
-  src/Gtkmm3WidgetDelegate.cpp
-  src/Gtkmm3Window.cpp
-  src/gtkmmConversions.cpp
+  src/AbstractWidgetsFactory.cpp
+  src/Button.cpp
+  src/conversions.cpp
+  src/Dialog.cpp
+  src/EditBox.cpp
+  src/Label.cpp
+  src/Layout.cpp
+  src/Menu.cpp
+  src/MenuBar.cpp
+  src/MenuItem.cpp
+  src/OnOffSwitch.cpp
+  src/SpinBox.cpp
+  src/StatusBar.cpp
+  src/WidgetDelegate.cpp
+  src/Window.cpp
 )
 
 target_include_directories(${TARGET_NAME}

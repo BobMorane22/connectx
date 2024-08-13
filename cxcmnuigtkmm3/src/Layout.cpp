@@ -16,7 +16,7 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file Gtkmm3Layout.cpp
+ * @file Layout.cpp
  * @date 2023
  *
  *************************************************************************************************/
@@ -27,10 +27,10 @@
 #include <cxcmnui/IWidget.h>
 #include <cxcmnui/KeyboardKeyPressedEvent.h>
 #include <cxcmnui/Margins.h>
-#include <cxcmnuigtkmm3/gtkmmConversions.h>
-#include <cxcmnuigtkmm3/Gtkmm3Layout.h>
+#include <cxcmnuigtkmm3/conversions.h>
+#include <cxcmnuigtkmm3/Layout.h>
 
-void cx::cmn::ui::gtkmm3::Gtkmm3Layout::SetDelegate(
+void cx::cmn::ui::gtkmm3::Layout::SetDelegate(
     std::unique_ptr<IWidget> p_delegate)
 {
     IF_PRECONDITION_NOT_MET_DO(p_delegate, return;);
@@ -40,7 +40,7 @@ void cx::cmn::ui::gtkmm3::Gtkmm3Layout::SetDelegate(
     POSTCONDITION(m_delegate);
 }
 
-void cx::cmn::ui::gtkmm3::Gtkmm3Layout::Register(
+void cx::cmn::ui::gtkmm3::Layout::Register(
     cx::cmn::ui::IWidget& p_widget,
     const cx::cmn::ui::ILayout::RowDescriptor& p_row,
     const cx::cmn::ui::ILayout::ColumnDescriptor& p_column,
@@ -65,7 +65,7 @@ void cx::cmn::ui::gtkmm3::Gtkmm3Layout::Register(
     attach(*gtkWidget, left, top, width, height );
 }
 
-void cx::cmn::ui::gtkmm3::Gtkmm3Layout::Register(
+void cx::cmn::ui::gtkmm3::Layout::Register(
     Gtk::Widget& p_gtkWidget,
     const cx::cmn::ui::ILayout::RowDescriptor& p_row,
     const cx::cmn::ui::ILayout::ColumnDescriptor& p_column,
@@ -87,7 +87,7 @@ void cx::cmn::ui::gtkmm3::Gtkmm3Layout::Register(
     attach(p_gtkWidget, left, top, width, height );
 }
 
-void cx::cmn::ui::gtkmm3::Gtkmm3Layout::Unregister(
+void cx::cmn::ui::gtkmm3::Layout::Unregister(
     cx::cmn::ui::IWidget& p_widget)
 {
     auto* gtkWidget = dynamic_cast<Gtk::Widget*>(&p_widget);
@@ -96,13 +96,13 @@ void cx::cmn::ui::gtkmm3::Gtkmm3Layout::Unregister(
     remove(*gtkWidget);
 }
 
-void cx::cmn::ui::gtkmm3::Gtkmm3Layout::Unregister(
+void cx::cmn::ui::gtkmm3::Layout::Unregister(
     Gtk::Widget& p_gtkWidget)
 {
     remove(p_gtkWidget);
 }
 
-const cx::cmn::ui::IWidget* cx::cmn::ui::gtkmm3::Gtkmm3Layout::GetWidgetAtPosition(
+const cx::cmn::ui::IWidget* cx::cmn::ui::gtkmm3::Layout::GetWidgetAtPosition(
     const cx::model::Row& p_row,
     const cx::model::Column& p_column) const
 {
@@ -118,14 +118,14 @@ const cx::cmn::ui::IWidget* cx::cmn::ui::gtkmm3::Gtkmm3Layout::GetWidgetAtPositi
     return widget;
 }
 
-cx::cmn::ui::IWidget* cx::cmn::ui::gtkmm3::Gtkmm3Layout::GetWidgetAtPosition(
+cx::cmn::ui::IWidget* cx::cmn::ui::gtkmm3::Layout::GetWidgetAtPosition(
     const cx::model::Row& p_row,
     const cx::model::Column& p_column)
 {
-    return const_cast<cx::cmn::ui::IWidget*>(const_cast<const cx::cmn::ui::gtkmm3::Gtkmm3Layout*>(this)->GetWidgetAtPosition(p_row, p_column));
+    return const_cast<cx::cmn::ui::IWidget*>(const_cast<const cx::cmn::ui::gtkmm3::Layout*>(this)->GetWidgetAtPosition(p_row, p_column));
 }
 
-void cx::cmn::ui::gtkmm3::Gtkmm3Layout::SetRowSpacingMode(
+void cx::cmn::ui::gtkmm3::Layout::SetRowSpacingMode(
     cx::cmn::ui::ILayout::RowSpacingMode p_newMode)
 {
     if(p_newMode == cx::cmn::ui::ILayout::RowSpacingMode::EQUAL)
@@ -138,7 +138,7 @@ void cx::cmn::ui::gtkmm3::Gtkmm3Layout::SetRowSpacingMode(
     }
 }
 
-void cx::cmn::ui::gtkmm3::Gtkmm3Layout::SetColumnSpacingMode(
+void cx::cmn::ui::gtkmm3::Layout::SetColumnSpacingMode(
     cx::cmn::ui::ILayout::ColumnSpacingMode p_newMode)
 {
     if(p_newMode == cx::cmn::ui::ILayout::ColumnSpacingMode::EQUAL)
@@ -151,40 +151,40 @@ void cx::cmn::ui::gtkmm3::Gtkmm3Layout::SetColumnSpacingMode(
     }
 }
 
-size_t cx::cmn::ui::gtkmm3::Gtkmm3Layout::GetWidth() const
+size_t cx::cmn::ui::gtkmm3::Layout::GetWidth() const
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return 0u;);
     return m_delegate->GetWidth();
 }
 
-size_t cx::cmn::ui::gtkmm3::Gtkmm3Layout::GetHeight() const
+size_t cx::cmn::ui::gtkmm3::Layout::GetHeight() const
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return 0u;);
     return m_delegate->GetHeight();
 }
 
-void  cx::cmn::ui::gtkmm3::Gtkmm3Layout::SetEnabled(
+void  cx::cmn::ui::gtkmm3::Layout::SetEnabled(
     cx::cmn::ui::EnabledState p_enabled)
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return;);
     m_delegate->SetEnabled(p_enabled);
 }
 
-void cx::cmn::ui::gtkmm3::Gtkmm3Layout::SetMargins(const 
+void cx::cmn::ui::gtkmm3::Layout::SetMargins(const 
     cx::cmn::ui::Margins& p_newMarginSizes)
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return;);
     m_delegate->SetMargins(p_newMarginSizes);
 }
 
-void cx::cmn::ui::gtkmm3::Gtkmm3Layout::SetTooltip(
+void cx::cmn::ui::gtkmm3::Layout::SetTooltip(
     const std::string& p_tooltipContents)
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return;);
     m_delegate->SetTooltip(p_tooltipContents);
 }
 
-std::unique_ptr<cx::cmn::ui::ISignal<cx::cmn::ui::EventPropagation, cx::cmn::ui::KeyboardKeyPressedEvent>> cx::cmn::ui::gtkmm3::Gtkmm3Layout::OnKeyPressed()
+std::unique_ptr<cx::cmn::ui::ISignal<cx::cmn::ui::EventPropagation, cx::cmn::ui::KeyboardKeyPressedEvent>> cx::cmn::ui::gtkmm3::Layout::OnKeyPressed()
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return nullptr;);
     return m_delegate->OnKeyPressed();

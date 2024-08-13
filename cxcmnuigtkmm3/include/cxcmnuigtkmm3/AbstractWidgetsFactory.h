@@ -16,7 +16,7 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file Gtkmm3AbstractWidgetsFactory.h
+ * @file AbstractWidgetsFactory.h
  * @date 2024
  *
  *************************************************************************************************/
@@ -37,7 +37,7 @@ namespace cx::cmn::ui::gtkmm3
  * This factory handles the "standard" widgets (e.g. buttons, labels, comboboxes, etc).
  *
  *************************************************************************************************/
-class Gtkmm3AbstractWidgetsFactory final : public IAbstractWidgetsFactory
+class AbstractWidgetsFactory final : public IAbstractWidgetsFactory
 {
 
 public:
@@ -56,7 +56,7 @@ public:
     *      The stored `Gtk::Application` instance is valid.
     *
     *********************************************************************************************/
-    explicit Gtkmm3AbstractWidgetsFactory(Glib::RefPtr<Gtk::Application> p_gtkApplication);
+    explicit AbstractWidgetsFactory(Glib::RefPtr<Gtk::Application> p_gtkApplication);
 
     // IAbstractWidgetsFactory:
     [[nodiscard]] std::unique_ptr<cx::cmn::ui::ILayout> CreateLayout() const override;

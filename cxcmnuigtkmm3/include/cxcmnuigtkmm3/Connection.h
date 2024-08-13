@@ -16,7 +16,7 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file Gtkmm3Connection.h
+ * @file Connection.h
  * @date 2024
  *
  *************************************************************************************************/
@@ -35,12 +35,12 @@ namespace cx::cmn::ui::gtkmm3
  * @brief Gtkmm 3 implementation of the `cx::cmn::ui::gtkmm3::IConnection` interface.
  *
  *************************************************************************************************/
-class Gtkmm3Connection : public IConnection
+class Connection : public IConnection
 {
 
 public:
 
-    explicit Gtkmm3Connection(const sigc::connection& p_connection)
+    explicit Connection(const sigc::connection& p_connection)
     : m_connection{p_connection}
     {
     }
@@ -64,4 +64,3 @@ private:
 } // namespace cx::cmn::ui::gtkmm3
 
 #endif // GTKMM3CONNECTION_H_3A2FD5EA_6019_469D_AF00_EAD02B3C68E7
-

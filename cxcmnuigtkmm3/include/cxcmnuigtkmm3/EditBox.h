@@ -16,40 +16,30 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file Gtkmm3StatusBar.h
- * @date 2020
+ * @file EditBox.h
+ * @date 2024
  *
  *************************************************************************************************/
 
-#ifndef GTKMM3STATUSBAR_H_DDBD40E5_28B4_47C2_8550_C0F49082EFBF
-#define GTKMM3STATUSBAR_H_DDBD40E5_28B4_47C2_8550_C0F49082EFBF
+#ifndef GTKMM3EDITBOX_H_3E389CC2_EA4C_481C_BF50_E5EDAF31336D
+#define GTKMM3EDITBOX_H_3E389CC2_EA4C_481C_BF50_E5EDAF31336D
 
-#include <gtkmm/statusbar.h>
+#include <gtkmm/entry.h>
 
-#include <cxcmnui/IStatusBar.h>
-#include <cxcmnui/IStatusBarPresenter.h>
+#include <cxcmnui/IEditBox.h>
 
 namespace cx::cmn::ui::gtkmm3
 {
 
 /**********************************************************************************************//**
- * @brief Main window status bar.
+ * @brief Gtkmm 3 implementation of an edit box.
  *
  *************************************************************************************************/
-class Gtkmm3StatusBar : public IStatusBar,
-                        public Gtk::Statusbar
+class EditBox : public IEditBox,
+                public Gtk::Entry
 {
 
 public:
-
-    /******************************************************************************************//**
-     * @brief Constructor.
-     *
-     * @param p_presenter
-     *      A status bar presenter.
-     *
-     *********************************************************************************************/
-    explicit Gtkmm3StatusBar(IStatusBarPresenter& p_presenter);
 
     /*******************************************************************************************//**
      * @brief Sets the delegate for widget common facilities.
@@ -68,12 +58,14 @@ public:
      **********************************************************************************************/
     void SetDelegate(std::unique_ptr<IWidget> p_delegate);
 
-    // cx::cmn::ui::gtkmm3::IStatusBar:
-    void SetLastUserActionStatus(const std::string& p_lastUserActionDescription) override;
+    // cx::cmn::ui::IEditBox:
+    void UpdateContents(const std::string& p_newContents) override;
+    [[nodiscard]] std::string GetContents() const override;
+    [[nodiscard]] std::unique_ptr<ISignal<void>> OnContentsChanged() override;
 
-    // cx::cmn::ui::gtkmm3::IWidget:
-    [[nodiscard]] size_t GetWidth() const override;
-    [[nodiscard]] size_t GetHeight() const override;
+    // cx::cmn::ui::IWidget:
+    [[nodiscard]]  size_t GetWidth() const override;
+    [[nodiscard]]  size_t GetHeight() const override;
     void SetEnabled(EnabledState p_enabled) override;
     void SetMargins(const Margins& p_newMarginSizes) override;
     void SetTooltip(const std::string& p_tooltipContents) override;
@@ -81,16 +73,10 @@ public:
 
 private:
 
-    virtual void Update(cx::model::ModelNotificationContext p_context, cx::model::ModelSubject* p_subject) override;
-
-private:
-
     std::unique_ptr<IWidget> m_delegate;
-
-    IStatusBarPresenter& m_presenter;
 
 };
 
 } // namespace cx::cmn::ui::gtkmm3
 
-#endif // GTKMM3STATUSBAR_H_DDBD40E5_28B4_47C2_8550_C0F49082EFBF
+#endif // GTKMM3EDITBOX_H_3E389CC2_EA4C_481C_BF50_E5EDAF31336D

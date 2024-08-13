@@ -16,7 +16,7 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file Gtkmm3Window.h
+ * @file Window.h
  * @date 2020
  *
  *************************************************************************************************/
@@ -60,8 +60,8 @@ namespace cx::cmn::ui::gtkmm3
  * child widgets, layouts and the window itself.
  *
  ************************************************************************************************/
-class Gtkmm3Window : public IWindow,
-                     public Gtk::Window
+class Window : public IWindow,
+               public Gtk::Window
 {
 
 public:
@@ -76,7 +76,7 @@ public:
      *      The window's main layout is valid.
      *
      ********************************************************************************************/
-    explicit Gtkmm3Window(cx::ui::WidgetsFactories& p_widgetsFactories);
+    explicit Window(cx::ui::WidgetsFactories& p_widgetsFactories);
 
     /******************************************************************************************//**
      * @brief Initializes the window widgets.

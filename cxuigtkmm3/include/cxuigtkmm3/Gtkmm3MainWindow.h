@@ -27,7 +27,7 @@
 #include <memory>
 
 #include <cxmodel/common.h>
-#include <cxcmnuigtkmm3/Gtkmm3Window.h>
+#include <cxcmnuigtkmm3/Window.h>
 
 namespace cx::cmn::ui
 {
@@ -84,7 +84,7 @@ namespace cx::cmn::ui
  * the gaming widgets, such as the board.
  *
  ************************************************************************************************/
-class Gtkmm3MainWindow : public cx::cmn::ui::gtkmm3::Gtkmm3Window
+class Gtkmm3MainWindow : public cx::cmn::ui::gtkmm3::Window
 {
 
 public:

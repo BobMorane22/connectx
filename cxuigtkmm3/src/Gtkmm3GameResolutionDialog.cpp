@@ -37,7 +37,7 @@ cx::cmn::ui::Gtkmm3GameResolutionDialog::Gtkmm3GameResolutionDialog(
     cx::ui::WidgetsFactories& p_widgetsFactories,
     std::unique_ptr<cx::ui::IGameResolutionDialogPresenter> p_presenter,
     std::unique_ptr<cx::ui::IGameResolutionDialogController> p_controller)
-: cx::cmn::ui::gtkmm3::Gtkmm3Window{p_widgetsFactories}
+: cx::cmn::ui::gtkmm3::Window{p_widgetsFactories}
 , m_presenter{std::move(p_presenter)}
 , m_controller{std::move(p_controller)}
 , m_widgetsFactories{p_widgetsFactories}
