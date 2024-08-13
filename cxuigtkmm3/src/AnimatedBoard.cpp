@@ -16,7 +16,7 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file Gtkmm3AnimatedBoard.cpp
+ * @file AnimatedBoard.cpp
  * @date 2021
  *
  *************************************************************************************************/
@@ -29,16 +29,16 @@
 #include <cxcmn/helpers.h>
 #include <cxmath/math.h>
 #include <cxmodel/Disc.h>
-#include <cxui/AnimatedBoardModel.h>
-#include <cxui/AnimatedBoardPresenter.h>
 #include <cxcmnui/common.h>
 #include <cxcmnui/EventPropagation.h>
-#include <cxui/FrameAnimationStrategy.h>
-#include <cxuigtkmm3/Gtkmm3AnimatedBoard.h>
-#include <cxuigtkmm3/Gtkmm3ContextRestoreRAII.h>
-#include <cxui/IGameViewPresenter.h>
 #include <cxcmnui/KeyboardKeyPressedEvent.h>
 #include <cxcmnui/pathHelpers.h>
+#include <cxui/AnimatedBoardModel.h>
+#include <cxui/AnimatedBoardPresenter.h>
+#include <cxui/FrameAnimationStrategy.h>
+#include <cxui/IGameViewPresenter.h>
+#include <cxuigtkmm3/AnimatedBoard.h>
+#include <cxuigtkmm3/ContextRestoreRAII.h>
 
 namespace
 {
@@ -85,7 +85,7 @@ void DrawChip(const Cairo::RefPtr<Cairo::Context>& p_context,
               double p_radius,
               const cx::model::ChipColor& p_backgroundColor)
 {
-    const cx::ui::gtkmm3::Gtkmm3ContextRestoreRAII contextRestoreRAII{p_context};
+    const cx::ui::gtkmm3::ContextRestoreRAII contextRestoreRAII{p_context};
 
     cx::cmn::ui::MakeCircularPath(p_context, p_centerPosition, p_radius);
 
@@ -98,7 +98,7 @@ void DrawChip(const Cairo::RefPtr<Cairo::Context>& p_context,
 
 } // namespace
 
-cx::ui::gtkmm3::Gtkmm3AnimatedBoard::Gtkmm3AnimatedBoard(const cx::ui::IGameViewPresenter& p_presenter, const cx::ui::AnimationSpeed& p_speed)
+cx::ui::gtkmm3::AnimatedBoard::AnimatedBoard(const cx::ui::IGameViewPresenter& p_presenter, const cx::ui::AnimationSpeed& p_speed)
 {
     m_presenter = std::make_unique<cx::ui::AnimatedBoardPresenter>(p_presenter);
     m_animationModel = std::make_unique<cx::ui::AnimatedBoardModel>(*m_presenter, p_speed);
@@ -112,7 +112,7 @@ cx::ui::gtkmm3::Gtkmm3AnimatedBoard::Gtkmm3AnimatedBoard(const cx::ui::IGameView
     set_vexpand(true);
     set_hexpand(true);
 
-    m_timer = std::make_unique<Gtkmm3AnimatedBoardTimerRAII>(
+    m_timer = std::make_unique<AnimatedBoardTimerRAII>(
        [this](){return Redraw();},
        cx::cmn::ui::Period{1000.0/m_animationModel->GetFPS().Get()});
 
@@ -152,7 +152,7 @@ cx::ui::gtkmm3::Gtkmm3AnimatedBoard::Gtkmm3AnimatedBoard(const cx::ui::IGameView
 
 // Performs an "frame increment". This is called on every tick (m_FPS times/sec) and
 // keeps track of all displacements. It also notifies when the animation completes.
-void cx::ui::gtkmm3::Gtkmm3AnimatedBoard::PerformChipAnimation(cx::ui::BoardAnimation p_animation)
+void cx::ui::gtkmm3::AnimatedBoard::PerformChipAnimation(cx::ui::BoardAnimation p_animation)
 {
     cx::ui::AnimationInformations<cx::math::Width>* horizontalAnimationInfo = &m_moveRightAnimationInfo;
     if(p_animation == cx::ui::BoardAnimation::MOVE_CHIP_LEFT_ONE_COLUMN)
@@ -176,7 +176,7 @@ void cx::ui::gtkmm3::Gtkmm3AnimatedBoard::PerformChipAnimation(cx::ui::BoardAnim
     }
 }
 
-void cx::ui::gtkmm3::Gtkmm3AnimatedBoard::SetDelegate(std::unique_ptr<IWidget> p_delegate)
+void cx::ui::gtkmm3::AnimatedBoard::SetDelegate(std::unique_ptr<IWidget> p_delegate)
 {
     IF_PRECONDITION_NOT_MET_DO(p_delegate, return;);
 
@@ -185,47 +185,47 @@ void cx::ui::gtkmm3::Gtkmm3AnimatedBoard::SetDelegate(std::unique_ptr<IWidget> p
     POSTCONDITION(m_delegate);
 }
 
-const cx::model::Column& cx::ui::gtkmm3::Gtkmm3AnimatedBoard::GetCurrentColumn() const
+const cx::model::Column& cx::ui::gtkmm3::AnimatedBoard::GetCurrentColumn() const
 {
     return m_animationModel->GetCurrentColumn();
 }
 
-cx::model::ChipColor cx::ui::gtkmm3::Gtkmm3AnimatedBoard::GetCurrentChipColor() const
+cx::model::ChipColor cx::ui::gtkmm3::AnimatedBoard::GetCurrentChipColor() const
 {
     return m_presenter->GetActivePlayerChipColor();
 }
 
-size_t cx::ui::gtkmm3::Gtkmm3AnimatedBoard::GetWidth() const 
+size_t cx::ui::gtkmm3::AnimatedBoard::GetWidth() const 
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return 0u;);
     return m_delegate->GetWidth();
 }
 
-size_t cx::ui::gtkmm3::Gtkmm3AnimatedBoard::GetHeight() const 
+size_t cx::ui::gtkmm3::AnimatedBoard::GetHeight() const 
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return 0u;);
     return m_delegate->GetHeight();
 }
 
-void cx::ui::gtkmm3::Gtkmm3AnimatedBoard::SetEnabled(cx::cmn::ui::EnabledState p_enabled) 
+void cx::ui::gtkmm3::AnimatedBoard::SetEnabled(cx::cmn::ui::EnabledState p_enabled) 
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return;);
     m_delegate->SetEnabled(p_enabled);
 }
 
-void cx::ui::gtkmm3::Gtkmm3AnimatedBoard::SetMargins(const cx::cmn::ui::Margins& p_newMarginSizes) 
+void cx::ui::gtkmm3::AnimatedBoard::SetMargins(const cx::cmn::ui::Margins& p_newMarginSizes) 
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return;);
     m_delegate->SetMargins(p_newMarginSizes);
 }
 
-void cx::ui::gtkmm3::Gtkmm3AnimatedBoard::SetTooltip(const std::string& p_tooltipContents)
+void cx::ui::gtkmm3::AnimatedBoard::SetTooltip(const std::string& p_tooltipContents)
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return;);
     m_delegate->SetTooltip(p_tooltipContents);
 }
 
-std::unique_ptr<cx::cmn::ui::ISignal<cx::cmn::ui::EventPropagation, cx::cmn::ui::KeyboardKeyPressedEvent>> cx::ui::gtkmm3::Gtkmm3AnimatedBoard::OnKeyPressed()
+std::unique_ptr<cx::cmn::ui::ISignal<cx::cmn::ui::EventPropagation, cx::cmn::ui::KeyboardKeyPressedEvent>> cx::ui::gtkmm3::AnimatedBoard::OnKeyPressed()
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return nullptr;);
     return m_delegate->OnKeyPressed();
@@ -238,7 +238,7 @@ std::unique_ptr<cx::cmn::ui::ISignal<cx::cmn::ui::EventPropagation, cx::cmn::ui:
 //  2. Cache the results to avoid redrawing the same things every time.
 //
 // Make sure that if you change this, the performance is not decreased.
-bool cx::ui::gtkmm3::Gtkmm3AnimatedBoard::on_draw(const Cairo::RefPtr<Cairo::Context>& p_context)
+bool cx::ui::gtkmm3::AnimatedBoard::on_draw(const Cairo::RefPtr<Cairo::Context>& p_context)
 {
     // Get window dimensions. We keep track of previous frame dimensions to allow
     // calculating a scaling factor in the case of a resize:
@@ -260,7 +260,7 @@ bool cx::ui::gtkmm3::Gtkmm3AnimatedBoard::on_draw(const Cairo::RefPtr<Cairo::Con
     
     // We clear the surface:
     {
-        const Gtkmm3ContextRestoreRAII contextRestoreRAII{bufferContext};
+        const ContextRestoreRAII contextRestoreRAII{bufferContext};
 
         cx::cmn::ui::MakeRectanglarPath(bufferContext,
                                   {0.0, 0.0},
@@ -309,13 +309,13 @@ bool cx::ui::gtkmm3::Gtkmm3AnimatedBoard::on_draw(const Cairo::RefPtr<Cairo::Con
 
 // Draws a "column highlight" that follows the current chip. This helps the user locate the
 // current column. Especially helpful on larger boards.
-void cx::ui::gtkmm3::Gtkmm3AnimatedBoard::DrawActiveColumnHighlight(const Cairo::RefPtr<Cairo::Context>& p_context)
+void cx::ui::gtkmm3::AnimatedBoard::DrawActiveColumnHighlight(const Cairo::RefPtr<Cairo::Context>& p_context)
 {
     const cx::math::Dimensions cellDimensions = m_animationModel->GetCellDimensions();
     const double cellWidth = cellDimensions.m_width.Get();
     const double cellHeight = cellDimensions.m_height.Get();
 
-    const Gtkmm3ContextRestoreRAII contextRestoreRAII{p_context};
+    const ContextRestoreRAII contextRestoreRAII{p_context};
 
     if(m_columnHilightCache)
     {
@@ -330,7 +330,7 @@ void cx::ui::gtkmm3::Gtkmm3AnimatedBoard::DrawActiveColumnHighlight(const Cairo:
 
     const auto bufferContext = Cairo::Context::create(m_columnHilightCache);
     {
-        const Gtkmm3ContextRestoreRAII bufferContextRestoreRAII{bufferContext};
+        const ContextRestoreRAII bufferContextRestoreRAII{bufferContext};
 
         cx::cmn::ui::MakeRectanglarPath(bufferContext, {0.0, 0.0}, m_animationModel->GetAnimatedAreaDimensions().m_height.Get() - cellHeight, cellWidth);
         SetSourceColor(bufferContext, m_presenter->GetGameViewColumnHighlightColor());
@@ -345,7 +345,7 @@ void cx::ui::gtkmm3::Gtkmm3AnimatedBoard::DrawActiveColumnHighlight(const Cairo:
 
 // See `on_draw()`. Basically draws a chip and the rectangular space around it (which has the board color). All
 // these elements together make the board.
-void cx::ui::gtkmm3::Gtkmm3AnimatedBoard::DrawBoardElement(const Cairo::RefPtr<Cairo::Context>& p_context, const cx::model::Row& p_row, const cx::model::Column& p_column)
+void cx::ui::gtkmm3::AnimatedBoard::DrawBoardElement(const Cairo::RefPtr<Cairo::Context>& p_context, const cx::model::Row& p_row, const cx::model::Column& p_column)
 {
     const cx::math::Dimensions cellDimensions = m_animationModel->GetCellDimensions();
     const double cellWidth = cellDimensions.m_width.Get();
@@ -355,7 +355,7 @@ void cx::ui::gtkmm3::Gtkmm3AnimatedBoard::DrawBoardElement(const Cairo::RefPtr<C
     const cx::ui::IGameViewPresenter::ChipColors& chipColors = m_presenter->GetBoardChipColors();
     const cx::model::ChipColor chipColor = chipColors[p_row.Get()][p_column.Get()];
 
-    const Gtkmm3ContextRestoreRAII contextRestoreRAII{p_context};
+    const ContextRestoreRAII contextRestoreRAII{p_context};
 
     if(m_boardElementsCache.HasElement(chipColor))
     {
@@ -374,7 +374,7 @@ void cx::ui::gtkmm3::Gtkmm3AnimatedBoard::DrawBoardElement(const Cairo::RefPtr<C
                                               cellHeight + m_animationModel->GetLineWidth(cx::ui::Feature::CELL).Get());
     const auto bufferContext = Cairo::Context::create(buffer);
     {
-        const Gtkmm3ContextRestoreRAII bufferContextRestoreRAII{bufferContext};
+        const ContextRestoreRAII bufferContextRestoreRAII{bufferContext};
 
         // Draw paths for chip space and the cell contour:
         cx::cmn::ui::MakeCircularPath(bufferContext, {cellWidth / 2.0, cellHeight / 2.0}, radius);
@@ -391,7 +391,7 @@ void cx::ui::gtkmm3::Gtkmm3AnimatedBoard::DrawBoardElement(const Cairo::RefPtr<C
 
     // Add border and draw model chips:
     {
-        Gtkmm3ContextRestoreRAII bufferContextRestoreRAII{bufferContext};
+        ContextRestoreRAII bufferContextRestoreRAII{bufferContext};
 
         cx::cmn::ui::MakeCircularPath(bufferContext, {cellWidth / 2.0, cellHeight / 2.0}, radius);
 
@@ -416,7 +416,7 @@ void cx::ui::gtkmm3::Gtkmm3AnimatedBoard::DrawBoardElement(const Cairo::RefPtr<C
 // (ex.: redraw the whole widget every time) can be very costly, especially
 // with lots of board elements and in full screen. Be careful when modifying
 // this.
-bool cx::ui::gtkmm3::Gtkmm3AnimatedBoard::Redraw()
+bool cx::ui::gtkmm3::AnimatedBoard::Redraw()
 {
     const double chipHorizontalPosition = m_animationModel->GetChipPosition().m_x;
     const cx::math::Dimensions cellDimensions = m_animationModel->GetCellDimensions();
@@ -482,7 +482,7 @@ bool cx::ui::gtkmm3::Gtkmm3AnimatedBoard::Redraw()
 
 // Called when the window is resized. Positions are updated to fit the
 // new ratio.
-bool cx::ui::gtkmm3::Gtkmm3AnimatedBoard::OnResize(const cx::math::Dimensions& p_newDimensions)
+bool cx::ui::gtkmm3::AnimatedBoard::OnResize(const cx::math::Dimensions& p_newDimensions)
 {
     // Handling initial values to avoid division by zero:
     RETURN_IF(m_lastFrameDimensions.m_height == cx::math::Height{0.0}, cx::cmn::ui::STOP_EVENT_PROPAGATION);
@@ -510,7 +510,7 @@ bool cx::ui::gtkmm3::Gtkmm3AnimatedBoard::OnResize(const cx::math::Dimensions& p
 }
 
 // Called in repetition until the animation completes.
-void cx::ui::gtkmm3::Gtkmm3AnimatedBoard::Update(cx::ui::BoardAnimationNotificationContext p_context, cx::ui::BoardAnimationSubject* p_subject)
+void cx::ui::gtkmm3::AnimatedBoard::Update(cx::ui::BoardAnimationNotificationContext p_context, cx::ui::BoardAnimationSubject* p_subject)
 {
     IF_CONDITION_NOT_MET_DO(p_subject, return;);
 
@@ -583,7 +583,7 @@ void cx::ui::gtkmm3::Gtkmm3AnimatedBoard::Update(cx::ui::BoardAnimationNotificat
 // Computes the best chip dimension so that the game view, when the board is present with all
 // chips drawn, is entirely viewable on the user's screen.
 
-void cx::ui::gtkmm3::Gtkmm3AnimatedBoard::CustomizeHeightAccordingToMonitorDimensions()
+void cx::ui::gtkmm3::AnimatedBoard::CustomizeHeightAccordingToMonitorDimensions()
 {
     // Get the window containing the widget. The casting is necessary to get a
     // non const reference on the window, in order to satisfy the Gdk::Display API:
@@ -639,7 +639,7 @@ void cx::ui::gtkmm3::Gtkmm3AnimatedBoard::CustomizeHeightAccordingToMonitorDimen
     set_size_request(nbColumns * chipDimension, nbRows * chipDimension);
 }
 
-bool cx::ui::gtkmm3::Gtkmm3AnimatedBoard::OnMouseButtonPressed(GdkEventButton* p_event)
+bool cx::ui::gtkmm3::AnimatedBoard::OnMouseButtonPressed(GdkEventButton* p_event)
 {
     IF_PRECONDITION_NOT_MET_DO(p_event, return cx::cmn::ui::PROPAGATE_EVENT;);
     IF_PRECONDITION_NOT_MET_DO(m_animationModel, return cx::cmn::ui::PROPAGATE_EVENT;);
@@ -676,7 +676,7 @@ bool cx::ui::gtkmm3::Gtkmm3AnimatedBoard::OnMouseButtonPressed(GdkEventButton* p
     return cx::cmn::ui::PROPAGATE_EVENT;
 }
 
-bool cx::ui::gtkmm3::Gtkmm3AnimatedBoard::OnMouseMotion(GdkEventMotion* p_event)
+bool cx::ui::gtkmm3::AnimatedBoard::OnMouseMotion(GdkEventMotion* p_event)
 {
     IF_PRECONDITION_NOT_MET_DO(p_event, return cx::cmn::ui::PROPAGATE_EVENT;);
     IF_PRECONDITION_NOT_MET_DO(m_animationModel, return cx::cmn::ui::PROPAGATE_EVENT;);

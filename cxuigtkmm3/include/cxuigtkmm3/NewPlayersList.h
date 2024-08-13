@@ -12,10 +12,11 @@
  *  GNU General Public License for more details.
  *
  *  You should have received a copy of the GNU General Public License
- *  along with Connect X. If not, see <https://www.gnu.org/licenses/>.  *
+ *  along with Connect X. If not, see <https://www.gnu.org/licenses/>.
+ *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file Gtkmm3NewPlayersList.h
+ * @file NewPlayersList.h
  * @date 2020
  *
  *************************************************************************************************/
@@ -63,7 +64,7 @@ namespace cx::ui::gtkmm3
  * @see cx::cmn::ui::NewPlayerRow
  *
  **************************************************************************************************/
-class Gtkmm3NewPlayersList final : public cx::ui::INewPlayersList,
+class NewPlayersList final : public cx::ui::INewPlayersList,
                                    public Gtk::Grid
 {
 
@@ -82,7 +83,7 @@ public:
      *      A new game view presenter.
      *
      **********************************************************************************************/
-    Gtkmm3NewPlayersList(
+    NewPlayersList(
         const cx::ui::INewGameViewPresenter& p_presenter,
         const cx::ui::WidgetsFactories& p_widgetsFactories);
 
@@ -90,7 +91,7 @@ public:
      * @brief Default destructor.
      *
      **********************************************************************************************/
-    ~Gtkmm3NewPlayersList() override;
+    ~NewPlayersList() override;
 
     /*******************************************************************************************//**
      * @brief Sets the delegate for widget common facilities.

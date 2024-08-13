@@ -1,7 +1,8 @@
 /**************************************************************************************************
  *  This file is part of Connect X.
  *
- *  Connect X is free software: you can redistribute it and/or modify *  it under the terms of the GNU General Public License as published by
+ *  Connect X is free software: you can redistribute it and/or modify 
+ *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation, either version 3 of the License, or
  *  (at your option) any later version.
  *
@@ -15,7 +16,7 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file Gtkmm3NewGameView.h
+ * @file NewGameView.h
  * @date 2020
  *
  *************************************************************************************************/
@@ -58,7 +59,7 @@ namespace cx::ui::gtkmm3
  * @brief Gtkmm 3 implementation of the view for creating new games.
  *
  ************************************************************************************************/
-class Gtkmm3NewGameView : public cx::ui::IView
+class NewGameView : public cx::ui::IView
 {
 
 public:
@@ -82,7 +83,7 @@ public:
      *      The top position of the new game view within the main window's top level layout.
      *
      ********************************************************************************************/
-    Gtkmm3NewGameView(
+    NewGameView(
        cx::ui::WidgetsFactories& p_widgetsFactories,
        cx::ui::INewGameViewPresenter& p_presenter,
        cx::ui::INewGameViewController& p_controller,

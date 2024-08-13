@@ -16,7 +16,7 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file Gtkmm3ColorPicker.h
+ * @file ColorPicker.h
  * @date 2024
  *
  *************************************************************************************************/
@@ -43,8 +43,8 @@ namespace cx::ui::gtkmm3
  * @invariant Thw treeview model is valid.
  *
  *************************************************************************************************/
-class Gtkmm3ColorPicker : public cx::ui::IColorPicker,
-                          public Gtk::ComboBox
+class ColorPicker : public cx::ui::IColorPicker,
+                    public Gtk::ComboBox
 {
 
 public:
@@ -62,7 +62,7 @@ public:
      *      The list of colors is not empty.
      *
      *********************************************************************************************/
-    explicit Gtkmm3ColorPicker(const std::vector<cx::cmn::ui::Color>& p_colors);
+    explicit ColorPicker(const std::vector<cx::cmn::ui::Color>& p_colors);
 
     /******************************************************************************************//**
      * @brief Sets the delegate for widget common facilities.

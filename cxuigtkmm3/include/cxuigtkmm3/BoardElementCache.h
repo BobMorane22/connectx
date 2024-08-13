@@ -16,7 +16,7 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file Gtkmm3BoardElementCache.h
+ * @file BoardElementCache.h
  * @date 2021
  *
  *************************************************************************************************/
@@ -73,7 +73,7 @@ namespace cx::ui::gtkmm3
  * user to look if the key is already in the cache.
  *
  *************************************************************************************************/
-class Gtkmm3BoardElementCache
+class BoardElementCache
 {
 
 public:
@@ -90,7 +90,9 @@ public:
      *      The board element to cache.
      *
      *********************************************************************************************/
-    void Add(const cx::model::ChipColor& p_color, const Cairo::RefPtr<Cairo::Surface>& p_surface);
+    void Add(
+        const cx::model::ChipColor& p_color,
+        const Cairo::RefPtr<Cairo::Surface>& p_surface);
 
     /******************************************************************************************//**
      * @brief Gets the correspondig cached board element from a key.

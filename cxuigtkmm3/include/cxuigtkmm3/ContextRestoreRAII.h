@@ -16,7 +16,7 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file Gtkmm3ContextRestoreRAII.h
+ * @file ContextRestoreRAII.h
  * @date 2021
  *
  *************************************************************************************************/
@@ -49,7 +49,7 @@ namespace cx::ui::gtkmm3
  * Cairo::Context::restore() (upon destruction) on the given context.
  *
  *************************************************************************************************/
-class Gtkmm3ContextRestoreRAII
+class ContextRestoreRAII
 {
 
 public:
@@ -61,13 +61,13 @@ public:
      *      The Cairo context to save and restore.
      *
      *********************************************************************************************/
-    explicit Gtkmm3ContextRestoreRAII(const Cairo::RefPtr<Cairo::Context>& p_context);
+    explicit ContextRestoreRAII(const Cairo::RefPtr<Cairo::Context>& p_context);
 
     /******************************************************************************************//**
      * @brief Destructor.
      *
      *********************************************************************************************/
-    ~Gtkmm3ContextRestoreRAII();
+    ~ContextRestoreRAII();
 
 private:
 

@@ -16,7 +16,7 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file Gtkmm3AnimatedBoardTimerRAII.h
+ * @file AnimatedBoardTimerRAII.h
  * @date 2022
  *
  *************************************************************************************************/
@@ -39,7 +39,7 @@ namespace cx::ui::gtkmm3
  * With this RAII, the timer is automatically started at creation and stopped at destruction.
  *
  *************************************************************************************************/
-class Gtkmm3AnimatedBoardTimerRAII
+class AnimatedBoardTimerRAII
 {
 
 public:
@@ -61,7 +61,7 @@ public:
      *      The period is greater than 0 ms.
      *
      *************************************************************************************************/
-    Gtkmm3AnimatedBoardTimerRAII(
+    AnimatedBoardTimerRAII(
         cx::cmn::ui::ITimer::Callback&& p_callback,
         cx::cmn::ui::Period&& p_period);
 
@@ -71,7 +71,7 @@ public:
      * Stops the underlying timer.
      *
      *************************************************************************************************/
-    ~Gtkmm3AnimatedBoardTimerRAII();
+    ~AnimatedBoardTimerRAII();
 
 private:
 

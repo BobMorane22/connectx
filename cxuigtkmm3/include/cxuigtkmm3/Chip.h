@@ -16,7 +16,7 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file Gtkmm3Chip.h
+ * @file Chip.h
  * @date 2020
  *
  *************************************************************************************************/
@@ -38,8 +38,8 @@ namespace cx::ui::gtkmm3
  * to the chip. It is the concrete class' job to specify a chip shape.
  *
  ************************************************************************************************/
-class Gtkmm3Chip : public cx::ui::IChip,
-                   public Gtk::DrawingArea
+class Chip : public cx::ui::IChip,
+             public Gtk::DrawingArea
 {
 
 public:
@@ -57,7 +57,7 @@ public:
      *     The chip height (in pixels).
      *
      ********************************************************************************************/
-    Gtkmm3Chip(const cx::model::ChipColor& p_fillColor,
+    Chip(const cx::model::ChipColor& p_fillColor,
                const cx::model::ChipColor& p_backgroundColor,
                int p_width,
                int p_height);

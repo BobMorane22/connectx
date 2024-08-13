@@ -16,7 +16,7 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file Gtkmm3MainWindow.cpp
+ * @file MainWindow.cpp
  * @date 2019
  *
  *************************************************************************************************/
@@ -33,7 +33,7 @@
 #include <cxcmnui/EnabledState.h>
 #include <cxui/GameResolutionDialogController.h>
 #include <cxui/GameResolutionDialogPresenterFactory.h>
-#include <cxuigtkmm3/Gtkmm3MainWindow.h>
+#include <cxuigtkmm3/MainWindow.h>
 #include <cxcmnui/IAbstractWidgetsFactory.h>
 #include <cxui/IAbstractConnectXWidgetsFactory.h>
 #include <cxui/IAnimatedBoardPresenter.h>
@@ -55,7 +55,7 @@
 #include <cxui/WidgetsFactories.h>
 #include <cxcmnui/widgetUtilities.h>
 
-cx::ui::gtkmm3::Gtkmm3MainWindow::Gtkmm3MainWindow(
+cx::ui::gtkmm3::MainWindow::MainWindow(
     Gtk::Application& p_gtkApplication,
     cx::model::ModelSubject& p_model,
     cx::ui::IMainWindowController& p_controller,
@@ -73,7 +73,7 @@ cx::ui::gtkmm3::Gtkmm3MainWindow::Gtkmm3MainWindow(
     // Nothing to do.
 }
 
-cx::ui::gtkmm3::Gtkmm3MainWindow::~Gtkmm3MainWindow()
+cx::ui::gtkmm3::MainWindow::~MainWindow()
 {
     // We unregister the current view from the main layout. If the view is
     // reset before the layout has had time to unregister it, we get a dangling
@@ -85,7 +85,7 @@ cx::ui::gtkmm3::Gtkmm3MainWindow::~Gtkmm3MainWindow()
     }
 }
 
-void cx::ui::gtkmm3::Gtkmm3MainWindow::InitializeWidgets()
+void cx::ui::gtkmm3::MainWindow::InitializeWidgets()
 {
     const cx::cmn::ui::IAbstractWidgetsFactory& standardWidgetsFactory = m_widgetsFactories.GetStandardWidgetsFactory();
 
@@ -101,18 +101,18 @@ void cx::ui::gtkmm3::Gtkmm3MainWindow::InitializeWidgets()
     m_aboutMenuItem = standardWidgetsFactory.CreateMenuItem(m_presenter.GetMenuLabel(cx::ui::MenuItem::ABOUT), cx::cmn::ui::FreeDesktop::StdActionIcon::HELP_ABOUT);
 }
 
-void cx::ui::gtkmm3::Gtkmm3MainWindow::ConfigureWindow()
+void cx::ui::gtkmm3::MainWindow::ConfigureWindow()
 {
     set_title(m_presenter.GetWindowTitle());
     set_position(Gtk::WIN_POS_CENTER);
 }
 
-void cx::ui::gtkmm3::Gtkmm3MainWindow::RegisterLayouts()
+void cx::ui::gtkmm3::MainWindow::RegisterLayouts()
 {
     // Nothing to do...
 }
 
-void cx::ui::gtkmm3::Gtkmm3MainWindow::RegisterWidgets()
+void cx::ui::gtkmm3::MainWindow::RegisterWidgets()
 {
     IF_CONDITION_NOT_MET_DO(m_mainLayout, return;);
 
@@ -135,18 +135,18 @@ void cx::ui::gtkmm3::Gtkmm3MainWindow::RegisterWidgets()
     RegisterStatusBar();
 }
 
-void cx::ui::gtkmm3::Gtkmm3MainWindow::ConfigureLayouts()
+void cx::ui::gtkmm3::MainWindow::ConfigureLayouts()
 {
     // Nothing to do...
 }
 
-void cx::ui::gtkmm3::Gtkmm3MainWindow::ConfigureWidgets()
+void cx::ui::gtkmm3::MainWindow::ConfigureWidgets()
 {
     m_model.Attach(m_statusBarPresenter.get());
     m_statusBarPresenter->Attach(m_statusBar.get());
 }
 
-void cx::ui::gtkmm3::Gtkmm3MainWindow::ConfigureSignalHandlers()
+void cx::ui::gtkmm3::MainWindow::ConfigureSignalHandlers()
 {
     m_newGameMenuItem->OnTriggered()->Connect([this](){OnNewGame();});
     m_reinitializeMenuItem->OnTriggered()->Connect([this](){OnReinitializeCurrentGame();});
@@ -157,13 +157,13 @@ void cx::ui::gtkmm3::Gtkmm3MainWindow::ConfigureSignalHandlers()
     m_aboutMenuItem->OnTriggered()->Connect([this](){OnCreateAboutWindow();});
 }
 
-int cx::ui::gtkmm3::Gtkmm3MainWindow::Show()
+int cx::ui::gtkmm3::MainWindow::Show()
 {
     show_all();
     return m_gtkApplication.run(*this);
 }
 
-void cx::ui::gtkmm3::Gtkmm3MainWindow::Update(cx::model::ModelNotificationContext p_context, cx::model::ModelSubject* p_subject)
+void cx::ui::gtkmm3::MainWindow::Update(cx::model::ModelNotificationContext p_context, cx::model::ModelSubject* p_subject)
 {
     if(INL_PRECONDITION(p_subject))
     {
@@ -224,13 +224,13 @@ void cx::ui::gtkmm3::Gtkmm3MainWindow::Update(cx::model::ModelNotificationContex
     UpdateMenuItems(p_context);
 }
 
-void cx::ui::gtkmm3::Gtkmm3MainWindow::UpdateCreateNewGame()
+void cx::ui::gtkmm3::MainWindow::UpdateCreateNewGame()
 {
     DeactivateNewGameView();
     ActivateGameView();
 }
 
-void cx::ui::gtkmm3::Gtkmm3MainWindow::UpdateChipDropped(cx::model::ModelNotificationContext p_context)
+void cx::ui::gtkmm3::MainWindow::UpdateChipDropped(cx::model::ModelNotificationContext p_context)
 {
     if(INL_ASSERT(m_gameView))
     {
@@ -238,7 +238,7 @@ void cx::ui::gtkmm3::Gtkmm3MainWindow::UpdateChipDropped(cx::model::ModelNotific
     }
 }
 
-void cx::ui::gtkmm3::Gtkmm3MainWindow::UpdateChipMoved(cx::model::ModelNotificationContext p_context)
+void cx::ui::gtkmm3::MainWindow::UpdateChipMoved(cx::model::ModelNotificationContext p_context)
 {
     if(INL_ASSERT(m_gameView))
     {
@@ -246,30 +246,30 @@ void cx::ui::gtkmm3::Gtkmm3MainWindow::UpdateChipMoved(cx::model::ModelNotificat
     }
 }
 
-void cx::ui::gtkmm3::Gtkmm3MainWindow::UpdateGameWon(cx::model::ModelNotificationContext p_context)
+void cx::ui::gtkmm3::MainWindow::UpdateGameWon(cx::model::ModelNotificationContext p_context)
 {
     m_gameView->Update(p_context);
     CreateGameResolutionWindow(p_context);
 }
 
-void cx::ui::gtkmm3::Gtkmm3MainWindow::UpdateGameTied(cx::model::ModelNotificationContext p_context)
+void cx::ui::gtkmm3::MainWindow::UpdateGameTied(cx::model::ModelNotificationContext p_context)
 {
     m_gameView->Update(p_context);
     CreateGameResolutionWindow(p_context);
 }
 
-void cx::ui::gtkmm3::Gtkmm3MainWindow::UpdateGameEnded()
+void cx::ui::gtkmm3::MainWindow::UpdateGameEnded()
 {
     DeactivateGameView();
     ActivateNewGameView();
 }
 
-void cx::ui::gtkmm3::Gtkmm3MainWindow::UpdateGameReinitialized(cx::model::ModelNotificationContext p_context)
+void cx::ui::gtkmm3::MainWindow::UpdateGameReinitialized(cx::model::ModelNotificationContext p_context)
 {
     m_gameView->Update(p_context); 
 }
 
-void cx::ui::gtkmm3::Gtkmm3MainWindow::UpdateMenuItems(cx::model::ModelNotificationContext p_context)
+void cx::ui::gtkmm3::MainWindow::UpdateMenuItems(cx::model::ModelNotificationContext p_context)
 {
     EnabledStateUpdate(*m_newGameMenuItem,      m_presenter.IsNewGamePossible());
     EnabledStateUpdate(*m_reinitializeMenuItem, m_presenter.IsCurrentGameReinitializationPossible());
@@ -277,7 +277,7 @@ void cx::ui::gtkmm3::Gtkmm3MainWindow::UpdateMenuItems(cx::model::ModelNotificat
     EnabledStateUpdate(*m_redoMenuItem,         m_presenter.IsRedoPossible());
 }
 
-void cx::ui::gtkmm3::Gtkmm3MainWindow::RegisterMenuBar()
+void cx::ui::gtkmm3::MainWindow::RegisterMenuBar()
 {
     // Keyboard shortcuts:
     m_undoMenuItem->RegisterKeyboardShortcut({cx::cmn::ui::Key::CTRL + cx::cmn::ui::Key::Z});
@@ -307,7 +307,7 @@ void cx::ui::gtkmm3::Gtkmm3MainWindow::RegisterMenuBar()
     EnabledStateUpdate(*m_redoMenuItem,         m_presenter.IsRedoPossible());
 }
 
-void cx::ui::gtkmm3::Gtkmm3MainWindow::RegisterStatusBar()
+void cx::ui::gtkmm3::MainWindow::RegisterStatusBar()
 {
     const cx::cmn::ui::IAbstractWidgetsFactory& standardWidgetsFactory = m_widgetsFactories.GetStandardWidgetsFactory();
 
@@ -326,7 +326,7 @@ void cx::ui::gtkmm3::Gtkmm3MainWindow::RegisterStatusBar()
     POSTCONDITION(m_statusBar);
 }
 
-void cx::ui::gtkmm3::Gtkmm3MainWindow::OnHelpContentsRequested()
+void cx::ui::gtkmm3::MainWindow::OnHelpContentsRequested()
 {
     const guint32 timestamp = gtk_get_current_event_time();
     GError* error = nullptr;
@@ -347,7 +347,7 @@ void cx::ui::gtkmm3::Gtkmm3MainWindow::OnHelpContentsRequested()
     }
 }
 
-void cx::ui::gtkmm3::Gtkmm3MainWindow::OnCreateAboutWindow()
+void cx::ui::gtkmm3::MainWindow::OnCreateAboutWindow()
 {
     if(!m_aboutWindow)
     {
@@ -368,27 +368,27 @@ void cx::ui::gtkmm3::Gtkmm3MainWindow::OnCreateAboutWindow()
     IF_CONDITION_NOT_MET_DO(result == EXIT_SUCCESS, return;);
 }
 
-void cx::ui::gtkmm3::Gtkmm3MainWindow::OnNewGame()
+void cx::ui::gtkmm3::MainWindow::OnNewGame()
 {
     m_controller.OnNewGame();
 }
 
-void cx::ui::gtkmm3::Gtkmm3MainWindow::OnReinitializeCurrentGame()
+void cx::ui::gtkmm3::MainWindow::OnReinitializeCurrentGame()
 {
    m_controller.OnReinitializeCurrentGame();
 }
 
-void cx::ui::gtkmm3::Gtkmm3MainWindow::OnUndo()
+void cx::ui::gtkmm3::MainWindow::OnUndo()
 {
     m_controller.OnUndo();
 }
 
-void cx::ui::gtkmm3::Gtkmm3MainWindow::OnRedo()
+void cx::ui::gtkmm3::MainWindow::OnRedo()
 {
     m_controller.OnRedo();
 }
 
-void cx::ui::gtkmm3::Gtkmm3MainWindow::CreateGameResolutionWindow(cx::model::ModelNotificationContext p_context)
+void cx::ui::gtkmm3::MainWindow::CreateGameResolutionWindow(cx::model::ModelNotificationContext p_context)
 {
 
     cx::model::GameResolution resolutionType;
@@ -431,7 +431,7 @@ void cx::ui::gtkmm3::Gtkmm3MainWindow::CreateGameResolutionWindow(cx::model::Mod
     IF_CONDITION_NOT_MET_DO(result == EXIT_SUCCESS, return;);
 }
 
-void cx::ui::gtkmm3::Gtkmm3MainWindow::ActivateNewGameView()
+void cx::ui::gtkmm3::MainWindow::ActivateNewGameView()
 {
     IF_CONDITION_NOT_MET_DO(m_mainLayout, return;);
 
@@ -453,7 +453,7 @@ void cx::ui::gtkmm3::Gtkmm3MainWindow::ActivateNewGameView()
     show_all();
 }
 
-void cx::ui::gtkmm3::Gtkmm3MainWindow::DeactivateNewGameView()
+void cx::ui::gtkmm3::MainWindow::DeactivateNewGameView()
 {
     IF_CONDITION_NOT_MET_DO(m_newGameView, return;);
 
@@ -462,7 +462,7 @@ void cx::ui::gtkmm3::Gtkmm3MainWindow::DeactivateNewGameView()
     m_gameResolution.reset();
 }
 
-void cx::ui::gtkmm3::Gtkmm3MainWindow::ActivateGameView()
+void cx::ui::gtkmm3::MainWindow::ActivateGameView()
 {
     IF_CONDITION_NOT_MET_DO(m_mainLayout, return;);
 
@@ -484,7 +484,7 @@ void cx::ui::gtkmm3::Gtkmm3MainWindow::ActivateGameView()
     show_all();
 }
 
-void cx::ui::gtkmm3::Gtkmm3MainWindow::DeactivateGameView()
+void cx::ui::gtkmm3::MainWindow::DeactivateGameView()
 {
     IF_CONDITION_NOT_MET_DO(m_gameView, return;);
 

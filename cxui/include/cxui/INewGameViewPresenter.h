@@ -32,6 +32,7 @@ namespace cx::model
 {
 
 class NewGameInformation;
+enum class PlayerType;
 
 }
 

@@ -16,7 +16,7 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file Gtkmm3MainWindow.h
+ * @file MainWindow.h
  * @date 2019
  *
  *************************************************************************************************/
@@ -84,7 +84,7 @@ namespace cx::ui::gtkmm3
  * the gaming widgets, such as the board.
  *
  ************************************************************************************************/
-class Gtkmm3MainWindow : public cx::cmn::ui::gtkmm3::Window
+class MainWindow : public cx::cmn::ui::gtkmm3::Window
 {
 
 public:
@@ -104,7 +104,7 @@ public:
      *      The widgets factories.
      *
      ********************************************************************************************/
-    Gtkmm3MainWindow(
+    MainWindow(
         Gtk::Application& p_gtkApplication,
         cx::model::ModelSubject& p_model,
         cx::ui::IMainWindowController& p_controller,
@@ -112,7 +112,7 @@ public:
         cx::ui::WidgetsFactories& p_widgetsFactories);
 
     // cx::cmn::ui::IWindow:
-    ~Gtkmm3MainWindow() override;
+    ~MainWindow() override;
     [[nodiscard]] int Show() override;
 
 private:

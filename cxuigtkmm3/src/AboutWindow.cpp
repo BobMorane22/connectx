@@ -16,12 +16,12 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file Gtkmm3AboutWindow.cpp
+ * @file AboutWindow.cpp
  * @date 2020
  *
  *************************************************************************************************/
 
-#include <cxuigtkmm3/Gtkmm3AboutWindow.h>
+#include <cxuigtkmm3/AboutWindow.h>
 #include <cxui/IAboutWindowPresenter.h>
 #include <cxui/IAbstractConnectXWidgetsFactory.h>
 #include <cxcmnui/IAbstractWidgetsFactory.h>
@@ -31,7 +31,7 @@
 #include <cxcmnui/Margins.h>
 #include <cxui/WidgetsFactories.h>
 
-cx::ui::gtkmm3::Gtkmm3AboutWindow::Gtkmm3AboutWindow(
+cx::ui::gtkmm3::AboutWindow::AboutWindow(
     cx::ui::WidgetsFactories& p_widgetsFactories,
     std::unique_ptr<cx::ui::IAboutWindowPresenter> p_presenter)
  : cx::cmn::ui::gtkmm3::Window(p_widgetsFactories)
@@ -42,12 +42,12 @@ cx::ui::gtkmm3::Gtkmm3AboutWindow::Gtkmm3AboutWindow(
     POSTCONDITION(m_presenter);
 }
 
-void cx::ui::gtkmm3::Gtkmm3AboutWindow::Update(cx::model::ModelNotificationContext /*p_context*/, cx::model::ModelSubject* /*p_subject*/)
+void cx::ui::gtkmm3::AboutWindow::Update(cx::model::ModelNotificationContext /*p_context*/, cx::model::ModelSubject* /*p_subject*/)
 {
     // Nothing to do...
 }
 
-void cx::ui::gtkmm3::Gtkmm3AboutWindow::InitializeWidgets()
+void cx::ui::gtkmm3::AboutWindow::InitializeWidgets()
 {
     const cx::cmn::ui::IAbstractWidgetsFactory& standardWidgetsFactory = m_widgetsFactories.GetStandardWidgetsFactory();
 
@@ -68,19 +68,19 @@ void cx::ui::gtkmm3::Gtkmm3AboutWindow::InitializeWidgets()
     POSTCONDITION(m_close);
 }
 
-void cx::ui::gtkmm3::Gtkmm3AboutWindow::ConfigureWindow()
+void cx::ui::gtkmm3::AboutWindow::ConfigureWindow()
 {
     set_title(m_presenter->GetWindowTitle());
     set_position(Gtk::WIN_POS_CENTER);
     set_resizable(false);
 }
 
-void cx::ui::gtkmm3::Gtkmm3AboutWindow::RegisterLayouts()
+void cx::ui::gtkmm3::AboutWindow::RegisterLayouts()
 {
     // Nothing to do.
 }
 
-void cx::ui::gtkmm3::Gtkmm3AboutWindow::RegisterWidgets()
+void cx::ui::gtkmm3::AboutWindow::RegisterWidgets()
 {
     IF_CONDITION_NOT_MET_DO(m_mainLayout, return;);
 
@@ -105,12 +105,12 @@ void cx::ui::gtkmm3::Gtkmm3AboutWindow::RegisterWidgets()
     m_mainLayout->Register(*m_close,       {row6, rowSpan1}, {column0, columnSpan1});
 }
 
-void cx::ui::gtkmm3::Gtkmm3AboutWindow::ConfigureLayouts()
+void cx::ui::gtkmm3::AboutWindow::ConfigureLayouts()
 {
     // Nothing to do.
 }
 
-void cx::ui::gtkmm3::Gtkmm3AboutWindow::ConfigureWidgets()
+void cx::ui::gtkmm3::AboutWindow::ConfigureWidgets()
 {
     using namespace cx::cmn::ui;
 
@@ -130,7 +130,7 @@ void cx::ui::gtkmm3::Gtkmm3AboutWindow::ConfigureWidgets()
     m_close->UpdateContents(m_presenter->GetCloseText());
 }
 
-void cx::ui::gtkmm3::Gtkmm3AboutWindow::ConfigureSignalHandlers()
+void cx::ui::gtkmm3::AboutWindow::ConfigureSignalHandlers()
 {
     m_close->OnClicked()->Connect([this](){close();});
 }

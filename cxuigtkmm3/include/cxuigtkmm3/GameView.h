@@ -4,7 +4,8 @@
  *  Connect X is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.  *
+ *  (at your option) any later version.
+ *
  *  Connect X is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -15,7 +16,7 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file Gtkmm3GameView.h
+ * @file GameView.h
  * @date 2020
  *
  *************************************************************************************************/
@@ -52,7 +53,7 @@ namespace cx::ui::gtkmm3
  * @brief Gtkmm3 implementation of the view for playing the game.
  *
  ************************************************************************************************/
-class Gtkmm3GameView : public cx::ui::IView,
+class GameView : public cx::ui::IView,
                        private cx::ui::IBoardAnimationObserver,
                        private cx::ui::IUserActionObserver,
                        private cx::ui::BoardAnimationSubject
@@ -79,7 +80,7 @@ public:
      *      The top position of the view in the layout.
      *
      ********************************************************************************************/
-    Gtkmm3GameView(
+    GameView(
         cx::ui::WidgetsFactories& p_widgetsFactories,
         cx::ui::IGameViewPresenter& p_presenter,
         cx::ui::IGameViewController& p_controller,
@@ -92,7 +93,7 @@ public:
      * @brief Destructor.
      *
      ********************************************************************************************/
-    ~Gtkmm3GameView() override;
+    ~GameView() override;
     
     // cx::ui::IView:
     void Activate() override;

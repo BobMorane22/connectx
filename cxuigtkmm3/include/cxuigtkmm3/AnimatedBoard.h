@@ -16,7 +16,7 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file Gtkmm3AnimatedBoard.h
+ * @file AnimatedBoard.h
  * @date 2021
  *
  *************************************************************************************************/
@@ -28,9 +28,9 @@
 
 #include <cxmath/Dimensions.h>
 #include <cxui/AnimationInformation.h>
-#include <cxuigtkmm3/Gtkmm3AnimatedBoardTimerRAII.h>
-#include <cxuigtkmm3/Gtkmm3BoardElementCache.h>
 #include <cxui/IAnimatedBoard.h>
+#include <cxuigtkmm3/AnimatedBoardTimerRAII.h>
+#include <cxuigtkmm3/BoardElementCache.h>
 
 namespace cx::ui
 {
@@ -49,8 +49,8 @@ namespace cx::ui::gtkmm3
  * @brief Gtkmm3 implementation of an animated game board.
  *
  *************************************************************************************************/
-class Gtkmm3AnimatedBoard : public cx::ui::IAnimatedBoard,
-                            public Gtk::DrawingArea
+class AnimatedBoard : public cx::ui::IAnimatedBoard,
+                      public Gtk::DrawingArea
 {
 
 public:
@@ -65,13 +65,13 @@ public:
      *      would mean that a chip will move three columns (or rows) per second when animated.
      *
      *********************************************************************************************/
-    Gtkmm3AnimatedBoard(const cx::ui::IGameViewPresenter& p_presenter, const cx::ui::AnimationSpeed& p_speed);
+    AnimatedBoard(const cx::ui::IGameViewPresenter& p_presenter, const cx::ui::AnimationSpeed& p_speed);
 
     /******************************************************************************************//**
      * @brief Destructor.
      *
      *********************************************************************************************/
-    ~Gtkmm3AnimatedBoard() override = default;
+    ~AnimatedBoard() override = default;
 
     /*******************************************************************************************//**
      * @brief Sets the delegate for widget common facilities.
@@ -133,7 +133,7 @@ private:
     std::unique_ptr<cx::ui::IAnimatedBoardModel> m_animationModel;
 
     // Clock (ticks m_FPS times per second):
-    std::unique_ptr<Gtkmm3AnimatedBoardTimerRAII> m_timer;
+    std::unique_ptr<AnimatedBoardTimerRAII> m_timer;
 
     cx::ui::AnimationInformations<cx::math::Width> m_moveLeftAnimationInfo;
     cx::ui::AnimationInformations<cx::math::Width> m_moveRightAnimationInfo;
@@ -144,7 +144,7 @@ private:
     // Surfaces in RAM on which to perform the drawing, in memory, before effectively
     // drawing on the screen. Caching these surfaces here avoids recreating them on every
     // frame draw, which helps performancewise:
-    Gtkmm3BoardElementCache m_boardElementsCache;       // For individual discs.
+    BoardElementCache m_boardElementsCache;             // For individual discs.
     Cairo::RefPtr<Cairo::Surface> m_columnHilightCache; // For the column hilight.
     Cairo::RefPtr<Cairo::Surface> m_surfaceCache;       // For the whole drawn surface.
 

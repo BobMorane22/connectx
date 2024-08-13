@@ -16,7 +16,7 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file Gtkmm3DiscChip.h
+ * @file DiscChip.h
  * @date 2020
  *
  *************************************************************************************************/
@@ -24,7 +24,7 @@
 #ifndef GTKMM3DISCCHIP_H_62BF81A1_A9D1_400E_83C5_2B8FE8CF5B34
 #define GTKMM3DISCCHIP_H_62BF81A1_A9D1_400E_83C5_2B8FE8CF5B34
 
-#include <cxuigtkmm3/Gtkmm3Chip.h>
+#include <cxuigtkmm3/Chip.h>
 
 namespace cx::ui::gtkmm3
 {
@@ -33,7 +33,7 @@ namespace cx::ui::gtkmm3
  * @brief Gtkmm3 implementation of a chip which has a disc shape.
  *
  *************************************************************************************************/
-class Gtkmm3DiscChip : public Gtkmm3Chip
+class DiscChip : public Chip
 {
 
 public:
@@ -49,9 +49,10 @@ public:
      *      The disc dimension (both width and height, in pixels).
      *
      ********************************************************************************************/
-    Gtkmm3DiscChip(const cx::model::ChipColor& p_fillColor,
-                   const cx::model::ChipColor& p_backgroundColor,
-                   int p_dimension);
+    DiscChip(
+        const cx::model::ChipColor& p_fillColor,
+        const cx::model::ChipColor& p_backgroundColor,
+        int p_dimension);
 
 private:
 

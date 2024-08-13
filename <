@@ -45,7 +45,7 @@ cx::Gtkmm3UIManager::Gtkmm3UIManager(int argc, char *argv[], cx::ModelReferences
         ASSERT(m_abstractWidgetsFactory);
 
         {
-            auto abstractConnectXWidgetsFactory = std::make_unique<cx::ui::gtkmm3::AbstractConnectXWidgetsFactory>(gtkApplication);
+            auto abstractConnectXWidgetsFactory = std::make_unique<cx::ui::gtkmm3::Gtkmm3AbstractConnectXWidgetsFactory>(gtkApplication);
             ASSERT(abstractConnectXWidgetsFactory);
 
             abstractConnectXWidgetsFactory->RegisterStandardWidgetsFactory(*m_abstractWidgetsFactory);

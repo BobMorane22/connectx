@@ -26,20 +26,20 @@
 set(TARGET_NAME cxuigtkmm3)
 
 add_library(${TARGET_NAME}
-  src/Gtkmm3AboutWindow.cpp
-  src/Gtkmm3AbstractConnectXWidgetsFactory.cpp
-  src/Gtkmm3AnimatedBoard.cpp
-  src/Gtkmm3AnimatedBoardTimerRAII.cpp
-  src/Gtkmm3BoardElementCache.cpp
-  src/Gtkmm3Chip.cpp
-  src/Gtkmm3ColorPicker.cpp
-  src/Gtkmm3ContextRestoreRAII.cpp
-  src/Gtkmm3DiscChip.cpp
-  src/Gtkmm3GameResolutionDialog.cpp
-  src/Gtkmm3GameView.cpp
-  src/Gtkmm3MainWindow.cpp
-  src/Gtkmm3NewGameView.cpp
-  src/Gtkmm3NewPlayersList.cpp
+  src/AboutWindow.cpp
+  src/AbstractConnectXWidgetsFactory.cpp
+  src/AnimatedBoard.cpp
+  src/AnimatedBoardTimerRAII.cpp
+  src/BoardElementCache.cpp
+  src/Chip.cpp
+  src/ColorPicker.cpp
+  src/ContextRestoreRAII.cpp
+  src/DiscChip.cpp
+  src/GameResolutionDialog.cpp
+  src/GameView.cpp
+  src/MainWindow.cpp
+  src/NewGameView.cpp
+  src/NewPlayersList.cpp
 )
 
 target_include_directories(${TARGET_NAME}

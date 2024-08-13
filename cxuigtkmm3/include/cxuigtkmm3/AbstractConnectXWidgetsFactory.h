@@ -16,7 +16,7 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file Gtkmm3AbstractConnectXWidgetsFactory.h
+ * @file AbstractConnectXWidgetsFactory.h
  * @date 2024
  *
  *************************************************************************************************/
@@ -53,7 +53,7 @@ namespace cx::ui::gtkmm3
  *       The stored `Gtk::Application` instance is valid.
  *
  *************************************************************************************************/
-class Gtkmm3AbstractConnectXWidgetsFactory final : public cx::ui::IAbstractConnectXWidgetsFactory
+class AbstractConnectXWidgetsFactory final : public cx::ui::IAbstractConnectXWidgetsFactory
 {
 
 public:
@@ -73,7 +73,7 @@ public:
     *      The `Gtk::Application` instance given as an argument is valid.
     *
     *********************************************************************************************/
-    explicit Gtkmm3AbstractConnectXWidgetsFactory(Glib::RefPtr<Gtk::Application> p_gtkApplication);
+    explicit AbstractConnectXWidgetsFactory(Glib::RefPtr<Gtk::Application> p_gtkApplication);
 
    /******************************************************************************************//**
     * @brief Sets a standard widgets factory.
