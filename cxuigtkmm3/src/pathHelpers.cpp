@@ -2,7 +2,7 @@
 
 #include <cxmath/math.h>
 #include <cxmath/Position.h>
-#include <cxcmnui/pathHelpers.h>
+#include <cxuigtkmm3/pathHelpers.h>
 
 void cx::cmn::ui::MakeRectanglarPath(const Cairo::RefPtr<Cairo::Context>& p_context,
                                const cx::math::Position& p_topLeft,

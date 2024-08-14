@@ -40,6 +40,7 @@ add_library(${TARGET_NAME}
   src/MainWindow.cpp
   src/NewGameView.cpp
   src/NewPlayersList.cpp
+  src/pathHelpers.cpp
 )
 
 target_include_directories(${TARGET_NAME}

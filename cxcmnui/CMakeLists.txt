@@ -28,7 +28,6 @@ set(TARGET_NAME cxcmnui)
 add_library(${TARGET_NAME}
   src/extractRawUserInput.cpp
   src/KeyboardShortcut.cpp
-  src/pathHelpers.cpp
   src/StatusBarPresenter.cpp
   src/StdActionIcon.cpp
   src/widgetUtilities.cpp

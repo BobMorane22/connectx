@@ -32,13 +32,13 @@
 #include <cxcmnui/common.h>
 #include <cxcmnui/EventPropagation.h>
 #include <cxcmnui/KeyboardKeyPressedEvent.h>
-#include <cxcmnui/pathHelpers.h>
 #include <cxui/AnimatedBoardModel.h>
 #include <cxui/AnimatedBoardPresenter.h>
 #include <cxui/FrameAnimationStrategy.h>
 #include <cxui/IGameViewPresenter.h>
 #include <cxuigtkmm3/AnimatedBoard.h>
 #include <cxuigtkmm3/ContextRestoreRAII.h>
+#include <cxuigtkmm3/pathHelpers.h>
 
 namespace
 {
