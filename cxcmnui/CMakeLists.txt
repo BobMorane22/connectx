@@ -35,7 +35,6 @@ add_library(${TARGET_NAME}
 
 target_include_directories(${TARGET_NAME}
   PUBLIC "${CMAKE_CURRENT_LIST_DIR}/include"
-  PRIVATE "${GTKMM_INCLUDE_DIRS}"
 )
 
 target_link_libraries(${TARGET_NAME}
@@ -43,7 +42,6 @@ target_link_libraries(${TARGET_NAME}
   PRIVATE cxinv
   PRIVATE cxmath
   PRIVATE cxmodel
-  PRIVATE ${GTKMM_LIBRARIES}
 )
 
 # Configuration files:
