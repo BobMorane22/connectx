@@ -22,7 +22,8 @@
  *************************************************************************************************/
 
 #include <cxinv/assertion.h>
-#include <cxcmnuigtkmm3/Label.h>
+
+#include "Label.h"
 
 cx::cmn::ui::gtkmm3::Label::Label()
 : Label("")

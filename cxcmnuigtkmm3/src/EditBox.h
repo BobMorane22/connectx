@@ -7,7 +7,8 @@
  *  (at your option) any later version.
  *
  *  Connect X is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  *  GNU General Public License for more details.
  *
  *  You should have received a copy of the GNU General Public License
@@ -15,42 +16,30 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file Label.h
- * @date 2024 *
+ * @file EditBox.h
+ * @date 2024
+ *
  *************************************************************************************************/
 
-#ifndef GTKMM3LABEL_H_B84CA49F_51D9_4CCA_944E_42D742A18DDD
-#define GTKMM3LABEL_H_B84CA49F_51D9_4CCA_944E_42D742A18DDD
+#ifndef GTKMM3EDITBOX_H_3E389CC2_EA4C_481C_BF50_E5EDAF31336D
+#define GTKMM3EDITBOX_H_3E389CC2_EA4C_481C_BF50_E5EDAF31336D
 
-#include <gtkmm/label.h>
+#include <gtkmm/entry.h>
 
-#include <cxcmnui/ILabel.h>
+#include <cxcmnui/IEditBox.h>
 
 namespace cx::cmn::ui::gtkmm3
 {
 
-class Label : public ILabel,
-              public Gtk::Label
+/**********************************************************************************************//**
+ * @brief Gtkmm 3 implementation of an edit box.
+ *
+ *************************************************************************************************/
+class EditBox : public IEditBox,
+                public Gtk::Entry
 {
 
 public:
-
-    /*******************************************************************************************//**
-     * @brief Default constructor.
-     *
-     * Creates a label with no contents.
-     *
-     **********************************************************************************************/
-    Label();
-
-    /*******************************************************************************************//**
-     * @brief Constructor.
-     *
-     * @param p_contents
-     *      The textual contents to appear on the label.
-     *
-     **********************************************************************************************/
-    explicit Label(const std::string& p_contents);
 
     /*******************************************************************************************//**
      * @brief Sets the delegate for widget common facilities.
@@ -69,17 +58,18 @@ public:
      **********************************************************************************************/
     void SetDelegate(std::unique_ptr<IWidget> p_delegate);
 
-    // cx::cmn::ui::Ilabel:
+    // cx::cmn::ui::IEditBox:
     void UpdateContents(const std::string& p_newContents) override;
     [[nodiscard]] std::string GetContents() const override;
+    [[nodiscard]] std::unique_ptr<ISignal<void>> OnContentsChanged() override;
 
     // cx::cmn::ui::IWidget:
-    [[nodiscard]] size_t GetWidth() const override;
-    [[nodiscard]] size_t GetHeight() const override;
-    void SetEnabled(EnabledState p_enabled) override;
-    void SetMargins(const Margins& p_newMarginSizes) override;
+    [[nodiscard]]  size_t GetWidth() const override;
+    [[nodiscard]]  size_t GetHeight() const override;
+    void SetEnabled(cx::cmn::ui::EnabledState p_enabled) override;
+    void SetMargins(const cx::cmn::ui::Margins& p_newMarginSizes) override;
     void SetTooltip(const std::string& p_tooltipContents) override;
-    [[nodiscard]] std::unique_ptr<ISignal<EventPropagation, KeyboardKeyPressedEvent>> OnKeyPressed() override;
+    [[nodiscard]] std::unique_ptr<cx::cmn::ui::ISignal<cx::cmn::ui::EventPropagation, cx::cmn::ui::KeyboardKeyPressedEvent>> OnKeyPressed() override;
 
 private:
 
@@ -89,4 +79,4 @@ private:
 
 } // namespace cx::cmn::ui::gtkmm3
 
-#endif // GTKMM3LABEL_H_B84CA49F_51D9_4CCA_944E_42D742A18DDD
+#endif // GTKMM3EDITBOX_H_3E389CC2_EA4C_481C_BF50_E5EDAF31336D

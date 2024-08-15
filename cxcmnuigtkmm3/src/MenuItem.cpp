@@ -32,9 +32,10 @@
 #include <cxcmnui/Keys.h>
 #include <cxcmnui/StdActionIcon.h>
 #include <cxcmnuigtkmm3/Connection.h>
-#include <cxcmnuigtkmm3/conversions.h>
-#include <cxcmnuigtkmm3/MenuItem.h>
 #include <cxcmnuigtkmm3/WidgetDelegate.h>
+
+#include "conversions.h"
+#include "MenuItem.h"
 
 namespace
 {

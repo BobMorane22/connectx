@@ -24,8 +24,9 @@
 #include <cxinv/assertion.h>
 #include <cxcmn/helpers.h>
 #include <cxcmnui/Margins.h>
-#include <cxcmnuigtkmm3/Button.h>
 #include <cxcmnuigtkmm3/Connection.h>
+
+#include "Button.h"
 
 namespace
 {

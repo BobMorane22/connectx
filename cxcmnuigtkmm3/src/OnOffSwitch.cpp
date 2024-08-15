@@ -30,7 +30,8 @@
 #include <cxcmnui/Margins.h>
 #include <cxcmnui/OnOffState.h>
 #include <cxcmnuigtkmm3/Connection.h>
-#include <cxcmnuigtkmm3/OnOffSwitch.h>
+
+#include "OnOffSwitch.h"
 
 namespace
 {

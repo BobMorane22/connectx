@@ -16,40 +16,30 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file StatusBar.h
- * @date 2020
+ * @file OnOffSwitch.h
+ * @date 2022
  *
  *************************************************************************************************/
 
-#ifndef GTKMM3STATUSBAR_H_DDBD40E5_28B4_47C2_8550_C0F49082EFBF
-#define GTKMM3STATUSBAR_H_DDBD40E5_28B4_47C2_8550_C0F49082EFBF
+#ifndef GTKMM3ONOFFSWITCH_H_3F9ABCFC_7442_44F5_8C96_A15828BC28B8
+#define GTKMM3ONOFFSWITCH_H_3F9ABCFC_7442_44F5_8C96_A15828BC28B8
 
-#include <gtkmm/statusbar.h>
+#include <gtkmm/switch.h>
 
-#include <cxcmnui/IStatusBar.h>
-#include <cxcmnui/IStatusBarPresenter.h>
+#include <cxcmnui/IOnOffSwitch.h>
 
 namespace cx::cmn::ui::gtkmm3
 {
 
 /**********************************************************************************************//**
- * @brief Main window status bar.
+ * @brief A switch that is either "On" or "Off".
  *
  *************************************************************************************************/
-class StatusBar : public IStatusBar,
-                  public Gtk::Statusbar
+class OnOffSwitch : public cx::cmn::ui::IOnOffSwitch,
+                    public Gtk::Switch
 {
 
 public:
-
-    /******************************************************************************************//**
-     * @brief Constructor.
-     *
-     * @param p_presenter
-     *      A status bar presenter.
-     *
-     *********************************************************************************************/
-    explicit StatusBar(IStatusBarPresenter& p_presenter);
 
     /*******************************************************************************************//**
      * @brief Sets the delegate for widget common facilities.
@@ -68,29 +58,26 @@ public:
      **********************************************************************************************/
     void SetDelegate(std::unique_ptr<IWidget> p_delegate);
 
-    // cx::cmn::ui::IStatusBar:
-    void SetLastUserActionStatus(const std::string& p_lastUserActionDescription) override;
+    // cx::cmn::ui::IOnOffSwitch:
+    [[nodiscard]] OnOffState GetState() const override;
+    void SetState(OnOffState p_newState) override;
+    [[nodiscard]] std::unique_ptr<ISignal<void>> OnStateChanged() override;
 
     // cx::cmn::ui::IWidget:
     [[nodiscard]] size_t GetWidth() const override;
     [[nodiscard]] size_t GetHeight() const override;
-    void SetEnabled(EnabledState p_enabled) override;
-    void SetMargins(const Margins& p_newMarginSizes) override;
+    void SetEnabled(cx::cmn::ui::EnabledState p_enabled) override;
+    void SetMargins(const cx::cmn::ui::Margins& p_newMarginSizes) override;
     void SetTooltip(const std::string& p_tooltipContents) override;
-    [[nodiscard]] std::unique_ptr<ISignal<EventPropagation, KeyboardKeyPressedEvent>> OnKeyPressed() override;
+    [[nodiscard]] std::unique_ptr<cx::cmn::ui::ISignal<cx::cmn::ui::EventPropagation, cx::cmn::ui::KeyboardKeyPressedEvent>> OnKeyPressed() override;
 
-private:
-
-    virtual void Update(cx::model::ModelNotificationContext p_context, cx::model::ModelSubject* p_subject) override;
 
 private:
 
     std::unique_ptr<IWidget> m_delegate;
 
-    IStatusBarPresenter& m_presenter;
-
 };
 
 } // namespace cx::cmn::ui::gtkmm3
 
-#endif // GTKMM3STATUSBAR_H_DDBD40E5_28B4_47C2_8550_C0F49082EFBF
+#endif // GTKMM3ONOFFSWITCH_H_3F9ABCFC_7442_44F5_8C96_A15828BC28B8

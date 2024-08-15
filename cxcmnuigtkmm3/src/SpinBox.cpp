@@ -27,20 +27,8 @@
 #include <cxcmnui/EventPropagation.h>
 #include <cxcmnui/KeyboardKeyPressedEvent.h>
 #include <cxcmnui/Margins.h>
-#include <cxcmnuigtkmm3/SpinBox.h>
 
-cx::cmn::ui::ISpinBox::Range::Range(const cx::cmn::ui::ISpinBox::Minimum& p_min,
-                              const cx::cmn::ui::ISpinBox::Maximum& p_max)
-: m_min{0}, m_max{0}
-{
-    PRECONDITION(p_max.Get() > p_min.Get());
-
-    m_min = p_min;
-    m_max = p_max;
-
-    POSTCONDITION(m_max.Get() > m_min.Get());
-    INVARIANT(m_max.Get() > m_min.Get());
-}
+#include "SpinBox.h"
 
 cx::cmn::ui::gtkmm3::SpinBox::SpinBox(
     int p_initialValue,

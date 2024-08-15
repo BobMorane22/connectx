@@ -16,51 +16,40 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file Button.h
- * @date 2024
+ * @file StatusBar.h
+ * @date 2020
  *
  *************************************************************************************************/
 
-#ifndef GTKMM3BUTTON_H_28BFEAFC_06B4_4950_A338_12355AA185D0
-#define GTKMM3BUTTON_H_28BFEAFC_06B4_4950_A338_12355AA185D0
+#ifndef GTKMM3STATUSBAR_H_DDBD40E5_28B4_47C2_8550_C0F49082EFBF
+#define GTKMM3STATUSBAR_H_DDBD40E5_28B4_47C2_8550_C0F49082EFBF
 
-#include <string>
+#include <gtkmm/statusbar.h>
 
-#include <gtkmm/button.h>
-
-#include <cxcmnui/IButton.h>
+#include <cxcmnui/IStatusBar.h>
+#include <cxcmnui/IStatusBarPresenter.h>
 
 namespace cx::cmn::ui::gtkmm3
 {
 
 /**********************************************************************************************//**
- * @brief Gtkmm 3 implementation of the `cx::cmn::ui::gtkmm3::IButton` interface.
+ * @brief Main window status bar.
  *
  *************************************************************************************************/
-class Button : public IButton,
-               public Gtk::Button
-
+class StatusBar : public IStatusBar,
+                  public Gtk::Statusbar
 {
 
 public:
 
     /******************************************************************************************//**
-     * @brief Default constructor.
-     *
-     * Creates a button with no contents.
-     *
-     *********************************************************************************************/
-     Button();
-
-    /******************************************************************************************//**
      * @brief Constructor.
      *
-     * @param p_label
-     *      The textual label to appear on the button. The label can be empty. In this case,
-     *      nothing will show on the button.
+     * @param p_presenter
+     *      A status bar presenter.
      *
      *********************************************************************************************/
-    explicit Button(const std::string& p_label);
+    explicit StatusBar(IStatusBarPresenter& p_presenter);
 
     /*******************************************************************************************//**
      * @brief Sets the delegate for widget common facilities.
@@ -79,25 +68,29 @@ public:
      **********************************************************************************************/
     void SetDelegate(std::unique_ptr<IWidget> p_delegate);
 
-    // cx::cmn::ui::IButton:
-    void UpdateContents(const std::string& p_newContents) override;
-    [[nodiscard]] std::string GetContents() const override;
-    [[nodiscard]] std::unique_ptr<ISignal<void>> OnClicked() override;
+    // cx::cmn::ui::IStatusBar:
+    void SetLastUserActionStatus(const std::string& p_lastUserActionDescription) override;
 
     // cx::cmn::ui::IWidget:
     [[nodiscard]] size_t GetWidth() const override;
     [[nodiscard]] size_t GetHeight() const override;
-    void SetEnabled(EnabledState p_enabled) override;
-    void SetMargins(const Margins& p_newMarginSizes) override;
+    void SetEnabled(cx::cmn::ui::EnabledState p_enabled) override;
+    void SetMargins(const cx::cmn::ui::Margins& p_newMarginSizes) override;
     void SetTooltip(const std::string& p_tooltipContents) override;
-    [[nodiscard]] std::unique_ptr<ISignal<EventPropagation, KeyboardKeyPressedEvent>> OnKeyPressed() override;
+    [[nodiscard]] std::unique_ptr<cx::cmn::ui::ISignal<cx::cmn::ui::EventPropagation, cx::cmn::ui::KeyboardKeyPressedEvent>> OnKeyPressed() override;
+
+private:
+
+    virtual void Update(cx::model::ModelNotificationContext p_context, cx::model::ModelSubject* p_subject) override;
 
 private:
 
     std::unique_ptr<IWidget> m_delegate;
 
+    IStatusBarPresenter& m_presenter;
+
 };
 
 } // namespace cx::cmn::ui::gtkmm3
 
-#endif // GTKMM3BUTTON_H_28BFEAFC_06B4_4950_A338_12355AA185D0
+#endif // GTKMM3STATUSBAR_H_DDBD40E5_28B4_47C2_8550_C0F49082EFBF

@@ -16,43 +16,50 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file Menu.h
- * @date 2024
+ * @file SpinBox.h
+ * @date 2023
  *
  *************************************************************************************************/
 
-#ifndef GTKMM3MENU_H_8F6908BA_083B_4C86_A927_97A375555E22
-#define GTKMM3MENU_H_8F6908BA_083B_4C86_A927_97A375555E22
+#ifndef GTKMM3SPINBOX_H_73AD5C68_A06C_4EFB_94EE_928437F83BA6
+#define GTKMM3SPINBOX_H_73AD5C68_A06C_4EFB_94EE_928437F83BA6
 
-#include <gtkmm/menu.h>
+#include <memory>
 
-#include <cxcmnui/IMenu.h>
-#include <cxcmnui/ISignal.h>
+#include <gtkmm/spinbutton.h>
+
+#include <cxcmnui/ISpinBox.h>
 
 namespace cx::cmn::ui::gtkmm3
 {
 
-/***********************************************************************************************//**
- * @brief Gtkmm 3 implementation of the `cx::cmn::ui::gtkmm3::IMenu` interface.
+/**********************************************************************************************//**
+ * @brief Gtkmm 3 implementation for the `cx::cmn::ui::gtkmm3::ISpinBox` interface.
  *
- **************************************************************************************************/
-class Menu : public IMenu,
-             public Gtk::Menu
+ *************************************************************************************************/
+class SpinBox final : public cx::cmn::ui::ISpinBox,
+                      public Gtk::SpinButton
 {
 
 public:
 
-    /*******************************************************************************************//**
+    /******************************************************************************************//**
      * @brief Constructor.
      *
-     * @param p_title
-     *      The menu title, as shown to the user.
+     * @param p_initialValue
+     *      The initialValue for the spin box.
      *
-     * @pre
-     *      The menu title is not empty.
+     * @param p_climbRate
+     *      The spin box's climb rate.
      *
-     **********************************************************************************************/
-    explicit Menu(const std::string& p_title);
+     * @param p_range
+     *      The spin box's value range.
+     *
+     *********************************************************************************************/
+    SpinBox(
+        int p_initialValue,
+        const ClimbRate& p_climbRate,
+        const Range& p_range);
 
     /*******************************************************************************************//**
      * @brief Sets the delegate for widget common facilities.
@@ -71,37 +78,25 @@ public:
      **********************************************************************************************/
     void SetDelegate(std::unique_ptr<IWidget> p_delegate);
 
-    /*******************************************************************************************//**
-     * @brief The Gtk menu item used to show the title.
-     *
-     * Sadly, Gtkmm 3 (at the time of writing: 3.24.5) does not offer the possibility to create
-     * a menu and specify a title "on the spot". The call exists, but was deprecated in Gtkmm
-     * 3.10. We have to go trough an extra menu item (of which the menu is a sub-menu of) to
-     * add a title. This getter exposes this extra menu item.
-     *
-     * @return The menu item through which the title, and the menu, can be added.
-     *
-     **********************************************************************************************/
-    [[nodiscard]] Gtk::MenuItem& GetTitleMenuItem();
-
-    // cx::cmn::ui::gtkmm3::IMenu:
-    void Register(IMenuItem& p_item) override;
+    // cx::cmn::ui::gtkmm3::ISpinBox:
+    [[nodiscard]] int GetValue() const override;
 
     // cx::cmn::ui::gtkmm3::IWidget:
     [[nodiscard]] size_t GetWidth() const override;
     [[nodiscard]] size_t GetHeight() const override;
-    void SetEnabled(EnabledState p_enabled) override;
-    void SetMargins(const Margins& p_newMarginSizes) override;
+    void SetEnabled(cx::cmn::ui::EnabledState p_enabled) override;
+    void SetMargins(const cx::cmn::ui::Margins& p_newMarginSizes) override;
     void SetTooltip(const std::string& p_tooltipContents) override;
-    [[nodiscard]] std::unique_ptr<ISignal<EventPropagation, KeyboardKeyPressedEvent>> OnKeyPressed() override;
+    [[nodiscard]] std::unique_ptr<cx::cmn::ui::ISignal<cx::cmn::ui::EventPropagation, cx::cmn::ui::KeyboardKeyPressedEvent>> OnKeyPressed() override;
 
 private:
 
-    Gtk::MenuItem m_titleMenuItem;
     std::unique_ptr<IWidget> m_delegate;
+
+    cx::cmn::ui::ISpinBox::Range m_limits;
 
 };
 
 } // namespace cx::cmn::ui::gtkmm3
 
-#endif // GTKMM3MENU_H_8F6908BA_083B_4C86_A927_97A375555E22
+#endif // GTKMM3SPINBOX_H_73AD5C68_A06C_4EFB_94EE_928437F83BA6

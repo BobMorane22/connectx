@@ -25,7 +25,8 @@
 #include <cxcmnui/EventPropagation.h>
 #include <cxcmnui/KeyboardKeyPressedEvent.h>
 #include <cxcmnui/Margins.h>
-#include <cxcmnuigtkmm3/StatusBar.h>
+
+#include "StatusBar.h"
 
 cx::cmn::ui::gtkmm3::StatusBar::StatusBar(IStatusBarPresenter& p_presenter)
  : m_presenter{p_presenter}

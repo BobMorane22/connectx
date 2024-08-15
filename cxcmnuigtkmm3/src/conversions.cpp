@@ -16,7 +16,7 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file gtkmmConversions.h
+ * @file conversions.cpp
  * @date 2024
  *
  *************************************************************************************************/
@@ -28,7 +28,8 @@
 #include <cxcmnui/EventPropagation.h>
 #include <cxcmnui/Keys.h>
 #include <cxcmnui/KeyboardKeyPressedEvent.h>
-#include <cxcmnuigtkmm3/conversions.h>
+
+#include "conversions.h"
 
 template<>
 std::optional<cx::cmn::ui::KeyboardKeyPressedEvent> cx::cmn::ui::gtkmm3::FromGtk<cx::cmn::ui::KeyboardKeyPressedEvent, GdkEventKey>(const GdkEventKey& p_event)

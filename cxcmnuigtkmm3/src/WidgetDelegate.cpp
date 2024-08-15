@@ -29,8 +29,9 @@
 #include <cxcmnui/KeyboardKeyPressedEvent.h>
 #include <cxcmnui/Margins.h>
 #include <cxcmnuigtkmm3/Connection.h>
-#include <cxcmnuigtkmm3/conversions.h>
 #include <cxcmnuigtkmm3/WidgetDelegate.h>
+
+#include "conversions.h"
 
 namespace
 {

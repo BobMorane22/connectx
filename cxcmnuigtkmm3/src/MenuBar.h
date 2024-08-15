@@ -16,27 +16,26 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file OnOffSwitch.h
- * @date 2022
+ * @file MenuBar.h
+ * @date 2024
  *
  *************************************************************************************************/
 
-#ifndef GTKMM3ONOFFSWITCH_H_3F9ABCFC_7442_44F5_8C96_A15828BC28B8
-#define GTKMM3ONOFFSWITCH_H_3F9ABCFC_7442_44F5_8C96_A15828BC28B8
+#ifndef GTKMM3MENUBAR_H_B09C49CF_EA28_4DBB_8ED7_BA7E8CEC3CC6
+#define GTKMM3MENUBAR_H_B09C49CF_EA28_4DBB_8ED7_BA7E8CEC3CC6
 
-#include <gtkmm/switch.h>
-
-#include <cxcmnui/IOnOffSwitch.h>
+#include <gtkmm/menubar.h>
+#include <cxcmnui/IMenuBar.h>
 
 namespace cx::cmn::ui::gtkmm3
 {
 
-/**********************************************************************************************//**
- * @brief A switch that is either "On" or "Off".
+/***********************************************************************************************//**
+ * @brief Gtkmm 3 implementation of the `cx::cmn::ui::gtkmm3::IMenuBar` interface.
  *
- *************************************************************************************************/
-class OnOffSwitch : public cx::cmn::ui::IOnOffSwitch,
-                    public Gtk::Switch
+ **************************************************************************************************/
+class MenuBar : public IMenuBar,
+                public Gtk::MenuBar
 {
 
 public:
@@ -58,19 +57,16 @@ public:
      **********************************************************************************************/
     void SetDelegate(std::unique_ptr<IWidget> p_delegate);
 
-    // cx::cmn::ui::IOnOffSwitch:
-    [[nodiscard]] OnOffState GetState() const override;
-    void SetState(OnOffState p_newState) override;
-    [[nodiscard]] std::unique_ptr<ISignal<void>> OnStateChanged() override;
+    // cx::cmn::ui::gtkmm3::IMenuBar:
+    void Register(IMenu& p_menu) override;
 
-    // cx::cmn::ui::IWidget:
+    // cx::cmn::ui::gtkmm3::IWidget:
     [[nodiscard]] size_t GetWidth() const override;
     [[nodiscard]] size_t GetHeight() const override;
-    void SetEnabled(EnabledState p_enabled) override;
-    void SetMargins(const Margins& p_newMarginSizes) override;
+    void SetEnabled(cx::cmn::ui::EnabledState p_enabled) override;
+    void SetMargins(const cx::cmn::ui::Margins& p_newMarginSizes) override;
     void SetTooltip(const std::string& p_tooltipContents) override;
-    [[nodiscard]] std::unique_ptr<ISignal<EventPropagation, KeyboardKeyPressedEvent>> OnKeyPressed() override;
-
+    [[nodiscard]] std::unique_ptr<cx::cmn::ui::ISignal<cx::cmn::ui::EventPropagation, cx::cmn::ui::KeyboardKeyPressedEvent>> OnKeyPressed() override;
 
 private:
 
@@ -80,4 +76,4 @@ private:
 
 } // namespace cx::cmn::ui::gtkmm3
 
-#endif // GTKMM3ONOFFSWITCH_H_3F9ABCFC_7442_44F5_8C96_A15828BC28B8
+#endif // GTKMM3MENUBAR_H_B09C49CF_EA28_4DBB_8ED7_BA7E8CEC3CC6

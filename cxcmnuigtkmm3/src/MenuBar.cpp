@@ -27,8 +27,9 @@
 #include <cxcmnui/EventPropagation.h>
 #include <cxcmnui/KeyboardKeyPressedEvent.h>
 #include <cxcmnui/IMenu.h>
-#include <cxcmnuigtkmm3/Menu.h>
-#include <cxcmnuigtkmm3/MenuBar.h>
+
+#include "Menu.h"
+#include "MenuBar.h"
 
 void cx::cmn::ui::gtkmm3::MenuBar::Register(cx::cmn::ui::IMenu& p_menu)
 {

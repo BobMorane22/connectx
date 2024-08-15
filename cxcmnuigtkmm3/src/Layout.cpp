@@ -27,8 +27,9 @@
 #include <cxcmnui/IWidget.h>
 #include <cxcmnui/KeyboardKeyPressedEvent.h>
 #include <cxcmnui/Margins.h>
-#include <cxcmnuigtkmm3/conversions.h>
-#include <cxcmnuigtkmm3/Layout.h>
+
+#include "conversions.h"
+#include "Layout.h"
 
 void cx::cmn::ui::gtkmm3::Layout::SetDelegate(
     std::unique_ptr<IWidget> p_delegate)

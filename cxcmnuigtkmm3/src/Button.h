@@ -16,50 +16,51 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file SpinBox.h
- * @date 2023
+ * @file Button.h
+ * @date 2024
  *
  *************************************************************************************************/
 
-#ifndef GTKMM3SPINBOX_H_73AD5C68_A06C_4EFB_94EE_928437F83BA6
-#define GTKMM3SPINBOX_H_73AD5C68_A06C_4EFB_94EE_928437F83BA6
+#ifndef GTKMM3BUTTON_H_28BFEAFC_06B4_4950_A338_12355AA185D0
+#define GTKMM3BUTTON_H_28BFEAFC_06B4_4950_A338_12355AA185D0
 
-#include <memory>
+#include <string>
 
-#include <gtkmm/spinbutton.h>
+#include <gtkmm/button.h>
 
-#include <cxcmnui/ISpinBox.h>
+#include <cxcmnui/IButton.h>
 
 namespace cx::cmn::ui::gtkmm3
 {
 
 /**********************************************************************************************//**
- * @brief Gtkmm 3 implementation for the `cx::cmn::ui::gtkmm3::ISpinBox` interface.
+ * @brief Gtkmm 3 implementation of the `cx::cmn::ui::gtkmm3::IButton` interface.
  *
  *************************************************************************************************/
-class SpinBox final : public cx::cmn::ui::ISpinBox,
-                      public Gtk::SpinButton
+class Button : public cx::cmn::ui::IButton,
+               public Gtk::Button
+
 {
 
 public:
 
     /******************************************************************************************//**
-     * @brief Constructor.
+     * @brief Default constructor.
      *
-     * @param p_initialValue
-     *      The initialValue for the spin box.
-     *
-     * @param p_climbRate
-     *      The spin box's climb rate.
-     *
-     * @param p_range
-     *      The spin box's value range.
+     * Creates a button with no contents.
      *
      *********************************************************************************************/
-    SpinBox(
-        int p_initialValue,
-        const ClimbRate& p_climbRate,
-        const Range& p_range);
+     Button();
+
+    /******************************************************************************************//**
+     * @brief Constructor.
+     *
+     * @param p_label
+     *      The textual label to appear on the button. The label can be empty. In this case,
+     *      nothing will show on the button.
+     *
+     *********************************************************************************************/
+    explicit Button(const std::string& p_label);
 
     /*******************************************************************************************//**
      * @brief Sets the delegate for widget common facilities.
@@ -78,25 +79,25 @@ public:
      **********************************************************************************************/
     void SetDelegate(std::unique_ptr<IWidget> p_delegate);
 
-    // cx::cmn::ui::gtkmm3::ISpinBox:
-    [[nodiscard]] int GetValue() const override;
+    // cx::cmn::ui::IButton:
+    void UpdateContents(const std::string& p_newContents) override;
+    [[nodiscard]] std::string GetContents() const override;
+    [[nodiscard]] std::unique_ptr<ISignal<void>> OnClicked() override;
 
-    // cx::cmn::ui::gtkmm3::IWidget:
+    // cx::cmn::ui::IWidget:
     [[nodiscard]] size_t GetWidth() const override;
     [[nodiscard]] size_t GetHeight() const override;
-    void SetEnabled(EnabledState p_enabled) override;
-    void SetMargins(const Margins& p_newMarginSizes) override;
+    void SetEnabled(cx::cmn::ui::EnabledState p_enabled) override;
+    void SetMargins(const cx::cmn::ui::Margins& p_newMarginSizes) override;
     void SetTooltip(const std::string& p_tooltipContents) override;
-    [[nodiscard]] std::unique_ptr<ISignal<EventPropagation, KeyboardKeyPressedEvent>> OnKeyPressed() override;
+    [[nodiscard]] std::unique_ptr<cx::cmn::ui::ISignal<cx::cmn::ui::EventPropagation, cx::cmn::ui::KeyboardKeyPressedEvent>> OnKeyPressed() override;
 
 private:
 
     std::unique_ptr<IWidget> m_delegate;
 
-    cx::cmn::ui::ISpinBox::Range m_limits;
-
 };
 
 } // namespace cx::cmn::ui::gtkmm3
 
-#endif // GTKMM3SPINBOX_H_73AD5C68_A06C_4EFB_94EE_928437F83BA6
+#endif // GTKMM3BUTTON_H_28BFEAFC_06B4_4950_A338_12355AA185D0

@@ -22,6 +22,7 @@
  *************************************************************************************************/
 
 #include <cxinv/assertion.h>
+#include <cxcmnui/IAbstractWidgetsFactory.h>
 #include <cxcmnui/IWindow.h>
 #include <cxui/MainWindowController.h>
 #include <cxui/MainWindowPresenter.h>
@@ -41,7 +42,7 @@ cx::Gtkmm3UIManager::Gtkmm3UIManager(int argc, char *argv[], cx::ModelReferences
         Glib::RefPtr<Gtk::Application> gtkApplication = Gtk::Application::create(argc, argv, "bobmorane.connectx");
         ASSERT(gtkApplication);
 
-        m_abstractWidgetsFactory = std::make_unique<cx::cmn::ui::gtkmm3::AbstractWidgetsFactory>(gtkApplication);
+        m_abstractWidgetsFactory = cx::cmn::ui::gtkmm3::FactoryCreate(gtkApplication);
         ASSERT(m_abstractWidgetsFactory);
 
         {

@@ -26,8 +26,9 @@
 
 #include <cxinv/assertion.h>
 #include <cxcmnui/DialogRole.h>
-#include <cxcmnuigtkmm3/conversions.h>
-#include <cxcmnuigtkmm3/Dialog.h>
+
+#include "conversions.h"
+#include "Dialog.h"
 
 cx::cmn::ui::gtkmm3::Dialog::Dialog(
     cx::cmn::ui::IWindow& p_parent,

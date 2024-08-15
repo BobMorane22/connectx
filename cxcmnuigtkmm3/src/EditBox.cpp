@@ -25,7 +25,8 @@
 #include <cxcmnui/EventPropagation.h>
 #include <cxcmnui/KeyboardKeyPressedEvent.h>
 #include <cxcmnuigtkmm3/Connection.h>
-#include <cxcmnuigtkmm3/EditBox.h>
+
+#include "EditBox.h"
 
 namespace
 {

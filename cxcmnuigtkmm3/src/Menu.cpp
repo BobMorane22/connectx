@@ -27,8 +27,9 @@
 #include <cxcmnui/EventPropagation.h>
 #include <cxcmnui/KeyboardKeyPressedEvent.h>
 #include <cxcmnui/Margins.h>
-#include <cxcmnuigtkmm3/Menu.h>
-#include <cxcmnuigtkmm3/MenuItem.h>
+
+#include "Menu.h"
+#include "MenuItem.h"
 
 cx::cmn::ui::gtkmm3::Menu::Menu(const std::string& p_title)
 {
