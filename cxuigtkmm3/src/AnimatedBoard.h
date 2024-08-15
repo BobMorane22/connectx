@@ -29,8 +29,9 @@
 #include <cxmath/Dimensions.h>
 #include <cxui/AnimationInformation.h>
 #include <cxui/IAnimatedBoard.h>
-#include <cxuigtkmm3/AnimatedBoardTimerRAII.h>
-#include <cxuigtkmm3/BoardElementCache.h>
+
+#include "AnimatedBoardTimerRAII.h"
+#include "BoardElementCache.h"
 
 namespace cx::ui
 {

@@ -21,7 +21,6 @@
  *
  *************************************************************************************************/
 
-#include <cxuigtkmm3/AboutWindow.h>
 #include <cxui/IAboutWindowPresenter.h>
 #include <cxui/IAbstractConnectXWidgetsFactory.h>
 #include <cxcmnui/IAbstractWidgetsFactory.h>
@@ -30,6 +29,8 @@
 #include <cxcmnui/ILayout.h>
 #include <cxcmnui/Margins.h>
 #include <cxui/WidgetsFactories.h>
+
+#include "AboutWindow.h"
 
 cx::ui::gtkmm3::AboutWindow::AboutWindow(
     cx::ui::WidgetsFactories& p_widgetsFactories,

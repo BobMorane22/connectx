@@ -29,7 +29,6 @@
 #include <cxui/WidgetsFactories.h>
 #include <cxcmnuigtkmm3/AbstractWidgetsFactory.h>
 #include <cxuigtkmm3/AbstractConnectXWidgetsFactory.h>
-#include <cxuigtkmm3/MainWindow.h>
 #include <cxexec/Gtkmm3UIManager.h>
 #include <cxexec/ModelReferences.h>
 

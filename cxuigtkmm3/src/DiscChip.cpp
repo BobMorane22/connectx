@@ -21,7 +21,7 @@
  *
  *************************************************************************************************/
 
-#include <cxuigtkmm3/DiscChip.h>
+#include "DiscChip.h"
 
 cx::ui::gtkmm3::DiscChip::DiscChip(
     const cx::model::ChipColor& p_fillColor,

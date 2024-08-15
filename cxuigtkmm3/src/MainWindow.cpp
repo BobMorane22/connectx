@@ -29,31 +29,32 @@
 #include <cxmodel/IConnectXGameInformation.h>
 #include <cxmodel/IVersioning.h>
 #include <cxmodel/GameResolutionStrategyFactory.h>
-#include <cxui/AboutWindowPresenter.h>
 #include <cxcmnui/EnabledState.h>
-#include <cxui/GameResolutionDialogController.h>
-#include <cxui/GameResolutionDialogPresenterFactory.h>
-#include <cxuigtkmm3/MainWindow.h>
 #include <cxcmnui/IAbstractWidgetsFactory.h>
-#include <cxui/IAbstractConnectXWidgetsFactory.h>
-#include <cxui/IAnimatedBoardPresenter.h>
 #include <cxcmnui/IButton.h>
 #include <cxcmnui/ILabel.h>
 #include <cxcmnui/ILayout.h>
-#include <cxui/INewPlayersList.h>
-#include <cxui/IMainWindowController.h>
-#include <cxui/IMainWindowPresenter.h>
 #include <cxcmnui/IMenu.h>
 #include <cxcmnui/IMenuBar.h>
 #include <cxcmnui/IMenuItem.h>
 #include <cxcmnui/ISpinBox.h>
 #include <cxcmnui/IStatusBar.h>
-#include <cxui/IView.h>
 #include <cxcmnui/KeyboardShortcut.h>
 #include <cxcmnui/StatusBarPresenter.h>
 #include <cxcmnui/StdActionIcon.h>
-#include <cxui/WidgetsFactories.h>
 #include <cxcmnui/widgetUtilities.h>
+#include <cxui/AboutWindowPresenter.h>
+#include <cxui/GameResolutionDialogController.h>
+#include <cxui/GameResolutionDialogPresenterFactory.h>
+#include <cxui/IAbstractConnectXWidgetsFactory.h>
+#include <cxui/IAnimatedBoardPresenter.h>
+#include <cxui/INewPlayersList.h>
+#include <cxui/IMainWindowController.h>
+#include <cxui/IMainWindowPresenter.h>
+#include <cxui/IView.h>
+#include <cxui/WidgetsFactories.h>
+
+#include "MainWindow.h"
 
 cx::ui::gtkmm3::MainWindow::MainWindow(
     Gtk::Application& p_gtkApplication,

@@ -24,7 +24,8 @@
 #include <cairomm/context.h>
 
 #include <cxinv/assertion.h>
-#include <cxuigtkmm3/ContextRestoreRAII.h>
+
+#include "ContextRestoreRAII.h"
 
 cx::ui::gtkmm3::ContextRestoreRAII::ContextRestoreRAII(const Cairo::RefPtr<Cairo::Context>& p_context)
 : m_context{p_context}

@@ -41,7 +41,8 @@
 #include <cxui/IColorPicker.h>
 #include <cxui/INewGameViewPresenter.h>
 #include <cxui/WidgetsFactories.h>
-#include <cxuigtkmm3/NewPlayersList.h>
+
+#include "NewPlayersList.h"
 
 namespace
 {

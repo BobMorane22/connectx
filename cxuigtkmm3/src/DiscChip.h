@@ -24,7 +24,7 @@
 #ifndef GTKMM3DISCCHIP_H_62BF81A1_A9D1_400E_83C5_2B8FE8CF5B34
 #define GTKMM3DISCCHIP_H_62BF81A1_A9D1_400E_83C5_2B8FE8CF5B34
 
-#include <cxuigtkmm3/Chip.h>
+#include "Chip.h"
 
 namespace cx::ui::gtkmm3
 {

@@ -24,25 +24,26 @@
 #include <cxinv/assertion.h>
 #include <cxmodel/IChip.h>
 #include <cxmodel/ModelNotificationContext.h>
-#include <cxui/BoardAnimation.h>
 #include <cxcmnui/common.h>
 #include <cxcmnui/EventPropagation.h>
-#include <cxui/GameViewKeyHandlerStrategyFactory.h>
-#include <cxuigtkmm3/GameView.h>
-#include <cxui/IAbstractConnectXWidgetsFactory.h>
 #include <cxcmnui/IAbstractWidgetsFactory.h>
-#include <cxui/IAnimatedBoard.h>
-#include <cxui/IAnimatedBoardPresenter.h>
-#include <cxui/IChip.h>
-#include <cxui/IGameViewController.h>
-#include <cxui/IGameViewPresenter.h>
 #include <cxcmnui/ILabel.h>
 #include <cxcmnui/ILayout.h>
 #include <cxcmnui/IWindow.h>
 #include <cxcmnui/KeyboardKeyPressedEvent.h>
 #include <cxcmnui/Margins.h>
 #include <cxcmnui/NotSupported.h>
+#include <cxui/BoardAnimation.h>
+#include <cxui/GameViewKeyHandlerStrategyFactory.h>
+#include <cxui/IAbstractConnectXWidgetsFactory.h>
+#include <cxui/IAnimatedBoard.h>
+#include <cxui/IAnimatedBoardPresenter.h>
+#include <cxui/IChip.h>
+#include <cxui/IGameViewController.h>
+#include <cxui/IGameViewPresenter.h>
 #include <cxui/WidgetsFactories.h>
+
+#include "GameView.h"
 
 namespace
 {

@@ -36,9 +36,10 @@
 #include <cxui/AnimatedBoardPresenter.h>
 #include <cxui/FrameAnimationStrategy.h>
 #include <cxui/IGameViewPresenter.h>
-#include <cxuigtkmm3/AnimatedBoard.h>
-#include <cxuigtkmm3/ContextRestoreRAII.h>
-#include <cxuigtkmm3/pathHelpers.h>
+
+#include "AnimatedBoard.h"
+#include "ContextRestoreRAII.h"
+#include "pathHelpers.h"
 
 namespace
 {

@@ -27,11 +27,12 @@
 #include <cxcmnui/ILabel.h>
 #include <cxcmnui/ILayout.h>
 #include <cxcmnui/Margins.h>
-#include <cxuigtkmm3/GameResolutionDialog.h>
 #include <cxui/IAbstractConnectXWidgetsFactory.h>
 #include <cxui/IGameResolutionDialogController.h>
 #include <cxui/IGameResolutionDialogPresenter.h>
 #include <cxui/WidgetsFactories.h>
+
+#include "GameResolutionDialog.h"
 
 cx::ui::gtkmm3::GameResolutionDialog::GameResolutionDialog(
     cx::ui::WidgetsFactories& p_widgetsFactories,

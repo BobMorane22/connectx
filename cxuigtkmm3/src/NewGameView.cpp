@@ -46,8 +46,9 @@
 #include <cxui/INewGameViewController.h>
 #include <cxui/INewGameViewPresenter.h>
 #include <cxui/INewPlayersList.h>
-#include <cxuigtkmm3/NewGameView.h>
 #include <cxui/WidgetsFactories.h>
+
+#include "NewGameView.h"
 
 namespace
 {

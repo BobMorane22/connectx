@@ -25,8 +25,9 @@
 #include <cxcmnui/EventPropagation.h>
 #include <cxcmnui/KeyboardKeyPressedEvent.h>
 #include <cxcmnui/Margins.h>
-#include <cxuigtkmm3/ColorPicker.h>
 #include <cxcmnuigtkmm3/Connection.h>
+
+#include "ColorPicker.h"
 
 namespace
 {

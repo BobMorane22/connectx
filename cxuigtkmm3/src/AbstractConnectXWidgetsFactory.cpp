@@ -40,16 +40,17 @@
 #include <cxui/INewPlayersList.h>
 #include <cxui/WidgetsFactories.h>
 #include <cxcmnuigtkmm3/WidgetDelegate.h>
-#include <cxuigtkmm3/AboutWindow.h>
 #include <cxuigtkmm3/AbstractConnectXWidgetsFactory.h>
-#include <cxuigtkmm3/AnimatedBoard.h>
-#include <cxuigtkmm3/ColorPicker.h>
-#include <cxuigtkmm3/DiscChip.h>
-#include <cxuigtkmm3/GameResolutionDialog.h>
-#include <cxuigtkmm3/GameView.h>
-#include <cxuigtkmm3/MainWindow.h>
-#include <cxuigtkmm3/NewGameView.h>
-#include <cxuigtkmm3/NewPlayersList.h>
+
+#include "AboutWindow.h"
+#include "AnimatedBoard.h"
+#include "ColorPicker.h"
+#include "DiscChip.h"
+#include "GameResolutionDialog.h"
+#include "GameView.h"
+#include "MainWindow.h"
+#include "NewGameView.h"
+#include "NewPlayersList.h"
 
 cx::ui::gtkmm3::AbstractConnectXWidgetsFactory::AbstractConnectXWidgetsFactory(
     Glib::RefPtr<Gtk::Application> p_gtkApplication)

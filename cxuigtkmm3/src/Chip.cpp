@@ -23,8 +23,9 @@
 
 #include <cxinv/assertion.h>
 #include <cxcmnui/EventPropagation.h>
-#include <cxuigtkmm3/Chip.h>
 #include <cxcmnui/KeyboardKeyPressedEvent.h>
+
+#include "Chip.h"
 
 cx::ui::gtkmm3::Chip::Chip(const cx::model::ChipColor& p_fillColor,
                               const cx::model::ChipColor& p_backgroundColor,

@@ -26,7 +26,7 @@
 #include <gdkmm/pixbuf.h>
 
 #include <cxinv/assertion.h>
-#include <cxuigtkmm3/BoardElementCache.h>
+#include "BoardElementCache.h"
 
 void cx::ui::gtkmm3::BoardElementCache::Add(
     const cx::model::ChipColor& p_color,
