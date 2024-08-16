@@ -27,7 +27,6 @@
 #include <cxcmnui/IAbstractWidgetsFactory.h>
 #include <cxcmnui/ILayout.h>
 #include <cxcmnui/KeyboardKeyPressedEvent.h>
-#include <cxui/WidgetsFactories.h>
 #include <cxcmnuigtkmm3/Window.h>
 
 void cx::cmn::ui::gtkmm3::Window::ConfigureWindowIcon()
@@ -45,11 +44,10 @@ void cx::cmn::ui::gtkmm3::Window::ConfigureWindowIcon()
     }
 }
 
-cx::cmn::ui::gtkmm3::Window::Window(cx::ui::WidgetsFactories& p_widgetsFactories)
-: m_widgetsFactories{p_widgetsFactories}
+cx::cmn::ui::gtkmm3::Window::Window(const cx::cmn::ui::IAbstractWidgetsFactory& p_standardWidgetsFactory)
+: m_standardWidgetsFactory{p_standardWidgetsFactory}
 {
-    const cx::cmn::ui::IAbstractWidgetsFactory& standardWidgetsFactory = m_widgetsFactories.GetStandardWidgetsFactory();
-    m_mainLayout = standardWidgetsFactory.CreateLayout();
+    m_mainLayout = m_standardWidgetsFactory.CreateLayout();
 
     Gtk::Widget* mainLayoutAsGtk = dynamic_cast<Gtk::Widget*>(m_mainLayout.get());
     if(INL_ASSERT(mainLayoutAsGtk))

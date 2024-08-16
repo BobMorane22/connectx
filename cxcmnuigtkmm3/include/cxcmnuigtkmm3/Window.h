@@ -32,13 +32,9 @@
 
 namespace cx::cmn::ui
 {
+    class IAbstractWidgetsFactory;
     class ILayout;
     class IWidget;
-}
-
-namespace cx::ui
-{
-    class WidgetsFactories;
 }
 
 namespace cx::cmn::ui::gtkmm3
@@ -69,14 +65,14 @@ public:
     /******************************************************************************************//**
      * @brief Constructor.
      *
-     * @param p_widgetsFactories
-     *      Factories for creating widgets.
+     * @param p_standardWidgetsFactory
+     *      An instance to a common widgets factory.
      *
      * @post
      *      The window's main layout is valid.
      *
      ********************************************************************************************/
-    explicit Window(cx::ui::WidgetsFactories& p_widgetsFactories);
+    explicit Window(const cx::cmn::ui::IAbstractWidgetsFactory& p_standardWidgetsFactory);
 
     /******************************************************************************************//**
      * @brief Initializes the window widgets.
@@ -192,7 +188,7 @@ private:
 
 private:
 
-    cx::ui::WidgetsFactories& m_widgetsFactories;
+    const cx::cmn::ui::IAbstractWidgetsFactory& m_standardWidgetsFactory;
     std::unique_ptr<cx::cmn::ui::IWidget> m_delegate;
 };
 

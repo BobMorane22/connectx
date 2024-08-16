@@ -35,7 +35,7 @@
 cx::ui::gtkmm3::AboutWindow::AboutWindow(
     cx::ui::WidgetsFactories& p_widgetsFactories,
     std::unique_ptr<cx::ui::IAboutWindowPresenter> p_presenter)
- : cx::cmn::ui::gtkmm3::Window(p_widgetsFactories)
+ : cx::cmn::ui::gtkmm3::Window(p_widgetsFactories.GetStandardWidgetsFactory())
  , m_widgetsFactories{p_widgetsFactories}
 {
     PRECONDITION(p_presenter);

@@ -62,7 +62,7 @@ cx::ui::gtkmm3::MainWindow::MainWindow(
     cx::ui::IMainWindowController& p_controller,
     cx::ui::IMainWindowPresenter& p_presenter,
     cx::ui::WidgetsFactories& p_widgetsFactories)
- : cx::cmn::ui::gtkmm3::Window{p_widgetsFactories}
+ : cx::cmn::ui::gtkmm3::Window{p_widgetsFactories.GetStandardWidgetsFactory()}
  , m_gtkApplication{p_gtkApplication}
  , m_model{p_model}
  , m_controller{p_controller}

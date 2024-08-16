@@ -54,7 +54,7 @@ target_link_libraries(${TARGET_NAME}
   PRIVATE cxmath
   PRIVATE cxmodel
   PRIVATE cxcmnui
-  PRIVATE cxui
   PRIVATE cxcmnuigtkmm3
+  PRIVATE cxui
   PRIVATE ${GTKMM_LIBRARIES}
 )
