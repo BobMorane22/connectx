@@ -52,7 +52,8 @@ namespace cx::cmn::ui::gtkmm3
  *      created by using Gtkmm version 3.24.5.
  *
  *************************************************************************************************/
-[[nodiscard]] std::unique_ptr<cx::cmn::ui::IAbstractWidgetsFactory> FactoryCreate(Glib::RefPtr<Gtk::Application> p_gtkApplication);
+[[nodiscard]] std::unique_ptr<cx::cmn::ui::IAbstractWidgetsFactory> CreateFactory(
+    Glib::RefPtr<Gtk::Application> p_gtkApplication);
 
 } // namespace cx::cmn::ui::gtkmm3
 

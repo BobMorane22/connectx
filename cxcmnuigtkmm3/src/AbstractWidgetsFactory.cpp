@@ -232,7 +232,7 @@ std::unique_ptr<cx::cmn::ui::IStatusBar> cx::cmn::ui::gtkmm3::AbstractWidgetsFac
     return statusBar;
 }
 
-std::unique_ptr<cx::cmn::ui::IAbstractWidgetsFactory> cx::cmn::ui::gtkmm3::FactoryCreate(Glib::RefPtr<Gtk::Application> p_gtkApplication)
+std::unique_ptr<cx::cmn::ui::IAbstractWidgetsFactory> cx::cmn::ui::gtkmm3::CreateFactory(Glib::RefPtr<Gtk::Application> p_gtkApplication)
 {
     IF_PRECONDITION_NOT_MET_DO(bool(p_gtkApplication), return nullptr;);
 
