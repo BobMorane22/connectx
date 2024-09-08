@@ -41,6 +41,7 @@ void cx::cmn::ui::gtkmm3::Layout::SetDelegate(
     POSTCONDITION(m_delegate);
 }
 
+//! [AWT - Layout and casts]
 void cx::cmn::ui::gtkmm3::Layout::Register(
     cx::cmn::ui::IWidget& p_widget,
     const cx::cmn::ui::ILayout::RowDescriptor& p_row,
@@ -65,6 +66,7 @@ void cx::cmn::ui::gtkmm3::Layout::Register(
 
     attach(*gtkWidget, left, top, width, height );
 }
+//! [AWT - Layout and casts]
 
 void cx::cmn::ui::gtkmm3::Layout::Register(
     Gtk::Widget& p_gtkWidget,

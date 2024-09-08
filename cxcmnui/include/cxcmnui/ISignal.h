@@ -18,8 +18,7 @@
 /**********************************************************************************************//**
  * @file ISignal.h
  * @date 2024
- *
- *************************************************************************************************/
+ * *************************************************************************************************/
 
 #ifndef ISIGNAL_H_8B7B8C55_0270_4508_9512_C441816FBCAE
 #define ISIGNAL_H_8B7B8C55_0270_4508_9512_C441816FBCAE
@@ -83,6 +82,7 @@ public:
  * @see cx::cmn::ui::IConnection
  *
  *************************************************************************************************/
+//! [cxcmnui signal]
 template<typename ReturnType, typename... Arguments>
 class ISignal
 {
@@ -108,6 +108,7 @@ public:
     virtual std::unique_ptr<IConnection> Connect(const std::function<ReturnType(Arguments...)>& p_slot) = 0;
 
 };
+//! [cxcmnui signal]
 
 } // namespace cx::cmn::ui
 

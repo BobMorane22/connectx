@@ -106,6 +106,8 @@ generate_doxygen_documentation(
     "Connect X"
 )
 
+add_subdirectory(doxygen)
+
 # Code coverage:
 if(CMAKE_BUILD_TYPE MATCHES Debug)
     setup_target_for_coverage_lcov(

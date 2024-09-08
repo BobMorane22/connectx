@@ -42,6 +42,7 @@ namespace cx::cmn::ui::gtkmm3
  *************************************************************************************************/
 class Layout : public cx::cmn::ui::ILayout,
                public Gtk::Grid
+
 {
 
 public:
