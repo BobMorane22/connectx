@@ -164,7 +164,10 @@ For reasons that will become clear in the next section, all specific widget impl
 should also publicly inherit from the toolkit's interface for that widget. For example,
 the button implementation for the Gtkmm toolkit would look something like:
 
-\snippet{trimleft} cxcmnuigtkmm3/src/Button.h AWT - Button inheritance
+```cpp
+class Button : public cx::cmn::ui::IButton,
+               public Gtk::Button                                    
+```
 
 but only the `cx::cmn::ui::IButton` interface is exposed through the factory and hence is available
 in the calling code. In short, this is because for some applications (such as layouts), casting
@@ -248,12 +251,8 @@ Indeed, the `cx::cmn::ui::ILayout::Register` implementations cannot add the butt
 know about is the `cx::cmn::ui::IWidget` interface, which is Gtkmm agnostic. This is where we, as
 implementers of the abstract factory, will use our private knowledge that in this case, the widget
 to register in the layout also inherits from `Gtk::Widget` (see previous section). Because of this,
-we can use casting to solve the problem:
-
-\snippet{trimleft} cxcmnuigtkmm3/src/Layout.cpp AWT - Layout and casts
-
-Note that the assertion should always hold, since we designed for it. Sadly, there is now way
-around this casting. If everything is build by the factory, however, it will always be safe.
+we can use casting to solve the problem. Sadly, there is now way around this casting. If everything
+is built through the factory, however, it will always be safe.
 
 
 ### 4.3. Windows
@@ -281,10 +280,6 @@ The `cx::cmn::ui::IConnection` interface is basically a handle on a connection b
 a signal. The `cx::cmn::ui::IConnection` instance is used to connect and disconnect a signal to
 a slot.
 
-The `cx::cmn::ui::ISignal` interface is as follow:
-
-\snippet cxcmnui/include/cxcmnui/ISignal.h cxcmnui signal
-
 The `cx::cmn::ui::ISignal::Connect` method is provided a slot which has `ReturnType` as its
 return type and `Arguments...` as its arguments' types. The parameter pack makes it possible for
 a slot to have any given number of arguments of any desired type. This method is the core of the
@@ -293,15 +288,13 @@ strong typing.
 For any signal you want to expose, you must implement the `cx::cmn::ui::ISignal` interface and
 provide the return and argument types for the corresponding slot. The
 `cx::cmn::ui::ISignal::Connect` method returns a connection instance, which you can reference
-for later (in case you need to disconnect the slot, at some later point in time). In production
-code, connection to a signal will look like this:
+for later (in case you need to disconnect the slot, at some later point in time).
 
-\snippet{trimleft} doxygen/awt/helloworld.cpp AWT - Connecting to a signal
-
-which is very close to what Gtkmm does. In this example, the `cx::cmn::ui::IButton::OnClicked` method
-returns the signal, on which `cx::cmn::ui::ISignal::Connect` is immediately called. The provided
-slot shows that the signal returns nothing and takes no parameter. This is indeed what is exposed
-in the `cx::cmn::ui::IButton` interface.
+This is very close to what Gtkmm does. In [this example](#hello-world), the
+`cx::cmn::ui::IButton::OnClicked` method returns the signal, on which
+`cx::cmn::ui::ISignal::Connect` is immediately called. The provided slot shows that the signal
+returns nothing and takes no parameter. This is indeed what is exposed in the
+`cx::cmn::ui::IButton` interface.
 
 Even though the signaling process is very similar to what Gtkmm offers, care should be taken when
 exposing a new signal. Other toolkit should be looked at to make sure the slot return and
@@ -334,8 +327,11 @@ GUI toolkit used is Gtkmm3.
 ## 7. TODOs
 
 \todo Include the `Gtk::Application` dependance inside the abstract factory.
+\todo Review the `gtkmm3::CreateFactory` call to remove the enum. The namespace already
+      does the job.
 \todo Add a non Connect X window creation facility in the AWT. The AWT is not functional at this
       point because one cannot create a simple window.
 \todo Remove the `cx::cmn::ui::ILayout::Register(Gtk::Widget& p_gtkWidget, ...)` overload.
 \todo Privatise all comments in implementations.
 \todo Document the Connect X extension to the AWT.
+\todo Fix all Doxygen errors.

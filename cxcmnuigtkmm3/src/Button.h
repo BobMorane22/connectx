@@ -30,7 +30,6 @@
 
 #include <cxcmnui/IButton.h>
 
-//! [AWT - Button inheritance]
 namespace cx::cmn::ui::gtkmm3
 {
 
@@ -40,7 +39,6 @@ namespace cx::cmn::ui::gtkmm3
  *************************************************************************************************/
 class Button : public cx::cmn::ui::IButton,
                public Gtk::Button                                    
-//! [AWT - Button inheritance]
 {
 
 public:

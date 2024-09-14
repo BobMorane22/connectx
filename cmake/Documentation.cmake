@@ -173,8 +173,7 @@ macro(setup_doxyfile)
     "*changelogs/*"
   )
   set(DOXYGEN_USE_MDFILE_AS_MAINPAGE "README.md")
-  set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}
-  )
+  set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/doxygen)
 
 
   #--------------------------------------------------------------------------------------------
@@ -182,7 +181,6 @@ macro(setup_doxyfile)
   #--------------------------------------------------------------------------------------------
   set(DOXYGEN_VERBATIM_HEADERS NO)
   set(DOXYGEN_STRIP_CODE_COMMENTS YES)
-  set(DOXYGEN_JAVADOC_BANNER YES)
 
 
   #--------------------------------------------------------------------------------------------
