@@ -116,7 +116,4 @@ if(CMAKE_BUILD_TYPE MATCHES Debug)
         EXCLUDE "cx*/test/*"
 )
 
-# Prototypes:
-add_subdirectory(prototypes)
-
 endif()
