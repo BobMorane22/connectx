@@ -69,14 +69,8 @@ public:
         const cx::cmn::ui::ILayout::RowDescriptor& p_row,
         const cx::cmn::ui::ILayout::ColumnDescriptor& p_column,
         const cx::cmn::ui::ILayout::Alignement& p_alignement = {}) override;
-    void Register(Gtk::Widget& p_gtkWidget,
-        const cx::cmn::ui::ILayout::RowDescriptor& p_row,
-        const cx::cmn::ui::ILayout::ColumnDescriptor& p_column,
-        const cx::cmn::ui::ILayout::Alignement& p_alignement = {}) override;
     void Unregister(
         cx::cmn::ui::IWidget& p_widget) override;
-    void Unregister(
-        Gtk::Widget& p_gtkWidget) override;
     [[nodiscard]] const IWidget* GetWidgetAtPosition(
         const cx::model::Row& p_row,
         const cx::model::Column& p_column) const override;

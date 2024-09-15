@@ -68,28 +68,6 @@ void cx::cmn::ui::gtkmm3::Layout::Register(
 }
 //! [AWT - Layout and casts]
 
-void cx::cmn::ui::gtkmm3::Layout::Register(
-    Gtk::Widget& p_gtkWidget,
-    const cx::cmn::ui::ILayout::RowDescriptor& p_row,
-    const cx::cmn::ui::ILayout::ColumnDescriptor& p_column,
-    const cx::cmn::ui::ILayout::Alignement& p_alignement)
-{
-    const int left = static_cast<int>(p_column.m_coordinate.Get());
-    const int top = static_cast<int>(p_row.m_coordinate.Get());
-    const int width = static_cast<int>(p_column.m_span.Get());
-    const int height = static_cast<int>(p_row.m_span.Get());
-
-    const auto verticalAlignementConversion = cx::cmn::ui::gtkmm3::ToGtk<Gtk::Align>(p_alignement.m_vertical);
-    p_gtkWidget.set_valign(verticalAlignementConversion.value_or(Gtk::ALIGN_FILL));
-    const auto horizontalAlignementConversion = cx::cmn::ui::gtkmm3::ToGtk<Gtk::Align>(p_alignement.m_horizontal);
-    p_gtkWidget.set_halign(horizontalAlignementConversion.value_or(Gtk::ALIGN_FILL));
-
-    p_gtkWidget.set_hexpand(true);
-    p_gtkWidget.set_vexpand(true);
-
-    attach(p_gtkWidget, left, top, width, height );
-}
-
 void cx::cmn::ui::gtkmm3::Layout::Unregister(
     cx::cmn::ui::IWidget& p_widget)
 {
@@ -97,12 +75,6 @@ void cx::cmn::ui::gtkmm3::Layout::Unregister(
     ASSERT(gtkWidget);
 
     remove(*gtkWidget);
-}
-
-void cx::cmn::ui::gtkmm3::Layout::Unregister(
-    Gtk::Widget& p_gtkWidget)
-{
-    remove(p_gtkWidget);
 }
 
 const cx::cmn::ui::IWidget* cx::cmn::ui::gtkmm3::Layout::GetWidgetAtPosition(

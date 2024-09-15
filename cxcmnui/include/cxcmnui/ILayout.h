@@ -284,33 +284,11 @@ public:
      *      entire layout cell.
      *
      *********************************************************************************************/
-    virtual void Register(IWidget& p_widget,
-                          const RowDescriptor& p_row,
-                          const ColumnDescriptor& p_column,
-                          const Alignement& p_alignement = {}) = 0;
-
-    /******************************************************************************************//**
-     * @brief Register a Gtkmm widget to the layout.
-     *
-     * @param p_gtkWidget
-     *      The Gtkmm widget to register to the layout.
-     * @param p_row
-     *      Description of where to register the widget, vertically.
-     * @param p_column
-     *      Description of where to register the widget, horizontally.
-     * @param p_alignement
-     *      The widget's alignement from within it's layout cell. By default, widgets fill the
-     *      entire layout cell.
-     *
-     * @warning
-     *      This call is temporary. It will be removed once all widgets will have been
-     *      abstracted away (TG-256).
-     *
-     *********************************************************************************************/
-    virtual void Register(Gtk::Widget& p_gtkWidget,
-                          const RowDescriptor& p_row,
-                          const ColumnDescriptor& p_column,
-                          const Alignement& p_alignement = {}) = 0;
+    virtual void Register(
+        IWidget& p_widget,
+        const RowDescriptor& p_row,
+        const ColumnDescriptor& p_column,
+        const Alignement& p_alignement = {}) = 0;
 
     /******************************************************************************************//**
      * @brief Unregister a widget from the layout.
@@ -319,20 +297,8 @@ public:
      *      The widget to unregister from the layout.
      *
      *********************************************************************************************/
-    virtual void Unregister(IWidget& p_widget) = 0;
-
-    /******************************************************************************************//**
-     * @brief Unregister a Gtkmm widget from the layout.
-     *
-     * @param p_gtkWidget
-     *      The Gtkmm widget to unregister from the layout.
-     *
-     * @warning
-     *      This call is temporary. It will be removed once all widgets will have been
-     *      abstracted away (TG-256).
-     *
-     *********************************************************************************************/
-    virtual void Unregister(Gtk::Widget& p_gtkWidget) = 0;
+    virtual void Unregister(
+        IWidget& p_widget) = 0;
 
     /******************************************************************************************//**
      * @brief Get the registered widget at the specified location.
@@ -346,13 +312,17 @@ public:
      *      The widget's address, or `nullptr` otherwise.
      *
      *********************************************************************************************/
-    [[nodiscard]] virtual const IWidget* GetWidgetAtPosition(const cx::model::Row& p_row, const cx::model::Column& p_column) const = 0;
+    [[nodiscard]] virtual const IWidget* GetWidgetAtPosition(
+        const cx::model::Row& p_row,
+        const cx::model::Column& p_column) const = 0;
 
     /******************************************************************************************//**
      * @copydoc cx::cmn::ui::ILayout::GetWidgetAtPosition
      *
      *********************************************************************************************/
-    [[nodiscard]] virtual IWidget* GetWidgetAtPosition(const cx::model::Row& p_row, const cx::model::Column& p_column) = 0;
+    [[nodiscard]] virtual IWidget* GetWidgetAtPosition(
+        const cx::model::Row& p_row,
+        const cx::model::Column& p_column) = 0;
 
     /******************************************************************************************//**
      * @brief Changes the row spacing mode. Affects all rows in the layout.
@@ -361,7 +331,8 @@ public:
      *      The new row spacing mode.
      *
      *********************************************************************************************/
-    virtual void SetRowSpacingMode(RowSpacingMode p_newMode) = 0;
+    virtual void SetRowSpacingMode(
+        RowSpacingMode p_newMode) = 0;
 
     /******************************************************************************************//**
      * @brief Changes the column spacing mode. Affects all columns in the layout.
@@ -370,7 +341,8 @@ public:
      *      The new column spacing mode.
      *
      *********************************************************************************************/
-    virtual void SetColumnSpacingMode(ColumnSpacingMode p_newMode) = 0;
+    virtual void SetColumnSpacingMode(
+        ColumnSpacingMode p_newMode) = 0;
 
 };
 
