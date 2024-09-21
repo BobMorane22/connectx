@@ -344,26 +344,26 @@ cx::model::PlayerType cx::ui::MainWindowPresenter::GetDefaultPlayerType(size_t p
     return cx::model::PlayerType::BOT;
 }
 
-cx::model::Status cx::ui::MainWindowPresenter::IsInARowValueValid(size_t p_inARowValue) const
+cx::cmn::Status cx::ui::MainWindowPresenter::IsInARowValueValid(size_t p_inARowValue) const
 {
     if(p_inARowValue < GetNewGameViewMinInARowValue() || p_inARowValue > GetNewGameViewMaxInARowValue())
     {
         const std::string errorMessage = MakeInARowValueOutOfLimitsWarningDialog(GetNewGameViewMinInARowValue(),
                                                                                  GetNewGameViewMaxInARowValue());
-        return cx::model::MakeError(errorMessage);
+        return cx::cmn::MakeError(errorMessage);
     }
 
-    return cx::model::MakeSuccess();
+    return cx::cmn::MakeSuccess();
 }
 
-cx::model::Status cx::ui::MainWindowPresenter::AreBoardDimensionsValid(size_t p_boardHeight, size_t p_boardWidth) const
+cx::cmn::Status cx::ui::MainWindowPresenter::AreBoardDimensionsValid(size_t p_boardHeight, size_t p_boardWidth) const
 {
     if(p_boardHeight < GetNewGameViewMinBoardHeightValue() ||
        p_boardHeight > GetNewGameViewMaxBoardHeightValue())
     {
         const std::string errorMessage = MakeBoardHeightValueOutOfLimitsWarningDialog(GetNewGameViewMinBoardHeightValue(),
                                                                                       GetNewGameViewMaxBoardHeightValue());
-        return cx::model::MakeError(errorMessage);
+        return cx::cmn::MakeError(errorMessage);
     }
 
     if(p_boardWidth < GetNewGameViewMinBoardWidthValue() ||
@@ -371,13 +371,13 @@ cx::model::Status cx::ui::MainWindowPresenter::AreBoardDimensionsValid(size_t p_
     {
         const std::string errorMessage = MakeBoardWidthValueOutOfLimitsWarningDialog(GetNewGameViewMinBoardWidthValue(),
                                                                                      GetNewGameViewMaxBoardWidthValue());
-        return cx::model::MakeError(errorMessage);
+        return cx::cmn::MakeError(errorMessage);
     }
 
-    return cx::model::MakeSuccess();
+    return cx::cmn::MakeSuccess();
 }
 
-cx::model::Status cx::ui::MainWindowPresenter::ArePlayerNamesValid(const std::vector<std::string>& p_playerNames) const
+cx::cmn::Status cx::ui::MainWindowPresenter::ArePlayerNamesValid(const std::vector<std::string>& p_playerNames) const
 {
     if(std::any_of(p_playerNames.cbegin(),
                    p_playerNames.cend(),
@@ -386,13 +386,13 @@ cx::model::Status cx::ui::MainWindowPresenter::ArePlayerNamesValid(const std::ve
                        return p_name.empty();
                    }))
               {
-                  return cx::model::MakeError("Player names cannot be empty.");
+                  return cx::cmn::MakeError("Player names cannot be empty.");
               }
 
-    return cx::model::MakeSuccess();
+    return cx::cmn::MakeSuccess();
 }
 
-cx::model::Status cx::ui::MainWindowPresenter::ArePlayerChipColorsValid(const std::vector<cx::model::ChipColor>& p_playerChipColors) const
+cx::cmn::Status cx::ui::MainWindowPresenter::ArePlayerChipColorsValid(const std::vector<cx::model::ChipColor>& p_playerChipColors) const
 {
    // Chip colors (should not have duplicates):
    bool duplicateColorsExist = false;
@@ -409,13 +409,13 @@ cx::model::Status cx::ui::MainWindowPresenter::ArePlayerChipColorsValid(const st
 
    if(duplicateColorsExist)
    {
-       return cx::model::MakeError("Discs must have different colors.");
+       return cx::cmn::MakeError("Discs must have different colors.");
    }
 
-   return cx::model::MakeSuccess();
+   return cx::cmn::MakeSuccess();
 }
 
-cx::model::Status cx::ui::MainWindowPresenter::ArePlayerTypesValid(const std::vector<cx::model::PlayerType>& p_playerTypes) const
+cx::cmn::Status cx::ui::MainWindowPresenter::ArePlayerTypesValid(const std::vector<cx::model::PlayerType>& p_playerTypes) const
 {
     if(std::any_of(p_playerTypes.cbegin(),
                    p_playerTypes.cend(),
@@ -424,13 +424,13 @@ cx::model::Status cx::ui::MainWindowPresenter::ArePlayerTypesValid(const std::ve
                        return p_type == cx::model::PlayerType::HUMAN;
                    }))
               {
-                  return cx::model::MakeSuccess();
+                  return cx::cmn::MakeSuccess();
               }
 
-    return cx::model::MakeError("At least one player must not be a bot.");
+    return cx::cmn::MakeError("At least one player must not be a bot.");
 }
 
-cx::model::Status cx::ui::MainWindowPresenter::IsNewGameWinnable(size_t p_inARowValue,
+cx::cmn::Status cx::ui::MainWindowPresenter::IsNewGameWinnable(size_t p_inARowValue,
                                                               size_t p_nbOfPlayers,
                                                               size_t p_boardHeight,
                                                               size_t p_boardWidth) const
@@ -440,16 +440,16 @@ cx::model::Status cx::ui::MainWindowPresenter::IsNewGameWinnable(size_t p_inARow
     const size_t nbLocations = p_boardHeight * p_boardWidth;
     if(nbLocations < (p_nbOfPlayers - 1u)*(p_inARowValue - 1u) + p_inARowValue)
     {
-        return cx::model::MakeError("There is not enough room on the board. Adjust the number of players or the in-a-row value.");
+        return cx::cmn::MakeError("There is not enough room on the board. Adjust the number of players or the in-a-row value.");
     }
 
     // Can the in-a-row value fit on the board?
     if(p_inARowValue > std::max<size_t>(p_boardHeight, p_boardWidth))
     {
-        return cx::model::MakeError("The in-a-row value does not fit on the board.");
+        return cx::cmn::MakeError("The in-a-row value does not fit on the board.");
     }
 
-    return cx::model::MakeSuccess();
+    return cx::cmn::MakeSuccess();
 }
 
 /**************************************************************************************************

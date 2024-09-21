@@ -397,19 +397,19 @@ void cx::ui::gtkmm3::NewGameView::OnNewGameParameterUpdated()
     m_startButton->SetTooltip("");
 }
 
-cx::model::Status cx::ui::gtkmm3::NewGameView::ExtractGameInformation(cx::model::NewGameInformation& p_gameInformation) const
+cx::cmn::Status cx::ui::gtkmm3::NewGameView::ExtractGameInformation(cx::model::NewGameInformation& p_gameInformation) const
 {
     // Extracting game parameters from the GUI:
     const int valueInARow = m_inARowSpinBox->GetValue();
-    IF_CONDITION_NOT_MET_DO(valueInARow > 0, return cx::model::MakeError("Unexpected error occured."););
+    IF_CONDITION_NOT_MET_DO(valueInARow > 0, return cx::cmn::MakeError("Unexpected error occured."););
     const size_t inARowValue = static_cast<size_t>(valueInARow);
 
     const int valueBoardWidth = m_boardWidthSpinBox->GetValue();
-    IF_CONDITION_NOT_MET_DO(valueBoardWidth > 0, return cx::model::MakeError("Unexpected error occured."););
+    IF_CONDITION_NOT_MET_DO(valueBoardWidth > 0, return cx::cmn::MakeError("Unexpected error occured."););
     const size_t boardWidth = static_cast<size_t>(valueBoardWidth);
 
     const int valueBoardHeight = m_boardHeightSpinBox->GetValue();
-    IF_CONDITION_NOT_MET_DO(valueBoardHeight > 0, return cx::model::MakeError("Unexpected error occured."););
+    IF_CONDITION_NOT_MET_DO(valueBoardHeight > 0, return cx::cmn::MakeError("Unexpected error occured."););
     const size_t boardHeight = static_cast<size_t>(valueBoardHeight);
 
     const std::vector<std::string> playerNames = m_playersList->GetAllPlayerNames();
@@ -427,5 +427,5 @@ cx::model::Status cx::ui::gtkmm3::NewGameView::ExtractGameInformation(cx::model:
         p_gameInformation.m_players.push_back(cx::model::CreatePlayer(playerNames[index], playerChipColors[index], playerTypes[index]));
     }
 
-    return cx::model::MakeSuccess();
+    return cx::cmn::MakeSuccess();
 }

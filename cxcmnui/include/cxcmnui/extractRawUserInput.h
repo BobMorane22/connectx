@@ -24,7 +24,7 @@
 #ifndef EXTRACTRAWUSERINPUT_H_E59E21D1_FC74_469C_9360_9ECC7EE8D51F
 #define EXTRACTRAWUSERINPUT_H_E59E21D1_FC74_469C_9360_9ECC7EE8D51F
 
-#include <cxmodel/Status.h>
+#include <cxcmn/Status.h>
 
 namespace cx::cmn::ui
 {
@@ -41,7 +41,7 @@ namespace cx::cmn::ui
  * Extracts a user input string (e.g. from an edit box) into an unsigned long, if possible.
  *
  ********************************************************************************************/
-cx::model::Status extractRawUserInput(const std::string& p_raw, unsigned long& p_extracted);
+cx::cmn::Status extractRawUserInput(const std::string& p_raw, unsigned long& p_extracted);
 
 } // namespace cx::cmn::ui
 

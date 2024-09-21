@@ -63,15 +63,17 @@ public:
      *      A Connect X model (managed players).
      *
      *********************************************************************************************/
-    MainWindowPresenter(const cx::model::IConnectXLimits& p_modelAsLimits,
-                        const cx::model::IConnectXGameInformation& p_modelAsGameInformation,
-                        const cx::model::IUndoRedo& p_modelAsUndoRedo,
-                        const cx::model::IConnectXAI& p_modelAsAI);
+    MainWindowPresenter(
+        const cx::model::IConnectXLimits& p_modelAsLimits,
+        const cx::model::IConnectXGameInformation& p_modelAsGameInformation,
+        const cx::model::IUndoRedo& p_modelAsUndoRedo,
+        const cx::model::IConnectXAI& p_modelAsAI);
 
 ///@{ @name Main Window
 // -----------------------------------------------------------------------------------------------
     std::string GetWindowTitle() const override;
-    std::string GetMenuLabel(MenuItem p_menuItem) const override;
+    std::string GetMenuLabel(
+        MenuItem p_menuItem) const override;
     bool IsNewGamePossible() const override;
     bool IsCurrentGameReinitializationPossible() const override;
     bool IsUndoPossible() const override;
@@ -97,8 +99,10 @@ public:
 
     std::string GetNewGameViewRemovePlayerButtonText() const override;
     std::string GetNewGameViewAddPlayerButtonText() const override;
-    [[nodiscard]] bool CanRemoveAnotherPlayer(std::size_t p_currentNumberOfPlayers) const override;
-    [[nodiscard]] bool CanAddAnotherPlayer(std::size_t p_currentNumberOfPlayers) const override;
+    [[nodiscard]] bool CanRemoveAnotherPlayer(
+        std::size_t p_currentNumberOfPlayers) const override;
+    [[nodiscard]] bool CanAddAnotherPlayer(
+        std::size_t p_currentNumberOfPlayers) const override;
 
     std::string GetNewGameViewStartButtonText() const override;
 
@@ -112,21 +116,31 @@ public:
     [[nodiscard]] size_t GetDefaultInARowValue() const override;
     [[nodiscard]] size_t GetDefaultBoardHeightValue() const override;
     [[nodiscard]] size_t GetDefaultBoardWidthValue() const override;
-    [[nodiscard]] std::string GetDefaultPlayerName(size_t p_playerIndex) const override;
-    [[nodiscard]] cx::model::ChipColor GetDefaultChipColor(size_t p_playerIndex) const override;
+    [[nodiscard]] std::string GetDefaultPlayerName(
+        size_t p_playerIndex) const override;
+    [[nodiscard]] cx::model::ChipColor GetDefaultChipColor(
+        size_t p_playerIndex) const override;
     [[nodiscard]] std::vector<cx::model::ChipColor> GetDefaultChipColors() const override;
-    [[nodiscard]] cx::model::PlayerType GetDefaultPlayerType(size_t p_playerIndex) const override;
+    [[nodiscard]] cx::model::PlayerType GetDefaultPlayerType(
+        size_t p_playerIndex) const override;
 
-    cx::model::Status IsInARowValueValid(size_t p_inARowValue) const override;
-    cx::model::Status AreBoardDimensionsValid(size_t p_boardHeight, size_t p_boardWidth) const override;
-    cx::model::Status ArePlayerNamesValid(const std::vector<std::string>& p_playerNames) const override;
-    cx::model::Status ArePlayerChipColorsValid(const std::vector<cx::model::ChipColor>& p_playerChipColors) const override;
-    cx::model::Status ArePlayerTypesValid(const std::vector<cx::model::PlayerType>& p_playerTypes) const override;
+    cx::cmn::Status IsInARowValueValid(
+        size_t p_inARowValue) const override;
+    cx::cmn::Status AreBoardDimensionsValid(
+        size_t p_boardHeight,
+        size_t p_boardWidth) const override;
+    cx::cmn::Status ArePlayerNamesValid(
+        const std::vector<std::string>& p_playerNames) const override;
+    cx::cmn::Status ArePlayerChipColorsValid(
+        const std::vector<cx::model::ChipColor>& p_playerChipColors) const override;
+    cx::cmn::Status ArePlayerTypesValid(
+        const std::vector<cx::model::PlayerType>& p_playerTypes) const override;
 
-    cx::model::Status IsNewGameWinnable(size_t p_inARowValue,
-                                      size_t p_nbOfPlayers,
-                                      size_t p_boardHeight,
-                                      size_t p_boardWidth) const override;
+    cx::cmn::Status IsNewGameWinnable(
+        size_t p_inARowValue,
+        size_t p_nbOfPlayers,
+        size_t p_boardHeight,
+        size_t p_boardWidth) const override;
 
 ///@}
 

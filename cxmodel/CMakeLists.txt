@@ -40,7 +40,6 @@ add_library(${TARGET_NAME}
   src/IPlayer.cpp
   src/Model.cpp
   src/NewGameInformation.cpp
-  src/Status.cpp
   src/TieGameResolutionStrategy.cpp
   src/WinGameResolutionStragegy.cpp
 )

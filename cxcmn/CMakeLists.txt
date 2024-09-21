@@ -27,11 +27,11 @@ set(TARGET_NAME cxcmn)
 
 # Header-only library:
 add_library(${TARGET_NAME}
-  INTERFACE
+  src/Status.cpp
 )
 
 target_include_directories(${TARGET_NAME}
-  INTERFACE "${CMAKE_CURRENT_LIST_DIR}/include"
+  PUBLIC "${CMAKE_CURRENT_LIST_DIR}/include"
 )
 
 # Unit tests:

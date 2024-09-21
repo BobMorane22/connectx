@@ -21,50 +21,37 @@
  *
  *************************************************************************************************/
 
-#include <cxinv/assertion.h>
-#include <cxmodel/Status.h>
+#include <cxcmn/Status.h>
 
-cx::model::Status::Status()
+cx::cmn::Status::Status()
 : m_status{true}
 {
-    CheckInvariants();
+    // Nothing to do...
 }
 
-cx::model::Status::Status(const std::string& p_errorMessage)
+cx::cmn::Status::Status(const std::string& p_errorMessage)
 : m_status{false}
 , m_errorMessage{p_errorMessage}
 {
-    PRECONDITION(!p_errorMessage.empty());
-    POSTCONDITION(!m_errorMessage.empty());
-
-    CheckInvariants();
+    // Nothing to do...
 }
 
-bool cx::model::Status::IsSuccess() const
+bool cx::cmn::Status::IsSuccess() const
 {
     return m_status;
 }
 
-const std::string& cx::model::Status::GetMessage() const
+const std::string& cx::cmn::Status::GetMessage() const
 {
-    PRECONDITION(!m_errorMessage.empty());
-
     return m_errorMessage;
 }
 
-void cx::model::Status::CheckInvariants()
+cx::cmn::Status cx::cmn::MakeSuccess()
 {
-    INVARIANT((IsSuccess() && m_errorMessage.empty()) || (!IsSuccess() && !m_errorMessage.empty()));
+    return cx::cmn::Status();
 }
 
-cx::model::Status cx::model::MakeSuccess()
+cx::cmn::Status cx::cmn::MakeError(const std::string& p_errorMessage)
 {
-    return cx::model::Status();
-}
-
-cx::model::Status cx::model::MakeError(const std::string& p_errorMessage)
-{
-    PRECONDITION(!p_errorMessage.empty());
-
-    return cx::model::Status(p_errorMessage);
+    return cx::cmn::Status(p_errorMessage);
 }

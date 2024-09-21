@@ -48,7 +48,6 @@ set(SOURCE_FILES
   ModelTestHelpers.cpp
   ModelTests.cpp
   NewGameInformationTests.cpp
-  StatusTests.cpp
   SubjectTestFixture.cpp
   SubjectTests.cpp
   Tie8By7BoardGameResolutionStrategyTests.cpp

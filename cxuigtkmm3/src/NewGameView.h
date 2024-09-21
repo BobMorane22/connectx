@@ -26,7 +26,7 @@
 
 #include <optional>
 
-#include <cxmodel/Status.h>
+#include <cxcmn/Status.h>
 #include <cxcmnui/ILayout.h>
 #include <cxui/IView.h>
 
@@ -116,7 +116,7 @@ private:
     void OnRemovePlayer();
     void OnNewGameParameterUpdated();
 
-    [[nodiscard]] cx::model::Status ExtractGameInformation(cx::model::NewGameInformation& p_gameInformation) const;
+    [[nodiscard]] cx::cmn::Status ExtractGameInformation(cx::model::NewGameInformation& p_gameInformation) const;
 
 private:
 

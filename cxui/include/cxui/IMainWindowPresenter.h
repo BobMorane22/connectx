@@ -72,7 +72,8 @@ public:
      * @return The label for the given item.
      *
      ********************************************************************************************/
-    virtual std::string GetMenuLabel(MenuItem p_menuItem) const = 0;
+    virtual std::string GetMenuLabel(
+        MenuItem p_menuItem) const = 0;
 
     /******************************************************************************************//**
      * @brief Indicates if a new game request is possible.
@@ -132,16 +133,23 @@ public:
     size_t GetNewGameViewMinBoardHeightValue() const override = 0;
     size_t GetNewGameViewMaxBoardHeightValue() const override = 0;
 
-    cx::model::Status IsInARowValueValid(size_t p_inARowValue) const override = 0;
-    cx::model::Status AreBoardDimensionsValid(size_t p_boardHeight, size_t p_boardWidth) const override = 0;
-    cx::model::Status ArePlayerNamesValid(const std::vector<std::string>& p_playerNames) const override = 0;
-    cx::model::Status ArePlayerChipColorsValid(const std::vector<cx::model::ChipColor>& p_playerChipColors) const override = 0;
-    cx::model::Status ArePlayerTypesValid(const std::vector<cx::model::PlayerType>& p_playerTypes) const override = 0;
+    cx::cmn::Status IsInARowValueValid(
+        size_t p_inARowValue) const override = 0;
+    cx::cmn::Status AreBoardDimensionsValid(
+        size_t p_boardHeight,
+        size_t p_boardWidth) const override = 0;
+    cx::cmn::Status ArePlayerNamesValid(
+        const std::vector<std::string>& p_playerNames) const override = 0;
+    cx::cmn::Status ArePlayerChipColorsValid(
+        const std::vector<cx::model::ChipColor>& p_playerChipColors) const override = 0;
+    cx::cmn::Status ArePlayerTypesValid(
+        const std::vector<cx::model::PlayerType>& p_playerTypes) const override = 0;
 
-    cx::model::Status IsNewGameWinnable(size_t p_inARowValue,
-                                      size_t p_nbOfPlayers,
-                                      size_t p_boardHeight,
-                                      size_t p_boardWidth) const override = 0;
+    cx::cmn::Status IsNewGameWinnable(
+        size_t p_inARowValue,
+        size_t p_nbOfPlayers,
+        size_t p_boardHeight,
+        size_t p_boardWidth) const override = 0;
 
 ///@}
 

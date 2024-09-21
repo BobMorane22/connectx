@@ -179,32 +179,32 @@ public:
         throw cx::unit::NotImplementedException();
     }
 
-    [[nodiscard]] cx::model::Status IsInARowValueValid(size_t /*p_inARowValue*/) const override
+    [[nodiscard]] cx::cmn::Status IsInARowValueValid(size_t /*p_inARowValue*/) const override
     {
         throw cx::unit::NotImplementedException();
     }
 
-    [[nodiscard]] cx::model::Status AreBoardDimensionsValid(size_t /*p_boardHeight*/, size_t /*p_boardWidth*/) const override
+    [[nodiscard]] cx::cmn::Status AreBoardDimensionsValid(size_t /*p_boardHeight*/, size_t /*p_boardWidth*/) const override
     {
         throw cx::unit::NotImplementedException();
     }
 
-    [[nodiscard]] cx::model::Status ArePlayerNamesValid(const std::vector<std::string>& /*p_playerNames*/) const override
+    [[nodiscard]] cx::cmn::Status ArePlayerNamesValid(const std::vector<std::string>& /*p_playerNames*/) const override
     {
         throw cx::unit::NotImplementedException();
     }
 
-    [[nodiscard]] cx::model::Status ArePlayerChipColorsValid(const std::vector<cx::model::ChipColor>& /*p_playerChipColors*/) const override
+    [[nodiscard]] cx::cmn::Status ArePlayerChipColorsValid(const std::vector<cx::model::ChipColor>& /*p_playerChipColors*/) const override
     {
         throw cx::unit::NotImplementedException();
     }
 
-    [[nodiscard]] cx::model::Status ArePlayerTypesValid(const std::vector<cx::model::PlayerType>& /*p_playerTypes*/) const override
+    [[nodiscard]] cx::cmn::Status ArePlayerTypesValid(const std::vector<cx::model::PlayerType>& /*p_playerTypes*/) const override
     {
         throw cx::unit::NotImplementedException();
     }
 
-    [[nodiscard]] cx::model::Status IsNewGameWinnable(size_t /*p_inARowValue*/, size_t /*p_nbOfPlayers*/, size_t /*p_boardHeight*/, size_t /*p_boardWidth*/) const override
+    [[nodiscard]] cx::cmn::Status IsNewGameWinnable(size_t /*p_inARowValue*/, size_t /*p_nbOfPlayers*/, size_t /*p_boardHeight*/, size_t /*p_boardWidth*/) const override
     {
         throw cx::unit::NotImplementedException();
     }
