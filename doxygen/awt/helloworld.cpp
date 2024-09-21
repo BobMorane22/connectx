@@ -30,7 +30,6 @@
 #include <gtkmm/application.h>
 
 #include <cxinv/assertion.h>
-#include <cxmodel/common.h>
 #include <cxcmnui/IAbstractWidgetsFactory.h>
 #include <cxcmnui/IButton.h>
 #include <cxcmnui/ILayout.h>
@@ -66,8 +65,8 @@ int main(int argc, char *argv[])
 
     mainLayout->Register(
         *button,
-        {cx::model::Row{0u}, ILayout::RowSpan{1u}},
-        {cx::model::Column{0u}, ILayout::ColumnSpan{1u}});
+        {ILayout::Row{0u}, ILayout::RowSpan{1u}},
+        {ILayout::Column{0u}, ILayout::ColumnSpan{1u}});
 
     return EXIT_SUCCESS;
 }

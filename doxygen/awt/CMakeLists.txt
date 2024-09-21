@@ -38,7 +38,6 @@ target_link_libraries(${TARGET_NAME}
   PRIVATE "${GTKMM_LIBRARIES}"
   PRIVATE cxcmn
   PRIVATE cxinv
-  PRIVATE cxmodel
   PRIVATE cxcmnui
   PRIVATE cxcmnuigtkmm3
 )

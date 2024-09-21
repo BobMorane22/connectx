@@ -78,8 +78,8 @@ void cx::cmn::ui::gtkmm3::Layout::Unregister(
 }
 
 const cx::cmn::ui::IWidget* cx::cmn::ui::gtkmm3::Layout::GetWidgetAtPosition(
-    const cx::model::Row& p_row,
-    const cx::model::Column& p_column) const
+    const Row& p_row,
+    const Column& p_column) const
 {
     const int left = static_cast<int>(p_column.Get());
     const int top = static_cast<int>(p_row.Get());
@@ -94,8 +94,8 @@ const cx::cmn::ui::IWidget* cx::cmn::ui::gtkmm3::Layout::GetWidgetAtPosition(
 }
 
 cx::cmn::ui::IWidget* cx::cmn::ui::gtkmm3::Layout::GetWidgetAtPosition(
-    const cx::model::Row& p_row,
-    const cx::model::Column& p_column)
+    const Row& p_row,
+    const Column& p_column)
 {
     return const_cast<cx::cmn::ui::IWidget*>(const_cast<const cx::cmn::ui::gtkmm3::Layout*>(this)->GetWidgetAtPosition(p_row, p_column));
 }

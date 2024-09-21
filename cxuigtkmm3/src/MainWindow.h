@@ -26,7 +26,7 @@
 
 #include <memory>
 
-#include <cxmodel/common.h>
+#include <cxcmnui/ILayout.h>
 #include <cxcmnuigtkmm3/Window.h>
 
 namespace cx::cmn::ui
@@ -183,8 +183,8 @@ private:
     std::unique_ptr<cx::cmn::ui::IMenuItem> m_aboutMenuItem;
 
     // Views:
-    const cx::model::Column m_viewLeft;
-    const cx::model::Row m_viewTop;
+    const cx::cmn::ui::ILayout::Column m_viewLeft;
+    const cx::cmn::ui::ILayout::Row m_viewTop;
     std::unique_ptr<cx::ui::IView> m_newGameView;
     std::unique_ptr<cx::ui::IView> m_gameView;
 

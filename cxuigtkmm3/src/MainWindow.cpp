@@ -117,7 +117,13 @@ void cx::ui::gtkmm3::MainWindow::RegisterWidgets()
 {
     IF_CONDITION_NOT_MET_DO(m_mainLayout, return;);
 
-    m_mainLayout->Register(*m_menuBar, {cx::model::Row{0u}, cx::cmn::ui::ILayout::RowSpan{1u}}, {cx::model::Column{0u}, cx::cmn::ui::ILayout::ColumnSpan{2u}});
+    {
+        using namespace cx::cmn::ui;
+        m_mainLayout->Register(
+            *m_menuBar,
+            {ILayout::Row{0u}, ILayout::RowSpan{1u}},
+            {ILayout::Column{0u}, ILayout::ColumnSpan{2u}});
+    }
 
     RegisterMenuBar();
 
@@ -317,11 +323,14 @@ void cx::ui::gtkmm3::MainWindow::RegisterStatusBar()
     m_statusBar = standardWidgetsFactory.CreateStatusBar(*m_statusBarPresenter);
     IF_CONDITION_NOT_MET_DO(m_statusBar, return;);
 
-    m_mainLayout->Register(
-        *m_statusBar,
-        {m_viewTop + cx::model::Row{1u},cx::cmn::ui::ILayout::RowSpan{1u}},
-        {cx::model::Column{0u}, cx::cmn::ui::ILayout::ColumnSpan{2u}}
-    );
+    {
+        using namespace cx::cmn::ui;
+        m_mainLayout->Register(
+            *m_statusBar,
+            {m_viewTop + ILayout::Row{1u}, ILayout::RowSpan{1u}},
+            {ILayout::Column{0u}, ILayout::ColumnSpan{2u}}
+        );
+    }
 
     POSTCONDITION(m_statusBarPresenter);
     POSTCONDITION(m_statusBar);

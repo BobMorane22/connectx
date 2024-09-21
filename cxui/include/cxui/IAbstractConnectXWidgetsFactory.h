@@ -26,8 +26,8 @@
 
 #include <memory>
 
-#include <cxmodel/common.h>
 #include <cxmodel/ModelNotificationContext.h>
+#include <cxcmnui/ILayout.h>
 #include <cxui/IAnimatedBoardModel.h>
 
 namespace cx::cmn::ui
@@ -185,8 +185,8 @@ public:
         INewGameViewController& p_controller,
         cx::cmn::ui::IWindow& p_parentWindow,
         cx::cmn::ui::ILayout& p_mainLayout,
-        const cx::model::Column& p_viewLeft,
-        const cx::model::Row& p_viewTop) const = 0;
+        const cx::cmn::ui::ILayout::Column& p_viewLeft,
+        const cx::cmn::ui::ILayout::Row& p_viewTop) const = 0;
 
     /*****************************************************************************************//**
      * @brief Creates a view for playing a Connect X game.
@@ -216,8 +216,8 @@ public:
         IGameViewController& p_controller,
         cx::cmn::ui::IWindow& p_parentWindow,
         cx::cmn::ui::ILayout& p_mainLayout,
-        const cx::model::Column& p_viewLeft,
-        const cx::model::Row& p_viewTop) const = 0;
+        const cx::cmn::ui::ILayout::Column& p_viewLeft,
+        const cx::cmn::ui::ILayout::Row& p_viewTop) const = 0;
 
 ///@}
 

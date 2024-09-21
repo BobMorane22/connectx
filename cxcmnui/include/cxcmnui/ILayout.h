@@ -25,7 +25,6 @@
 #define ILAYOUT_H_D6AEBC20_3580_4018_B083_08451439CC56
 
 #include <cxcmn/StrongType.h>
-#include <cxmodel/common.h>
 #include <cxcmnui/IWidget.h>
 
 namespace cx::cmn::ui
@@ -81,6 +80,22 @@ class ILayout : public IWidget
 {
 
 public:
+
+    /** Represents a row in the layout. */
+    using Row = cx::cmn::StrongType<
+        size_t,
+        struct RowTag,
+        cx::cmn::EqualityComparable,
+        cx::cmn::Comparable,
+        cx::cmn::Addable >;
+    
+    /** Represents a column in the layout. */
+    using Column = cx::cmn::StrongType<
+        size_t,
+        struct ColumnTag,
+        cx::cmn::EqualityComparable,
+        cx::cmn::Comparable,
+        cx::cmn::Addable >;
 
     /******************************************************************************************//**
      * @brief Describes a number of rows needed to arrange some widget in a layout.
@@ -160,13 +175,13 @@ public:
      * @brief Necessary row information to position a widget in a layout.
      *
      *********************************************************************************************/
-    using RowDescriptor = CoordinateDescriptor<cx::model::Row, RowSpan>;
+    using RowDescriptor = CoordinateDescriptor<Row, RowSpan>;
     
     /******************************************************************************************//**
      * @brief Necessary column information to position a widget in a layout.
      *
      *********************************************************************************************/
-    using ColumnDescriptor = CoordinateDescriptor<cx::model::Column, ColumnSpan>;
+    using ColumnDescriptor = CoordinateDescriptor<Column, ColumnSpan>;
 
     /******************************************************************************************//**
      * @brief Row spacing modes.
@@ -313,16 +328,16 @@ public:
      *
      *********************************************************************************************/
     [[nodiscard]] virtual const IWidget* GetWidgetAtPosition(
-        const cx::model::Row& p_row,
-        const cx::model::Column& p_column) const = 0;
+        const Row& p_row,
+        const Column& p_column) const = 0;
 
     /******************************************************************************************//**
      * @copydoc cx::cmn::ui::ILayout::GetWidgetAtPosition
      *
      *********************************************************************************************/
     [[nodiscard]] virtual IWidget* GetWidgetAtPosition(
-        const cx::model::Row& p_row,
-        const cx::model::Column& p_column) = 0;
+        const Row& p_row,
+        const Column& p_column) = 0;
 
     /******************************************************************************************//**
      * @brief Changes the row spacing mode. Affects all rows in the layout.

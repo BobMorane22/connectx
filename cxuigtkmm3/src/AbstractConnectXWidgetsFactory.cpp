@@ -108,24 +108,24 @@ public:
         cx::ui::INewGameViewController& p_controller,
         cx::cmn::ui::IWindow& p_parentWindow,
         cx::cmn::ui::ILayout& p_mainLayout,
-        const cx::model::Column& p_viewLeft,
-        const cx::model::Row& p_viewTop) const override;
+        const cx::cmn::ui::ILayout::Column& p_viewLeft,
+        const cx::cmn::ui::ILayout::Row& p_viewTop) const override;
     [[nodiscard]] virtual std::unique_ptr<cx::ui::IView> CreateGameView(
-    cx::ui::IGameViewPresenter& p_presenter,
-    cx::ui::IGameViewController& p_controller,
-    cx::cmn::ui::IWindow& p_parentWindow,
-    cx::cmn::ui::ILayout& p_mainLayout,
-    const cx::model::Column& p_viewLeft,
-    const cx::model::Row& p_viewTop) const override;
-[[nodiscard]] std::unique_ptr<cx::ui::INewPlayersList> CreateNewPlayersList(
-    const cx::ui::INewGameViewPresenter& p_presenter) const override;
-[[nodiscard]] std::unique_ptr<cx::ui::IColorPicker> CreateColorPicker(
-    const std::vector<cx::model::ChipColor>& p_colors) const override;
-[[nodiscard]] std::unique_ptr<cx::ui::IAnimatedBoard> CreateGameBoard(
-    const cx::ui::IGameViewPresenter& p_presenter,
-    const cx::ui::AnimationSpeed& p_speed) const override;
-[[nodiscard]] std::unique_ptr<cx::ui::IChip> CreateChip(
-    const cx::model::ChipColor& p_fillColor,
+        cx::ui::IGameViewPresenter& p_presenter,
+        cx::ui::IGameViewController& p_controller,
+        cx::cmn::ui::IWindow& p_parentWindow,
+        cx::cmn::ui::ILayout& p_mainLayout,
+        const cx::cmn::ui::ILayout::Column& p_viewLeft,
+        const cx::cmn::ui::ILayout::Row& p_viewTop) const override;
+    [[nodiscard]] std::unique_ptr<cx::ui::INewPlayersList> CreateNewPlayersList(
+        const cx::ui::INewGameViewPresenter& p_presenter) const override;
+    [[nodiscard]] std::unique_ptr<cx::ui::IColorPicker> CreateColorPicker(
+        const std::vector<cx::model::ChipColor>& p_colors) const override;
+    [[nodiscard]] std::unique_ptr<cx::ui::IAnimatedBoard> CreateGameBoard(
+        const cx::ui::IGameViewPresenter& p_presenter,
+        const cx::ui::AnimationSpeed& p_speed) const override;
+    [[nodiscard]] std::unique_ptr<cx::ui::IChip> CreateChip(
+        const cx::model::ChipColor& p_fillColor,
         const cx::model::ChipColor& p_backgroundColor,
         int p_diameter) const override;
 
@@ -230,8 +230,8 @@ std::unique_ptr<cx::ui::IView> cx::ui::gtkmm3::AbstractConnectXWidgetsFactory::C
     cx::ui::INewGameViewController& p_controller,
     cx::cmn::ui::IWindow& p_parentWindow,
     cx::cmn::ui::ILayout& p_mainLayout,
-    const cx::model::Column& p_viewLeft,
-    const cx::model::Row& p_viewTop) const
+    const cx::cmn::ui::ILayout::Column& p_viewLeft,
+    const cx::cmn::ui::ILayout::Row& p_viewTop) const
 {
     auto newGameView = std::make_unique<NewGameView>(
         *m_widgetsFactories,
@@ -253,8 +253,8 @@ std::unique_ptr<cx::ui::IView> cx::ui::gtkmm3::AbstractConnectXWidgetsFactory::C
     cx::ui::IGameViewController& p_controller,
     cx::cmn::ui::IWindow& p_parentWindow,
     cx::cmn::ui::ILayout& p_mainLayout,
-    const cx::model::Column& p_viewLeft,
-    const cx::model::Row& p_viewTop) const
+    const cx::cmn::ui::ILayout::Column& p_viewLeft,
+    const cx::cmn::ui::ILayout::Row& p_viewTop) const
 {
     auto gameView = std::make_unique<GameView>(
         *m_widgetsFactories,

@@ -354,19 +354,19 @@ void cx::ui::gtkmm3::NewPlayersList::RegisterTitleRow()
 
     m_layout->Register(
         *m_isBotTitle,
-        {cx::model::Row{0u}, ILayout::RowSpan{1u}},
-        {cx::model::Column{0u}, ILayout::ColumnSpan{1u}},
+        {ILayout::Row{0u}, ILayout::RowSpan{1u}},
+        {ILayout::Column{0u}, ILayout::ColumnSpan{1u}},
         {ILayout::VerticalAlignement::CENTER, ILayout::HorizontalAlignement::CENTER});
 
     m_layout->Register(
         *m_playerNameTitle,
-        {cx::model::Row{0u}, ILayout::RowSpan{1u}},
-        {cx::model::Column{1u}, ILayout::ColumnSpan{1u}});
+        {ILayout::Row{0u}, ILayout::RowSpan{1u}},
+        {ILayout::Column{1u}, ILayout::ColumnSpan{1u}});
 
     m_layout->Register(
         *m_chipColorTitle,
-        {cx::model::Row{0u}, ILayout::RowSpan{1u}},
-        {cx::model::Column{2u}, ILayout::ColumnSpan{1u}});
+        {ILayout::Row{0u}, ILayout::RowSpan{1u}},
+        {ILayout::Column{2u}, ILayout::ColumnSpan{1u}});
 
     POSTCONDITION(m_isBotTitle);
     POSTCONDITION(m_playerNameTitle);
@@ -417,13 +417,15 @@ void cx::ui::gtkmm3::NewPlayersList::RegisterNewPlayerRow(
     playerType->SetMargins({TopMargin{0}, BottomMargin{0}, LeftMargin{0}, RightMargin{cx::cmn::ui::CONTROL_SIDE_MARGIN}});
 
     // Registering the widgets:
-    constexpr cx::cmn::ui::ILayout::RowSpan rowSpan{1u};
-    constexpr cx::cmn::ui::ILayout::ColumnSpan columnSpan{1u};
-    const cx::model::Row row{p_rowIndex};
-    constexpr cx::cmn::ui::ILayout::Alignement alignCenter{cx::cmn::ui::ILayout::VerticalAlignement::CENTER, cx::cmn::ui::ILayout::HorizontalAlignement::CENTER};
-    m_layout->Register(*playerType,      {row, rowSpan}, {cx::model::Column{0u}, columnSpan}, alignCenter);
-    m_layout->Register(*playerName,      {row, rowSpan}, {cx::model::Column{1u}, columnSpan});
-    m_layout->Register(*playerChipColor, {row, rowSpan}, {cx::model::Column{2u}, columnSpan});
+    using namespace cx::cmn::ui;
+
+    constexpr ILayout::RowSpan rowSpan{1u};
+    constexpr ILayout::ColumnSpan columnSpan{1u};
+    const ILayout::Row row{p_rowIndex};
+    constexpr ILayout::Alignement alignCenter{ILayout::VerticalAlignement::CENTER, ILayout::HorizontalAlignement::CENTER};
+    m_layout->Register(*playerType,      {row, rowSpan}, {ILayout::Column{0u}, columnSpan}, alignCenter);
+    m_layout->Register(*playerName,      {row, rowSpan}, {ILayout::Column{1u}, columnSpan});
+    m_layout->Register(*playerChipColor, {row, rowSpan}, {ILayout::Column{2u}, columnSpan});
 
     m_playerTypes.push_back(std::move(playerType));
     m_playerNames.push_back(std::move(playerName));
@@ -473,8 +475,8 @@ bool cx::ui::gtkmm3::NewPlayersList::UpdatePlayerRow(
     IF_PRECONDITION_NOT_MET_DO(p_index < GetNbPlayers(), return false;);
     IF_PRECONDITION_NOT_MET_DO(!p_playerNewName.empty(), return false;);
 
-    const cx::model::Row row{p_index};
-    constexpr cx::model::Column column0{0u};
+    const cx::cmn::ui::ILayout::Row row{p_index};
+    constexpr cx::cmn::ui::ILayout::Column column0{0u};
     {
         cx::cmn::ui::IWidget* widget = m_layout->GetWidgetAtPosition(row, column0);
         auto* control = dynamic_cast<cx::cmn::ui::IOnOffSwitch*>(widget);
@@ -489,7 +491,7 @@ bool cx::ui::gtkmm3::NewPlayersList::UpdatePlayerRow(
         control->SetState(newState);
     }
 
-    constexpr cx::model::Column column1{1u};
+    constexpr cx::cmn::ui::ILayout::Column column1{1u};
     {
         cx::cmn::ui::IWidget* widget = m_layout->GetWidgetAtPosition(row, column1);
         auto* control = dynamic_cast<cx::cmn::ui::IEditBox*>(widget);
@@ -498,7 +500,7 @@ bool cx::ui::gtkmm3::NewPlayersList::UpdatePlayerRow(
         control->UpdateContents(p_playerNewName);
     }
 
-    constexpr cx::model::Column column2{2u};
+    constexpr cx::cmn::ui::ILayout::Column column2{2u};
     {
         cx::cmn::ui::IWidget* widget = m_layout->GetWidgetAtPosition(row, column2);
         auto* control = dynamic_cast<cx::ui::IColorPicker*>(widget);

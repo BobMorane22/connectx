@@ -78,8 +78,8 @@ cx::ui::gtkmm3::NewGameView::NewGameView(
     cx::ui::INewGameViewController& p_controller,
     cx::cmn::ui::IWindow& p_parentWindow,
     cx::cmn::ui::ILayout& p_mainLayout,
-    const cx::model::Column& p_viewLeft,
-    const cx::model::Row& p_viewTop)
+    const cx::cmn::ui::ILayout::Column& p_viewLeft,
+    const cx::cmn::ui::ILayout::Row& p_viewTop)
  : m_widgetsFactories{p_widgetsFactories}
  , m_presenter{p_presenter}
  , m_controller{p_controller}
@@ -210,31 +210,31 @@ std::unique_ptr<cx::cmn::ui::ISignal<cx::cmn::ui::EventPropagation, cx::cmn::ui:
 
 void cx::ui::gtkmm3::NewGameView::SetLayout()
 {
-    constexpr cx::model::Column column0{0u};
-    constexpr cx::model::Column column1{1u};
-    constexpr cx::cmn::ui::ILayout::ColumnSpan singleColumnSpan{1u};
-    constexpr cx::cmn::ui::ILayout::ColumnSpan fullColumnSpan{2u};
-
-    constexpr cx::model::Row row0{0u};
-    constexpr cx::model::Row row1{1u};
-    constexpr cx::model::Row row2{2u};
-    constexpr cx::model::Row row3{3u};
-    constexpr cx::model::Row row4{4u};
-    constexpr cx::model::Row row5{5u};
-    constexpr cx::model::Row row6{6u};
-    constexpr cx::model::Row row7{7u};
-    constexpr cx::model::Row row8{8u};
-    constexpr cx::model::Row row9{9u};
-    constexpr cx::cmn::ui::ILayout::RowSpan singleRowSpan{1u};
-
     using namespace cx::cmn::ui;
+
+    constexpr ILayout::Column column0{0u};
+    constexpr ILayout::Column column1{1u};
+    constexpr ILayout::ColumnSpan singleColumnSpan{1u};
+    constexpr ILayout::ColumnSpan fullColumnSpan{2u};
+
+    constexpr ILayout::Row row0{0u};
+    constexpr ILayout::Row row1{1u};
+    constexpr ILayout::Row row2{2u};
+    constexpr ILayout::Row row3{3u};
+    constexpr ILayout::Row row4{4u};
+    constexpr ILayout::Row row5{5u};
+    constexpr ILayout::Row row6{6u};
+    constexpr ILayout::Row row7{7u};
+    constexpr ILayout::Row row8{8u};
+    constexpr ILayout::Row row9{9u};
+    constexpr ILayout::RowSpan singleRowSpan{1u};
 
     constexpr ILayout::Alignement hAlignLeft{
         ILayout::VerticalAlignement::FILL,
         ILayout::HorizontalAlignement::LEFT
     };
 
-    m_viewLayout->SetColumnSpacingMode(cx::cmn::ui::ILayout::ColumnSpacingMode::EQUAL);
+    m_viewLayout->SetColumnSpacingMode(ILayout::ColumnSpacingMode::EQUAL);
 
     m_viewLayout->Register(*m_title,               {row0,  singleRowSpan}, {column0, fullColumnSpan}              );
     m_viewLayout->Register(*m_gameSectionTitle,    {row1,  singleRowSpan}, {column0, fullColumnSpan},   hAlignLeft);

@@ -72,11 +72,11 @@ public:
     void Unregister(
         cx::cmn::ui::IWidget& p_widget) override;
     [[nodiscard]] const IWidget* GetWidgetAtPosition(
-        const cx::model::Row& p_row,
-        const cx::model::Column& p_column) const override;
+        const Row& p_row,
+        const Column& p_column) const override;
     [[nodiscard]] cx::cmn::ui::IWidget* GetWidgetAtPosition(
-        const cx::model::Row& p_row,
-        const cx::model::Column& p_column) override;
+        const Row& p_row,
+        const Column& p_column) override;
     void SetRowSpacingMode(
         cx::cmn::ui::ILayout::RowSpacingMode p_newMode) override;
     void SetColumnSpacingMode(

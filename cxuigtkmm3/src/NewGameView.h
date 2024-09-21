@@ -26,8 +26,8 @@
 
 #include <optional>
 
-#include <cxmodel/common.h>
 #include <cxmodel/Status.h>
+#include <cxcmnui/ILayout.h>
 #include <cxui/IView.h>
 
 namespace cx::model
@@ -89,8 +89,8 @@ public:
        cx::ui::INewGameViewController& p_controller,
        cx::cmn::ui::IWindow& p_parentWindow,
        cx::cmn::ui::ILayout& p_mainLayout,
-       const cx::model::Column& p_viewLeft,
-       const cx::model::Row& p_viewTop);
+       const cx::cmn::ui::ILayout::Column& p_viewLeft,
+       const cx::cmn::ui::ILayout::Row& p_viewTop);
 
     // cx::ui::IView:
     void Activate() override;
@@ -129,8 +129,8 @@ private:
 
     cx::cmn::ui::ILayout& m_mainLayout;
 
-    const cx::model::Column m_viewLeft;
-    const cx::model::Row m_viewTop;
+    const cx::cmn::ui::ILayout::Column m_viewLeft;
+    const cx::cmn::ui::ILayout::Row m_viewTop;
 
     std::unique_ptr<cx::cmn::ui::ILayout> m_viewLayout;
 

@@ -58,8 +58,8 @@ cx::ui::gtkmm3::GameView::GameView(
     cx::ui::IGameViewController& p_controller,
     cx::cmn::ui::IWindow& p_parentWindow,
     cx::cmn::ui::ILayout& p_mainLayout,
-    const cx::model::Column& p_viewLeft,
-    const cx::model::Row& p_viewTop)
+    const cx::cmn::ui::ILayout::Column& p_viewLeft,
+    const cx::cmn::ui::ILayout::Row& p_viewTop)
 : m_widgetsFactories{p_widgetsFactories}
 , m_presenter{p_presenter}
 , m_controller{p_controller}
@@ -311,14 +311,14 @@ void cx::ui::gtkmm3::GameView::SetLayout()
 
     using namespace cx::cmn::ui;
 
-    constexpr cx::model::Row row0{0u};
-    constexpr cx::model::Row row1{1u};
-    constexpr cx::model::Row row4{4u};
+    constexpr ILayout::Row row0{0u};
+    constexpr ILayout::Row row1{1u};
+    constexpr ILayout::Row row4{4u};
     constexpr ILayout::RowSpan singleRowSpan{1u};
 
-    constexpr cx::model::Column column0{0u};
-    constexpr cx::model::Column column1{1u};
-    constexpr cx::model::Column column2{2u};
+    constexpr ILayout::Column column0{0u};
+    constexpr ILayout::Column column1{1u};
+    constexpr ILayout::Column column2{2u};
     constexpr ILayout::ColumnSpan singleColumnSpan{1u};
     constexpr ILayout::ColumnSpan fullSpan{2u};
 

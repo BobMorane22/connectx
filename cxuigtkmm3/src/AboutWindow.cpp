@@ -85,17 +85,19 @@ void cx::ui::gtkmm3::AboutWindow::RegisterWidgets()
 {
     IF_CONDITION_NOT_MET_DO(m_mainLayout, return;);
 
-    constexpr cx::model::Row row0{0u};
-    constexpr cx::model::Row row1{1u};
-    constexpr cx::model::Row row2{2u};
-    constexpr cx::model::Row row3{3u};
-    constexpr cx::model::Row row4{4u};
-    constexpr cx::model::Row row5{5u};
-    constexpr cx::model::Row row6{6u};
-    constexpr cx::cmn::ui::ILayout::RowSpan rowSpan1{1u};
+    using namespace cx::cmn::ui;
 
-    constexpr cx::model::Column column0{0u};
-    constexpr cx::cmn::ui::ILayout::ColumnSpan columnSpan1{1u};
+    constexpr ILayout::Row row0{0u};
+    constexpr ILayout::Row row1{1u};
+    constexpr ILayout::Row row2{2u};
+    constexpr ILayout::Row row3{3u};
+    constexpr ILayout::Row row4{4u};
+    constexpr ILayout::Row row5{5u};
+    constexpr ILayout::Row row6{6u};
+    constexpr ILayout::RowSpan rowSpan1{1u};
+
+    constexpr ILayout::Column column0{0u};
+    constexpr ILayout::ColumnSpan columnSpan1{1u};
     
     m_mainLayout->Register(*m_name,        {row0, rowSpan1}, {column0, columnSpan1});
     m_mainLayout->Register(*m_version,     {row1, rowSpan1}, {column0, columnSpan1});
