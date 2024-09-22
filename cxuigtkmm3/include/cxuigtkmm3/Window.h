@@ -27,8 +27,9 @@
 #include <gtkmm/window.h>
 
 #include <cxinv/assertion.h>
-#include <cxcmnui/generated/ressources.h>
+#include <cxcmnui/ISignal.h>
 #include <cxcmnui/IWindow.h>
+#include <cxui/generated/ressources.h>
 
 namespace cx::cmn::ui
 {
@@ -37,7 +38,7 @@ namespace cx::cmn::ui
     class IWidget;
 }
 
-namespace cx::cmn::ui::gtkmm3
+namespace cx::ui::gtkmm3
 {
 
 /*********************************************************************************************//**
@@ -56,7 +57,7 @@ namespace cx::cmn::ui::gtkmm3
  * child widgets, layouts and the window itself.
  *
  ************************************************************************************************/
-class Window : public IWindow,
+class Window : public cx::cmn::ui::IWindow,
                public Gtk::Window
 {
 
@@ -110,7 +111,7 @@ public:
     void SetEnabled(cx::cmn::ui::EnabledState p_enabled) override;
     void SetMargins(const cx::cmn::ui::Margins& p_newMarginSizes) override;
     void SetTooltip(const std::string& p_tooltipContents) override;
-    [[nodiscard]] std::unique_ptr<ISignal<EventPropagation, KeyboardKeyPressedEvent>> OnKeyPressed() override;
+    [[nodiscard]] std::unique_ptr<cx::cmn::ui::ISignal<cx::cmn::ui::EventPropagation, cx::cmn::ui::KeyboardKeyPressedEvent>> OnKeyPressed() override;
 
 protected:
 
@@ -192,6 +193,6 @@ private:
     std::unique_ptr<cx::cmn::ui::IWidget> m_delegate;
 };
 
-} // namespace cx::cmn::ui::gtkmm3
+} // namespace cx::ui::gtkmm3
 
 #endif // GTKMM3WINDOW_H_861FC628_597C_407E_8206_E67F71000A55

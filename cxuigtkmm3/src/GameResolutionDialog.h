@@ -25,7 +25,7 @@
 #define GTKMM3GAMERESOLUTIONDIALOG_H_E524D346_789D_4165_ABD3_4B876F7FBBD7
 
 #include <cxui/WidgetsFactories.h>
-#include <cxcmnuigtkmm3/Window.h>
+#include <cxuigtkmm3/Window.h>
 
 namespace cx::cmn::ui
 {
@@ -52,7 +52,7 @@ namespace cx::ui::gtkmm3
  * @note This window is modal.
  *
  ************************************************************************************************/
-class GameResolutionDialog : public cx::cmn::ui::gtkmm3::Window
+class GameResolutionDialog final : public cx::ui::gtkmm3::Window
 {
 
 public:
@@ -78,15 +78,13 @@ public:
 
 private:
 
-    void Update(cx::model::ModelNotificationContext p_context, cx::model::ModelSubject* p_subject) final;
-
-    void InitializeWidgets() final;
-    void ConfigureWindow() final;
-    void RegisterLayouts() final;
-    void RegisterWidgets() final;
-    void ConfigureLayouts() final;
-    void ConfigureWidgets() final;
-    void ConfigureSignalHandlers() final;
+    void InitializeWidgets() override;
+    void ConfigureWindow() override;
+    void RegisterLayouts() override;
+    void RegisterWidgets() override;
+    void ConfigureLayouts() override;
+    void ConfigureWidgets() override;
+    void ConfigureSignalHandlers() override;
 
     const std::unique_ptr<cx::ui::IGameResolutionDialogPresenter> m_presenter;
     const std::unique_ptr<cx::ui::IGameResolutionDialogController> m_controller;

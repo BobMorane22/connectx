@@ -53,11 +53,6 @@ void cx::cmn::ui::gtkmm3::Dialog::ShrinkToContents(IWindow::Orientation /*p_orie
     // Nothing to do.
 }
 
-void cx::cmn::ui::gtkmm3::Dialog::Update(cx::model::ModelNotificationContext /*p_context*/, cx::model::ModelSubject* /*p_subject*/)
-{
-    // Nothing to do.
-}
-
 void cx::cmn::ui::gtkmm3::Dialog::SetDelegate(std::unique_ptr<IWidget> p_delegate)
 {
     IF_PRECONDITION_NOT_MET_DO(p_delegate, return;);

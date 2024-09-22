@@ -38,6 +38,7 @@
 #include <cxui/INewGameViewController.h>
 #include <cxui/INewGameViewPresenter.h>
 #include <cxui/INewPlayersList.h>
+#include <cxui/IStatusBar.h>
 #include <cxui/WidgetsFactories.h>
 #include <cxcmnuigtkmm3/WidgetDelegate.h>
 #include <cxuigtkmm3/AbstractConnectXWidgetsFactory.h>
@@ -51,6 +52,7 @@
 #include "MainWindow.h"
 #include "NewGameView.h"
 #include "NewPlayersList.h"
+#include "StatusBar.h"
 
 namespace cx::ui::gtkmm3
 {
@@ -95,6 +97,9 @@ public:
     void RegisterStandardWidgetsFactory(cx::cmn::ui::IAbstractWidgetsFactory& p_stdAbstractWidgetsFactory);
 
     // cx::ui::IAbstractConnectXWidgetsFactory:
+    [[nodiscard]] std::unique_ptr<IStatusBar> CreateStatusBar(
+        IStatusBarPresenter& p_presenter,
+        cx::model::ModelSubject& p_model) const override;
     [[nodiscard]] std::unique_ptr<cx::cmn::ui::IWindow> CreateMainWindow(cx::model::ModelSubject& p_model,
         cx::ui::IMainWindowController& p_controller,
         cx::ui::IMainWindowPresenter& p_presenter) const override;
@@ -165,6 +170,25 @@ void cx::ui::gtkmm3::AbstractConnectXWidgetsFactory::RegisterStandardWidgetsFact
     InvariantsCheck();
 }
 
+std::unique_ptr<cx::ui::IStatusBar> cx::ui::gtkmm3::AbstractConnectXWidgetsFactory::CreateStatusBar(
+    IStatusBarPresenter& p_presenter,
+    cx::model::ModelSubject& p_model) const
+{
+    IF_PRECONDITION_NOT_MET_DO(m_widgetsFactories, return nullptr;);
+
+    auto statusBar = cx::cmn::ui::gtkmm3::CreateWidget<StatusBar>(
+        p_presenter);
+    IF_CONDITION_NOT_MET_DO(statusBar, return nullptr;);
+
+    p_model.Attach(&p_presenter);
+    p_presenter.Attach(statusBar.get());
+
+    POSTCONDITION(statusBar);
+    InvariantsCheck();
+
+    return statusBar;
+}
+
 std::unique_ptr<cx::cmn::ui::IWindow> cx::ui::gtkmm3::AbstractConnectXWidgetsFactory::CreateMainWindow(
     cx::model::ModelSubject& p_model,
     cx::ui::IMainWindowController& p_controller,
@@ -181,6 +205,9 @@ std::unique_ptr<cx::cmn::ui::IWindow> cx::ui::gtkmm3::AbstractConnectXWidgetsFac
     IF_CONDITION_NOT_MET_DO(mainWindow, return nullptr;);
 
     mainWindow->Init();
+
+    p_model.Attach(&p_presenter);
+    p_presenter.Attach(mainWindow.get());
 
     POSTCONDITION(mainWindow);
     InvariantsCheck();

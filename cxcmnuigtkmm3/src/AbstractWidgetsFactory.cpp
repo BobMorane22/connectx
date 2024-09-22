@@ -25,7 +25,6 @@
 
 #include <cxinv/assertion.h>
 #include <cxcmnui/IAbstractWidgetsFactory.h>
-#include <cxcmnui/IStatusBarPresenter.h>
 #include <cxcmnui/StdActionIcon.h>
 #include <cxcmnuigtkmm3/AbstractWidgetsFactory.h>
 #include <cxcmnuigtkmm3/WidgetDelegate.h>
@@ -40,7 +39,6 @@
 #include "MenuItem.h"
 #include "OnOffSwitch.h"
 #include "SpinBox.h"
-#include "StatusBar.h"
 
 namespace cx::cmn::ui::gtkmm3
 {
@@ -93,7 +91,6 @@ public:
     [[nodiscard]] std::unique_ptr<cx::cmn::ui::IMenuItem> CreateMenuItem(
         const std::string p_label,
         const std::optional<cx::cmn::ui::FreeDesktop::StdActionIcon>& p_icon = std::nullopt) const override;
-    [[nodiscard]] std::unique_ptr<IStatusBar> CreateStatusBar(IStatusBarPresenter& p_presenter) const override;
 
 private:
 
@@ -222,14 +219,6 @@ std::unique_ptr<cx::cmn::ui::IMenuItem> cx::cmn::ui::gtkmm3::AbstractWidgetsFact
     POSTCONDITION(menuItem);
 
     return menuItem;
-}
-
-std::unique_ptr<cx::cmn::ui::IStatusBar> cx::cmn::ui::gtkmm3::AbstractWidgetsFactory::CreateStatusBar(cx::cmn::ui::IStatusBarPresenter& p_presenter) const
-{
-    auto statusBar = CreateWidget<cx::cmn::ui::gtkmm3::StatusBar>(p_presenter);
-    POSTCONDITION(statusBar);
-
-    return statusBar;
 }
 
 std::unique_ptr<cx::cmn::ui::IAbstractWidgetsFactory> cx::cmn::ui::gtkmm3::CreateFactory(Glib::RefPtr<Gtk::Application> p_gtkApplication)

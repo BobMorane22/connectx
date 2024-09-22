@@ -38,9 +38,7 @@
 #include <cxcmnui/IMenuBar.h>
 #include <cxcmnui/IMenuItem.h>
 #include <cxcmnui/ISpinBox.h>
-#include <cxcmnui/IStatusBar.h>
 #include <cxcmnui/KeyboardShortcut.h>
-#include <cxcmnui/StatusBarPresenter.h>
 #include <cxcmnui/StdActionIcon.h>
 #include <cxcmnui/widgetUtilities.h>
 #include <cxui/AboutWindowPresenter.h>
@@ -51,10 +49,36 @@
 #include <cxui/INewPlayersList.h>
 #include <cxui/IMainWindowController.h>
 #include <cxui/IMainWindowPresenter.h>
+#include <cxui/IStatusBar.h>
 #include <cxui/IView.h>
+#include <cxui/StatusBarPresenter.h>
 #include <cxui/WidgetsFactories.h>
+#include <cxuigtkmm3/Window.h>
 
 #include "MainWindow.h"
+
+namespace
+{
+
+class MainWindowImpl : public cx::ui::gtkmm3::Window
+{
+
+public:
+
+    cx::cmn::ui::ILayout& GetLayout(){return *m_mainLayout;}
+
+private:
+
+    void InitializeWidgets() override;
+    void ConfigureWindow() override;
+    void RegisterLayouts() override;
+    void RegisterWidgets() override;
+    void ConfigureLayouts() override;
+    void ConfigureWidgets() override;
+    void ConfigureSignalHandlers() override;
+};
+
+} // namespace
 
 cx::ui::gtkmm3::MainWindow::MainWindow(
     Gtk::Application& p_gtkApplication,
@@ -62,7 +86,7 @@ cx::ui::gtkmm3::MainWindow::MainWindow(
     cx::ui::IMainWindowController& p_controller,
     cx::ui::IMainWindowPresenter& p_presenter,
     cx::ui::WidgetsFactories& p_widgetsFactories)
- : cx::cmn::ui::gtkmm3::Window{p_widgetsFactories.GetStandardWidgetsFactory()}
+ : cx::ui::gtkmm3::Window{p_widgetsFactories.GetStandardWidgetsFactory()}
  , m_gtkApplication{p_gtkApplication}
  , m_model{p_model}
  , m_controller{p_controller}
@@ -149,8 +173,7 @@ void cx::ui::gtkmm3::MainWindow::ConfigureLayouts()
 
 void cx::ui::gtkmm3::MainWindow::ConfigureWidgets()
 {
-    m_model.Attach(m_statusBarPresenter.get());
-    m_statusBarPresenter->Attach(m_statusBar.get());
+    // Nothing to do...
 }
 
 void cx::ui::gtkmm3::MainWindow::ConfigureSignalHandlers()
@@ -316,11 +339,11 @@ void cx::ui::gtkmm3::MainWindow::RegisterMenuBar()
 
 void cx::ui::gtkmm3::MainWindow::RegisterStatusBar()
 {
-    const cx::cmn::ui::IAbstractWidgetsFactory& standardWidgetsFactory = m_widgetsFactories.GetStandardWidgetsFactory();
+    const cx::ui::IAbstractConnectXWidgetsFactory& connectXWidgetsFactory = m_widgetsFactories.GetConnectXWidgetsFactory();
 
-    m_statusBarPresenter = std::make_unique<cx::cmn::ui::StatusBarPresenter>();
+    m_statusBarPresenter = std::make_unique<cx::ui::StatusBarPresenter>();
     IF_CONDITION_NOT_MET_DO(m_statusBarPresenter, return;);
-    m_statusBar = standardWidgetsFactory.CreateStatusBar(*m_statusBarPresenter);
+    m_statusBar = connectXWidgetsFactory.CreateStatusBar(*m_statusBarPresenter, m_model);
     IF_CONDITION_NOT_MET_DO(m_statusBar, return;);
 
     {

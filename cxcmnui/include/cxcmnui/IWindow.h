@@ -24,7 +24,6 @@
 #ifndef IWINDOW_H_4807796E_6C76_4D0A_BF7D_81534795BA29
 #define IWINDOW_H_4807796E_6C76_4D0A_BF7D_81534795BA29
 
-#include <cxmodel/ModelNotificationContext.h>
 #include <cxcmnui/IWidget.h>
 
 namespace cx::cmn::ui
@@ -36,8 +35,7 @@ namespace cx::cmn::ui
  * This interface presents the basic utilities needed to create windows.
  *
  ************************************************************************************************/
-class IWindow : public IWidget,
-                public cx::model::IModelObserver
+class IWindow : public IWidget
 {
 
 public:

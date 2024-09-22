@@ -26,7 +26,7 @@
 
 #include "IStatusBarPresenter.h"
 
-namespace cx::cmn::ui
+namespace cx::ui
 {
 
 /*********************************************************************************************//**
@@ -49,7 +49,6 @@ private:
 
 };
 
-
 /**********************************************************************************************//**
  * @brief Generates a formatted string associated to a model notification context.
  *
@@ -65,8 +64,6 @@ private:
  *************************************************************************************************/
 [[nodiscard]] std::string MakeStatusBarContextString(cx::model::ModelNotificationContext p_context);
 
-} // namespace cx::cmn::ui
-
-
+} // namespace cx::ui
 
 #endif // STATUSBARPRESENTER_H_8AA4CA20_8179_4812_944C_7029B25AE1DC

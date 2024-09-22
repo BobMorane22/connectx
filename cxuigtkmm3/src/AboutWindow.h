@@ -26,7 +26,7 @@
 
 #include <cxui/IAboutWindowPresenter.h>
 
-#include <cxcmnuigtkmm3/Window.h>
+#include <cxuigtkmm3/Window.h>
 
 namespace cx::cmn::ui
 {
@@ -46,7 +46,7 @@ namespace cx::ui::gtkmm3
  * @brief Gtkmm3 About window.
  *
  *************************************************************************************************/
-class AboutWindow : public cx::cmn::ui::gtkmm3::Window
+class AboutWindow final : public cx::ui::gtkmm3::Window
 {
 
 public:
@@ -71,16 +71,13 @@ public:
 
 private:
 
-    // cx::model::IModelObserver:
-    void Update(cx::model::ModelNotificationContext p_context, cx::model::ModelSubject* p_subject) final;
-
-    void InitializeWidgets() final;
-    void ConfigureWindow() final;
-    void RegisterLayouts() final;
-    void RegisterWidgets() final;
-    void ConfigureLayouts() final;
-    void ConfigureWidgets() final;
-    void ConfigureSignalHandlers() final;
+    void InitializeWidgets() override;
+    void ConfigureWindow() override;
+    void RegisterLayouts() override;
+    void RegisterWidgets() override;
+    void ConfigureLayouts() override;
+    void ConfigureWidgets() override;
+    void ConfigureSignalHandlers() override;
 
     std::unique_ptr<cx::ui::IAboutWindowPresenter> m_presenter;
 

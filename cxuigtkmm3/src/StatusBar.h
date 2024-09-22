@@ -26,10 +26,10 @@
 
 #include <gtkmm/statusbar.h>
 
-#include <cxcmnui/IStatusBar.h>
-#include <cxcmnui/IStatusBarPresenter.h>
+#include <cxui/IStatusBar.h>
+#include <cxui/IStatusBarPresenter.h>
 
-namespace cx::cmn::ui::gtkmm3
+namespace cx::ui::gtkmm3
 {
 
 /**********************************************************************************************//**
@@ -66,7 +66,7 @@ public:
      *      The registered widget delegate is valid.
      *
      **********************************************************************************************/
-    void SetDelegate(std::unique_ptr<IWidget> p_delegate);
+    void SetDelegate(std::unique_ptr<cx::cmn::ui::IWidget> p_delegate);
 
     // cx::cmn::ui::IStatusBar:
     void SetLastUserActionStatus(const std::string& p_lastUserActionDescription) override;
@@ -85,12 +85,12 @@ private:
 
 private:
 
-    std::unique_ptr<IWidget> m_delegate;
+    std::unique_ptr<cx::cmn::ui::IWidget> m_delegate;
 
     IStatusBarPresenter& m_presenter;
 
 };
 
-} // namespace cx::cmn::ui::gtkmm3
+} // namespace cx::ui::gtkmm3
 
 #endif // GTKMM3STATUSBAR_H_DDBD40E5_28B4_47C2_8550_C0F49082EFBF

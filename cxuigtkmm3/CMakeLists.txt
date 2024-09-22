@@ -41,6 +41,8 @@ add_library(${TARGET_NAME}
   src/NewGameView.cpp
   src/NewPlayersList.cpp
   src/pathHelpers.cpp
+  src/StatusBar.cpp
+  src/Window.cpp
 )
 
 target_include_directories(${TARGET_NAME}

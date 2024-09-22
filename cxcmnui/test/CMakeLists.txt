@@ -27,7 +27,6 @@ set(SOURCE_FILES
   extractRawUserInputTests.cpp
   KeyboardShortcutTests.cpp
   ScalingRatiosTests.cpp
-  StatusBarPresenterTests.cpp
   StdActionIconTests.cpp
   widgetUtilitiesTests.cpp
 )
@@ -37,7 +36,6 @@ set(LIBRARIES
   cxcmn
   cxinv
   cxmath
-  cxmodel
 )
 
 add_lib_unit_test(

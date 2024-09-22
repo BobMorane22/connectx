@@ -44,9 +44,6 @@ namespace cx::cmn::ui
     class IOnOffSwitch;
     class IWindow;
 
-    class IStatusBar;
-    class IStatusBarPresenter;
-
     namespace FreeDesktop
     {
         enum class StdActionIcon;
@@ -308,31 +305,6 @@ public:
     [[nodiscard]] virtual std::unique_ptr<IMenuItem> CreateMenuItem(
         const std::string p_label,
         const std::optional<FreeDesktop::StdActionIcon>& p_icon = std::nullopt) const = 0;
-
-///@}
-
-
-// ================================================================================================
-///@{ @name Status bar
-// ================================================================================================
-
-    /******************************************************************************************//**
-     * Creates a status bar instance.
-     *
-     * Status bars are typically used at the bottom of windows to print information about the
-     * application's status.
-     *
-     * @param p_presenter
-     *      A status bar presenter.
-     *
-     * @post
-     *      The returned status bar instance is valid.
-     *
-     * @return
-     *      A status bar instance.
-     *
-     *********************************************************************************************/
-    [[nodiscard]] virtual std::unique_ptr<IStatusBar> CreateStatusBar(IStatusBarPresenter& p_presenter) const = 0;
 
 ///@}
 

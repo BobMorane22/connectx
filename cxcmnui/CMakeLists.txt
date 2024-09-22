@@ -29,7 +29,6 @@ add_library(${TARGET_NAME}
   src/extractRawUserInput.cpp
   src/ISpinBox.cpp
   src/KeyboardShortcut.cpp
-  src/StatusBarPresenter.cpp
   src/StdActionIcon.cpp
   src/widgetUtilities.cpp
 )
@@ -42,13 +41,6 @@ target_link_libraries(${TARGET_NAME}
   PRIVATE cxcmn
   PRIVATE cxinv
   PRIVATE cxmath
-  PRIVATE cxmodel
-)
-
-# Configuration files:
-configure_file("${CMAKE_CURRENT_SOURCE_DIR}/include/${TARGET_NAME}/ressources.h.in" "${TARGET_NAME}/generated/ressources.h")
-target_include_directories(${TARGET_NAME}
-  PUBLIC ${CMAKE_CURRENT_BINARY_DIR}
 )
 
 # Unit tests:

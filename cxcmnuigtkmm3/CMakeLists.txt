@@ -38,9 +38,7 @@ add_library(${TARGET_NAME}
   src/MenuItem.cpp
   src/OnOffSwitch.cpp
   src/SpinBox.cpp
-  src/StatusBar.cpp
   src/WidgetDelegate.cpp
-  src/Window.cpp
 )
 
 target_include_directories(${TARGET_NAME}
@@ -52,7 +50,6 @@ target_link_libraries(${TARGET_NAME}
   PRIVATE cxcmn
   PRIVATE cxinv
   PRIVATE cxmath
-  PRIVATE cxmodel
   PRIVATE cxcmnui
   PRIVATE ${GTKMM_LIBRARIES}
 )

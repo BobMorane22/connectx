@@ -26,7 +26,6 @@
 
 #include <gtkmm/messagedialog.h>
 
-#include <cxmodel/ModelNotificationContext.h>
 #include <cxcmnui/IWindow.h>
 
 namespace cx::cmn::ui
@@ -101,9 +100,6 @@ public:
     [[nodiscard]] std::unique_ptr<ISignal<cx::cmn::ui::EventPropagation, cx::cmn::ui::KeyboardKeyPressedEvent>> OnKeyPressed() override;
 
 private:
-
-    // cx::model::IModelObserver:
-    void Update(cx::model::ModelNotificationContext p_context, cx::model::ModelSubject* p_subject) override;
 
     std::unique_ptr<cx::cmn::ui::IWidget> m_delegate;
 

@@ -16,41 +16,57 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file IStatusBarPresenter.h
+ * @file IStatusBar.h
  * @date 2020
  *
  *************************************************************************************************/
 
-#ifndef ISTATUSBARPRESENTER_H_ABE6731E_14D3_4B54_B017_22D806A7BC0B
-#define ISTATUSBARPRESENTER_H_ABE6731E_14D3_4B54_B017_22D806A7BC0B
+#ifndef ISTATUSBAR_H_B9E6A5FA_CB18_4646_9BD1_F38CE15F1A62
+#define ISTATUSBAR_H_B9E6A5FA_CB18_4646_9BD1_F38CE15F1A62
 
 #include <string>
 
 #include <cxmodel/ModelNotificationContext.h>
+#include <cxcmnui/IWidget.h>
 
-namespace cx::cmn::ui
+namespace cx::ui
 {
 
 /*********************************************************************************************//**
- * @brief Interface for status bar presenters.
+ * @brief Status bar.
+ *
+ * Status bars often appear at the bottom of an application's main window and display some
+ * informations about the application state to the user.
  *
  ************************************************************************************************/
-class IStatusBarPresenter : public cx::model::IModelObserver,
-                            public cx::model::ModelSubject
+class IStatusBar : public cx::cmn::ui::IWidget,
+                   public cx::model::IModelObserver
 {
 
 public:
 
     /******************************************************************************************//**
-     * @brief Retrieves the message to display in the status bar.
-     *
-     * @return The message to display in the status bar.
+     * @brief Destructor.
      *
      ********************************************************************************************/
-    virtual std::string GetStatusBarMessage() const = 0;
+    virtual ~IStatusBar() = default;
+
+    /******************************************************************************************//**
+     * @brief Sets the status bar's user action status string.
+     *
+     * When the user make actions, the status bar is updated to reflect the action. To do
+     * this, it displays the string indication what specific action was performed by the user.
+     * This method sets this string in the status bar.
+     *
+     * @pre p_lastUserActionDescription is not empty.
+     *
+     * @param p_lastUserActionDescription The user action status string, ready for display.
+     *
+     ********************************************************************************************/
+    virtual void SetLastUserActionStatus(const std::string& p_lastUserActionDescription) = 0;
 
 };
 
-} // namespace cx::cmn::ui
+} // namespace cx::ui
 
-#endif // ISTATUSBARPRESENTER_H_ABE6731E_14D3_4B54_B017_22D806A7BC0B
+#endif // ISTATUSBAR_H_B9E6A5FA_CB18_4646_9BD1_F38CE15F1A62

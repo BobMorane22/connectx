@@ -65,9 +65,6 @@ cx::Gtkmm3UIManager::Gtkmm3UIManager(int argc, char *argv[], cx::ModelReferences
     m_mainWindow = m_abstractConnectXWidgetsFactory->CreateMainWindow(p_model.m_asSubject, *m_controller, *m_presenter);
     ASSERT(m_mainWindow);
 
-    p_model.m_asSubject.Attach(m_presenter.get());
-    m_presenter->Attach(m_mainWindow.get());
-
     POSTCONDITION(m_abstractWidgetsFactory);
     POSTCONDITION(m_abstractConnectXWidgetsFactory);
     POSTCONDITION(m_widgetsFactories);

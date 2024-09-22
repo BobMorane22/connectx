@@ -28,12 +28,12 @@
 
 #include "StatusBar.h"
 
-cx::cmn::ui::gtkmm3::StatusBar::StatusBar(IStatusBarPresenter& p_presenter)
+cx::ui::gtkmm3::StatusBar::StatusBar(IStatusBarPresenter& p_presenter)
  : m_presenter{p_presenter}
 {
 }
 
-void cx::cmn::ui::gtkmm3::StatusBar::SetDelegate(std::unique_ptr<IWidget> p_delegate)
+void cx::ui::gtkmm3::StatusBar::SetDelegate(std::unique_ptr<IWidget> p_delegate)
 {
     IF_PRECONDITION_NOT_MET_DO(p_delegate, return;);
 
@@ -42,12 +42,12 @@ void cx::cmn::ui::gtkmm3::StatusBar::SetDelegate(std::unique_ptr<IWidget> p_dele
     POSTCONDITION(m_delegate);
 }
 
-void cx::cmn::ui::gtkmm3::StatusBar::SetLastUserActionStatus(const std::string& p_lastUserActionDescription)
+void cx::ui::gtkmm3::StatusBar::SetLastUserActionStatus(const std::string& p_lastUserActionDescription)
 {
     push(p_lastUserActionDescription);
 }
 
-void cx::cmn::ui::gtkmm3::StatusBar::Update(cx::model::ModelNotificationContext, cx::model::ModelSubject* p_subject)
+void cx::ui::gtkmm3::StatusBar::Update(cx::model::ModelNotificationContext, cx::model::ModelSubject* p_subject)
 {
     if(p_subject)
     {
@@ -55,37 +55,37 @@ void cx::cmn::ui::gtkmm3::StatusBar::Update(cx::model::ModelNotificationContext,
     }
 }
 
-size_t cx::cmn::ui::gtkmm3::StatusBar::GetWidth() const 
+size_t cx::ui::gtkmm3::StatusBar::GetWidth() const 
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return 0u;);
     return m_delegate->GetWidth();
 }
 
-size_t cx::cmn::ui::gtkmm3::StatusBar::GetHeight() const 
+size_t cx::ui::gtkmm3::StatusBar::GetHeight() const 
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return 0u;);
     return m_delegate->GetHeight();
 }
 
-void cx::cmn::ui::gtkmm3::StatusBar::SetEnabled(EnabledState p_enabled) 
+void cx::ui::gtkmm3::StatusBar::SetEnabled(cx::cmn::ui::EnabledState p_enabled) 
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return;);
     m_delegate->SetEnabled(p_enabled);
 }
 
-void cx::cmn::ui::gtkmm3::StatusBar::SetMargins(const Margins& p_newMarginSizes) 
+void cx::ui::gtkmm3::StatusBar::SetMargins(const cx::cmn::ui::Margins& p_newMarginSizes) 
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return;);
     m_delegate->SetMargins(p_newMarginSizes);
 }
 
-void cx::cmn::ui::gtkmm3::StatusBar::SetTooltip(const std::string& p_tooltipContents)
+void cx::ui::gtkmm3::StatusBar::SetTooltip(const std::string& p_tooltipContents)
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return;);
     m_delegate->SetTooltip(p_tooltipContents);
 }
 
-std::unique_ptr<cx::cmn::ui::ISignal<cx::cmn::ui::EventPropagation, cx::cmn::ui::KeyboardKeyPressedEvent>> cx::cmn::ui::gtkmm3::StatusBar::OnKeyPressed()
+std::unique_ptr<cx::cmn::ui::ISignal<cx::cmn::ui::EventPropagation, cx::cmn::ui::KeyboardKeyPressedEvent>> cx::ui::gtkmm3::StatusBar::OnKeyPressed()
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return nullptr;);
     return m_delegate->OnKeyPressed();

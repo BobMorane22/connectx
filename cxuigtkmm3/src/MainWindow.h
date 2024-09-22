@@ -26,8 +26,9 @@
 
 #include <memory>
 
+#include <cxmodel/ModelNotificationContext.h>
 #include <cxcmnui/ILayout.h>
-#include <cxcmnuigtkmm3/Window.h>
+#include <cxuigtkmm3/Window.h>
 
 namespace cx::cmn::ui
 {
@@ -83,8 +84,12 @@ namespace cx::ui::gtkmm3
  * starts the game, the 'New Game' view is swapped for the 'Game' view, which contains all
  * the gaming widgets, such as the board.
  *
+ * The Connect X main window also listens to Connect X model updates. I can react to it and
+ * update its views accordingly.
+ *
  ************************************************************************************************/
-class MainWindow : public cx::cmn::ui::gtkmm3::Window
+class MainWindow : public cx::ui::gtkmm3::Window,
+                   public cx::model::IModelObserver
 {
 
 public:
@@ -111,7 +116,7 @@ public:
         cx::ui::IMainWindowPresenter& p_presenter,
         cx::ui::WidgetsFactories& p_widgetsFactories);
 
-    // cx::cmn::ui::IWindow:
+    // cx::ui::IWindow:
     ~MainWindow() override;
     [[nodiscard]] int Show() override;
 
@@ -162,13 +167,13 @@ private:
 
     cx::ui::IMainWindowController& m_controller;
     cx::ui::IMainWindowPresenter& m_presenter;
-    std::unique_ptr<cx::cmn::ui::IStatusBarPresenter> m_statusBarPresenter;
+    std::unique_ptr<cx::ui::IStatusBarPresenter> m_statusBarPresenter;
 
     // Widgets factories:
     cx::ui::WidgetsFactories& m_widgetsFactories;
 
     // Status bar:
-    std::unique_ptr<cx::cmn::ui::IStatusBar> m_statusBar;
+    std::unique_ptr<cx::ui::IStatusBar> m_statusBar;
 
     // Menu bar:
     std::unique_ptr<cx::cmn::ui::IMenuBar> m_menuBar;

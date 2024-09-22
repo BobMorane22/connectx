@@ -35,17 +35,12 @@
 cx::ui::gtkmm3::AboutWindow::AboutWindow(
     cx::ui::WidgetsFactories& p_widgetsFactories,
     std::unique_ptr<cx::ui::IAboutWindowPresenter> p_presenter)
- : cx::cmn::ui::gtkmm3::Window(p_widgetsFactories.GetStandardWidgetsFactory())
+ : cx::ui::gtkmm3::Window(p_widgetsFactories.GetStandardWidgetsFactory())
  , m_widgetsFactories{p_widgetsFactories}
 {
     PRECONDITION(p_presenter);
     m_presenter = std::move(p_presenter);
     POSTCONDITION(m_presenter);
-}
-
-void cx::ui::gtkmm3::AboutWindow::Update(cx::model::ModelNotificationContext /*p_context*/, cx::model::ModelSubject* /*p_subject*/)
-{
-    // Nothing to do...
 }
 
 void cx::ui::gtkmm3::AboutWindow::InitializeWidgets()

@@ -20,19 +20,19 @@
  *************************************************************************************************/
 
 #include <cxinv/assertion.h>
-#include <cxcmnui/StatusBarPresenter.h>
+#include <cxui/StatusBarPresenter.h>
 
 namespace
 {
     const std::string NO_MESSAGE = "";
 }
 
-std::string cx::cmn::ui::StatusBarPresenter::GetStatusBarMessage() const
+std::string cx::ui::StatusBarPresenter::GetStatusBarMessage() const
 {
     return m_statusBarMessage;
 }
 
-void cx::cmn::ui::StatusBarPresenter::Update(cx::model::ModelNotificationContext p_context, cx::model::ModelSubject* p_subject)
+void cx::ui::StatusBarPresenter::Update(cx::model::ModelNotificationContext p_context, cx::model::ModelSubject* p_subject)
 {
     if(p_subject)
     {
@@ -42,7 +42,7 @@ void cx::cmn::ui::StatusBarPresenter::Update(cx::model::ModelNotificationContext
     }
 }
 
-std::string cx::cmn::ui::MakeStatusBarContextString(cx::model::ModelNotificationContext p_context)
+std::string cx::ui::MakeStatusBarContextString(cx::model::ModelNotificationContext p_context)
 {
     switch(p_context)
     {

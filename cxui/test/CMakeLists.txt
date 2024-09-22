@@ -54,6 +54,7 @@ set(SOURCE_FILES
   MenuItemTests.cpp
   NewGameViewPresenterMock.h
   NewGameViewPresenterTests.cpp
+  StatusBarPresenterTests.cpp
   TieGameResolutionDialogPresenterTests.cpp
   WinGameResolutionDialogPresenterTests.cpp
 )

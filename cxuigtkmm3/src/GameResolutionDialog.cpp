@@ -38,18 +38,13 @@ cx::ui::gtkmm3::GameResolutionDialog::GameResolutionDialog(
     cx::ui::WidgetsFactories& p_widgetsFactories,
     std::unique_ptr<cx::ui::IGameResolutionDialogPresenter> p_presenter,
     std::unique_ptr<cx::ui::IGameResolutionDialogController> p_controller)
-: cx::cmn::ui::gtkmm3::Window{p_widgetsFactories.GetStandardWidgetsFactory()}
+: cx::ui::gtkmm3::Window{p_widgetsFactories.GetStandardWidgetsFactory()}
 , m_presenter{std::move(p_presenter)}
 , m_controller{std::move(p_controller)}
 , m_widgetsFactories{p_widgetsFactories}
 {
     POSTCONDITION(m_presenter);
     POSTCONDITION(m_controller);
-}
-
-void cx::ui::gtkmm3::GameResolutionDialog::Update(cx::model::ModelNotificationContext /*p_context*/, cx::model::ModelSubject* /*p_subject*/)
-{
-    // Nothing to do...
 }
 
 void cx::ui::gtkmm3::GameResolutionDialog::InitializeWidgets()

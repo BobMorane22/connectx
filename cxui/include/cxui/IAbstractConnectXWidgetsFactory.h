@@ -47,11 +47,13 @@ namespace cx::ui
     class IMainWindowPresenter;
     class INewGameViewController;
     class INewGameViewPresenter;
+    class IStatusBarPresenter;
 
     class IAnimatedBoard;
     class IChip;
     class IColorPicker;
     class INewPlayersList;
+    class IStatusBar;
     class IView;
 }
 
@@ -69,6 +71,36 @@ class IAbstractConnectXWidgetsFactory
 {
 
 public:
+
+// ================================================================================================
+///@{ @name Status bar
+// ================================================================================================
+
+    /******************************************************************************************//**
+     * Creates a status bar instance.
+     *
+     * Status bars are typically used at the bottom of windows to print information about the
+     * application's status. This particular status bar also listens to Connect X model events
+     * and can react to them.
+     *
+     * @param p_presenter
+     *      A status bar presenter.
+     *
+     * @param p_model
+     *      The model to get notification from.
+     *
+     * @post
+     *      The returned status bar instance is valid.
+     *
+     * @return
+     *      A status bar instance.
+     *
+     *********************************************************************************************/
+    [[nodiscard]] virtual std::unique_ptr<IStatusBar> CreateStatusBar(
+        IStatusBarPresenter& p_presenter,
+        cx::model::ModelSubject& p_model) const = 0;
+
+///@}
 
 // ================================================================================================
 ///@{ @name Windows.

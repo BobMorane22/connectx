@@ -38,6 +38,7 @@ add_library(${TARGET_NAME}
   src/MainWindowController.cpp
   src/MainWindowPresenter.cpp
   src/MenuItem.cpp
+  src/StatusBarPresenter.cpp
   src/TieGameResolutionDialogPresenter.cpp
   src/WidgetsFactories.cpp
   src/WinGameResolutionDialogPresenter.cpp
@@ -53,6 +54,12 @@ target_link_libraries(${TARGET_NAME}
   PRIVATE cxmath
   PRIVATE cxmodel
   PRIVATE cxcmnui
+)
+
+# Configuration files:
+configure_file("${CMAKE_CURRENT_SOURCE_DIR}/include/${TARGET_NAME}/ressources.h.in" "${TARGET_NAME}/generated/ressources.h")
+target_include_directories(${TARGET_NAME}
+  PUBLIC ${CMAKE_CURRENT_BINARY_DIR}
 )
 
 # Unit tests:
