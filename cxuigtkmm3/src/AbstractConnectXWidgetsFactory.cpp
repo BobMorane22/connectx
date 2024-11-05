@@ -40,6 +40,7 @@
 #include <cxui/INewPlayersList.h>
 #include <cxui/IStatusBar.h>
 #include <cxui/WidgetsFactories.h>
+#include <cxcmnuigtkmm3/AbstractWidgetsFactory.h>
 #include <cxcmnuigtkmm3/WidgetDelegate.h>
 #include <cxuigtkmm3/AbstractConnectXWidgetsFactory.h>
 
@@ -53,100 +54,6 @@
 #include "NewGameView.h"
 #include "NewPlayersList.h"
 #include "StatusBar.h"
-
-namespace cx::ui::gtkmm3
-{
-
-/**********************************************************************************************//**
- * @brief Abstract widgets factory for Gtkmm 3.24.5.
- *
- * This factory handles the Connect X specific widgets.
- *
- * @invariant
- *       The stored `Gtk::Application` instance is valid.
- *
- *************************************************************************************************/
-class AbstractConnectXWidgetsFactory final : public cx::ui::IAbstractConnectXWidgetsFactory
-{
-
-public:
-
-   /******************************************************************************************//**
-    * @brief Constructor.
-    *
-    * @param p_gtkApplication
-    *      The `Gtk::Application` instance representing the current application the factory
-    *      is used for. Without it, widgets cannot be rendered on the screen.
-    *
-    * @pre
-    *      The `Gtk::Application` instance given as an argument is valid.
-    *
-    *********************************************************************************************/
-    explicit AbstractConnectXWidgetsFactory(Glib::RefPtr<Gtk::Application> p_gtkApplication);
-
-   /******************************************************************************************//**
-    * @brief Sets a standard widgets factory.
-    *
-    * Whenever possible, this factory should be used when creating Connect X specific widgets
-    * to avoid multiple maintance point for equivalent widget types.
-    *
-    * @post
-    *      The stored widget factories are valid.
-    *
-    *********************************************************************************************/
-    void RegisterStandardWidgetsFactory(cx::cmn::ui::IAbstractWidgetsFactory& p_stdAbstractWidgetsFactory);
-
-    // cx::ui::IAbstractConnectXWidgetsFactory:
-    [[nodiscard]] std::unique_ptr<IStatusBar> CreateStatusBar(
-        IStatusBarPresenter& p_presenter,
-        cx::model::ModelSubject& p_model) const override;
-    [[nodiscard]] std::unique_ptr<cx::cmn::ui::IWindow> CreateMainWindow(cx::model::ModelSubject& p_model,
-        cx::ui::IMainWindowController& p_controller,
-        cx::ui::IMainWindowPresenter& p_presenter) const override;
-    [[nodiscard]] virtual std::unique_ptr<cx::cmn::ui::IWindow> CreateAboutWindow(
-        std::unique_ptr<cx::ui::IAboutWindowPresenter> p_presenter) const override;
-    [[nodiscard]] virtual std::unique_ptr<cx::cmn::ui::IWindow> CreateGameResolutionDialog(
-        std::unique_ptr<cx::ui::IGameResolutionDialogPresenter> p_presenter,
-        std::unique_ptr<cx::ui::IGameResolutionDialogController> p_controller) const override;
-    [[nodiscard]] virtual std::unique_ptr<cx::ui::IView> CreateNewGameView(
-        cx::ui::INewGameViewPresenter& p_presenter,
-        cx::ui::INewGameViewController& p_controller,
-        cx::cmn::ui::IWindow& p_parentWindow,
-        cx::cmn::ui::ILayout& p_mainLayout,
-        const cx::cmn::ui::ILayout::Column& p_viewLeft,
-        const cx::cmn::ui::ILayout::Row& p_viewTop) const override;
-    [[nodiscard]] virtual std::unique_ptr<cx::ui::IView> CreateGameView(
-        cx::ui::IGameViewPresenter& p_presenter,
-        cx::ui::IGameViewController& p_controller,
-        cx::cmn::ui::IWindow& p_parentWindow,
-        cx::cmn::ui::ILayout& p_mainLayout,
-        const cx::cmn::ui::ILayout::Column& p_viewLeft,
-        const cx::cmn::ui::ILayout::Row& p_viewTop) const override;
-    [[nodiscard]] std::unique_ptr<cx::ui::INewPlayersList> CreateNewPlayersList(
-        const cx::ui::INewGameViewPresenter& p_presenter) const override;
-    [[nodiscard]] std::unique_ptr<cx::ui::IColorPicker> CreateColorPicker(
-        const std::vector<cx::model::ChipColor>& p_colors) const override;
-    [[nodiscard]] std::unique_ptr<cx::ui::IAnimatedBoard> CreateGameBoard(
-        const cx::ui::IGameViewPresenter& p_presenter,
-        const cx::ui::AnimationSpeed& p_speed) const override;
-    [[nodiscard]] std::unique_ptr<cx::ui::IChip> CreateChip(
-        const cx::model::ChipColor& p_fillColor,
-        const cx::model::ChipColor& p_backgroundColor,
-        int p_diameter) const override;
-
-private:
-
-    void InvariantsCheck() const;
-
-private:
-
-    Glib::RefPtr<Gtk::Application> m_gtkApplication;
-
-    std::unique_ptr<cx::ui::WidgetsFactories> m_widgetsFactories;
-
-};
-
-} // namespace cx::ui::gtkmm3
 
 cx::ui::gtkmm3::AbstractConnectXWidgetsFactory::AbstractConnectXWidgetsFactory(
     Glib::RefPtr<Gtk::Application> p_gtkApplication)
@@ -353,20 +260,4 @@ std::unique_ptr<cx::ui::IChip> cx::ui::gtkmm3::AbstractConnectXWidgetsFactory::C
 void cx::ui::gtkmm3::AbstractConnectXWidgetsFactory::InvariantsCheck() const 
 {
     INVARIANT(m_gtkApplication);
-}
-
-[[nodiscard]] std::unique_ptr<cx::ui::IAbstractConnectXWidgetsFactory> cx::ui::gtkmm3::CreateFactory(
-    Glib::RefPtr<Gtk::Application> p_gtkApplication,
-    cx::cmn::ui::IAbstractWidgetsFactory& p_stdAbstractWidgetsFactory)
-{
-    IF_PRECONDITION_NOT_MET_DO(bool(p_gtkApplication), return nullptr;);
-
-    auto factory = std::make_unique<AbstractConnectXWidgetsFactory>(p_gtkApplication);
-    IF_PRECONDITION_NOT_MET_DO(factory, return nullptr;);
-
-    factory->RegisterStandardWidgetsFactory(p_stdAbstractWidgetsFactory);
-
-    POSTCONDITION(factory != nullptr);
-
-    return factory;
 }

@@ -39,7 +39,6 @@ add_library(${TARGET_NAME}
 
 target_include_directories(${TARGET_NAME}
   PUBLIC "${CMAKE_CURRENT_LIST_DIR}/include"
-  PRIVATE "${GTKMM_INCLUDE_DIRS}"
 )
 
 target_link_libraries(${TARGET_NAME}
@@ -52,7 +51,6 @@ target_link_libraries(${TARGET_NAME}
   PRIVATE cxui
   PRIVATE cxcmnuigtkmm3
   PRIVATE cxuigtkmm3
-  PRIVATE ${GTKMM_LIBRARIES}
 )
 
 # Unit tests:

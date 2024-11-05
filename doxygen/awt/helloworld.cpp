@@ -27,24 +27,19 @@
 #include <cstdlib>
 #include <iostream>
 
-#include <gtkmm/application.h>
-
 #include <cxinv/assertion.h>
 #include <cxcmnui/IAbstractWidgetsFactory.h>
 #include <cxcmnui/IButton.h>
 #include <cxcmnui/ILayout.h>
 #include <cxcmnui/ISignal.h>
-#include <cxcmnuigtkmm3/AbstractWidgetsFactory.h>
+#include <cxcmnuigtkmm3/widgetsFactory.h>
 
-int main(int argc, char *argv[])
+int main(int /*argc*/, char** /*argv*/)
 {
     using namespace cx::cmn::ui;
 
     // Create an instance of the abstract factory
-    const auto gtkApplication = Gtk::Application::create(argc, argv);
-    IF_CONDITION_NOT_MET_DO(bool(gtkApplication), return EXIT_FAILURE;);
-
-    const std::unique_ptr<IAbstractWidgetsFactory> factory = gtkmm3::CreateFactory(gtkApplication);
+    const std::unique_ptr<IAbstractWidgetsFactory> factory = gtkmm3::CreateFactory();
     IF_CONDITION_NOT_MET_DO(factory, return EXIT_FAILURE;);
 
     std::unique_ptr<ILayout> mainLayout = factory->CreateLayout();

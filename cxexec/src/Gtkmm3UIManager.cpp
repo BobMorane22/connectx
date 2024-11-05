@@ -24,11 +24,12 @@
 #include <cxinv/assertion.h>
 #include <cxcmnui/IAbstractWidgetsFactory.h>
 #include <cxcmnui/IWindow.h>
+#include <cxui/IAbstractConnectXWidgetsFactory.h>
 #include <cxui/MainWindowController.h>
 #include <cxui/MainWindowPresenter.h>
 #include <cxui/WidgetsFactories.h>
-#include <cxcmnuigtkmm3/AbstractWidgetsFactory.h>
-#include <cxuigtkmm3/AbstractConnectXWidgetsFactory.h>
+#include <cxcmnuigtkmm3/widgetsFactory.h>
+#include <cxuigtkmm3/widgetsFactory.h>
 #include <cxexec/Gtkmm3UIManager.h>
 #include <cxexec/ModelReferences.h>
 
@@ -37,15 +38,16 @@ cx::Gtkmm3UIManager::Gtkmm3UIManager(int argc, char *argv[], cx::ModelReferences
     PRECONDITION(argc > 0);
     PRECONDITION(argv);
 
-    {
-        Glib::RefPtr<Gtk::Application> gtkApplication = Gtk::Application::create(argc, argv, "bobmorane.connectx");
-        ASSERT(gtkApplication);
+    // These arguments are unused for now. They might become mandatory if I ever support
+    // other widget toolkits, so I leave them here.
+    (void)argc; (void)argv;
 
-        m_abstractWidgetsFactory = cx::cmn::ui::gtkmm3::CreateFactory(gtkApplication);
+    {
+        m_abstractWidgetsFactory = cx::cmn::ui::gtkmm3::CreateFactory();
         ASSERT(m_abstractWidgetsFactory);
 
         {
-            auto abstractConnectXWidgetsFactory = cx::ui::gtkmm3::CreateFactory(gtkApplication, *m_abstractWidgetsFactory);
+            auto abstractConnectXWidgetsFactory = cx::ui::gtkmm3::CreateFactory(*m_abstractWidgetsFactory);
             ASSERT(abstractConnectXWidgetsFactory);
 
             m_abstractConnectXWidgetsFactory = std::move(abstractConnectXWidgetsFactory);

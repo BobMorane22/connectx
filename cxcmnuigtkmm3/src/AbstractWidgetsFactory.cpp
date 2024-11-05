@@ -21,10 +21,7 @@
  *
  *************************************************************************************************/
 
-#include <gtkmm/application.h>
-
 #include <cxinv/assertion.h>
-#include <cxcmnui/IAbstractWidgetsFactory.h>
 #include <cxcmnui/StdActionIcon.h>
 #include <cxcmnuigtkmm3/AbstractWidgetsFactory.h>
 #include <cxcmnuigtkmm3/WidgetDelegate.h>
@@ -40,64 +37,6 @@
 #include "OnOffSwitch.h"
 #include "SpinBox.h"
 
-namespace cx::cmn::ui::gtkmm3
-{
-
-/**********************************************************************************************//**
- * @brief Abstract widgets factory for Gtkmm 3.24.5.
- *
- * This factory handles the "standard" widgets (e.g. buttons, labels, comboboxes, etc).
- *
- *************************************************************************************************/
-class AbstractWidgetsFactory final : public IAbstractWidgetsFactory
-{
-
-public:
-
-   /******************************************************************************************//**
-    * @brief Constructor.
-    *
-    * @param p_gtkApplication
-    *      The `Gtk::Application` instance representing the current application the factory
-    *      is used for. Without it, widgets cannot be rendered on the screen.
-    *
-    * @pre
-    *      The `Gtk::Application` instance given as an argument is valid.
-    *
-    * @post
-    *      The stored `Gtk::Application` instance is valid.
-    *
-    *********************************************************************************************/
-    explicit AbstractWidgetsFactory(Glib::RefPtr<Gtk::Application> p_gtkApplication);
-
-    // IAbstractWidgetsFactory:
-    [[nodiscard]] std::unique_ptr<cx::cmn::ui::ILayout> CreateLayout() const override;
-    [[nodiscard]] std::unique_ptr<cx::cmn::ui::IButton> CreateButton() const override;
-    [[nodiscard]] std::unique_ptr<cx::cmn::ui::IButton> CreateButton(const std::string& p_contents) const override;
-    [[nodiscard]] std::unique_ptr<cx::cmn::ui::ILabel> CreateLabel() const override;
-    [[nodiscard]] std::unique_ptr<cx::cmn::ui::ILabel> CreateLabel(const std::string& p_contents) const override;
-    [[nodiscard]] std::unique_ptr<cx::cmn::ui::IEditBox> CreateEditBox() const override;
-    [[nodiscard]] std::unique_ptr<cx::cmn::ui::ISpinBox> CreateSpinBox(
-        int p_initialValue,
-        const cx::cmn::ui::ISpinBox::ClimbRate& p_climbRate,
-        const cx::cmn::ui::ISpinBox::Range& p_range) const override;
-    [[nodiscard]] std::unique_ptr<cx::cmn::ui::IOnOffSwitch> CreateOnOffSwitch() const override;
-    [[nodiscard]] std::unique_ptr<cx::cmn::ui::IWindow> CreateDialog(
-        cx::cmn::ui::IWindow& p_parent,
-        cx::cmn::ui::DialogRole p_dialogRole,
-        const std::string& p_message) const override;
-    [[nodiscard]] std::unique_ptr<cx::cmn::ui::IMenuBar> CreateMenuBar() const override;
-    [[nodiscard]] std::unique_ptr<cx::cmn::ui::IMenu> CreateMenu(const std::string p_title) const override;
-    [[nodiscard]] std::unique_ptr<cx::cmn::ui::IMenuItem> CreateMenuItem(
-        const std::string p_label,
-        const std::optional<cx::cmn::ui::FreeDesktop::StdActionIcon>& p_icon = std::nullopt) const override;
-
-private:
-
-    Glib::RefPtr<Gtk::Application> m_gtkApplication;
-};
-
-} // namespace cx::cmn::ui::gtkmm3
 
 cx::cmn::ui::gtkmm3::AbstractWidgetsFactory::AbstractWidgetsFactory(Glib::RefPtr<Gtk::Application> p_gtkApplication)
 {
@@ -221,13 +160,7 @@ std::unique_ptr<cx::cmn::ui::IMenuItem> cx::cmn::ui::gtkmm3::AbstractWidgetsFact
     return menuItem;
 }
 
-std::unique_ptr<cx::cmn::ui::IAbstractWidgetsFactory> cx::cmn::ui::gtkmm3::CreateFactory(Glib::RefPtr<Gtk::Application> p_gtkApplication)
+Glib::RefPtr<Gtk::Application> cx::cmn::ui::gtkmm3::AbstractWidgetsFactory::GetGtkApplication()
 {
-    IF_PRECONDITION_NOT_MET_DO(bool(p_gtkApplication), return nullptr;);
-
-    auto factory = std::make_unique<cx::cmn::ui::gtkmm3::AbstractWidgetsFactory>(p_gtkApplication);
-
-    POSTCONDITION(factory);
-
-    return factory;
+    return m_gtkApplication;
 }

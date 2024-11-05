@@ -42,6 +42,7 @@ add_library(${TARGET_NAME}
   src/NewPlayersList.cpp
   src/pathHelpers.cpp
   src/StatusBar.cpp
+  src/widgetsFactory.cpp
   src/Window.cpp
 )
 

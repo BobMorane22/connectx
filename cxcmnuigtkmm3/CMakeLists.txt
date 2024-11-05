@@ -39,6 +39,7 @@ add_library(${TARGET_NAME}
   src/OnOffSwitch.cpp
   src/SpinBox.cpp
   src/WidgetDelegate.cpp
+  src/widgetsFactory.cpp
 )
 
 target_include_directories(${TARGET_NAME}
