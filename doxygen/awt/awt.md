@@ -326,7 +326,6 @@ GUI toolkit used is Gtkmm3.
 <a name="todos"></a>
 ## 7. TODOs
 
-\todo Include the `Gtk::Application` dependance inside the abstract factory.
 \todo Review the `gtkmm3::CreateFactory` call to remove the enum. The namespace already
       does the job.
 \todo Add a non Connect X window creation facility in the AWT. The AWT is not functional at this
