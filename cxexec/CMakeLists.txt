@@ -22,6 +22,7 @@
 # @date 2021
 #
 #************************************************************************************************/
+
 set(TARGET_NAME cxexec)
 
 add_library(${TARGET_NAME}
@@ -33,7 +34,6 @@ add_library(${TARGET_NAME}
   src/CmdArgVerboseStrategy.cpp
   src/CmdArgVersionStrategy.cpp
   src/CmdArgWorkflowFactory.cpp
-  src/Gtkmm3UIManager.cpp
   src/UIManagerFactory.cpp
 )
 
