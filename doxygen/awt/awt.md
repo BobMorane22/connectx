@@ -328,8 +328,6 @@ GUI toolkit used is Gtkmm3.
 
 \todo Review the `gtkmm3::CreateFactory` call to remove the enum. The namespace already
       does the job.
-\todo Add a non Connect X window creation facility in the AWT. The AWT is not functional at this
-      point because one cannot create a simple window.
 \todo Privatise all comments in implementations.
 \todo Document the Connect X extension to the AWT.
 \todo Fix all Doxygen errors.

@@ -40,6 +40,7 @@ add_library(${TARGET_NAME}
   src/SpinBox.cpp
   src/WidgetDelegate.cpp
   src/widgetsFactory.cpp
+  src/Window.cpp
 )
 
 target_include_directories(${TARGET_NAME}

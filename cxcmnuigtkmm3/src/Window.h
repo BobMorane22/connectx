@@ -9,42 +9,35 @@
  *  Connect X is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- *  GNU General Public License for more details.  *
+ *  GNU General Public License for more details.
+ *
  *  You should have received a copy of the GNU General Public License
  *  along with Connect X. If not, see <https://www.gnu.org/licenses/>.
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file Dialog.h
+ * @file Window.h
  * @date 2024
  *
  *************************************************************************************************/
 
-#ifndef GTKMM3DIALOG_H_0BE19F00_7BE5_40DA_B880_C87F635AABE8
-#define GTKMM3DIALOG_H_0BE19F00_7BE5_40DA_B880_C87F635AABE8
+#ifndef WINDOW_H_450385E3_F251_4E91_ADE7_5457E7CFF128
+#define WINDOW_H_450385E3_F251_4E91_ADE7_5457E7CFF128
 
-#include <gtkmm/messagedialog.h>
+#include <gtkmm/application.h>
+#include <gtkmm/window.h>
 
 #include <cxcmnui/IWindow.h>
-
-namespace cx::cmn::ui
-{
-    enum class DialogRole;
-}
 
 namespace cx::cmn::ui::gtkmm3
 {
 
-/**********************************************************************************************//**
- * @brief Gtkmm 3 dialog implementation.
+/***********************************************************************************************//**
+ * @brief Gtkmm3 window implementation.
  *
- * Unlike Gtkmm, this implementation shares the `IWindow::Show` method. Typical Gtkmm
- * implementations use the `Gtk::Dialog::run` method (but also inherit from `Gtk::Window::show`)
- * which adds confusion.
- *
- *************************************************************************************************/
-class Dialog : public cx::cmn::ui::IWindow,
-               public Gtk::MessageDialog
+ **************************************************************************************************/
+class Window : public Gtk::Window,
+               public cx::cmn::ui::IWindow
 {
 
 public:
@@ -52,22 +45,17 @@ public:
     /*******************************************************************************************//**
      * @brief Constructor.
      *
-     * @param p_parent
-     *      The window over which the dialog will appear.
-     * @param p_role
-     *      The dialog's role. In other words, the type of communication the dialog going to
-     *      be used, as far as the user is concerned.
-     * @param p_message
-     *      The message to display to the user. 
+     * @param p_gtkApplication
+     *      The underlying GTK application.
      *
      * @pre
-     *      The message should not be empty.
+     *      The supplied GTK application is valid.
+     * @post
+     *      The stored GTK application reference is valid.
      *
      **********************************************************************************************/
-    Dialog(
-        cx::cmn::ui::IWindow& p_parent,
-        cx::cmn::ui::DialogRole p_role,
-        const std::string& p_message);
+    Window(
+        Glib::RefPtr<Gtk::Application> p_gtkApplication);
 
     /*******************************************************************************************//**
      * @brief Sets the delegate for widget common facilities.
@@ -84,15 +72,14 @@ public:
      *      The registered widget delegate is valid.
      *
      **********************************************************************************************/
-    void SetDelegate(
-        std::unique_ptr<cx::cmn::ui::IWidget> p_delegate);
+    void SetDelegate(std::unique_ptr<IWidget> p_delegate);
 
     // cx::cmn::ui::IWindow:
-    [[nodiscard]] virtual int Show() override;
+    [[nodiscard]] int Show() override;
     void ShrinkToContents(
-        IWindow::Orientation p_orientation) override;
+        Orientation p_orientation) override;
     void RegisterLayout(
-        ILayout& p_layout) override;
+        cx::cmn::ui::ILayout& p_layout) override;
 
     // cx::cmn::ui::IWidget:
     [[nodiscard]] size_t GetWidth() const override;
@@ -100,14 +87,15 @@ public:
     void SetEnabled(cx::cmn::ui::EnabledState p_enabled) override;
     void SetMargins(const cx::cmn::ui::Margins& p_newMarginSizes) override;
     void SetTooltip(const std::string& p_tooltipContents) override;
-    [[nodiscard]] std::unique_ptr<ISignal<cx::cmn::ui::EventPropagation, cx::cmn::ui::KeyboardKeyPressedEvent>> OnKeyPressed() override;
+    [[nodiscard]] std::unique_ptr<cx::cmn::ui::ISignal<cx::cmn::ui::EventPropagation, cx::cmn::ui::KeyboardKeyPressedEvent>> OnKeyPressed() override;
 
 private:
 
-    std::unique_ptr<cx::cmn::ui::IWidget> m_delegate;
+    Glib::RefPtr<Gtk::Application> m_gtkApplication;
+    std::unique_ptr<IWidget> m_delegate;
 
 };
 
 } // namespace cx::cmn::ui::gtkmm3
 
-#endif // GTKMM3DIALOG_H_0BE19F00_7BE5_40DA_B880_C87F635AABE8
+#endif // WINDOW_H_450385E3_F251_4E91_ADE7_5457E7CFF128

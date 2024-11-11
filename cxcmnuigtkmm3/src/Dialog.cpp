@@ -21,6 +21,7 @@
  *
  *************************************************************************************************/
 
+#include <gtkmm/grid.h>
 #include <gtkmm/enums.h>
 #include <gtkmm/messagedialog.h>
 
@@ -46,6 +47,15 @@ cx::cmn::ui::gtkmm3::Dialog::Dialog(
 int cx::cmn::ui::gtkmm3::Dialog::Show()
 {
     return run();
+}
+
+void cx::cmn::ui::gtkmm3::Dialog::RegisterLayout(
+    ILayout& p_layout)
+{
+    auto* gtkLayout = dynamic_cast<Gtk::Grid*>(&p_layout);
+    IF_CONDITION_NOT_MET_DO(gtkLayout, return;);
+
+    add(*gtkLayout);
 }
 
 void cx::cmn::ui::gtkmm3::Dialog::ShrinkToContents(IWindow::Orientation /*p_orientation*/)

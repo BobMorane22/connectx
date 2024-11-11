@@ -57,29 +57,6 @@
 
 #include "MainWindow.h"
 
-namespace
-{
-
-class MainWindowImpl : public cx::ui::gtkmm3::Window
-{
-
-public:
-
-    cx::cmn::ui::ILayout& GetLayout(){return *m_mainLayout;}
-
-private:
-
-    void InitializeWidgets() override;
-    void ConfigureWindow() override;
-    void RegisterLayouts() override;
-    void RegisterWidgets() override;
-    void ConfigureLayouts() override;
-    void ConfigureWidgets() override;
-    void ConfigureSignalHandlers() override;
-};
-
-} // namespace
-
 cx::ui::gtkmm3::MainWindow::MainWindow(
     Gtk::Application& p_gtkApplication,
     cx::model::ModelSubject& p_model,
@@ -189,6 +166,8 @@ void cx::ui::gtkmm3::MainWindow::ConfigureSignalHandlers()
 
 int cx::ui::gtkmm3::MainWindow::Show()
 {
+    PRECONDITION(!m_gtkApplication.get_active_window());
+
     show_all();
     return m_gtkApplication.run(*this);
 }

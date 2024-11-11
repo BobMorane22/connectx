@@ -21,51 +21,64 @@
  *
  *************************************************************************************************/
 
-#include <glibmm/fileutils.h>
+#include <cstdlib>
+
 #include <gtkmm/grid.h>
 
-#include <cxcmnui/EventPropagation.h>
-#include <cxcmnui/IAbstractWidgetsFactory.h>
+#include <cxinv/assertion.h>
 #include <cxcmnui/ILayout.h>
-#include <cxcmnui/KeyboardKeyPressedEvent.h>
-#include <cxuigtkmm3/Window.h>
 
-void cx::ui::gtkmm3::Window::ConfigureWindowIcon()
+#include "Window.h"
+
+cx::cmn::ui::gtkmm3::Window::Window(
+    Glib::RefPtr<Gtk::Application> p_gtkApplication)
 {
-    try
-    {
-        set_icon_from_file(cx::ui::RESSOURCE_ICONS_PATH + std::string{"/cxicon16.png"});
-    }
-    catch(const Glib::FileError& p_exception)
-    {
-        const std::string errorMsg = p_exception.what();
-        ASSERT_ERROR_MSG(errorMsg.c_str());
+    PRECONDITION(bool(p_gtkApplication));
 
-        return;
-    }
+    m_gtkApplication = p_gtkApplication;
+
+    POSTCONDITION(bool(m_gtkApplication));
 }
 
-cx::ui::gtkmm3::Window::Window(const cx::cmn::ui::IAbstractWidgetsFactory& p_standardWidgetsFactory)
-: m_standardWidgetsFactory{p_standardWidgetsFactory}
+void cx::cmn::ui::gtkmm3::Window::SetDelegate(
+    std::unique_ptr<cx::cmn::ui::IWidget> p_delegate)
 {
-    m_mainLayout = m_standardWidgetsFactory.CreateLayout();
+    IF_PRECONDITION_NOT_MET_DO(p_delegate, return;);
 
-    if(INL_ASSERT(m_mainLayout))
-    {
-        RegisterLayout(*m_mainLayout);
-    }
+    m_delegate = std::move(p_delegate);
 
-    POSTCONDITION(m_mainLayout);
+    POSTCONDITION(m_delegate);
 }
 
-int cx::ui::gtkmm3::Window::Show()
+int cx::cmn::ui::gtkmm3::Window::Show() 
 {
-    show_all();
+    const Gtk::Window* const activeWindow = m_gtkApplication->get_active_window();
 
+    if(!activeWindow)
+    {
+        // There are no active window. This means this is the first shown
+        // window, and hence the main window. We run the Gtk::Application
+        // instance with this window to make it the main window.
+        show_all();
+        return m_gtkApplication->run(*this);
+    }
+
+    // Not the main window. We simply show it.
+    show_all();    
     return EXIT_SUCCESS;
 }
 
-void cx::ui::gtkmm3::Window::ShrinkToContents(IWindow::Orientation p_orientation)
+void cx::cmn::ui::gtkmm3::Window::RegisterLayout(
+    cx::cmn::ui::ILayout& p_layout)
+{
+    auto* gtkLayout = dynamic_cast<Gtk::Grid*>(&p_layout);
+    IF_CONDITION_NOT_MET_DO(gtkLayout, return;);
+
+    add(*gtkLayout);
+}
+
+void cx::cmn::ui::gtkmm3::Window::ShrinkToContents(
+    cx::cmn::ui::IWindow::Orientation p_orientation) 
 {
     using namespace cx::cmn::ui;
 
@@ -93,67 +106,37 @@ void cx::ui::gtkmm3::Window::ShrinkToContents(IWindow::Orientation p_orientation
     ASSERT_ERROR_MSG("Not yet implemented");
 }
 
-void cx::ui::gtkmm3::Window::RegisterLayout(            
-    cx::cmn::ui::ILayout& p_layout)
-{
-    auto* gtkLayout = dynamic_cast<Gtk::Grid*>(&p_layout);
-    IF_CONDITION_NOT_MET_DO(gtkLayout, return;);
-
-    add(*gtkLayout);
-}
-
-void cx::ui::gtkmm3::Window::Init()
-{
-    ConfigureWindowIcon();
-    InitializeWidgets();
-    ConfigureWindow();
-    RegisterLayouts();
-    RegisterWidgets();
-    ConfigureLayouts();
-    ConfigureWidgets();
-    ConfigureSignalHandlers();
-}
-
-void cx::ui::gtkmm3::Window::SetDelegate(std::unique_ptr<IWidget> p_delegate)
-{
-    IF_PRECONDITION_NOT_MET_DO(p_delegate, return;);
-
-    m_delegate = std::move(p_delegate);
-
-    POSTCONDITION(m_delegate);
-}
-
-size_t cx::ui::gtkmm3::Window::GetWidth() const 
+size_t cx::cmn::ui::gtkmm3::Window::GetWidth() const 
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return 0u;);
     return m_delegate->GetWidth();
 }
 
-size_t cx::ui::gtkmm3::Window::GetHeight() const 
+size_t cx::cmn::ui::gtkmm3::Window::GetHeight() const 
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return 0u;);
     return m_delegate->GetHeight();
 }
 
-void cx::ui::gtkmm3::Window::SetEnabled(cx::cmn::ui::EnabledState p_enabled) 
+void cx::cmn::ui::gtkmm3::Window::SetEnabled(cx::cmn::ui::EnabledState p_enabled) 
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return;);
     m_delegate->SetEnabled(p_enabled);
 }
 
-void cx::ui::gtkmm3::Window::SetMargins(const cx::cmn::ui::Margins& p_newMarginSizes) 
+void cx::cmn::ui::gtkmm3::Window::SetMargins(const cx::cmn::ui::Margins& p_newMarginSizes) 
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return;);
     m_delegate->SetMargins(p_newMarginSizes);
 }
 
-void cx::ui::gtkmm3::Window::SetTooltip(const std::string& p_tooltipContents)
+void cx::cmn::ui::gtkmm3::Window::SetTooltip(const std::string& p_tooltipContents) 
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return;);
     m_delegate->SetTooltip(p_tooltipContents);
 }
 
-std::unique_ptr<cx::cmn::ui::ISignal<cx::cmn::ui::EventPropagation, cx::cmn::ui::KeyboardKeyPressedEvent>> cx::ui::gtkmm3::Window::OnKeyPressed()
+std::unique_ptr<cx::cmn::ui::ISignal<cx::cmn::ui::EventPropagation, cx::cmn::ui::KeyboardKeyPressedEvent>> cx::cmn::ui::gtkmm3::Window::OnKeyPressed() 
 {
     IF_CONDITION_NOT_MET_DO(m_delegate, return nullptr;);
     return m_delegate->OnKeyPressed();

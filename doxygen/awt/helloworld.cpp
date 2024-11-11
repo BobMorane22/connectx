@@ -32,18 +32,23 @@
 #include <cxcmnui/IButton.h>
 #include <cxcmnui/ILayout.h>
 #include <cxcmnui/ISignal.h>
+#include <cxcmnui/IWindow.h>
 #include <cxcmnuigtkmm3/widgetsFactory.h>
 
 int main(int /*argc*/, char** /*argv*/)
 {
     using namespace cx::cmn::ui;
 
-    // Create an instance of the abstract factory
     const std::unique_ptr<IAbstractWidgetsFactory> factory = gtkmm3::CreateFactory();
     IF_CONDITION_NOT_MET_DO(factory, return EXIT_FAILURE;);
 
+    std::unique_ptr<IWindow> mainWindow = factory->CreateWindow();
+    IF_CONDITION_NOT_MET_DO(mainWindow, return EXIT_FAILURE;);
+
     std::unique_ptr<ILayout> mainLayout = factory->CreateLayout();
     IF_CONDITION_NOT_MET_DO(mainLayout, return EXIT_FAILURE;);
+
+    mainWindow->RegisterLayout(*mainLayout);
 
     //! \noop [AWT - Create button]
     std::unique_ptr<IButton> button = factory->CreateButton("Hello World!");
@@ -63,6 +68,6 @@ int main(int /*argc*/, char** /*argv*/)
         {ILayout::Row{0u}, ILayout::RowSpan{1u}},
         {ILayout::Column{0u}, ILayout::ColumnSpan{1u}});
 
-    return EXIT_SUCCESS;
+    return mainWindow->Show();
 }
 //! \noop [AWT - Hello World]

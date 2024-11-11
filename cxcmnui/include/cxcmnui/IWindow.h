@@ -28,6 +28,11 @@
 
 namespace cx::cmn::ui
 {
+    class ILayout;
+}
+
+namespace cx::cmn::ui
+{
 
 /*********************************************************************************************//**
  * @brief Interface for creating a standard window.
@@ -70,11 +75,19 @@ public:
      * Shows the window on the screen for a user to see.
      *
      * @return
-     *      `EXIT_SUCCESS` if the window if the window terminated the application without
-     *       errors, `EXIT_FAILURE` otherwise.
+     *      `EXIT_SUCCESS` if the window terminated the application without errors, `EXIT_FAILURE` otherwise.
      *
      ********************************************************************************************/
     [[nodiscard]] virtual int Show() = 0;
+
+    /******************************************************************************************//**
+     * @brief Registers a layout to the window.
+     *
+     * If a layout is already registered for the window, it is replaced by the new layout.
+     *
+     ********************************************************************************************/
+    virtual void RegisterLayout(
+        cx::cmn::ui::ILayout& p_layout) = 0;
 
     /******************************************************************************************//**
      * @brief Make any extra space removed on the window.
@@ -86,7 +99,8 @@ public:
      *      The window dimension(s) to shrink.
      *
      ********************************************************************************************/
-    virtual void ShrinkToContents(Orientation p_orientation) = 0;
+    virtual void ShrinkToContents(
+        Orientation p_orientation) = 0;
 
 };
 

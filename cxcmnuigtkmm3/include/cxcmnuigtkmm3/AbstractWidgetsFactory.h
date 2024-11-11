@@ -83,6 +83,7 @@ public:
         const cx::cmn::ui::ISpinBox::ClimbRate& p_climbRate,
         const cx::cmn::ui::ISpinBox::Range& p_range) const override;
     [[nodiscard]] std::unique_ptr<cx::cmn::ui::IOnOffSwitch> CreateOnOffSwitch() const override;
+    [[nodiscard]] std::unique_ptr<IWindow> CreateWindow() const override;
     [[nodiscard]] std::unique_ptr<cx::cmn::ui::IWindow> CreateDialog(
         cx::cmn::ui::IWindow& p_parent,
         cx::cmn::ui::DialogRole p_dialogRole,

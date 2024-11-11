@@ -73,7 +73,8 @@ public:
      *      The window's main layout is valid.
      *
      ********************************************************************************************/
-    explicit Window(const cx::cmn::ui::IAbstractWidgetsFactory& p_standardWidgetsFactory);
+    explicit Window(
+        const cx::cmn::ui::IAbstractWidgetsFactory& p_standardWidgetsFactory);
 
     /******************************************************************************************//**
      * @brief Initializes the window widgets.
@@ -99,11 +100,15 @@ public:
      *      The registered widget delegate is valid.
      *
      **********************************************************************************************/
-    void SetDelegate(std::unique_ptr<cx::cmn::ui::IWidget> p_delegate);
+    void SetDelegate(
+        std::unique_ptr<cx::cmn::ui::IWidget> p_delegate);
 
     // cx::cmn::ui::IWindow:
     [[nodiscard]] int Show() override;
-    void ShrinkToContents(cx::cmn::ui::IWindow::Orientation p_orientation) override;
+    void ShrinkToContents(
+        cx::cmn::ui::IWindow::Orientation p_orientation) override;
+    void RegisterLayout(            
+        cx::cmn::ui::ILayout& p_layout) override;
 
     // cx::cmn::ui::IWidget:
     [[nodiscard]] virtual size_t GetWidth() const override;

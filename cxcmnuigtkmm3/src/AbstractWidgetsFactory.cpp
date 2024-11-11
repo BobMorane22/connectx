@@ -36,7 +36,7 @@
 #include "MenuItem.h"
 #include "OnOffSwitch.h"
 #include "SpinBox.h"
-
+#include "Window.h"
 
 cx::cmn::ui::gtkmm3::AbstractWidgetsFactory::AbstractWidgetsFactory(Glib::RefPtr<Gtk::Application> p_gtkApplication)
 {
@@ -112,6 +112,14 @@ std::unique_ptr<cx::cmn::ui::IOnOffSwitch> cx::cmn::ui::gtkmm3::AbstractWidgetsF
     POSTCONDITION(onOffSwitch);
 
     return onOffSwitch;
+}
+
+std::unique_ptr<cx::cmn::ui::IWindow> cx::cmn::ui::gtkmm3::AbstractWidgetsFactory::CreateWindow() const
+{
+    auto window = CreateWidget<cx::cmn::ui::gtkmm3::Window>(m_gtkApplication);
+    POSTCONDITION(window);
+
+    return window;
 }
 
 std::unique_ptr<cx::cmn::ui::IWindow> cx::cmn::ui::gtkmm3::AbstractWidgetsFactory::CreateDialog(

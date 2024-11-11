@@ -206,8 +206,26 @@ public:
      *********************************************************************************************/
     [[nodiscard]] virtual std::unique_ptr<IOnOffSwitch> CreateOnOffSwitch() const = 0;
 
+///@}
+
+// ================================================================================================
+///@{ @name Dialogs & Windows
+// ================================================================================================
+
     /******************************************************************************************//**
-     * @brief Creates dialog instance.
+     * @brief Creates a window instance.
+     *
+     * @post
+     *      The returned window instance is valid.
+     * 
+     * @return
+     *      A window instance.
+     *
+     *********************************************************************************************/
+    [[nodiscard]] virtual std::unique_ptr<IWindow> CreateWindow() const = 0;
+
+    /******************************************************************************************//**
+     * @brief Creates a dialog instance.
      *
      * @param p_parent
      *      The dialog's parent window. This is the window over which the dialog shows.
