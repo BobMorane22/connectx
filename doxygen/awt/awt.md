@@ -326,8 +326,6 @@ GUI toolkit used is Gtkmm3.
 <a name="todos"></a>
 ## 7. TODOs
 
-\todo Review the `gtkmm3::CreateFactory` call to remove the enum. The namespace already
-      does the job.
 \todo Privatise all comments in implementations.
 \todo Document the Connect X extension to the AWT.
 \todo Fix all Doxygen errors.
