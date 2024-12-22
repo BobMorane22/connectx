@@ -16,7 +16,7 @@
 
 <a name="introduction"></a>
 ## 1. Introduction
-In this document, the abstract widgets toolkit (AWT) is presented in details. This toolkit
+In this document, the Abstract Widgets Toolkit (AWT) is presented in details. This toolkit
 is used by Connect X for implementing user interfaces (UI).
 
 
