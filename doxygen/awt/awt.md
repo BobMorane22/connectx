@@ -327,5 +327,4 @@ GUI toolkit used is Gtkmm3.
 ## 7. TODOs
 
 \todo Privatise all comments in implementations.
-\todo Document the Connect X extension to the AWT.
 \todo Fix all Doxygen errors.
