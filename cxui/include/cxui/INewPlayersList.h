@@ -199,7 +199,7 @@ public:
         const std::string& p_newPlayerNewName,
         const cx::model::ChipColor& p_newPlayerNewChipColor) = 0;
 
-    /***********************************************************************************************
+    /*******************************************************************************************//**
      * @brief Get the signal for when a player is updated in the list.
      *
      * @return

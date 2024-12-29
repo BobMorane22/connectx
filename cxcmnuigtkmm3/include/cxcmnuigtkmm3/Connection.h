@@ -40,11 +40,19 @@ class Connection : public IConnection
 
 public:
 
+    /******************************************************************************************//**
+     * @brief Constructor.
+     *
+     * @param p_connection
+     *      The underlying sigc connection.
+     *
+     *********************************************************************************************/
     explicit Connection(const sigc::connection& p_connection)
     : m_connection{p_connection}
     {
     }
 
+    // cx::cmn::ui::IConnection.
     [[nodiscard]] bool IsConnected() const override
     {
         return m_connection.connected();

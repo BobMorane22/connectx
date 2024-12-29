@@ -146,7 +146,7 @@ std::unique_ptr<cx::cmn::ui::IMenuBar> cx::cmn::ui::gtkmm3::AbstractWidgetsFacto
     return menuBar;
 }
 
-std::unique_ptr<cx::cmn::ui::IMenu> cx::cmn::ui::gtkmm3::AbstractWidgetsFactory::CreateMenu(const std::string p_title) const
+std::unique_ptr<cx::cmn::ui::IMenu> cx::cmn::ui::gtkmm3::AbstractWidgetsFactory::CreateMenu(const std::string& p_title) const
 {
     IF_PRECONDITION_NOT_MET_DO(!p_title.empty(), return nullptr;);
 
@@ -157,7 +157,7 @@ std::unique_ptr<cx::cmn::ui::IMenu> cx::cmn::ui::gtkmm3::AbstractWidgetsFactory:
 }
 
 std::unique_ptr<cx::cmn::ui::IMenuItem> cx::cmn::ui::gtkmm3::AbstractWidgetsFactory::CreateMenuItem(
-    const std::string p_label,
+    const std::string& p_label,
     const std::optional<cx::cmn::ui::FreeDesktop::StdActionIcon>& p_icon) const
 {
     IF_PRECONDITION_NOT_MET_DO(!p_label.empty(), return nullptr;);

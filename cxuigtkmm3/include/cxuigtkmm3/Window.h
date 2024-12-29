@@ -120,6 +120,7 @@ public:
 
 protected:
 
+    /** The window's top level layout. */
     std::unique_ptr<cx::cmn::ui::ILayout> m_mainLayout;
 
 private:

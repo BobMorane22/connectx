@@ -26,6 +26,14 @@
 
 #include <string>
 
+/**********************************************************************************************//**
+ * @brief Free Desktop related items.
+ *
+ * For more information, see:
+ *
+ *                       https://specifications.freedesktop.org
+ *
+ *************************************************************************************************/
 namespace cx::cmn::ui::FreeDesktop
 {
 

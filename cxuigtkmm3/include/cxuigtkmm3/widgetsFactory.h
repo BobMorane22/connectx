@@ -42,7 +42,7 @@ namespace cx::ui::gtkmm3
 /**********************************************************************************************//**
  * @brief Creates a factory instance for Connect X specific widgets.
  *
- * @param p_stdWidgetsFactory
+ * @param p_stdAbstractWidgetsFactory
  *      A standard widgets factory. Useful for reusing standard widgets in Connect X specific
  *      widgets, which makes porting easier.
  *

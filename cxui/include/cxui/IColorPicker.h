@@ -31,22 +31,26 @@
 namespace cx::ui
 {
 
+/**********************************************************************************************//**
+ * @brief Color picking widget.
+ *
+ *************************************************************************************************/
 class IColorPicker : public cx::cmn::ui::IWidget
 {
 
 public:
 
     /******************************************************************************************//**
-     * @brief Sets the current selected color.
+     * @brief Gets the last selected color.
      *
-     * @param p_color
-     *      The color to make visible in the combo box.
+     * @return
+     *      The last selected color.
      *
      ********************************************************************************************/
     [[nodiscard]] virtual cx::cmn::ui::Color GetCurrentSelection() const = 0;
 
     /******************************************************************************************//**
-     * @brief Sets the current selected color.
+     * @brief Sets the current selected color programatically.
      *
      * @param p_color
      *      The color to make visible in the combo box.

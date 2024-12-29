@@ -54,6 +54,9 @@ public:
      *
      * A connexion is valid if a signal has been bound to a handler.
      *
+     * @return
+     *      `true` if the connexion is valid. `false` otherwise.
+     *
      *********************************************************************************************/
     [[nodiscard]] virtual bool IsConnected() const = 0;
 

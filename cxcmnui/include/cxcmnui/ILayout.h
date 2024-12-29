@@ -167,7 +167,10 @@ public:
         {
         }
     
+        /** @brief The layout coordinate where to register the widget. */
         Coordinate m_coordinate;
+
+        /** @brief The number of adjacent coordinates needed by the widget in the layout. */
         Span m_span;
     };
 
@@ -279,7 +282,10 @@ public:
         {
         }
 
+        /** @brief Vertical alignement component. */
         VerticalAlignement m_vertical;
+
+        /** @brief Horizontal alignement component. */
         HorizontalAlignement m_horizontal;
     };
 

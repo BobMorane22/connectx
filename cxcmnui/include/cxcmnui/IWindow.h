@@ -85,6 +85,9 @@ public:
      *
      * If a layout is already registered for the window, it is replaced by the new layout.
      *
+     * @param p_layout
+     *      The layout to register to the window.
+     *
      ********************************************************************************************/
     virtual void RegisterLayout(
         cx::cmn::ui::ILayout& p_layout) = 0;

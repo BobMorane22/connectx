@@ -37,10 +37,6 @@ namespace cx::cmn::ui::gtkmm3
 /**********************************************************************************************//**
  * @brief Creates a factory instance for common widgets.
  *
- * @param p_gtkApplication
- *      The `Gtk::Application` instance representing the current application the factory is used for.
- *      Without it, widgets cannot be rendered on the screen.
- *
  * @post
  *      The returned factory is valid.
  *

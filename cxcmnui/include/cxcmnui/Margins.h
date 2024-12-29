@@ -73,18 +73,26 @@ struct Margins
      *      The right side margin size.
      *
      ****************************************************************************************/
-    constexpr Margins(const TopMargin& p_top,
-                      const BottomMargin& p_bottom,
-                      const LeftMargin& p_left,
-                      const RightMargin& p_right)
+    constexpr Margins(
+        const TopMargin& p_top,
+        const BottomMargin& p_bottom,
+        const LeftMargin& p_left,
+        const RightMargin& p_right)
     : m_top{p_top}, m_bottom{p_bottom}
     , m_left{p_left}, m_right{p_right}
     {
     }
 
+    /** @brief Top margin size. */
     TopMargin m_top;
+
+    /** @brief Bottom margin size. */
     BottomMargin m_bottom;
+
+    /** @brief Left margin size. */
     LeftMargin m_left;
+
+    /** @brief Right margin size. */
     RightMargin m_right;
 };
 

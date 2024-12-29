@@ -69,11 +69,17 @@ public:
     /******************************************************************************************//**
      * @brief Get the standard widgets factory.
      *
+     * @return
+     *      The standard widgets factory instance.
+     *
      *********************************************************************************************/
     [[nodiscard]] const cx::cmn::ui::IAbstractWidgetsFactory& GetStandardWidgetsFactory() const;
 
     /******************************************************************************************//**
      * @brief Get the Connect X widgets factory.
+     *
+     * @return
+     *      The Connect X widgets factory.
      *
      *********************************************************************************************/
     [[nodiscard]] const IAbstractConnectXWidgetsFactory& GetConnectXWidgetsFactory() const;

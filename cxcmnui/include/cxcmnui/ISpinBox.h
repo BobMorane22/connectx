@@ -85,10 +85,10 @@ public:
         *****************************************************************************************/
         Range(const Minimum& p_min, const Maximum& p_max);
 
-        ///< The range lower limit.
+        /** @brief The range's lower limit. */
         Minimum m_min;
 
-        ///< The range upper limit.
+        /** @brief The range's upper limit. */
         Maximum m_max;
     };
 

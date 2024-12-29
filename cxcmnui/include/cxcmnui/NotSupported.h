@@ -16,7 +16,7 @@
  *
  *************************************************************************************************/
 /**********************************************************************************************//**
- * @file NoSupported.h
+ * @file NotSupported.h
  * @date 2024
  *
  *************************************************************************************************/
@@ -62,8 +62,10 @@ public:
      *      A closed connection.
      *
      *********************************************************************************************/
-    std::unique_ptr<IConnection> Connect(const std::function<ReturnType(Arguments...)>& /*p_slot*/) override
+    std::unique_ptr<IConnection> Connect(const std::function<ReturnType(Arguments...)>& p_slot) override
     {
+        (void)p_slot; // Unused.
+
         ASSERT_ERROR_MSG("Un supported signal for this widget");
         return std::make_unique<ClosedConnection>();
     }

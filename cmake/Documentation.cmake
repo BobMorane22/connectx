@@ -128,6 +128,7 @@ macro(setup_doxyfile)
   set(DOXYGEN_PROJECT_NAME ${p_projectPrettyName})
   set(DOXYGEN_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/doxygen)
   set(DOXYGEN_MARKDOWN_SUPPORT YES)
+  set(DOXYGEN_BUILTIN_STL_SUPPORT YES)
 
 
   #--------------------------------------------------------------------------------------------
@@ -170,7 +171,9 @@ macro(setup_doxyfile)
     "*/data/*"
     "*backlog.md"
     "*wishlist.md"
-    "*changelogs/*"
+  )
+  set(DOXYGEN_IMAGE_PATH
+    "changelogs"
   )
   set(DOXYGEN_USE_MDFILE_AS_MAINPAGE "README.md")
   set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/doxygen)
@@ -247,8 +250,9 @@ macro(setup_doxyfile)
 
 
   #--------------------------------------------------------------------------------------------
-  # Configuration options related to the
+  # Configuration options related to diagram generator tools
   #--------------------------------------------------------------------------------------------
+  set(DOXYGEN_COLLABORATION_GRAPH NO)
 
 
 endmacro()

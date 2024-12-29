@@ -4,19 +4,19 @@
      Guide for extending the Abstract Widgets Toolkit (AWT).
 
 ## Contents
-1. [Introduction](#introduction)
-2. [Motivation](#motivation)
-3. [Extending Common Widgets](#extending)
-4. [Architecture](#architecture)
+1. [Introduction](#eawt-introduction)
+2. [Motivation](#eawt-motivation)
+3. [Extending Common Widgets](#eawt-extending)
+4. [Architecture](#eawt-architecture)
 
 
-<a name="introduction"></a>
+<a name="eawt-introduction"></a>
 ## 1. Introduction
 This document explains how the [Abstract Widgets Toolkit](../awt/awt.md) (AWT) can be extended
 to meet application specific needs.
 
 
-<a name="motivation"></a>
+<a name="eawt-motivation"></a>
 ## 2. Motivation
 The AWT is nice for using common widgets, such as buttons, labels and windows (to name a few).
 When applications get more involved, they sometimes need widgets that are more specialized.
@@ -33,7 +33,7 @@ however, is how this specialization is achieved. The Connect X specific extensio
 is known as the Extended Abstract Widget Toolkit (EAWT).
 
 
-<a name="extending"></a>
+<a name="eawt-extending"></a>
 ## 3. Extending Common Widgets
 
 There are three ways in which GUI toolkits typically let us create specialized widgets:
@@ -57,9 +57,9 @@ especially for an abstraction that aims at being GUI toolkit independant. Moreov
 in practice, direct inheritance to the AWT toolkit was never really a need.
 
 
-<a name="architecture"></a>
+<a name="eawt-architecture"></a>
 ## 4. Architecture
-As illustrated in [Figure 1](#arch-high-level), the EAWT is a client of the AWT. The
+As illustrated in [Figure 1](#eawt-arch-high-level), the EAWT is a client of the AWT. The
 `cx::ui::gtkmm3::AbstractConnectXWidgetsFactory` class has a reference to the
 `cx::cmn::ui::IAbstractWidgetsFactory` interface. This makes it possible to use this factory
 to create common widgets. Because of this, composition of common widgets to create new,
@@ -68,7 +68,7 @@ class automatically benefits from any maintenance done on the AWT, with minimal 
 because the only dependence it has is on the AWT interfaces.  One example of a composed widget
 is the `cx::ui::gtkmm3::MainWindow`.
 
-<a name="arch-high-level">**Figure 1 :**</a> The extended abstract factory architecture (high level).
+<a name="eawt-arch-high-level">**Figure 1 :**</a> The extended abstract factory architecture (high level).
 ```plantuml
 skinparam linetype ortho
 
@@ -115,7 +115,6 @@ package gtkmm3 as implementation {
 } /' cx::ui '/
 
 cx::cmn::ui --[hidden]u-> cx::ui
-
 ```
 
 The abstract factory associated with the EAWT also has access to Gtkmm. This makes it possible

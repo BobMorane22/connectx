@@ -26,27 +26,34 @@
 #ifndef HELPERS_H_3AE5AA7A_CC26_4C4F_99E2_0418EDA361C2
 #define HELPERS_H_3AE5AA7A_CC26_4C4F_99E2_0418EDA361C2
 
-/*********************************************************************************************//**
- * @ingroup helpermacros
- * @def RETURN_IF(p_condition, p_return)
- * 
- * @brief Conditional return.
- *
- * If `p_condition` is `true`, the caller returns with `p_return`. This macro is used to
- * hide repetitive boiler plate code only. It should be used in valid contexts only, so
- * it does not throw an assertion failure.
- *
- * @param p_condition
- *      The condition to check. Will return if this condition evaluates to `true`.
- *
- * @param p_return
- *      The expression to put after the `return` keyword. Can be ommited in the case
- *      of void functions.
- *
- ************************************************************************************************/
 #define GET_RETURN_IF_IMPL_FROM_ARGS(p_arg1, p_arg2, p_arg3, p_arg4) \
     p_arg4                                                           \
 
+/*********************************************************************************************//**
+ * @brief Conditional return.
+ *
+ * @ingroup helpermacros
+ *
+ * Immediately return from a function when a predicate is met. For example, in a function
+ * returning an `int`, one might write:
+ *
+ * ```
+ * RETURN_IF(!predicate, -1);
+ * ```
+ *
+ * The macro can even be used in a function returning `void`, as such:
+ *
+ * ```
+ * RETURN_IF(!predicate,);
+ * ```
+ *
+ * This macro is used to hide repetitive boiler plate code only. It should be used in valid
+ * contexts only, where returning only is not used as an error handling mechanism.
+ *
+ * @param ...
+ *      The first parameter should be the predicate to test. The second (optional) parameter
+ *
+ ************************************************************************************************/
 #define RETURN_IF(...)                               \
     RETURN_IF_IMPL_CHOOSER(__VA_ARGS__)(__VA_ARGS__) \
 

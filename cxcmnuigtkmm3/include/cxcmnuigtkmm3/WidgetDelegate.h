@@ -61,7 +61,7 @@ public:
     /******************************************************************************************//**
      * @brief Sets the underlying Gtkmm3 widget instance to operate on.
      *
-     * @param p_underling.
+     * @param p_underlying
      *      The address of the underlying Gtkmm 3 widget instance.
      *
      * @pre

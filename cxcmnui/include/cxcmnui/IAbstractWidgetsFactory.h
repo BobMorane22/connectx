@@ -274,7 +274,7 @@ public:
     [[nodiscard]] virtual std::unique_ptr<IMenuBar> CreateMenuBar() const = 0;
 
     /******************************************************************************************//**
-     * Creates a menu instance.
+     * @brief Creates a menu instance.
      *
      * Menus are used in a `IMenuBar`. They hold `IMenuItem`, which are the elements
      * the user interacts with to activate features.
@@ -292,10 +292,10 @@ public:
      *      A menu instance.
      *
      *********************************************************************************************/
-    [[nodiscard]] virtual std::unique_ptr<IMenu> CreateMenu(const std::string p_title) const = 0;
+    [[nodiscard]] virtual std::unique_ptr<IMenu> CreateMenu(const std::string& p_title) const = 0;
 
     /******************************************************************************************//**
-     * Creates a menu item instance.
+     * @brief Creates a menu item instance.
      *
      * Menu items are used in a `IMenu`, which compose a `IMenuBar`. They are the
      * elements with which the user interacts to activate features.
@@ -321,8 +321,8 @@ public:
      *
      *********************************************************************************************/
     [[nodiscard]] virtual std::unique_ptr<IMenuItem> CreateMenuItem(
-        const std::string p_label,
-        const std::optional<FreeDesktop::StdActionIcon>& p_icon = std::nullopt) const = 0;
+        const std::string& p_label,
+        const std::optional<cx::cmn::ui::FreeDesktop::StdActionIcon>& p_icon = std::nullopt) const = 0;
 
 ///@}
 
